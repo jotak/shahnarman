@@ -1,0 +1,170 @@
+<level id=0>
+	<option id='Druid_1' texture='fee'>
+		<name>
+			<english>Druid apprentice</english>
+			<french>Apprenti druide</french>
+		</name>
+		<skill name='ManaProductor' parameters='2 0 0 0' />
+	</option>
+	<option id='Warrior_1' texture='crysis'>
+		<name>
+			<english>Keltic fighter</english>
+			<french>Combattant Keltic</french>
+		</name>
+		<modify key='melee' value='2' />
+	</option>
+</level>
+<level id=1>
+	<option id='Druid_2' texture='fee'>
+		<name>
+			<english>Druid</english>
+			<french>Druide</french>
+		</name>
+		<skill name='ManaProductor' parameters='2 0 0 0' />
+		<spell name='GreaterRegenerate' />
+		<spell name='GreaterRegenerate' />
+		<spell name='GreaterRegenerate' />
+	</option>
+	<option id='Rebel_druid' texture='fee'>
+		<name>
+			<english>Rebel druid</english>
+			<french>Druide rebelle</french>
+		</name>
+		<modify key='speed' value='1' />
+		<modify key='range' value='1' />
+		<modify key='melee' value='1' />
+	</option>
+	<option id='Warrior_2' texture='crysis'>
+		<name>
+			<english>Keltic warrior</english>
+			<french>Guerrier Keltic</french>
+		</name>
+	</option>
+	<option id='Bard' texture='crysis'>
+		<name>
+			<english>Keltic bard</english>
+			<french>Barde Keltic</french>
+		</name>
+	</option>
+</level>
+<level id=2>
+	<option id='Druid_3' texture='fee'>
+		<name>
+			<english>Great druid</english>
+			<french>Grand druide</french>
+		</name>
+	</option>
+	<option id='Metamorph_druid' texture='fee'>
+		<name>
+			<english>Metamorph druid</english>
+			<french>Druide métamorphe</french>
+		</name>
+	</option>
+	<option id='Druid_warrior' texture='fee'>
+		<name>
+			<english>Druid warrior</english>
+			<french>Druide guerrier</french>
+		</name>
+	</option>
+	<option id='Warrior_3' texture='crysis'>
+		<name>
+			<english>Keltic warlord</english>
+			<french>Chef de guerre Keltic</french>
+		</name>
+	</option>
+	<option id='Archer_master' texture='crysis'>
+		<name>
+			<english>Keltic master archer</english>
+			<french>Maître archer Keltic</french>
+		</name>
+	</option>
+	<option id='Tribe_lord' texture='crysis'>
+		<name>
+			<english>Keltic tribe Lord</english>
+			<french>Chef de clan Keltic</french>
+		</name>
+	</option>
+</level>
+<level id=3>
+	<option id='Druid_4' texture='fee'>
+		<name>
+			<english>Great Druid Master</english>
+			<french>Grand Maître Druide</french>
+		</name>
+	</option>
+	<option id='Forest_spirit' texture='fee'>
+		<name>
+			<english>Spirit of the Forest</english>
+			<french>Esprit de la Forêt</french>
+		</name>
+	</option>
+	<option id='Great_war_druid' texture='fee'>
+		<name>
+			<english>Great wardruid</english>
+			<french>Grand druid de guerre</french>
+		</name>
+	</option>
+	<option id='Warrior_4' texture='crysis'>
+		<name>
+			<english>Great Keltic strategus</english>
+			<french>Grand stratège Keltic</french>
+		</name>
+	</option>
+	<option id='Forest_defender' texture='crysis'>
+		<name>
+			<english>Defender of the Forest</english>
+			<french>Défenseur de la Forêt</french>
+		</name>
+	</option>
+	<option id='Great_gatherer' texture='crysis'>
+		<name>
+			<english>Great gatherer of the Keltics</english>
+			<french>Grand rassembleur des Keltics</french>
+		</name>
+	</option>
+</level>
+
+<tree>
+	<option id='Druid_1'>
+		<child>Druid_2</child>
+		<child>Rebel_druid</child>
+	</option>
+	<option id='Warrior_1'>
+		<child>Warrior_2</child>
+		<child>Bard</child>
+	</option>
+	<option id='Druid_2'>
+		<child>Druid_3</child>
+		<child>Metamorph_druid</child>
+	</option>
+	<option id='Rebel_druid'>
+		<child>Druid_warrior</child>
+		<child>Metamorph_druid</child>
+	</option>
+	<option id='Warrior_2'>
+		<child>Warrior_3</child>
+		<child>Archer_master</child>
+	</option>
+	<option id='Bard'>
+		<child>Tribe_lord</child>
+		<child>Druid_warrior</child>
+	</option>
+	<option id='Druid_3'>
+		<child>Druid_4</child>
+	</option>
+	<option id='Metamorph_druid'>
+		<child>Forest_spirit</child>
+	</option>
+	<option id='Druid_warrior'>
+		<child>Great_war_druid</child>
+	</option>
+	<option id='Warrior_3'>
+		<child>Warrior_4</child>
+	</option>
+	<option id='Archer_master'>
+		<child>Forest_defender</child>
+	</option>
+	<option id='Tribe_lord'>
+		<child>Great_gatherer</child>
+	</option>
+</tree>

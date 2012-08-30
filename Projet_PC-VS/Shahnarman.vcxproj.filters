@@ -1,0 +1,855 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="_System">
+      <UniqueIdentifier>{bd836581-a814-4814-bfed-2b2d007e30f4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Audio">
+      <UniqueIdentifier>{136c4cb4-70cd-4533-aafb-a13bec782840}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Data">
+      <UniqueIdentifier>{3b5fbd78-cf4c-47b5-9fd7-5570a65d4e97}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Debug">
+      <UniqueIdentifier>{e0bbedef-3cc1-4ef3-825e-685ecf608add}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Display">
+      <UniqueIdentifier>{0915e8d0-7aa1-455f-b88a-50a862fd8d9a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Fx">
+      <UniqueIdentifier>{4727188a-717a-4a10-8bdc-26c81e767404}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Gameboard">
+      <UniqueIdentifier>{2b109f35-9ae9-46f6-9d3e-4e65fc964d54}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Interface">
+      <UniqueIdentifier>{392afe5c-b54f-4950-a77f-6acbf7edec01}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Server">
+      <UniqueIdentifier>{89c69af6-98b7-4d91-89fe-77368a6e07e8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Players">
+      <UniqueIdentifier>{cebaa2df-c797-4673-9f30-533e4953625c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GUIClasses">
+      <UniqueIdentifier>{74495867-be87-4df8-8afa-3be0d8a063c8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GUIClasses\FrameEffects">
+      <UniqueIdentifier>{a3eec028-9304-4430-b7c5-f016c77d4465}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Fonts">
+      <UniqueIdentifier>{432b9dbe-6195-4e3c-aed6-d2085f3d2c6a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Geometries">
+      <UniqueIdentifier>{58454e7c-bda1-4414-9085-476b810341d0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Physics">
+      <UniqueIdentifier>{ff383c69-5955-4c11-a1aa-7d25f5700d95}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Common">
+      <UniqueIdentifier>{94543945-d58e-416f-8558-1d6aa96acd70}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Input">
+      <UniqueIdentifier>{085de4fa-851c-4c59-bfea-2e89b0d1abf4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="DeckData">
+      <UniqueIdentifier>{995685b9-d4b5-4584-bc78-82391b6d0ac3}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\Sources\_System\DirectoryChecker.cpp">
+      <Filter>_System</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Sources\_System\linux_utils.cpp">
+      <Filter>_System</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Sources\_System\main.cpp">
+      <Filter>_System</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Sources\_System\stdafx.cpp">
+      <Filter>_System</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Sources\_System\TheAvatars.cpp">
+      <Filter>_System</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Sources\_System\utils_win32.cpp">
+      <Filter>_System</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Sources\Audio\AudioManager.cpp">
+      <Filter>Audio</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Sources\Data\DataFactory.cpp">
+      <Filter>Data</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Sources\Data\IniFile.cpp">
+      <Filter>Data</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Sources\Data\LocalisationTool.cpp">
+      <Filter>Data</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Sources\Data\LuaContext.cpp">
+      <Filter>Data</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Sources\Data\LuaObject.cpp">
+      <Filter>Data</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Sources\Data\LuaTargetable.cpp">
+      <Filter>Data</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Sources\Data\Parameters.cpp">
+      <Filter>Data</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Sources\Data\XMLLiteElement.cpp">
+      <Filter>Data</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Sources\Data\XMLLiteReader.cpp">
+      <Filter>Data</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Sources\Data\XMLObject.cpp">
+      <Filter>Data</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Sources\Debug\DebugManager.cpp">
+      <Filter>Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Sources\Display\DisplayEngine.cpp">
+      <Filter>Display</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Sources\Display\Texture.cpp">
+      <Filter>Display</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Sources\Display\TextureEngine.cpp">
+      <Filter>Display</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Sources\Fx\FxManager.cpp">
+      <Filter>Fx</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Sources\Gameboard\Building.cpp">
+      <Filter>Gameboard</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Sources\Gameboard\GameboardInputs.cpp">
+      <Filter>Gameboard</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Sources\Gameboard\GameboardManager.cpp">
+      <Filter>Gameboard</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Sources\Gameboard\Map.cpp">
+      <Filter>Gameboard</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Sources\Gameboard\MapCursor.cpp">
+      <Filter>Gameboard</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Sources\Gameboard\MapObject.cpp">
+      <Filter>Gameboard</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Sources\Gameboard\MapTile.cpp">
+      <Filter>Gameboard</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Sources\Gameboard\Pathfinder.cpp">
+      <Filter>Gameboard</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Sources\Gameboard\Skill.cpp">
+      <Filter>Gameboard</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Sources\Gameboard\SpecialTile.cpp">
+      <Filter>Gameboard</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Sources\Gameboard\Temple.cpp">
+      <Filter>Gameboard</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Sources\Gameboard\Town.cpp">
+      <Filter>Gameboard</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Sources\Gameboard\Unit.cpp">
+      <Filter>Gameboard</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Sources\Interface\ArtifactsEquipDlg.cpp">
+      <Filter>Interface</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Sources\Interface\BattleSpellPopup.cpp">
+      <Filter>Interface</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Sources\Interface\BuildDeckDlg.cpp">
+      <Filter>Interface</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Sources\Interface\GameOverDlg.cpp">
+      <Filter>Interface</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Sources\Interface\HostGameDlg.cpp">
+      <Filter>Interface</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Sources\Interface\InfoboxDlg.cpp">
+      <Filter>Interface</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Sources\Interface\InterfaceManager.cpp">
+      <Filter>Interface</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Sources\Interface\LevelUpDlg.cpp">
+      <Filter>Interface</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Sources\Interface\LoadGameDlg.cpp">
+      <Filter>Interface</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Sources\Interface\LogDlg.cpp">
+      <Filter>Interface</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Sources\Interface\MapObjectDlg.cpp">
+      <Filter>Interface</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Sources\Interface\MoveOrAttackDlg.cpp">
+      <Filter>Interface</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Sources\Interface\OptionsDlg.cpp">
+      <Filter>Interface</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Sources\Interface\PlayerSelectorDlg.cpp">
+      <Filter>Interface</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Sources\Interface\ResolveDlg.cpp">
+      <Filter>Interface</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Sources\Interface\SelectPlayerAvatarDlg.cpp">
+      <Filter>Interface</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Sources\Interface\ShopDlg.cpp">
+      <Filter>Interface</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Sources\Interface\SpellDlg.cpp">
+      <Filter>Interface</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Sources\Interface\SpellsSelectorDlg.cpp">
+      <Filter>Interface</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Sources\Interface\StartMenuDlg.cpp">
+      <Filter>Interface</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Sources\Interface\StatusDlg.cpp">
+      <Filter>Interface</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Sources\Interface\Tooltip.cpp">
+      <Filter>Interface</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Sources\Interface\UnitOptionsDlg.cpp">
+      <Filter>Interface</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Sources\Server\MapReader.cpp">
+      <Filter>Server</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Sources\Server\NetworkData.cpp">
+      <Filter>Server</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Sources\Server\Server.cpp">
+      <Filter>Server</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Sources\Server\ServerUnit.cpp">
+      <Filter>Server</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Sources\Server\SpellsSolver.cpp">
+      <Filter>Server</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Sources\Server\TurnSolver.cpp">
+      <Filter>Server</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Sources\Players\Artifact.cpp">
+      <Filter>Players</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Sources\Players\Mana.cpp">
+      <Filter>Players</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Sources\Players\Player.cpp">
+      <Filter>Players</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Sources\Players\PlayerManager.cpp">
+      <Filter>Players</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Sources\Players\PlayerManagerAbstract.cpp">
+      <Filter>Players</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Sources\Players\Spell.cpp">
+      <Filter>Players</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Sources\GUIClasses\guiButton.cpp">
+      <Filter>GUIClasses</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Sources\GUIClasses\guiComboBox.cpp">
+      <Filter>GUIClasses</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Sources\GUIClasses\guiComponent.cpp">
+      <Filter>GUIClasses</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Sources\GUIClasses\guiContainer.cpp">
+      <Filter>GUIClasses</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Sources\GUIClasses\guiDocument.cpp">
+      <Filter>GUIClasses</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Sources\GUIClasses\guiEditBox.cpp">
+      <Filter>GUIClasses</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Sources\GUIClasses\guiFrame.cpp">
+      <Filter>GUIClasses</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Sources\GUIClasses\guiGauge.cpp">
+      <Filter>GUIClasses</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Sources\GUIClasses\guiImage.cpp">
+      <Filter>GUIClasses</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Sources\GUIClasses\guiLabel.cpp">
+      <Filter>GUIClasses</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Sources\GUIClasses\guiList.cpp">
+      <Filter>GUIClasses</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Sources\GUIClasses\guiObject.cpp">
+      <Filter>GUIClasses</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Sources\GUIClasses\guiPopup.cpp">
+      <Filter>GUIClasses</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Sources\GUIClasses\guiSmartSlider.cpp">
+      <Filter>GUIClasses</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Sources\GUIClasses\guiTabbedFrame.cpp">
+      <Filter>GUIClasses</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Sources\GUIClasses\guiToggleButton.cpp">
+      <Filter>GUIClasses</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Sources\GUIClasses\FrameEffects\EffectComeIn.cpp">
+      <Filter>GUIClasses\FrameEffects</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Sources\GUIClasses\FrameEffects\EffectExtract.cpp">
+      <Filter>GUIClasses\FrameEffects</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Sources\GUIClasses\FrameEffects\guiFrameEffect.cpp">
+      <Filter>GUIClasses\FrameEffects</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Sources\GUIClasses\FrameEffects\guiFrameFlash.cpp">
+      <Filter>GUIClasses\FrameEffects</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Sources\GUIClasses\FrameEffects\guiFrameIntro.cpp">
+      <Filter>GUIClasses\FrameEffects</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Sources\GUIClasses\FrameEffects\guiFrameMouseFocus.cpp">
+      <Filter>GUIClasses\FrameEffects</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Sources\GUIClasses\FrameEffects\guiFrameOutro.cpp">
+      <Filter>GUIClasses\FrameEffects</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Sources\Fonts\Font.cpp">
+      <Filter>Fonts</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Sources\Fonts\FontEngine.cpp">
+      <Filter>Fonts</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Sources\Geometries\Geometry.cpp">
+      <Filter>Geometries</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Sources\Geometries\GeometryCylinder.cpp">
+      <Filter>Geometries</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Sources\Geometries\GeometryModifier.cpp">
+      <Filter>Geometries</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Sources\Geometries\GeometryQuads.cpp">
+      <Filter>Geometries</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Sources\Geometries\GeometryText.cpp">
+      <Filter>Geometries</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Sources\Geometries\ModProgressiveBlending.cpp">
+      <Filter>Geometries</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Sources\Geometries\ModProgressiveRotate.cpp">
+      <Filter>Geometries</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Sources\Geometries\ModProgressiveScaling.cpp">
+      <Filter>Geometries</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Sources\Geometries\StencilGeometry.cpp">
+      <Filter>Geometries</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Sources\Physics\ConstantMovement3D.cpp">
+      <Filter>Physics</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Sources\Physics\FasloMove.cpp">
+      <Filter>Physics</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Sources\Physics\Movement.cpp">
+      <Filter>Physics</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Sources\Physics\PhysicalObject.cpp">
+      <Filter>Physics</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Sources\Physics\SlofasloMove.cpp">
+      <Filter>Physics</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Sources\Common\md5.cpp">
+      <Filter>Common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Sources\Common\ObjectList.cpp">
+      <Filter>Common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Sources\Common\SortInterface.cpp">
+      <Filter>Common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Sources\Common\TimeController.cpp">
+      <Filter>Common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Sources\Input\InputEngine.cpp">
+      <Filter>Input</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Sources\Input\PCInputEngine.cpp">
+      <Filter>Input</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Sources\DeckData\AvatarData.cpp">
+      <Filter>DeckData</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Sources\DeckData\Edition.cpp">
+      <Filter>DeckData</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Sources\DeckData\Ethnicity.cpp">
+      <Filter>DeckData</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Sources\DeckData\Profile.cpp">
+      <Filter>DeckData</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Sources\DeckData\ProgressionElement.cpp">
+      <Filter>DeckData</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Sources\DeckData\ProgressionTree.cpp">
+      <Filter>DeckData</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Sources\DeckData\ShopItem.cpp">
+      <Filter>DeckData</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Sources\DeckData\UnitData.cpp">
+      <Filter>DeckData</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Sources\GameRoot.cpp" />
+    <ClCompile Include="..\Sources\LocalClient.cpp" />
+    <ClCompile Include="..\Sources\lua_callbacks.cpp" />
+    <ClCompile Include="..\Sources\utils.cpp" />
+    <ClCompile Include="..\Sources\Server\AISolver.cpp">
+      <Filter>Server</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Sources\DeckData\ShahmahCreation.cpp">
+      <Filter>DeckData</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Sources\Interface\CreateAvatarDlg.cpp">
+      <Filter>Interface</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Sources\Data\FileSerializer.cpp">
+      <Filter>Data</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Sources\Data\NetworkSerializer.cpp">
+      <Filter>Data</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\Sources\_System\stdafx.h">
+      <Filter>_System</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Sources\Audio\AudioManager.h">
+      <Filter>Audio</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Sources\Data\DataFactory.h">
+      <Filter>Data</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Sources\Data\IniFile.h">
+      <Filter>Data</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Sources\Data\LocalisationTool.h">
+      <Filter>Data</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Sources\Data\LuaContext.h">
+      <Filter>Data</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Sources\Data\LuaObject.h">
+      <Filter>Data</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Sources\Data\LuaTargetable.h">
+      <Filter>Data</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Sources\Data\Parameters.h">
+      <Filter>Data</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Sources\Data\XMLLiteElement.h">
+      <Filter>Data</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Sources\Data\XMLLiteReader.h">
+      <Filter>Data</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Sources\Data\XMLObject.h">
+      <Filter>Data</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Sources\Debug\DebugManager.h">
+      <Filter>Debug</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Sources\Display\DisplayEngine.h">
+      <Filter>Display</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Sources\Display\Texture.h">
+      <Filter>Display</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Sources\Display\TextureEngine.h">
+      <Filter>Display</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Sources\Fx\FxManager.h">
+      <Filter>Fx</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Sources\Gameboard\Building.h">
+      <Filter>Gameboard</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Sources\Gameboard\GameboardInputs.h">
+      <Filter>Gameboard</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Sources\Gameboard\GameboardManager.h">
+      <Filter>Gameboard</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Sources\Gameboard\Map.h">
+      <Filter>Gameboard</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Sources\Gameboard\MapCursor.h">
+      <Filter>Gameboard</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Sources\Gameboard\MapObject.h">
+      <Filter>Gameboard</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Sources\Gameboard\MapTile.h">
+      <Filter>Gameboard</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Sources\Gameboard\Pathfinder.h">
+      <Filter>Gameboard</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Sources\Gameboard\Skill.h">
+      <Filter>Gameboard</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Sources\Gameboard\SpecialTile.h">
+      <Filter>Gameboard</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Sources\Gameboard\Temple.h">
+      <Filter>Gameboard</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Sources\Gameboard\Town.h">
+      <Filter>Gameboard</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Sources\Gameboard\Unit.h">
+      <Filter>Gameboard</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Sources\Interface\ArtifactsEquipDlg.h">
+      <Filter>Interface</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Sources\Interface\BattleSpellPopup.h">
+      <Filter>Interface</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Sources\Interface\BuildDeckDlg.h">
+      <Filter>Interface</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Sources\Interface\GameOverDlg.h">
+      <Filter>Interface</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Sources\Interface\HostGameDlg.h">
+      <Filter>Interface</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Sources\Interface\InfoboxDlg.h">
+      <Filter>Interface</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Sources\Interface\InterfaceManager.h">
+      <Filter>Interface</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Sources\Interface\LevelUpDlg.h">
+      <Filter>Interface</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Sources\Interface\LoadGameDlg.h">
+      <Filter>Interface</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Sources\Interface\LogDlg.h">
+      <Filter>Interface</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Sources\Interface\MapObjectDlg.h">
+      <Filter>Interface</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Sources\Interface\MoveOrAttackDlg.h">
+      <Filter>Interface</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Sources\Interface\OptionsDlg.h">
+      <Filter>Interface</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Sources\Interface\PlayerSelectorDlg.h">
+      <Filter>Interface</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Sources\Interface\ResolveDlg.h">
+      <Filter>Interface</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Sources\Interface\SelectPlayerAvatarDlg.h">
+      <Filter>Interface</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Sources\Interface\ShopDlg.h">
+      <Filter>Interface</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Sources\Interface\SpellDlg.h">
+      <Filter>Interface</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Sources\Interface\SpellsSelectorDlg.h">
+      <Filter>Interface</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Sources\Interface\StackGroupInterface.h">
+      <Filter>Interface</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Sources\Interface\StartMenuDlg.h">
+      <Filter>Interface</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Sources\Interface\StatusDlg.h">
+      <Filter>Interface</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Sources\Interface\Tooltip.h">
+      <Filter>Interface</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Sources\Interface\UnitOptionsDlg.h">
+      <Filter>Interface</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Sources\Server\MapReader.h">
+      <Filter>Server</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Sources\Server\NetworkData.h">
+      <Filter>Server</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Sources\Server\Server.h">
+      <Filter>Server</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Sources\Server\SpellsSolver.h">
+      <Filter>Server</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Sources\Server\TurnSolver.h">
+      <Filter>Server</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Sources\Players\Artifact.h">
+      <Filter>Players</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Sources\Players\Mana.h">
+      <Filter>Players</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Sources\Players\Player.h">
+      <Filter>Players</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Sources\Players\PlayerManager.h">
+      <Filter>Players</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Sources\Players\PlayerManagerAbstract.h">
+      <Filter>Players</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Sources\Players\Spell.h">
+      <Filter>Players</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Sources\GUIClasses\ComponentOwnerInterface.h">
+      <Filter>GUIClasses</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Sources\GUIClasses\guiButton.h">
+      <Filter>GUIClasses</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Sources\GUIClasses\guiComboBox.h">
+      <Filter>GUIClasses</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Sources\GUIClasses\guiComponent.h">
+      <Filter>GUIClasses</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Sources\GUIClasses\guiContainer.h">
+      <Filter>GUIClasses</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Sources\GUIClasses\guiDocument.h">
+      <Filter>GUIClasses</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Sources\GUIClasses\guiEditBox.h">
+      <Filter>GUIClasses</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Sources\GUIClasses\guiFrame.h">
+      <Filter>GUIClasses</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Sources\GUIClasses\guiGauge.h">
+      <Filter>GUIClasses</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Sources\GUIClasses\guiImage.h">
+      <Filter>GUIClasses</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Sources\GUIClasses\guiLabel.h">
+      <Filter>GUIClasses</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Sources\GUIClasses\guiList.h">
+      <Filter>GUIClasses</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Sources\GUIClasses\guiObject.h">
+      <Filter>GUIClasses</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Sources\GUIClasses\guiPopup.h">
+      <Filter>GUIClasses</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Sources\GUIClasses\guiSmartSlider.h">
+      <Filter>GUIClasses</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Sources\GUIClasses\guiTabbedFrame.h">
+      <Filter>GUIClasses</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Sources\GUIClasses\guiToggleButton.h">
+      <Filter>GUIClasses</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Sources\GUIClasses\FrameEffects\EffectComeIn.h">
+      <Filter>GUIClasses\FrameEffects</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Sources\GUIClasses\FrameEffects\EffectExtract.h">
+      <Filter>GUIClasses\FrameEffects</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Sources\GUIClasses\FrameEffects\guiFrameEffect.h">
+      <Filter>GUIClasses\FrameEffects</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Sources\GUIClasses\FrameEffects\guiFrameFlash.h">
+      <Filter>GUIClasses\FrameEffects</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Sources\GUIClasses\FrameEffects\guiFrameIntro.h">
+      <Filter>GUIClasses\FrameEffects</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Sources\GUIClasses\FrameEffects\guiFrameMouseFocus.h">
+      <Filter>GUIClasses\FrameEffects</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Sources\GUIClasses\FrameEffects\guiFrameOutro.h">
+      <Filter>GUIClasses\FrameEffects</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Sources\Fonts\Font.h">
+      <Filter>Fonts</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Sources\Fonts\FontEngine.h">
+      <Filter>Fonts</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Sources\Geometries\Geometry.h">
+      <Filter>Geometries</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Sources\Geometries\GeometryCylinder.h">
+      <Filter>Geometries</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Sources\Geometries\GeometryModifier.h">
+      <Filter>Geometries</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Sources\Geometries\GeometryQuads.h">
+      <Filter>Geometries</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Sources\Geometries\GeometryText.h">
+      <Filter>Geometries</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Sources\Geometries\ModProgressiveBlending.h">
+      <Filter>Geometries</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Sources\Geometries\ModProgressiveRotate.h">
+      <Filter>Geometries</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Sources\Geometries\ModProgressiveScaling.h">
+      <Filter>Geometries</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Sources\Geometries\StencilGeometry.h">
+      <Filter>Geometries</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Sources\Physics\ConstantMovement3D.h">
+      <Filter>Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Sources\Physics\FasloMove.h">
+      <Filter>Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Sources\Physics\Movement.h">
+      <Filter>Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Sources\Physics\PhysicalObject.h">
+      <Filter>Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Sources\Physics\SlofasloMove.h">
+      <Filter>Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Sources\Common\BaseObject.h">
+      <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Sources\Common\GraphicObject.h">
+      <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Sources\Common\md5.h">
+      <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Sources\Common\ObjectList.h">
+      <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Sources\Common\SortInterface.h">
+      <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Sources\Common\TimeController.h">
+      <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Sources\Input\EventListener.h">
+      <Filter>Input</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Sources\Input\InputEngine.h">
+      <Filter>Input</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Sources\Input\KeyboardInputEngine.h">
+      <Filter>Input</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Sources\Input\KeyboardListener.h">
+      <Filter>Input</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Sources\Input\PCInputEngine.h">
+      <Filter>Input</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Sources\DeckData\AvatarData.h">
+      <Filter>DeckData</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Sources\DeckData\Edition.h">
+      <Filter>DeckData</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Sources\DeckData\Ethnicity.h">
+      <Filter>DeckData</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Sources\DeckData\Profile.h">
+      <Filter>DeckData</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Sources\DeckData\ProgressionElement.h">
+      <Filter>DeckData</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Sources\DeckData\ProgressionTree.h">
+      <Filter>DeckData</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Sources\DeckData\ShopItem.h">
+      <Filter>DeckData</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Sources\DeckData\UnitData.h">
+      <Filter>DeckData</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Sources\errorcodes.h" />
+    <ClInclude Include="..\Sources\GameRoot.h" />
+    <ClInclude Include="..\Sources\LocalClient.h" />
+    <ClInclude Include="..\Sources\lua_callbacks.h" />
+    <ClInclude Include="..\Sources\lua_callbacks_utils.h" />
+    <ClInclude Include="..\Sources\SystemHeaders.h" />
+    <ClInclude Include="..\Sources\utils.h" />
+    <ClInclude Include="..\Sources\Server\AISolver.h">
+      <Filter>Server</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Sources\DeckData\ShahmahCreation.h">
+      <Filter>DeckData</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Sources\Interface\CreateAvatarDlg.h">
+      <Filter>Interface</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Sources\Data\FileSerializer.h">
+      <Filter>Data</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Sources\Data\NetworkSerializer.h">
+      <Filter>Data</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Sources\Data\Serializer.h">
+      <Filter>Data</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\Docs\NOTES - LUA.txt" />
+    <None Include="..\Docs\NOTES.txt" />
+    <None Include="..\Docs\TODO - GD.txt" />
+    <None Include="..\Docs\TODO - LUA.txt" />
+    <None Include="..\Docs\TODO.txt" />
+  </ItemGroup>
+</Project>

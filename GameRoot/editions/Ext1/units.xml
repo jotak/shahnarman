@@ -1,0 +1,20 @@
+<unit>
+  <id>Extension1_Boss</id>
+  <name>
+    <english>Boss</english>
+    <french>Boss</french>
+  </name>
+  <ethnicity></ethnicity>
+  <melee>4</melee>
+  <range>2</range>
+  <armor>1</armor>
+  <endurance>5</endurance>
+  <speed>4</speed>
+  <alignment>4</alignment>
+  <texture>renard</texture>
+  <skill luafile='Flying' />
+  <description>
+    <english>You've reached the boss!</english>
+    <french>Vous avez atteint le boss!</french>
+  </description>
+</unit>

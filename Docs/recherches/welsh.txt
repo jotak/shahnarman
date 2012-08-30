@@ -1,0 +1,16 @@
+kingdom	   = teyrnas nf (teyrnasoedd) / brenhiniaeth n.f. (breniniaethau)
+montagne   = mynydd n.m.  (mynyddoedd)
+montagneux = fynyddig
+of         = o
+country
+   1. tud n.f.
+   2. brodir n.f. (brodiroedd)
+   3. gwlad n.f. (gwledydd)
+   4. pau n.f. (peuoedd)
+
+
+
+Le royaume montagneux = y teyrnas fynyddig
+Kindom of mountains = Teyrnas o mynyddoedd
+Le pays/peuple des 3 montagnes = Y tud o tri mynydd (pas de pl.)
+=> Tudotrimyn'dd / Tudutrimynt [raccourci=les Tuduts]

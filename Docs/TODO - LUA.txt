@@ -1,0 +1,51 @@
+************************************
+- Déplacement sur l'eau / déplacement + lent sur forêt
+- Faire un bateau en LUA?
+|
+|----DONE----
+|
+- Mana productor : récupère le mana 1pt / tour
+- Vol de sort actif
+- Teleport Town
+- Place un cercle de magie supplémentaire
+- Skill : place ou déplace un cercle de magie contre mana
+- Double la production en mana du temple ciblé
+- "Mains liées" => target player doesn't draw any spell next turn
+- Change town owner
+- Ressucite unité morte et la mettre sous son contrôle
+- Défausser 2 sorts de la main de l'adversaire
+- Défausser 4 sorts de la pioche adverse
+- Pénurie => all players have 5 cards in hand max
+- Far far away => augmente de 10 la portée des sorts du joueur
+- Teleport Unit
+- "Terrain en friche" => supprime le foodprod d'un terrain
+- "Frozen land" => transforme un terrain en toundra
+- Faire un listing des callback LUA->C et C->LUA dans un fichier texte
+- Faire un sort "Inflige 2 dégâts à 3 units"
+- Vol: modifs sur les cibles possibles? (battles)
+- Vol
+- Terrain : forêt des Anciens
+- Terrain : tour du chaos
+- Terrain : horses
+- SpecTiles : Exonite (gives armor piercing)
+- Skill : armor piercing
+- SpecTiles : Adamantium
+- Buildings : le Wild Stables débloque le wolvern rider
+- Buildings : le Stables débloque le Wild Stables
+- Buildings : le Stables débloque le cavalier
+- Faire un sort "Instantly build a granary in target town"
+- Building : granary
+- Faire un sort "Steal unit"
+- Faire un sort "Steal spell"
+x [bad design] Faire un sort "+2 force to target" (qui joue sur la force de base)
+- Refaire regénration
+- Faire un sort "At next turn, draw an extra spell"
+- Faire un skill "Disable all target's skills for this turn (cost:4)"
+- All units that have first strike skill loose it
+- Faire un skill "+X endurance to target this turn (cost:X)"
+- Summon spells
+- Faire un skill "+2 force to target this turn (cost:1)"
+- Disenchant can be cast on global spell
+- Faire un sort d'enchantement global
+- Faire un sort "Take a spell from your deck"
+- Faire le sort "désenchantement"

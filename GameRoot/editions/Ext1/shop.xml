@@ -1,0 +1,15 @@
+<item type='pack'>
+  <name>
+    <english>Extension 1 small pack</english>
+    <french>Petit paquet Extension 1</french>
+  </name>
+  <texture>renard</texture>
+  <description>
+    <english>5 spells from the Extension 1.</english>
+    <french>5 sorts de l'Extension 1.</french>
+  </description>
+  <cost>10</cost>
+  <content>
+    <spells quantity='5' mode='random' />
+  </content>
+</item>

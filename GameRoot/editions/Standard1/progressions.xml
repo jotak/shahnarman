@@ -1,0 +1,54 @@
+<tree type='ethnicity' id='Keltics'>
+	<name>
+		<english>Keltics</english>
+		<french>Keltics</french>
+	</name>
+	<description>
+		<english>Keltics progression tree</english>
+		<french>Arbre de progression du peuple Keltics</french>
+	</description>
+</tree>
+<tree type='magic' id='Life'>
+	<name>
+		<english>Life</english>
+		<french>Vie</french>
+	</name>
+	<description>
+		<english>Life progression tree</english>
+		<french>Arbre de progression de la Vie</french>
+	</description>
+	<skill name='ManaProductor' parameters='2 0 0 0' />
+</tree>
+<tree type='magic' id='Law'>
+	<name>
+		<english>Law</english>
+		<french>Loi</french>
+	</name>
+	<description>
+		<english>Law progression tree</english>
+		<french>Arbre de progression de la Loi</french>
+	</description>
+	<skill name='ManaProductor' parameters='0 2 0 0' />
+</tree>
+<tree type='magic' id='Death'>
+	<name>
+		<english>Death</english>
+		<french>Mort</french>
+	</name>
+	<description>
+		<english>Death progression tree</english>
+		<french>Arbre de progression de la Mort</french>
+	</description>
+	<skill name='ManaProductor' parameters='0 0 2 0' />
+</tree>
+<tree type='magic' id='Chaos'>
+	<name>
+		<english>Chaos</english>
+		<french>Chaos</french>
+	</name>
+	<description>
+		<english>Chaos progression tree</english>
+		<french>Arbre de progression du Chaos</french>
+	</description>
+	<skill name='ManaProductor' parameters='0 0 0 2' />
+</tree>

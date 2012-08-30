@@ -1,0 +1,442 @@
+************************************
+- A garder en mémoire : GLSL, glsldevil, FBO, glPolygonOffset, profiler ATI, Optimisation : http://jeux.developpez.com/faq/opengl/?page=techniques#TECHNIQUES_meta_texture
+- Mode de jeu : 1 unité par case (sauf en ville : 4). La détection des combats se fait avec les cases adjacentes, voire à 2 de distance pour les unités à distance.
+- Si un joueur a plein d'avatars / de sorts, la sauvegarde sera un peu longue. Or dans BuildDeckDlg, on fait les sauvegardes à la volée dès que quelque chose est modifié. => soit faire la sauvegarde "onHide", soit faire à la volée mais en ne changeant que le nécessaire (nécessite de compartimenter le fichier de sauvegarde? accéder rapidement en un point du fichier? faire un truc façon bdd?)
+- Quand aucun joueur actif, écran noir (car il se peut qu'un joueur ait un sort "blind" sur lui, par exemple?)
+- Sécurité : il est facile de faire planter le serveur en lui envoyant une requête genre NETWORKMSG_RESOLVE_DEFENDER_CHOSEN quand il ne l'attend pas
+- Sécurité : facile de provoquer des dépassements de tableau en lisant des strings depuis un NetworkData object
+- Faire du vrai réseau
+- Compression player.dat (gain ~90%/95%!)
+- GameOverDlg : stats = nombre de tours de jeu, % des couleurs jouées, etc.
+- Save & load : (de)serialize LUA states => implementer une fonction save et load dans les LUA files ; puis lors de la sauvegarde, passer 1 fichier à tous les LUA objects (le même fichier pour tous, mais différent du fichier de sauvegarde binaire car c'est du texte pour LUA). Save: fwrite(sEdition, sObject); pLua->saveLua(file);
+	=> voir aussi Pluto (lib lua)
+- Serialize m_pChildEffects
+- Fix UTF8 problem (not working)
+- BUG : group moves ne marche pas toujours?
+- Petit bug : changement de production d'unité dans une ville puis rechangement pour la premiere unité => en local, la jauge est remise à 0, côté serveur ça reste identique
+- Bug : unit textures are not mipmaped because they was previously loaded as interface textures
+- Intro (lancement d'une partie) : fond d'écran menus qui s'obscurcit progressivement, du centre vers les extrémités sauf la carte => shaders.
+- Shaders : enregistrer les variables dans une hashmap avec valeur + bool modified ; faire une liste de shaders par geometry
+- Système de création de Shahmah : fichier XML dans edition (creation.xml?) => liste images, liste skill dispo+coût, X points à répartir, +1 / charac = 5 pts
+- Concept de fame à... conceptualiser
+- Après quelques essais il semble que le randomseed (LUA) soit global => enlever les randomseed partout, sauf à 1 endroit exécuté en 1er
+- Progression : 2 / 3 nouveaux traits
+- Show level information in Shahmah description
+- Show dialog when gain new level?
+- Caches : hide creatures on map
+- Find a way to securely, witout changing real data, simulate things for AI (battle, spells, etc.). Then implement "getOpponentInterest"
+- AI: LUA
+- Building : dispensaire
+|
+|----DONE----
+|
+- Faire fonction LUA splitint
+- Mana : producteur de mana influe sur le mana max. Mettre en place au niveau player une jauge de mana (current*4, max*4)
+- Les unités ne régénèrent pas
+- BUG transition mouvement sur Teleport
+- A verifier : si je disenchant KillingCreepers, est-ce que les child effects sont virés?
+- KillingCreepers.lua : tester les ChildEffects pour un spell
+- Logo : 4 "boules de feu" bicolores
+- Animation (translate) lors des déplacements d'unités
+- Shahmah creation: save and reload Shahmah
+- Load / save Shahmah without using model
+- Shahmah creation: make image relative to ethnicity (in XML and in creation dialog)
+- BUG : crash on logdlg action button click
+- Buildings : définition XML+LUA, fonction "isAvailable"
+- Shahmah creation: XML, creation interface
+- Neutral AI
+- Faire rich text (notamment pour spells tooltips)
+- Options audio (volume)
+- AudioManager : add sounds : cast spell, select map object, etc.
+- AudioManager : sounds
+- AudioManager : musics
+- Implémenter un système de dépendance des éditions
+- Cache : nouveau Shahmah
+- BUG aléatoire au lancement d'une partie, a priori que lorsque les caches sont activées, a priori bug lua???
+	=> stack LUA trop petite pour les fonctions du type "get...List" => augmenter la taille de la stack dans ces fonctions
+- Options graphiques : available modes
+- traquer memory leaks
+- Merge identical skills
+- Faire le XML pour le Magic Path ; finalement, on le met quand même dans une édition pour qu'il puisse être modifié "proprement" (ou alors, il faudrait en faire un fichier binaire... mais bof)
+- Progression : distinguer avancée / ouverture arbre
+- Evolution des avatars (gain de niveau) à travailler
+- Caches
+- Artefacts : activation des effets
+- Artefacts : écran équippement
+- Artefacts
+- Client param : log max messages (en nb de tours)
+- Server params : turn timer, nb max sorts
+- Bug inputs : lancer le jeu, quitter le jeu (revenir aux menus), presser echap => plantage. Push/pop listeners pas au point?
+- Faire un "status dialog", par exemple pour dire "choose a unit target to cast lightning bolt on"
+- Positionner ResolveDialog comme UnitOptionsDlg
+- Toujours (ou souvent) afficher le blason avec les icones d'unité (stack, mapobjectdlg, etc.)
+- Quand un joueur local prend la main, mettre à jour les mapobjects lists de la carte pour faire apparaitre en 1er les unités du joueur
+- Bug : parenthèses () lors d'un summon
+- Faire apparaître un petit "X" sur une case où il y a plusieurs unités (X = nb d'unités)
+- Faire apparaître les skills dans la description d'une unité
+- Bug : quand on clique une pile d'unité de la carte, cela devrait sélectionner automatiquement une unité jouable et non une unité adverse dans la stack.
+- Implémenter bouton "défendre"
+- Possibilité de modifier le nom de l'avatar
+- Historique / passé de l'avatar ( = description custom)
+- Pastilles cylindriques sous les unités
+- Bug : activate skill then change order => mana pas rendu
+- Bug : cancel activate skill => mana pas rendu
+- Bug probable à régler : je lance un sort comme "LinkedHands", qui doit se mettre tout seul à la poubelle. Avant qu'il y aille, je le change de propriétaire => il ne se retrouvera plus et ne se mettra pas tout seul à la poubelle, il restera actif.
+	=> Plusieurs possibilités : la plus simple serait d'utiliser l'id "-1" pour "this".
+	En règle générale les changements d'owner sont problématiques. Le sort "StealActiveSpell" change l'owner d'un spell, mais que se passe-t-il si le spell avait enregistré son owner dans une variable? S'il avait été attaché à son owner, il le restera. Ou alors, il faut le "désenchanter" puis le relancer... Ou alors, il revient obligatoirement en main de son nouveau propriétaire.
+- Bug : mana insuffisant, icone pas grisée dans spelldlg
+- SpellsSelectorDlg : quand on clique sur btn sorts actifs, montrer tous les sorts actifs, groupés par lanceur :
+	- Sorts de joueur 1 (liste des sorts, tooltips = "lancé sur ... et ... et ..." (en cas de pls targets)
+- PlayersSelectorDlg : on ne voit pas la texture de sélection
+- Affichage magic circles
+- Release Demo 2 26-10-2010
+- Villes : vérifier que plus la ville est grande, plus elle produit vite les unités.
+- Combats, changement de règles : l'attaquant détermine le défenseur.
+- Bug : vu 2 fois (pas fréquent), Arch. Soup. commence avec 0 mana le 1er tour => click trop vite sur entrée alors que le jeu n'est pas encore 100% chargé
+- Parse functions in LUA: make it simpler, directly send arrays!
+- Revoir interface build deck : boutique sur plusieurs lignes, accès direct au build deck, selection automatique du 1er avatar, etc.
+- SpecTiles : cabler le LUA
+- PB : les spectiles effects d'une ville ne s'affichent que le 1er tour, car la fct Town::deserialize ne retransmet pas les spectile effects
+- Effects list : liste d'icones (MapObjectDlg)
+- Utiliser des icones pour les child effects
+- LogDlg, on new log : si !sticked, sortir 2 sec. la frame
+- OPT : ne pas afficher le off-screen.
+- Bug : apparition joueur sur l'eau
+- refonte des tile masks
+- Mipmaping
+- Interface : afficher les infos InfoDlg hors tabbed frame
+- Refonte de l'interface in-game
+- Mettre les textures des éditions dans un dossier séparé
+- Refonte de l'interface des menus
+- Ménage dans SpellsSolver et autres...
+- SpecTiles : faire fonction "isAllowedOnTerrain"
+- SpecTile.cpp
+- villes : gestion du owner (seul lui peut modifier la production...)
+- Héros : rupture d'allégeance
+- CheckBox : click sur texte = click sur bouton ; idée : pour ça, faire que lorsqu'on clique sur un guiLabel qui a un guiButton en attachement, ça clique sur le guiButton
+- Bug : l'ancienne bataille reste affichée en phase resolve suivante
+- Bug : apparition d'un héros, il aurait dû apparaître pour l'ennemi
+- Bug : plantage en fin de partie
+- Bug : le vainqueur n'est pas celui qui a gagné!
+- Héros
+- Temples : gameplay
+- Villes : radius
+- Fonctions getInfos (Town, Temple...)
+- Temples : texture
+- Temples
+- Carte : passer "taille de la carte" dans les paramètres de carte?
+- Utilisation de sendcustomlog pour les villes
+- Faire joueur neutre
+- Interface : faire apparaître certains messages en gros pendant un moment, par exemple lorsqu'un sort est lancé
+- Utiliser des constantes partout dans l'interface : H1_FONT, H1_COLOR, H2_FONT, H2_COLOR, TEXT_FONT, TEXT_COLOR
+- Profile changes in BuildDeckDialog not seen in game until next restart
+- Skill instance id not reliable because it's a UnitData instance, not Unit instance. Should store instanciated skills in separate list (for instance Unit::m_pSkillsRef) which is private and only useful to provide pointers to Unit::m_pEffects
+- BUG to fix: both for spells or skills: click on a skill that must target something. Click again to cancel it. Still in target mode. Can crash if I target something then.
+- Make LUA simpler by using function "split"
+- Skills : gérer "onAction" et "onActionCost"
+- Faire un système plus général qui fonctionne aussi bien pour skills et spells: setChildEffect
+- Problème de zoom? (il semble recadrer parfois la fenetre alors que c'est pas nécessaire, et réciproquement)
+- Problème sur les sorts qui dévoilent la main ou le deck adverse : on peut les caster puis les annuler en phase de directive. => ne choisir la target qu'en phase de résolution, via un nouveau message NetworkData.
+- Lisser la carte
+- In TurnSolver::removePlayer, also remove player's Active Spells
+- Changement : on n'utilise plus "MOVE_SPELL_LOCATION" mais des messages plus spécifiques (car les cas d'utilisation ne sont pas si variés que ça, et ça offre plus de souplesse)
+- Spell targets : 1 spell can have mutliple targets. When target dies, spell is not automatically discarded.
+- Spell targeting
+- DEBUG: pathfinder : can't go on mountains
+- Fin du jeu : enregistrer l'XP gagnée et sauver l'avatar
+- When a unit is dead, all spell effects on it are removed
+- Fin de jeu : gérer le message de fin et retour au menu, avec écran récap.
+- Fin du jeu : xp...
+- Utiliser le "journal"
+- DEBUG: map object dialog, click on upper bar
+- Implement first strike
+- Unit attached spells : récupérer un name & description (MapObjectDlg)
+- Refaire "getProducedMana", en utilisant les lua handlers
+- Characs: melee, endurance, armor, speed, range (use them in combat calculations and game mechanisms)
+- Checksum effectué mais pas vérifié en local (uniquement pour le lancement d'une partie réseau)
+- Placer intelligemment les units au début
+- Map generator: read it in LUA
+- Creation / deserialization des Units : pour le m_pAttackTarget, il faut d'abord faire une passe pour créer toutes les units, puis une 2nde pour les deserialiser
+- Double-clics possibles sur boutons
+- Z-plane du selection ring incorrect (devrait être entre les tiles et les units)
+- Remove ServerUnit
+- Unit : computePath (AStarPath is now a list)
+- Load game : Server.cpp (deserialize and init)
+- Sauvegarde d'une partie en cours en mode LAN/local
+- Fonction shuffle deck (fct faite dans Player.cpp ; à intégrer et tester)
+- Redo localization
+- Piocher 6 sorts au début
+- HostDlg : inclure les paramètres de la carte
+- Afficher la bannière du joueur à côté des unités
+- Système de "lien hypertexte" dans LogDlg (ou simplement un bouton "voir" (oeil))
+- guiButton : image button
+- LogDlg
+- Villes : production d'unités
+- Villes : construction de batiments
+- Villes : stats
+- Villes : modificateur vitesse de prod. d'unité
+- Villes : gestion de la nourriture & growth
+- Avatars : image blason à choisir
+- Joueurs : attribut unique "couleur"
+- guiGauge
+- Images à faire : icone nourr., icone prod., jauge, 3 blasons gris
+- Bâtiments LUA
+- Ecran ville via double-click
+- Ecran unité(s) via double-click
+- MoveOrAttackDlg : fermer la fenêtre quand click à côté
+- Enlever double-click = attaque
+- MoveOrAttackDlg : le tooltip reste après la fermeture de la fenetre
+- Faire un popup après un drag pour choisir : attack/moveto
+- Mettre des villes
+- BUG de texture sur le texte "Vos Avatars" (SelectPlayerAvatarDlg) après un passage fullscreen/windowed
+- Repositionner les frames après un screen resize
+- Config : fullscreen resolution
+- Config : language
+- Ingame unit creation process: read localized data from client
+- config.ini : gérer window size & position
+- Config : fullscreen
+- IniFile : writer
+- Config : désactivation d'éditions
+- Paneau de config
+- Utiliser les différents charactères mana dans les decriptions
+- Mettre des caractères spéciaux "mana" dans les fonts
+- EditBox : END & HOME
+- EditBox : quelques fonctions semblent avoir disparu (arrows, selection+backspace, ...)
+- EditBox : copier/coller
+- Enlever le "neutral", c'est moche, ça sert à rien
+- LUA / Skills : name & description
+- LevelUpDlg : arbres de progression
+- LevelUpDlg : mettre un bouton "do it later"
+- Un peu de ménage dans ProgressionTree/ProgressionElement/...
+- Faire dialog "LevelUp" ; il se lance lorsqu'on achète un avatar, pour le level 1
+- LevelUpPopup : le mettre en guiDocument, géré depuis l'interface manager, et qui a une liste d'avatars comme membre, qui s'ajoutent au fur et à mesure de l'appel à LevelUpPopup::doAvatar(AvatarData*). La fenetre s'ouvre et se ferme via hide/show.
+- Nom de version = Checksum
+- Checksum version des xml & lua
+- Faille : si une édition n'est pas chargée (pour x raison) et qu'un avatar provienne de cette édition, l'avatar ne sera pas chargé... et sera donc effacé lors de la prochaine sauvegarde!
+- Utilité de players/%PLAYER_NAME%/player.dat ? A priori, players/%PLAYER_NAME%.dat suffit
+- Voir player.dat dans bloc-note : texte inutile. Sans doute l'espace inutilisé dans les wchar_t* strings. A réduire.
+- Read/write Profile, per Avatar : xp, progression trees data, fame by ethnicity and custom description
+- remplacer EditionAndValue par SpellData, et EditionAndValue (version avatar) par AvatarData
+- Progression trees : parse progression elements
+- Classe ProgressionTree
+- Ethnicity
+- Effect : fondu alpha + scale pour les intro/outro (toutes les frames)
+- refonte des frame effects ; à restorer : alpha fading, frame flashing, voir guiPopup::update
+- Faire guiFrameEffect
+- Menu in-game
+- Faire un mouvement rotation pour le circle ; dessiner le circle en couleurs dégradées
+- HostGameDlg : si on supprime une ligne, ça ne recheck pas les avatars des autres combos (checkIfAvatarEnabled)
+- Créer un tool pour gérer le dictionnaire
+- guiComboBox : afficher la list au dessus de tout
+- Bug : bordures des textures composées
+- fonctions statiques "create..." : include le sCpntId
+- Charger le jeu depuis les menus
+- New game dialog
+- BuildDeck : revoir les filtres
+- Add player info in LabelCol2 and LabelCol3 (SelectPlayerAvatarDlg)
+- Play => New game / join LAN game
+- BuildDeck : afficher spell infos
+- guiList : keyboard
+- BUG : ça plante quand je quitte depuis BuildDeckDlg
+- guiList : sort (tri)
+- Revoir l'InputManager pour le keyboard. Il ne doit pas gérer lui-même les actions
+- StackDlg::onClick(guiComponent * pCpnt) : le isCtrlPressed est à décommenter
+- guiList without keyboard
+- GameboardInputs::setMouseMode, GameboardInputs::onMouseDrag, GameboardInputs::onMouseUp, GameboardInputs::onMouse2Down, GameboardInputs::onMouse2Up (catchMouseOverEvents)
+- mettre des tooltips?
+- BuildDeck dialog (2)
+- Remplacer la gestion de click/focus/drag actuelle par un pOwner->onClick() ? (cf FocusedComponent dans guiDocument, SelectedComponent dans guiContainer, etc.)
+- InterfaceManager : fusionner game & menu frames
+- Tooltips sur boutons filtres
+- BuildDeck : bouton filtre avatars
+- guiList
+- Autoriser "<" dans le xml (bouton "<< Back")
+- Mettre moins d'include dans les headers pour minimiser les temps de compilation
+- Bug : quand on achète un avatar pour un joueur, ça semble l'achter pour tous les joueurs
+- Textures "composées", notamment pour le GUI
+- TextureEngine : gérer les UV par texture (une tex de 256x256 dont la taille théorique est 54*236)
+- Textures & VBOs : les objets Geometry gèrent eux-même leur(s) texture(s) (sachant que la texture inclut les infos u/v, qui sont dans le vbo). Par ex. guiButton n'aura plus m_iClickedTex mais m_pClickedGeometry
+- Shop : acheter des spells
+- En cours : Edition::Edition (lire le xml, stocker les spells, calculer le total des coefs, etc.)
+- Réorganiser les dossiers (pour mieux prendre en compte les éditions)
+- piti bug : quand on drag sur un bouton disablé ou la zone de label en dessous du smartslider, ça déplace le document, sans déplacer la frame!
+- SelectPlayerAvatarDlg : afficher la liste des avatars
+- Sauvegarde d'Avatar (binaire)
+- EditBox : faire single line
+- Shop : enlever de la liste les avatars déjà possédés
+- Anti-aliaser les fonts
+- Shop
+- SelectPlayerAvatarDlg
+- utiliser guiPopup pour BattleSpellPopup, TextInputDialog, ShopItemDialog ...
+- Supprimer le XML pour l'interface (car trop lourd à gérer, à chaque fois qu'il y a un petit popup à ajouter!!)
+- Simplifier guiPopup
+- Supprimer guiList?
+- Début des tours : choisir qui joue
+- TextInputDlg
+- Faire le scroll façon pdf
+- supprimer les scrollbars
+- EditBox
+- BUG : lorsque j'invoque 2 créatures le même tour, ça bugge
+- BUG : le astarpath ne semble pas réactualisé côté client de tour en tour
+- Passer les infos de piles au serveur
+- Gérer les piles d'unités pour les déplacements
+- Glut : gérer les key modifiers
+- Label in box
+- Gérer les piles d'unités pour les ciblages
+- loi, chaos, vie et mort
+- Gestion des sorts et de la pioche
+- Resolve : instant spells
+- At the end of each casting spell phase (except last one), send updated player's mana
+- Masquer les sorts quand il y a pls joueurs sur la machine, sauf lorsqu'on passe le curseur dessus
+- Battles : skip screen when no option ; and auto-select buttons
+- Mettre à jour les rings du gameboard après les déplacements, ou ne pas les afficher
+- Server messages : do it with queues
+- Système de combat : cast spells
+- In PlayerManager::updateUnitsFilteredData , remove effects that are not present anymore
+- Sorts permanents
+- Resolve spells
+- Summon spell
+- Cast spell : mettre à jour le mana
+- Player : distinguer "hand" et "deck"
+- Select target mode
+- LUA : vérifier s'il ne faut pas libérer la mémoire à la fin
+- LUA : spells
+- guiLabel pour guiSpell
+- Intégrer LUA (sorts & skills)
+- Changement de système 3d : x:-1->1, y:-1->1
+- Quand on meurt, pierre tombale apparaît
+- Resolve combat : résolution des dégâts
+- Système de filtres pour updater les data de Unit
+- Faire en sorte temporairement que le client distant envoie les messages que le serveur attend... ou supprimer le client distant
+- ObjectList : faire un système pour locker / délocker un itérator?
+- Système de combat : resolve
+- Battle selector
+- BUG probable : dans ResolveDlg::inMousePosition, le xPxl/yPxl relatif est probablement mauvais en cas de scrolling
+- Idem pour ResolveDlg::inMouseDown(int xPxl, int yPxl)
+- Système de combat : choose defenders
+- Resolve order : 1/ cast all spells; 2/ resolve player1 moves; 3/ resolve player1 attacks; 4/ resolve player2 moves; 5/ resolve player2 attacks; etc.
+- Double-clic on a frame to make it translucent, instead of simple-clicking
+- Système de combat : choose attackers
+- BUG : si je bouge deux unités (joueurs différents), le tour suivant ils échangent leurs itinéraires
+- Au début de la phase de résolution puis à sa fin, recalculer les ordres des unités
+- BUG : il est actuellement possible de faire un MoveTo en dehors du plateau
+- BUG : (?) guiObject, guiLabel, ... : confusion entre [int]fontid et [FontId]id
+- Refaire une map pas toute verte...
+- Scrollbar horizontale
+- BUG avec la scrollbar (cf LogDlg)
+- Portage sous Code::Blocks / Linux
+- Vérifier qu'il n'y ait pas de textid en doublon dans texts.xml
+- Textes à localiser
+- FS pour lister les profils : utiliser du code portable
+- BUG : cliquer sur un tab compte pour le focus
+- LocalisationManager
+- Faire mon propre parser xml (basique) pour prendre en charge le wchar_t
+- Passer en unicode
+- Faire que les frames se collent aux bords de l'écran
+- faire un système de focus par click sur les fenêtres, pour qu'elles restent visibles quand on clique dessus
+- TabbedFrame parait mal positionnée ; chevauche sur UnitStack
+- UnitStackDlg : elle doit être resizée en fonction du nombre d'unités
+- UnitStackDlg : en fait, faire apparaitre tout le contenu de la case (villes, temples, trucs spéciaux...) et pas que les unités
+- InfoDlg : affiche la description d'un MapObject/MapTile survolé par la souris
+- UnitOptionsDlg => refaire attack / moveto
+- clone guiFrame : ajouter les 2 nouveaux enums
+- faire le onMouseOver (notamment pour les boutons)
+- Depth buffer... alpha blending etc. http://jerome.jouvie.free.fr/OpenGl/Lessons/Lesson5.php
+- Permettre de ne pas mettre de texture dans les Geometry (car les textures proviennent des fichiers xml, il faut prévoir cela)
+- Systeme de TexturesSet : voir si c'est pas mieux/plus souple/plus rapide d'indiquer directement le nom de la texture voulue
+- (refonte du système d'interface ; utilisation de fichiers XML)
+- Double-click sur cible = attaque
+- Faire GeometryModifier pour les Geometries
+- Remettre à jour UnitOptionsDlg => boutons qui ne se désappuient pas
+- Suppirmer le "zdisplay" de GraphicObject ?
+- FxManager : faire cancelZoom et unzoom
+- Gestion des mouvements / de la caméra : permettre d'unbinder un mouvement via un ID
+- Smooth scrolling pour le zoom
+- FX Manager : gestion des trajectoires de caméra, faire un truc mieux
+- Fontcions convertCoords_... => un peu bordéliques!
+- Mouvement des rings de sélection buggés
+- Rétablir les clicks sur 3D
+- Texture "circle" => faire une animation pour la sélection
+- Texture "circle" => faire une animation pour le focused unit
+- Réintroduire la partie 3D
+- Remettre à jour PopupDlg => button
+- Remettre à jour InfoDlg => labels
+- Remettre à jour LogDlg => scrollbars
+- guiTabbedFrame : changer la font quand tab sélectionné
+- Remettre à jour guiTabbedFrame
+- remove all iLeft, iRight, iTop, iBottom
+- Stencil buffer
+- Fonts vbo
+- VBO	(http://www.siteduzero.com/tuto-3-18397-1-les-vertex-buffer-objects.html ,
+		http://www.g-truc.net/article/vbo-fr.pdf,
+		http://nehe.gamedev.net/data/lessons/lesson.asp?lesson=45 )
+- Affichage du texte centré
+- Faire d'autres fontes / tailles de polices
+- Faire des vraies fonts
+- Passer en vraie 3D
+- bugs d'affichage transparence (alphablending - combobox...)
+- Remplacer les XXX_TEXTURE_SET par GUI_TEXTURE_SET_1 etc. (uniformiser)
+- guiComboBox : events
+- guiList : do autofit
+- Inclure guiList dans guiComboBox
+- Faire guiList
+- Réorganisation GUI, avec Container/Document
+- Vérifier tous les ids maintenant que les windows et les components ids sont mergés
+- GROS MERGE : guiScrollable + guiWindow => guiScrollDocument ; ce guiScrollDocument servira autant aux Windows qu'aux components divers
+- guiComboBox : liste
+- Faire guiComboBox
+- Gérer la molette (new glut)
+- guiLabel pour l'infobox
+- BUG : guiLabel ne s'affichent pas
+- Faire un guiImage notamment pour le littleSquare
+- Passer aux textures
+- Régions : débroussailler tout ça : gérer régions de destination et de source
+- Utiliser les (fausses) textures partout
+- Utiliser les fonts du fontengine partout
+- Scrollbars : découper le content en fonction du scroll
+- Faire un système de fonts intermédiaire
+- Faire le guiComponent : guiLabel
+- Organiser les dossiers
+- Trier/organiser les includes
+- Texture blending : à revoir
+- Texture engine
+- UI : faire des scrollbars
+- XPXL et YPXL doivent appartenir à frame et non a window
+- Debug manager
+- Log : afficher le n° de tour de jeu
+- Menu de lancement
+- Parser de skills
+- Fusion avatar/unit
+- Faire des fichiers XML pour les sorts
+- Faire des fichiers XML pour les créatures
+- Intégrer un parser xml
+- Sort rose ne s'affiche pas
+- Résolutions : sorts
+- Résolutions : mouvements
+- Fenetre infos : écrire la liste des joueurs avec un point devant celui qui commence la résolution
+- Gérer les clics des boutons :
+	- Fortifier (ou aussi "f")
+	- Move to : lorsqu'on clique, passage en mode "choose move target" pour le curseur
+	- Pursue à renommer en "Attaque" : idem mais valide uniquement sur les unités adverses
+- Gameboard Display : regarder les ordres de l'unité sélectionnée pour savoir
+- Pour attaquer une unité, double-cliquer dessus
+- Sélection d'unité : lors du drag, montrer les deux targets
+- Quand une unité a déjà son ordre, highlighter le bouton
+- Enlever le bouton "sleep"
+- Incorporer des assert un peu partout
+- Pour passer à l'unité suivante, "space"
+- Quand glisser-déplacer, ne pas passer à l'unité suivante.
+- Déplacement d'unité : placer un curseur pour le mouvement total + un curseur pour le mouvement de ce tour
+- Faire les tours de jeu : phase 1 = directives, phase 2 = résolutions (serveur)
+- Se débarasser des singletons
+- BUG : si je selectionne une unité (le dlg apparait) puis j'invoque une unité, j'ai alors 2 dialog
+- Mettre en place une symétrie automatique left/right dans InputEngine
+- TabbedFrame : double-cliquer sur un onglet le fait se détacher
+- BUG : c'est à la fenetre d'etre disablée et non a la frame (cf SpellFrame qui est attachée aux autres)
+- Faire le tabbedFrame
+- Utiliser "setToTopLevel" / "setToBottomLevel" pour les fenetres et les listes dans mapTile
+- Faire une fct "setToTopLevel" / "setToBottomLevel" dans cObjectList
+- Gestion des ObjectList : ajouter "remove", "clear". Dans les classes qui l'utilisent, gérer la réinitialisation des listes
+- Input
+- Créer éléments de base pour listes chainées
+- generateMap

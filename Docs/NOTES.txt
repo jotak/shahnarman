@@ -1,0 +1,41 @@
+- L12N: how to proceed to update?
+The character strings are first recognized in the POT file Tools/default.pot. To update it, use the automatic update function
+from POEdit. If you want to add a key that is not recognized, you can add manually it in the file "dummy_l12nkeys.c", in Tools,
+which is also scanned by POEdit.
+Then to update the translation files (PO files), open them in POEdit (they're located in GameRoot/data/i18n). Update them from
+POT file, and complete the translation. Then the game program will read these PO files.
+
+
+Note about LUA:
+
+- The "permanent" keyword in spells is used to know if the spell is used as instant or permanent.
+However, if in its effects the spell attaches itself to a target, it will automatically be seen as a permanent,
+whatever was specified earlier.
+
+- Take care not to do loop calls: for instance, when you call 'getUnitData(i, j, "Speed")' from inside "onGetSpeedMod",
+"getUnitData" will itself call "onGetSpeedMod". This would freeze the game. To avoid that, you can call
+'getUnitData(i, j, "Speed", 1)'. The '1' will tell the program to return the base unit's speed, without any modifier.
+If you really need to get the value with all the modifiers, think about calling getUnitData at the begining of a new
+turn for instance (you can do it through "onEndOfResolve" handler), and store the result in a variable so that you can
+use it safely from "onGetXXXMod" later in this turn.
+
+
+Note pour moi-même, pour mon prochain jeu (voire pour celui-là si ça s'avère encore utile) : faire une structure générique
+de donnée, sauvegardable et serializable, accessible via mots-clé (hashmap?). L'intérêt principal est de sauvegarder ou
+envoyer sur le réseau la hashmap complète, peu importe son contenu, pour ne pas avoir à modifier les fonctions de
+sauvegarde/serialization à chaque fois qu'on veut ajouter une data dans une structure.
+
+A remercier :
+
+Christophe
+Hortense
+
+OpenGL
+http://www.realmtech.net/opengl/glut.php (who is "I"?)
+zlib
+libpng
+lua
+glew
+Ronald Rivest's md5 and Quentin Carbonneaux' implementation
+AngelCode's BMFont
+(any profiler maker?)

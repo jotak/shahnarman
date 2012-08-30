@@ -1,0 +1,6 @@
+************************************
+- How do we get cash?
+|
+|----DONE----
+|
+- Probably it will be better if mana regenerates at 1 point / turn in each color. It could be done entirely in skill ManaProducer, so if you've got 2 mana producing units it regenerates at 2 pts/turn

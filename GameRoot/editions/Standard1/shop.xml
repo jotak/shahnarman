@@ -1,0 +1,42 @@
+<item type='shahmah' id='General_Kroupyon'>
+  <cost>4</cost>
+</item>
+<item type='shahmah' id='Archmage_Soupalognon'>
+  <cost>7</cost>
+</item>
+<item type='shahmah' id='Dark_Maggot_Master'>
+  <cost>7</cost>
+</item>
+<item type='pack'>
+  <name>
+    <english>Standard edition pack</english>
+    <french>Paquet édition standard</french>
+  </name>
+  <texture>renard</texture>
+  <description>
+    <english>60 spells from the standard edition.</english>
+    <french>60 sorts de l'édition standard.</french>
+  </description>
+  <cost>60</cost>
+  <content>
+    <spells quantity='60' mode='random' />
+  </content>
+</item>
+<item type='pack'>
+  <name>
+    <english>Standard edition small pack</english>
+    <french>Petit paquet édition standard</french>
+  </name>
+  <texture>renard</texture>
+  <description>
+    <english>20 spells from the standard edition.</english>
+    <french>20 sorts de l'édition standard.</french>
+  </description>
+  <cost>30</cost>
+  <content>
+    <spells quantity='20' mode='random' />
+  </content>
+</item>
+<item type='artifact' id='Dwarven_axe'>
+  <cost>2</cost>
+</item>

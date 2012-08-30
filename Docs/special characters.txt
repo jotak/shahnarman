@@ -1,0 +1,14 @@
+$ = qaraywa money
+¤ = life sign
+µ = death sign
+§ = chaos sign
+| = law sign
+
+° 176
+$ 36
+£ 163
+¤ 164
+µ 181
+§ 167
+# 35
+| 124

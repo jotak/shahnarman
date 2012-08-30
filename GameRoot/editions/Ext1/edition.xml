@@ -1,0 +1,8 @@
+<edition locale='fra'>
+  <name>
+    <english>Extension 1</english>
+    <french>Extension 1</french>
+  </name>
+  <version>0.1</version>
+  <dependency>Standard1</dependency>
+</edition>

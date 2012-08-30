@@ -1,0 +1,1186 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: Avatars_fr\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2011-03-06 18:06+0100\n"
+"PO-Revision-Date: \n"
+"Last-Translator: JT\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=iso-8859-1\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Poedit-Language: French\n"
+"X-Poedit-Country: FRANCE\n"
+
+#: Tools/dummy_l12nkeys.c:4
+msgid "melee"
+msgstr "mêlée"
+
+#: Tools/dummy_l12nkeys.c:5
+msgid "range"
+msgstr "distance"
+
+#: Tools/dummy_l12nkeys.c:6
+msgid "armor"
+msgstr "armure"
+
+#: Tools/dummy_l12nkeys.c:7
+msgid "endurance"
+msgstr "endurance"
+
+#: Tools/dummy_l12nkeys.c:8
+msgid "speed"
+msgstr "vitesse"
+
+#: Tools/dummy_l12nkeys.c:9
+msgid "life"
+msgstr "vie"
+
+#: Tools/dummy_l12nkeys.c:10
+msgid "moves"
+msgstr "mouvements restants"
+
+#: Tools/dummy_l12nkeys.c:11
+msgid "alignment"
+msgstr "Alignement"
+
+#: Tools/dummy_l12nkeys.c:12
+msgid "food"
+msgstr "nourriture"
+
+#: Tools/dummy_l12nkeys.c:13
+msgid "production"
+msgstr "production"
+
+#: Tools/dummy_l12nkeys.c:14
+msgid "LIFE_MANA"
+msgstr "Mana de vie"
+
+#: Tools/dummy_l12nkeys.c:15
+msgid "LAW_MANA"
+msgstr "Mana de loi"
+
+#: Tools/dummy_l12nkeys.c:16
+msgid "DEATH_MANA"
+msgstr "Mana de mort"
+
+#: Tools/dummy_l12nkeys.c:17
+msgid "CHAOS_MANA"
+msgstr "Mana de chaos"
+
+#: Tools/dummy_l12nkeys.c:18
+msgid "INFINITE(TIMER)"
+msgstr "Infinie"
+
+#: Tools/dummy_l12nkeys.c:19
+msgid "CHOOSE_MAGIC_PATH"
+msgstr "Choisissez une voie de magie"
+
+#: Tools/dummy_l12nkeys.c:20
+msgid "CHOOSE_CHARACTER_TRAIT"
+msgstr "Choisissez un trait personnel"
+
+#: Sources/lua_callbacks.cpp:40
+msgid "(A)_SPELL_IN_DECK"
+msgstr "un sort de la pioche"
+
+#: Sources/lua_callbacks.cpp:45
+msgid "(A)_SPELL_IN_HAND"
+msgstr "un sort en main"
+
+#: Sources/lua_callbacks.cpp:50
+msgid "(A)_SPELL_IN_PLAY"
+msgstr "un sort actif"
+
+#: Sources/lua_callbacks.cpp:55
+msgid "(A)_SPELL_IN_DISCARD"
+msgstr "un sort de la défausse"
+
+#: Sources/lua_callbacks.cpp:63
+msgid "(A)_PLAYER"
+msgstr "un joueur"
+
+#: Sources/lua_callbacks.cpp:80
+msgid "(A)_TILE"
+msgstr "une case de terrain"
+
+#: Sources/lua_callbacks.cpp:82
+msgid "(A)_UNIT"
+msgstr "une unité"
+
+#: Sources/lua_callbacks.cpp:84
+msgid "(A)_DEAD_UNIT"
+msgstr "une unité morte"
+
+#: Sources/lua_callbacks.cpp:86
+msgid "(A)_TOWN"
+msgstr "une ville"
+
+#: Sources/lua_callbacks.cpp:88
+msgid "(A)_BUILDING"
+msgstr "un bâtiment de ville"
+
+#: Sources/lua_callbacks.cpp:90
+msgid "(A)_TEMPLE"
+msgstr "un temple"
+
+# Colon (deux points)
+#: Sources/lua_callbacks.cpp:102
+#: Sources/Data/LocalisationTool.cpp:317
+#: Sources/Data/LuaTargetable.cpp:405
+msgid "2P"
+msgstr " : "
+
+#: Sources/lua_callbacks.cpp:115
+msgid "IN_RANGE"
+msgstr "à portée"
+
+#: Sources/lua_callbacks.cpp:121
+msgid "FRIEND(UNIT)"
+msgstr "allié(e)"
+
+#: Sources/lua_callbacks.cpp:127
+msgid "ENEMY(UNIT)"
+msgstr "adverse"
+
+#: Sources/lua_callbacks.cpp:133
+msgid "(THE)_SPELL"
+msgstr "Le sort"
+
+#: Sources/lua_callbacks.cpp:138
+msgid "(THE)_SKILL"
+msgstr "La compétence"
+
+#: Sources/lua_callbacks.cpp:142
+msgid "%$1s_%$2s_NEEDS_SELECT_TARGET_%$3s_WITH_CONSTRAINTS_%$4s"
+msgstr "%$1s '%$2s' nécessite de sélectionner %$3s %$4s."
+
+#: Sources/Debug/DebugManager.cpp:361
+msgid "NEUTRAL"
+msgstr "Neutre"
+
+#: Sources/DeckData/Edition.cpp:877
+#: Sources/DeckData/ProgressionElement.cpp:125
+msgid "AVATAR"
+msgstr "Shahmah"
+
+#: Sources/DeckData/Edition.cpp:939
+#: Sources/DeckData/ProgressionElement.cpp:109
+msgid "ARTIFACT"
+msgstr "Artefact"
+
+#: Sources/DeckData/Edition.cpp:979
+msgid "MUST_BUY_AVATAR"
+msgstr "Vous devez d'abord acheter un Shahmah."
+
+#: Sources/DeckData/Edition.cpp:991
+msgid "ALREADY_OWN"
+msgstr "Vous possédez déjà ce Shahmah."
+
+#: Sources/DeckData/Edition.cpp:1000
+msgid "NEED_MORE_CASH"
+msgstr "Vous n'avez pas assez d'argent!"
+
+#: Sources/DeckData/ProgressionElement.cpp:80
+msgid "SPELL"
+msgstr "Sort"
+
+#: Sources/DeckData/ProgressionElement.cpp:92
+msgid "SKILL"
+msgstr "Compétence"
+
+#: Sources/DeckData/ShopItem.cpp:12
+#: Sources/DeckData/ShopItem.cpp:27
+msgid "PRICE"
+msgstr "prix"
+
+#: Sources/DeckData/ShopItem.cpp:29
+msgid "YOUR_CASH"
+msgstr "votre fric : "
+
+#: Sources/DeckData/ShopItem.cpp:57
+msgid "CANCEL"
+msgstr "Annuler"
+
+#: Sources/DeckData/ShopItem.cpp:65
+msgid "BUY"
+msgstr "Acheter"
+
+#: Sources/DeckData/UnitData.cpp:58
+msgid "ETHNICITY"
+msgstr "Peuple"
+
+#: Sources/DeckData/UnitData.cpp:102
+msgid "SKILLS"
+msgstr "Compétences"
+
+#: Sources/DeckData/UnitData.cpp:136
+msgid "NONE"
+msgstr "aucun"
+
+#: Sources/DeckData/UnitData.cpp:141
+msgid "LIFE"
+msgstr "vie"
+
+#: Sources/DeckData/UnitData.cpp:147
+msgid "LAW"
+msgstr "loi"
+
+#: Sources/DeckData/UnitData.cpp:153
+msgid "DEATH"
+msgstr "mort"
+
+#: Sources/DeckData/UnitData.cpp:159
+msgid "CHAOS"
+msgstr "chaos"
+
+#: Sources/Fx/FxManager.cpp:169
+msgid "YOU_GOT_%$1ld_AT_THROW_THE_MAP"
+msgstr "Vous obtenez %$1ld au lancé de carte!"
+
+#: Sources/Fx/FxManager.cpp:172
+msgid "TTH_SCORE_1"
+msgstr "Hééé toi là! T'as jeté la carte? Mais faut pas faire ça!"
+
+#: Sources/Fx/FxManager.cpp:174
+msgid "TTH_SCORE_2"
+msgstr "Mouais, pas mal. Mais peut mieux faire."
+
+#: Sources/Fx/FxManager.cpp:176
+msgid "TTH_SCORE_3"
+msgstr "Quel beau tir!!! Impressionant!"
+
+#: Sources/Fx/FxManager.cpp:178
+msgid "TTH_SCORE_4"
+msgstr "Vous devez être un lanceur de carte professionnel!"
+
+#: Sources/Fx/FxManager.cpp:180
+msgid "TTH_SCORE_5"
+msgstr "Woooowooowoo!!! Plus de 500 000! Vous êtes le meilleur!"
+
+#: Sources/Fx/FxManager.cpp:182
+msgid "TTH_SCORE_6"
+msgstr "LE MILLION, LE MILLION, LE MILLION!!!!!!! YEEEHHHAAAA!"
+
+#: Sources/Gameboard/GameboardInputs.cpp:430
+msgid "HIGHEST_INFLUENCE_%$1s"
+msgstr "Meilleure influence : %$1s"
+
+#: Sources/Gameboard/GameboardInputs.cpp:445
+msgid "MAGIC_CIRCLE_(%$1s)"
+msgstr "Cercle de magie (%$1s)"
+
+#: Sources/Gameboard/MapTile.cpp:302
+msgid "PLAIN"
+msgstr "plaine"
+
+#: Sources/Gameboard/MapTile.cpp:305
+msgid "FOREST"
+msgstr "forêt"
+
+#: Sources/Gameboard/MapTile.cpp:308
+msgid "MOUNTAIN"
+msgstr "montagne"
+
+#: Sources/Gameboard/MapTile.cpp:311
+msgid "TOUNDRA"
+msgstr "toundra"
+
+#: Sources/Gameboard/MapTile.cpp:314
+msgid "DESERT"
+msgstr "désert"
+
+#: Sources/Gameboard/MapTile.cpp:317
+msgid "SEA"
+msgstr "mer"
+
+#: Sources/Gameboard/Temple.cpp:165
+msgid "TEMPLE_OF_%$1s_(%$2s)"
+msgstr "Temple de %$1s (%$2s)"
+
+#: Sources/Gameboard/Town.cpp:403
+msgid "TOWN_OF_%$1s_(%$2s)"
+msgstr "Ville de %$1s (%$2s)"
+
+#: Sources/Gameboard/Town.cpp:474
+msgid "(1s)_TOWN_CAPTURED_(2s)"
+msgstr "%$1s a été capturée par %$2s."
+
+#: Sources/Gameboard/Town.cpp:476
+msgid "(s)_TOWN_LIBERATED"
+msgstr "%$1s a été libérée par les forces neutres."
+
+#: Sources/Gameboard/Town.cpp:488
+msgid "TOWN_(s)_HAS_GROWN_TO_(d)"
+msgstr "%$1s est désormais de taille %$2d."
+
+#: Sources/Gameboard/Town.cpp:492
+msgid "IT_IS_NOW_CAPITAL_OF_(s)"
+msgstr "C'est devenu la capitale de %$1s!"
+
+#: Sources/Gameboard/Town.cpp:505
+msgid "BUILDING_(1s)_WAS_BUILT_IN_(2s)"
+msgstr "Un(e) %$1s a été construit(e) à %$2s."
+
+#: Sources/Gameboard/Town.cpp:522
+msgid "(1s)_PRODUCED_UNIT_(2s)"
+msgstr "%$1s a formé une unité de %$2s."
+
+#: Sources/Gameboard/Town.cpp:652
+msgid "%$1s_HAS_TURNED_COAT_FOR_%$2s"
+msgstr "%$1s a retourné sa veste pour %$2s!"
+
+#: Sources/Gameboard/Town.cpp:703
+msgid "A_HEROE_%$1s_IS_BORN_FOR_%$2s"
+msgstr "Un héros, %$1s, est né pour %$2s."
+
+#: Sources/Gameboard/Unit.cpp:697
+msgid "DEAD"
+msgstr "mort"
+
+#: Sources/GUIClasses/guiPopup.cpp:156
+#: Sources/GUIClasses/guiPopup.cpp:218
+#: Sources/GUIClasses/guiPopup.cpp:433
+msgid "OK"
+msgstr "Ok"
+
+#: Sources/GUIClasses/guiPopup.cpp:283
+msgid "YES"
+msgstr "Oui"
+
+#: Sources/GUIClasses/guiPopup.cpp:287
+msgid "NO"
+msgstr "Non"
+
+#: Sources/Interface/ArtifactsEquipDlg.cpp:69
+#: Sources/Interface/BuildDeckDlg.cpp:69
+msgid "CLICK_TO_CHANGE_BANNER"
+msgstr "Cliquez pour changer de blason."
+
+#: Sources/Interface/ArtifactsEquipDlg.cpp:78
+#: Sources/Interface/BuildDeckDlg.cpp:78
+#: Sources/Interface/LevelUpDlg.cpp:195
+msgid "LEVEL_UP"
+msgstr "Niveau suivant"
+
+#: Sources/Interface/ArtifactsEquipDlg.cpp:96
+#: Sources/Interface/BuildDeckDlg.cpp:96
+msgid "CLICK_TO_EDIT_NAME_DESCR"
+msgstr "Cliquez pour personnaliser le nom et la description."
+
+#: Sources/Interface/ArtifactsEquipDlg.cpp:105
+#: Sources/Interface/BuildDeckDlg.cpp:105
+msgid "DELETE_AVATAR"
+msgstr "Supprimer ce Shahmah"
+
+#: Sources/Interface/ArtifactsEquipDlg.cpp:113
+#: Sources/Interface/BuildDeckDlg.cpp:114
+msgid "FILTERS"
+msgstr "Filtres : "
+
+#: Sources/Interface/ArtifactsEquipDlg.cpp:127
+#: Sources/Interface/ArtifactsEquipDlg.cpp:755
+#: Sources/Interface/BuildDeckDlg.cpp:128
+#: Sources/Interface/BuildDeckDlg.cpp:913
+msgid "INCLUDE"
+msgstr "Inclure"
+
+#: Sources/Interface/ArtifactsEquipDlg.cpp:137
+msgid "HEAD"
+msgstr "la tête"
+
+#: Sources/Interface/ArtifactsEquipDlg.cpp:138
+#: Sources/Interface/ArtifactsEquipDlg.cpp:150
+#: Sources/Interface/ArtifactsEquipDlg.cpp:162
+#: Sources/Interface/ArtifactsEquipDlg.cpp:174
+#: Sources/Interface/ArtifactsEquipDlg.cpp:186
+msgid "%$1s_ARTIFACTS_FOR_%$2s"
+msgstr "%$1s les artefacts pour %$2s."
+
+#: Sources/Interface/ArtifactsEquipDlg.cpp:149
+msgid "BODY"
+msgstr "le corps"
+
+#: Sources/Interface/ArtifactsEquipDlg.cpp:161
+msgid "LEFT_HAND"
+msgstr "la main gauche"
+
+#: Sources/Interface/ArtifactsEquipDlg.cpp:173
+msgid "RIGHT_HAND"
+msgstr "la main droite"
+
+#: Sources/Interface/ArtifactsEquipDlg.cpp:185
+msgid "FOOT"
+msgstr "les pieds"
+
+#: Sources/Interface/ArtifactsEquipDlg.cpp:197
+msgid "%$1s_ARTIFACTS_EQUIPPED_BY_ANOTHER"
+msgstr "%$1s les artefacts équipés par un autre Shahmah."
+
+#: Sources/Interface/ArtifactsEquipDlg.cpp:204
+#: Sources/Interface/BuildDeckDlg.cpp:784
+msgid "SPELLS"
+msgstr "Sorts"
+
+#: Sources/Interface/ArtifactsEquipDlg.cpp:211
+#: Sources/Interface/BuildDeckDlg.cpp:224
+msgid "SHOP"
+msgstr "Boutique"
+
+#: Sources/Interface/ArtifactsEquipDlg.cpp:217
+#: Sources/Interface/BuildDeckDlg.cpp:230
+msgid "MAIN_MENU"
+msgstr "Menu principal"
+
+#: Sources/Interface/ArtifactsEquipDlg.cpp:226
+#: Sources/Interface/BuildDeckDlg.cpp:237
+msgid "NOT_EQUIPPED"
+msgstr "Non équipés"
+
+#: Sources/Interface/ArtifactsEquipDlg.cpp:233
+#: Sources/Interface/BuildDeckDlg.cpp:251
+#: Sources/Interface/BuildDeckDlg.cpp:783
+msgid "EQUIPPED"
+msgstr "Equipés"
+
+#: Sources/Interface/ArtifactsEquipDlg.cpp:483
+#: Sources/Interface/BuildDeckDlg.cpp:504
+msgid "REALLY_DELETE_AVATAR"
+msgstr "Voulez-vous vraiment supprimer ce Shahmah?"
+
+#: Sources/Interface/ArtifactsEquipDlg.cpp:772
+#: Sources/Interface/BuildDeckDlg.cpp:930
+msgid "%$1s_SPELLS_FROM_EDITION_%$2s"
+msgstr "%$1s les sorts de l'édition %$2s."
+
+#: Sources/Interface/ArtifactsEquipDlg.cpp:806
+#: Sources/Interface/BuildDeckDlg.cpp:964
+#, c-format
+msgid "%s_AVATARS"
+msgstr "Shahmahs de %s"
+
+#: Sources/Interface/ArtifactsEquipDlg.cpp:856
+#: Sources/Interface/BuildDeckDlg.cpp:1020
+#: Sources/Interface/HostGameDlg.cpp:846
+#: Sources/Interface/HostGameDlg.cpp:902
+msgid "SPELLS_(d)"
+msgstr "Nombre de sorts : %d"
+
+#: Sources/Interface/ArtifactsEquipDlg.cpp:868
+#: Sources/Interface/BuildDeckDlg.cpp:1032
+#: Sources/Interface/GameOverDlg.cpp:158
+#: Sources/Interface/HostGameDlg.cpp:914
+msgid "TOTAL_XP(d1)_NEXT(d2)"
+msgstr "XP totale : %$1d (prochain niveau : %$2d)"
+
+#: Sources/Interface/BattleSpellPopup.cpp:22
+msgid "(s)_CAN_CAST_BATTLE_SPELLS"
+msgstr "%s : vous pouvez maintenant lancer des sorts de bataille, ou cliquer sur \"Terminer\"."
+
+#: Sources/Interface/BattleSpellPopup.cpp:31
+#: Sources/Interface/BattleSpellPopup.cpp:35
+#: Sources/Interface/BattleSpellPopup.cpp:103
+#: Sources/Interface/BattleSpellPopup.cpp:119
+msgid "FINISH"
+msgstr "Terminer"
+
+#: Sources/Interface/BattleSpellPopup.cpp:43
+msgid "FINISH_FOR_BATTLE"
+msgstr "Terminer pour cette bataille"
+
+#: Sources/Interface/BattleSpellPopup.cpp:50
+msgid "STOP_TIMER"
+msgstr "Arrêter le compteur"
+
+#: Sources/Interface/BuildDeckDlg.cpp:139
+#: Sources/Interface/BuildDeckDlg.cpp:151
+#: Sources/Interface/BuildDeckDlg.cpp:163
+#: Sources/Interface/BuildDeckDlg.cpp:175
+#: Sources/Interface/BuildDeckDlg.cpp:187
+#: Sources/Interface/BuildDeckDlg.cpp:199
+msgid "_(1s)_SPELLS_TYPE_(2s)_"
+msgstr "%$1s les sorts de type %$2s."
+
+#: Sources/Interface/BuildDeckDlg.cpp:186
+msgid "BATTLE"
+msgstr "combat"
+
+#: Sources/Interface/BuildDeckDlg.cpp:198
+msgid "ADVENTURE"
+msgstr "aventure"
+
+#: Sources/Interface/BuildDeckDlg.cpp:210
+msgid "_(s)_SPELLS_EQUIPPED_BY_ANOTHER"
+msgstr "%s les sorts équipés par un autre Shahmah."
+
+#: Sources/Interface/BuildDeckDlg.cpp:217
+msgid "EQUIPMENTS"
+msgstr "Equipements"
+
+#: Sources/Interface/BuildDeckDlg.cpp:247
+#: Sources/Interface/BuildDeckDlg.cpp:261
+msgid "SHOW_HIDE_ALL_IDENTICAL_SPELLS"
+msgstr "Afficher ou masquer les sorts identiques"
+
+#: Sources/Interface/BuildDeckDlg.cpp:720
+#: Sources/Interface/CreateAvatarDlg.cpp:666
+#: Sources/Interface/MapObjectDlg.cpp:861
+msgid "COST"
+msgstr "Coût"
+
+#: Sources/Interface/BuildDeckDlg.cpp:1063
+msgid "ENTER_AVATAR_NAME"
+msgstr "Nom du Shahmah"
+
+#: Sources/Interface/BuildDeckDlg.cpp:1077
+msgid "ENTER_AVATAR_DESCRIPTION"
+msgstr "Description du Shahmah"
+
+#: Sources/Interface/CreateAvatarDlg.cpp:54
+#: Sources/Interface/HostGameDlg.cpp:149
+msgid "BACK"
+msgstr "<< Retour"
+
+#: Sources/Interface/CreateAvatarDlg.cpp:68
+msgid "EDITION"
+msgstr "Edition"
+
+#: Sources/Interface/CreateAvatarDlg.cpp:89
+#: Sources/Interface/CreateAvatarDlg.cpp:786
+msgid "POINTS_ABREV"
+msgstr "pts."
+
+#: Sources/Interface/CreateAvatarDlg.cpp:99
+msgid "PAY_GOLD"
+msgstr "Payer en or"
+
+#: Sources/Interface/CreateAvatarDlg.cpp:100
+msgid "ALLOWS_TO_INCREASE_AVAILABLE_POINTS"
+msgstr "Permet d'augmenter les points disponibles"
+
+#: Sources/Interface/CreateAvatarDlg.cpp:324
+msgid "REMAINS_%$1d_UNUSED_POINTS_WISH_CONTINUE"
+msgstr "Il vous reste encore %$1d points inutilisés. Voulez-vous continuer?"
+
+#: Sources/Interface/GameOverDlg.cpp:70
+msgid "VICTORY"
+msgstr "VICTOIRE : "
+
+#: Sources/Interface/GameOverDlg.cpp:72
+msgid "SHARED_VICTORY"
+msgstr "VICTOIRE PARTAGEE : "
+
+#: Sources/Interface/GameOverDlg.cpp:147
+msgid "GAINED_XP(d1)_BEFORE(d2)"
+msgstr "XP gagnée : %$1d (%$2d avant pondération)"
+
+#: Sources/Interface/HostGameDlg.cpp:67
+msgid "GAME_NAME"
+msgstr "Nom de la partie :"
+
+# For choices by default (eg. in list UI)
+#: Sources/Interface/HostGameDlg.cpp:108
+#: Sources/Interface/HostGameDlg.cpp:737
+msgid "DEFAULT"
+msgstr "par défaut"
+
+#: Sources/Interface/HostGameDlg.cpp:112
+msgid "MAP_TYPE"
+msgstr "Type de carte :"
+
+#: Sources/Interface/HostGameDlg.cpp:157
+msgid "START"
+msgstr "Lancer!"
+
+#: Sources/Interface/HostGameDlg.cpp:162
+#: Sources/Interface/HostGameDlg.cpp:948
+msgid "NEED_TWO_PLAYERS"
+msgstr "Il faut au moins 2 joueur pour commencer une partie."
+
+#: Sources/Interface/HostGameDlg.cpp:183
+msgid "SERVER_OPTIONS"
+msgstr "Options du serveur"
+
+#: Sources/Interface/HostGameDlg.cpp:190
+msgid "TURN_TIMER"
+msgstr "Durée des tours"
+
+#: Sources/Interface/HostGameDlg.cpp:207
+msgid "SECOND"
+msgstr "seconde"
+
+#: Sources/Interface/HostGameDlg.cpp:212
+msgid "SECONDS"
+msgstr "secondes"
+
+#: Sources/Interface/HostGameDlg.cpp:217
+msgid "MINUTE"
+msgstr "minute"
+
+#: Sources/Interface/HostGameDlg.cpp:222
+msgid "MINUTES"
+msgstr "minutes"
+
+#: Sources/Interface/HostGameDlg.cpp:227
+msgid "HOUR"
+msgstr "heure"
+
+#: Sources/Interface/HostGameDlg.cpp:232
+msgid "HOURS"
+msgstr "heures"
+
+#: Sources/Interface/HostGameDlg.cpp:241
+msgid "DECK_MAX_SIZE"
+msgstr "Taille de pioche max."
+
+#: Sources/Interface/HostGameDlg.cpp:252
+msgid "UNLIMITED(DECK_SIZE)"
+msgstr "Illimitée"
+
+#: Sources/Interface/HostGameDlg.cpp:454
+msgid "SHOW_INFORMATION"
+msgstr "Afficher les informations"
+
+#: Sources/Interface/HostGameDlg.cpp:488
+msgid "CHANGE_PLAYER_COLOR"
+msgstr "Changer la couleur du joueur"
+
+#: Sources/Interface/HostGameDlg.cpp:511
+msgid "LAN"
+msgstr "LAN"
+
+#: Sources/Interface/HostGameDlg.cpp:512
+msgid "CLOSED"
+msgstr "Fermé"
+
+#: Sources/Interface/HostGameDlg.cpp:704
+msgid "WARNING_AVATAR_HAS_TOO_MUCH_SPELLS"
+msgstr "Attention : ce Shahmah possède trop de sorts par rapport aux limitations imposées par le serveur. Certains sorts seront aléatoirement retirés en début de partie."
+
+#: Sources/Interface/HostGameDlg.cpp:716
+msgid "CANNOT_SELECT_AVATAR_TWICE"
+msgstr "Vous ne pouvez pas sélectionner deux fois le même Shahmah."
+
+#: Sources/Interface/HostGameDlg.cpp:824
+msgid "CASH_(d)"
+msgstr "Pognon : %d"
+
+#: Sources/Interface/HostGameDlg.cpp:829
+msgid "DISPUTED_GAMES_(d)_WON_(d)_LOST_(d)"
+msgstr ""
+"Number of disputed games: %d\n"
+"(won: %d, lost: %d)"
+
+#: Sources/Interface/HostGameDlg.cpp:835
+msgid "PCT_VICTORIES_(d)"
+msgstr "Pourcentage de victoires : %d"
+
+#: Sources/Interface/HostGameDlg.cpp:841
+msgid "AVATARS_(d)"
+msgstr "Nombre de Shahmahs : %d"
+
+#: Sources/Interface/HostGameDlg.cpp:958
+msgid "PLEASE_WAIT_WHILE_SERVER_STARTING"
+msgstr "Veuillez patienter pendant que le serveur démarre..."
+
+#: Sources/Interface/HostGameDlg.cpp:1184
+msgid "GAME_NAME_ALREADY_EXIST"
+msgstr "Une précédente partie existe déjà sous ce nom, elle sera supprimée. Voulez-vous continuer?"
+
+#: Sources/Interface/InfoboxDlg.cpp:45
+msgid "INFO"
+msgstr "Infos"
+
+#: Sources/Interface/InfoboxDlg.cpp:126
+msgid "WAITING"
+msgstr "en attente"
+
+#: Sources/Interface/InfoboxDlg.cpp:129
+msgid "PLAYING"
+msgstr "actif"
+
+#: Sources/Interface/InfoboxDlg.cpp:132
+msgid "FINISHED"
+msgstr "terminé"
+
+#: Sources/Interface/InfoboxDlg.cpp:135
+msgid "CONNECTION_PROBLEM"
+msgstr "problème de connexion"
+
+#: Sources/Interface/InterfaceManager.cpp:689
+msgid "WAIT_WHILE_FINISHING_TURNS"
+msgstr "Patientez pendant que les autres joueurs finissent leur tour."
+
+#: Sources/Interface/InterfaceManager.cpp:691
+msgid "CHOOSE_NEXT_PLAYER"
+msgstr "Choisissez le prochain joueur :"
+
+#: Sources/Interface/InterfaceManager.cpp:1033
+msgid "RESUME_GAME"
+msgstr "Reprendre le jeu"
+
+#: Sources/Interface/InterfaceManager.cpp:1041
+msgid "SAVE_GAME"
+msgstr "Sauvegarder la partie"
+
+#: Sources/Interface/InterfaceManager.cpp:1050
+msgid "OPTIONS"
+msgstr "Options"
+
+#: Sources/Interface/InterfaceManager.cpp:1058
+msgid "QUIT"
+msgstr "Quitter"
+
+#: Sources/Interface/InterfaceManager.cpp:1155
+msgid "SPELL_(s)_ASK_EXTRA_MANA"
+msgstr "Le sort %s demande du mana additionnel"
+
+#: Sources/Interface/InterfaceManager.cpp:1160
+msgid "SKILL_(s)_ASK_EXTRA_MANA"
+msgstr "La capacité %s demande du mana additionnel"
+
+#: Sources/Interface/InterfaceManager.cpp:1216
+msgid "NO_MANA_AVAILABLE"
+msgstr "Pas de mana disponible."
+
+#: Sources/Interface/LevelUpDlg.cpp:206
+msgid "(s)_LEVELED_UP_AND_IS_(d)"
+msgstr "%s a gagné un niveau et atteint le niveau %d! Vous devez choisir une amélioration :"
+
+#: Sources/Interface/LevelUpDlg.cpp:362
+msgid "DO_IT_LATER"
+msgstr "Plus tard"
+
+#: Sources/Interface/LevelUpDlg.cpp:365
+msgid "DO_IT_LATER_EXPL"
+msgstr "Vous pourrez revenir depuis le panneau Shahmah de la fenêtre \"Construire un deck\"."
+
+#: Sources/Interface/LoadGameDlg.cpp:28
+msgid "LOAD_GAME"
+msgstr "Charger une partie"
+
+#: Sources/Interface/LogDlg.cpp:28
+msgid "LOG"
+msgstr "Journal"
+
+#: Sources/Interface/LogDlg.cpp:95
+#: Sources/Interface/LogDlg.cpp:107
+msgid "SEE"
+msgstr "Voir"
+
+#: Sources/Interface/LogDlg.cpp:161
+msgid "NEW_TURN"
+msgstr "Nouveau tour"
+
+#: Sources/Interface/MapObjectDlg.cpp:113
+#: Sources/Interface/MapObjectDlg.cpp:194
+#: Sources/Interface/MapObjectDlg.cpp:503
+#: Sources/Interface/MapObjectDlg.cpp:635
+#: Sources/Interface/MapObjectDlg.cpp:686
+#: Sources/Interface/MapObjectDlg.cpp:877
+msgid "TURNS"
+msgstr "tour(s)"
+
+#: Sources/Interface/MapObjectDlg.cpp:211
+#: Sources/Interface/MapObjectDlg.cpp:699
+msgid "PRODUCING_NOTHING"
+msgstr "Pas de formation en cours."
+
+#: Sources/Interface/MapObjectDlg.cpp:350
+#: Sources/Interface/MapObjectDlg.cpp:458
+msgid "OWNED_BY_(s)"
+msgstr "Appartient à %s."
+
+#: Sources/Interface/MapObjectDlg.cpp:365
+msgid "SKILLS_AND_ACTIVE_EFFECTS"
+msgstr "Capacités et effets actifs"
+
+#: Sources/Interface/MapObjectDlg.cpp:530
+msgid "GROWS_IN_%$1d_TURNS"
+msgstr "Grandit dans %$1d tour(s)."
+
+#: Sources/Interface/MapObjectDlg.cpp:548
+msgid "CITIZENS_ARE_VERY_UNHAPPY"
+msgstr "La population est très mécontente."
+
+#: Sources/Interface/MapObjectDlg.cpp:550
+msgid "CITIZENS_ARE_UNHAPPY"
+msgstr "La population est mécontente."
+
+#: Sources/Interface/MapObjectDlg.cpp:552
+msgid "CITIZENS_ARE_A_BIT_UNHAPPY"
+msgstr "La population est un peu mécontente."
+
+#: Sources/Interface/MapObjectDlg.cpp:554
+msgid "CITIZENS_ARE_NEUTRAL"
+msgstr "La population est indifférente."
+
+#: Sources/Interface/MapObjectDlg.cpp:556
+msgid "CITIZENS_ARE_VERY_HAPPY"
+msgstr "La population est très heureuse."
+
+#: Sources/Interface/MapObjectDlg.cpp:558
+msgid "CITIZENS_ARE_HAPPY"
+msgstr "La population est heureuse."
+
+#: Sources/Interface/MapObjectDlg.cpp:560
+msgid "CITIZENS_ARE_A_BIT_HAPPY"
+msgstr "La population est assez heureuse."
+
+#: Sources/Interface/MapObjectDlg.cpp:578
+msgid "FEAR_DESCRIPTION_NULL"
+msgstr "La population n'a pas peur. Cela augmente beaucoup les chances d'apparition d'un héros."
+
+#: Sources/Interface/MapObjectDlg.cpp:580
+msgid "FEAR_DESCRIPTION_LOW"
+msgstr "La population n'a pas très peur. Cela augmente les chances d'apparition d'un héros."
+
+#: Sources/Interface/MapObjectDlg.cpp:582
+msgid "FEAR_DESCRIPTION_AVERAGE"
+msgstr "La population a assez peur. Il y a quelques chances pour qu'un héros apparaisse."
+
+#: Sources/Interface/MapObjectDlg.cpp:584
+msgid "FEAR_DESCRIPTION_HIGH"
+msgstr "La population a très peur. Il y a peu de chances pour qu'un héros apparaisse."
+
+#: Sources/Interface/MapObjectDlg.cpp:649
+msgid "BUILDING_NOTHING"
+msgstr "Pas de construction en cours."
+
+#: Sources/Interface/MapObjectDlg.cpp:711
+msgid "PRODUCE_UNIT"
+msgstr "Former une unité"
+
+#: Sources/Interface/MapObjectDlg.cpp:721
+msgid "NONE(UNITS_LIST)"
+msgstr "Aucune"
+
+#: Sources/Interface/MapObjectDlg.cpp:752
+msgid "ACTIVE_EFFECTS"
+msgstr "Effets actifs"
+
+#: Sources/Interface/MoveOrAttackDlg.cpp:33
+msgid "MOVE_TO_POS"
+msgstr "Se déplacer vers cette case"
+
+#: Sources/Interface/MoveOrAttackDlg.cpp:54
+msgid "ATTACK_(s)"
+msgstr "Attaquer %s"
+
+#: Sources/Interface/OptionsDlg.cpp:34
+msgid "GAME_OPTIONS"
+msgstr "Options de jeu"
+
+#: Sources/Interface/OptionsDlg.cpp:44
+msgid "VIDEO_OPTIONS"
+msgstr "Options graphiques"
+
+#: Sources/Interface/OptionsDlg.cpp:52
+msgid "AUDIO_OPTIONS"
+msgstr "Options audio"
+
+#: Sources/Interface/OptionsDlg.cpp:170
+#: Sources/Interface/OptionsDlg.cpp:494
+msgid "CLOSES_IN_(d)_SEC"
+msgstr "(Se fermera dans %d secondes)"
+
+#: Sources/Interface/OptionsDlg.cpp:213
+msgid "LANGUAGE"
+msgstr "Langue :"
+
+#: Sources/Interface/OptionsDlg.cpp:226
+msgid "AVAILABLE_EDITIONS"
+msgstr "Editions actives"
+
+#: Sources/Interface/OptionsDlg.cpp:259
+msgid "KEEP_LOGS"
+msgstr "Conserver le journal sur :"
+
+#: Sources/Interface/OptionsDlg.cpp:267
+msgid "UNLIMITED(KEEP_LOGS)"
+msgstr "Illimité"
+
+#: Sources/Interface/OptionsDlg.cpp:272
+msgid "%$1d_TURNS(KEEP_LOGS)"
+msgstr "%$1d tours"
+
+#: Sources/Interface/OptionsDlg.cpp:304
+msgid "FULLSCREEN"
+msgstr "Plein écran"
+
+#: Sources/Interface/OptionsDlg.cpp:312
+msgid "SCREEN_RESOLUTION"
+msgstr "Résolution"
+
+#: Sources/Interface/OptionsDlg.cpp:354
+msgid "SOUND_VOLUME"
+msgstr "Volume des sons"
+
+#: Sources/Interface/OptionsDlg.cpp:366
+#: Sources/Interface/OptionsDlg.cpp:388
+msgid "0_MUTE"
+msgstr "0 (muet)"
+
+#: Sources/Interface/OptionsDlg.cpp:376
+msgid "MUSIC_VOLUME"
+msgstr "Volume des musiques"
+
+#: Sources/Interface/OptionsDlg.cpp:457
+msgid "LANGUAGE_CHANGE_ON_RESTART"
+msgstr "Vous devez redémarrer le jeu pour prendre en compte la langue sélectionnée."
+
+#: Sources/Interface/OptionsDlg.cpp:491
+msgid "CONFIRM_RESOLUTION"
+msgstr "Cliquez sur Ok pour confirmer la résolution choisie. Sinon, le jeu passera en mode fenetré par sécurité."
+
+#: Sources/Interface/PlayerSelectorDlg.cpp:153
+#: Sources/Interface/SpellsSelectorDlg.cpp:31
+#: Sources/Interface/SpellsSelectorDlg.cpp:205
+msgid "CLOSE"
+msgstr "Fermer"
+
+#: Sources/Interface/ResolveDlg.cpp:52
+msgid "RESOLVE"
+msgstr "Résolution"
+
+#: Sources/Interface/ResolveDlg.cpp:107
+msgid "IGNORE_BATTLES"
+msgstr "Ignorer ces combats"
+
+#: Sources/Interface/ResolveDlg.cpp:113
+msgid "SELECT_BATTLE"
+msgstr "Sélectionner la bataille"
+
+#: Sources/Interface/ResolveDlg.cpp:130
+msgid "ATTACKERS"
+msgstr "Attaquants"
+
+#: Sources/Interface/ResolveDlg.cpp:143
+msgid "DEFENDERS"
+msgstr "Défenseurs"
+
+#: Sources/Interface/ResolveDlg.cpp:161
+msgid "NEXT"
+msgstr "Suivant >>"
+
+#: Sources/Interface/ResolveDlg.cpp:612
+msgid "RANGE_ATTACK"
+msgstr "Attaque à distance"
+
+#: Sources/Interface/ResolveDlg.cpp:616
+msgid "MELEE_ATTACK"
+msgstr "Corps à corps"
+
+#: Sources/Interface/ResolveDlg.cpp:654
+msgid "WAIT_SPELLS"
+msgstr "Attendez un moment, d'autres joueurs peuvent lancer des sorts."
+
+#: Sources/Interface/ResolveDlg.cpp:843
+#: Sources/Interface/ResolveDlg.cpp:916
+msgid "(s)_CHOOSE_BATTLE"
+msgstr "%s : choisissez une bataille sur la carte, ou passez votre tour."
+
+#: Sources/Interface/ResolveDlg.cpp:868
+msgid "PROCESSING_AI_%$1s"
+msgstr "IA %$1s"
+
+#: Sources/Interface/ResolveDlg.cpp:877
+msgid "PROCESSING_NEUTRAL_AI"
+msgstr "Joueur neutre"
+
+#: Sources/Interface/ResolveDlg.cpp:887
+msgid "RESOLVING_SPELLS_(s)"
+msgstr "Résolution des sorts (%s)"
+
+#: Sources/Interface/ResolveDlg.cpp:900
+msgid "RESOLVING_MOVES_(s)"
+msgstr "Résolution des mouvements (%s)"
+
+#: Sources/Interface/ResolveDlg.cpp:933
+msgid "WAIT_(s)_CHOOSING_BATTLES"
+msgstr "Attendez un moment, %s choisit ses batailles."
+
+#: Sources/Interface/ResolveDlg.cpp:946
+msgid "(s)_SELECT_ATTACKER_AND_TARGET"
+msgstr "%s : sélectionnez votre attaquant et votre adversaire."
+
+#: Sources/Interface/ResolveDlg.cpp:977
+msgid "(1s)_IS_ATTACKING_(2s)_CAN_CAST_SPELLS"
+msgstr "%$1s lance une attaque contre %$2s. Vous pouvez maintenant lancer un sort."
+
+#: Sources/Interface/ResolveDlg.cpp:993
+msgid "NO_MORE_BATTLES_CAN_CAST_SPELLS"
+msgstr "Plus de bataille ce tour-ci. Vous pouvez lancer un sort rapide avant le prochain tour."
+
+#: Sources/Interface/ResolveDlg.cpp:1013
+msgid "UPDATING_TOWNS"
+msgstr "Mise à jour des villes..."
+
+#: Sources/Interface/ResolveDlg.cpp:1039
+msgid "(1s)_CAST_(2s)_SELECT_TARGET"
+msgstr "%$1s : vous lancez %$2s. Choisissez une cible valide."
+
+#: Sources/Interface/ResolveDlg.cpp:1051
+msgid "(1s)_ACTIVATE_(2s)_SELECT_TARGET"
+msgstr "%$1s : vous activez %$2s. Choisissez une cible valide."
+
+#: Sources/Interface/SelectPlayerAvatarDlg.cpp:37
+msgid "CHOOSE_PLAYER"
+msgstr "Choisissez un joueur"
+
+#: Sources/Interface/SelectPlayerAvatarDlg.cpp:58
+msgid "CREATE_SHAHMAH"
+msgstr "Créer un Shahmah"
+
+#: Sources/Interface/SelectPlayerAvatarDlg.cpp:79
+msgid "STATISTICS"
+msgstr "Statistiques"
+
+#: Sources/Interface/SelectPlayerAvatarDlg.cpp:86
+msgid "DELETE_THIS_PLAYER"
+msgstr "Supprimer ce joueur"
+
+#: Sources/Interface/SelectPlayerAvatarDlg.cpp:200
+msgid "ENTER_PLAYER_NAME"
+msgstr "Entrez le nom du joueur."
+
+#: Sources/Interface/SelectPlayerAvatarDlg.cpp:209
+msgid "REALLY_DELETE_PLAYER"
+msgstr "Voulez-vous vraiment supprimer ce joueur?"
+
+#: Sources/Interface/SelectPlayerAvatarDlg.cpp:265
+msgid "CREATE_NEW"
+msgstr "Nouveau joueur"
+
+#: Sources/Interface/ShopDlg.cpp:272
+msgid "TOTAL_SPELLS_(d)"
+msgstr "Nombre total de sorts (inclut les sorts des éditions désactivées) : %d"
+
+#: Sources/Interface/SpellDlg.cpp:107
+msgid "SHOW_ACTIVE_SPELLS"
+msgstr "Afficher les sorts actifs"
+
+#: Sources/Interface/SpellDlg.cpp:115
+msgid "SHOW_GAME_MENU"
+msgstr "Afficher le menu de jeu"
+
+#: Sources/Interface/SpellDlg.cpp:176
+msgid "CAST_ON_(s)"
+msgstr "Lancé sur %s."
+
+#: Sources/Interface/SpellDlg.cpp:195
+msgid "END_OF_TURN"
+msgstr "Fin du tour"
+
+#: Sources/Interface/StartMenuDlg.cpp:29
+msgid "BUILD_DECK"
+msgstr "Edition de Shahmahs"
+
+#: Sources/Interface/StartMenuDlg.cpp:41
+msgid "PLAY"
+msgstr "Jouer"
+
+#: Sources/Interface/StartMenuDlg.cpp:49
+msgid "PLAY_ONLINE"
+msgstr "Jeu en ligne"
+
+#: Sources/Interface/StartMenuDlg.cpp:138
+msgid "NEW_GAME"
+msgstr "Nouvelle partie"
+
+#: Sources/Interface/StartMenuDlg.cpp:146
+msgid "JOIN_LAN"
+msgstr "Rejoindre LAN"
+
+#: Sources/Interface/UnitOptionsDlg.cpp:27
+msgid "UNIT_OPTIONS"
+msgstr "Options d'unité"
+
+#: Sources/Interface/UnitOptionsDlg.cpp:32
+msgid "DEFEND"
+msgstr "Défendre"
+
+#: Sources/Interface/UnitOptionsDlg.cpp:43
+msgid "MOVE_TO"
+msgstr "Déplacer"
+
+#: Sources/Interface/UnitOptionsDlg.cpp:50
+msgid "ATTACK"
+msgstr "Attaquer"
+
+#: Sources/Players/Player.cpp:553
+msgid "AVAILABLE_MANA"
+msgstr "Mana disponible"
+
+#: Sources/Players/PlayerManager.cpp:171
+msgid "PLAYER_(s1)_DEAD"
+msgstr "Le joueur %$1s est mort!"
+
+#: Sources/Players/PlayerManager.cpp:475
+msgid "(1s)_(2s)_DIED"
+msgstr "%$1s est mort (joueur %$2s)."
+
+#: Sources/Players/PlayerManager.cpp:518
+msgid "(s1)_CAST_(s2)_FAILED"
+msgstr "%$1s a voulu lancer %$2s mais a échoué!"
+
+#: Sources/Players/PlayerManager.cpp:520
+msgid "%$1s_CAST_%$2s_ON_%$3s"
+msgstr "%$1s a lancé %$2s sur %$3s."
+
+#: Sources/Players/PlayerManager.cpp:522
+msgid "%$1s_CAST_%$2s"
+msgstr "%$1s a lancé %$2s."
+
+#: Sources/Players/PlayerManager.cpp:719
+msgid "%$1s_WAS_ACTIVATED_ON_%$2s"
+msgstr "%$1s a été activé sur %$2s."
+
+#: Sources/Players/PlayerManager.cpp:725
+msgid "%$1s_ACTIVATED_%$2s_ON_%$3s"
+msgstr "%$1s a activé %$2s sur %$3s."
+
+#: Sources/Players/PlayerManager.cpp:765
+msgid "(s)_EFFECT_ON_(s)_ENDED"
+msgstr "L'effet %s sur %s a pris fin."
+
+#: Sources/Server/Server.cpp:708
+msgid "GAME_SAVED_SUCCESS"
+msgstr "Partie sauvegardée."
+
+#: Sources/Server/SpellsSolver.cpp:161
+msgid "(s)_TRIED_CAST_SPELL_BUT_NO_MANA"
+msgstr "%s manque de mana pour lancer un sort!"
+
+#: Sources/Server/SpellsSolver.cpp:166
+msgid "(s)_CANT_FIND_SPELL"
+msgstr "%s a perdu un sort au moment de le lancer!"
+
+#: Sources/Server/SpellsSolver.cpp:1335
+msgid "%$1s_WON_%$2d_GOLD"
+msgstr "%$1s a gagné %$2d or!"
+
+#: Sources/Server/SpellsSolver.cpp:1358
+msgid "%$1s_WON_SPELL_%$2s"
+msgstr "%$1s a gagné le sort %$2s!"
+
+#: Sources/Server/SpellsSolver.cpp:1383
+msgid "%$1s_WON_ARTIFACT_%$2s"
+msgstr "%$1s a gagné l'artefact %$2s!"
+
+#: Sources/Server/SpellsSolver.cpp:1406
+msgid "%$1s_WON_AVATAR_%$2s"
+msgstr "%$1s a gagné un Shahmah : %$2s!"
+
+#: Sources/Server/TurnSolver.cpp:625
+msgid "(1s)_ATTACKED_(2s)"
+msgstr "%$1s a attaqué %$2s."
+
+#~ msgid "MAGIC"
+#~ msgstr "Magie"
+
+#~ msgid "TRAIT1"
+#~ msgstr "Trait 1"
+
+#~ msgid "TRAIT2"
+#~ msgstr "Trait 2"

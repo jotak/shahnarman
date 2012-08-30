@@ -1,0 +1,67 @@
+<shahmah>
+  <id>General_Kroupyon</id>
+  <name>
+    <english>General Kroupyon</english>
+    <french>Général Kroupyon</french>
+  </name>
+  <ethnicity>Galates</ethnicity>
+  <melee>15</melee>
+  <range>10</range>
+  <armor>2</armor>
+  <endurance>3</endurance>
+  <speed>8</speed>
+  <alignment>8</alignment>
+  <texture>soldat2</texture>
+  <skill luafile='ManaProductor' parameters='5 5 5 5' />
+  <skill luafile='EPODealer' />
+  <skill luafile='FirstStrike' />
+  <skill luafile='MagicCircle' />
+  <skill luafile='FirstStrike' />
+  <skill luafile='MagicCircle' />
+  <description>
+    <english></english>
+    <french></french>
+  </description>
+</shahmah>
+<shahmah>
+  <id>Archmage_Soupalognon</id>
+  <name>
+    <english>Archmage Soupalognon</english>
+    <french>Archimage Soupalognon</french>
+  </name>
+  <ethnicity>Huanakos</ethnicity>
+  <melee>4</melee>
+  <range>0</range>
+  <armor>2</armor>
+  <endurance>5</endurance>
+  <speed>2</speed>
+  <alignment>2</alignment>
+  <texture>soldat1</texture>
+  <skill luafile='ManaProductor' parameters='5 5 5 5' />
+  <skill luafile='DeadlyCharm' />
+  <description>
+    <english>The Archmage Soupalognon is the first cooking-mage.</english>
+    <french>L'Archimage Soupalognon est précurseur dans la magie culinaire.</french>
+  </description>
+</shahmah>
+<shahmah>
+  <id>Dark_Maggot_Master</id>
+  <name>
+    <english>Dark Maggot Master</english>
+    <french>Maître Asticot des ténèbres</french>
+  </name>
+  <ethnicity>Peraa</ethnicity>
+  <melee>4</melee>
+  <range>0</range>
+  <armor>2</armor>
+  <endurance>5</endurance>
+  <speed>5</speed>
+  <alignment>4</alignment>
+  <texture>soldat3</texture>
+  <skill luafile='ManaProductor' parameters='5 5 5 5' />
+  <skill luafile='SummonMaggot' />
+  <description>
+    <english>The Dark Maggot Master can summon living-dead maggots.</english>
+    <french>Le Maître Asticot des ténèbres est capable d'invoquer des asticots morts-vivants.</french>
+  </description>
+</shahmah>

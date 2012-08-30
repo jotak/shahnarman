@@ -1,0 +1,29 @@
+Alchemy: Costs 1 Pick, units always have magic weapons (bonus to hit), and you can transmute gold to mana and mana to gold at a 1:1 ratio, instead of 1:2.
+
+Warlord: Costs 2 Picks, units start 1 level of experience higher, and can reach one higher max level.
+
+Channeler: Costs 2 Picks, spells cast during combat always only cost their base amount (normally, the farther you are from your capital, the more mana you must spend). Also, only pays half of spell maintenance for permanent enchantments.
+
+Archmage: Costs 1 Pick, requires 4 Picks in any 1 school, gives 10 bonus skill to wizard (how much mana can be channeled into spells per turn), makes his spells harder to dispel, skill rises faster.
+
+Artificer: Costs 1 Pick, can make magic items from the start of the game, and does so for half mana.
+
+Conjurer: Costs 1 Pick, 25% decrease to casting, research, and maintenance of summoning spells.
+
+Sage Master: Costs 1 Pick, requires 1 pick in any 2 schools, research of all magic is 25% faster.
+
+Myrran: Costs 3 Picks, starts on the world of Myrror, as opposed to Arcanus. That means 5 extra mana per turn, generally a safer start (enemies on the other plane), and 1 of 5 special races to choose from that aren't found on Arcanus. The creatures in caves and magic nodes are a bit scarier though.
+
+Divine/Infernal Power: Costs 2 Picks, requires 4 picks in Life/Death Magic, increases mana gained and unrest reduced by shrines, temples, etc. by 50%. By and large, not worth it at all.
+
+Famous: Costs 2 Picks, 10 starting Fame (normally gained by wining large battles, a certain Sorcery Spell, or having Legendary heroes, it causes more heroes and mercenaries to offer their services, and more magic items to be offered to sell to you. Also, each point reduces the gold upkeep of your army by 1). Also, doubles chance of heroes, mercenaries, and magic items.
+
+Runemaster: Costs 1 Pick, requires 2 picks in any 3 schools, 25% faster researching and cheaper casting of Arcane spells, the generic spells available to everybody (Dispelling, moving your summoning circle, spying on cities, etc.).
+
+Charismatic: Costs 1 Pick, makes heroes, mercenaries, and magic items half priced, and causes good diplomatic actions to have double the effect, and bad actions half the effect.
+
+Chaos/Nature/Sorcery Mastery: Costs 1 Pick, requires 4 picks in associated school, 15% research bonus, 15% reduced casting cost, spells twice as hard to dispel, and doubles magic from associated nodes (all previous bonuses also only apply to associated school).
+
+Mana Focusing: Costs 1 Pick, requires 1 Pick in any 1 school, makes increases mana you generate by 25%.
+
+Node Mastery: Costs 1 Pick, requires 2 picks in Sorcery, Nature, and Chaos, doubles magic gained from all nodes, and spells are immune to dispelling effect of nodes (when fighting at a node, spells from schools that aren't of the same school as the node are very often dispelled).

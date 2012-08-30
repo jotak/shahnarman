@@ -1,0 +1,35 @@
+Liste des fonctions C appelées depuis LUA
+- selectTarget(type, constraint)
+	ask the program to let the user select a target (can be "unit", "spell", "enchantment", "tile") with given constraints (can be "any", "opponenthand")
+- attachToUnit(unit)
+- attachAsGlobal()
+- changeSpellOwner(spell, owner)
+- moveSpell(spell, to)
+- getOwner()
+- removeSpell(spell)
+	detach and delete spell ; if params is empty, removes itself
+- getUnitData(unit, dataname)
+- setUnitData(unit, dataname, datavalue)
+- summon(name, x, y)
+- damageUnit(unit, damages)
+
+
+Liste des fonctions LUA appelées depuis C (tous les noms de fonctions doivent commencer par "on"
+- onGetName(language)
+	called to know a spell's name
+	must return a string
+- onGetDescription(language)
+	called to know a spell's description
+	must return a string
+- onCast()
+	called when the spell is cast (not resolved), can be used for instance to call "selectTarget".
+- onResolve(params)
+	called when the cast spell needs to be resolved (at end of turn)
+	"params" will contain any data stored when the spell was cast, such as targeted unit for instance.
+- onGetData(dataname, oldvalue)
+	this is called at any time the C program or any LUA script needs to get a data, such as a unit's strength or chaos mana produced, that can be modified by a permanent spell
+- onGetAnyUnitData(unit, dataname, oldvalue)
+	same as above, but concerns any unit (for instance, a global spell that would increase all unit's speed value)
+- onEndOfResolve(unit)
+	this function is called, when the spell is attached as effect on a unit, at the end of resolve phase
+- onGetNumberOfSpellsToDraw(player, nbspells)

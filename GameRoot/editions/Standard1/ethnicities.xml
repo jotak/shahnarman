@@ -1,0 +1,221 @@
+<ethnicity>
+	<id>Galates</id>
+	<name>
+		<english>Galates</english>
+		<french>Galates</french>
+	</name>
+	<description>
+		<english>The Galates is an agriarian and working people, but never balk at doing a little war. They are organized in clans, often rival.</english>
+		<french>Les Galates sont un peuple agraire et travailleurs, mais ne rechignent jamais devant une petite guerre. Ils sont organisé en clans souvent rivaux.</french>
+	</description>
+	<towns freq_on_plain=2 freq_on_forest=5 freq_on_mountain=3 freq_on_toundra=1 freq_on_desert=0 growth=110 productivity=100 unitprod=110 happiness_bonus=3 radius_bonus=0>
+		<name>Skamerum</name>
+		<name>Caerdargum</name>
+		<name>Ambajum</name>
+		<name>Sagamae</name>
+		<name>Lidura</name>
+		<name>Caervagum</name>
+		<name>Caeonas</name>
+		<name>Caerberum</name>
+		<name>Camergio</name>
+		<name>Duogarfon</name>
+		<name>Narmica</name>
+	</towns>
+	<textures town1='Galates_town1' town2='Galates_town2' town3='Galates_town3' town4='Galates_town4' town5='Galates_town5' townbigpic='Galates_bigtown1' />
+	<building id='GalatesTrainingGround' x=10 y=10 /> <!-- Replaces barracks -->
+	<building id='Farm' x=100 y=10 />
+	<building id='Granary' x=200 y=10 />
+	<building id='Tavern' x=300 y=10 />
+	<building id='Marketplace' x=400 y=10 />
+	<building id='Workshop' x=500 y=10 />
+	<building id='Blacksmith' x=600 y=10 />
+	<building id='Armory' x=700 y=10 />
+	<building id='Stables' x=800 y=10 />
+	<building id='ArcheryRange' x=900 y=10 />
+	<building id='Shrine' x=10 y=100 />
+	<building id='GalatesGreatOldOak' x=100 y=100 />
+	<building id='CouncilHall' x=200 y=100 />
+	<heroe id='Ragebus_WarriorM' />
+	<heroe id='Jeminomus_DruidM' />
+	<heroe id='Vehlo_WarriorF' />
+	<heroe id='Laodeica_DruidF' />
+</ethnicity>
+
+<ethnicity>
+	<id>Peraa</id>
+	<name>
+		<english>Per-âa</english>
+		<french>Per-âa</french>
+	</name>
+	<description>
+		<english>Per-âa are very proud people, great builders and priests warriors, adepts of Life and Chaos.</english>
+		<french>Les Per-âa sont un peuple très fier, grands bâtisseurs, comptant de nombreux prêtres guerriers adeptes de la Vie et du Chaos.</french>
+	</description>
+	<towns freq_on_plain=4 freq_on_forest=1 freq_on_mountain=1 freq_on_toundra=2 freq_on_desert=3 growth=100 productivity=120 unitprod=80 happiness_bonus=0 radius_bonus=1>
+		<name>Fenptis</name>
+		<name>Râa'ntis</name>
+		<name>Sth'ntis</name>
+		<name>Peraos</name>
+		<name>Am'ntis</name>
+		<name>Ptahos</name>
+		<name>Sâara'pis</name>
+		<name>Montu'is</name>
+		<name>Sbêk'tis</name>
+		<name>Mô'u'ntis</name>
+		<name>Bastêe'ntis</name>
+	</towns>
+	<textures town1='Peraa_town1' town2='Peraa_town2' town3='Peraa_town3' town4='Peraa_town4' town5='Peraa_town5' townbigpic='Peraa_bigtown1' />
+	<building id='Barrack' x=10 y=10 />
+	<building id='Farm' x=100 y=10 />
+	<building id='Granary' x=200 y=10 />
+	<building id='Marketplace' x=400 y=10 />
+	<building id='Workshop' x=500 y=10 />
+	<building id='Blacksmith' x=600 y=10 />
+	<building id='Armory' x=700 y=10 />
+	<building id='Stables' x=800 y=10 />
+	<building id='ArcheryRange' x=900 y=10 />
+	<building id='Shrine' x=10 y=100 />
+	<building id='PeraaChaosTemple' x=100 y=100 />
+	<building id='PeraaLifeTemple' x=100 y=100 />
+	<building id='CouncilHall' x=200 y=100 />
+	<building id='Palace' x=300 y=100 />
+	<heroe id='StheChampion' />
+	<heroe id='RaaChampion' />
+	<heroe id='PerKanahkt' />
+	<heroe id='PerIminhtp' />
+</ethnicity>
+
+<ethnicity>
+	<id>Huanakos</id>
+	<name>
+		<english>Huanakos</english>
+		<french>Huanakos</french>
+	</name>
+	<description>
+		<english>Huanoakos people is very religious, mastering the power of Life and Death. Their priests are among the most powerful.</english>
+		<french>Les Huanakos sont un peuple très religieux, maîtrisant la puissance de la Vie et de la Mort. Leurs prêtres sont parmi les plus puissants.</french>
+	</description>
+	<towns freq_on_plain=2 freq_on_forest=2 freq_on_mountain=4 freq_on_toundra=1 freq_on_desert=2 growth=80 productivity=100 unitprod=120 happiness_bonus=2 radius_bonus=1>
+		<name>Chucahaqa</name>
+		<name>Sapuhuah</name>
+		<name>Ututepoqa</name>
+		<name>Choputopuah</name>
+		<name>Huaqueqa</name>
+		<name>Puhmuesh</name>
+		<name>Quoxaqahuadur</name>
+		<name>Quateruqa</name>
+		<name>Phuurpunpetuah</name>
+		<name>Uahutueshqa</name>
+		<name>Punuxapuah</name>
+	</towns>
+	<textures town1='Huanakos_town1' town2='Huanakos_town2' town3='Huanakos_town3' town4='Huanakos_town4' town5='Huanakos_town5' townbigpic='Huanakos_bigtown1' />
+	<building id='Barrack' x=10 y=10 />
+	<building id='Farm' x=100 y=10 />
+	<building id='Granary' x=200 y=10 />
+	<building id='Marketplace' x=400 y=10 />
+	<building id='Workshop' x=500 y=10 />
+	<building id='Blacksmith' x=600 y=10 />
+	<building id='Armory' x=700 y=10 />
+	<building id='Stables' x=800 y=10 />
+	<building id='ArcheryRange' x=900 y=10 />
+	<building id='Shrine' x=10 y=100 />
+	<building id='HuanakosSanctuary' x=100 y=100 />
+	<building id='HuanakosAltar' x=100 y=200 />
+	<building id='CouncilHall' x=200 y=100 />
+	<building id='Palace' x=300 y=100 />
+	<heroe id='Quohad_LifePriestM' />
+	<heroe id='Xonahpun_DeathPriestM' />
+	<heroe id='Anemru_LifePriestF' />
+	<heroe id='Xospur_DeathPriestF' />
+</ethnicity>
+
+<ethnicity>
+	<id>Hakhamanes</id>
+	<name>
+		<english>Hakhamanes</english>
+		<french>Hakhamanes</french>
+	</name>
+	<description>
+		<english>Hakhamanes are very organized people, not so much strong in magic but they have powerful bowmen and spearmen as well as good cavalry.</english>
+		<french>Les Hakhamanes sont un peuple très organisé, pas vraiment versés dans les arts magiques mais possédant de puissants archers et lanciers, sans oublier leur cavalerie.</french>
+	</description>
+	<towns freq_on_plain=5 freq_on_forest=2 freq_on_mountain=2 freq_on_toundra=2 freq_on_desert=1 growth=120 productivity=100 unitprod=100 happiness_bonus=0 radius_bonus=2>
+		<name>Citulane</name>
+		<name>Mahaflam</name>
+		<name>Amgabane</name>
+		<name>Felgeram</name>
+		<name>Matnarsam</name>
+		<name>Anshan</name>
+		<name>Erhigsane</name>
+		<name>Matahpone</name>
+		<name>Boghor</name>
+		<name>Cedonispalpon</name>
+		<name>Sunapokam</name>
+	</towns>
+	<textures town1='Hakhamanes_town1' town2='Hakhamanes_town2' town3='Hakhamanes_town3' town4='Hakhamanes_town4' town5='Hakhamanes_town5' townbigpic='Hakhamanes_bigtown1' />
+	<building id='Barrack' x=10 y=10 />
+	<building id='Farm' x=100 y=10 />
+	<building id='HakhamanesQanat' x=100 y=200 />	 <!-- HakhamanesQanat(irrigation=>meilleure growth) -->
+	<building id='HakhamanesGarden' x=100 y=300 />	 <!-- HakhamanesGarden(jardin persan=>meilleur radius+happy) -->
+	<building id='Granary' x=200 y=10 />
+	<building id='Tavern' x=300 y=10 />
+	<building id='Marketplace' x=400 y=10 />
+	<building id='Workshop' x=500 y=10 />
+	<building id='Blacksmith' x=600 y=10 />
+	<building id='Armory' x=700 y=10 />
+	<building id='Stables' x=800 y=10 />
+	<building id='ArcheryRange' x=900 y=10 />
+	<building id='HakhamanesWarCollege' x=900 y=200 /> <!-- War college follows archery ; produces elite bowmen and elite spearmen -->
+	<building id='HakhamanesShrine' x=10 y=100 /> <!-- Gives Law priests (not so much efficient). No temple follows -->
+	<building id='CouncilHall' x=200 y=100 />
+	<building id='Palace' x=300 y=100 />
+	<heroe id='Rostam' />
+	<heroe id='Gircus' />
+	<heroe id='Heblidoeh' />
+	<heroe id='Haheran' />
+</ethnicity>
+
+<ethnicity>
+	<id>Mawohka</id>
+	<name>
+		<english>Mawohka</english>
+		<french>Mawohka</french>
+	</name>
+	<description>
+		<english>Mawohka people likes war above all. Warriors and shamans are more aggressives than defensive.</english>
+		<french>Le peuple Mawohka aime la guerre avant tout. Guerriers comme shahmans sont plus offensifs que défensifs.</french>
+	</description>
+	<towns freq_on_plain=4 freq_on_forest=3 freq_on_mountain=2 freq_on_toundra=2 freq_on_desert=1 growth=90 productivity=90 unitprod=120 happiness_bonus=1 radius_bonus=1>
+		<name>Kascajo</name>
+		<name>Wehjek</name>
+		<name>Nakhoi</name>
+		<name>Nogukoa</name>
+		<name>Jekhoinoa</name>
+		<name>Josca-koata</name>
+		<name>Lanoaroo</name>
+		<name>Pawneera</name>
+		<name>Aoneera</name>
+		<name>Mijosca</name>
+		<name>Dastoga</name>
+	</towns>
+	<textures town1='Mawohka_town1' town2='Mawohka_town2' town3='Mawohka_town3' town4='Mawohka_town4' town5='Mawohka_town5' townbigpic='Mawohka_bigtown1' />
+	<building id='Barrack' x=10 y=10 />
+	<building id='Farm' x=100 y=10 />
+	<building id='Granary' x=200 y=10 />
+	<building id='Tavern' x=300 y=10 />
+	<building id='Marketplace' x=400 y=10 />
+	<building id='Workshop' x=500 y=10 />
+	<building id='Blacksmith' x=600 y=10 />
+	<building id='Armory' x=700 y=10 />
+	<building id='Stables' x=800 y=10 />
+	<building id='ArcheryRange' x=900 y=10 />
+	<building id='Shrine' x=10 y=100 />
+	<building id='Temple' x=100 y=100 />
+	<building id='CouncilHall' x=200 y=100 />
+	<building id='Palace' x=300 y=100 />
+	<building id='MawohkaTotem' x=10 y=200 />
+	<heroe id='Odugavvis' />
+	<heroe id='Raadawk' />
+	<heroe id='Nukilah' />
+	<heroe id='Atanonak' />
+</ethnicity>

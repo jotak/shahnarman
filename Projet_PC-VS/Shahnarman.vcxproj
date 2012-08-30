@@ -1,0 +1,382 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{BE9C340B-435A-4931-8E18-952129DEC108}</ProjectGuid>
+    <RootNamespace>Shahnarman</RootNamespace>
+    <Keyword>Win32Proj</Keyword>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <CharacterSet>Unicode</CharacterSet>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup>
+    <_ProjectFileVersion>10.0.30319.1</_ProjectFileVersion>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">..\GameRoot\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(Configuration)\</IntDir>
+    <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</LinkIncremental>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(SolutionDir)$(Configuration)\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(Configuration)\</IntDir>
+    <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</LinkIncremental>
+    <IncludePath Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">E:\dev\sdk\Other includes;$(IncludePath)</IncludePath>
+    <ReferencePath Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">E:\dev\sdk\Other libs;$(ReferencePath)</ReferencePath>
+    <LibraryPath Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">E:\dev\sdk\Other libs;$(LibraryPath)</LibraryPath>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(ProjectName)_dbg</TargetName>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <Optimization>Disabled</Optimization>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;AVATARS_VS2005;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <MinimalRebuild>true</MinimalRebuild>
+      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
+    </ClCompile>
+    <Link>
+      <AdditionalDependencies>libogg.lib;libvorbis.lib;libvorbisfile.lib;OpenAL32.lib;glew32.lib;zlib.lib;libpng.lib;lua5.1.lib;kernel32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <OutputFile>..\Gameroot\$(ProjectName)_dbg.exe</OutputFile>
+      <IgnoreAllDefaultLibraries>false</IgnoreAllDefaultLibraries>
+      <IgnoreSpecificDefaultLibraries>msvcrt.lib;libcmt.lib;%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <SubSystem>Console</SubSystem>
+      <RandomizedBaseAddress>false</RandomizedBaseAddress>
+      <DataExecutionPrevention>
+      </DataExecutionPrevention>
+      <TargetMachine>MachineX86</TargetMachine>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+    </ClCompile>
+    <Link>
+      <AdditionalDependencies>glew32.lib;zlib.lib;libpng.lib;lua5.1.lib;User32.lib;kernel32.lib</AdditionalDependencies>
+      <OutputFile>..\Gameroot\$(ProjectName).exe</OutputFile>
+      <IgnoreSpecificDefaultLibraries>libcmt.lib;%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <SubSystem>Console</SubSystem>
+      <OptimizeReferences>true</OptimizeReferences>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <RandomizedBaseAddress>false</RandomizedBaseAddress>
+      <DataExecutionPrevention>
+      </DataExecutionPrevention>
+      <TargetMachine>MachineX86</TargetMachine>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="..\Sources\Data\FileSerializer.cpp" />
+    <ClCompile Include="..\Sources\Data\NetworkSerializer.cpp" />
+    <ClCompile Include="..\Sources\DeckData\ShahmahCreation.cpp" />
+    <ClCompile Include="..\Sources\Interface\CreateAvatarDlg.cpp" />
+    <ClCompile Include="..\Sources\Server\AISolver.cpp" />
+    <ClCompile Include="..\Sources\_System\DirectoryChecker.cpp" />
+    <ClCompile Include="..\Sources\_System\linux_utils.cpp" />
+    <ClCompile Include="..\Sources\_System\main.cpp" />
+    <ClCompile Include="..\Sources\_System\stdafx.cpp" />
+    <ClCompile Include="..\Sources\_System\TheAvatars.cpp" />
+    <ClCompile Include="..\Sources\_System\utils_win32.cpp" />
+    <ClCompile Include="..\Sources\Audio\AudioManager.cpp" />
+    <ClCompile Include="..\Sources\Data\DataFactory.cpp" />
+    <ClCompile Include="..\Sources\Data\IniFile.cpp" />
+    <ClCompile Include="..\Sources\Data\LocalisationTool.cpp" />
+    <ClCompile Include="..\Sources\Data\LuaContext.cpp" />
+    <ClCompile Include="..\Sources\Data\LuaObject.cpp" />
+    <ClCompile Include="..\Sources\Data\LuaTargetable.cpp" />
+    <ClCompile Include="..\Sources\Data\Parameters.cpp" />
+    <ClCompile Include="..\Sources\Data\XMLLiteElement.cpp" />
+    <ClCompile Include="..\Sources\Data\XMLLiteReader.cpp" />
+    <ClCompile Include="..\Sources\Data\XMLObject.cpp" />
+    <ClCompile Include="..\Sources\Debug\DebugManager.cpp" />
+    <ClCompile Include="..\Sources\Display\DisplayEngine.cpp" />
+    <ClCompile Include="..\Sources\Display\Texture.cpp" />
+    <ClCompile Include="..\Sources\Display\TextureEngine.cpp" />
+    <ClCompile Include="..\Sources\Fx\FxManager.cpp" />
+    <ClCompile Include="..\Sources\Gameboard\Building.cpp" />
+    <ClCompile Include="..\Sources\Gameboard\GameboardInputs.cpp" />
+    <ClCompile Include="..\Sources\Gameboard\GameboardManager.cpp" />
+    <ClCompile Include="..\Sources\Gameboard\Map.cpp" />
+    <ClCompile Include="..\Sources\Gameboard\MapCursor.cpp" />
+    <ClCompile Include="..\Sources\Gameboard\MapObject.cpp" />
+    <ClCompile Include="..\Sources\Gameboard\MapTile.cpp" />
+    <ClCompile Include="..\Sources\Gameboard\Pathfinder.cpp" />
+    <ClCompile Include="..\Sources\Gameboard\Skill.cpp" />
+    <ClCompile Include="..\Sources\Gameboard\SpecialTile.cpp" />
+    <ClCompile Include="..\Sources\Gameboard\Temple.cpp" />
+    <ClCompile Include="..\Sources\Gameboard\Town.cpp" />
+    <ClCompile Include="..\Sources\Gameboard\Unit.cpp" />
+    <ClCompile Include="..\Sources\Interface\ArtifactsEquipDlg.cpp" />
+    <ClCompile Include="..\Sources\Interface\BattleSpellPopup.cpp" />
+    <ClCompile Include="..\Sources\Interface\BuildDeckDlg.cpp" />
+    <ClCompile Include="..\Sources\Interface\GameOverDlg.cpp" />
+    <ClCompile Include="..\Sources\Interface\HostGameDlg.cpp" />
+    <ClCompile Include="..\Sources\Interface\InfoboxDlg.cpp" />
+    <ClCompile Include="..\Sources\Interface\InterfaceManager.cpp" />
+    <ClCompile Include="..\Sources\Interface\LevelUpDlg.cpp" />
+    <ClCompile Include="..\Sources\Interface\LoadGameDlg.cpp" />
+    <ClCompile Include="..\Sources\Interface\LogDlg.cpp" />
+    <ClCompile Include="..\Sources\Interface\MapObjectDlg.cpp" />
+    <ClCompile Include="..\Sources\Interface\MoveOrAttackDlg.cpp" />
+    <ClCompile Include="..\Sources\Interface\OptionsDlg.cpp" />
+    <ClCompile Include="..\Sources\Interface\PlayerSelectorDlg.cpp" />
+    <ClCompile Include="..\Sources\Interface\ResolveDlg.cpp" />
+    <ClCompile Include="..\Sources\Interface\SelectPlayerAvatarDlg.cpp" />
+    <ClCompile Include="..\Sources\Interface\ShopDlg.cpp" />
+    <ClCompile Include="..\Sources\Interface\SpellDlg.cpp" />
+    <ClCompile Include="..\Sources\Interface\SpellsSelectorDlg.cpp" />
+    <ClCompile Include="..\Sources\Interface\StartMenuDlg.cpp" />
+    <ClCompile Include="..\Sources\Interface\StatusDlg.cpp" />
+    <ClCompile Include="..\Sources\Interface\Tooltip.cpp" />
+    <ClCompile Include="..\Sources\Interface\UnitOptionsDlg.cpp" />
+    <ClCompile Include="..\Sources\Server\MapReader.cpp" />
+    <ClCompile Include="..\Sources\Server\NetworkData.cpp" />
+    <ClCompile Include="..\Sources\Server\Server.cpp" />
+    <ClCompile Include="..\Sources\Server\ServerUnit.cpp" />
+    <ClCompile Include="..\Sources\Server\SpellsSolver.cpp" />
+    <ClCompile Include="..\Sources\Server\TurnSolver.cpp" />
+    <ClCompile Include="..\Sources\Players\Artifact.cpp" />
+    <ClCompile Include="..\Sources\Players\Mana.cpp" />
+    <ClCompile Include="..\Sources\Players\Player.cpp" />
+    <ClCompile Include="..\Sources\Players\PlayerManager.cpp" />
+    <ClCompile Include="..\Sources\Players\PlayerManagerAbstract.cpp" />
+    <ClCompile Include="..\Sources\Players\Spell.cpp" />
+    <ClCompile Include="..\Sources\GUIClasses\guiButton.cpp" />
+    <ClCompile Include="..\Sources\GUIClasses\guiComboBox.cpp" />
+    <ClCompile Include="..\Sources\GUIClasses\guiComponent.cpp" />
+    <ClCompile Include="..\Sources\GUIClasses\guiContainer.cpp" />
+    <ClCompile Include="..\Sources\GUIClasses\guiDocument.cpp" />
+    <ClCompile Include="..\Sources\GUIClasses\guiEditBox.cpp" />
+    <ClCompile Include="..\Sources\GUIClasses\guiFrame.cpp" />
+    <ClCompile Include="..\Sources\GUIClasses\guiGauge.cpp" />
+    <ClCompile Include="..\Sources\GUIClasses\guiImage.cpp" />
+    <ClCompile Include="..\Sources\GUIClasses\guiLabel.cpp" />
+    <ClCompile Include="..\Sources\GUIClasses\guiList.cpp" />
+    <ClCompile Include="..\Sources\GUIClasses\guiObject.cpp" />
+    <ClCompile Include="..\Sources\GUIClasses\guiPopup.cpp" />
+    <ClCompile Include="..\Sources\GUIClasses\guiSmartSlider.cpp" />
+    <ClCompile Include="..\Sources\GUIClasses\guiTabbedFrame.cpp" />
+    <ClCompile Include="..\Sources\GUIClasses\guiToggleButton.cpp" />
+    <ClCompile Include="..\Sources\GUIClasses\FrameEffects\EffectComeIn.cpp" />
+    <ClCompile Include="..\Sources\GUIClasses\FrameEffects\EffectExtract.cpp" />
+    <ClCompile Include="..\Sources\GUIClasses\FrameEffects\guiFrameEffect.cpp" />
+    <ClCompile Include="..\Sources\GUIClasses\FrameEffects\guiFrameFlash.cpp" />
+    <ClCompile Include="..\Sources\GUIClasses\FrameEffects\guiFrameIntro.cpp" />
+    <ClCompile Include="..\Sources\GUIClasses\FrameEffects\guiFrameMouseFocus.cpp" />
+    <ClCompile Include="..\Sources\GUIClasses\FrameEffects\guiFrameOutro.cpp" />
+    <ClCompile Include="..\Sources\Fonts\Font.cpp" />
+    <ClCompile Include="..\Sources\Fonts\FontEngine.cpp" />
+    <ClCompile Include="..\Sources\Geometries\Geometry.cpp" />
+    <ClCompile Include="..\Sources\Geometries\GeometryCylinder.cpp" />
+    <ClCompile Include="..\Sources\Geometries\GeometryModifier.cpp" />
+    <ClCompile Include="..\Sources\Geometries\GeometryQuads.cpp" />
+    <ClCompile Include="..\Sources\Geometries\GeometryText.cpp" />
+    <ClCompile Include="..\Sources\Geometries\ModProgressiveBlending.cpp" />
+    <ClCompile Include="..\Sources\Geometries\ModProgressiveRotate.cpp" />
+    <ClCompile Include="..\Sources\Geometries\ModProgressiveScaling.cpp" />
+    <ClCompile Include="..\Sources\Geometries\StencilGeometry.cpp" />
+    <ClCompile Include="..\Sources\Physics\ConstantMovement3D.cpp" />
+    <ClCompile Include="..\Sources\Physics\FasloMove.cpp" />
+    <ClCompile Include="..\Sources\Physics\Movement.cpp" />
+    <ClCompile Include="..\Sources\Physics\PhysicalObject.cpp" />
+    <ClCompile Include="..\Sources\Physics\SlofasloMove.cpp" />
+    <ClCompile Include="..\Sources\Common\md5.cpp" />
+    <ClCompile Include="..\Sources\Common\ObjectList.cpp" />
+    <ClCompile Include="..\Sources\Common\SortInterface.cpp" />
+    <ClCompile Include="..\Sources\Common\TimeController.cpp" />
+    <ClCompile Include="..\Sources\Input\InputEngine.cpp" />
+    <ClCompile Include="..\Sources\Input\PCInputEngine.cpp" />
+    <ClCompile Include="..\Sources\DeckData\AvatarData.cpp" />
+    <ClCompile Include="..\Sources\DeckData\Edition.cpp" />
+    <ClCompile Include="..\Sources\DeckData\Ethnicity.cpp" />
+    <ClCompile Include="..\Sources\DeckData\Profile.cpp" />
+    <ClCompile Include="..\Sources\DeckData\ProgressionElement.cpp" />
+    <ClCompile Include="..\Sources\DeckData\ProgressionTree.cpp" />
+    <ClCompile Include="..\Sources\DeckData\ShopItem.cpp" />
+    <ClCompile Include="..\Sources\DeckData\UnitData.cpp" />
+    <ClCompile Include="..\Sources\GameRoot.cpp" />
+    <ClCompile Include="..\Sources\LocalClient.cpp" />
+    <ClCompile Include="..\Sources\lua_callbacks.cpp" />
+    <ClCompile Include="..\Sources\utils.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\Sources\Data\FileSerializer.h" />
+    <ClInclude Include="..\Sources\Data\NetworkSerializer.h" />
+    <ClInclude Include="..\Sources\Data\Serializer.h" />
+    <ClInclude Include="..\Sources\DeckData\ShahmahCreation.h" />
+    <ClInclude Include="..\Sources\Interface\CreateAvatarDlg.h" />
+    <ClInclude Include="..\Sources\Server\AISolver.h" />
+    <ClInclude Include="..\Sources\_System\stdafx.h" />
+    <ClInclude Include="..\Sources\Audio\AudioManager.h" />
+    <ClInclude Include="..\Sources\Data\DataFactory.h" />
+    <ClInclude Include="..\Sources\Data\IniFile.h" />
+    <ClInclude Include="..\Sources\Data\LocalisationTool.h" />
+    <ClInclude Include="..\Sources\Data\LuaContext.h" />
+    <ClInclude Include="..\Sources\Data\LuaObject.h" />
+    <ClInclude Include="..\Sources\Data\LuaTargetable.h" />
+    <ClInclude Include="..\Sources\Data\Parameters.h" />
+    <ClInclude Include="..\Sources\Data\XMLLiteElement.h" />
+    <ClInclude Include="..\Sources\Data\XMLLiteReader.h" />
+    <ClInclude Include="..\Sources\Data\XMLObject.h" />
+    <ClInclude Include="..\Sources\Debug\DebugManager.h" />
+    <ClInclude Include="..\Sources\Display\DisplayEngine.h" />
+    <ClInclude Include="..\Sources\Display\Texture.h" />
+    <ClInclude Include="..\Sources\Display\TextureEngine.h" />
+    <ClInclude Include="..\Sources\Fx\FxManager.h" />
+    <ClInclude Include="..\Sources\Gameboard\Building.h" />
+    <ClInclude Include="..\Sources\Gameboard\GameboardInputs.h" />
+    <ClInclude Include="..\Sources\Gameboard\GameboardManager.h" />
+    <ClInclude Include="..\Sources\Gameboard\Map.h" />
+    <ClInclude Include="..\Sources\Gameboard\MapCursor.h" />
+    <ClInclude Include="..\Sources\Gameboard\MapObject.h" />
+    <ClInclude Include="..\Sources\Gameboard\MapTile.h" />
+    <ClInclude Include="..\Sources\Gameboard\Pathfinder.h" />
+    <ClInclude Include="..\Sources\Gameboard\Skill.h" />
+    <ClInclude Include="..\Sources\Gameboard\SpecialTile.h" />
+    <ClInclude Include="..\Sources\Gameboard\Temple.h" />
+    <ClInclude Include="..\Sources\Gameboard\Town.h" />
+    <ClInclude Include="..\Sources\Gameboard\Unit.h" />
+    <ClInclude Include="..\Sources\Interface\ArtifactsEquipDlg.h" />
+    <ClInclude Include="..\Sources\Interface\BattleSpellPopup.h" />
+    <ClInclude Include="..\Sources\Interface\BuildDeckDlg.h" />
+    <ClInclude Include="..\Sources\Interface\GameOverDlg.h" />
+    <ClInclude Include="..\Sources\Interface\HostGameDlg.h" />
+    <ClInclude Include="..\Sources\Interface\InfoboxDlg.h" />
+    <ClInclude Include="..\Sources\Interface\InterfaceManager.h" />
+    <ClInclude Include="..\Sources\Interface\LevelUpDlg.h" />
+    <ClInclude Include="..\Sources\Interface\LoadGameDlg.h" />
+    <ClInclude Include="..\Sources\Interface\LogDlg.h" />
+    <ClInclude Include="..\Sources\Interface\MapObjectDlg.h" />
+    <ClInclude Include="..\Sources\Interface\MoveOrAttackDlg.h" />
+    <ClInclude Include="..\Sources\Interface\OptionsDlg.h" />
+    <ClInclude Include="..\Sources\Interface\PlayerSelectorDlg.h" />
+    <ClInclude Include="..\Sources\Interface\ResolveDlg.h" />
+    <ClInclude Include="..\Sources\Interface\SelectPlayerAvatarDlg.h" />
+    <ClInclude Include="..\Sources\Interface\ShopDlg.h" />
+    <ClInclude Include="..\Sources\Interface\SpellDlg.h" />
+    <ClInclude Include="..\Sources\Interface\SpellsSelectorDlg.h" />
+    <ClInclude Include="..\Sources\Interface\StackGroupInterface.h" />
+    <ClInclude Include="..\Sources\Interface\StartMenuDlg.h" />
+    <ClInclude Include="..\Sources\Interface\StatusDlg.h" />
+    <ClInclude Include="..\Sources\Interface\Tooltip.h" />
+    <ClInclude Include="..\Sources\Interface\UnitOptionsDlg.h" />
+    <ClInclude Include="..\Sources\Server\MapReader.h" />
+    <ClInclude Include="..\Sources\Server\NetworkData.h" />
+    <ClInclude Include="..\Sources\Server\Server.h" />
+    <ClInclude Include="..\Sources\Server\SpellsSolver.h" />
+    <ClInclude Include="..\Sources\Server\TurnSolver.h" />
+    <ClInclude Include="..\Sources\Players\Artifact.h" />
+    <ClInclude Include="..\Sources\Players\Mana.h" />
+    <ClInclude Include="..\Sources\Players\Player.h" />
+    <ClInclude Include="..\Sources\Players\PlayerManager.h" />
+    <ClInclude Include="..\Sources\Players\PlayerManagerAbstract.h" />
+    <ClInclude Include="..\Sources\Players\Spell.h" />
+    <ClInclude Include="..\Sources\GUIClasses\ComponentOwnerInterface.h" />
+    <ClInclude Include="..\Sources\GUIClasses\guiButton.h" />
+    <ClInclude Include="..\Sources\GUIClasses\guiComboBox.h" />
+    <ClInclude Include="..\Sources\GUIClasses\guiComponent.h" />
+    <ClInclude Include="..\Sources\GUIClasses\guiContainer.h" />
+    <ClInclude Include="..\Sources\GUIClasses\guiDocument.h" />
+    <ClInclude Include="..\Sources\GUIClasses\guiEditBox.h" />
+    <ClInclude Include="..\Sources\GUIClasses\guiFrame.h" />
+    <ClInclude Include="..\Sources\GUIClasses\guiGauge.h" />
+    <ClInclude Include="..\Sources\GUIClasses\guiImage.h" />
+    <ClInclude Include="..\Sources\GUIClasses\guiLabel.h" />
+    <ClInclude Include="..\Sources\GUIClasses\guiList.h" />
+    <ClInclude Include="..\Sources\GUIClasses\guiObject.h" />
+    <ClInclude Include="..\Sources\GUIClasses\guiPopup.h" />
+    <ClInclude Include="..\Sources\GUIClasses\guiSmartSlider.h" />
+    <ClInclude Include="..\Sources\GUIClasses\guiTabbedFrame.h" />
+    <ClInclude Include="..\Sources\GUIClasses\guiToggleButton.h" />
+    <ClInclude Include="..\Sources\GUIClasses\FrameEffects\EffectComeIn.h" />
+    <ClInclude Include="..\Sources\GUIClasses\FrameEffects\EffectExtract.h" />
+    <ClInclude Include="..\Sources\GUIClasses\FrameEffects\guiFrameEffect.h" />
+    <ClInclude Include="..\Sources\GUIClasses\FrameEffects\guiFrameFlash.h" />
+    <ClInclude Include="..\Sources\GUIClasses\FrameEffects\guiFrameIntro.h" />
+    <ClInclude Include="..\Sources\GUIClasses\FrameEffects\guiFrameMouseFocus.h" />
+    <ClInclude Include="..\Sources\GUIClasses\FrameEffects\guiFrameOutro.h" />
+    <ClInclude Include="..\Sources\Fonts\Font.h" />
+    <ClInclude Include="..\Sources\Fonts\FontEngine.h" />
+    <ClInclude Include="..\Sources\Geometries\Geometry.h" />
+    <ClInclude Include="..\Sources\Geometries\GeometryCylinder.h" />
+    <ClInclude Include="..\Sources\Geometries\GeometryModifier.h" />
+    <ClInclude Include="..\Sources\Geometries\GeometryQuads.h" />
+    <ClInclude Include="..\Sources\Geometries\GeometryText.h" />
+    <ClInclude Include="..\Sources\Geometries\ModProgressiveBlending.h" />
+    <ClInclude Include="..\Sources\Geometries\ModProgressiveRotate.h" />
+    <ClInclude Include="..\Sources\Geometries\ModProgressiveScaling.h" />
+    <ClInclude Include="..\Sources\Geometries\StencilGeometry.h" />
+    <ClInclude Include="..\Sources\Physics\ConstantMovement3D.h" />
+    <ClInclude Include="..\Sources\Physics\FasloMove.h" />
+    <ClInclude Include="..\Sources\Physics\Movement.h" />
+    <ClInclude Include="..\Sources\Physics\PhysicalObject.h" />
+    <ClInclude Include="..\Sources\Physics\SlofasloMove.h" />
+    <ClInclude Include="..\Sources\Common\BaseObject.h" />
+    <ClInclude Include="..\Sources\Common\GraphicObject.h" />
+    <ClInclude Include="..\Sources\Common\md5.h" />
+    <ClInclude Include="..\Sources\Common\ObjectList.h" />
+    <ClInclude Include="..\Sources\Common\SortInterface.h" />
+    <ClInclude Include="..\Sources\Common\TimeController.h" />
+    <ClInclude Include="..\Sources\Input\EventListener.h" />
+    <ClInclude Include="..\Sources\Input\InputEngine.h" />
+    <ClInclude Include="..\Sources\Input\KeyboardInputEngine.h" />
+    <ClInclude Include="..\Sources\Input\KeyboardListener.h" />
+    <ClInclude Include="..\Sources\Input\PCInputEngine.h" />
+    <ClInclude Include="..\Sources\DeckData\AvatarData.h" />
+    <ClInclude Include="..\Sources\DeckData\Edition.h" />
+    <ClInclude Include="..\Sources\DeckData\Ethnicity.h" />
+    <ClInclude Include="..\Sources\DeckData\Profile.h" />
+    <ClInclude Include="..\Sources\DeckData\ProgressionElement.h" />
+    <ClInclude Include="..\Sources\DeckData\ProgressionTree.h" />
+    <ClInclude Include="..\Sources\DeckData\ShopItem.h" />
+    <ClInclude Include="..\Sources\DeckData\UnitData.h" />
+    <ClInclude Include="..\Sources\errorcodes.h" />
+    <ClInclude Include="..\Sources\GameRoot.h" />
+    <ClInclude Include="..\Sources\LocalClient.h" />
+    <ClInclude Include="..\Sources\lua_callbacks.h" />
+    <ClInclude Include="..\Sources\lua_callbacks_utils.h" />
+    <ClInclude Include="..\Sources\SystemHeaders.h" />
+    <ClInclude Include="..\Sources\utils.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\Docs\NOTES - LUA.txt" />
+    <None Include="..\Docs\NOTES.txt" />
+    <None Include="..\Docs\TODO - GD.txt" />
+    <None Include="..\Docs\TODO - LUA.txt" />
+    <None Include="..\Docs\TODO.txt" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

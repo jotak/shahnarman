@@ -1,0 +1,28 @@
+Barbarians:Populations grow faster than any other race, most troops have throwing weapons, giving them a decent first strike before other blows are dealt. Only missing a few high end building. Berserkers are nice.
+
+Gnolls: Grow a little slowly, all units have extra attack, but cities can't build many buildings.
+
+Halflings: Farmers grow more than others, units have less attack but more defense and resistance, are "Lucky" (small bonus to attack, defense, resistance, etc.), and some units come in units of 8 (default is 6). Also only missing some high end buildings. Also, they generate the least unrest in conquered races (or when they themselves are conquered).
+
+High Elf: Generates 1/2 Power per population (power is what goes into mana generation, research, or skill building), grow quite slowly, units move through forests easily, have higher resistance, and have small bonuses to hit. Generate higher than average unrest in conquered people.
+
+High Men: All around, their units have no bonuses, they can build almost everything, and have good unique units. Also note, that their units are base price (most other armies whose units have bonuses are also more expensive).
+
+Klackon (think bug people): Units have bonus defense, and a good unique unit, but lack many building options, and grow a little slowly. Workers produce extra Also, klackons ruled by klackons have an unrest decrease, but very disagreeable as conquerers or as the conquered.
+
+Lizardman: Units have extra defense, resistance, and health (given units have multiple men per unit, this means an extra hit on every guy. Not huge, but definitely good), and are amphibious. Unfortunately, they are probably the most gimped in building options in their cities. Population grows slower than barbarians, but faster than everyone else.
+
+Nomads: The final human side, they grow a tad slowly, but get some extra gold, and have most building options open to them. Rangers are good.
+
+Orcs: The most average of the average. Can build everything, excel at nothing.
+
+The following races can only be found on Myrror:
+Beastmen: Produce 1/2 power per population, have extra attack, small resistance bonus, and health in units.
+
+Dark Elves: 1 Power per population, units have extra magic resistance, and basic units have inherent ranged magic attack. Also produce massive unrest in conquered races.
+
+Draconians: Units fly, breathe fire (same as barbarian thrown weapons), and have extra defense and resistance. Produce 1/2 power per population.
+
+Dwarves: Workers produce more, cities produce more gold, units have bonus health (more than beastmen and lizardmen) and resistance, engineers build roads faster (roads allow faster movement), and bonuses from special ores in hills near cities are doubled. Good unique units. Produce a good amount of unrest in conquered people.
+
+Trolls: Units come in groups of 4, but are strong, have high resistance, have most health of any race, and regenerate during battle (also, fully heal after battle, and dead units come back as long as their side won). Produce more unrest in conquered people than usual.

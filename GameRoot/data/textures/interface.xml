@@ -1,0 +1,270 @@
+<item name="BigButtonNormal">
+	<ustart>0</ustart>
+	<uend>63</uend>
+	<vstart>0</vstart>
+	<vend>63</vend>
+</item>
+<item name="BigButtonClicked">
+	<ustart>64</ustart>
+	<uend>127</uend>
+	<vstart>0</vstart>
+	<vend>63</vend>
+</item>
+<item name="ComboLeft">
+	<ustart>0</ustart>
+	<uend>15</uend>
+	<vstart>66</vstart>
+	<vend>92</vend>
+</item>
+<item name="ComboMiddle">
+	<ustart>16</ustart>
+	<uend>31</uend>
+	<vstart>66</vstart>
+	<vend>92</vend>
+</item>
+<item name="ComboRight">
+	<ustart>32</ustart>
+	<uend>63</uend>
+	<vstart>66</vstart>
+	<vend>92</vend>
+</item>
+<item name="SmallButtonClicked">
+	<ustart>64</ustart>
+	<uend>95</uend>
+	<vstart>64</vstart>
+	<vend>95</vend>
+</item>
+<item name="SmallButtonNormal">
+	<ustart>96</ustart>
+	<uend>127</uend>
+	<vstart>64</vstart>
+	<vend>95</vend>
+</item>
+<item name="Selector">
+	<ustart>0</ustart>
+	<uend>31</uend>
+	<vstart>96</vstart>
+	<vend>127</vend>
+</item>
+<item name="WinBg">
+	<ustart>32</ustart>
+	<uend>47</uend>
+	<vstart>96</vstart>
+	<vend>111</vend>
+</item>
+<item name="LstTL">
+	<ustart>32</ustart>
+	<uend>35</uend>
+	<vstart>112</vstart>
+	<vend>115</vend>
+</item>
+<item name="LstTC">
+	<ustart>36</ustart>
+	<uend>39</uend>
+	<vstart>112</vstart>
+	<vend>115</vend>
+</item>
+<item name="LstTR">
+	<ustart>40</ustart>
+	<uend>43</uend>
+	<vstart>112</vstart>
+	<vend>115</vend>
+</item>
+<item name="LstCL">
+	<ustart>32</ustart>
+	<uend>35</uend>
+	<vstart>116</vstart>
+	<vend>119</vend>
+</item>
+<item name="LstCR">
+	<ustart>40</ustart>
+	<uend>43</uend>
+	<vstart>116</vstart>
+	<vend>119</vend>
+</item>
+<item name="LstBL">
+	<ustart>32</ustart>
+	<uend>35</uend>
+	<vstart>120</vstart>
+	<vend>123</vend>
+</item>
+<item name="LstBC">
+	<ustart>36</ustart>
+	<uend>39</uend>
+	<vstart>120</vstart>
+	<vend>123</vend>
+</item>
+<item name="LstBR">
+	<ustart>40</ustart>
+	<uend>43</uend>
+	<vstart>120</vstart>
+	<vend>123</vend>
+</item>
+<item name="TabSelLeft">
+	<ustart>48</ustart>
+	<uend>55</uend>
+	<vstart>96</vstart>
+	<vend>121</vend>
+</item>
+<item name="TabSelMiddle">
+	<ustart>56</ustart>
+	<uend>63</uend>
+	<vstart>96</vstart>
+	<vend>121</vend>
+</item>
+<item name="TabSelRight">
+	<ustart>64</ustart>
+	<uend>71</uend>
+	<vstart>96</vstart>
+	<vend>121</vend>
+</item>
+<item name="TabLeft">
+	<ustart>72</ustart>
+	<uend>75</uend>
+	<vstart>96</vstart>
+	<vend>117</vend>
+</item>
+<item name="TabMiddle">
+	<ustart>76</ustart>
+	<uend>79</uend>
+	<vstart>96</vstart>
+	<vend>117</vend>
+</item>
+<item name="TabRight">
+	<ustart>80</ustart>
+	<uend>83</uend>
+	<vstart>96</vstart>
+	<vend>117</vend>
+</item>
+<item name="EditBg">
+	<ustart>84</ustart>
+	<uend>99</uend>
+	<vstart>96</vstart>
+	<vend>111</vend>
+</item>
+<item name="Transparent">
+	<ustart>84</ustart>
+	<uend>87</uend>
+	<vstart>112</vstart>
+	<vend>115</vend>
+</item>
+<item name="AlmostTransparent">
+	<ustart>88</ustart>
+	<uend>91</uend>
+	<vstart>112</vstart>
+	<vend>115</vend>
+</item>
+<item name="FrmTL">
+	<ustart>100</ustart>
+	<uend>107</uend>
+	<vstart>96</vstart>
+	<vend>103</vend>
+</item>
+<item name="FrmTC">
+	<ustart>108</ustart>
+	<uend>115</uend>
+	<vstart>96</vstart>
+	<vend>103</vend>
+</item>
+<item name="FrmTR">
+	<ustart>116</ustart>
+	<uend>122</uend>
+	<vstart>96</vstart>
+	<vend>103</vend>
+</item>
+<item name="FrmCL">
+	<ustart>100</ustart>
+	<uend>107</uend>
+	<vstart>104</vstart>
+	<vend>111</vend>
+</item>
+<item name="FrmCR">
+	<ustart>116</ustart>
+	<uend>122</uend>
+	<vstart>104</vstart>
+	<vend>111</vend>
+</item>
+<item name="FrmBL">
+	<ustart>100</ustart>
+	<uend>107</uend>
+	<vstart>112</vstart>
+	<vend>118</vend>
+</item>
+<item name="FrmBC">
+	<ustart>108</ustart>
+	<uend>115</uend>
+	<vstart>112</vstart>
+	<vend>118</vend>
+</item>
+<item name="FrmBR">
+	<ustart>116</ustart>
+	<uend>122</uend>
+	<vstart>112</vstart>
+	<vend>118</vend>
+</item>
+<item name="Caret">
+	<ustart>123</ustart>
+	<uend>123</uend>
+	<vstart>96</vstart>
+	<vend>111</vend>
+</item>
+<item name="CheckBoxTick">
+	<ustart>128</ustart>
+	<uend>150</uend>
+	<vstart>0</vstart>
+	<vend>21</vend>
+</item>
+<item name="CheckBox">
+	<ustart>128</ustart>
+	<uend>150</uend>
+	<vstart>22</vstart>
+	<vend>43</vend>
+</item>
+<item name="ComboListBg">
+	<ustart>128</ustart>
+	<uend>135</uend>
+	<vstart>45</vstart>
+	<vend>52</vend>
+</item>
+<item name="ComboListBorder">
+	<ustart>128</ustart>
+	<uend>128</uend>
+	<vstart>53</vstart>
+	<vend>53</vend>
+</item>
+<item name="WhiteButtonClicked">
+	<ustart>151</ustart>
+	<uend>182</uend>
+	<vstart>0</vstart>
+	<vend>31</vend>
+</item>
+<item name="WhiteButtonNormal">
+	<ustart>183</ustart>
+	<uend>214</uend>
+	<vstart>0</vstart>
+	<vend>31</vend>
+</item>
+<item name="LeftArrow">
+	<ustart>215</ustart>
+	<uend>224</uend>
+	<vstart>0</vstart>
+	<vend>16</vend>
+</item>
+<item name="RightArrow">
+	<ustart>225</ustart>
+	<uend>234</uend>
+	<vstart>0</vstart>
+	<vend>16</vend>
+</item>
+<item name="GaugeBg">
+	<ustart>0</ustart>
+	<uend>255</uend>
+	<vstart>128</vstart>
+	<vend>159</vend>
+</item>
+<item name="GaugeFg">
+	<ustart>0</ustart>
+	<uend>255</uend>
+	<vstart>160</vstart>
+	<vend>191</vend>
+</item>

@@ -1,0 +1,30 @@
+<shahmah_creation>
+  <skill luafile='ManaProductor' parameters='1 0 0 0' cost=5 />
+  <skill luafile='ManaProductor' parameters='0 1 0 0' cost=5 />
+  <skill luafile='ManaProductor' parameters='0 0 1 0' cost=5 />
+  <skill luafile='ManaProductor' parameters='0 0 0 1' cost=5 />
+  <skill luafile='EPODealer' cost=5 />
+  <skill luafile='FirstStrike' cost=8 />
+  <skill luafile='MagicCircle' cost=3 />
+  <ethnicity name='Galates' cost=3>
+	  <image name='elephant' />
+	  <image name='chien' />
+  </ethnicity>
+  <ethnicity name='Peraa' cost=3>
+	  <image name='gimp' />
+	  <image name='chien' />
+  </ethnicity>
+  <ethnicity name='Huanakos' cost=3>
+	  <image name='fee' />
+	  <image name='gimp' />
+	  <image name='chien' />
+  </ethnicity>
+  <ethnicity name='Hakhamanes' cost=3>
+	  <image name='elephant' />
+	  <image name='fee' />
+  </ethnicity>
+  <ethnicity name='Mawohka' cost=3>
+	  <image name='fee' />
+	  <image name='gimp' />
+  </ethnicity>
+</shahmah_creation>

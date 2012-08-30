@@ -1,0 +1,55 @@
+	<building id='Barrack' x=10 y=10 />
+	<building id='Farm' x=100 y=10 />
+	<building id='Granary' x=200 y=10 />
+	<building id='Tavern' x=300 y=10 />
+	<building id='Marketplace' x=400 y=10 />
+	<building id='Workshop' x=500 y=10 />
+	<building id='Blacksmith' x=600 y=10 />
+	<building id='Armory' x=700 y=10 />
+	<building id='Stables' x=800 y=10 />
+	<building id='ArcheryRange' x=900 y=10 />
+	<building id='Shrine' x=10 y=100 />
+	<building id='Temple' x=100 y=100 />
+	<building id='CouncilHall' x=200 y=100 />
+	<building id='Palace' x=300 y=100 />
+
+	<building id='Barrack' />
+	<building id='Farm'>
+		<allows>
+			<building id='Granary'>
+				<allows>
+					<building id='Tavern' />
+				</allows>
+			</building>
+			<building id='Marketplace' />
+		</allows>
+	</building>
+	<building id='Workshop'>
+		<allows>
+			<building id='Blacksmith'>
+				<allows>
+					<building id='Armory' />
+				</allows>
+			</building>
+			<building id='Stables'>
+				<requires>
+					<building>Barracks</building>
+				</requires>
+			</building>
+			<building id='ArcheryRange'>
+				<requires>
+					<building>Barracks</building>
+				</requires>
+			</building>
+		</allows>
+	</building>
+	<building id='Shrine'>
+		<allows>
+			<building id='Temple' />
+		</allows>
+	</building>
+	<building id='CouncilHall'>
+		<allows>
+			<building id='Palace' />
+		</allows>
+	</building>
