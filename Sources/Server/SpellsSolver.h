@@ -41,8 +41,6 @@ public:
   void startResolveSpells(ResolveSpellsState state);
   void waitForInstantSpells(ResolveSpellsState state);
   void resolveChildEffect(Player * pPlayer, Unit * pUnit, ChildEffect * pChild);
-//  Spell * getSpellBeingResolved() { return m_pSpellBeingCast; };
-//  ChildEffect * getEffectBeingResolved() { return m_pCurrentChildEffect; };
   LuaContext * retrieveLuaContext(u32 uExpectedType = 0, NetworkData * pSerialize = NULL, int iEffect = -1);
 
   // Messages from clients
@@ -52,7 +50,7 @@ public:
 
   // Handlers called from LUA
   void onDamageUnit(u8 uPlayerId, u32 uUnitId, u8 uDamages);
-  void onAddUnit(CoordsMap mapPos, const char * sName, u8 uOwner);
+  Unit * onAddUnit(CoordsMap mapPos, const char * sName, u8 uOwner, bool bSimulate = false);
   void onAttachToUnit(u8 uPlayerId, u32 uUnitId);
   void onAttachToPlayer(u8 uPlayerId);
   void onAttachToTown(u32 uTownId);
@@ -60,23 +58,26 @@ public:
   void onAttachToTile(CoordsMap pos);
   void onAddChildEffectToUnit(int iEffectId, u8 uPlayerId, u32 uUnitId);
   void onRemoveChildEffectFromUnit(int iEffectId, u8 uPlayerId, u32 uUnitId);
+  void onAddChildEffectToTown(int iEffectId, u32 uTownId);
+  void onRemoveChildEffectFromTown(int iEffectId, u32 uTownId);
   void onDiscardSpell(u8 uSrc, int iPlayerId, int iSpellId);
   void onDrawSpell(u8 uPlayerId, u32 uSpellId);
   void onRecallSpell(const wchar_t * sType, u8 uPlayerId, u32 uSpellId);
   void onAttachAsGlobal();
   void onDetachFromGlobal();
   void onSelectTargetThenResolve(u8 uType, u32 uConstraints, wchar_t * sCallback);
-  void onDeactivateSkill(u8 uPlayerId, u32 uUnitId, u32 uSkillId);
+  void onDeactivateSkill(long iPlayerId, long iUnitId, long iSkillId);
   void onChangeSpellOwner(const wchar_t * sType, u8 uOldOwner, u32 uSpellId, u8 uNewOwner);
   void onChangeUnitOwner(u8 uOldOwner, u32 uUnitId, u8 uNewOwner);
   void onChangeTownOwner(u32 uTownId, u8 uNewOwner);
   void onBuildBuilding(u32 uTownId, wchar_t * sName);
   void onProduceMana(int playerId, CoordsMap srcPos, u8 * pMana);
-  void onUpdateMaxMana(int playerId, CoordsMap srcPos, u8 * pMana);
+  //void onUpdateMaxMana(int playerId, CoordsMap srcPos, u8 * pMana);
   void onAddSkillToUnit(wchar_t * sSkillName, wchar_t * sSkillParams, u8 uPlayerId, u32 uUnitId);
   void onHideSpecialTile(u32 uTileId);
   void onTeleport(MapObject * pMapObj, CoordsMap pos);
   void onResurrect(u8 uPlayerId, u32 uUnitId);
+  void onRemoveUnit(u8 uPlayerId, u32 uUnitId);
   int onAddMagicCircle(Player * pPlayer, CoordsMap pos);
   void onRemoveMagicCircle(Player * pPlayer, int iCircle);
   void onAddGoldToPlayer(u8 uPlayerId, int iAmount);
@@ -102,11 +103,8 @@ private:
   int m_iPlayerIt;
 
   // Temporary spell data
-//  Player * m_pCurrentCaster;
   LuaObject * m_pLuaBeingResolved;
-//  NetworkData * m_pSpellNetworkData;
   bool m_bPauseResolving;
-//  ChildEffect * m_pCurrentChildEffect;
   LuaContext m_LuaContext;
 };
 

@@ -1,6 +1,25 @@
 #include "ShopItem.h"
+#include "../Data/XMLObject.h"
 #include "../Data/LocalisationTool.h"
 #include "../GUIClasses/guiPopup.h"
+
+// -----------------------------------------------------------------
+// Name : ShopItem
+//  ctor
+// -----------------------------------------------------------------
+ShopItem::ShopItem()
+{
+  m_pXml = new XMLObject();
+}
+
+// -----------------------------------------------------------------
+// Name : ~ShopItem
+//  destructor
+// -----------------------------------------------------------------
+ShopItem::~ShopItem()
+{
+  delete m_pXml;
+}
 
 // -----------------------------------------------------------------
 // Name : getInfo
@@ -44,9 +63,10 @@ guiPopup * ShopItem::createPopup(int iCash, DisplayEngine * pDisplay)
   pLbl->setBoxWidth(iDocWidth - 20 - iImageSize);
 
   // Add full description
+  m_pXml->findLocalizedElement(sText, 512, i18n->getCurrentLanguageName(), L"description");
   int yPxl = 10 + max(pLbl->getHeight() + 5, 5 + iImageSize);
   guiLabel * pLbl2 = new guiLabel();
-  pLbl2->init(m_sFullText, pLbl->getFontId(), pLbl->getDiffuseColor(), L"FullDescription", 5, yPxl, iDocWidth - 10, 0, pDisplay);
+  pLbl2->init(sText, pLbl->getFontId(), pLbl->getDiffuseColor(), L"FullDescription", 5, yPxl, iDocWidth - 10, 0, pDisplay);
   pPopup->getDocument()->addComponent(pLbl2);
 
   // Update buttons data

@@ -76,6 +76,10 @@ public:
   // Static default constructors
   static guiContainer * createDefaultPanel(int width, int height, wchar_t * sId, DisplayEngine * pDisplay);
 
+  // Static data
+  static void initStatic();
+  static void deleteStatic();
+
 protected:
   int m_iMaxWidth;
   int m_iMaxHeight;
@@ -84,8 +88,14 @@ protected:
   int m_iInnerWidth;
   int m_iInnerHeight;
   guiDocument * m_pDoc;
-//  guiObject * m_pSelectedObject;
   StencilGeometry * m_pStencilGeometry;
+  static GeometryQuads * m_pScrollButtons[4];   // top, bottom, left, right
+  bool m_bShowScrollButtons[4];                 // top, bottom, left, right
+  CoordsScreen m_ScrollButtonsCoords[4];        // top, bottom, left, right
+  int m_iClickedScroll;
+  float m_fScrollDelta;
+  static int m_iScrollButtonWidth;
+  static int m_iScrollButtonHeight;
   FrameFitBehavior m_WidthFit;
   FrameFitBehavior m_HeightFit;
   int m_iXOffset;
@@ -93,6 +103,7 @@ protected:
 
 private:
   int computeQuadsList(QuadData *** pQuads, int * iTextures, DisplayEngine * pDisplay);
+  void stepScroll(int iDir);  // 0=top, 1=bottom, 2=left, 3=right
 };
 
 #endif

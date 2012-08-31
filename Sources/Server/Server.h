@@ -71,6 +71,7 @@
 #define NETWORKMSG_ADD_MAGIC_CIRCLE                         269
 #define NETWORKMSG_REMOVE_MAGIC_CIRCLE                      270
 #define NETWORKMSG_RECALL_SPELLS                            271
+#define NETWORKMSG_REMOVE_UNIT                              272
 
 class DataFactory;
 class TurnSolver;

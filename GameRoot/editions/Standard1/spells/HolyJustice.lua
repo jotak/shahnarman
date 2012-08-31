@@ -32,8 +32,11 @@ function onResolve(params)
 			life, law, death, chaos = getUnitAlignment(player, unit)
 			unitx, unity = getObjectPosition("unit", player, unit)
 			if math.abs(x-unitx) <= 4 and math.abs(y-unity) <= 4 and death == 1 then
-				endurance = getUnitData(player, unit, "endurance")
-				damageUnit(player, unit, endurance)
+				b = isShahmah(player, unit)
+				if b == 0 then
+					endurance = getUnitData(player, unit, "endurance")
+					damageUnit(player, unit, endurance)
+				end
 			end
 		end
 	end

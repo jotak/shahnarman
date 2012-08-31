@@ -55,6 +55,7 @@ InterfaceManager::InterfaceManager(LocalClient * pLocalClient) : EventListener(7
   m_pTargetedObject = NULL;
   m_uIsLuaPlayerGO = 0;
   deleteAllFrames();
+  guiContainer::initStatic();
 }
 
 // -----------------------------------------------------------------
@@ -65,6 +66,7 @@ InterfaceManager::~InterfaceManager()
   delete m_pFrameList;
   delete m_pTopDisplayList;
   FREE(m_pMenuBgGeometry);
+  guiContainer::deleteStatic();
 }
 
 // -----------------------------------------------------------------
@@ -302,7 +304,7 @@ void InterfaceManager::InitGame()
   pFrame->moveTo(m_pLocalClient->getClientParameters()->screenXSize - 79, 0);
   pFrame->setRetractible(2);  // right side
   m_pFrameList->addLast(pFrame);
-  m_pSpellWnd = new SpellDlg(m_pLocalClient, m_pLocalClient->getPlayerManager()->getLocalPlayersCount() > 1);
+  m_pSpellWnd = new SpellDlg(m_pLocalClient, m_pLocalClient->getPlayerManager()->getLocalPlayersCount(false) > 1);
   pFrame->setDocument(m_pSpellWnd);
 
   // Resolve window
@@ -653,7 +655,7 @@ void InterfaceManager::waitLocalPlayer()
   Player * pPlayer = (Player*) m_pLocalClient->getPlayerManager()->getPlayersList()->getFirst(0);
   while (pPlayer != NULL)
   {
-    if (pPlayer->m_uClientId == m_pLocalClient->getClientId())
+    if (pPlayer->m_uClientId == m_pLocalClient->getClientId() && !pPlayer->m_bIsAI)
     {
       guiButton * pBtn = guiButton::createDefaultSmallButton(pPlayer->getAvatarName(), width, L"", m_pLocalClient->getDisplay());
       pBtn->moveTo(0, yPxl);
@@ -699,7 +701,7 @@ void InterfaceManager::onClickNextLocalPlayer(guiComponent * pCpnt)
   // Get next player
   Player * pPlayer = (Player*) pCpnt->getAttachment();
   assert(pPlayer != NULL);
-  assert(pPlayer->m_uClientId == m_pLocalClient->getClientId() && pPlayer->getState() == waiting);
+  assert(pPlayer->m_uClientId == m_pLocalClient->getClientId() && pPlayer->getState() == waiting && !pPlayer->m_bIsAI);
   deleteFrame(m_pNextLocalPlayerDlg);
   m_pNextLocalPlayerDlg = NULL;
   m_pLocalClient->startPlayerTurn(pPlayer);
@@ -1085,7 +1087,7 @@ bool InterfaceManager::onClickStart()
     Player * pPlayer = (Player*) m_pLocalClient->getPlayerManager()->getPlayersList()->getFirst(0);
     while (pPlayer != NULL)
     {
-      if (pPlayer->m_uClientId == m_pLocalClient->getClientId() && pPlayer->getState() == waiting)
+      if (pPlayer->m_uClientId == m_pLocalClient->getClientId() && pPlayer->getState() == waiting && !pPlayer->m_bIsAI)
       {
         deleteFrame(m_pNextLocalPlayerDlg);
         m_pNextLocalPlayerDlg = NULL;

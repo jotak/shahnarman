@@ -1,4 +1,4 @@
-cost = {0,0,0,10}
+cost = {0,0,0,4}--10}
 icon = "ragnarok"
 allowedInBattle = 0
 

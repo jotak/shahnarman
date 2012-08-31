@@ -64,7 +64,7 @@ function onNewTileTurn()
 			while iChild <= _nbChildren do
 				if player == _children[iChild][1] and unit == _children[iChild][2] then
 					bIsAlreadyAttached = 1
-					break;
+					break
 				end
 				iChild = iChild + 1
 			end

@@ -1,0 +1,10 @@
+<tree type='ethnicity' id='Keltics'>
+	<l12n key='name'>
+		<english>Keltics</english>
+		<french>Keltics</french>
+	</l12n>
+	<l12n key='description'>
+		<english>Keltics progression tree</english>
+		<french>Arbre de progression du peuple Keltics</french>
+	</l12n>
+</tree>

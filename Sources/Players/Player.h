@@ -7,6 +7,10 @@
 #define STRING_NBDRAWN      L"spells_drawn"
 #define STRING_MAXSPELLS    L"max_spells"
 #define STRING_SPELLSRANGE  L"spells_range"
+#define STRING_MANA_LIFE    L"mana_life"
+#define STRING_MANA_LAW     L"mana_law"
+#define STRING_MANA_DEATH   L"mana_death"
+#define STRING_MANA_CHAOS   L"mana_chaos"
 
 #define MAX_MAGIC_CIRCLES   100
 
@@ -66,6 +70,12 @@ public:
 
   // Other
   void shuffleDeck();
+  Mana getMana();
+  u8 getMana(u8 uColor);
+  Mana getBaseMana();
+  u8 getBaseMana(u8 uColor);
+  void setBaseMana(Mana mana);
+  void setBaseMana(u8 uColor, u8 value);
 
   u8 m_uPlayerId;
   u8 m_uClientId;
@@ -74,14 +84,14 @@ public:
   wchar_t m_sBanner[64];
   int m_iBannerTex;
   F_RGBA m_Color;
+  bool m_bIsAI;
   ObjectList * m_pUnits;
   ObjectList * m_pDeadUnits;
   ObjectList * m_pDeck;
   ObjectList * m_pHand;
   ObjectList * m_pActiveSpells;
   ObjectList * m_pDiscard;
-  Mana m_Mana;
-  Mana m_ManaMax;
+  Mana m_SpentMana;
   CoordsMap m_MagicCirclePos[MAX_MAGIC_CIRCLES];
   Town * m_pCapitalTown;
   AvatarData * m_pAvatarData;

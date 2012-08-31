@@ -631,7 +631,7 @@ void ResolveDlg::askNextPlayerCastSpells()
   Player * pPlayer = (Player*) m_pLocalClient->getPlayerManager()->getPlayersList()->getCurrent(m_iPlayerIt);
   while (pPlayer != NULL)
   {
-    if (pPlayer->m_uClientId == m_pLocalClient->getClientId() && m_pCastSpellForThisBattle[pPlayer->m_uPlayerId-1])
+    if (pPlayer->m_uClientId == m_pLocalClient->getClientId() && m_pCastSpellForThisBattle[pPlayer->m_uPlayerId-1] && !pPlayer->m_bIsAI)
     {
       // Ask this player to cast spells
       int iTimer = m_iTimerNotConcerned;

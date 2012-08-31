@@ -30,8 +30,8 @@ void Spell::init(u8 uPlayerId, short iFreq, DebugManager * pDebug)
 {
   m_uPlayerId = uPlayerId;
   m_iFrequency = iFreq;
-  wsafecpy(m_sParametersInfos, 256, L"");
   wsafecpy(m_sResolveParameters, LUA_FUNCTION_PARAMS_MAX_CHARS, L"");
+  wsafecpy(m_sTargetInfo, 256, L"");
   m_bGlobal = false;
   m_bAllowedInBattle = false;
   loadBasicData(pDebug);
@@ -145,22 +145,15 @@ Spell * Spell::deserialize(NetworkData * pData, DebugManager * pDebug)
 void Spell::resetResolveParameters()
 {
   wsafecpy(m_sResolveParameters, LUA_FUNCTION_PARAMS_MAX_CHARS, L"");
-  wsafecpy(m_sParametersInfos, 256, L"");
 }
 
 // -----------------------------------------------------------------
 // Name : addResolveParameters
 // -----------------------------------------------------------------
-void Spell::addResolveParameters(wchar_t * sParams, wchar_t * sInfos)
+void Spell::addResolveParameters(wchar_t * sParams)
 {
   wsafecat(m_sResolveParameters, LUA_FUNCTION_PARAMS_MAX_CHARS, L" ");
   wsafecat(m_sResolveParameters, LUA_FUNCTION_PARAMS_MAX_CHARS, sParams);
-  if (wcscmp(sInfos, L"") != 0)
-  {
-    if (wcscmp(m_sParametersInfos, L"") != 0)
-      wsafecat(m_sParametersInfos, 256, L", ");
-    wsafecat(m_sParametersInfos, 256, sInfos);
-  }
 }
 
 // -----------------------------------------------------------------
@@ -174,13 +167,13 @@ wchar_t * Spell::getInfo(wchar_t * sBuf, int iSize)
         m_sName,
         sMana,
         m_sDescription
-        );
-  if (wcscmp(m_sParametersInfos, L"") != 0)
+  );
+  if (wcscmp(m_sTargetInfo, L"") != 0)
   {
     wchar_t sBuf1[256] = L"";
     wchar_t sBuf2[256] = L"";
     i18n->getText(L"CAST_ON_(s)", sBuf1, 256);
-    swprintf_s(sBuf2, 256, sBuf1, m_sParametersInfos);
+    swprintf_s(sBuf2, 256, sBuf1, m_sTargetInfo);
     wsafecat(sBuf, iSize, L"\n");
     wsafecat(sBuf, iSize, sBuf2);
   }

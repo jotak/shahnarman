@@ -35,6 +35,7 @@ public:
   void notifyErrorMessage(const wchar_t * errorMsg);
   void notifyINIErrorMessage(wchar_t * sFile, int errorCode);
   void notifyXMLErrorMessage(wchar_t * sFile, int errorCode, int line, int col);
+  void notifyLoadingMessage(const wchar_t * msg);
   wchar_t * getErrorMessage(wchar_t * errorMsg, s16 errorCode);
   void clear();
   void switchShowFPS() { m_bShowFPS = !m_bShowFPS; };

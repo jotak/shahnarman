@@ -1,4 +1,4 @@
-icon = "ane"
+icon = "berserker"
 
 function getName()
 	if language == "french" then

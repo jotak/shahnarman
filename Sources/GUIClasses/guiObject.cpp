@@ -33,14 +33,8 @@ guiObject::guiObject() : GraphicObject()
 // -----------------------------------------------------------------
 guiObject::~guiObject()
 {
-#ifdef DBG_VERBOSE1
-  printf("Begin destroy guiObject\n");
-#endif
   extern GameRoot * g_pMainGameRoot;
   g_pMainGameRoot->m_pLocalClient->getInterface()->resetSharedPointers(this);
-#ifdef DBG_VERBOSE1
-  printf("End destroy guiObject\n");
-#endif
 }
 
 // -----------------------------------------------------------------
@@ -111,16 +105,6 @@ void guiObject::init(int xPxl, int yPxl, int wPxl, int hPxl)
   m_iWidth = wPxl;
   m_iHeight = hPxl;
 }
-
-//// -----------------------------------------------------------------
-//// Name : clone
-//// -----------------------------------------------------------------
-//guiObject * guiObject::clone()
-//{
-//  guiObject * obj = new guiObject();
-//  obj->init(m_iXPxl, m_iYPxl, m_iWidth, m_iHeight);
-//  return obj;
-//}
 
 // -----------------------------------------------------------------
 // Name : registerTextures

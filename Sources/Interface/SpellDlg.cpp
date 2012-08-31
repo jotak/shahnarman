@@ -119,7 +119,7 @@ void SpellDlg::updateContent(Player * pPlayer, bool bOnlyInstants, bool bCantCas
     return;
 
   // Mana
-  m_RemainingMana = pPlayer->m_Mana;
+  m_RemainingMana = pPlayer->getMana() - pPlayer->m_SpentMana;
   int xPxl = iWidth / 4;
   int yPxl = pBtn1->getHeight() + 2 * SPACING;
   wchar_t str[8];
@@ -169,12 +169,12 @@ void SpellDlg::updateContent(Player * pPlayer, bool bOnlyInstants, bool bCantCas
             pSpell->getManaText(sMana, 32),
             pSpell->getIconPath(),
             pSpell->getLocalizedDescription());
-    if (wcscmp(pSpell->getParametersInfos(), L"") != 0)
+    if (wcscmp(pSpell->getTargetInfo(), L"") != 0)
     {
       wchar_t sBuf1[256] = L"";
       wchar_t sBuf2[256] = L"";
       i18n->getText(L"CAST_ON_(s)", sBuf1, 256);
-      swprintf_s(sBuf2, 256, sBuf1, pSpell->getParametersInfos());
+      swprintf_s(sBuf2, 256, sBuf1, pSpell->getTargetInfo());
       wsafecat(sText, LABEL_MAX_CHARS, L"\n");
       wsafecat(sText, LABEL_MAX_CHARS, sBuf2);
     }

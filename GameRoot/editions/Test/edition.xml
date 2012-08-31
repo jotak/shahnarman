@@ -1,0 +1,8 @@
+<edition locale='fra'>
+  <l12n key='name'>
+    <english>Test</english>
+    <french>Test</french>
+  </l12n>
+  <version>0.1</version>
+  <dependency>Standard1</dependency>
+</edition>

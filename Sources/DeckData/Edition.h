@@ -22,11 +22,12 @@ class Ethnicity;
 class ProgressionTree;
 class Artifact;
 class ShahmahCreation;
+class SpellsPackContent;
 
 class Edition : public XMLObject
 {
 public:
-  Edition(wchar_t * sChecksum, LocalClient * pLocalClient);
+  Edition(wchar_t * sName, LocalClient * pLocalClient);
   ~Edition();
 
   // Member access
@@ -44,22 +45,26 @@ public:
   SpecialTile * findSpecialTile(wchar_t * sName, bool bLookDependencies = true);
   Artifact * findArtifact(wchar_t * sName, bool bLookDependencies = true);
   Edition * findSkillEdition(wchar_t * sName);
-  Spell * buySpell(int iRandMode);
+  Spell * selectRandomSpell(int iSelectMode);
   ObjectList * getSpecialTiles() { return m_pSpecTiles; };
+  ObjectList * getAIs() { return m_pAIs; };
   void getAllTreesByType(ObjectList * pList, u8 uType);
   ShahmahCreation * getShahmahCreationData() { return m_pShahmahCreation; };
+  wchar_t * getChecksum() { return m_sChecksum; };
 
 protected:
   XMLLiteElement * loadXMLFile(XMLLiteReader * pReader, wchar_t * fileName, DebugManager * pDebug);
   void parseXMLObjectData(XMLLiteElement * pRootNode, DebugManager * pDebug);
   void checkShopItemValidity(Profile * pPlayer, ShopItem * pItem);
-  void checksum(DebugManager * pDebug);
+  void computeChecksum(DebugManager * pDebug);
+  SpellsPackContent * readSpellsPackContent(XMLLiteElement * pSpellsNode, DebugManager * pDebug, wchar_t * sFileName);
 
   bool m_bActive;
   int m_iTotalFreq;
   wchar_t m_sLocale[32];
   wchar_t m_sChecksum[NAME_MAX_CHARS];
   wchar_t m_sVersion[16];
+  ObjectList * m_pAIs;
   ObjectList * m_pUnits;
   ObjectList * m_pSpells;
   ObjectList * m_pSpecTiles;

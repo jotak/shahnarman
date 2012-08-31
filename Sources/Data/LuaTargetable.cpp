@@ -8,6 +8,9 @@
 #include "../Players/Player.h"
 #include "../Gameboard/Skill.h"
 #include "../Gameboard/Building.h"
+#include "../Gameboard/Temple.h"
+#include "../Gameboard/Town.h"
+#include "../Gameboard/Unit.h"
 #include "../LocalClient.h"
 #include "../Data/LocalisationTool.h"
 
@@ -341,8 +344,9 @@ bool LuaTargetable::_callEffectHandlerForEffect(LuaObject * pLua, int iChild, wc
 // -----------------------------------------------------------------
 // Name : callEffectHandler
 // -----------------------------------------------------------------
-bool LuaTargetable::callEffectHandler(wchar_t * sFunc, wchar_t * sArgsType, void ** pArgs, u8 uResultType)
+long LuaTargetable::callEffectHandler(wchar_t * sFunc, wchar_t * sArgsType, void ** pArgs, u8 uResultType)
 {
+  long iResult = 0;
   bool bResult = true;
   if (uResultType == HANDLER_RESULT_TYPE_BOR)
     bResult = false;
@@ -357,8 +361,10 @@ bool LuaTargetable::callEffectHandler(wchar_t * sFunc, wchar_t * sArgsType, void
     {
       if (uResultType == HANDLER_RESULT_TYPE_BOR)
         bResult |= (pEffect->getLuaNumber() == 1);
-      if (uResultType == HANDLER_RESULT_TYPE_BAND)
+      else if (uResultType == HANDLER_RESULT_TYPE_BAND)
         bResult &= (pEffect->getLuaNumber() == 1);
+      else if (uResultType == HANDLER_RESULT_TYPE_ADD)
+        iResult += (long) pEffect->getLuaNumber();
     }
     pEffect = getNextEffect(0);
   }
@@ -370,8 +376,10 @@ bool LuaTargetable::callEffectHandler(wchar_t * sFunc, wchar_t * sArgsType, void
     {
       if (uResultType == HANDLER_RESULT_TYPE_BOR)
         bResult |= (pEffect->getLuaNumber() == 1);
-      if (uResultType == HANDLER_RESULT_TYPE_BAND)
+      else if (uResultType == HANDLER_RESULT_TYPE_BAND)
         bResult &= (pEffect->getLuaNumber() == 1);
+      else if (uResultType == HANDLER_RESULT_TYPE_ADD)
+        iResult += (long) pEffect->getLuaNumber();
     }
     pEffect = (LuaObject*) (*m_pGlobalEffects)->getNext(0);
   }
@@ -385,12 +393,17 @@ bool LuaTargetable::callEffectHandler(wchar_t * sFunc, wchar_t * sArgsType, void
     {
       if (uResultType == HANDLER_RESULT_TYPE_BOR)
         bResult |= (pEffect->getLuaNumber() == 1);
-      if (uResultType == HANDLER_RESULT_TYPE_BAND)
+      else if (uResultType == HANDLER_RESULT_TYPE_BAND)
         bResult &= (pEffect->getLuaNumber() == 1);
+      else if (uResultType == HANDLER_RESULT_TYPE_ADD)
+        iResult += (long) pEffect->getLuaNumber();
     }
     pChild = getNextChildEffect(0);
   }
-  return bResult;
+  if (uResultType == HANDLER_RESULT_TYPE_ADD)
+    return iResult;
+  else
+    return bResult ? 1 : 0;
 }
 
 // -----------------------------------------------------------------
@@ -410,4 +423,47 @@ void LuaTargetable::getInfo_AddValue(wchar_t * sBuf, int iSize, const wchar_t * 
         sSeparator
   );
   wsafecat(sBuf, iSize, sTemp);
+}
+
+// -----------------------------------------------------------------
+// Name : convertToBaseObject
+// -----------------------------------------------------------------
+BaseObject * LuaTargetable::convertToBaseObject(u8 uType)
+{
+  switch (uType) {
+  case SELECT_TYPE_PLAYER:
+    return (Player*)this;
+  case SELECT_TYPE_TILE:
+    return (MapTile*)this;
+  case SELECT_TYPE_TOWN:
+    return (Town*)this;
+  case SELECT_TYPE_TEMPLE:
+    return (Temple*)this;
+  case SELECT_TYPE_DEAD_UNIT:
+  case SELECT_TYPE_UNIT:
+    return (Unit*)this;
+  }
+  return NULL;
+}
+
+// -----------------------------------------------------------------
+// Name : convertFromBaseObject
+//  Static function
+// -----------------------------------------------------------------
+LuaTargetable * LuaTargetable::convertFromBaseObject(BaseObject * pObj, u8 uType)
+{
+  switch (uType) {
+  case SELECT_TYPE_PLAYER:
+    return (Player*)pObj;
+  case SELECT_TYPE_TILE:
+    return (MapTile*)pObj;
+  case SELECT_TYPE_TOWN:
+    return (Town*)pObj;
+  case SELECT_TYPE_TEMPLE:
+    return (Temple*)pObj;
+  case SELECT_TYPE_DEAD_UNIT:
+  case SELECT_TYPE_UNIT:
+    return (Unit*)pObj;
+  }
+  return NULL;
 }

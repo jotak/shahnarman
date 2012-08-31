@@ -1,4 +1,4 @@
-icon = "ane"
+icon = "firststrike"
 
 function getName()
 	if language == "french" then

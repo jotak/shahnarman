@@ -25,19 +25,21 @@ end
 function onCheckSelect(tile)
 	x, y = split(tile, " ")
 	terrain = getTileData(x, y, "terrain")
-	if terrain == "montain" then
+	if terrain == "mountain" then
 		return 1
 	end
 	return 0
 end
 
 function onResolve(params)
-	x, y = split(params, " ")
+	x, y = splitint(params, " ")
+	print("volcano", x, y)
 	players = {getPlayersList()}
 	for p, player in pairs(players) do
 		units = {getUnitsList(player)}
 		for u, unit in pairs(units) do
 			unitx, unity = getObjectPosition("unit", player, unit)
+	print(unitx, unity)
 			if x == unitx and y == unity then
 				damageUnit(player, unit, 3)
 			else

@@ -2,6 +2,7 @@
 // XML OBJECT
 // -----------------------------------------------------------------
 #include "XMLObject.h"
+#include "XMLLiteElement.h"
 
 // -----------------------------------------------------------------
 // Name : XMLObject
@@ -19,13 +20,28 @@ XMLObject::XMLObject()
 // -----------------------------------------------------------------
 XMLObject::~XMLObject()
 {
-#ifdef DBG_VERBOSE1
-  printf("Begin destroy XMLObject\n");
-#endif
   delete m_pLocalizedElements;
-#ifdef DBG_VERBOSE1
-  printf("End destroy XMLObject\n");
-#endif
+}
+
+// -----------------------------------------------------------------
+// Name : readLocalizedElementsFromXml
+// -----------------------------------------------------------------
+void XMLObject::readLocalizedElementsFromXml(XMLLiteElement * pNode)
+{
+  XMLLiteElement * pSubNode = pNode->getFirstChild();
+  while (pSubNode != NULL) {
+    if (_wcsicmp(pSubNode->getName(), L"l12n") == 0) {
+      XMLLiteAttribute * pKey = pSubNode->getAttributeByName(L"key");
+      if (pKey != NULL && wcslen(pKey->getCharValue()) > 0) {
+        XMLLiteElement * pLang = pSubNode->getFirstChild();
+        while (pLang != NULL) {
+          addLocalizedElement(pKey->getCharValue(), pLang->getCharValue(), pLang->getName());
+          pLang = pSubNode->getNextChild();
+        }
+      }
+    }
+    pSubNode = pNode->getNextChild();
+  }
 }
 
 // -----------------------------------------------------------------
@@ -54,8 +70,27 @@ void XMLObject::findLocalizedElement(wchar_t * sValue, int iSize, wchar_t * sLan
     pElt = (LocalizedElement*) m_pLocalizedElements->getNext(0);
   }
   // Not found; try english
-  if (wcscmp(sLanguage, L"english") != 0)
-    findLocalizedElement(sValue, iSize, L"english", sKey);
+  pElt = (LocalizedElement*) m_pLocalizedElements->getFirst(0);
+  while (pElt != NULL)
+  {
+    if (_wcsicmp(L"english", pElt->m_sLanguage) == 0 && _wcsicmp(sKey, pElt->m_sKey) == 0)
+    {
+      wsafecpy(sValue, iSize, pElt->m_sValue);
+      return;
+    }
+    pElt = (LocalizedElement*) m_pLocalizedElements->getNext(0);
+  }
+  // Not found; take first available
+  pElt = (LocalizedElement*) m_pLocalizedElements->getFirst(0);
+  while (pElt != NULL)
+  {
+    if (_wcsicmp(sKey, pElt->m_sKey) == 0)
+    {
+      wsafecpy(sValue, iSize, pElt->m_sValue);
+      return;
+    }
+    pElt = (LocalizedElement*) m_pLocalizedElements->getNext(0);
+  }
 }
 
 // -----------------------------------------------------------------

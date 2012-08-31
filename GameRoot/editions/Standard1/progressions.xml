@@ -1,54 +1,94 @@
-<tree type='ethnicity' id='Keltics'>
-	<name>
-		<english>Keltics</english>
-		<french>Keltics</french>
-	</name>
-	<description>
-		<english>Keltics progression tree</english>
-		<french>Arbre de progression du peuple Keltics</french>
-	</description>
+<tree type='ethnicity' id='Galates'>
+	<l12n key='name'>
+		<english>Galates</english>
+		<french>Galates</french>
+	</l12n>
+	<l12n key='description'>
+		<english>Galates progression tree</english>
+		<french>Arbre de progression du peuple Galate</french>
+	</l12n>
+</tree>
+<tree type='ethnicity' id='Peraa'>
+	<l12n key='name'>
+		<english>Peraa</english>
+		<french>Peraa</french>
+	</l12n>
+	<l12n key='description'>
+		<english>Peraa progression tree</english>
+		<french>Arbre de progression du peuple Peraa</french>
+	</l12n>
+</tree>
+<tree type='ethnicity' id='Huanakos'>
+	<l12n key='name'>
+		<english>Huanakos</english>
+		<french>Huanakos</french>
+	</l12n>
+	<l12n key='description'>
+		<english>Huanakos progression tree</english>
+		<french>Arbre de progression du peuple Huanakos</french>
+	</l12n>
+</tree>
+<tree type='ethnicity' id='Hakhamanes'>
+	<l12n key='name'>
+		<english>Hakhamanes</english>
+		<french>Hakhamanes</french>
+	</l12n>
+	<l12n key='description'>
+		<english>Hakhamanes progression tree</english>
+		<french>Arbre de progression du peuple Hakhamane</french>
+	</l12n>
+</tree>
+<tree type='ethnicity' id='Mawohka'>
+	<l12n key='name'>
+		<english>Mawohka</english>
+		<french>Mawohka</french>
+	</l12n>
+	<l12n key='description'>
+		<english>Mawohka progression tree</english>
+		<french>Arbre de progression du peuple Mawohka</french>
+	</l12n>
 </tree>
 <tree type='magic' id='Life'>
-	<name>
+	<l12n key='name'>
 		<english>Life</english>
 		<french>Vie</french>
-	</name>
-	<description>
+	</l12n>
+	<l12n key='description'>
 		<english>Life progression tree</english>
 		<french>Arbre de progression de la Vie</french>
-	</description>
+	</l12n>
 	<skill name='ManaProductor' parameters='2 0 0 0' />
 </tree>
 <tree type='magic' id='Law'>
-	<name>
+	<l12n key='name'>
 		<english>Law</english>
 		<french>Loi</french>
-	</name>
-	<description>
+	</l12n>
+	<l12n key='description'>
 		<english>Law progression tree</english>
 		<french>Arbre de progression de la Loi</french>
-	</description>
+	</l12n>
 	<skill name='ManaProductor' parameters='0 2 0 0' />
 </tree>
 <tree type='magic' id='Death'>
-	<name>
+	<l12n key='name'>
 		<english>Death</english>
 		<french>Mort</french>
-	</name>
-	<description>
+	</l12n>
+	<l12n key='description'>
 		<english>Death progression tree</english>
 		<french>Arbre de progression de la Mort</french>
-	</description>
+	</l12n>
 	<skill name='ManaProductor' parameters='0 0 2 0' />
 </tree>
 <tree type='magic' id='Chaos'>
-	<name>
+	<l12n key='name'>
 		<english>Chaos</english>
 		<french>Chaos</french>
-	</name>
-	<description>
+	</l12n>
+	<l12n key='description'>
 		<english>Chaos progression tree</english>
 		<french>Arbre de progression du Chaos</french>
-	</description>
+	</l12n>
 	<skill name='ManaProductor' parameters='0 0 0 2' />
 </tree>

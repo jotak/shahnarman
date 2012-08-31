@@ -5,6 +5,7 @@
 #include "lua_callbacks_utils.h"
 #include "Data/DataFactory.h"
 #include "GUIClasses/guiLabel.h"
+#include "Server/AISolver.h"
 
 //------------------------------------------------------------------------------
 // Spell_selectTarget
@@ -167,6 +168,15 @@ int LUA_selectTarget(lua_State * pState)
     return 0;
 
   g_pLuaStateForTarget = pState;
+
+  if (g_bLuaEvaluationMode) {
+    AILuaSolver::EvaluationTargetInfo * pEvalTarget = new AILuaSolver::EvaluationTargetInfo(g_uLuaSelectTargetType, g_uLuaSelectConstraints);
+    Server * pServer = g_pMainGameRoot->m_pLocalClient->getServer();
+    assert(pServer != NULL);
+    pServer->getSolver()->getAISolver()->addEvaluationTarget(pEvalTarget);
+    return 0;
+  }
+
   return LUA_selectTarget(sText, false);
 }
 
@@ -206,6 +216,20 @@ int LUA_damageUnit(lua_State * pState)
   u8 uPlayerId = (u8)lua_tonumber(pState, 1);
   u32 uUnitId = (u32)lua_tonumber(pState, 2);
   u8 damages = (u8)lua_tonumber(pState, 3);
+
+  if (g_bLuaEvaluationMode) {
+    Server * pServer = g_pMainGameRoot->m_pLocalClient->getServer();
+    assert(pServer != NULL);
+    Player * pPlayer = pServer->getSolver()->findPlayer(uPlayerId);
+    if (pPlayer != NULL) {
+      Unit * pUnit = pPlayer->findUnit(uUnitId);
+      if (pUnit != NULL) {
+        pServer->getSolver()->getAISolver()->addCurrentSpellInterestForDamages(pPlayer, pUnit, damages);
+      }
+    }
+    return 0;
+  }
+
   pServer->getSolver()->getSpellsSolver()->onDamageUnit(uPlayerId, uUnitId, damages);
   return 0;
 }
@@ -223,6 +247,19 @@ int LUA_summon(lua_State * pState)
   mp.x = (int)lua_tonumber(pState, 2);
   mp.y = (int)lua_tonumber(pState, 3);
   const char * pName = lua_tostring(pState, 4);
+
+  if (g_bLuaEvaluationMode) {
+    Server * pServer = g_pMainGameRoot->m_pLocalClient->getServer();
+    assert(pServer != NULL);
+    Player * pPlayer = pServer->getSolver()->findPlayer(uPlayer);
+    if (pPlayer != NULL) {
+      int iSign = (uPlayer == pServer->getSolver()->getAISolver()->getCurrentPlayer()->m_uPlayerId) ? 1 : -1;
+      float fUnitInterest = pServer->getSolver()->getAISolver()->evaluateUnit(mp, pName, uPlayer);
+      pServer->getSolver()->getAISolver()->addInterestForCurrentSpell(iSign * fUnitInterest);
+    }
+    return 0;
+  }
+
   pServer->getSolver()->getSpellsSolver()->onAddUnit(mp, pName, uPlayer);
   return 0;
 }
@@ -237,6 +274,13 @@ int LUA_attachToUnit(lua_State * pState)
 
   u8 uPlayerId = (u8)lua_tonumber(pState, 1);
   u32 uUnitId = (u32)lua_tonumber(pState, 2);
+
+  if (g_bLuaEvaluationMode) {
+    Server * pServer = g_pMainGameRoot->m_pLocalClient->getServer();
+    assert(pServer != NULL);
+    return 0;
+  }
+
   pServer->getSolver()->getSpellsSolver()->onAttachToUnit(uPlayerId, uUnitId);
   return 0;
 }
@@ -250,6 +294,13 @@ int LUA_attachToPlayer(lua_State * pState)
     return 0;
 
   u8 uPlayerId = (u8)lua_tonumber(pState, 1);
+
+  if (g_bLuaEvaluationMode) {
+    Server * pServer = g_pMainGameRoot->m_pLocalClient->getServer();
+    assert(pServer != NULL);
+    return 0;
+  }
+
   pServer->getSolver()->getSpellsSolver()->onAttachToPlayer(uPlayerId);
   return 0;
 }
@@ -263,6 +314,13 @@ int LUA_attachToTown(lua_State * pState)
     return 0;
 
   u32 uTownId = (u32)lua_tonumber(pState, 1);
+
+  if (g_bLuaEvaluationMode) {
+    Server * pServer = g_pMainGameRoot->m_pLocalClient->getServer();
+    assert(pServer != NULL);
+    return 0;
+  }
+
   pServer->getSolver()->getSpellsSolver()->onAttachToTown(uTownId);
   return 0;
 }
@@ -276,6 +334,13 @@ int LUA_attachToTemple(lua_State * pState)
     return 0;
 
   u32 uTempleId = (u32)lua_tonumber(pState, 1);
+
+  if (g_bLuaEvaluationMode) {
+    Server * pServer = g_pMainGameRoot->m_pLocalClient->getServer();
+    assert(pServer != NULL);
+    return 0;
+  }
+
   pServer->getSolver()->getSpellsSolver()->onAttachToTemple(uTempleId);
   return 0;
 }
@@ -290,6 +355,13 @@ int LUA_attachToTile(lua_State * pState)
 
   int x = (int) lua_tonumber(pState, 1);
   int y = (int) lua_tonumber(pState, 2);
+
+  if (g_bLuaEvaluationMode) {
+    Server * pServer = g_pMainGameRoot->m_pLocalClient->getServer();
+    assert(pServer != NULL);
+    return 0;
+  }
+
   pServer->getSolver()->getSpellsSolver()->onAttachToTile(CoordsMap(x, y));
   return 0;
 }
@@ -305,6 +377,13 @@ int LUA_addChildEffectToUnit(lua_State * pState)
   int iEffectId = (int)lua_tonumber(pState, 1) - 1;
   u8 uPlayerId = (u8)lua_tonumber(pState, 2);
   u32 uUnitId = (u32)lua_tonumber(pState, 3);
+
+  if (g_bLuaEvaluationMode) {
+    Server * pServer = g_pMainGameRoot->m_pLocalClient->getServer();
+    assert(pServer != NULL);
+    return 0;
+  }
+
   pServer->getSolver()->getSpellsSolver()->onAddChildEffectToUnit(iEffectId, uPlayerId, uUnitId);
   return 0;
 }
@@ -320,7 +399,56 @@ int LUA_removeChildEffectFromUnit(lua_State * pState)
   int iEffectId = (int)lua_tonumber(pState, 1) - 1;
   u8 uPlayerId = (u8)lua_tonumber(pState, 2);
   u32 uUnitId = (u32)lua_tonumber(pState, 3);
+
+  if (g_bLuaEvaluationMode) {
+    Server * pServer = g_pMainGameRoot->m_pLocalClient->getServer();
+    assert(pServer != NULL);
+    return 0;
+  }
+
   pServer->getSolver()->getSpellsSolver()->onRemoveChildEffectFromUnit(iEffectId, uPlayerId, uUnitId);
+  return 0;
+}
+
+int LUA_addChildEffectToTown(lua_State * pState)
+{
+  Server * pServer = checkServerResolving(L"addChildEffectToTown");
+  if (pServer == NULL)
+    return 0;
+  if (!checkNumberOfParams(pState, 2, L"addChildEffectToTown"))
+    return 0;
+
+  int iEffectId = (int)lua_tonumber(pState, 1) - 1;
+  u32 uTownId = (u32)lua_tonumber(pState, 2);
+
+  if (g_bLuaEvaluationMode) {
+    Server * pServer = g_pMainGameRoot->m_pLocalClient->getServer();
+    assert(pServer != NULL);
+    return 0;
+  }
+
+  pServer->getSolver()->getSpellsSolver()->onAddChildEffectToTown(iEffectId, uTownId);
+  return 0;
+}
+
+int LUA_removeChildEffectFromTown(lua_State * pState)
+{
+  Server * pServer = checkServerResolving(L"removeChildEffectFromTown");
+  if (pServer == NULL)
+    return 0;
+  if (!checkNumberOfParams(pState, 2, L"removeChildEffectFromTown"))
+    return 0;
+
+  int iEffectId = (int)lua_tonumber(pState, 1) - 1;
+  u32 uTownId = (u32)lua_tonumber(pState, 2);
+
+  if (g_bLuaEvaluationMode) {
+    Server * pServer = g_pMainGameRoot->m_pLocalClient->getServer();
+    assert(pServer != NULL);
+    return 0;
+  }
+
+  pServer->getSolver()->getSpellsSolver()->onRemoveChildEffectFromTown(iEffectId, uTownId);
   return 0;
 }
 
@@ -406,6 +534,32 @@ int LUA_setUnitData(lua_State * pState)
     {
       wchar_t sName[64];
       strtow(sName, 64, varname);
+
+      if (g_bLuaEvaluationMode) {
+        Server * pServer = g_pMainGameRoot->m_pLocalClient->getServer();
+        assert(pServer != NULL);
+        bool bFound = true;
+        long iCurVal = pUnit->getValue(sName, true, &bFound);
+        if (!bFound)
+          iCurVal = 0;
+        int iSign = (uPlayerId == pServer->getSolver()->getAISolver()->getCurrentPlayer()->m_uPlayerId) ? 1 : -1;
+        float fCoef = 0.0f;
+        if (_wcsicmp(STRING_MELEE, sName) == 0)
+          fCoef = AI_INTEREST_MELEE;
+        else if (_wcsicmp(STRING_RANGE, sName) == 0)
+          fCoef = AI_INTEREST_RANGE;
+        else if (_wcsicmp(STRING_ARMOR, sName) == 0)
+          fCoef = AI_INTEREST_ARMOR;
+        else if (_wcsicmp(STRING_ENDURANCE, sName) == 0)
+          fCoef = AI_INTEREST_ENDURANCE;
+        else if (_wcsicmp(STRING_SPEED, sName) == 0)
+          fCoef = AI_INTEREST_SPEED;
+        else if (_wcsicmp(STRING_LIFE, sName) == 0)
+          fCoef = AI_INTEREST_LIFE;
+        pServer->getSolver()->getAISolver()->addInterestForCurrentSpell(iSign * (value - (double)iCurVal) * fCoef);
+        return 0;
+      }
+
       if (!pUnit->setBaseValue(sName, value))
         pServer->getDebug()->notifyErrorMessage(L"Lua interaction error in function setUnitData: variable not found.");
     }
@@ -434,28 +588,15 @@ int LUA_produceMana(lua_State * pState)
   pMana[2] = (u8) lua_tonumber(pState, 6);
   pMana[3] = (u8) lua_tonumber(pState, 7);
 
+  if (g_bLuaEvaluationMode) {
+    Server * pServer = g_pMainGameRoot->m_pLocalClient->getServer();
+    assert(pServer != NULL);
+    int iSign = (playerId == pServer->getSolver()->getAISolver()->getCurrentPlayer()->m_uPlayerId) ? 1 : -1;
+    pServer->getSolver()->getAISolver()->addInterestForCurrentSpell(iSign * (pMana[0] + pMana[1] + pMana[2] + pMana[3]) * 2.0f);
+    return 0;
+  }
+
   pServer->getSolver()->getSpellsSolver()->onProduceMana(playerId, CoordsMap(x, y), pMana);
-  return 0;
-}
-
-int LUA_updateMaxMana(lua_State * pState)
-{
-  Server * pServer = checkServerResolving(L"updateMaxMana");
-  if (pServer == NULL)
-    return 0;
-  if (!checkNumberOfParams(pState, 7, L"updateMaxMana"))
-    return 0;
-
-  int playerId = (int) lua_tonumber(pState, 1);
-  int x = (int) lua_tonumber(pState, 2);
-  int y = (int) lua_tonumber(pState, 3);
-  u8 pMana[4];
-  pMana[0] = (u8) lua_tonumber(pState, 4);
-  pMana[1] = (u8) lua_tonumber(pState, 5);
-  pMana[2] = (u8) lua_tonumber(pState, 6);
-  pMana[3] = (u8) lua_tonumber(pState, 7);
-
-  pServer->getSolver()->getSpellsSolver()->onUpdateMaxMana(playerId, CoordsMap(x, y), pMana);
   return 0;
 }
 
@@ -521,7 +662,20 @@ int LUA_setAttackerLife(lua_State * pState)
     return 0;
   if (!checkNumberOfParams(pState, 1, L"setAttackerLife"))
     return 0;
-  pServer->getSolver()->m_iAttackerLife = (int) lua_tonumber(pState, 1);
+
+  int iNewLife = (int) lua_tonumber(pState, 1);
+  if (g_bLuaEvaluationMode) {
+    if (iNewLife != pServer->getSolver()->m_iAttackerLife) {
+      Server * pServer = g_pMainGameRoot->m_pLocalClient->getServer();
+      assert(pServer != NULL);
+      pServer->getSolver()->getAISolver()->addInterestForCurrentSpell(
+              pServer->getSolver()->getAISolver()->evaluateBattleModifications(&iNewLife, NULL, NULL, NULL, NULL, NULL)
+      );
+    }
+    return 0;
+  }
+
+  pServer->getSolver()->m_iAttackerLife = iNewLife;
   return 0;
 }
 
@@ -543,7 +697,20 @@ int LUA_setDefenderLife(lua_State * pState)
     return 0;
   if (!checkNumberOfParams(pState, 1, L"setDefenderLife"))
     return 0;
-  pServer->getSolver()->m_iDefenderLife = (int) lua_tonumber(pState, 1);
+  
+  int iNewLife = (int) lua_tonumber(pState, 1);
+  if (g_bLuaEvaluationMode) {
+    if (iNewLife != pServer->getSolver()->m_iDefenderLife) {
+      Server * pServer = g_pMainGameRoot->m_pLocalClient->getServer();
+      assert(pServer != NULL);
+      pServer->getSolver()->getAISolver()->addInterestForCurrentSpell(
+              pServer->getSolver()->getAISolver()->evaluateBattleModifications(NULL, &iNewLife, NULL, NULL, NULL, NULL)
+      );
+    }
+    return 0;
+  }
+
+  pServer->getSolver()->m_iDefenderLife = iNewLife;
   return 0;
 }
 
@@ -565,7 +732,20 @@ int LUA_setAttackerDamages(lua_State * pState)
     return 0;
   if (!checkNumberOfParams(pState, 1, L"setAttackerDamages"))
     return 0;
-  pServer->getSolver()->m_iAttackerDamages = (int) lua_tonumber(pState, 1);
+
+  int iNewDamages = (int) lua_tonumber(pState, 1);
+  if (g_bLuaEvaluationMode) {
+    if (iNewDamages != pServer->getSolver()->m_iAttackerDamages) {
+      Server * pServer = g_pMainGameRoot->m_pLocalClient->getServer();
+      assert(pServer != NULL);
+      pServer->getSolver()->getAISolver()->addInterestForCurrentSpell(
+              pServer->getSolver()->getAISolver()->evaluateBattleModifications(NULL, NULL, NULL, NULL, &iNewDamages, NULL)
+      );
+    }
+    return 0;
+  }
+
+  pServer->getSolver()->m_iAttackerDamages = iNewDamages;
   return 0;
 }
 
@@ -587,7 +767,20 @@ int LUA_setDefenderDamages(lua_State * pState)
     return 0;
   if (!checkNumberOfParams(pState, 1, L"setDefenderDamages"))
     return 0;
-  pServer->getSolver()->m_iDefenderDamages = (int) lua_tonumber(pState, 1);
+
+  int iNewDamages = (int) lua_tonumber(pState, 1);
+  if (g_bLuaEvaluationMode) {
+    if (iNewDamages != pServer->getSolver()->m_iDefenderDamages) {
+      Server * pServer = g_pMainGameRoot->m_pLocalClient->getServer();
+      assert(pServer != NULL);
+      pServer->getSolver()->getAISolver()->addInterestForCurrentSpell(
+              pServer->getSolver()->getAISolver()->evaluateBattleModifications(NULL, NULL, NULL, NULL, NULL, &iNewDamages)
+      );
+    }
+    return 0;
+  }
+
+  pServer->getSolver()->m_iDefenderDamages = iNewDamages;
   return 0;
 }
 
@@ -609,7 +802,20 @@ int LUA_setAttackerArmor(lua_State * pState)
     return 0;
   if (!checkNumberOfParams(pState, 1, L"setAttackerArmor"))
     return 0;
-  pServer->getSolver()->m_iAttackerArmor = (int) lua_tonumber(pState, 1);
+
+  int iNewArmor = (int) lua_tonumber(pState, 1);
+  if (g_bLuaEvaluationMode) {
+    if (iNewArmor != pServer->getSolver()->m_iAttackerArmor) {
+      Server * pServer = g_pMainGameRoot->m_pLocalClient->getServer();
+      assert(pServer != NULL);
+      pServer->getSolver()->getAISolver()->addInterestForCurrentSpell(
+              pServer->getSolver()->getAISolver()->evaluateBattleModifications(NULL, NULL, &iNewArmor, NULL, NULL, NULL)
+      );
+    }
+    return 0;
+  }
+
+  pServer->getSolver()->m_iAttackerArmor = iNewArmor;
   return 0;
 }
 
@@ -631,7 +837,20 @@ int LUA_setDefenderArmor(lua_State * pState)
     return 0;
   if (!checkNumberOfParams(pState, 1, L"setDefenderArmor"))
     return 0;
-  pServer->getSolver()->m_iDefenderArmor = (int) lua_tonumber(pState, 1);
+
+  int iNewArmor = (int) lua_tonumber(pState, 1);
+  if (g_bLuaEvaluationMode) {
+    if (iNewArmor != pServer->getSolver()->m_iDefenderArmor) {
+      Server * pServer = g_pMainGameRoot->m_pLocalClient->getServer();
+      assert(pServer != NULL);
+      pServer->getSolver()->getAISolver()->addInterestForCurrentSpell(
+              pServer->getSolver()->getAISolver()->evaluateBattleModifications(NULL, NULL, NULL, &iNewArmor, NULL, NULL)
+      );
+    }
+    return 0;
+  }
+
+  pServer->getSolver()->m_iDefenderArmor = iNewArmor;
   return 0;
 }
 
@@ -649,6 +868,13 @@ int LUA_discardActiveSpell(lua_State * pState)
     iPlayerId = (long) lua_tonumber(pState, 1);
     iSpellId = (long) lua_tonumber(pState, 2);
   }
+
+  if (g_bLuaEvaluationMode) {
+    Server * pServer = g_pMainGameRoot->m_pLocalClient->getServer();
+    assert(pServer != NULL);
+    return 0;
+  }
+
   pServer->getSolver()->getSpellsSolver()->onDiscardSpell(2, iPlayerId, iSpellId);
   return 0;
 }
@@ -662,6 +888,13 @@ int LUA_discardDeckSpell(lua_State * pState)
     return 0;
   long iPlayerId = (long) lua_tonumber(pState, 1);
   long iSpellId = (long) lua_tonumber(pState, 2);
+
+  if (g_bLuaEvaluationMode) {
+    Server * pServer = g_pMainGameRoot->m_pLocalClient->getServer();
+    assert(pServer != NULL);
+    return 0;
+  }
+
   pServer->getSolver()->getSpellsSolver()->onDiscardSpell(0, iPlayerId, iSpellId);
   return 0;
 }
@@ -675,6 +908,13 @@ int LUA_discardHandSpell(lua_State * pState)
     return 0;
   long iPlayerId = (long) lua_tonumber(pState, 1);
   long iSpellId = (long) lua_tonumber(pState, 2);
+
+  if (g_bLuaEvaluationMode) {
+    Server * pServer = g_pMainGameRoot->m_pLocalClient->getServer();
+    assert(pServer != NULL);
+    return 0;
+  }
+
   pServer->getSolver()->getSpellsSolver()->onDiscardSpell(1, iPlayerId, iSpellId);
   return 0;
 }
@@ -688,6 +928,13 @@ int LUA_drawSpell(lua_State * pState)
     return 0;
   u8 uPlayerId = (u8)lua_tonumber(pState, 1);
   u32 uSpellId = (u32)lua_tonumber(pState, 2);
+
+  if (g_bLuaEvaluationMode) {
+    Server * pServer = g_pMainGameRoot->m_pLocalClient->getServer();
+    assert(pServer != NULL);
+    return 0;
+  }
+
   pServer->getSolver()->getSpellsSolver()->onDrawSpell(uPlayerId, uSpellId);
   return 0;
 }
@@ -697,6 +944,13 @@ int LUA_attachAsGlobal(lua_State * pState)
   Server * pServer = checkServerResolving(L"attachAsGlobal");
   if (pServer == NULL)
     return 0;
+
+  if (g_bLuaEvaluationMode) {
+    Server * pServer = g_pMainGameRoot->m_pLocalClient->getServer();
+    assert(pServer != NULL);
+    return 0;
+  }
+
   pServer->getSolver()->getSpellsSolver()->onAttachAsGlobal();
   return 0;
 }
@@ -706,6 +960,13 @@ int LUA_detachFromGlobal(lua_State * pState)
   Server * pServer = checkServerResolving(L"detachFromGlobal");
   if (pServer == NULL)
     return 0;
+
+  if (g_bLuaEvaluationMode) {
+    Server * pServer = g_pMainGameRoot->m_pLocalClient->getServer();
+    assert(pServer != NULL);
+    return 0;
+  }
+
   pServer->getSolver()->getSpellsSolver()->onDetachFromGlobal();
   return 0;
 }
@@ -754,6 +1015,13 @@ int LUA_askForExtraMana(lua_State * pState)
   strcpy_s(sCallback, 128, lua_tostring(pState, 5));
   wchar_t sCallbackW[128];
   strtow(sCallbackW, 128, sCallback);
+
+  if (g_bLuaEvaluationMode) {
+    Server * pServer = g_pMainGameRoot->m_pLocalClient->getServer();
+    assert(pServer != NULL);
+    return 0;
+  }
+
   g_pMainGameRoot->m_pLocalClient->getInterface()->askForExtraMana(sDescW, mana, min, max, sCallbackW, g_uLuaCurrentObjectType);
   return 0;
 }
@@ -767,8 +1035,15 @@ int LUA_addResolveParameter(lua_State * pState)
   strcpy_s(sParam, 256, lua_tostring(pState, 1));
   wchar_t sParamW[256];
   strtow(sParamW, 256, sParam);
+
+  if (g_bLuaEvaluationMode) {
+    Server * pServer = g_pMainGameRoot->m_pLocalClient->getServer();
+    assert(pServer != NULL);
+    return 0;
+  }
+
   if (g_uLuaCurrentObjectType == LUAOBJECT_SPELL)
-    g_pMainGameRoot->m_pLocalClient->getPlayerManager()->getSpellBeingCast()->addResolveParameters(sParamW, L"");
+    g_pMainGameRoot->m_pLocalClient->getPlayerManager()->getSpellBeingCast()->addResolveParameters(sParamW);
   else if (g_uLuaCurrentObjectType == LUAOBJECT_SKILL)
     g_pMainGameRoot->m_pLocalClient->getPlayerManager()->getSkillBeingActivated()->addResolveParameters(sParamW);
   return 0;
@@ -779,6 +1054,10 @@ int LUA_dispatchToClients(lua_State * pState)
   Server * pServer = checkServerResolving(L"dispatchToClients");
   if (pServer == NULL)
     return 0;
+
+  if (g_bLuaEvaluationMode) {
+    return 0;
+  }
 
   int nbParams = lua_gettop(pState);
   if (nbParams < 2)
@@ -945,13 +1224,24 @@ int LUA_deactivateSkill(lua_State * pState)
   Server * pServer = checkServerResolving(L"deactivateSkill");
   if (pServer == NULL)
     return 0;
-  if (!checkNumberOfParams(pState, 3, L"deactivateSkill"))
+  int nbParams = checkNumberOfParams(pState, 0, 3, L"deactivateSkill");
+  if (nbParams != 0 && !checkNumberOfParams(pState, 3, L"deactivateSkill"))
     return 0;
+  long iPlayerId = -1, iUnitId = -1, iSkillId = -1;
+  if (nbParams == 3)
+  {
+    iPlayerId = (long) lua_tonumber(pState, 1);
+    iUnitId = (long) lua_tonumber(pState, 2);
+    iSkillId = (long) lua_tonumber(pState, 3);
+  }
 
-  int player = (int) lua_tonumber(pState, 1);
-  int unit = (int) lua_tonumber(pState, 2);
-  int skill = (int) lua_tonumber(pState, 3);
-  pServer->getSolver()->getSpellsSolver()->onDeactivateSkill(player, unit, skill);
+  if (g_bLuaEvaluationMode) {
+    Server * pServer = g_pMainGameRoot->m_pLocalClient->getServer();
+    assert(pServer != NULL);
+    return 0;
+  }
+
+  pServer->getSolver()->getSpellsSolver()->onDeactivateSkill(iPlayerId, iUnitId, iSkillId);
 
   return 0;
 }
@@ -970,6 +1260,13 @@ int LUA_changeSpellOwner(lua_State * pState)
   int player = (int) lua_tonumber(pState, 2);
   int spell = (int) lua_tonumber(pState, 3);
   int newowner = (int) lua_tonumber(pState, 4);
+
+  if (g_bLuaEvaluationMode) {
+    Server * pServer = g_pMainGameRoot->m_pLocalClient->getServer();
+    assert(pServer != NULL);
+    return 0;
+  }
+
   pServer->getSolver()->getSpellsSolver()->onChangeSpellOwner(typeW, player, spell, newowner);
 
   return 0;
@@ -986,6 +1283,13 @@ int LUA_changeUnitOwner(lua_State * pState)
   int player = (int) lua_tonumber(pState, 1);
   int unit = (int) lua_tonumber(pState, 2);
   int newowner = (int) lua_tonumber(pState, 3);
+
+  if (g_bLuaEvaluationMode) {
+    Server * pServer = g_pMainGameRoot->m_pLocalClient->getServer();
+    assert(pServer != NULL);
+    return 0;
+  }
+
   pServer->getSolver()->getSpellsSolver()->onChangeUnitOwner(player, unit, newowner);
   return 0;
 }
@@ -1000,6 +1304,13 @@ int LUA_changeTownOwner(lua_State * pState)
 
   int town = (int) lua_tonumber(pState, 1);
   int newowner = (int) lua_tonumber(pState, 2);
+
+  if (g_bLuaEvaluationMode) {
+    Server * pServer = g_pMainGameRoot->m_pLocalClient->getServer();
+    assert(pServer != NULL);
+    return 0;
+  }
+
   pServer->getSolver()->getSpellsSolver()->onChangeTownOwner(town, newowner);
   return 0;
 }
@@ -1046,7 +1357,8 @@ int LUA_getTownData(lua_State * pState)
       lua_pushstring(pState, str);
       wtostr(str, 64, pTown->getEthnicityId());
       lua_pushstring(pState, str);
-      return 2;
+      lua_pushnumber(pState, pTown->getOwner());
+      return 3;
     }
   }
   else
@@ -1106,6 +1418,13 @@ int LUA_buildBuilding(lua_State * pState)
   const char * varname = lua_tostring(pState, 2);
   wchar_t sName[64];
   strtow(sName, 64, varname);
+
+  if (g_bLuaEvaluationMode) {
+    Server * pServer = g_pMainGameRoot->m_pLocalClient->getServer();
+    assert(pServer != NULL);
+    return 0;
+  }
+
   pServer->getSolver()->getSpellsSolver()->onBuildBuilding(uTownId, sName);
   return 0;
 }
@@ -1211,6 +1530,13 @@ int LUA_addSkillToUnit(lua_State * pState)
   strtow(sParams, 256, params);
   u8 uPlayer = (u8)lua_tonumber(pState, 3);
   u32 uUnit = (u32)lua_tonumber(pState, 4);
+
+  if (g_bLuaEvaluationMode) {
+    Server * pServer = g_pMainGameRoot->m_pLocalClient->getServer();
+    assert(pServer != NULL);
+    return 0;
+  }
+
   pServer->getSolver()->getSpellsSolver()->onAddSkillToUnit(sSkill, sParams, uPlayer, uUnit);
   return 0;
 }
@@ -1224,6 +1550,13 @@ int LUA_hideSpecialTile(lua_State * pState)
     return 0;
 
   u32 uSpec = (u32)lua_tonumber(pState, 1);
+
+  if (g_bLuaEvaluationMode) {
+    Server * pServer = g_pMainGameRoot->m_pLocalClient->getServer();
+    assert(pServer != NULL);
+    return 0;
+  }
+
   pServer->getSolver()->getSpellsSolver()->onHideSpecialTile(uSpec);
   return 0;
 }
@@ -1380,6 +1713,12 @@ int LUA_setTileData(lua_State * pState)
     {
       if (strcmp(type, pAllTerrains[i]) == 0)
       {
+        if (g_bLuaEvaluationMode) {
+          Server * pServer = g_pMainGameRoot->m_pLocalClient->getServer();
+          assert(pServer != NULL);
+          return 0;
+        }
+
         pServer->getMap()->changeTerrainType(CoordsMap(x, y), (u8)i, pServer);
         return 0;
       }
@@ -1392,6 +1731,13 @@ int LUA_setTileData(lua_State * pState)
     wchar_t sName[64];
     strtow(sName, 64, varname);
     double d = lua_tonumber(pState, 4);
+
+    if (g_bLuaEvaluationMode) {
+      Server * pServer = g_pMainGameRoot->m_pLocalClient->getServer();
+      assert(pServer != NULL);
+      return 0;
+    }
+
     if (!pTile->setBaseValue(sName, d))
       pServer->getDebug()->notifyErrorMessage(L"Lua interaction error in function setTileData: variable not found.");
   }
@@ -1445,6 +1791,13 @@ int LUA_teleport(lua_State * pState)
   }
   int x = (int) lua_tonumber(pState, iNextParam);
   int y = (int) lua_tonumber(pState, iNextParam+1);
+
+  if (g_bLuaEvaluationMode) {
+    Server * pServer = g_pMainGameRoot->m_pLocalClient->getServer();
+    assert(pServer != NULL);
+    return 0;
+  }
+
   pServer->getSolver()->getSpellsSolver()->onTeleport(pMapObj, CoordsMap(x, y));
   return 0;
 }
@@ -1459,6 +1812,13 @@ int LUA_resurrect(lua_State * pState)
 
   u8 uPlayerId = (u8) lua_tonumber(pState, 1);
   u32 uUnitId = (u32) lua_tonumber(pState, 2);
+
+  if (g_bLuaEvaluationMode) {
+    Server * pServer = g_pMainGameRoot->m_pLocalClient->getServer();
+    assert(pServer != NULL);
+    return 0;
+  }
+
   pServer->getSolver()->getSpellsSolver()->onResurrect(uPlayerId, uUnitId);
 
   return 0;
@@ -1482,6 +1842,13 @@ int LUA_addMagicCircle(lua_State * pState)
     g_pMainGameRoot->m_pLocalClient->getDebug()->notifyErrorMessage(L"Lua interaction error: invalid player in function \"addMagicCircle\".");
     return 0;
   }
+
+  if (g_bLuaEvaluationMode) {
+    Server * pServer = g_pMainGameRoot->m_pLocalClient->getServer();
+    assert(pServer != NULL);
+    return 0;
+  }
+
   int id = pServer->getSolver()->getSpellsSolver()->onAddMagicCircle(pPlayer, CoordsMap(x, y));
   lua_pushnumber(pState, id);
   return 1;
@@ -1504,6 +1871,13 @@ int LUA_removeMagicCircle(lua_State * pState)
     g_pMainGameRoot->m_pLocalClient->getDebug()->notifyErrorMessage(L"Lua interaction error: invalid player in function \"removeMagicCircle\".");
     return 0;
   }
+
+  if (g_bLuaEvaluationMode) {
+    Server * pServer = g_pMainGameRoot->m_pLocalClient->getServer();
+    assert(pServer != NULL);
+    return 0;
+  }
+
   pServer->getSolver()->getSpellsSolver()->onRemoveMagicCircle(pPlayer, id);
   return 0;
 }
@@ -1522,6 +1896,12 @@ int LUA_recallSpell(lua_State * pState)
   u8 uPlayerId = (u8) lua_tonumber(pState, 2);
   u32 id = (u32) lua_tonumber(pState, 3);
 
+  if (g_bLuaEvaluationMode) {
+    Server * pServer = g_pMainGameRoot->m_pLocalClient->getServer();
+    assert(pServer != NULL);
+    return 0;
+  }
+
   pServer->getSolver()->getSpellsSolver()->onRecallSpell(sType, uPlayerId, id);
   return 0;
 }
@@ -1536,6 +1916,12 @@ int LUA_addGoldToPlayer(lua_State * pState)
 
   u8 uPlayerId = (u8) lua_tonumber(pState, 1);
   int amount = (int) lua_tonumber(pState, 2);
+
+  if (g_bLuaEvaluationMode) {
+    Server * pServer = g_pMainGameRoot->m_pLocalClient->getServer();
+    assert(pServer != NULL);
+    return 0;
+  }
 
   pServer->getSolver()->getSpellsSolver()->onAddGoldToPlayer(uPlayerId, amount);
   return 0;
@@ -1554,6 +1940,12 @@ int LUA_addSpellToPlayer(lua_State * pState)
   const char * name = lua_tostring(pState, 2);
   strtow(sName, 64, name);
 
+  if (g_bLuaEvaluationMode) {
+    Server * pServer = g_pMainGameRoot->m_pLocalClient->getServer();
+    assert(pServer != NULL);
+    return 0;
+  }
+
   pServer->getSolver()->getSpellsSolver()->onAddSpellToPlayer(uPlayerId, sName);
   return 0;
 }
@@ -1570,6 +1962,12 @@ int LUA_addArtifactToPlayer(lua_State * pState)
   wchar_t sName[64];
   const char * name = lua_tostring(pState, 2);
   strtow(sName, 64, name);
+
+  if (g_bLuaEvaluationMode) {
+    Server * pServer = g_pMainGameRoot->m_pLocalClient->getServer();
+    assert(pServer != NULL);
+    return 0;
+  }
 
   pServer->getSolver()->getSpellsSolver()->onAddArtifactToPlayer(uPlayerId, sName);
   return 0;
@@ -1588,8 +1986,171 @@ int LUA_addShahmahToPlayer(lua_State * pState)
   const char * name = lua_tostring(pState, 2);
   strtow(sName, 64, name);
 
+  if (g_bLuaEvaluationMode) {
+    Server * pServer = g_pMainGameRoot->m_pLocalClient->getServer();
+    assert(pServer != NULL);
+    return 0;
+  }
+
   pServer->getSolver()->getSpellsSolver()->onAddAvatarToPlayer(uPlayerId, sName);
   return 0;
+}
+
+int LUA_getUnitStatus(lua_State * pState) {
+  if (!checkNumberOfParams(pState, 2, L"getUnitStatus"))
+    return 0;
+
+  u8 uPlayerId = (u8)lua_tonumber(pState, 1);
+  u32 uUnitId = (u32)lua_tonumber(pState, 2);
+  Player * pPlayer = getServerOrLocalPlayer(uPlayerId);
+  if (pPlayer != NULL) {
+    Unit * pUnit = pPlayer->findUnit(uUnitId);
+    if (pUnit != NULL) {
+      switch (pUnit->getStatus())
+      {
+      case US_Dead:
+        lua_pushstring(pState, "dead");
+        break;
+      case US_Removed:
+        lua_pushstring(pState, "removed");
+        break;
+      case US_Normal:
+      default:
+        lua_pushstring(pState, "normal");
+        break;
+      }
+      return 1;
+    }
+    else {
+      wchar_t sError[512] = L"";
+      swprintf_s(sError, 512, L"Lua interaction error in function getUnitStatus: unit not found.");
+      g_pMainGameRoot->m_pLocalClient->getDebug()->notifyErrorMessage(sError);
+    }
+  }
+  else {
+    wchar_t sError[512] = L"";
+    swprintf_s(sError, 512, L"Lua interaction error in function getUnitStatus: player not found.");
+    g_pMainGameRoot->m_pLocalClient->getDebug()->notifyErrorMessage(sError);
+  }
+  return 0;
+}
+
+int LUA_getUnitNameAndEdition(lua_State * pState) {
+  if (!checkNumberOfParams(pState, 2, L"getUnitNameAndEdition"))
+    return 0;
+
+  u8 uPlayerId = (u8)lua_tonumber(pState, 1);
+  u32 uUnitId = (u32)lua_tonumber(pState, 2);
+  Player * pPlayer = getServerOrLocalPlayer(uPlayerId);
+  if (pPlayer != NULL) {
+    Unit * pUnit = pPlayer->findUnit(uUnitId);
+    if (pUnit != NULL) {
+      char sName[NAME_MAX_CHARS] = "";
+      char sEdition[NAME_MAX_CHARS] = "";
+      wtostr(sName, NAME_MAX_CHARS, pUnit->getUnitModelId());
+      wtostr(sEdition, NAME_MAX_CHARS, pUnit->getUnitEdition());
+      lua_pushstring(pState, sName);
+      lua_pushstring(pState, sEdition);
+      return 2;
+    }
+    else {
+      wchar_t sError[512] = L"";
+      swprintf_s(sError, 512, L"Lua interaction error in function getUnitNameAndEdition: unit not found.");
+      g_pMainGameRoot->m_pLocalClient->getDebug()->notifyErrorMessage(sError);
+    }
+  }
+  else {
+    wchar_t sError[512] = L"";
+    swprintf_s(sError, 512, L"Lua interaction error in function getUnitNameAndEdition: player not found.");
+    g_pMainGameRoot->m_pLocalClient->getDebug()->notifyErrorMessage(sError);
+  }
+  return 0;
+}
+
+int LUA_removeUnit(lua_State * pState) {
+  Server * pServer = checkServerResolving(L"removeUnit");
+  if (pServer == NULL)
+    return 0;
+  if (!checkNumberOfParams(pState, 2, L"removeUnit"))
+    return 0;
+  
+  u8 uPlayerId = (u8)lua_tonumber(pState, 1);
+  u32 uUnitId = (u32)lua_tonumber(pState, 2);
+
+  if (g_bLuaEvaluationMode) {
+    Server * pServer = g_pMainGameRoot->m_pLocalClient->getServer();
+    assert(pServer != NULL);
+    return 0;
+  }
+
+  pServer->getSolver()->getSpellsSolver()->onRemoveUnit(uPlayerId, uUnitId);
+  return 0;
+}
+
+int LUA_getMapDimensions(lua_State * pState) {
+  if (!checkNumberOfParams(pState, 0, L"getMapDimensions"))
+    return 0;
+
+  Map * pMap = getServerOrLocalMap();
+  lua_pushnumber(pState, pMap->getWidth());
+  lua_pushnumber(pState, pMap->getHeight());
+  return 2;
+}
+
+u8 getTargetTypeFromName(char * sType)
+{
+  u8 uType = 0;
+  if (_stricmp(sType, "unit") == 0)
+    uType = SELECT_TYPE_UNIT;
+  else if (_stricmp(sType, "dead_unit") == 0)
+    uType = SELECT_TYPE_DEAD_UNIT;
+  else if (_stricmp(sType, "town") == 0)
+    uType = SELECT_TYPE_TOWN;
+  else if (_stricmp(sType, "temple") == 0)
+    uType = SELECT_TYPE_TEMPLE;
+  else if (_stricmp(sType, "building") == 0)
+    uType = SELECT_TYPE_BUILDING;
+  else if (_stricmp(sType, "spell_in_play") == 0)
+    uType = SELECT_TYPE_SPELL_IN_PLAY;
+  else if (_stricmp(sType, "spell_in_hand") == 0)
+    uType = SELECT_TYPE_SPELL_IN_HAND;
+  else if (_stricmp(sType, "spell_in_deck") == 0)
+    uType = SELECT_TYPE_SPELL_IN_DECK;
+  else if (_stricmp(sType, "spell_in_discard") == 0)
+    uType = SELECT_TYPE_SPELL_IN_DISCARD;
+  else if (_stricmp(sType, "tile") == 0)
+    uType = SELECT_TYPE_TILE;
+  else if (_stricmp(sType, "player") == 0)
+    uType = SELECT_TYPE_PLAYER;
+  return uType;
+}
+
+u8 getTargetTypeFromName(wchar_t * sType)
+{
+  u8 uType = 0;
+  if (_wcsicmp(sType, L"unit") == 0)
+    uType = SELECT_TYPE_UNIT;
+  else if (_wcsicmp(sType, L"dead_unit") == 0)
+    uType = SELECT_TYPE_DEAD_UNIT;
+  else if (_wcsicmp(sType, L"town") == 0)
+    uType = SELECT_TYPE_TOWN;
+  else if (_wcsicmp(sType, L"temple") == 0)
+    uType = SELECT_TYPE_TEMPLE;
+  else if (_wcsicmp(sType, L"building") == 0)
+    uType = SELECT_TYPE_BUILDING;
+  else if (_wcsicmp(sType, L"spell_in_play") == 0)
+    uType = SELECT_TYPE_SPELL_IN_PLAY;
+  else if (_wcsicmp(sType, L"spell_in_hand") == 0)
+    uType = SELECT_TYPE_SPELL_IN_HAND;
+  else if (_wcsicmp(sType, L"spell_in_deck") == 0)
+    uType = SELECT_TYPE_SPELL_IN_DECK;
+  else if (_wcsicmp(sType, L"spell_in_discard") == 0)
+    uType = SELECT_TYPE_SPELL_IN_DISCARD;
+  else if (_wcsicmp(sType, L"tile") == 0)
+    uType = SELECT_TYPE_TILE;
+  else if (_wcsicmp(sType, L"player") == 0)
+    uType = SELECT_TYPE_PLAYER;
+  return uType;
 }
 
 //------------------------------------------------------------------------------
@@ -1613,6 +2174,8 @@ void registerLuaCallbacks(lua_State * pState)
 	lua_register(pState, "detachFromGlobal", LUA_detachFromGlobal);
 	lua_register(pState, "addChildEffectToUnit", LUA_addChildEffectToUnit);
 	lua_register(pState, "removeChildEffectFromUnit", LUA_removeChildEffectFromUnit);
+	lua_register(pState, "addChildEffectToTown", LUA_addChildEffectToTown);
+	lua_register(pState, "removeChildEffectFromTown", LUA_removeChildEffectFromTown);
 	lua_register(pState, "getUnitData", LUA_getUnitData);
 	lua_register(pState, "getUnitBaseData", LUA_getUnitBaseData);
 	lua_register(pState, "setUnitData", LUA_setUnitData);
@@ -1621,7 +2184,6 @@ void registerLuaCallbacks(lua_State * pState)
 	lua_register(pState, "discardDeckSpell", LUA_discardDeckSpell);
 	lua_register(pState, "discardHandSpell", LUA_discardHandSpell);
 	lua_register(pState, "produceMana", LUA_produceMana);
-	lua_register(pState, "updateMaxMana", LUA_updateMaxMana);
 	lua_register(pState, "getAttacker", LUA_getAttacker);
 	lua_register(pState, "getDefender", LUA_getDefender);
 	lua_register(pState, "getAttackerLife", LUA_getAttackerLife);
@@ -1667,4 +2229,8 @@ void registerLuaCallbacks(lua_State * pState)
 	lua_register(pState, "addSpellToPlayer", LUA_addSpellToPlayer);
 	lua_register(pState, "addArtifactToPlayer", LUA_addArtifactToPlayer);
 	lua_register(pState, "addShahmahToPlayer", LUA_addShahmahToPlayer);
+	lua_register(pState, "getUnitStatus", LUA_getUnitStatus);
+	lua_register(pState, "getUnitNameAndEdition", LUA_getUnitNameAndEdition);
+	lua_register(pState, "removeUnit", LUA_removeUnit);
+	lua_register(pState, "getMapDimensions", LUA_getMapDimensions);
 }

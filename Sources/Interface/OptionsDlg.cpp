@@ -234,6 +234,7 @@ bool OptionsDlg::onButtonEvent(ButtonAction * pEvent, guiComponent * pCpnt)
     pPanel->moveTo(4, yPxl);
     pDoc->addComponent(pPanel);
     yPxl = 4;
+    int maxWidth = 0;
     Edition * pEdition = m_pLocalClient->getDataFactory()->getFirstEdition();
     while (pEdition != NULL)
     {
@@ -243,16 +244,20 @@ bool OptionsDlg::onButtonEvent(ButtonAction * pEvent, guiComponent * pCpnt)
       pPanel->getDocument()->addComponent(pBtn);
       wchar_t sEditionName[NAME_MAX_CHARS];
       pEdition->findLocalizedElement(sEditionName, NAME_MAX_CHARS, i18n->getCurrentLanguageName(), L"name");
-      swprintf_s(sText, LABEL_MAX_CHARS, L"%s\n  (md5: %s)", sEditionName, pEdition->m_sObjectId);
+      swprintf_s(sText, LABEL_MAX_CHARS, L"%s\n  (md5: %s)", sEditionName, pEdition->getChecksum());
       pLbl = new guiLabel();
       pLbl->init(sText, H2_FONT, H2_COLOR, L"", 30, yPxl, 0, 0, getDisplay());
       pPanel->getDocument()->addComponent(pLbl);
       pLbl->setCatchClicks(true);
       pLbl->setComponentOwner(pBtn);
       ((guiToggleButton*)pBtn)->setClickState(pEdition->isActive());
+      if (pLbl->getWidth() + pLbl->getXPos() > maxWidth)
+        maxWidth = pLbl->getWidth() + pLbl->getXPos();
       yPxl += pLbl->getHeight() + 4;
       pEdition = m_pLocalClient->getDataFactory()->getNextEdition();
     }
+    if (maxWidth > pPanel->getDocument()->getWidth())
+      pPanel->getDocument()->setWidth(maxWidth);
     // Keep logs for how many turns?
     yPxl = pPanel->getYPos() + pPanel->getHeight() + 4;
     pLbl = new guiLabel();

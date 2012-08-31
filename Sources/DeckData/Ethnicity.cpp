@@ -57,20 +57,12 @@ Ethnicity::~Ethnicity()
 // -----------------------------------------------------------------
 void Ethnicity::readFromNode(XMLLiteElement * pNode, DebugManager * pDebug)
 {
+  readLocalizedElementsFromXml(pNode);
   XMLLiteElement * pDataElt = pNode->getFirstChild();
   while (pDataElt != NULL)
   {
     if (0 == _wcsicmp(pDataElt->getName(), L"id"))
       wsafecpy(m_sObjectId, NAME_MAX_CHARS, pDataElt->getCharValue());
-    else if (0 == _wcsicmp(pDataElt->getName(), L"name") || 0 == _wcsicmp(pDataElt->getName(), L"description"))
-    {
-      XMLLiteElement * pSubDataElt = pDataElt->getFirstChild();
-      while (pSubDataElt != NULL)
-      {
-        addLocalizedElement(pDataElt->getName(), pSubDataElt->getCharValue(), pSubDataElt->getName());
-        pSubDataElt = pDataElt->getNextChild();
-      }
-    }
     else if (0 == _wcsicmp(pDataElt->getName(), L"towns"))
     {
       XMLLiteAttribute * pTownAttr = pDataElt->getFirstAttribute();

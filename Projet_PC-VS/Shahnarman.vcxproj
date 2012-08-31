@@ -99,8 +99,11 @@
   <ItemGroup>
     <ClCompile Include="..\Sources\Data\FileSerializer.cpp" />
     <ClCompile Include="..\Sources\Data\NetworkSerializer.cpp" />
+    <ClCompile Include="..\Sources\DeckData\AIData.cpp" />
     <ClCompile Include="..\Sources\DeckData\ShahmahCreation.cpp" />
     <ClCompile Include="..\Sources\Interface\CreateAvatarDlg.cpp" />
+    <ClCompile Include="..\Sources\Players\AISpell.cpp" />
+    <ClCompile Include="..\Sources\Server\AILuaSolver.cpp" />
     <ClCompile Include="..\Sources\Server\AISolver.cpp" />
     <ClCompile Include="..\Sources\_System\DirectoryChecker.cpp" />
     <ClCompile Include="..\Sources\_System\linux_utils.cpp" />
@@ -234,8 +237,11 @@
     <ClInclude Include="..\Sources\Data\FileSerializer.h" />
     <ClInclude Include="..\Sources\Data\NetworkSerializer.h" />
     <ClInclude Include="..\Sources\Data\Serializer.h" />
+    <ClInclude Include="..\Sources\DeckData\AIData.h" />
     <ClInclude Include="..\Sources\DeckData\ShahmahCreation.h" />
     <ClInclude Include="..\Sources\Interface\CreateAvatarDlg.h" />
+    <ClInclude Include="..\Sources\Players\AISpell.h" />
+    <ClInclude Include="..\Sources\Server\AILuaSolver.h" />
     <ClInclude Include="..\Sources\Server\AISolver.h" />
     <ClInclude Include="..\Sources\_System\stdafx.h" />
     <ClInclude Include="..\Sources\Audio\AudioManager.h" />

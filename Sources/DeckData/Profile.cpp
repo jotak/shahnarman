@@ -332,15 +332,22 @@ void Profile::buyItem(ShopItem * pItem)
 
   if (pItem->m_iType == 0)  // pack
   {
-    PackShopItem::PackShopItem_content * pContent = (PackShopItem::PackShopItem_content*) ((PackShopItem*)pItem)->m_pContent->getFirst(0);
+    SpellsPackContent * pContent = (SpellsPackContent*) ((PackShopItem*)pItem)->m_pContent->getFirst(0);
     while (pContent != NULL)
     {
       for (int i = 0; i < pContent->m_iNbSpells; i++)
       {
-        Spell * pSpell = pEdition->buySpell(pContent->m_iMode);
-        addSpell(pItem->m_sEdition, pSpell->getObjectName());
+        Spell * pSpell = NULL;
+        if (pContent->m_iMode == PACK_MODE_FIXED)
+          pSpell = pEdition->findSpell(pContent->m_sSpellId);
+        else
+          pSpell = pEdition->selectRandomSpell(pContent->m_iMode);
+        if (pSpell == NULL)
+          m_pLocalClient->getDebug()->notifyErrorMessage(L"NULL spell in Profile::buyItem - spell selection failed.");
+        else
+          addSpell(pItem->m_sEdition, pSpell->getObjectName());
       }
-      pContent = (PackShopItem::PackShopItem_content*) ((PackShopItem*)pItem)->m_pContent->getNext(0);
+      pContent = (SpellsPackContent*) ((PackShopItem*)pItem)->m_pContent->getNext(0);
     }
   }
   else if (pItem->m_iType == 1)  // avatar

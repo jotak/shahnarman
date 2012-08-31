@@ -616,6 +616,9 @@ void LocalClient::processNextMessage()
       case NETWORKMSG_RESURRECT:
         m_pPlayerManager->resurrectUnit(pData);
         break;
+      case NETWORKMSG_REMOVE_UNIT:
+        m_pPlayerManager->removeUnit(pData);
+        break;
       case NETWORKMSG_ADD_MAGIC_CIRCLE:
         m_pPlayerManager->addMagicCircle(pData);
         break;
@@ -824,7 +827,7 @@ void LocalClient::gameOver(NetworkData * pData)
   Player * pPlayer = (Player*) getPlayerManager()->getPlayersList()->getFirst(0);
   while (pPlayer != NULL)
   {
-    if (pPlayer->m_uClientId == getClientId())
+    if (pPlayer->m_uClientId == getClientId() && !pPlayer->m_bIsAI)
     {
       // Problem here: the "AvatarData" we have is a cloned version of the one contained in Profile.
       //  So we have to retrieve the corresponding profile, and replace the old AvatarData by the new one.

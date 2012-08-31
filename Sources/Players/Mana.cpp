@@ -43,6 +43,28 @@ Mana Mana::operator+(Mana * addMana)
 }
 
 // -----------------------------------------------------------------
+// Name : operator-
+// -----------------------------------------------------------------
+Mana Mana::operator-(Mana remMana)
+{
+  Mana result;
+  for (int i = 0; i < 4; i++)
+    result.mana[i] = mana[i] - min(remMana.mana[i], mana[i]);
+  return result;
+}
+
+// -----------------------------------------------------------------
+// Name : operator-
+// -----------------------------------------------------------------
+Mana Mana::operator-(Mana * remMana)
+{
+  Mana result;
+  for (int i = 0; i < 4; i++)
+    result.mana[i] = mana[i] - min(remMana->mana[i], mana[i]);
+  return result;
+}
+
+// -----------------------------------------------------------------
 // Name : operator+=
 // -----------------------------------------------------------------
 void Mana::operator+=(Mana addMana)
@@ -66,7 +88,7 @@ void Mana::operator+=(Mana * addMana)
 void Mana::operator-=(Mana remMana)
 {
   for (int i = 0; i < 4; i++)
-    mana[i] -= remMana.mana[i];
+    mana[i] -= min(remMana.mana[i], mana[i]);
 }
 
 // -----------------------------------------------------------------

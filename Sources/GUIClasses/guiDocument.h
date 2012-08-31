@@ -37,6 +37,7 @@ public:
   guiComponent * getLastComponent() { return (guiComponent*) m_pComponentsList->getLast(m_iCpntIt2); };
   guiComponent * getPrevComponent() { return (guiComponent*) m_pComponentsList->getPrev(m_iCpntIt2); };
   int getComponentsCount() { return m_pComponentsList->size; };
+  bool deleteComponent(guiComponent * pCpnt);
   guiComponent * deleteCurrentComponent(bool bSetToNext);
   guiComponent * getComponentAt(int xPxl, int yPxl);
   ObjectList * getComponentsList() { return m_pComponentsList; };

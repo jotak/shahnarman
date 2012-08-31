@@ -425,6 +425,7 @@ u16 Town::getMaxFoodStorage()
 // -----------------------------------------------------------------
 // Name : getUnitProdBonus
 //  return percentage of basic cost
+//  => Lower is better
 // -----------------------------------------------------------------
 s16 Town::getUnitProdBonus()
 {

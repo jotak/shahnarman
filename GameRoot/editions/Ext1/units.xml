@@ -1,9 +1,9 @@
 <unit>
   <id>Extension1_Boss</id>
-  <name>
+  <l12n key='name'>
     <english>Boss</english>
     <french>Boss</french>
-  </name>
+  </l12n>
   <ethnicity></ethnicity>
   <melee>4</melee>
   <range>2</range>
@@ -13,8 +13,8 @@
   <alignment>4</alignment>
   <texture>renard</texture>
   <skill luafile='Flying' />
-  <description>
+  <l12n key='description'>
     <english>You've reached the boss!</english>
     <french>Vous avez atteint le boss!</french>
-  </description>
+  </l12n>
 </unit>

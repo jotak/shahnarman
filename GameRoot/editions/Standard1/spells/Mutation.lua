@@ -33,10 +33,12 @@ function getDescription()
 				end
 			end
 			word2 = "gagné"
+			modif = _modif
 			if _modif < 0 then
 				word2 = "perdu"
+				modif = -_modif
 			end
-			return "L'unité mutée a "..word2.." ".._modif.." points "..word.."."
+			return "L'unité mutée a "..word2.." "..modif.." points "..word.."."
 		else
 			word = "melee"
 			if _charac == 2 then
@@ -47,10 +49,12 @@ function getDescription()
 				end
 			end
 			word2 = "won"
+			modif = _modif
 			if _modif < 0 then
 				word2 = "lost"
+				modif = -_modif
 			end
-			return "Mutated unit "..word2.." ".._modif.." "..word.." points."
+			return "Mutated unit "..word2.." "..modif.." "..word.." points."
 		end
 	end
 end
@@ -80,22 +84,22 @@ function onMutationDone(charac, modif)
 end
 
 function getMod_melee(i)
-	if charac == 1 then
-		return i + modif
+	if _charac == 1 then
+		return i + _modif
 	end
 	return i
 end
 
 function getMod_armor(i)
-	if charac == 2 then
-		return i + modif
+	if _charac == 2 then
+		return i + _modif
 	end
 	return i
 end
 
 function getMod_speed(i)
-	if charac == 3 then
-		return i + modif
+	if _charac == 3 then
+		return i + _modif
 	end
 	return i
 end

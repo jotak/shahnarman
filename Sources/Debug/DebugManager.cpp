@@ -227,6 +227,16 @@ void DebugManager::notifyErrorMessage(const wchar_t * errorMsg)
 }
 
 // -----------------------------------------------------------------
+// Name : notifyLoadingMessage
+// -----------------------------------------------------------------
+void DebugManager::notifyLoadingMessage(const wchar_t * msg)
+{
+    wprintf(L"\t");
+    wprintf(msg);
+    wprintf(L"\n");
+}
+
+// -----------------------------------------------------------------
 // Name : notifyINIErrorMessage
 // -----------------------------------------------------------------
 void DebugManager::notifyINIErrorMessage(wchar_t * sFile, int errorCode)

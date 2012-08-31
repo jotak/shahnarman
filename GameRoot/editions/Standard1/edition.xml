@@ -1,7 +1,7 @@
 <edition locale='fra'>
-  <name>
+  <l12n key='name'>
     <english>Standard 1</english>
     <french>Standard 1</french>
-  </name>
+  </l12n>
   <version>0.1</version>
 </edition>

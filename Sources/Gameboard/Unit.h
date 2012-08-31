@@ -18,7 +18,8 @@ enum UnitOrder
 enum UnitStatus
 {
   US_Normal = 0,
-  US_Dead
+  US_Dead,
+  US_Removed
 };
 
 class GameboardManager;
@@ -49,7 +50,7 @@ public:
   void initGraphics(DisplayEngine * pDisplay);
 
   // GraphicObject virtual functions
-  virtual u32 getType() { return MapObject::getType() | (m_Status == US_Dead ? GOTYPE_DEAD_UNIT : GOTYPE_UNIT); };
+  virtual u32 getType() { return MapObject::getType() | (m_Status == US_Dead ? GOTYPE_DEAD_UNIT : (m_Status == US_Removed ? GOTYPE_REMOVED_UNIT : GOTYPE_UNIT)); };
   virtual void display();
   virtual void update(double delta);
 
@@ -94,6 +95,8 @@ public:
   ObjectList * getSkillsRef() { return m_pSkillsRef; };
   void setPlayerColor(F_RGBA color) { m_PlayerColor = color; };
   virtual long getValue(const wchar_t * sName, bool bBase = false, bool * bFound = NULL);
+  wchar_t * getUnitModelId() { return m_sUnitId; };
+  wchar_t * getUnitEdition() { return m_sEdition; };
 
   // find data
   Skill * findSkill(u32 uSkillId, bool * isActive = NULL);
@@ -105,8 +108,8 @@ public:
   bool setBaseValue(const wchar_t * sName, long val);
   void setMapPos(CoordsMap coords);
   void setHasAttacked(bool bHasAttacked) { m_bHasAttacked = bHasAttacked; };
-  bool canAttack() { return !m_bHasAttacked && m_Status != US_Dead; };
-  bool canDefend() { return m_Status != US_Dead; };
+  bool canAttack() { return !m_bHasAttacked && m_Status == US_Normal; };
+  bool canDefend() { return m_Status == US_Normal; };
   void onNewTurn();
   bool wasModified() { return m_bModified; };
   void setModified(bool bMod) { m_bModified = bMod; };

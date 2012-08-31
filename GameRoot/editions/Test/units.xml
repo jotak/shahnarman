@@ -1,0 +1,77 @@
+<unit>
+  <id>Djinn_tres_tres_mechant</id>
+  <l12n key='name'>
+    <english>Very, very evil djinn</english>
+    <french>Djinn très très méchant</french>
+  </l12n>
+  <ethnicity></ethnicity>
+  <melee>4</melee>
+  <range>0</range>
+  <armor>1</armor>
+  <endurance>5</endurance>
+  <speed>4</speed>
+  <alignment>4</alignment>
+  <texture>renard</texture>
+  <skill luafile='Flying' />
+  <l12n key='description'>
+    <english>Take care, this djinn is really evil.</english>
+    <french>Attention, ce djinn est vraiment très méchant.</french>
+  </l12n>
+</unit>
+<unit>
+  <id>Goblin_des_montagnes_rouges</id>
+  <l12n key='name'>
+    <english>Red mountains goblin</english>
+    <french>Goblin des montagnes rouges</french>
+  </l12n>
+  <ethnicity></ethnicity>
+  <melee>1</melee>
+  <range>0</range>
+  <armor>0</armor>
+  <endurance>1</endurance>
+  <speed>2</speed>
+  <alignment>8</alignment>
+  <texture>mario</texture>
+  <l12n key='description'>
+    <english>These goblins are quite stupid.</english>
+    <french>Ces goblins sont assez stupides.</french>
+  </l12n>
+</unit>
+<unit>
+  <id>Troll_aquatique_farceur</id>
+  <l12n key='name'>
+    <english>Happy water-troll</english>
+    <french>Troll aquatique farceur</french>
+  </l12n>
+  <ethnicity></ethnicity>
+  <melee>4</melee>
+  <range>0</range>
+  <armor>2</armor>
+  <endurance>5</endurance>
+  <speed>2</speed>
+  <alignment>9</alignment>
+  <texture>canard</texture>
+  <l12n key='description'>
+    <english>His jokes can kill an elephant.</english>
+    <french>Ses blagues peuvent tuer un éléphant.</french>
+  </l12n>
+</unit>
+<unit>
+  <id>Dark_Maggot</id>
+  <l12n key='name'>
+    <english>Dark maggot</english>
+    <french>Asticot des ténèbres</french>
+  </l12n>
+  <ethnicity></ethnicity>
+  <melee>1</melee>
+  <range>0</range>
+  <armor>0</armor>
+  <endurance>1</endurance>
+  <speed>1</speed>
+  <alignment>4</alignment>
+  <texture>asticot</texture>
+  <l12n key='description'>
+    <english></english>
+    <french></french>
+  </l12n>
+</unit>

@@ -1,18 +1,14 @@
 #ifndef _LUA_TARGETABLE_H
 #define _LUA_TARGETABLE_H
 
+#include "../lua_callbacks.h"
 #include "../Common/ObjectList.h"
 #include "LuaObject.h"
-
-#define LUATARGET_PLAYER    1
-#define LUATARGET_TILE      2
-#define LUATARGET_TOWN      3
-#define LUATARGET_UNIT      4
-#define LUATARGET_TEMPLE    5
 
 #define HANDLER_RESULT_TYPE_NONE    0
 #define HANDLER_RESULT_TYPE_BAND    1
 #define HANDLER_RESULT_TYPE_BOR     2
+#define HANDLER_RESULT_TYPE_ADD     3
 
 class LocalClient;
 
@@ -49,14 +45,14 @@ public:
   virtual bool setBaseValue(const wchar_t * sName, long val);
 
   // Other
-  bool callEffectHandler(wchar_t * sFunc, wchar_t * sArgsType = L"", void ** pArgs = NULL, u8 uResultType = HANDLER_RESULT_TYPE_NONE);
+  long callEffectHandler(wchar_t * sFunc, wchar_t * sArgsType = L"", void ** pArgs = NULL, u8 uResultType = HANDLER_RESULT_TYPE_NONE);
   void getInfo_AddValue(wchar_t * sBuf, int iSize, const wchar_t * sKey, const wchar_t * sSeparator);
+  static LuaTargetable * convertFromBaseObject(BaseObject * pObj, u8 uType);
+  BaseObject * convertToBaseObject(u8 uType);
 
 protected:
   void serializeValues(NetworkData * pData);
   void deserializeValues(NetworkData * pData);
-  //void serializeEffects(NetworkData * pData, ObjectList * pEffectsList);
-  //void deserializeEffects(NetworkData * pData, ObjectList * pEffectsList, LocalClient * pLocalClient, std::queue<RELINK_PTR_DATA> * relinkPtrData, u8 uRelinkType);
 
   long_hash m_lValues;
   ObjectList ** m_pGlobalEffects;

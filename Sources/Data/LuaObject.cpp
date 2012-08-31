@@ -198,8 +198,10 @@ bool LuaObject::callPreparedLuaFunction(int iNbParams, int iNbResults, wchar_t *
   {
   case LUA_ERRRUN:
     {
-      wchar_t sError[512] = L"";
-      swprintf_s(sError, 512, L"LUA runtime error when calling %s::%s(%s).", m_sObjectName, sFunc, sParams);
+      wchar_t sError[1024] = L"";
+      wchar_t sLuaError[512] = L"";
+      strtow(sLuaError, 512, lua_tostring(m_pLuaState, -1));
+      swprintf_s(sError, 1024, L"LUA runtime error when calling %s::%s(%s). %s", m_sObjectName, sFunc, sParams, sLuaError);
       m_pDebug->notifyErrorMessage(sError);
       return false;
     }
@@ -444,38 +446,9 @@ void LuaObject::removeFromTargets()
   BaseObject * pObj = m_pTargets->getFirst(0);
   while (pObj != NULL)
   {
-    // Need here to get the type of pTarget, and re-cast it
-    switch (m_pTargets->getCurrentType(0))
-    {
-    case LUATARGET_PLAYER:
-      {
-        Player * pTarget = (Player*) m_pTargets->getCurrent(0);
-        assert(pTarget != NULL);
-        pTarget->getAllEffects()->deleteObject(this, true);
-        break;
-      }
-    case LUATARGET_TILE:
-      {
-        MapTile * pTarget = (MapTile*) m_pTargets->getCurrent(0);
-        assert(pTarget != NULL);
-        pTarget->getAllEffects()->deleteObject(this, true);
-        break;
-      }
-    case LUATARGET_TOWN:
-      {
-        Town * pTarget = (Town*) m_pTargets->getCurrent(0);
-        assert(pTarget != NULL);
-        pTarget->getAllEffects()->deleteObject(this, true);
-        break;
-      }
-    case LUATARGET_UNIT:
-      {
-        Unit * pTarget = (Unit*) m_pTargets->getCurrent(0);
-        assert(pTarget != NULL);
-        pTarget->getAllEffects()->deleteObject(this, true);
-        break;
-      }
-    }
+    LuaTargetable * pTarget = LuaTargetable::convertFromBaseObject(pObj, m_pTargets->getCurrentType(0));
+    assert(pTarget != NULL);
+    pTarget->getAllEffects()->deleteObject(this, true);
     pObj = m_pTargets->deleteCurrent(0, true);
   }
 }

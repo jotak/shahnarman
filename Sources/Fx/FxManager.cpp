@@ -108,16 +108,6 @@ void FxManager::Update(double delta)
   m_pCameraModifier->moveTo(m_pLocalClient->getDisplay()->getCamera());
   m_pCameraModifier->update(delta);
   Coords3D pos = m_pCameraModifier->get3DPos();
-  if (pos.z < GUIPLANE)
-  {
-    pos.z = GUIPLANE;
-    m_pCameraModifier->moveTo(pos);
-  }
-  else if (pos.z > BOARDPLANE - 0.15f)
-  {
-    pos.z = BOARDPLANE - 0.15f;
-    m_pCameraModifier->moveTo(pos);
-  }
   // Game intro
   if (m_bInitialCamMove)
   {
@@ -147,6 +137,19 @@ void FxManager::Update(double delta)
     {
       pos.x = 0;
       pos.y = 0.0625f * pos.z * pos.z - 11.875f * pos.z + 564.0625f;  // Formula given by calculation in document: "calculs_traj_init.ods"
+      m_pCameraModifier->moveTo(pos);
+    }
+  }
+  else {
+    // Z-bounded cam (except during intro)
+    if (pos.z < BOARDPLANE - 5.0f)
+    {
+      pos.z = BOARDPLANE - 5.0f;
+      m_pCameraModifier->moveTo(pos);
+    }
+    else if (pos.z > BOARDPLANE - 0.15f)
+    {
+      pos.z = BOARDPLANE - 0.15f;
       m_pCameraModifier->moveTo(pos);
     }
   }

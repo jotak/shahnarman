@@ -20,6 +20,8 @@ public:
   u8 operator[](int idx) { return mana[idx]; };
   Mana operator+(Mana addMana);
   Mana operator+(Mana* addMana);
+  Mana operator-(Mana addMana);
+  Mana operator-(Mana* addMana);
   void operator+=(Mana addMana);
   void operator+=(Mana* addMana);
   void operator-=(Mana remMana);

@@ -11,6 +11,7 @@
 #include "../Gameboard/Temple.h"
 #include "../Gameboard/Town.h"
 #include "../Data/LuaContext.h"
+#include "../lua_callbacks_utils.h"
 
 // -----------------------------------------------------------------
 // Name : PlayerManagerAbstract
@@ -82,7 +83,7 @@ void PlayerManagerAbstract::deserializePlayersData(NetworkData * pData, LocalCli
         if (pPlayer != NULL)
         {
           pUnit1->m_pAttackTarget = pPlayer->findUnit(data.data3);
-          if (pUnit1->m_pAttackTarget->getStatus() == US_Dead)
+          if (pUnit1->m_pAttackTarget->getStatus() != US_Normal)
             pUnit1->m_pAttackTarget = NULL;
         }
         pUnit1->recomputePath();
@@ -181,31 +182,31 @@ Player * PlayerManagerAbstract::getNextPlayerAndNeutral(int _it)
 LuaTargetable * PlayerManagerAbstract::findTargetFromIdentifiers(long iType, wchar_t * sIds, Map * pMap)
 {
   wchar_t sType[64];
-  if (iType == LUATARGET_PLAYER)
+  if (iType == SELECT_TYPE_PLAYER)
   {
     int id;
     swscanf_s(sIds, L"%s %d", sType, 64, &id);
     return findPlayer(id);
   }
-  else if (iType == LUATARGET_TEMPLE)
+  else if (iType == SELECT_TYPE_TEMPLE)
   {
     long id, owner;
     swscanf_s(sIds, L"%s %ld %ld", sType, 64, &owner, &id);
     return pMap->findTemple(id);
   }
-  else if (iType == LUATARGET_TOWN)
+  else if (iType == SELECT_TYPE_TOWN)
   {
     long id, owner;
     swscanf_s(sIds, L"%s %ld %ld", sType, 64, &owner, &id);
     return pMap->findTown(id);
   }
-  else if (iType == LUATARGET_TILE)
+  else if (iType == SELECT_TYPE_TILE)
   {
     long x, y;
     swscanf_s(sIds, L"%s %ld %ld", sType, 64, &x, &y);
     return pMap->getTileAt(CoordsMap(x, y));
   }
-  else if (iType == LUATARGET_UNIT)
+  else if (iType == SELECT_TYPE_UNIT)
   {
     long id, owner;
     swscanf_s(sIds, L"%s %ld %ld", sType, 64, &owner, &id);
@@ -214,4 +215,21 @@ LuaTargetable * PlayerManagerAbstract::findTargetFromIdentifiers(long iType, wch
     return pPlayer->findUnit(id);
   }
   return NULL;
+}
+
+// -----------------------------------------------------------------
+// Name : retrieveTargetsNames
+// -----------------------------------------------------------------
+wchar_t * PlayerManagerAbstract::retrieveTargetsNames(wchar_t * sBuf, int iSize, wchar_t * sIds, Map * pMap)
+{
+  wsafecpy(sBuf, iSize, L"");
+  wchar_t sep[8] = L"";
+  // The first element in sIds is object type
+  wchar_t sType[64];
+  int id;
+  swscanf_s(sIds, L"%s %d", sType, 64, &id);
+  u8 uType = getTargetTypeFromName(sType);
+  LuaTargetable * pTarget = findTargetFromIdentifiers((long) uType, sIds, pMap);
+  if (pTarget != NULL) {
+  }
 }

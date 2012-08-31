@@ -46,12 +46,6 @@ PlayerManager::PlayerManager(LocalClient * pLocalClient)
 // -----------------------------------------------------------------
 PlayerManager::~PlayerManager()
 {
-#ifdef DBG_VERBOSE1
-  printf("Begin destroy PlayerManager\n");
-#endif
-#ifdef DBG_VERBOSE1
-  printf("End destroy PlayerManager\n");
-#endif
 }
 
 // -----------------------------------------------------------------
@@ -179,12 +173,16 @@ void PlayerManager::setPlayerState(NetworkData * pData)
 // -----------------------------------------------------------------
 void PlayerManager::setPlayerMana(NetworkData * pData)
 {
+  bool bSpent = (pData->readLong() == 1);
   Player * pPlayer = findPlayer((u8)pData->readLong());
-  if (pPlayer != NULL)
-  {
+  if (pPlayer != NULL) {
     // retrieve mana values
-    for (int i = 0; i < 4; i++)
-      pPlayer->m_Mana.mana[i] = (u8) pData->readLong();
+    for (int i = 0; i < 4; i++) {
+      if (bSpent)
+        pPlayer->m_SpentMana.mana[i] = (u8) pData->readLong();
+      else
+        pPlayer->setBaseMana(i, (u8) pData->readLong());
+    }
   }
 }
 
@@ -285,7 +283,7 @@ void PlayerManager::discardSpells(NetworkData * pData)
         BaseObject * pTarget = (BaseObject*) pChild->pTargets->getFirst(0);
         while (pTarget != NULL) {
           int type = pChild->pTargets->getCurrentType(0);
-          if (type == LUATARGET_UNIT) {
+          if (type == SELECT_TYPE_UNIT) {
             if (((Unit*)pTarget)->detachChildEffect(pChild))
             {
               pChild->pTargets->deleteObject(((Unit*)pTarget), true);
@@ -542,10 +540,10 @@ void PlayerManager::updateCastSpellData(NetworkData * pData)
     void * pPhraseArgs[3];
     pPhraseArgs[0] = pPlayer->getAvatarName();
     pPhraseArgs[1] = pSpell->getLocalizedName();
-    pPhraseArgs[2] = pSpell->getParametersInfos();
+    pPhraseArgs[2] = pSpell->getTargetInfo();
     if (dest == 2)  // Spell canceled!
       i18n->getText(L"(s1)_CAST_(s2)_FAILED", sText, 256, pPhraseArgs);
-    else if (wcscmp(pSpell->getParametersInfos(), L"") != 0)
+    else if (wcscmp(pSpell->getTargetInfo(), L"") != 0)
       i18n->getText(L"%$1s_CAST_%$2s_ON_%$3s", sText, 256, pPhraseArgs);
     else
       i18n->getText(L"%$1s_CAST_%$2s", sText, 256, pPhraseArgs);
@@ -565,69 +563,18 @@ void PlayerManager::onLuaAttached(NetworkData * pData)
   if (!context.deserialize(pData, this, m_pLocalClient->getGameboard()->getMap()))
     return;
   LuaObject * pLua = context.pLua;
-  switch (pData->readLong())
-  {
-  case 0:     // global spell
-    {
-      m_pGlobalSpells->addLast(pLua);
-      if (pLua->getType() == LUAOBJECT_SPELL)
-        ((Spell*)pLua)->setGlobal();
-      break;
-    }
-  case LUATARGET_UNIT:     // target is unit
-    {
-      // Find objects
-      u8 uTargetPlayerId = (u8) pData->readLong();
-      u32 uTargetUnitId = (u32) pData->readLong();
-      Player * pTargetPlayer = findPlayer(uTargetPlayerId);
-      assert(pTargetPlayer != NULL);
-      Unit * pUnit = pTargetPlayer->findUnit(uTargetUnitId);
-      assert(pUnit != NULL);
-      pUnit->attachEffect(pLua);  // do attach spell effect to targetted unit
-      pLua->addTarget(pUnit, LUATARGET_UNIT);
-      break;
-    }
-  case LUATARGET_PLAYER:     // target is player
-    {
-      // Find objects
-      u8 uTargetPlayerId = (u8) pData->readLong();
-      Player * pTargetPlayer = findPlayer(uTargetPlayerId);
-      assert(pTargetPlayer != NULL);
-      pTargetPlayer->attachEffect(pLua);  // do attach spell effect to targetted player
-      pLua->addTarget(pTargetPlayer, LUATARGET_PLAYER);
-      break;
-    }
-  case LUATARGET_TOWN:     // target is town
-    {
-      // Find objects
-      u32 uTargetTownId = (u32) pData->readLong();
-      Town * pTargetTown = m_pLocalClient->getGameboard()->getMap()->findTown(uTargetTownId);
-      assert(pTargetTown != NULL);
-      pTargetTown->attachEffect(pLua);  // do attach spell effect to targetted town
-      pLua->addTarget(pTargetTown, LUATARGET_TOWN);
-      break;
-    }
-  case LUATARGET_TEMPLE:     // target is temple
-    {
-      // Find objects
-      u32 uTemple = (u32) pData->readLong();
-      Temple * pTemple = m_pLocalClient->getGameboard()->getMap()->findTemple(uTemple);
-      assert(pTemple != NULL);
-      pTemple->attachEffect(pLua);  // do attach spell effect to targetted temple
-      pLua->addTarget(pTemple, LUATARGET_TEMPLE);
-      break;
-    }
-  case LUATARGET_TILE:     // target is tile
-    {
-      // Find tile
-      int x = (int) pData->readLong();
-      int y = (int) pData->readLong();
-      MapTile * pTile = m_pLocalClient->getGameboard()->getMap()->getTileAt(CoordsMap(x, y));
-      assert(pTile != NULL);
-      pTile->attachEffect(pLua);  // do attach spell effect to targetted town
-      pLua->addTarget(pTile, LUATARGET_TILE);
-      break;
-    }
+  u32 uType = 0;
+  LuaTargetable * pTarget = findLuaTarget(pData, &uType);
+  if (uType == 0) {
+    // Global spell
+    m_pGlobalSpells->addLast(pLua);
+    if (pLua->getType() == LUAOBJECT_SPELL)
+      ((Spell*)pLua)->setGlobal();
+  }
+  else {
+    assert(pTarget != NULL);
+    pTarget->attachEffect(pLua);  // do attach spell effect to targetted object
+    pLua->addTarget(pTarget->convertToBaseObject(uType), uType);
   }
 }
 
@@ -640,46 +587,16 @@ void PlayerManager::onLuaDetached(NetworkData * pData)
   if (!context.deserialize(pData, this, m_pLocalClient->getGameboard()->getMap()))
     return;
   LuaObject * pLua = context.pLua;
-  switch (pData->readLong())
-  {
-  case 0:     // global spell
-    {
-      m_pGlobalSpells->deleteObject(pLua, true);
-      break;
-    }
-  case LUATARGET_UNIT:     // target is unit
-    {
-      // Find objects
-      u8 uTargetPlayerId = (u8) pData->readLong();
-      u32 uTargetUnitId = (u32) pData->readLong();
-      Player * pTargetPlayer = findPlayer(uTargetPlayerId);
-      assert(pTargetPlayer != NULL);
-      Unit * pUnit = pTargetPlayer->findUnit(uTargetUnitId);
-      assert(pUnit != NULL);
-      pUnit->detachEffect(pLua);
-      pLua->removeTarget(pUnit);
-      break;
-    }
-  case LUATARGET_PLAYER:     // target is player
-    {
-      // Find objects
-      u8 uTargetPlayerId = (u8) pData->readLong();
-      Player * pTargetPlayer = findPlayer(uTargetPlayerId);
-      assert(pTargetPlayer != NULL);
-      pTargetPlayer->detachEffect(pLua);
-      pLua->removeTarget(pTargetPlayer);
-      break;
-    }
-  case LUATARGET_TOWN:     // target is town
-    {
-      // Find objects
-      u32 uTargetTownId = (u32) pData->readLong();
-      Town * pTargetTown = m_pLocalClient->getGameboard()->getMap()->findTown(uTargetTownId);
-      assert(pTargetTown != NULL);
-      pTargetTown->detachEffect(pLua);  // do attach spell effect to targetted town
-      pLua->removeTarget(pTargetTown);
-      break;
-    }
+  u32 uType = 0;
+  LuaTargetable * pTarget = findLuaTarget(pData, &uType);
+  if (uType == 0) {
+    // Global spell
+    m_pGlobalSpells->deleteObject(pLua, true);
+  }
+  else {
+    assert(pTarget != NULL);
+    pTarget->detachEffect(pLua);
+    pLua->removeTarget(pTarget->convertToBaseObject(uType));
   }
 }
 
@@ -717,29 +634,26 @@ void PlayerManager::onChildEffectAttached(NetworkData * pData)
   LuaTargetable * pTarget = findLuaTarget(pData, &uTargetType);
   pTarget->attachChildEffect(pChild);
 
+  pChild->pTargets->addLast(pTarget->convertToBaseObject(uTargetType), uTargetType);
   wchar_t sTargetName[NAME_MAX_CHARS] = L"";
   u8 uLogAction = 0;
   void * pLogParam = NULL;
   switch (uTargetType)
   {
-  case LUATARGET_UNIT:
-    pChild->pTargets->addLast((Unit*) pTarget, LUATARGET_UNIT);
+  case SELECT_TYPE_UNIT:
     wsafecpy(sTargetName, NAME_MAX_CHARS, ((Unit*)pTarget)->getName());
     uLogAction = LOG_ACTION_UNITSCREEN;
     pLogParam = (Unit*) pTarget;
     break;
-  case LUATARGET_PLAYER:
-    pChild->pTargets->addLast((Player*) pTarget, LUATARGET_PLAYER);
+  case SELECT_TYPE_PLAYER:
     wsafecpy(sTargetName, NAME_MAX_CHARS, ((Player*)pTarget)->getAvatarName());
     break;
-  case LUATARGET_TOWN:
-    pChild->pTargets->addLast((Town*) pTarget, LUATARGET_TOWN);
+  case SELECT_TYPE_TOWN:
     wsafecpy(sTargetName, NAME_MAX_CHARS, ((Town*)pTarget)->getName());
     uLogAction = LOG_ACTION_TOWNSCREEN;
     pLogParam = (Town*) pTarget;
     break;
-  case LUATARGET_TILE:
-    pChild->pTargets->addLast((MapTile*) pTarget, LUATARGET_TILE);
+  case SELECT_TYPE_TILE:
     wsafecpy(sTargetName, NAME_MAX_CHARS, L"");
     break;
   }
@@ -775,23 +689,20 @@ void PlayerManager::onChildEffectDetached(NetworkData * pData)
   assert(pTarget != NULL);
   pTarget->detachChildEffect(pChild);
 
+  pChild->pTargets->deleteObject(pTarget->convertToBaseObject(uTargetType), true);
   wchar_t sTargetName[NAME_MAX_CHARS] = L"";
   switch (uTargetType)
   {
-  case LUATARGET_UNIT:
-    pChild->pTargets->deleteObject((Unit*) pTarget, true);
+  case SELECT_TYPE_UNIT:
     wsafecpy(sTargetName, NAME_MAX_CHARS, ((Unit*)pTarget)->getName());
     break;
-  case LUATARGET_PLAYER:
-    pChild->pTargets->deleteObject((Player*) pTarget, true);
+  case SELECT_TYPE_PLAYER:
     wsafecpy(sTargetName, NAME_MAX_CHARS, ((Player*)pTarget)->getAvatarName());
     break;
-  case LUATARGET_TOWN:
-    pChild->pTargets->deleteObject((Town*) pTarget, true);
+  case SELECT_TYPE_TOWN:
     wsafecpy(sTargetName, NAME_MAX_CHARS, ((Town*)pTarget)->getName());
     break;
-  case LUATARGET_TILE:
-    pChild->pTargets->deleteObject((MapTile*) pTarget, true);
+  case SELECT_TYPE_TILE:
     wsafecpy(sTargetName, NAME_MAX_CHARS, L"");
     break;
   }
@@ -1071,13 +982,13 @@ void PlayerManager::updateMagicCirclePositions()
 // -----------------------------------------------------------------
 // Name : getLocalPlayersCount
 // -----------------------------------------------------------------
-u8 PlayerManager::getLocalPlayersCount()
+u8 PlayerManager::getLocalPlayersCount(bool bCountAI)
 {
   u8 count = 0;
   Player * player = (Player*) m_pPlayersList->getFirst(0);
   while (player != NULL)
   {
-    if (player->m_uClientId == m_pLocalClient->getClientId())
+    if (player->m_uClientId == m_pLocalClient->getClientId() && (bCountAI || !player->m_bIsAI))
       count++;
     player = (Player*) m_pPlayersList->getNext(0);
   }
@@ -1187,26 +1098,26 @@ LuaTargetable * PlayerManager::findLuaTarget(NetworkData * pData, u32 * pType)
   LuaTargetable * pTarget = NULL;
   switch (uType)
   {
-  case LUATARGET_PLAYER:
+  case SELECT_TYPE_PLAYER:
     {
       u8 uPlayer = (u8) pData->readLong();
       pTarget = findPlayer(uPlayer);
       break;
     }
-  case LUATARGET_TILE:
+  case SELECT_TYPE_TILE:
     {
       int x = (int) pData->readLong();
       int y = (int) pData->readLong();
       pTarget = m_pLocalClient->getGameboard()->getMap()->getTileAt(CoordsMap(x, y));
       break;
     }
-  case LUATARGET_TOWN:
+  case SELECT_TYPE_TOWN:
     {
       u32 uTown = (u32) pData->readLong();
       pTarget = m_pLocalClient->getGameboard()->getMap()->findTown(uTown);
       break;
     }
-  case LUATARGET_UNIT:
+  case SELECT_TYPE_UNIT:
     {
       u8 uPlayer = (u8) pData->readLong();
       u32 uUnit = (u32) pData->readLong();
@@ -1256,7 +1167,7 @@ void PlayerManager::resurrectUnit(NetworkData * pData)
 {
   wchar_t sIds[16];
   pData->readString(sIds);
-  Unit * pUnit = (Unit*) findTargetFromIdentifiers(LUATARGET_UNIT, sIds, m_pLocalClient->getGameboard()->getMap());
+  Unit * pUnit = (Unit*) findTargetFromIdentifiers(SELECT_TYPE_UNIT, sIds, m_pLocalClient->getGameboard()->getMap());
   assert(pUnit != NULL);
   Player * pPlayer = findPlayer(pUnit->getOwner());
   assert(pPlayer != NULL);
@@ -1264,6 +1175,24 @@ void PlayerManager::resurrectUnit(NetworkData * pData)
   pPlayer->m_pUnits->addLast(pUnit);
   pUnit->setStatus(US_Normal);
   pUnit->setBaseValue(STRING_LIFE, pUnit->getValue(STRING_ENDURANCE));
+}
+
+// -----------------------------------------------------------------
+// Name : removeUnit
+// -----------------------------------------------------------------
+void PlayerManager::removeUnit(NetworkData * pData)
+{
+  wchar_t sIds[16];
+  pData->readString(sIds);
+  Unit * pUnit = (Unit*) findTargetFromIdentifiers(SELECT_TYPE_UNIT, sIds, m_pLocalClient->getGameboard()->getMap());
+  assert(pUnit != NULL);
+  Player * pPlayer = findPlayer(pUnit->getOwner());
+  assert(pPlayer != NULL);
+  if (pUnit->getStatus() == US_Normal) {
+    pPlayer->m_pUnits->deleteObject(pUnit, true, true);
+    pPlayer->m_pDeadUnits->addLast(pUnit);
+  }
+  pUnit->setStatus(US_Removed);
 }
 
 // -----------------------------------------------------------------

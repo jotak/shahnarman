@@ -256,6 +256,30 @@
 	<vstart>0</vstart>
 	<vend>16</vend>
 </item>
+<item name="ScrollTop">
+	<ustart>243</ustart>
+	<uend>255</uend>
+	<vstart>29</vstart>
+	<vend>48</vend>
+</item>
+<item name="ScrollBottom">
+	<ustart>230</ustart>
+	<uend>242</uend>
+	<vstart>29</vstart>
+	<vend>48</vend>
+</item>
+<item name="ScrollLeft">
+	<ustart>236</ustart>
+	<uend>255</uend>
+	<vstart>15</vstart>
+	<vend>27</vend>
+</item>
+<item name="ScrollRight">
+	<ustart>236</ustart>
+	<uend>255</uend>
+	<vstart>0</vstart>
+	<vend>12</vend>
+</item>
 <item name="GaugeBg">
 	<ustart>0</ustart>
 	<uend>255</uend>

@@ -1,126 +1,126 @@
 <level id=0>
 	<option id='Druid_1' texture='fee'>
-		<name>
+		<l12n key='name'>
 			<english>Druid apprentice</english>
 			<french>Apprenti druide</french>
-		</name>
+		</l12n>
 		<skill name='ManaProductor' parameters='2 0 0 0' />
 	</option>
 	<option id='Warrior_1' texture='crysis'>
-		<name>
+		<l12n key='name'>
 			<english>Keltic fighter</english>
 			<french>Combattant Keltic</french>
-		</name>
+		</l12n>
 		<modify key='melee' value='2' />
 	</option>
 </level>
 <level id=1>
 	<option id='Druid_2' texture='fee'>
-		<name>
+		<l12n key='name'>
 			<english>Druid</english>
 			<french>Druide</french>
-		</name>
+		</l12n>
 		<skill name='ManaProductor' parameters='2 0 0 0' />
 		<spell name='GreaterRegenerate' />
 		<spell name='GreaterRegenerate' />
 		<spell name='GreaterRegenerate' />
 	</option>
 	<option id='Rebel_druid' texture='fee'>
-		<name>
+		<l12n key='name'>
 			<english>Rebel druid</english>
 			<french>Druide rebelle</french>
-		</name>
+		</l12n>
 		<modify key='speed' value='1' />
 		<modify key='range' value='1' />
 		<modify key='melee' value='1' />
 	</option>
 	<option id='Warrior_2' texture='crysis'>
-		<name>
+		<l12n key='name'>
 			<english>Keltic warrior</english>
 			<french>Guerrier Keltic</french>
-		</name>
+		</l12n>
 	</option>
 	<option id='Bard' texture='crysis'>
-		<name>
+		<l12n key='name'>
 			<english>Keltic bard</english>
 			<french>Barde Keltic</french>
-		</name>
+		</l12n>
 	</option>
 </level>
 <level id=2>
 	<option id='Druid_3' texture='fee'>
-		<name>
+		<l12n key='name'>
 			<english>Great druid</english>
 			<french>Grand druide</french>
-		</name>
+		</l12n>
 	</option>
 	<option id='Metamorph_druid' texture='fee'>
-		<name>
+		<l12n key='name'>
 			<english>Metamorph druid</english>
 			<french>Druide métamorphe</french>
-		</name>
+		</l12n>
 	</option>
 	<option id='Druid_warrior' texture='fee'>
-		<name>
+		<l12n key='name'>
 			<english>Druid warrior</english>
 			<french>Druide guerrier</french>
-		</name>
+		</l12n>
 	</option>
 	<option id='Warrior_3' texture='crysis'>
-		<name>
+		<l12n key='name'>
 			<english>Keltic warlord</english>
 			<french>Chef de guerre Keltic</french>
-		</name>
+		</l12n>
 	</option>
 	<option id='Archer_master' texture='crysis'>
-		<name>
+		<l12n key='name'>
 			<english>Keltic master archer</english>
 			<french>Maître archer Keltic</french>
-		</name>
+		</l12n>
 	</option>
 	<option id='Tribe_lord' texture='crysis'>
-		<name>
+		<l12n key='name'>
 			<english>Keltic tribe Lord</english>
 			<french>Chef de clan Keltic</french>
-		</name>
+		</l12n>
 	</option>
 </level>
 <level id=3>
 	<option id='Druid_4' texture='fee'>
-		<name>
+		<l12n key='name'>
 			<english>Great Druid Master</english>
 			<french>Grand Maître Druide</french>
-		</name>
+		</l12n>
 	</option>
 	<option id='Forest_spirit' texture='fee'>
-		<name>
+		<l12n key='name'>
 			<english>Spirit of the Forest</english>
 			<french>Esprit de la Forêt</french>
-		</name>
+		</l12n>
 	</option>
 	<option id='Great_war_druid' texture='fee'>
-		<name>
+		<l12n key='name'>
 			<english>Great wardruid</english>
 			<french>Grand druid de guerre</french>
-		</name>
+		</l12n>
 	</option>
 	<option id='Warrior_4' texture='crysis'>
-		<name>
+		<l12n key='name'>
 			<english>Great Keltic strategus</english>
 			<french>Grand stratège Keltic</french>
-		</name>
+		</l12n>
 	</option>
 	<option id='Forest_defender' texture='crysis'>
-		<name>
+		<l12n key='name'>
 			<english>Defender of the Forest</english>
 			<french>Défenseur de la Forêt</french>
-		</name>
+		</l12n>
 	</option>
 	<option id='Great_gatherer' texture='crysis'>
-		<name>
+		<l12n key='name'>
 			<english>Great gatherer of the Keltics</english>
 			<french>Grand rassembleur des Keltics</french>
-		</name>
+		</l12n>
 	</option>
 </level>
 

@@ -35,17 +35,11 @@ guiEditBox::guiEditBox(KeyboardInputEngine * pInputs) : guiComponent()
 // -----------------------------------------------------------------
 guiEditBox::~guiEditBox()
 {
-#ifdef DBG_VERBOSE1
-  printf("Begin destroy guiEditBox\n");
-#endif
   m_pInputs->unsetKeyboardListener(this);
   FREE(m_pStencilGeometry);
   FREE(m_pTextGeometry);
   FREE(m_pCaretGeometry);
   FREE(m_pSelectionGeometry);
-#ifdef DBG_VERBOSE1
-  printf("End destroy guiEditBox\n");
-#endif
 }
 
 // -----------------------------------------------------------------

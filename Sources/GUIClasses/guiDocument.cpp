@@ -211,6 +211,19 @@ void guiDocument::deleteAllComponents()
 }
 
 // -----------------------------------------------------------------
+// Name : deleteComponent
+// -----------------------------------------------------------------
+bool guiDocument::deleteComponent(guiComponent * pCpnt)
+{
+  if (m_pComponentsList->deleteObject(pCpnt, true) > 0) {
+    m_pFocusedComponent = NULL;
+    m_bContentChanged = true;
+    return true;
+  }
+  return false;
+}
+
+// -----------------------------------------------------------------
 // Name : deleteCurrentComponent
 // -----------------------------------------------------------------
 guiComponent * guiDocument::deleteCurrentComponent(bool bSetToNext)

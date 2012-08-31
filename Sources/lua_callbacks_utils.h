@@ -27,34 +27,14 @@
 #include "Server/Server.h"
 #include "Server/TurnSolver.h"
 
-#define SELECT_TYPE_UNIT              1
-#define SELECT_TYPE_DEAD_UNIT         2
-#define SELECT_TYPE_TOWN              3
-#define SELECT_TYPE_BUILDING          4
-#define SELECT_TYPE_SPELL_IN_PLAY     5
-#define SELECT_TYPE_SPELL_IN_HAND     6
-#define SELECT_TYPE_SPELL_IN_DECK     7
-#define SELECT_TYPE_SPELL_IN_DISCARD  8
-#define SELECT_TYPE_ANY_SPELL         9
-#define SELECT_TYPE_TILE              10
-#define SELECT_TYPE_PLAYER            11
-#define SELECT_TYPE_TEMPLE            12
-
-#define SELECT_CONSTRAINT_NONE        0x00000000
-#define SELECT_CONSTRAINT_INRANGE     0x00000001
-#define SELECT_CONSTRAINT_OWNED       0x00000002
-#define SELECT_CONSTRAINT_OPPONENT    0x00000004
-#define SELECT_CONSTRAINT_NOT_AVATAR  0x00000008
-#define SELECT_CONSTRAINT_CUSTOM      0x00000010
-
 extern GameRoot * g_pMainGameRoot;
 
 u8 g_uLuaSelectTargetType;
 u32 g_uLuaSelectConstraints = SELECT_CONSTRAINT_NONE;
 wchar_t g_sLuaSelectCallback[128] = L"";
 bool g_bLuaSelectOnResolve = false;
-bool g_bLuaSimulate = false;
 u32 g_uLuaCurrentObjectType;
+bool g_bLuaEvaluationMode = false;
 lua_State * g_pLuaStateForTarget = NULL;
 
 //************************************************************************************
@@ -164,29 +144,8 @@ int checkNumberOfParams(lua_State * pState, int iMinExpected, int iMaxExpected, 
 bool readTargetData(char * sType, char * sConstraints, char * sCallback, wchar_t * sFuncName)
 {
   // Get target type
-  if (_stricmp(sType, "unit") == 0)
-    g_uLuaSelectTargetType = SELECT_TYPE_UNIT;
-  else if (_stricmp(sType, "dead_unit") == 0)
-    g_uLuaSelectTargetType = SELECT_TYPE_DEAD_UNIT;
-  else if (_stricmp(sType, "town") == 0)
-    g_uLuaSelectTargetType = SELECT_TYPE_TOWN;
-  else if (_stricmp(sType, "temple") == 0)
-    g_uLuaSelectTargetType = SELECT_TYPE_TEMPLE;
-  else if (_stricmp(sType, "building") == 0)
-    g_uLuaSelectTargetType = SELECT_TYPE_BUILDING;
-  else if (_stricmp(sType, "spell_in_play") == 0)
-    g_uLuaSelectTargetType = SELECT_TYPE_SPELL_IN_PLAY;
-  else if (_stricmp(sType, "spell_in_hand") == 0)
-    g_uLuaSelectTargetType = SELECT_TYPE_SPELL_IN_HAND;
-  else if (_stricmp(sType, "spell_in_deck") == 0)
-    g_uLuaSelectTargetType = SELECT_TYPE_SPELL_IN_DECK;
-  else if (_stricmp(sType, "spell_in_discard") == 0)
-    g_uLuaSelectTargetType = SELECT_TYPE_SPELL_IN_DISCARD;
-  else if (_stricmp(sType, "tile") == 0)
-    g_uLuaSelectTargetType = SELECT_TYPE_TILE;
-  else if (_stricmp(sType, "player") == 0)
-    g_uLuaSelectTargetType = SELECT_TYPE_PLAYER;
-  else
+  g_uLuaSelectTargetType = getTargetTypeFromName(sType);
+  if (g_uLuaSelectTargetType == 0)
   {
     wchar_t sError[256];
     swprintf_s(sError, 256, L"Lua interaction error: parameter \"type\" in \"%s\" is unknown.", sFuncName);
@@ -232,7 +191,6 @@ bool readTargetData(char * sType, char * sConstraints, char * sCallback, wchar_t
   return true;
 }
 
-void getObjectParamsAndInfos(CoordsMap, BaseObject*, u8, wchar_t*, wchar_t*, char*);
 bool checkCustomConstraints(CoordsMap mp, BaseObject * pObj, u8 uType)
 {
   if (!(g_uLuaSelectConstraints & SELECT_CONSTRAINT_CUSTOM))
@@ -245,7 +203,24 @@ bool checkCustomConstraints(CoordsMap mp, BaseObject * pObj, u8 uType)
   if (lua_isfunction(g_pLuaStateForTarget, -1))
   {
     char sParams[64];
-    getObjectParamsAndInfos(mp, pObj, uType, NULL, NULL, sParams);
+    switch (uType) {
+    case SELECT_TYPE_TILE:
+      sprintf_s(sParams, 64, "tile %d %d", mp.x, mp.y);
+      break;
+    case SELECT_TYPE_ANY_SPELL:
+    case SELECT_TYPE_SPELL_IN_PLAY:
+    case SELECT_TYPE_SPELL_IN_HAND:
+    case SELECT_TYPE_SPELL_IN_DECK:
+    case SELECT_TYPE_SPELL_IN_DISCARD:
+      sprintf_s(sParams, 64, "spell %d %ld", (int)((Spell*)pObj)->getPlayerId(), (long)((Spell*)pObj)->getInstanceId());
+      break;
+    default:
+      {
+        LuaTargetable * pTarget = LuaTargetable::convertFromBaseObject(pObj, uType);
+        assert(pTarget != NULL);
+        wtostr(sParams, 64, pTarget->getIdentifiers());
+      }
+    }
     lua_pushstring(g_pLuaStateForTarget, sParams);
     int err = lua_pcall(g_pLuaStateForTarget, 1, 1, 0);
     switch (err)
@@ -439,7 +414,7 @@ bool checkTargetSpell(Spell * pObj)
   return checkSpellConstraints(pObj);
 }
 
-BaseObject * checkTargetTile(CoordsMap mp, bool * bMultipleTargets)
+LuaTargetable * checkTargetTile(CoordsMap mp, bool * bMultipleTargets)
 {
   if (!g_pMainGameRoot->m_pLocalClient->getGameboard()->getMap()->isInBounds(mp))
     return NULL;
@@ -526,70 +501,62 @@ BaseObject * checkTargetTile(CoordsMap mp, bool * bMultipleTargets)
   }
   return NULL;
 }
-
-void getObjectParamsAndInfos(CoordsMap mp, BaseObject * pObj, u8 uSelectType, wchar_t * wParams, wchar_t * wInfos, char * sParams)
+/*
+void getObjectParameters(LuaTargetable * pTarget, u8 uType, wchar_t * wParams, char * sParams)
 {
-  switch (uSelectType)
+  switch (pTarget->get)
   {
   case SELECT_TYPE_TILE:
     {
       if (sParams != NULL)
-        sprintf_s(sParams, 64, "%d %d", mp.x, mp.y);
+        sprintf_s(sParams, 64, "tile %d %d", mp.x, mp.y);
       if (wParams != NULL)
-        swprintf_s(wParams, 64, L"%d %d", mp.x, mp.y);
+        swprintf_s(wParams, 64, L"tile %d %d", mp.x, mp.y);
       break;
     }
   case SELECT_TYPE_UNIT:
   case SELECT_TYPE_DEAD_UNIT:
     {
       if (sParams != NULL)
-        sprintf_s(sParams, 64, "%d %ld", ((Unit*)pObj)->getOwner(), (long)((Unit*)pObj)->getId());
+        sprintf_s(sParams, 64, "%d %d %ld", ((Unit*)pObj)->getOwner(), (long)((Unit*)pObj)->getId());
       if (wParams != NULL)
-        swprintf_s(wParams, 64, L"%d %ld", ((Unit*)pObj)->getOwner(), (long)((Unit*)pObj)->getId());
-      if (wInfos != NULL)
-        swprintf_s(wInfos, 256, L"%s", ((Unit*)pObj)->getName());
+        swprintf_s(wParams, 64, L"%d %d %ld", ((Unit*)pObj)->getOwner(), (long)((Unit*)pObj)->getId());
       break;
     }
   case SELECT_TYPE_TOWN:
     {
       if (sParams != NULL)
-        sprintf_s(sParams, 64, "%ld", (long)((Town*)pObj)->getId());
+        sprintf_s(sParams, 64, "%d %ld", (long)((Town*)pObj)->getId());
       if (wParams != NULL)
-        swprintf_s(wParams, 64, L"%ld", (long)((Town*)pObj)->getId());
-      if (wInfos != NULL)
-        swprintf_s(wInfos, 256, L"%s", ((Town*)pObj)->getName());
+        swprintf_s(wParams, 64, L"%d %ld", (long)((Town*)pObj)->getId());
       break;
     }
   case SELECT_TYPE_TEMPLE:
     {
       if (sParams != NULL)
-        sprintf_s(sParams, 64, "%ld", (long)((Temple*)pObj)->getId());
+        sprintf_s(sParams, 64, "%d %ld", (long)((Temple*)pObj)->getId());
       if (wParams != NULL)
-        swprintf_s(wParams, 64, L"%ld", (long)((Temple*)pObj)->getId());
+        swprintf_s(wParams, 64, L"%d %ld", (long)((Temple*)pObj)->getId());
       break;
     }
   case SELECT_TYPE_ANY_SPELL:
     {
       if (sParams != NULL)
-        sprintf_s(sParams, 64, "%d %ld", (int)((Spell*)pObj)->getPlayerId(), (long)((Spell*)pObj)->getInstanceId());
+        sprintf_s(sParams, 64, "%d %d %ld", (int)((Spell*)pObj)->getPlayerId(), (long)((Spell*)pObj)->getInstanceId());
       if (wParams != NULL)
-        swprintf_s(wParams, 64, L"%d %ld", (int)((Spell*)pObj)->getPlayerId(), (long)((Spell*)pObj)->getInstanceId());
-      if (wInfos != NULL)
-        swprintf_s(wInfos, 256, L"%s", ((Spell*)pObj)->getLocalizedName());
+        swprintf_s(wParams, 64, L"%d %d %ld", (int)((Spell*)pObj)->getPlayerId(), (long)((Spell*)pObj)->getInstanceId());
       break;
     }
   case SELECT_TYPE_PLAYER:
     {
       if (sParams != NULL)
-        sprintf_s(sParams, 64, "%d", (int)((Player*)pObj)->m_uPlayerId);
+        sprintf_s(sParams, 64, "%d %d", (int)((Player*)pObj)->m_uPlayerId);
       if (wParams != NULL)
-        swprintf_s(wParams, 64, L"%d", (int)((Player*)pObj)->m_uPlayerId);
-      if (wInfos != NULL)
-        swprintf_s(wInfos, 256, L"%s", ((Player*)pObj)->getAvatarName());
+        swprintf_s(wParams, 64, L"%d %d", (int)((Player*)pObj)->m_uPlayerId);
       break;
     }
   }
-}
+}*/
 
 
 //************************************************************************************
@@ -637,7 +604,7 @@ void clbkSelectTarget_OnMouseOverGameboard(CoordsMap mp)
 void clbkSelectTarget_OnClickGameboard(CoordsMap mp)
 {
   bool bMultipleTargets;
-  BaseObject * pObj = checkTargetTile(mp, &bMultipleTargets);
+  LuaTargetable * pObj = checkTargetTile(mp, &bMultipleTargets);
   if (pObj != NULL)
   {
     switch (g_uLuaSelectTargetType)
@@ -684,11 +651,11 @@ void clbkSelectTarget_OnClickGameboard(CoordsMap mp)
     g_pMainGameRoot->m_pLocalClient->getPlayerManager()->enableEOT(true);
     wchar_t sParams[64];
     wchar_t sInfos[256] = L"";
-    getObjectParamsAndInfos(mp, pObj, g_uLuaSelectTargetType, sParams, sInfos, NULL);
+    wsafecpy(sParams, 64, pObj->getIdentifiers());
     if (g_uLuaCurrentObjectType == LUAOBJECT_SPELL)
     {
       Spell * pSpell = g_pMainGameRoot->m_pLocalClient->getPlayerManager()->getSpellBeingCast();
-      pSpell->addResolveParameters(sParams, sInfos);
+      pSpell->addResolveParameters(sParams);
       if (wcscmp(g_sLuaSelectCallback, L"") == 0)
         g_pMainGameRoot->m_pLocalClient->getPlayerManager()->castSpellFinished(true, g_bLuaSelectOnResolve);
       else
@@ -708,9 +675,9 @@ void clbkSelectTarget_OnClickGameboard(CoordsMap mp)
     clbkSelectTarget_cancelSelection();
 }
 
-bool clbkSelectTarget_OnMouseOverInterface(BaseObject * pBaseObj, u8 isLuaPlayerGO)
+bool clbkSelectTarget_OnMouseOverInterface(BaseObject * pBaseObj, u8 enum1Spell2Player3Mapobj)
 {
-  if (isLuaPlayerGO == 1)
+  if (enum1Spell2Player3Mapobj == 1)
   {
     LuaObject * pObj = (LuaObject*) pBaseObj;
     switch (g_uLuaSelectTargetType)
@@ -722,12 +689,12 @@ bool clbkSelectTarget_OnMouseOverInterface(BaseObject * pBaseObj, u8 isLuaPlayer
       return (pObj->getType() == LUAOBJECT_SPELL) && checkTargetSpell((Spell*)pObj);
     }
   }
-  else if (isLuaPlayerGO == 2)
+  else if (enum1Spell2Player3Mapobj == 2)
   {
     if (g_uLuaSelectTargetType == SELECT_TYPE_PLAYER)
       return checkTargetPlayer((Player*)pBaseObj);
   }
-  else if (isLuaPlayerGO == 3)
+  else if (enum1Spell2Player3Mapobj == 3)
   {
     GraphicObject * pObj = (GraphicObject*) pBaseObj;
     switch (g_uLuaSelectTargetType)
@@ -742,23 +709,23 @@ bool clbkSelectTarget_OnMouseOverInterface(BaseObject * pBaseObj, u8 isLuaPlayer
   return false;
 }
 
-bool clbkSelectTarget_OnClickInterface(BaseObject * pObj, u8 isLuaPlayerGO)
+bool clbkSelectTarget_OnClickInterface(BaseObject * pObj, u8 enum1Spell2Player3Mapobj)
 {
   if (pObj == NULL)
     return false;
   wchar_t sParams[64] = L"";
   wchar_t sInfos[256] = L"";
   bool bOk = false;
-  if (isLuaPlayerGO == 1)
+  if (enum1Spell2Player3Mapobj == 1)
   {
     bOk = true;
-    getObjectParamsAndInfos(CoordsMap(), pObj, SELECT_TYPE_ANY_SPELL, sParams, sInfos, NULL);
+    swprintf_s(sParams, 64, L"spell %d %ld", (int)((Spell*)pObj)->getPlayerId(), (long)((Spell*)pObj)->getInstanceId());
     g_pMainGameRoot->m_pLocalClient->getInterface()->getSpellsSelectorDialog()->hide();
   }
-  else if (isLuaPlayerGO == 2)
+  else if (enum1Spell2Player3Mapobj == 2)
   {
     bOk = true;
-    getObjectParamsAndInfos(CoordsMap(), pObj, SELECT_TYPE_PLAYER, sParams, sInfos, NULL);
+    wsafecpy(sParams, 64, ((Player*) pObj)->getIdentifiers());
     g_pMainGameRoot->m_pLocalClient->getInterface()->getPlayerSelectorDialog()->hide();
   }
   else
@@ -767,7 +734,7 @@ bool clbkSelectTarget_OnClickInterface(BaseObject * pObj, u8 isLuaPlayerGO)
     {
       // Ok, target is valid
       bOk = true;
-      getObjectParamsAndInfos(CoordsMap(), pObj, g_uLuaSelectTargetType, sParams, sInfos, NULL);
+      wsafecpy(sParams, 64, ((MapObject*) pObj)->getIdentifiers());
     }
   }
   g_pMainGameRoot->m_pLocalClient->getInterface()->getStatusDialog()->hide();
@@ -779,7 +746,7 @@ bool clbkSelectTarget_OnClickInterface(BaseObject * pObj, u8 isLuaPlayerGO)
     {
       g_pMainGameRoot->m_pLocalClient->getGameboard()->unsetTargetMode();
       Spell * pSpell = g_pMainGameRoot->m_pLocalClient->getPlayerManager()->getSpellBeingCast();
-      pSpell->addResolveParameters(sParams, sInfos);
+      pSpell->addResolveParameters(sParams);
       if (wcscmp(g_sLuaSelectCallback, L"") == 0)
         g_pMainGameRoot->m_pLocalClient->getPlayerManager()->castSpellFinished(true, g_bLuaSelectOnResolve);
       else

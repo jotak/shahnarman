@@ -38,14 +38,8 @@ SpellsSolver::SpellsSolver(Server * pServer, TurnSolver * pSolver)
 // -----------------------------------------------------------------
 SpellsSolver::~SpellsSolver()
 {
-#ifdef DBG_VERBOSE1
-  printf("Begin destroy SpellsSolver\n");
-#endif
   if (m_bWaitingClient != NULL)
     delete[] m_bWaitingClient;
-#ifdef DBG_VERBOSE1
-  printf("End destroy SpellsSolver\n");
-#endif
 }
 
 // -----------------------------------------------------------------
@@ -147,15 +141,17 @@ bool SpellsSolver::startResolvePlayerSpell(Player * pPlayer)
   {
     // When we've finished to cast all player's spells, send updated mana to clients
     NetworkData msg(NETWORKMSG_SEND_PLAYER_MANA);
+    msg.addLong(1); // Stands for "spent mana"
     msg.addLong((long)(pPlayer->m_uPlayerId));
     for (int i = 0; i < 4; i++)
-      msg.addLong((long)(pPlayer->m_Mana[i]));
+      msg.addLong((long)(pPlayer->m_SpentMana[i]));
     m_pServer->sendMessageToAllClients(&msg);
     return false;
   }
 //  m_pSpellBeingCast = pSpell;
+  Mana mana = pPlayer->getMana();
   // check if the player still has enough mana
-  if (pPlayer->m_Mana < pSpell->getCost()) // if no mana left, try next spell
+  if (mana < pPlayer->m_SpentMana + pSpell->getCost()) // if no mana left, try next spell
   {
     pPlayer->m_pCastSpells->deleteCurrent(0, true);
     m_pServer->sendCustomLogToAll(L"(s)_TRIED_CAST_SPELL_BUT_NO_MANA", 0, L"ps", pPlayer->m_uPlayerId, pPlayer->m_uPlayerId, L"hand", pSpell->getInstanceId());
@@ -167,7 +163,7 @@ bool SpellsSolver::startResolvePlayerSpell(Player * pPlayer)
   }
   else
   {
-    pPlayer->m_Mana -= pSpell->getCost();
+    pPlayer->m_SpentMana += pSpell->getCost();
     NetworkData msg(NETWORKMSG_SEND_CAST_SPELLS_DATA);
     msg.addLong(0); // stands for "start cast spell"
     msg.addLong((long) pPlayer->m_uPlayerId);
@@ -191,32 +187,35 @@ bool SpellsSolver::startResolvePlayerSpell(Player * pPlayer)
 void SpellsSolver::resolveChildEffect(Player * pPlayer, Unit * pUnit, ChildEffect * pChild)
 {
   m_State = RSS_ChildEffect;
+  Mana mana = pPlayer->getMana();
   // check if the player still has enough mana
-  if (pChild->cost <= pPlayer->m_Mana)
+  if (pChild->cost + pPlayer->m_SpentMana <= mana)
   {
-    pPlayer->m_Mana -= pChild->cost;
+    pPlayer->m_SpentMana += pChild->cost;
     // send updated mana to clients
     NetworkData msg(NETWORKMSG_SEND_PLAYER_MANA);
+    msg.addLong(1); // Stands for "spent mana"
     msg.addLong((long)(pPlayer->m_uPlayerId));
     for (int i = 0; i < 4; i++)
-      msg.addLong((long)(pPlayer->m_Mana[i]));
+      msg.addLong((long)(pPlayer->m_SpentMana[i]));
     m_pServer->sendMessageToAllClients(&msg);
 
     m_bPauseResolving = false;
     LuaObject * pLua = pChild->getLua();
     pLua->setCurrentEffect(pChild->id);
+    m_pLuaBeingResolved = pLua;
+    // In what follows, it's possible that m_pSpellNetworkData is modified during the "onResolve" call
     switch (pLua->getType())
     {
     case LUAOBJECT_SPELL:
       ((Spell*)pLua)->setCaster(pPlayer);
+      pLua->callLuaFunction(L"onResolveChild", 0, L"isi", (int) (pChild->id + 1), pChild->sResolveParams, (int) pPlayer->m_uPlayerId);
       break;
     case LUAOBJECT_SKILL:
       ((Skill*)pLua)->setCaster(pUnit);
+      pLua->callLuaFunction(L"onResolveChild", 0, L"isii", (int) (pChild->id + 1), pChild->sResolveParams, (int) pPlayer->m_uPlayerId, (int) pUnit->getId());
       break;
     }
-    m_pLuaBeingResolved = pLua;
-    // In what follows, it's possible that m_pSpellNetworkData is modified during the "onResolve" call
-    pLua->callLuaFunction(L"onResolveChild", 0, L"isi", (int) (pChild->id + 1), pChild->sResolveParams, (int) pPlayer->m_uPlayerId);
     if (!m_bPauseResolving)  // During call of "onResolve", it's possible that it was paused for instance to select a target during resolve
       endActivateEffect(false);
   }
@@ -253,6 +252,7 @@ void SpellsSolver::endCastSpell(bool bCancel)
     pPlayer->m_pDiscard->addLast(pSpell);
     msg.addLong(0);  // stands for "move spell from hand to discard"
   }
+  msg.addString(pSpell->getResolveParameters());
   m_pServer->sendMessageToAllClients(&msg);
 }
 
@@ -314,7 +314,7 @@ void SpellsSolver::receiveSpells(NetworkData * pData)
           pPlayer->m_pCastSpells->addLast(pSpell);
           pData->readString(spellParams);
           pSpell->resetResolveParameters();
-          pSpell->addResolveParameters(spellParams, L"");
+          pSpell->addResolveParameters(spellParams);
         }
         else
           m_pServer->getDebug()->notifyErrorMessage(L"Inconsistant data received from client: spell not found in player's hand.");
@@ -459,18 +459,21 @@ void SpellsSolver::onDamageUnit(u8 uPlayerId, u32 uUnitId, u8 uDamages)
 // -----------------------------------------------------------------
 // Name : onAddUnit
 // -----------------------------------------------------------------
-void SpellsSolver::onAddUnit(CoordsMap mapPos, const char * sName, u8 uOwner)
+Unit * SpellsSolver::onAddUnit(CoordsMap mapPos, const char * sName, u8 uOwner, bool bSimulate)
 {
   // We need to convert ascii to wchar_t first
   wchar_t sNameId[NAME_MAX_CHARS] = L"";
   strtow(sNameId, NAME_MAX_CHARS, sName);
   retrieveLuaContext();
   assert(m_LuaContext.pLua != NULL);
-  Unit * pUnit = m_pSolver->addUnitToPlayer(m_LuaContext.pLua->getObjectEdition(), sNameId, uOwner, mapPos);
-  // Send data to clients
-  NetworkData unitData(NETWORKMSG_CREATE_UNIT_DATA);
-  pUnit->serialize(&unitData);
-  m_pServer->sendMessageToAllClients(&unitData);
+  Unit * pUnit = m_pSolver->addUnitToPlayer(m_LuaContext.pLua->getObjectEdition(), sNameId, uOwner, mapPos, bSimulate);
+  if (!bSimulate) {
+    // Send data to clients
+    NetworkData unitData(NETWORKMSG_CREATE_UNIT_DATA);
+    pUnit->serialize(&unitData);
+    m_pServer->sendMessageToAllClients(&unitData);
+  }
+  return pUnit;
 }
 
 // -----------------------------------------------------------------
@@ -489,10 +492,10 @@ void SpellsSolver::onAttachToUnit(u8 uPlayerId, u32 uUnitId)
     if (pUnit != NULL)
     {
       pUnit->attachEffect(m_LuaContext.pLua);
-      m_LuaContext.pLua->addTarget(pUnit, LUATARGET_UNIT);
+      m_LuaContext.pLua->addTarget(pUnit, SELECT_TYPE_UNIT);
       // now we'll complete the current network message m_pSpellNetworkData
       // that is going to be send from function resolvePlayerSpells
-      msg.addLong(LUATARGET_UNIT);         // stands for "spell was attached to a unit"
+      msg.addLong(SELECT_TYPE_UNIT);         // stands for "spell was attached to a unit"
       msg.addLong((long) uPlayerId);       // target player id
       msg.addLong((long) uUnitId);         // target unit id
       m_pServer->sendMessageToAllClients(&msg);
@@ -530,9 +533,9 @@ void SpellsSolver::onAddChildEffectToUnit(int iEffectId, u8 uPlayerId, u32 uUnit
     if (pUnit != NULL)
     {
       pUnit->attachChildEffect(pChild);
-      pChild->pTargets->addLast(pUnit, LUATARGET_UNIT);
+      pChild->pTargets->addLast(pUnit, SELECT_TYPE_UNIT);
       // now send a network message to notify players that an effect was attached
-      msg.addLong(LUATARGET_UNIT);                    // target type, stands for "attached to a unit"
+      msg.addLong(SELECT_TYPE_UNIT);                    // target type, stands for "attached to a unit"
       msg.addLong((long) uPlayerId);                  // target player id
       msg.addLong((long) uUnitId);                    // target unit id
       m_pServer->sendMessageToAllClients(&msg);
@@ -578,7 +581,7 @@ void SpellsSolver::onRemoveChildEffectFromUnit(int iEffectId, u8 uPlayerId, u32 
       if (pUnit->detachChildEffect(pChild))
       {
         pChild->pTargets->deleteObject(pUnit, true);
-        msg.addLong(LUATARGET_UNIT);                    // target type, stands for "detached from a unit"
+        msg.addLong(SELECT_TYPE_UNIT);                    // target type, stands for "detached from a unit"
         msg.addLong((long) uPlayerId);                  // target player id
         msg.addLong((long) uUnitId);                    // target unit id
         m_pServer->sendMessageToAllClients(&msg);
@@ -606,6 +609,77 @@ void SpellsSolver::onRemoveChildEffectFromUnit(int iEffectId, u8 uPlayerId, u32 
 }
 
 // -----------------------------------------------------------------
+// Name : onAddChildEffectToTown
+//  This function is called from LUA, during a spell resolution
+// -----------------------------------------------------------------
+void SpellsSolver::onAddChildEffectToTown(int iEffectId, u32 uTownId)
+{
+  NetworkData msg(NETWORKMSG_CHILD_EFFECT_ATTACHED);
+  if (!retrieveLuaContext(0, &msg, iEffectId))
+    return;
+  ChildEffect * pChild = m_LuaContext.pLua->getChildEffect(iEffectId);
+  assert(pChild != NULL);
+  Town * pTown = m_pServer->getMap()->findTown(uTownId);
+  if (pTown != NULL)
+  {
+    pTown->attachChildEffect(pChild);
+    pChild->pTargets->addLast(pTown, SELECT_TYPE_TOWN);
+    // now send a network message to notify players that an effect was attached
+    msg.addLong(SELECT_TYPE_TOWN);
+    msg.addLong((long) uTownId);
+    m_pServer->sendMessageToAllClients(&msg);
+  }
+  else
+  {
+    wchar_t sError[128];
+    swprintf_s(sError, 128, L"Lua interaction error: effect %s sent wrong town id at resolve stage.", m_LuaContext.pLua->getLocalizedName(), NAME_MAX_CHARS);
+    m_pServer->getDebug()->notifyErrorMessage(sError);
+  }
+}
+
+// -----------------------------------------------------------------
+// Name : onRemoveChildEffectFromTown
+//  This function is called from LUA, during a spell resolution
+// -----------------------------------------------------------------
+void SpellsSolver::onRemoveChildEffectFromTown(int iEffectId, u32 uTownId)
+{
+  NetworkData msg(NETWORKMSG_CHILD_EFFECT_DETACHED);
+  if (!retrieveLuaContext(0, &msg, iEffectId))
+    return;
+
+  ChildEffect * pChild = m_LuaContext.pLua->getChildEffect(iEffectId);
+  if (pChild == NULL)
+  {
+    m_pServer->getDebug()->notifyErrorMessage(L"Lua interaction error: child effect not found while calling SpellsSolver::onRemoveChildEffectFromTown.");
+    return;
+  }
+  
+  Town * pTown = m_pServer->getMap()->findTown(uTownId);
+  if (pTown != NULL)
+  {
+    if (pTown->detachChildEffect(pChild))
+    {
+      pChild->pTargets->deleteObject(pTown, true);
+      msg.addLong(SELECT_TYPE_TOWN);                    // target type, stands for "detached from a town"
+      msg.addLong((long) uTownId);
+      m_pServer->sendMessageToAllClients(&msg);
+    }
+    else
+    {
+      wchar_t sError[128];
+      swprintf_s(sError, 128, L"Lua interaction error: can't detach effect %s.", m_LuaContext.pLua->getLocalizedName(), NAME_MAX_CHARS);
+      m_pServer->getDebug()->notifyErrorMessage(sError);
+    }
+  }
+  else
+  {
+    wchar_t sError[128];
+    swprintf_s(sError, 128, L"Lua interaction error: effect %s sent wrong town id at resolve stage.", m_LuaContext.pLua->getLocalizedName(), NAME_MAX_CHARS);
+    m_pServer->getDebug()->notifyErrorMessage(sError);
+  }
+}
+
+// -----------------------------------------------------------------
 // Name : onAttachToPlayer
 //  This function is called from LUA, during a spell resolution
 // -----------------------------------------------------------------
@@ -618,10 +692,10 @@ void SpellsSolver::onAttachToPlayer(u8 uPlayerId)
   if (pPlayer != NULL)
   {
     pPlayer->attachEffect(m_LuaContext.pLua);
-    m_LuaContext.pLua->addTarget(pPlayer, LUATARGET_PLAYER);
+    m_LuaContext.pLua->addTarget(pPlayer, SELECT_TYPE_PLAYER);
     // now we'll complete the current network message m_pSpellNetworkData
     // that is going to be send from function resolvePlayerSpells
-    msg.addLong(LUATARGET_PLAYER);                      // stands for "spell was attached to a player"
+    msg.addLong(SELECT_TYPE_PLAYER);                      // stands for "spell was attached to a player"
     msg.addLong((long) uPlayerId);       // target player id
     m_pServer->sendMessageToAllClients(&msg);
   }
@@ -646,10 +720,10 @@ void SpellsSolver::onAttachToTown(u32 uTownId)
   if (pTown != NULL)
   {
     pTown->attachEffect(m_LuaContext.pLua);
-    m_LuaContext.pLua->addTarget(pTown, LUATARGET_TOWN);
+    m_LuaContext.pLua->addTarget(pTown, SELECT_TYPE_TOWN);
     // now we'll complete the current network message m_pSpellNetworkData
     // that is going to be send from function resolvePlayerSpells
-    msg.addLong(LUATARGET_TOWN);                      // stands for "spell was attached to a town"
+    msg.addLong(SELECT_TYPE_TOWN);                      // stands for "spell was attached to a town"
     msg.addLong((long) uTownId);       // target town id
     m_pServer->sendMessageToAllClients(&msg);
   }
@@ -674,10 +748,10 @@ void SpellsSolver::onAttachToTemple(u32 uTempleId)
   if (pTemple != NULL)
   {
     pTemple->attachEffect(m_LuaContext.pLua);
-    m_LuaContext.pLua->addTarget(pTemple, LUATARGET_TEMPLE);
+    m_LuaContext.pLua->addTarget(pTemple, SELECT_TYPE_TEMPLE);
     // now we'll complete the current network message m_pSpellNetworkData
     // that is going to be send from function resolvePlayerSpells
-    msg.addLong(LUATARGET_TEMPLE);                      // stands for "spell was attached to a town"
+    msg.addLong(SELECT_TYPE_TEMPLE);                      // stands for "spell was attached to a town"
     msg.addLong((long) uTempleId);       // target temple id
     m_pServer->sendMessageToAllClients(&msg);
   }
@@ -702,10 +776,10 @@ void SpellsSolver::onAttachToTile(CoordsMap pos)
   if (pTile != NULL)
   {
     pTile->attachEffect(m_LuaContext.pLua);
-    m_LuaContext.pLua->addTarget(pTile, LUATARGET_TILE);
+    m_LuaContext.pLua->addTarget(pTile, SELECT_TYPE_TILE);
     // now we'll complete the current network message m_pSpellNetworkData
     // that is going to be send from function resolvePlayerSpells
-    msg.addLong(LUATARGET_TILE);                      // stands for "spell was attached to a town"
+    msg.addLong(SELECT_TYPE_TILE);                      // stands for "spell was attached to a town"
     msg.addLong((long) pos.x);
     msg.addLong((long) pos.y);
     m_pServer->sendMessageToAllClients(&msg);
@@ -796,7 +870,7 @@ void SpellsSolver::onDiscardSpell(u8 uSrc, int iPlayerId, int iSpellId)
         BaseObject * pTarget = (BaseObject*) pChild->pTargets->getFirst(0);
         while (pTarget != NULL) {
           int type = pChild->pTargets->getCurrentType(0);
-          if (type == LUATARGET_UNIT) {
+          if (type == SELECT_TYPE_UNIT) {
             if (((Unit*)pTarget)->detachChildEffect(pChild))
             {
               pChild->pTargets->deleteObject(((Unit*)pTarget), true);
@@ -1006,22 +1080,43 @@ void SpellsSolver::onSelectTargetThenResolve(u8 uType, u32 uConstraints, wchar_t
 // -----------------------------------------------------------------
 // Name : onDeactivateSkill
 // -----------------------------------------------------------------
-void SpellsSolver::onDeactivateSkill(u8 uPlayerId, u32 uUnitId, u32 uSkillId)
+void SpellsSolver::onDeactivateSkill(long iPlayerId, long iUnitId, long iSkillId)
 {
-  Player * pPlayer = m_pSolver->findPlayer(uPlayerId);
+  if (!retrieveLuaContext())
+    return;
+  Player * pPlayer = NULL;
+  Unit * pUnit = NULL;
+  Skill * pSkill = NULL;
+  if (iPlayerId >= 0)
+    pPlayer = m_pSolver->findPlayer(iPlayerId);
+  else
+    pPlayer = m_LuaContext.pPlayer;
   if (pPlayer == NULL)
   {
     m_pServer->getDebug()->notifyErrorMessage(L"Error in LUA: invalid player provided to function onDeactivateSkill");
     return;
   }
-  Unit * pUnit = pPlayer->findUnit(uUnitId);
+  if (iUnitId >= 0)
+    pUnit = pPlayer->findUnit(iUnitId);
+  else
+    pUnit = m_LuaContext.pUnit;
   if (pUnit == NULL)
   {
     m_pServer->getDebug()->notifyErrorMessage(L"Error in LUA: invalid unit provided to function onDeactivateSkill");
     return;
   }
   bool bIsActive;
-  Skill * pSkill = pUnit->findSkill(uSkillId, &bIsActive);
+  if (iSkillId >= 0)
+    pSkill = pUnit->findSkill(iSkillId, &bIsActive);
+  else {
+    if (m_LuaContext.pLua->getType() == LUAOBJECT_SKILL)
+      pSkill = pUnit->findSkill(((Skill*)m_LuaContext.pLua)->getInstanceId(), &bIsActive);
+    else
+    {
+      m_pServer->getDebug()->notifyErrorMessage(L"Error in LUA: function onDeactivateSkill expected current LUA to be a skill");
+      return;
+    }
+  }
   if (pSkill == NULL)
   {
     m_pServer->getDebug()->notifyErrorMessage(L"Error in LUA: invalid skill provided to function onDeactivateSkill");
@@ -1031,9 +1126,9 @@ void SpellsSolver::onDeactivateSkill(u8 uPlayerId, u32 uUnitId, u32 uSkillId)
     pUnit->disableEffect(pSkill);
 
   NetworkData msg(NETWORKMSG_DEACTIVATE_SKILLS);
-  msg.addLong((long) uPlayerId);
-  msg.addLong((long) uUnitId);
-  msg.addLong((long) uSkillId);
+  msg.addLong((long) pPlayer->m_uPlayerId);
+  msg.addLong((long) pUnit->getId());
+  msg.addLong((long) pSkill->getInstanceId());
   m_pServer->sendMessageToAllClients(&msg);
 }
 
@@ -1191,32 +1286,33 @@ void SpellsSolver::onProduceMana(int playerId, CoordsMap srcPos, u8 * pMana)
       pMana[pTemple->getValue(STRING_MANATYPE)] *= 2;
   }
   Mana mana = Mana(pMana[0], pMana[1], pMana[2], pMana[3]);
-  pPlayer->m_Mana += mana;
+  pPlayer->setBaseMana(pPlayer->getBaseMana() + mana);
 
   NetworkData msg(NETWORKMSG_SEND_PLAYER_MANA);
+  msg.addLong(0); // Stands for "base mana"
   msg.addLong((long)(pPlayer->m_uPlayerId));
   for (int i = 0; i < 4; i++)
-    msg.addLong((long)(pPlayer->m_Mana[i]));
+    msg.addLong((long)(pPlayer->getBaseMana(i)));
   m_pServer->sendMessageToAllClients(&msg);
 }
 
-// -----------------------------------------------------------------
-// Name : onUpdateMaxMana
-// -----------------------------------------------------------------
-void SpellsSolver::onUpdateMaxMana(int playerId, CoordsMap srcPos, u8 * pMana)
-{
-  Player * pPlayer = (playerId < 0) ? m_pSolver->getCurrentPlayer() : m_pSolver->findPlayer(playerId);
-  // If this mana source is on a temple, corresponding mana is doubled
-  MapTile * pTile = m_pServer->getMap()->getTileAt(srcPos);
-  if (pTile != NULL)
-  {
-    Temple * pTemple = (Temple*) pTile->getFirstMapObject(GOTYPE_TEMPLE);
-    if (pTemple != NULL)
-      pMana[pTemple->getValue(STRING_MANATYPE)] *= 2;
-  }
-  Mana mana = Mana(pMana[0], pMana[1], pMana[2], pMana[3]);
-  pPlayer->m_ManaMax += mana;
-}
+//// -----------------------------------------------------------------
+//// Name : onUpdateMaxMana
+//// -----------------------------------------------------------------
+//void SpellsSolver::onUpdateMaxMana(int playerId, CoordsMap srcPos, u8 * pMana)
+//{
+//  Player * pPlayer = (playerId < 0) ? m_pSolver->getCurrentPlayer() : m_pSolver->findPlayer(playerId);
+//  // If this mana source is on a temple, corresponding mana is doubled
+//  MapTile * pTile = m_pServer->getMap()->getTileAt(srcPos);
+//  if (pTile != NULL)
+//  {
+//    Temple * pTemple = (Temple*) pTile->getFirstMapObject(GOTYPE_TEMPLE);
+//    if (pTemple != NULL)
+//      pMana[pTemple->getValue(STRING_MANATYPE)] *= 2;
+//  }
+//  Mana mana = Mana(pMana[0], pMana[1], pMana[2], pMana[3]);
+//  pPlayer->m_ManaMax += mana;
+//}
 
 // -----------------------------------------------------------------
 // Name : onAddSkillToUnit
@@ -1292,11 +1388,11 @@ void SpellsSolver::onTeleport(MapObject * pMapObj, CoordsMap pos)
   pMapObj->setMapPos(pos);
   NetworkData msg(NETWORKMSG_MOVE_MAPOBJ);
   if (pMapObj->getType() & GOTYPE_UNIT)
-    msg.addLong(LUATARGET_UNIT);
+    msg.addLong(SELECT_TYPE_UNIT);
   else if (pMapObj->getType() & GOTYPE_TOWN)
-    msg.addLong(LUATARGET_TOWN);
+    msg.addLong(SELECT_TYPE_TOWN);
   else if (pMapObj->getType() & GOTYPE_TEMPLE)
-    msg.addLong(LUATARGET_TEMPLE);
+    msg.addLong(SELECT_TYPE_TEMPLE);
   msg.addString(pMapObj->getIdentifiers());
   msg.addLong(pos.x);
   msg.addLong(pos.y);
@@ -1326,6 +1422,34 @@ void SpellsSolver::onResurrect(u8 uPlayerId, u32 uUnitId)
   pUnit->setStatus(US_Normal);
   pUnit->setBaseValue(STRING_LIFE, pUnit->getValue(STRING_ENDURANCE));
   NetworkData msg(NETWORKMSG_RESURRECT);
+  msg.addString(pUnit->getIdentifiers());
+  m_pServer->sendMessageToAllClients(&msg);
+}
+
+// -----------------------------------------------------------------
+// Name : onRemoveUnit
+// -----------------------------------------------------------------
+void SpellsSolver::onRemoveUnit(u8 uPlayerId, u32 uUnitId)
+{
+  Player * pPlayer = m_pSolver->findPlayer(uPlayerId);
+  if (pPlayer == NULL)
+  {
+    m_pServer->getDebug()->notifyErrorMessage(L"Lua interaction error: invalid player in function \"removeUnit\".");
+    return;
+  }
+  Unit * pUnit = pPlayer->findUnit(uUnitId);
+  if (pUnit == NULL)
+  {
+    m_pServer->getDebug()->notifyErrorMessage(L"Lua interaction error: unit not found in function \"removeUnit\".");
+    return;
+  }
+
+  if (pUnit->getStatus() == US_Normal) {
+    pPlayer->m_pUnits->deleteObject(pUnit, true, true);
+    pPlayer->m_pDeadUnits->addLast(pUnit);
+  }
+  pUnit->setStatus(US_Removed);
+  NetworkData msg(NETWORKMSG_REMOVE_UNIT);
   msg.addString(pUnit->getIdentifiers());
   m_pServer->sendMessageToAllClients(&msg);
 }

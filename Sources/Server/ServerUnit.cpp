@@ -70,7 +70,7 @@ void Unit::onNewTurn()
   // If target is dead, remove attack order
   if (m_Order == OrderAttack)
   {
-    if (m_pAttackTarget->getStatus() == US_Dead)
+    if (m_pAttackTarget->getStatus() != US_Normal)
       unsetOrder();
   }
   m_bNewTurnDone = true;

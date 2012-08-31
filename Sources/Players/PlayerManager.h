@@ -53,6 +53,7 @@ public:
   LuaTargetable * findLuaTarget(NetworkData * pData, u32 * pType);
   void buildBuilding(NetworkData * pData);
   void resurrectUnit(NetworkData * pData);
+  void removeUnit(NetworkData * pData);
   void teleport(NetworkData * pData);
   void addMagicCircle(NetworkData * pData);
   void removeMagicCircle(NetworkData * pData);
@@ -66,7 +67,7 @@ public:
   // Player management functions
   Player * getActiveLocalPlayer() { return m_pActiveLocalPlayer; };
   bool isPlayerReady(u8 uPlayerId);
-  u8 getLocalPlayersCount();
+  u8 getLocalPlayersCount(bool bCountAI);
   double getTurnTimer() { return m_fTurnTimer; };
 
   // Unit & skill management functions

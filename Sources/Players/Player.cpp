@@ -36,7 +36,10 @@ Player::Player(u8 playerId, u8 clientId, ObjectList ** pGlobalEffects) : LuaTarg
   registerValue(STRING_NBDRAWN, 1);
   registerValue(STRING_MAXSPELLS, 6);
   registerValue(STRING_SPELLSRANGE, 6);
-//  m_uNbMagicCircles = 0;
+  registerValue(STRING_MANA_LIFE, 0);
+  registerValue(STRING_MANA_LAW, 0);
+  registerValue(STRING_MANA_DEATH, 0);
+  registerValue(STRING_MANA_CHAOS, 0);
   m_pCapitalTown = NULL;
   m_pBannerGeometry = NULL;
   m_uXPTownPoints = 0;
@@ -50,6 +53,7 @@ Player::Player(u8 playerId, u8 clientId, ObjectList ** pGlobalEffects) : LuaTarg
   swprintf_s(m_sIdentifiers, 16, L"player %d", (int) m_uPlayerId);
   for (int i = 0; i < MAX_MAGIC_CIRCLES; i++)
     m_MagicCirclePos[i].x = -1;
+  m_bIsAI = false;
 }
 
 // -----------------------------------------------------------------
@@ -94,6 +98,7 @@ void Player::serialize(NetworkData * pData, bool bShort)
     pData->addLong(m_Color.g);
     pData->addLong(m_Color.b);
     pData->addLong(m_Color.a);
+    pData->addLong(m_bIsAI ? 1 : 0);
   }
   LuaTargetable::serializeValues(pData);
   pData->addLong((long) m_State);
@@ -104,9 +109,7 @@ void Player::serialize(NetworkData * pData, bool bShort)
     pData->addLong(m_MagicCirclePos[i].y);
   }
   for (int i = 0; i < 4; i++)
-    pData->addLong(m_Mana[i]);
-  for (int i = 0; i < 4; i++)
-    pData->addLong(m_ManaMax[i]);
+    pData->addLong(m_SpentMana[i]);
   if (!bShort)
   {
     pData->addLong(m_uXPTownPoints);
@@ -156,6 +159,7 @@ void Player::deserialize(NetworkData * pData, bool bShort, LocalClient * pLocalC
     m_Color.g = pData->readLong();
     m_Color.b = pData->readLong();
     m_Color.a = pData->readLong();
+    m_bIsAI = (pData->readLong() == 1);
   }
   LuaTargetable::deserializeValues(pData);
   setState((PlayerState)pData->readLong());
@@ -167,9 +171,7 @@ void Player::deserialize(NetworkData * pData, bool bShort, LocalClient * pLocalC
   }
   // retrieve mana values
   for (int i = 0; i < 4; i++)
-    m_Mana.mana[i] = (u8) pData->readLong();
-  for (int i = 0; i < 4; i++)
-    m_ManaMax.mana[i] = (u8) pData->readLong();
+    m_SpentMana.mana[i] = (u8) pData->readLong();
   if (!bShort)
   {
     m_uXPTownPoints = pData->readLong();
@@ -309,7 +311,7 @@ void Player::serializeUnits(NetworkData * pData)
     m_pAvatarData->serialize(NetworkSerializer::getInstance(pData));
     m_pAvatar->serialize(pData);
     // Units
-    if (m_pAvatar->getStatus() == US_Dead)
+    if (m_pAvatar->getStatus() != US_Normal)
       pData->addLong(m_pUnits->size);
     else
       pData->addLong(m_pUnits->size - 1);
@@ -350,7 +352,7 @@ void Player::deserializeUnits(NetworkData * pData, Map * pMap, LocalClient * pLo
     m_pAvatar->deserialize(pData, pLocalClient, relinkPtrData);
     m_pAvatar->setPlayerColor(m_Color);
     m_pAvatar->setNameDescriptionTexture(m_pAvatarData->m_sCustomName, m_pAvatarData->m_sCustomDescription, m_pAvatarData->m_sTextureFilename);
-    if (m_pAvatar->getStatus() != US_Dead)
+    if (m_pAvatar->getStatus() == US_Normal)
       m_pUnits->addLast(m_pAvatar);
     // Units
     long count = pData->readLong();
@@ -544,42 +546,118 @@ void Player::shuffleDeck()
 }
 
 // -----------------------------------------------------------------
+// Name : getMana
+// -----------------------------------------------------------------
+Mana Player::getMana()
+{
+  Mana mana((u8) getValue(STRING_MANA_LIFE),
+    (u8) getValue(STRING_MANA_LAW),
+    (u8) getValue(STRING_MANA_DEATH),
+    (u8) getValue(STRING_MANA_CHAOS));
+  return mana;
+}
+
+// -----------------------------------------------------------------
+// Name : getBaseMana
+// -----------------------------------------------------------------
+Mana Player::getBaseMana()
+{
+  Mana mana((u8) getValue(STRING_MANA_LIFE, true),
+    (u8) getValue(STRING_MANA_LAW, true),
+    (u8) getValue(STRING_MANA_DEATH, true),
+    (u8) getValue(STRING_MANA_CHAOS, true));
+  return mana;
+}
+
+// -----------------------------------------------------------------
+// Name : getMana
+// -----------------------------------------------------------------
+u8 Player::getMana(u8 uColor)
+{
+  switch (uColor) {
+  case MANA_LIFE:
+    return (u8) getValue(STRING_MANA_LIFE);
+  case MANA_LAW:
+    return (u8) getValue(STRING_MANA_LAW);
+  case MANA_DEATH:
+    return (u8) getValue(STRING_MANA_DEATH);
+  case MANA_CHAOS:
+    return (u8) getValue(STRING_MANA_CHAOS);
+  }
+  return 0; // won't happen
+}
+
+// -----------------------------------------------------------------
+// Name : getBaseMana
+// -----------------------------------------------------------------
+u8 Player::getBaseMana(u8 uColor)
+{
+  switch (uColor) {
+  case MANA_LIFE:
+    return (u8) getValue(STRING_MANA_LIFE, true);
+  case MANA_LAW:
+    return (u8) getValue(STRING_MANA_LAW, true);
+  case MANA_DEATH:
+    return (u8) getValue(STRING_MANA_DEATH, true);
+  case MANA_CHAOS:
+    return (u8) getValue(STRING_MANA_CHAOS, true);
+  }
+  return 0; // won't happen
+}
+
+// -----------------------------------------------------------------
+// Name : setBaseMana
+// -----------------------------------------------------------------
+void Player::setBaseMana(Mana mana)
+{
+  setBaseValue(STRING_MANA_LIFE, mana[MANA_LIFE]);
+  setBaseValue(STRING_MANA_LAW, mana[MANA_LAW]);
+  setBaseValue(STRING_MANA_DEATH, mana[MANA_DEATH]);
+  setBaseValue(STRING_MANA_CHAOS, mana[MANA_CHAOS]);
+}
+
+// -----------------------------------------------------------------
+// Name : setBaseMana
+// -----------------------------------------------------------------
+void Player::setBaseMana(u8 uColor, u8 value)
+{
+  switch (uColor) {
+  case MANA_LIFE:
+    setBaseValue(STRING_MANA_LIFE, value);
+    break;
+  case MANA_LAW:
+    setBaseValue(STRING_MANA_LAW, value);
+    break;
+  case MANA_DEATH:
+    setBaseValue(STRING_MANA_DEATH, value);
+    break;
+  case MANA_CHAOS:
+    setBaseValue(STRING_MANA_CHAOS, value);
+    break;
+  }
+}
+
+// -----------------------------------------------------------------
 // Name : getInfo
 // -----------------------------------------------------------------
 wchar_t * Player::getInfo(wchar_t * sBuf, int iSize)
 {
   wchar_t sAvatar[64];
   wchar_t sAvailMana[64];
-  wchar_t sLife[64];
-  wchar_t sLaw[64];
-  wchar_t sDeath[64];
-  wchar_t sChaos[64];
   wchar_t sDeuxPoints[4];
   i18n->getText1stUp(L"AVATAR", sAvatar, 64);
   i18n->getText1stUp(L"AVAILABLE_MANA", sAvailMana, 64);
-  i18n->getText1stUp(L"LIFE", sLife, 64);
-  i18n->getText1stUp(L"LAW", sLaw, 64);
-  i18n->getText1stUp(L"DEATH", sDeath, 64);
-  i18n->getText1stUp(L"CHAOS", sChaos, 64);
   i18n->getText(L"2P", sDeuxPoints, 4);
-  swprintf_s(sBuf, iSize, L"%s%s%s\n%s%s\n  %s%s%d\n  %s%s%d\n  %s%s%d\n  %s%s%d",
+  swprintf_s(sBuf, iSize, L"%s%s%s\n%s%s\n  ",
         sAvatar,
         sDeuxPoints,
         m_pAvatar->getName(),
         sAvailMana,
-        sDeuxPoints,
-        sLife,
-        sDeuxPoints,
-        (int)m_Mana[MANA_LIFE],
-        sLaw,
-        sDeuxPoints,
-        (int)m_Mana[MANA_LAW],
-        sDeath,
-        sDeuxPoints,
-        (int)m_Mana[MANA_DEATH],
-        sChaos,
-        sDeuxPoints,
-        (int)m_Mana[MANA_CHAOS]
-        );
+        sDeuxPoints
+  );
+  getInfo_AddValue(sBuf, iSize, STRING_MANA_LIFE, L"\n  ");
+  getInfo_AddValue(sBuf, iSize, STRING_MANA_LAW, L"\n  ");
+  getInfo_AddValue(sBuf, iSize, STRING_MANA_DEATH, L"\n  ");
+  getInfo_AddValue(sBuf, iSize, STRING_MANA_CHAOS, L"");
   return sBuf;
 }

@@ -32,7 +32,8 @@ private:
   ASTAR_NODE aStar_CreateNode(short xMap, short yMap, CoordsMap goal, ObjectList * pList);
   void aStar_AddToList(ASTAR_NODE * list, int * listSize, ASTAR_NODE node);
   ASTAR_NODE aStar_RemoveFromList(ASTAR_NODE * list, int position, int * listSize);
-  s16 aStar_ExtractSolution(ASTAR_NODE * closedList, int closedListSize, CoordsMap goal, CoordsMap ** solution);
+  s16 aStar_ExtractSolution(ASTAR_NODE * closedList, int closedListSize, ASTAR_NODE * openList, int openListSize, CoordsMap goal, CoordsMap ** solution);
+  s16 aStar_GetSolutionSize(ASTAR_NODE * closedList, int closedListSize, ASTAR_NODE * openList, int openListSize);
   int getHighestMoveCost(ObjectList * pList, int x, int y);
 
   // Map data

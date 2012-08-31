@@ -445,6 +445,15 @@
     <ClCompile Include="..\Sources\Data\NetworkSerializer.cpp">
       <Filter>Data</Filter>
     </ClCompile>
+    <ClCompile Include="..\Sources\DeckData\AIData.cpp">
+      <Filter>DeckData</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Sources\Players\AISpell.cpp">
+      <Filter>Players</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Sources\Server\AILuaSolver.cpp">
+      <Filter>Server</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Sources\_System\stdafx.h">
@@ -843,6 +852,15 @@
     </ClInclude>
     <ClInclude Include="..\Sources\Data\Serializer.h">
       <Filter>Data</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Sources\DeckData\AIData.h">
+      <Filter>DeckData</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Sources\Players\AISpell.h">
+      <Filter>Players</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Sources\Server\AILuaSolver.h">
+      <Filter>Server</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

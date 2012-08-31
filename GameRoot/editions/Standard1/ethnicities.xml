@@ -1,13 +1,13 @@
 <ethnicity>
 	<id>Galates</id>
-	<name>
+	<l12n key='name'>
 		<english>Galates</english>
 		<french>Galates</french>
-	</name>
-	<description>
+	</l12n>
+	<l12n key='description'>
 		<english>The Galates is an agriarian and working people, but never balk at doing a little war. They are organized in clans, often rival.</english>
 		<french>Les Galates sont un peuple agraire et travailleurs, mais ne rechignent jamais devant une petite guerre. Ils sont organisé en clans souvent rivaux.</french>
-	</description>
+	</l12n>
 	<towns freq_on_plain=2 freq_on_forest=5 freq_on_mountain=3 freq_on_toundra=1 freq_on_desert=0 growth=110 productivity=100 unitprod=110 happiness_bonus=3 radius_bonus=0>
 		<name>Skamerum</name>
 		<name>Caerdargum</name>
@@ -43,14 +43,14 @@
 
 <ethnicity>
 	<id>Peraa</id>
-	<name>
+	<l12n key='name'>
 		<english>Per-âa</english>
 		<french>Per-âa</french>
-	</name>
-	<description>
+	</l12n>
+	<l12n key='description'>
 		<english>Per-âa are very proud people, great builders and priests warriors, adepts of Life and Chaos.</english>
 		<french>Les Per-âa sont un peuple très fier, grands bâtisseurs, comptant de nombreux prêtres guerriers adeptes de la Vie et du Chaos.</french>
-	</description>
+	</l12n>
 	<towns freq_on_plain=4 freq_on_forest=1 freq_on_mountain=1 freq_on_toundra=2 freq_on_desert=3 growth=100 productivity=120 unitprod=80 happiness_bonus=0 radius_bonus=1>
 		<name>Fenptis</name>
 		<name>Râa'ntis</name>
@@ -87,14 +87,14 @@
 
 <ethnicity>
 	<id>Huanakos</id>
-	<name>
+	<l12n key='name'>
 		<english>Huanakos</english>
 		<french>Huanakos</french>
-	</name>
-	<description>
+	</l12n>
+	<l12n key='description'>
 		<english>Huanoakos people is very religious, mastering the power of Life and Death. Their priests are among the most powerful.</english>
 		<french>Les Huanakos sont un peuple très religieux, maîtrisant la puissance de la Vie et de la Mort. Leurs prêtres sont parmi les plus puissants.</french>
-	</description>
+	</l12n>
 	<towns freq_on_plain=2 freq_on_forest=2 freq_on_mountain=4 freq_on_toundra=1 freq_on_desert=2 growth=80 productivity=100 unitprod=120 happiness_bonus=2 radius_bonus=1>
 		<name>Chucahaqa</name>
 		<name>Sapuhuah</name>
@@ -131,14 +131,14 @@
 
 <ethnicity>
 	<id>Hakhamanes</id>
-	<name>
+	<l12n key='name'>
 		<english>Hakhamanes</english>
 		<french>Hakhamanes</french>
-	</name>
-	<description>
+	</l12n>
+	<l12n key='description'>
 		<english>Hakhamanes are very organized people, not so much strong in magic but they have powerful bowmen and spearmen as well as good cavalry.</english>
 		<french>Les Hakhamanes sont un peuple très organisé, pas vraiment versés dans les arts magiques mais possédant de puissants archers et lanciers, sans oublier leur cavalerie.</french>
-	</description>
+	</l12n>
 	<towns freq_on_plain=5 freq_on_forest=2 freq_on_mountain=2 freq_on_toundra=2 freq_on_desert=1 growth=120 productivity=100 unitprod=100 happiness_bonus=0 radius_bonus=2>
 		<name>Citulane</name>
 		<name>Mahaflam</name>
@@ -177,14 +177,14 @@
 
 <ethnicity>
 	<id>Mawohka</id>
-	<name>
+	<l12n key='name'>
 		<english>Mawohka</english>
 		<french>Mawohka</french>
-	</name>
-	<description>
+	</l12n>
+	<l12n key='description'>
 		<english>Mawohka people likes war above all. Warriors and shamans are more aggressives than defensive.</english>
 		<french>Le peuple Mawohka aime la guerre avant tout. Guerriers comme shahmans sont plus offensifs que défensifs.</french>
-	</description>
+	</l12n>
 	<towns freq_on_plain=4 freq_on_forest=3 freq_on_mountain=2 freq_on_toundra=2 freq_on_desert=1 growth=90 productivity=90 unitprod=120 happiness_bonus=1 radius_bonus=1>
 		<name>Kascajo</name>
 		<name>Wehjek</name>

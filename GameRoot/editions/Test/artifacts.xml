@@ -1,0 +1,18 @@
+<artifact>
+  <id>Dwarven_axe</id>
+  <l12n key='name'>
+    <english>Dwarven axe</english>
+    <french>Hache des nains</french>
+  </l12n>
+  <position>left_hand</position>
+  <two_handed>0</two_handed>
+  <modify key='melee' value='3' />
+  <modify key='range' value='-1' />
+  <skill edition='Standard1' name='SteroidDealer' />
+  <spell edition='Standard1' name='InsaneStrength' />
+  <texture>axe</texture>
+  <l12n key='description'>
+    <english>Nice axe: +3 melee, give spell "Insane strength" and skill "Steroid dealer", but -1 range.</english>
+    <french>Belle hache : +3 en mêlée, donne le sort "Force démentielle" et la capacité "Dealer de stéroïdes", mais -1 en distance.</french>
+  </l12n>
+</artifact>

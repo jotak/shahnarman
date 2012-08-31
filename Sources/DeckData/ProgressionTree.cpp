@@ -90,19 +90,11 @@ ProgressionTree::ProgressionTree(wchar_t * sEdition, wchar_t * sName, u8 uType, 
         swprintf_s(sTexture, MAX_PATH, L"%s/%s", m_sEdition, pAttr->getCharValue());
         ProgressionElement * pElement = new ProgressionElement(sId, sTexture, uLevel, this);
         m_pElements[uLevel]->addLast(pElement);
+        pElement->readLocalizedElementsFromXml(pOption);
         XMLLiteElement * pOptData = pOption->getFirstChild();
         while (pOptData != NULL)
         {
-          if (_wcsicmp(pOptData->getName(), L"name") == 0 || 0 == _wcsicmp(pOptData->getName(), L"description"))
-          {
-            XMLLiteElement * pSubDataElt = pOptData->getFirstChild();
-            while (pSubDataElt != NULL)
-            {
-              pElement->addLocalizedElement(pOptData->getName(), pSubDataElt->getCharValue(), pSubDataElt->getName());
-              pSubDataElt = pOptData->getNextChild();
-            }
-          }
-          else if (_wcsicmp(pOptData->getName(), L"skill") == 0
+          if (_wcsicmp(pOptData->getName(), L"skill") == 0
                 || _wcsicmp(pOptData->getName(), L"spell") == 0
                 || _wcsicmp(pOptData->getName(), L"modify") == 0
                 || _wcsicmp(pOptData->getName(), L"artifact") == 0

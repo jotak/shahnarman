@@ -1,7 +1,7 @@
 childEffectsCount = 1
 childEffectsCost = {{0,0,0,1}}	-- 1 chaos
-childEffectsIcon = {"ane"}
-icon = "ane"
+childEffectsIcon = {"telluricblast"}
+icon = "telluricblast"
 
 function getName()
 	if language == "french" then

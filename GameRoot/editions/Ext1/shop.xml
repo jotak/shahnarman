@@ -1,13 +1,13 @@
 <item type='pack'>
-  <name>
+  <l12n key='name'>
     <english>Extension 1 small pack</english>
     <french>Petit paquet Extension 1</french>
-  </name>
+  </l12n>
   <texture>renard</texture>
-  <description>
+  <l12n key='description'>
     <english>5 spells from the Extension 1.</english>
     <french>5 sorts de l'Extension 1.</french>
-  </description>
+  </l12n>
   <cost>10</cost>
   <content>
     <spells quantity='5' mode='random' />

@@ -11,6 +11,7 @@
 #include "ProgressionElement.h"
 #include "Profile.h"
 #include "ShahmahCreation.h"
+#include "AIData.h"
 #include "../Players/Spell.h"
 #include "../Players/Artifact.h"
 #include "../Gameboard/SpecialTile.h"
@@ -22,12 +23,13 @@
 // Name : Edition
 //  Constructor
 // -----------------------------------------------------------------
-Edition::Edition(wchar_t * sChecksum, LocalClient * pLocalClient)
+Edition::Edition(wchar_t * sName, LocalClient * pLocalClient)
 {
-  wsafecpy(m_sObjectId, NAME_MAX_CHARS, sChecksum);
+  wsafecpy(m_sObjectId, NAME_MAX_CHARS, sName);
   wsafecpy(m_sLocale, 32, L"en_EN");
   wsafecpy(m_sVersion, 16, L"n/a");
   m_bActive = false;
+  m_pAIs = new ObjectList(true);
   m_pUnits = new ObjectList(true);
   m_pSpells = new ObjectList(true);
   m_pSpecTiles = new ObjectList(true);
@@ -38,6 +40,10 @@ Edition::Edition(wchar_t * sChecksum, LocalClient * pLocalClient)
   m_pProgressionTrees = new ObjectList(true);
   m_iTotalFreq = 0;
   m_pShahmahCreation = NULL;
+
+  wchar_t loadingMsg[128] = L"";
+  swprintf_s(loadingMsg, 128, L"Edition: %s", sName);
+  pLocalClient->getDebug()->notifyLoadingMessage(loadingMsg);
 
   // Read edition.xml
   XMLLiteReader reader;
@@ -59,22 +65,8 @@ Edition::Edition(wchar_t * sChecksum, LocalClient * pLocalClient)
       else
       {
         wsafecpy(m_sLocale, 32, pLocaleAttr->getCharValue());
-        XMLLiteElement * pDataElt = pNode->getChildByName(L"name");
-        if (pDataElt == NULL)
-        {
-          swprintf_s(sError, 1024, L"XML formation error: missing \"name\" element in node edition. Check out file %s.", pRootNode->getName());
-          pLocalClient->getDebug()->notifyErrorMessage(sError);
-        }
-        else
-        {
-          XMLLiteElement * pSubDataElt = pDataElt->getFirstChild();
-          while (pSubDataElt != NULL)
-          {
-            addLocalizedElement(pDataElt->getName(), pSubDataElt->getCharValue(), pSubDataElt->getName());
-            pSubDataElt = pDataElt->getNextChild();
-          }
-        }
-        pDataElt = pNode->getChildByName(L"version");
+        readLocalizedElementsFromXml(pNode);
+        XMLLiteElement * pDataElt = pNode->getChildByName(L"version");
         if (pDataElt != NULL)
           wsafecpy(m_sVersion, 16, pDataElt->getCharValue());
         pDataElt = pNode->getFirstChild();
@@ -101,7 +93,9 @@ Edition::Edition(wchar_t * sChecksum, LocalClient * pLocalClient)
       pLocalClient->getDebug()->notifyErrorMessage(sError);
     }
   }
-  checksum(pLocalClient->getDebug());
+  swprintf_s(loadingMsg, 128, L"%s: checksum", sName);
+  pLocalClient->getDebug()->notifyLoadingMessage(loadingMsg);
+  computeChecksum(pLocalClient->getDebug());
 }
 
 // -----------------------------------------------------------------
@@ -110,9 +104,6 @@ Edition::Edition(wchar_t * sChecksum, LocalClient * pLocalClient)
 // -----------------------------------------------------------------
 Edition::~Edition()
 {
-#ifdef DBG_VERBOSE1
-  printf("Begin destroy Edition\n");
-#endif
   delete m_pEthnicities;
   delete m_pProgressionTrees;
   delete m_pUnits;
@@ -121,10 +112,8 @@ Edition::~Edition()
   delete m_pArtifacts;
   delete m_pDependencies;
   delete m_pSkillNames;
+  delete m_pAIs;
   FREE(m_pShahmahCreation);
-#ifdef DBG_VERBOSE1
-  printf("End destroy Edition\n");
-#endif
 }
 
 // -----------------------------------------------------------------
@@ -144,14 +133,17 @@ bool Edition::activate(DebugManager * pDebug)
   XMLLiteReader reader;
   swprintf_s(sFileName, MAX_PATH, L"%s%s/ethnicities.xml", EDITIONS_PATH, m_sObjectId);
   XMLLiteElement * pRootNode = loadXMLFile(&reader, sFileName, pDebug);
-  if (pRootNode != NULL)
+  if (pRootNode != NULL) {
+    pDebug->notifyLoadingMessage(sFileName);
     parseXMLObjectData(pRootNode, pDebug);
+  }
 
   // Load progression trees
   swprintf_s(sFileName, MAX_PATH, L"%s%s/progressions.xml", EDITIONS_PATH, m_sObjectId);
   pRootNode = loadXMLFile(&reader, sFileName, pDebug);
   if (pRootNode != NULL)
   {
+    pDebug->notifyLoadingMessage(sFileName);
     wchar_t sError[1024] = L"";
     XMLLiteElement * pNode = pRootNode->getFirstChild();
     while (pNode != NULL)
@@ -190,20 +182,11 @@ bool Edition::activate(DebugManager * pDebug)
       }
       if (pTree != NULL)
       {
+        pTree->readLocalizedElementsFromXml(pNode);
         XMLLiteElement * pDataElt = pNode->getFirstChild();
         while (pDataElt != NULL)
         {
-          if (_wcsicmp(pDataElt->getName(), L"name") == 0
-            || _wcsicmp(pDataElt->getName(), L"description") == 0)
-          {
-            XMLLiteElement * pSubDataElt = pDataElt->getFirstChild();
-            while (pSubDataElt != NULL)
-            {
-              pTree->addLocalizedElement(pDataElt->getName(), pSubDataElt->getCharValue(), pSubDataElt->getName());
-              pSubDataElt = pDataElt->getNextChild();
-            }
-          }
-          else if (_wcsicmp(pDataElt->getName(), L"skill") == 0
+          if (_wcsicmp(pDataElt->getName(), L"skill") == 0
                 || _wcsicmp(pDataElt->getName(), L"spell") == 0
                 || _wcsicmp(pDataElt->getName(), L"modify") == 0
                 || _wcsicmp(pDataElt->getName(), L"artifact") == 0
@@ -223,6 +206,7 @@ bool Edition::activate(DebugManager * pDebug)
 
   // Look for skills
   // Init temporary list
+  pDebug->notifyLoadingMessage(L"Skills");
   wchar_t ** sList;
   sList = new wchar_t*[MAX_SKILLS];
   for (int i = 0; i < MAX_SKILLS; i++)
@@ -240,14 +224,18 @@ bool Edition::activate(DebugManager * pDebug)
   // Load avatars
   swprintf_s(sFileName, MAX_PATH, L"%s%s/shahmahs.xml", EDITIONS_PATH, m_sObjectId);
   pRootNode = loadXMLFile(&reader, sFileName, pDebug);
-  if (pRootNode != NULL)
+  if (pRootNode != NULL) {
+    pDebug->notifyLoadingMessage(sFileName);
     parseXMLObjectData(pRootNode, pDebug);
+  }
 
   // Load units
   swprintf_s(sFileName, MAX_PATH, L"%s%s/units.xml", EDITIONS_PATH, m_sObjectId);
   pRootNode = loadXMLFile(&reader, sFileName, pDebug);
-  if (pRootNode != NULL)
+  if (pRootNode != NULL) {
+    pDebug->notifyLoadingMessage(sFileName);
     parseXMLObjectData(pRootNode, pDebug);
+  }
 
   // Load spells
   m_iTotalFreq = 0;
@@ -255,6 +243,7 @@ bool Edition::activate(DebugManager * pDebug)
   pRootNode = loadXMLFile(&reader, sFileName, pDebug);
   if (pRootNode != NULL)
   {
+    pDebug->notifyLoadingMessage(sFileName);
     wchar_t sError[1024] = L"";
     XMLLiteElement * pNode = pRootNode->getFirstChild();
     while (pNode != NULL)
@@ -288,6 +277,7 @@ bool Edition::activate(DebugManager * pDebug)
   pRootNode = loadXMLFile(&reader, sFileName, pDebug);
   if (pRootNode != NULL)
   {
+    pDebug->notifyLoadingMessage(sFileName);
     wchar_t sError[1024] = L"";
     XMLLiteElement * pNode = pRootNode->getFirstChild();
     while (pNode != NULL)
@@ -323,14 +313,17 @@ bool Edition::activate(DebugManager * pDebug)
   // Load artifacts
   swprintf_s(sFileName, MAX_PATH, L"%s%s/artifacts.xml", EDITIONS_PATH, m_sObjectId);
   pRootNode = loadXMLFile(&reader, sFileName, pDebug);
-  if (pRootNode != NULL)
+  if (pRootNode != NULL) {
+    pDebug->notifyLoadingMessage(sFileName);
     parseXMLObjectData(pRootNode, pDebug);
+  }
 
   // Load ShahmahCreation
   swprintf_s(sFileName, MAX_PATH, L"%s%s/creation.xml", EDITIONS_PATH, m_sObjectId);
   pRootNode = loadXMLFile(&reader, sFileName, pDebug);
   if (pRootNode != NULL)
   {
+    pDebug->notifyLoadingMessage(sFileName);
     m_pShahmahCreation = new ShahmahCreation();
     wchar_t sError[1024] = L"";
     XMLLiteElement * pNode = pRootNode->getFirstChild();
@@ -440,6 +433,53 @@ bool Edition::activate(DebugManager * pDebug)
       pDebug->notifyErrorMessage(sError);
       delete m_pShahmahCreation;
       m_pShahmahCreation = NULL;
+    }
+  }
+
+  // Load AIs
+  swprintf_s(sFileName, MAX_PATH, L"%s%s/ais.xml", EDITIONS_PATH, m_sObjectId);
+  pRootNode = loadXMLFile(&reader, sFileName, pDebug);
+  if (pRootNode != NULL) {
+    pDebug->notifyLoadingMessage(sFileName);
+    wchar_t sError[1024] = L"";
+    XMLLiteElement * pNode = pRootNode->getFirstChild();
+    while (pNode != NULL) {
+      if (0 != _wcsicmp(pNode->getName(), L"ai"))
+      {
+        pNode = pRootNode->getNextChild();
+        continue;
+      }
+      // id and shahmah
+      XMLLiteAttribute * pId = pNode->getAttributeByName(L"id");
+      XMLLiteAttribute * pShahmah = pNode->getAttributeByName(L"shahmah");
+      if (pId == NULL || pShahmah == NULL)
+      {
+        swprintf_s(sError, 1024, L"XML formation error: missing \"id\" and/or \"shahmah\" attributes in node item. Check out file %s.", sFileName);
+        pDebug->notifyErrorMessage(sError);
+        pNode = pRootNode->getNextChild();
+        continue;
+      }
+      AIData * pAI = new AIData();
+      m_pAIs->addLast(pAI);
+      wsafecpy(pAI->m_sObjectId, NAME_MAX_CHARS, pId->getCharValue());
+      wsafecpy(pAI->m_sEdition, NAME_MAX_CHARS, m_sObjectId);
+      wsafecpy(pAI->m_sAvatarId, NAME_MAX_CHARS, pShahmah->getCharValue());
+      // L12N elements
+      pAI->readLocalizedElementsFromXml(pNode);
+      // spells packs
+      XMLLiteElement * pSpellsNode = pNode->getFirstChild();
+      while (pSpellsNode != NULL) {
+        // For each spells node, add a "SpellsPackContent" object in the pack
+        if (_wcsicmp(pSpellsNode->getName(), L"spells") == 0)
+        {
+          SpellsPackContent * pPack = readSpellsPackContent(pSpellsNode, pDebug, sFileName);
+          if (pPack != NULL) {
+            pAI->m_pSpellsPacks->addFirst(pPack);
+          }
+        }
+        pSpellsNode = pNode->getNextChild();
+      }
+      pNode = pRootNode->getNextChild();
     }
   }
 
@@ -560,20 +600,12 @@ void Edition::parseXMLObjectData(XMLLiteElement * pRootNode, DebugManager * pDeb
       // Create artifact
       Artifact * pArtifact = new Artifact(m_sObjectId, sId, sTexture, (u8)iPosition, bTwoHanded);
       // Read artifact data
+      pArtifact->readLocalizedElementsFromXml(pNode);
       XMLLiteElement * pDataElt = pNode->getFirstChild();
       while (pDataElt != NULL)
       {
         const wchar_t* pName = pDataElt->getName();
-        if (0 == _wcsicmp(pName, L"name") || 0 == _wcsicmp(pName, L"description"))
-        {
-          XMLLiteElement * pSubDataElt = pDataElt->getFirstChild();
-          while (pSubDataElt != NULL)
-          {
-            pArtifact->addLocalizedElement(pName, pSubDataElt->getCharValue(), pSubDataElt->getName());
-            pSubDataElt = pDataElt->getNextChild();
-          }
-        }
-        else if (0 == _wcsicmp(pName, L"modify"))
+        if (0 == _wcsicmp(pName, L"modify"))
         {
           wchar_t sKey[NAME_MAX_CHARS];
           int iValue;
@@ -672,21 +704,13 @@ void Edition::parseXMLObjectData(XMLLiteElement * pRootNode, DebugManager * pDeb
     assert(pData != NULL);
 
     wsafecpy(pData->m_sEdition, NAME_MAX_CHARS, m_sObjectId);
+    pData->readLocalizedElementsFromXml(pNode);
     XMLLiteElement * pDataElt = pNode->getFirstChild();
     while (pDataElt != NULL)
     {
       const wchar_t* pName = pDataElt->getName();
       if (0 == _wcsicmp(pName, L"id"))
         wsafecpy(pData->m_sObjectId, NAME_MAX_CHARS, pDataElt->getCharValue());
-      else if (0 == _wcsicmp(pName, L"name") || 0 == _wcsicmp(pName, L"description"))
-      {
-        XMLLiteElement * pSubDataElt = pDataElt->getFirstChild();
-        while (pSubDataElt != NULL)
-        {
-          pData->addLocalizedElement(pName, pSubDataElt->getCharValue(), pSubDataElt->getName());
-          pSubDataElt = pDataElt->getNextChild();
-        }
-      }
       else if (0 == _wcsicmp(pName, L"ethnicity"))
         wsafecpy(pData->m_sEthnicityId, NAME_MAX_CHARS, pDataElt->getCharValue());
       else if (0 == _wcsicmp(pName, STRING_MELEE) || 0 == _wcsicmp(pName, STRING_RANGE) || 0 == _wcsicmp(pName, STRING_ARMOR) ||
@@ -760,35 +784,10 @@ void Edition::addShopItems(Profile * pPlayer, guiSmartSlider * pShopSlider, Debu
       PackShopItem * pItem = new PackShopItem();
       pItem->m_bEnabled = true;
       wsafecpy(pItem->m_sEdition, NAME_MAX_CHARS, m_sObjectId);
-
-      // Item name
-      XMLLiteElement * pChild = pNode->getChildByName(L"name");
-      if (pChild != NULL)
-      {
-        XMLLiteElement * pSubChild = pChild->getChildByName(i18n->getCurrentLanguageName());
-        if (pSubChild != NULL)
-          wsafecpy(pItem->m_sName, SLIDER_ITEM_MAX_CHARS, pSubChild->getCharValue());
-        else
-          wsafecpy(pItem->m_sName, SLIDER_ITEM_MAX_CHARS, L"Error: name not found.");
-      }
-      else
-        wsafecpy(pItem->m_sName, SLIDER_ITEM_MAX_CHARS, L"Error: name not found.");
-
-      // Item full description
-      pChild = pNode->getChildByName(L"description");
-      if (pChild != NULL)
-      {
-        XMLLiteElement * pSubChild = pChild->getChildByName(i18n->getCurrentLanguageName());
-        if (pSubChild != NULL)
-          wsafecpy(pItem->m_sFullText, SHOP_ITEM_FULL_DESCRIPTION_MAX_CHARS, pSubChild->getCharValue());
-        else
-          wsafecpy(pItem->m_sFullText, SHOP_ITEM_FULL_DESCRIPTION_MAX_CHARS, L"");
-      }
-      else
-        wsafecpy(pItem->m_sFullText, SHOP_ITEM_FULL_DESCRIPTION_MAX_CHARS, L"");
-
+      pItem->m_pXml->readLocalizedElementsFromXml(pNode);
+      pItem->m_pXml->findLocalizedElement(pItem->m_sName, SLIDER_ITEM_MAX_CHARS, i18n->getCurrentLanguageName(), L"name");
       // Item cost
-      pChild = pNode->getChildByName(L"cost");
+      XMLLiteElement * pChild = pNode->getChildByName(L"cost");
       if (pChild != NULL)
         pItem->m_iCost = (int) pChild->getIntValue();
       else
@@ -818,23 +817,8 @@ void Edition::addShopItems(Profile * pPlayer, guiSmartSlider * pShopSlider, Debu
           // For each spells node, add a "PackShopItem_content" object in the pack
           if (_wcsicmp(pSpellsNode->getName(), L"spells") == 0)
           {
-            XMLLiteAttribute * pQuantity = pSpellsNode->getAttributeByName(L"quantity");
-            XMLLiteAttribute * pMode = pSpellsNode->getAttributeByName(L"mode");
-            if (pQuantity == NULL || pMode == NULL)
-            {
-              swprintf_s(sError, 1024, L"XML formation error : missing attributes in node content / spells. Check out file %s.", sFileName);
-              pDebug->notifyErrorMessage(sError);
-            }
-            else
-            {
-              PackShopItem::PackShopItem_content * pPack = new PackShopItem::PackShopItem_content();
-              wchar_t * sMode = pMode->getCharValue();
-              pPack->m_iMode = -1;
-              if (_wcsicmp(sMode, L"random") == 0)
-                pPack->m_iMode = 0;
-              if (_wcsicmp(sMode, L"random_rare") == 0)
-                pPack->m_iMode = 1;
-              pPack->m_iNbSpells = pQuantity->getIntValue();
+            SpellsPackContent * pPack = readSpellsPackContent(pSpellsNode, pDebug, sFileName);
+            if (pPack != NULL) {
               pItem->m_pContent->addFirst(pPack);
             }
           }
@@ -897,7 +881,9 @@ void Edition::addShopItems(Profile * pPlayer, guiSmartSlider * pShopSlider, Debu
       else
         pEthn->findLocalizedElement(sEthnicityName, NAME_MAX_CHARS, i18n->getCurrentLanguageName(), L"name");
 
-      pAvatar->getInfos(pItem->m_sFullText, SHOP_ITEM_FULL_DESCRIPTION_MAX_CHARS, L"\n", false, sEthnicityName);
+      wchar_t sDesc[DESCRIPTION_MAX_CHARS] = L"";
+      pAvatar->getInfos(sDesc, DESCRIPTION_MAX_CHARS, L"\n", false, sEthnicityName);
+      pItem->m_pXml->addLocalizedElement(L"description", sDesc, i18n->getCurrentLanguageName());
 
       // Item cost
       XMLLiteElement * pChild = pNode->getChildByName(L"cost");
@@ -949,7 +935,9 @@ void Edition::addShopItems(Profile * pPlayer, guiSmartSlider * pShopSlider, Debu
       swprintf_s(pItem->m_sName, SLIDER_ITEM_MAX_CHARS, L"%s (%s)", sName, str);
 
       // Item full description
-      pArtifact->findLocalizedElement(pItem->m_sFullText, SHOP_ITEM_FULL_DESCRIPTION_MAX_CHARS, i18n->getCurrentLanguageName(), L"description");
+      wchar_t sDesc[DESCRIPTION_MAX_CHARS] = L"";
+      pArtifact->findLocalizedElement(sDesc, DESCRIPTION_MAX_CHARS, i18n->getCurrentLanguageName(), L"description");
+      pItem->m_pXml->addLocalizedElement(L"description", sDesc, i18n->getCurrentLanguageName());
 
       // Item cost
       XMLLiteElement * pChild = pNode->getChildByName(L"cost");
@@ -977,17 +965,68 @@ void Edition::addShopItems(Profile * pPlayer, guiSmartSlider * pShopSlider, Debu
 }
 
 // -----------------------------------------------------------------
+// Name : readSpellsPackContent
+// -----------------------------------------------------------------
+SpellsPackContent * Edition::readSpellsPackContent(XMLLiteElement * pSpellsNode, DebugManager * pDebug, wchar_t * sFileName)
+{
+  wchar_t sError[1024];
+  XMLLiteAttribute * pQuantity = pSpellsNode->getAttributeByName(L"quantity");
+  XMLLiteAttribute * pMode = pSpellsNode->getAttributeByName(L"mode");
+  XMLLiteAttribute * pSpellId = pSpellsNode->getAttributeByName(L"id");
+  if (pQuantity == NULL || pMode == NULL)
+  {
+    swprintf_s(sError, 1024, L"XML formation error: missing attributes in node spells. Check out file %s.", sFileName);
+    pDebug->notifyErrorMessage(sError);
+    return NULL;
+  }
+  SpellsPackContent * pPack = NULL;
+  wchar_t * sMode = pMode->getCharValue();
+  if (_wcsicmp(sMode, L"fixed") == 0) {
+    if (pSpellId != NULL) {
+      pPack = new SpellsPackContent();
+      pPack->m_iMode = PACK_MODE_FIXED;
+      wsafecpy(pPack->m_sSpellId, NAME_MAX_CHARS, pSpellId->getCharValue());
+    }
+    else {
+      swprintf_s(sError, 1024, L"XML formation error: missing attribute 'id' in node spells. Check out file %s.", sFileName);
+      pDebug->notifyErrorMessage(sError);
+    }
+  }
+  else {
+    int mode = -1;
+    if (_wcsicmp(sMode, L"random") == 0)
+      mode = PACK_MODE_RANDOM;
+    else if (_wcsicmp(sMode, L"random-rare") == 0)
+      mode = PACK_MODE_RANDOM_RARE;
+    else if (_wcsicmp(sMode, L"random-life") == 0)
+      mode = PACK_MODE_RANDOM_LIFE;
+    else if (_wcsicmp(sMode, L"random-law") == 0)
+      mode = PACK_MODE_RANDOM_LAW;
+    else if (_wcsicmp(sMode, L"random-death") == 0)
+      mode = PACK_MODE_RANDOM_DEATH;
+    else if (_wcsicmp(sMode, L"random-chaos") == 0)
+      mode = PACK_MODE_RANDOM_CHAOS;
+    if (mode != -1) {
+      pPack = new SpellsPackContent();
+      pPack->m_iMode = mode;
+    }
+    else {
+      swprintf_s(sError, 1024, L"XML formation error: invalid attribute 'mode' in node spells. Check out file %s.", sFileName);
+      pDebug->notifyErrorMessage(sError);
+    }
+  }
+  if (pPack != NULL) {
+    pPack->m_iNbSpells = pQuantity->getIntValue();
+  }
+  return pPack;
+}
+
+// -----------------------------------------------------------------
 // Name : checkShopItemValidity
 // -----------------------------------------------------------------
 void Edition::checkShopItemValidity(Profile * pPlayer, ShopItem * pItem)
 {
   ObjectList * pAvatarsList = pPlayer->getAvatarsList();
-  if (pAvatarsList->size == 0 && pItem->m_iType != 1) // not avatar but need avatar
-  {
-    pItem->m_bEnabled = false;
-    i18n->getText(L"MUST_BUY_AVATAR", pItem->m_sDisabledReason, SLIDER_ITEM_MAX_CHARS);
-    return;
-  }
   if (pItem->m_iType == 1) // avatar?
   {
     AvatarData * p = (AvatarData*) pAvatarsList->getFirst(0);
@@ -1168,13 +1207,14 @@ Artifact * Edition::findArtifact(wchar_t * strId, bool bLookDependencies)
 }
 
 // -----------------------------------------------------------------
-// Name : buySpell
+// Name : selectRandomSpell
 // -----------------------------------------------------------------
-Spell * Edition::buySpell(int iRandomMode)
+Spell * Edition::selectRandomSpell(int iSelectMode)
 {
-  switch (iRandomMode)
+  int iMana = -1;
+  switch (iSelectMode)
   {
-  case 0 :  // random
+  case PACK_MODE_RANDOM:
     {
       int iRand = (int) getRandom((u32)m_iTotalFreq);
       int i = 0;
@@ -1189,6 +1229,72 @@ Spell * Edition::buySpell(int iRandomMode)
       return NULL;
     }
     break;
+  case PACK_MODE_RANDOM_RARE:
+    {
+      // Compute total frequency
+      u32 totalFreq = 0;
+      Spell * pSpell = (Spell*) m_pSpells->getFirst(0);
+      while (pSpell != NULL)
+      {
+        // Only look at rare spells (freq <= 3)
+        if (pSpell->getFrequency() <= 3)
+          totalFreq += (unsigned) pSpell->getFrequency();
+        pSpell = (Spell*) m_pSpells->getNext(0);
+      }
+      int iRand = (int) getRandom(totalFreq);
+      int i = 0;
+      pSpell = (Spell*) m_pSpells->getFirst(0);
+      while (pSpell != NULL)
+      {
+        // Only look at rare spells (freq <= 3)
+        if (pSpell->getFrequency() <= 3) {
+          i += pSpell->getFrequency();
+          if (iRand < i)
+            return pSpell;
+        }
+        pSpell = (Spell*) m_pSpells->getNext(0);
+      }
+      // No rare spell found => use normal random mode
+      return selectRandomSpell(PACK_MODE_RANDOM);
+    }
+    break;
+  case PACK_MODE_RANDOM_LIFE:
+    iMana = MANA_LIFE;
+    break;
+  case PACK_MODE_RANDOM_LAW:
+    iMana = MANA_LAW;
+    break;
+  case PACK_MODE_RANDOM_DEATH:
+    iMana = MANA_DEATH;
+    break;
+  case PACK_MODE_RANDOM_CHAOS:
+    iMana = MANA_CHAOS;
+    break;
+  }
+  if (iMana >= 0) {
+    // Compute total frequency
+    u32 totalFreq = 0;
+    Spell * pSpell = (Spell*) m_pSpells->getFirst(0);
+    while (pSpell != NULL)
+    {
+      // Only look at spells according to wanted mana
+      if (pSpell->getCost().mana[iMana] > 0)
+        totalFreq += (unsigned) pSpell->getFrequency();
+      pSpell = (Spell*) m_pSpells->getNext(0);
+    }
+    int iRand = (int) getRandom(totalFreq);
+    int i = 0;
+    pSpell = (Spell*) m_pSpells->getFirst(0);
+    while (pSpell != NULL)
+    {
+      // Only look at spells according to wanted mana
+      if (pSpell->getCost().mana[iMana] > 0) {
+        i += pSpell->getFrequency();
+        if (iRand < i)
+          return pSpell;
+      }
+      pSpell = (Spell*) m_pSpells->getNext(0);
+    }
   }
   return NULL;
 }
@@ -1231,9 +1337,9 @@ Edition * Edition::findSkillEdition(wchar_t * sName)
 }
 
 // -----------------------------------------------------------------
-// Name : checksum
+// Name : computeChecksum
 // -----------------------------------------------------------------
-void Edition::checksum(DebugManager * pDebug)
+void Edition::computeChecksum(DebugManager * pDebug)
 {
   //FILE * pFile = NULL;
   //u32 filessize = 0;
@@ -1242,7 +1348,7 @@ void Edition::checksum(DebugManager * pDebug)
   if (!md5folder(sPath, m_sChecksum))
   {
     wchar_t sError[256];
-    swprintf_s(sError, 256, L"Error: can't do checksum on edition %s. The edition will be desactivated. Please check that you haven't opened any file from this extension.", m_sObjectId);
+    swprintf_s(sError, 256, L"Error: can't do checksum on edition %s. The edition will be deactivated. Please check that you haven't opened any file from this extension.", m_sObjectId);
     pDebug->notifyErrorMessage(sError);
     deactivate();
   }
@@ -1271,7 +1377,7 @@ void Edition::checksum(DebugManager * pDebug)
   //      break;
   //    }
   //    wchar_t sError[256];
-  //    swprintf_s(sError, 256, L"Error: can't rename folder (code: %s). The edition will be desactivated. Please check that you haven't opened any file from this extension.", sKeyword);
+  //    swprintf_s(sError, 256, L"Error: can't rename folder (code: %s). The edition will be deactivated. Please check that you haven't opened any file from this extension.", sKeyword);
   //    pDebug->notifyErrorMessage(sError);
   //    desactivate();
   //  }

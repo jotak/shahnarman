@@ -69,7 +69,7 @@ end
 function onNewUnitTurn(unitids)
 	objtype, player, unit = split(unitids, " ")
 	x, y = getObjectPosition("unit", player, unit)
-	updateMaxMana(player, x, y, mana[1], mana[2], mana[3], mana[4])
+	produceMana(player, x, y, mana[1], mana[2], mana[3], mana[4])
 end
 
 isMergeable = 1

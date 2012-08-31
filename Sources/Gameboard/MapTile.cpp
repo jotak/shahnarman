@@ -60,17 +60,11 @@ MapTile::MapTile(u8 uTerrainType, ObjectList ** pGlobalEffects) : GraphicObject(
 // -----------------------------------------------------------------
 MapTile::~MapTile()
 {
-#ifdef DBG_VERBOSE1
-  printf("Begin destroy MapTile\n");
-#endif
   delete m_pMapObjects;
   FREE(m_pSpecialTile);
   FREE(m_pSpecialTileGeometry);
   FREE(m_pNbAlliesGeo);
   FREE(m_pNbFoesGeo);
-#ifdef DBG_VERBOSE1
-  printf("End destroy MapTile\n");
-#endif
 }
 
 // -----------------------------------------------------------------

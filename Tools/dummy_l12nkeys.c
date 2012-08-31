@@ -11,6 +11,10 @@ void dummy()
   getText("alignment");
   getText("food");
   getText("production");
+  getText("mana_life");
+  getText("mana_law");
+  getText("mana_death");
+  getText("mana_chaos");
   getText("LIFE_MANA");
   getText("LAW_MANA");
   getText("DEATH_MANA");

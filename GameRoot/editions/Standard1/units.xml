@@ -1,872 +1,873 @@
 <unit>
-  <id>Djinn_tres_tres_mechant</id>
-  <name>
-    <english>Very, very evil djinn</english>
-    <french>Djinn très très méchant</french>
-  </name>
-  <ethnicity></ethnicity>
-  <melee>4</melee>
-  <range>0</range>
-  <armor>1</armor>
-  <endurance>5</endurance>
-  <speed>4</speed>
-  <alignment>4</alignment>
-  <texture>renard</texture>
-  <skill luafile='Flying' />
-  <description>
-    <english>Take care, this djinn is really evil.</english>
-    <french>Attention, ce djinn est vraiment très méchant.</french>
-  </description>
+	<id>Spearman</id>
+	<l12n key='name'>
+		<english>Spearman</english>
+		<french>Lancier</french>
+	</l12n>
+	<ethnicity>*</ethnicity>
+	<melee>1</melee>
+	<range>0</range>
+	<armor>1</armor>
+	<endurance>3</endurance>
+	<speed>1</speed>
+	<alignment>0</alignment>
+	<texture>canard</texture>
+	<l12n key='description'>
+		<english>The spearman is a basic defending unit.</english>
+		<french>Le lancier est l'unité défensive de base.</french>
+	</l12n>
 </unit>
 <unit>
-  <id>Goblin_des_montagnes_rouges</id>
-  <name>
-    <english>Red mountains goblin</english>
-    <french>Goblin des montagnes rouges</french>
-  </name>
-  <ethnicity></ethnicity>
-  <melee>1</melee>
-  <range>0</range>
-  <armor>0</armor>
-  <endurance>1</endurance>
-  <speed>2</speed>
-  <alignment>8</alignment>
-  <texture>mario</texture>
-  <description>
-    <english>These goblins are quite stupid.</english>
-    <french>Ces goblins sont assez stupides.</french>
-  </description>
+	<id>Swordman</id>
+	<l12n key='name'>
+		<english>Swordman</english>
+		<french>Epéiste</french>
+	</l12n>
+	<ethnicity>*</ethnicity>
+	<melee>2</melee>
+	<range>0</range>
+	<armor>1</armor>
+	<endurance>2</endurance>
+	<speed>2</speed>
+	<alignment>0</alignment>
+	<texture>canard</texture>
+	<l12n key='description'>
+		<english>The swordman is a basic attacking unit.</english>
+		<french>L'épéiste est l'unité d'attaque de base.</french>
+	</l12n>
 </unit>
 <unit>
-  <id>Troll_aquatique_farceur</id>
-  <name>
-    <english>Happy water-troll</english>
-    <french>Troll aquatique farceur</french>
-  </name>
-  <ethnicity></ethnicity>
-  <melee>4</melee>
-  <range>0</range>
-  <armor>2</armor>
-  <endurance>5</endurance>
-  <speed>2</speed>
-  <alignment>9</alignment>
-  <texture>canard</texture>
-  <description>
-    <english>His jokes can kill an elephant.</english>
-    <french>Ses blagues peuvent tuer un éléphant.</french>
-  </description>
+	<id>Bowman</id>
+	<l12n key='name'>
+		<english>Bowman</english>
+		<french>Archer</french>
+	</l12n>
+	<ethnicity>*</ethnicity>
+	<melee>1</melee>
+	<range>1</range>
+	<armor>1</armor>
+	<endurance>2</endurance>
+	<speed>1</speed>
+	<alignment>0</alignment>
+	<texture>canard</texture>
+	<l12n key='description'>
+		<english>The bowman is a basic range-attacking unit.</english>
+		<french>L'archer est l'unité d'attaque à distance de base.</french>
+	</l12n>
 </unit>
 <unit>
-  <id>Spearman</id>
-  <name>
-    <english>Spearman</english>
-    <french>Lancier</french>
-  </name>
-  <ethnicity>*</ethnicity>
-  <melee>1</melee>
-  <range>0</range>
-  <armor>1</armor>
-  <endurance>3</endurance>
-  <speed>1</speed>
-  <alignment>0</alignment>
-  <texture>canard</texture>
-  <description>
-    <english>The spearman is a basic defending unit.</english>
-    <french>Le lancier est l'unité défensive de base.</french>
-  </description>
+	<id>Cavalry</id>
+	<l12n key='name'>
+		<english>Cavalry</english>
+		<french>Cavalerie</french>
+	</l12n>
+	<ethnicity>*</ethnicity>
+	<melee>3</melee>
+	<range>0</range>
+	<armor>1</armor>
+	<endurance>3</endurance>
+	<speed>4</speed>
+	<alignment>0</alignment>
+	<texture>canard</texture>
+	<l12n key='description'>
+		<english>The cavalry is a fast and good attacking unit.</english>
+		<french>La cavalerie est une bonne et rapide unité offensive.</french>
+	</l12n>
 </unit>
 <unit>
-  <id>Swordman</id>
-  <name>
-    <english>Swordman</english>
-    <french>Epéiste</french>
-  </name>
-  <ethnicity>*</ethnicity>
-  <melee>2</melee>
-  <range>0</range>
-  <armor>1</armor>
-  <endurance>2</endurance>
-  <speed>2</speed>
-  <alignment>0</alignment>
-  <texture>canard</texture>
-  <description>
-    <english>The swordman is a basic attacking unit.</english>
-    <french>L'épéiste est l'unité d'attaque de base.</french>
-  </description>
+	<id>Priest</id>
+	<l12n key='name'>
+		<english>Priest</english>
+		<french>Prêtre</french>
+	</l12n>
+	<ethnicity>*</ethnicity>
+	<melee>1</melee>
+	<range>0</range>
+	<armor>0</armor>
+	<endurance>2</endurance>
+	<speed>2</speed>
+	<alignment>0</alignment>
+	<texture>canard</texture>
+	<skill luafile='Healing' parameters='2' />
+	<skill luafile='HolyBlast' />
+	<l12n key='description'>
+		<english></english>
+		<french></french>
+	</l12n>
 </unit>
 <unit>
-  <id>Bowman</id>
-  <name>
-    <english>Bowman</english>
-    <french>Archer</french>
-  </name>
-  <ethnicity>*</ethnicity>
-  <melee>1</melee>
-  <range>1</range>
-  <armor>1</armor>
-  <endurance>2</endurance>
-  <speed>1</speed>
-  <alignment>0</alignment>
-  <texture>canard</texture>
-  <description>
-    <english>The bowman is a basic range-attacking unit.</english>
-    <french>L'archer est l'unité d'attaque à distance de base.</french>
-  </description>
+	<id>GalatesWarrior</id>
+	<l12n key='name'>
+		<english>Galate warrior</english>
+		<french>Guerrier galate</french>
+	</l12n>
+	<ethnicity>Galates</ethnicity>
+	<melee>2</melee>
+	<range>0</range>
+	<armor>1</armor>
+	<endurance>3</endurance>
+	<speed>2</speed>
+	<alignment>0</alignment>
+	<texture>canard</texture>
+	<l12n key='description'>
+		<english>The dangerous Galate warriors have wars and fights in their blood. They are more robust than standard swordmen.</english>
+		<french>Les dangereux guerriers Galates ont la guerre et le combat dans le sang. Ils sont plus robustes que les épéistes standards.</french>
+	</l12n>
 </unit>
 <unit>
-  <id>Cavalry</id>
-  <name>
-    <english>Cavalry</english>
-    <french>Cavalerie</french>
-  </name>
-  <ethnicity>*</ethnicity>
-  <melee>3</melee>
-  <range>0</range>
-  <armor>1</armor>
-  <endurance>3</endurance>
-  <speed>4</speed>
-  <alignment>0</alignment>
-  <texture>canard</texture>
-  <description>
-    <english>The cavalry is a fast and good attacking unit.</english>
-    <french>La cavalerie est une bonne et rapide unité offensive.</french>
-  </description>
+	<id>GalatesWarlord</id>
+	<l12n key='name'>
+		<english>Galate warlord</english>
+		<french>Chef de guerre galate</french>
+	</l12n>
+	<ethnicity>Galates</ethnicity>
+	<melee>4</melee>
+	<range>0</range>
+	<armor>2</armor>
+	<endurance>5</endurance>
+	<speed>2</speed>
+	<alignment>0</alignment>
+	<texture>canard</texture>
+	<l12n key='description'>
+		<english>The terrible Galate warlords are feared and famous all over the world. Any army should think twice before engaging a fight.</english>
+		<french>Les terribles chefs de guerre Galates sont craints et respectés dans le monde entier. Toute armée doit réflechir à deux fois avant d'engager le combat.</french>
+	</l12n>
 </unit>
 <unit>
-  <id>Priest</id>
-  <name>
-    <english>Priest</english>
-    <french>Prêtre</french>
-  </name>
-  <ethnicity>*</ethnicity>
-  <melee>1</melee>
-  <range>0</range>
-  <armor>0</armor>
-  <endurance>2</endurance>
-  <speed>2</speed>
-  <alignment>0</alignment>
-  <texture>canard</texture>
-  <skill luafile='Healing' />
-  <skill luafile='HolyBlast' />
-  <description>
-    <english></english>
-    <french></french>
-  </description>
+	<id>GalatesWolveRider</id>
+	<l12n key='name'>
+		<english>Galate wolf rider</english>
+		<french>Chevaucheur de loup galate</french>
+	</l12n>
+	<ethnicity>Galates</ethnicity>
+	<melee>4</melee>
+	<range>0</range>
+	<armor>1</armor>
+	<endurance>3</endurance>
+	<speed>6</speed>
+	<alignment>8</alignment>
+	<skill luafile='Forestwalk' />
+	<skill luafile='FirstStrike' />
+	<texture>canard</texture>
+	<l12n key='description'>
+		<english>Hey, look! These barbarians ride wolves!!</english>
+		<french>Héé, regardes! Ces barbares chevauchent des loups!!</french>
+	</l12n>
 </unit>
 <unit>
-  <id>GalatesWarrior</id>
-  <name>
-    <english>Galate warrior</english>
-    <french>Guerrier galate</french>
-  </name>
-  <ethnicity>Galates</ethnicity>
-  <melee>2</melee>
-  <range>0</range>
-  <armor>1</armor>
-  <endurance>3</endurance>
-  <speed>2</speed>
-  <alignment>0</alignment>
-  <texture>canard</texture>
-  <description>
-    <english>The dangerous Galate warriors have wars and fights in their blood. They are more robust than standard swordmen.</english>
-    <french>Les dangereux guerriers Galates ont la guerre et le combat dans le sang. Ils sont plus robustes que les épéistes standards.</french>
-  </description>
+	<id>GalatesDruid</id>
+	<l12n key='name'>
+		<english>Galate druid</english>
+		<french>Druide galate</french>
+	</l12n>
+	<ethnicity>Galates</ethnicity>
+	<melee>2</melee>
+	<range>0</range>
+	<armor>0</armor>
+	<endurance>2</endurance>
+	<speed>2</speed>
+	<alignment>0</alignment>
+	<skill luafile='Forestwalk' />
+	<skill luafile='Healing' parameters='2' />
+	<skill luafile='TelluricBlast' />
+	<texture>canard</texture>
+	<l12n key='description'>
+		<english>The Galate druids are the guardian of an ancient knowledge and pact between Man and Nature.</english>
+		<french>Les druides galates sont les gardiens de connaissances ancestrales et d'un pacte entre l'Homme et la Nature.</french>
+	</l12n>
 </unit>
 <unit>
-  <id>GalatesWarlord</id>
-  <name>
-    <english>Galate warlord</english>
-    <french>Chef de guerre galate</french>
-  </name>
-  <ethnicity>Galates</ethnicity>
-  <melee>4</melee>
-  <range>0</range>
-  <armor>2</armor>
-  <endurance>5</endurance>
-  <speed>2</speed>
-  <alignment>0</alignment>
-  <texture>canard</texture>
-  <description>
-    <english>The terrible Galate warlords are feared and famous all over the world. Any army should think twice before engaging a fight.</english>
-    <french>Les terribles chefs de guerre Galates sont craints et respectés dans le monde entier. Toute armée doit réflechir à deux fois avant d'engager le combat.</french>
-  </description>
+	<id>MawohkaWarrior</id>
+	<l12n key='name'>
+		<english>Mawohka warrior</english>
+		<french>Guerrier mawohka</french>
+	</l12n>
+	<ethnicity>Mawohka</ethnicity>
+	<melee>2</melee>
+	<range>1</range>
+	<armor>0</armor>
+	<endurance>3</endurance>
+	<speed>2</speed>
+	<alignment>0</alignment>
+	<texture>canard</texture>
+	<l12n key='description'>
+		<english>The Hakhamane warriors are skilled and range-attacking fighters.</english>
+		<french>Les guerriers hakhamanes sont d'habiles combattants, attaquant à distance.</french>
+	</l12n>
 </unit>
 <unit>
-  <id>GalatesWolveRider</id>
-  <name>
-    <english>Galate wolf rider</english>
-    <french>Chevaucheur de loup galate</french>
-  </name>
-  <ethnicity>Galates</ethnicity>
-  <melee>4</melee>
-  <range>0</range>
-  <armor>1</armor>
-  <endurance>3</endurance>
-  <speed>6</speed>
-  <alignment>8</alignment>
-  <skill luafile='Forestwalk' />
-  <skill luafile='FirstStrike' />
-  <texture>canard</texture>
-  <description>
-    <english>Hey, look! These barbarians ride wolves!!</english>
-    <french>Héé, regardes! Ces barbares chevauchent des loups!!</french>
-  </description>
+	<id>MawohkaShaman</id>
+	<l12n key='name'>
+		<english>Mawohka shaman</english>
+		<french>Chamane mawohka</french>
+	</l12n>
+	<ethnicity>Mawohka</ethnicity>
+	<melee>1</melee>
+	<range>0</range>
+	<armor>0</armor>
+	<endurance>2</endurance>
+	<speed>2</speed>
+	<alignment>0</alignment>
+	<skill luafile='Confuse' />
+	<skill luafile='Healing' parameters='2' />
+	<texture>canard</texture>
+	<l12n key='description'>
+		<english></english>
+		<french></french>
+	</l12n>
 </unit>
 <unit>
-  <id>GalatesDruid</id>
-  <name>
-    <english>Galate druid</english>
-    <french>Druide galate</french>
-  </name>
-  <ethnicity>Galates</ethnicity>
-  <melee>2</melee>
-  <range>0</range>
-  <armor>0</armor>
-  <endurance>2</endurance>
-  <speed>2</speed>
-  <alignment>0</alignment>
-  <skill luafile='Forestwalk' />
-  <skill luafile='Healing' />
-  <skill luafile='TelluricBlast' />
-  <texture>canard</texture>
-  <description>
-    <english>The Galate druids are the guardian of an ancient knowledge and pact between Man and Nature.</english>
-    <french>Les druides galates sont les gardiens de connaissances ancestrales et d'un pacte entre l'Homme et la Nature.</french>
-  </description>
+	<id>MawohkaHorseman</id>
+	<l12n key='name'>
+		<english>Mawohka horseman</english>
+		<french>Cavalier mawohka</french>
+	</l12n>
+	<ethnicity>Mawohka</ethnicity>
+	<melee>3</melee>
+	<range>1</range>
+	<armor>0</armor>
+	<endurance>3</endurance>
+	<speed>4</speed>
+	<alignment>0</alignment>
+	<texture>canard</texture>
+	<l12n key='description'>
+		<english></english>
+		<french></french>
+	</l12n>
 </unit>
 <unit>
-  <id>MawohkaWarrior</id>
-  <name>
-    <english>Mawohka warrior</english>
-    <french>Guerrier mawohka</french>
-  </name>
-  <ethnicity>Mawohka</ethnicity>
-  <melee>2</melee>
-  <range>1</range>
-  <armor>0</armor>
-  <endurance>3</endurance>
-  <speed>2</speed>
-  <alignment>0</alignment>
-  <texture>canard</texture>
-  <description>
-    <english>The Hakhamane warriors are skilled and range-attacking fighters.</english>
-    <french>Les guerriers hakhamanes sont d'habiles combattants, attaquant à distance.</french>
-  </description>
+	<id>MawohkaWyvernRider</id>
+	<l12n key='name'>
+		<english>Mawohka wyvern rider</english>
+		<french>Chevaucheur de vouivre mawohka</french>
+	</l12n>
+	<ethnicity>Mawohka</ethnicity>
+	<melee>7</melee>
+	<range>1</range>
+	<armor>1</armor>
+	<endurance>5</endurance>
+	<speed>8</speed>
+	<alignment>0</alignment>
+	<texture>canard</texture>
+	<l12n key='description'>
+		<english></english>
+		<french></french>
+	</l12n>
 </unit>
 <unit>
-  <id>MawohkaShaman</id>
-  <name>
-    <english>Mawohka shaman</english>
-    <french>Chamane mawohka</french>
-  </name>
-  <ethnicity>Mawohka</ethnicity>
-  <melee>1</melee>
-  <range>0</range>
-  <armor>0</armor>
-  <endurance>2</endurance>
-  <speed>2</speed>
-  <alignment>0</alignment>
-  <skill luafile='Confuse' />
-  <skill luafile='Healing' />
-  <texture>canard</texture>
-  <description>
-    <english></english>
-    <french></french>
-  </description>
+	<id>HakhamanesElitePikeman</id>
+	<l12n key='name'>
+		<english>Hakhaman elite pikeman</english>
+		<french>Piquier d'élite hakhaman</french>
+	</l12n>
+	<ethnicity>Hakhamanes</ethnicity>
+	<melee>2</melee>
+	<range>0</range>
+	<armor>2</armor>
+	<endurance>5</endurance>
+	<speed>1</speed>
+	<alignment>0</alignment>
+	<texture>canard</texture>
+	<l12n key='description'>
+		<english></english>
+		<french>Il s'agit de la redoutable garde d'élite des Empereurs hakhamans.</french>
+	</l12n>
 </unit>
 <unit>
-  <id>MawohkaHorseman</id>
-  <name>
-    <english>Mawohka horseman</english>
-    <french>Cavalier mawohka</french>
-  </name>
-  <ethnicity>Mawohka</ethnicity>
-  <melee>3</melee>
-  <range>1</range>
-  <armor>0</armor>
-  <endurance>3</endurance>
-  <speed>4</speed>
-  <alignment>0</alignment>
-  <texture>canard</texture>
-  <description>
-    <english></english>
-    <french></french>
-  </description>
+	<id>HakhamanesEliteBowman</id>
+	<l12n key='name'>
+		<english>Hakhamane elite bowman</english>
+		<french>Archer d'élite hakhamane</french>
+	</l12n>
+	<ethnicity>Hakhamanes</ethnicity>
+	<melee>2</melee>
+	<range>2</range>
+	<armor>2</armor>
+	<endurance>4</endurance>
+	<speed>1</speed>
+	<alignment>0</alignment>
+	<texture>canard</texture>
+	<l12n key='description'>
+		<english></english>
+		<french>Les archers d'élite des Empereurs hakhamans peuvent s'avérer mortels, même au corps à corps.</french>
+	</l12n>
 </unit>
 <unit>
-  <id>MawohkaWyvernRider</id>
-  <name>
-    <english>Mawohka wyvern rider</english>
-    <french>Chevaucheur de vouivre mawohka</french>
-  </name>
-  <ethnicity>Mawohka</ethnicity>
-  <melee>7</melee>
-  <range>1</range>
-  <armor>1</armor>
-  <endurance>5</endurance>
-  <speed>8</speed>
-  <alignment>0</alignment>
-  <texture>canard</texture>
-  <description>
-    <english></english>
-    <french></french>
-  </description>
+	<id>Ragebus_WarriorM</id>
+	<l12n key='name'>
+		<english>Ragebus</english>
+		<french>Ragebus</french>
+	</l12n>
+	<ethnicity>Galates</ethnicity>
+	<melee>8</melee>
+	<range>2</range>
+	<armor>4</armor>
+	<endurance>6</endurance>
+	<speed>2</speed>
+	<alignment>0</alignment>
+	<texture>canard</texture>
+	<l12n key='description'>
+		<english></english>
+		<french></french>
+	</l12n>
 </unit>
 <unit>
-  <id>HakhamanesElitePikeman</id>
-  <name>
-    <english>Hakhaman elite pikeman</english>
-    <french>Piquier d'élite hakhaman</french>
-  </name>
-  <ethnicity>Hakhamanes</ethnicity>
-  <melee>2</melee>
-  <range>0</range>
-  <armor>2</armor>
-  <endurance>5</endurance>
-  <speed>1</speed>
-  <alignment>0</alignment>
-  <texture>canard</texture>
-  <description>
-    <english></english>
-    <french>Il s'agit de la redoutable garde d'élite des Empereurs hakhamans.</french>
-  </description>
+	<id>Jeminomus_DruidM</id>
+	<l12n key='name'>
+		<english>Jeminomus</english>
+		<french>Jeminomus</french>
+	</l12n>
+	<ethnicity>Galates</ethnicity>
+	<melee>8</melee>
+	<range>2</range>
+	<armor>4</armor>
+	<endurance>6</endurance>
+	<speed>2</speed>
+	<alignment>0</alignment>
+	<texture>canard</texture>
+	<l12n key='description'>
+		<english></english>
+		<french></french>
+	</l12n>
 </unit>
 <unit>
-  <id>HakhamanesEliteBowman</id>
-  <name>
-    <english>Hakhamane elite bowman</english>
-    <french>Archer d'élite hakhamane</french>
-  </name>
-  <ethnicity>Hakhamanes</ethnicity>
-  <melee>2</melee>
-  <range>2</range>
-  <armor>2</armor>
-  <endurance>4</endurance>
-  <speed>1</speed>
-  <alignment>0</alignment>
-  <texture>canard</texture>
-  <description>
-    <english></english>
-    <french>Les archers d'élite des Empereurs hakhamans peuvent s'avérer mortels, même au corps à corps.</french>
-  </description>
+	<id>Vehlo_WarriorF</id>
+	<l12n key='name'>
+		<english>Vehlo</english>
+		<french>Vehlo</french>
+	</l12n>
+	<ethnicity>Galates</ethnicity>
+	<melee>8</melee>
+	<range>2</range>
+	<armor>4</armor>
+	<endurance>6</endurance>
+	<speed>2</speed>
+	<alignment>0</alignment>
+	<texture>canard</texture>
+	<l12n key='description'>
+		<english></english>
+		<french></french>
+	</l12n>
 </unit>
 <unit>
-  <id>Ragebus_WarriorM</id>
-  <name>
-    <english>Ragebus</english>
-    <french>Ragebus</french>
-  </name>
-  <ethnicity>Galates</ethnicity>
-  <melee>8</melee>
-  <range>2</range>
-  <armor>4</armor>
-  <endurance>6</endurance>
-  <speed>2</speed>
-  <alignment>0</alignment>
-  <texture>canard</texture>
-  <description>
-    <english></english>
-    <french></french>
-  </description>
+	<id>Laodeica_DruidF</id>
+	<l12n key='name'>
+		<english>Laodeica</english>
+		<french>Laodeica</french>
+	</l12n>
+	<ethnicity>Galates</ethnicity>
+	<melee>8</melee>
+	<range>2</range>
+	<armor>4</armor>
+	<endurance>6</endurance>
+	<speed>2</speed>
+	<alignment>0</alignment>
+	<texture>canard</texture>
+	<l12n key='description'>
+		<english></english>
+		<french></french>
+	</l12n>
 </unit>
 <unit>
-  <id>Jeminomus_DruidM</id>
-  <name>
-    <english>Jeminomus</english>
-    <french>Jeminomus</french>
-  </name>
-  <ethnicity>Galates</ethnicity>
-  <melee>8</melee>
-  <range>2</range>
-  <armor>4</armor>
-  <endurance>6</endurance>
-  <speed>2</speed>
-  <alignment>0</alignment>
-  <texture>canard</texture>
-  <description>
-    <english></english>
-    <french></french>
-  </description>
+	<id>StheChampion</id>
+	<l12n key='name'>
+		<english>Sthe Champion</english>
+		<french>Champion de Sthe</french>
+	</l12n>
+	<ethnicity>Peraa</ethnicity>
+	<melee>8</melee>
+	<range>2</range>
+	<armor>4</armor>
+	<endurance>6</endurance>
+	<speed>2</speed>
+	<alignment>0</alignment>
+	<texture>canard</texture>
+	<l12n key='description'>
+		<english></english>
+		<french></french>
+	</l12n>
 </unit>
 <unit>
-  <id>Vehlo_WarriorF</id>
-  <name>
-    <english>Vehlo</english>
-    <french>Vehlo</french>
-  </name>
-  <ethnicity>Galates</ethnicity>
-  <melee>8</melee>
-  <range>2</range>
-  <armor>4</armor>
-  <endurance>6</endurance>
-  <speed>2</speed>
-  <alignment>0</alignment>
-  <texture>canard</texture>
-  <description>
-    <english></english>
-    <french></french>
-  </description>
+	<id>RaaChampion</id>
+	<l12n key='name'>
+		<english>Raa Champion</english>
+		<french>Champion de Raa</french>
+	</l12n>
+	<ethnicity>Peraa</ethnicity>
+	<melee>8</melee>
+	<range>2</range>
+	<armor>4</armor>
+	<endurance>6</endurance>
+	<speed>2</speed>
+	<alignment>0</alignment>
+	<texture>canard</texture>
+	<l12n key='description'>
+		<english></english>
+		<french></french>
+	</l12n>
 </unit>
 <unit>
-  <id>Laodeica_DruidF</id>
-  <name>
-    <english>Laodeica</english>
-    <french>Laodeica</french>
-  </name>
-  <ethnicity>Galates</ethnicity>
-  <melee>8</melee>
-  <range>2</range>
-  <armor>4</armor>
-  <endurance>6</endurance>
-  <speed>2</speed>
-  <alignment>0</alignment>
-  <texture>canard</texture>
-  <description>
-    <english></english>
-    <french></french>
-  </description>
+	<id>PerKanahkt</id>
+	<l12n key='name'>
+		<english>Kanahkt</english>
+		<french>Kanahkt</french>
+	</l12n>
+	<ethnicity>Peraa</ethnicity>
+	<melee>8</melee>
+	<range>2</range>
+	<armor>4</armor>
+	<endurance>6</endurance>
+	<speed>2</speed>
+	<alignment>0</alignment>
+	<texture>canard</texture>
+	<l12n key='description'>
+		<english></english>
+		<french></french>
+	</l12n>
 </unit>
 <unit>
-  <id>StheChampion</id>
-  <name>
-    <english>Sthe Champion</english>
-    <french>Champion de Sthe</french>
-  </name>
-  <ethnicity>Peraa</ethnicity>
-  <melee>8</melee>
-  <range>2</range>
-  <armor>4</armor>
-  <endurance>6</endurance>
-  <speed>2</speed>
-  <alignment>0</alignment>
-  <texture>canard</texture>
-  <description>
-    <english></english>
-    <french></french>
-  </description>
+	<id>PerIminhtp</id>
+	<l12n key='name'>
+		<english>Iminhtp</english>
+		<french>Iminhtp</french>
+	</l12n>
+	<ethnicity>Peraa</ethnicity>
+	<melee>8</melee>
+	<range>2</range>
+	<armor>4</armor>
+	<endurance>6</endurance>
+	<speed>2</speed>
+	<alignment>0</alignment>
+	<texture>canard</texture>
+	<l12n key='description'>
+		<english></english>
+		<french></french>
+	</l12n>
 </unit>
 <unit>
-  <id>RaaChampion</id>
-  <name>
-    <english>Raa Champion</english>
-    <french>Champion de Raa</french>
-  </name>
-  <ethnicity>Peraa</ethnicity>
-  <melee>8</melee>
-  <range>2</range>
-  <armor>4</armor>
-  <endurance>6</endurance>
-  <speed>2</speed>
-  <alignment>0</alignment>
-  <texture>canard</texture>
-  <description>
-    <english></english>
-    <french></french>
-  </description>
+	<id>Quohad_LifePriestM</id>
+	<l12n key='name'>
+		<english>Quohad</english>
+		<french>Quohad</french>
+	</l12n>
+	<ethnicity>Huanakos</ethnicity>
+	<melee>8</melee>
+	<range>2</range>
+	<armor>4</armor>
+	<endurance>6</endurance>
+	<speed>2</speed>
+	<alignment>0</alignment>
+	<texture>canard</texture>
+	<l12n key='description'>
+		<english></english>
+		<french></french>
+	</l12n>
 </unit>
 <unit>
-  <id>PerKanahkt</id>
-  <name>
-    <english>Kanahkt</english>
-    <french>Kanahkt</french>
-  </name>
-  <ethnicity>Peraa</ethnicity>
-  <melee>8</melee>
-  <range>2</range>
-  <armor>4</armor>
-  <endurance>6</endurance>
-  <speed>2</speed>
-  <alignment>0</alignment>
-  <texture>canard</texture>
-  <description>
-    <english></english>
-    <french></french>
-  </description>
+	<id>Xonahpun_DeathPriestM</id>
+	<l12n key='name'>
+		<english>Xonahpun</english>
+		<french>Xonahpun</french>
+	</l12n>
+	<ethnicity>Huanakos</ethnicity>
+	<melee>8</melee>
+	<range>2</range>
+	<armor>4</armor>
+	<endurance>6</endurance>
+	<speed>2</speed>
+	<alignment>0</alignment>
+	<texture>canard</texture>
+	<l12n key='description'>
+		<english></english>
+		<french></french>
+	</l12n>
 </unit>
 <unit>
-  <id>PerIminhtp</id>
-  <name>
-    <english>Iminhtp</english>
-    <french>Iminhtp</french>
-  </name>
-  <ethnicity>Peraa</ethnicity>
-  <melee>8</melee>
-  <range>2</range>
-  <armor>4</armor>
-  <endurance>6</endurance>
-  <speed>2</speed>
-  <alignment>0</alignment>
-  <texture>canard</texture>
-  <description>
-    <english></english>
-    <french></french>
-  </description>
+	<id>Anemru_LifePriestF</id>
+	<l12n key='name'>
+		<english>Anemru</english>
+		<french>Anemru</french>
+	</l12n>
+	<ethnicity>Huanakos</ethnicity>
+	<melee>8</melee>
+	<range>2</range>
+	<armor>4</armor>
+	<endurance>6</endurance>
+	<speed>2</speed>
+	<alignment>0</alignment>
+	<texture>canard</texture>
+	<l12n key='description'>
+		<english></english>
+		<french></french>
+	</l12n>
 </unit>
 <unit>
-  <id>Quohad_LifePriestM</id>
-  <name>
-    <english>Quohad</english>
-    <french>Quohad</french>
-  </name>
-  <ethnicity>Huanakos</ethnicity>
-  <melee>8</melee>
-  <range>2</range>
-  <armor>4</armor>
-  <endurance>6</endurance>
-  <speed>2</speed>
-  <alignment>0</alignment>
-  <texture>canard</texture>
-  <description>
-    <english></english>
-    <french></french>
-  </description>
+	<id>Xospur_DeathPriestF</id>
+	<l12n key='name'>
+		<english>Xospur</english>
+		<french>Xospur</french>
+	</l12n>
+	<ethnicity>Huanakos</ethnicity>
+	<melee>8</melee>
+	<range>2</range>
+	<armor>4</armor>
+	<endurance>6</endurance>
+	<speed>2</speed>
+	<alignment>0</alignment>
+	<texture>canard</texture>
+	<l12n key='description'>
+		<english></english>
+		<french></french>
+	</l12n>
 </unit>
 <unit>
-  <id>Xonahpun_DeathPriestM</id>
-  <name>
-    <english>Xonahpun</english>
-    <french>Xonahpun</french>
-  </name>
-  <ethnicity>Huanakos</ethnicity>
-  <melee>8</melee>
-  <range>2</range>
-  <armor>4</armor>
-  <endurance>6</endurance>
-  <speed>2</speed>
-  <alignment>0</alignment>
-  <texture>canard</texture>
-  <description>
-    <english></english>
-    <french></french>
-  </description>
+	<id>Rostam</id>
+	<l12n key='name'>
+		<english>Rostam</english>
+		<french>Rostam</french>
+	</l12n>
+	<ethnicity>Hakhamanes</ethnicity>
+	<melee>8</melee>
+	<range>2</range>
+	<armor>4</armor>
+	<endurance>6</endurance>
+	<speed>2</speed>
+	<alignment>0</alignment>
+	<texture>canard</texture>
+	<l12n key='description'>
+		<english></english>
+		<french></french>
+	</l12n>
 </unit>
 <unit>
-  <id>Anemru_LifePriestF</id>
-  <name>
-    <english>Anemru</english>
-    <french>Anemru</french>
-  </name>
-  <ethnicity>Huanakos</ethnicity>
-  <melee>8</melee>
-  <range>2</range>
-  <armor>4</armor>
-  <endurance>6</endurance>
-  <speed>2</speed>
-  <alignment>0</alignment>
-  <texture>canard</texture>
-  <description>
-    <english></english>
-    <french></french>
-  </description>
+	<id>Gircus</id>
+	<l12n key='name'>
+		<english>Gircus</english>
+		<french>Gircus</french>
+	</l12n>
+	<ethnicity>Hakhamanes</ethnicity>
+	<melee>8</melee>
+	<range>2</range>
+	<armor>4</armor>
+	<endurance>6</endurance>
+	<speed>2</speed>
+	<alignment>0</alignment>
+	<texture>canard</texture>
+	<l12n key='description'>
+		<english></english>
+		<french></french>
+	</l12n>
 </unit>
 <unit>
-  <id>Xospur_DeathPriestF</id>
-  <name>
-    <english>Xospur</english>
-    <french>Xospur</french>
-  </name>
-  <ethnicity>Huanakos</ethnicity>
-  <melee>8</melee>
-  <range>2</range>
-  <armor>4</armor>
-  <endurance>6</endurance>
-  <speed>2</speed>
-  <alignment>0</alignment>
-  <texture>canard</texture>
-  <description>
-    <english></english>
-    <french></french>
-  </description>
+	<id>Heblidoeh</id>
+	<l12n key='name'>
+		<english>Heblidoeh</english>
+		<french>Heblidoeh</french>
+	</l12n>
+	<ethnicity>Hakhamanes</ethnicity>
+	<melee>8</melee>
+	<range>2</range>
+	<armor>4</armor>
+	<endurance>6</endurance>
+	<speed>2</speed>
+	<alignment>0</alignment>
+	<texture>canard</texture>
+	<l12n key='description'>
+		<english></english>
+		<french></french>
+	</l12n>
 </unit>
 <unit>
-  <id>Rostam</id>
-  <name>
-    <english>Rostam</english>
-    <french>Rostam</french>
-  </name>
-  <ethnicity>Hakhamanes</ethnicity>
-  <melee>8</melee>
-  <range>2</range>
-  <armor>4</armor>
-  <endurance>6</endurance>
-  <speed>2</speed>
-  <alignment>0</alignment>
-  <texture>canard</texture>
-  <description>
-    <english></english>
-    <french></french>
-  </description>
+	<id>Haheran</id>
+	<l12n key='name'>
+		<english>Haheran</english>
+		<french>Haheran</french>
+	</l12n>
+	<ethnicity>Hakhamanes</ethnicity>
+	<melee>8</melee>
+	<range>2</range>
+	<armor>4</armor>
+	<endurance>6</endurance>
+	<speed>2</speed>
+	<alignment>0</alignment>
+	<texture>canard</texture>
+	<l12n key='description'>
+		<english></english>
+		<french></french>
+	</l12n>
 </unit>
 <unit>
-  <id>Gircus</id>
-  <name>
-    <english>Gircus</english>
-    <french>Gircus</french>
-  </name>
-  <ethnicity>Hakhamanes</ethnicity>
-  <melee>8</melee>
-  <range>2</range>
-  <armor>4</armor>
-  <endurance>6</endurance>
-  <speed>2</speed>
-  <alignment>0</alignment>
-  <texture>canard</texture>
-  <description>
-    <english></english>
-    <french></french>
-  </description>
+	<id>Odugavvis</id>
+	<l12n key='name'>
+		<english>Odugavvis</english>
+		<french>Odugavvis</french>
+	</l12n>
+	<ethnicity>Mawohka</ethnicity>
+	<melee>8</melee>
+	<range>2</range>
+	<armor>4</armor>
+	<endurance>6</endurance>
+	<speed>2</speed>
+	<alignment>0</alignment>
+	<texture>canard</texture>
+	<l12n key='description'>
+		<english></english>
+		<french></french>
+	</l12n>
 </unit>
 <unit>
-  <id>Heblidoeh</id>
-  <name>
-    <english>Heblidoeh</english>
-    <french>Heblidoeh</french>
-  </name>
-  <ethnicity>Hakhamanes</ethnicity>
-  <melee>8</melee>
-  <range>2</range>
-  <armor>4</armor>
-  <endurance>6</endurance>
-  <speed>2</speed>
-  <alignment>0</alignment>
-  <texture>canard</texture>
-  <description>
-    <english></english>
-    <french></french>
-  </description>
+	<id>Raadawk</id>
+	<l12n key='name'>
+		<english>Raadawk</english>
+		<french>Raadawk</french>
+	</l12n>
+	<ethnicity>Mawohka</ethnicity>
+	<melee>8</melee>
+	<range>2</range>
+	<armor>4</armor>
+	<endurance>6</endurance>
+	<speed>2</speed>
+	<alignment>0</alignment>
+	<texture>canard</texture>
+	<l12n key='description'>
+		<english></english>
+		<french></french>
+	</l12n>
 </unit>
 <unit>
-  <id>Haheran</id>
-  <name>
-    <english>Haheran</english>
-    <french>Haheran</french>
-  </name>
-  <ethnicity>Hakhamanes</ethnicity>
-  <melee>8</melee>
-  <range>2</range>
-  <armor>4</armor>
-  <endurance>6</endurance>
-  <speed>2</speed>
-  <alignment>0</alignment>
-  <texture>canard</texture>
-  <description>
-    <english></english>
-    <french></french>
-  </description>
+	<id>Nukilah</id>
+	<l12n key='name'>
+		<english>Nukilah</english>
+		<french>Nukilah</french>
+	</l12n>
+	<ethnicity>Mawohka</ethnicity>
+	<melee>8</melee>
+	<range>2</range>
+	<armor>4</armor>
+	<endurance>6</endurance>
+	<speed>2</speed>
+	<alignment>0</alignment>
+	<texture>canard</texture>
+	<l12n key='description'>
+		<english></english>
+		<french></french>
+	</l12n>
 </unit>
 <unit>
-  <id>Odugavvis</id>
-  <name>
-    <english>Odugavvis</english>
-    <french>Odugavvis</french>
-  </name>
-  <ethnicity>Mawohka</ethnicity>
-  <melee>8</melee>
-  <range>2</range>
-  <armor>4</armor>
-  <endurance>6</endurance>
-  <speed>2</speed>
-  <alignment>0</alignment>
-  <texture>canard</texture>
-  <description>
-    <english></english>
-    <french></french>
-  </description>
+	<id>Atanonak</id>
+	<l12n key='name'>
+		<english>Atanonak</english>
+		<french>Atanonak</french>
+	</l12n>
+	<ethnicity>Mawohka</ethnicity>
+	<melee>8</melee>
+	<range>2</range>
+	<armor>4</armor>
+	<endurance>6</endurance>
+	<speed>2</speed>
+	<alignment>0</alignment>
+	<texture>canard</texture>
+	<l12n key='description'>
+		<english></english>
+		<french></french>
+	</l12n>
 </unit>
 <unit>
-  <id>Raadawk</id>
-  <name>
-    <english>Raadawk</english>
-    <french>Raadawk</french>
-  </name>
-  <ethnicity>Mawohka</ethnicity>
-  <melee>8</melee>
-  <range>2</range>
-  <armor>4</armor>
-  <endurance>6</endurance>
-  <speed>2</speed>
-  <alignment>0</alignment>
-  <texture>canard</texture>
-  <description>
-    <english></english>
-    <french></french>
-  </description>
+	<id>KillingSprites</id>
+	<l12n key='name'>
+		<english>Killing sprites</english>
+		<french>Fées tueuses</french>
+	</l12n>
+	<ethnicity></ethnicity>
+	<melee>1</melee>
+	<range>1</range>
+	<armor>0</armor>
+	<endurance>1</endurance>
+	<speed>5</speed>
+	<alignment>1</alignment>
+	<skill luafile='Flying' />
+	<skill luafile='SpriteBlast' />
+	<texture>killingsprites</texture>
+	<l12n key='description'>
+		<english>The killing sprites are rather weak but fast, flying and range-attacking creature.</english>
+		<french>Les fées tueuses sont des créatures assez faibles mais rapides, volantes et capables d'attaquer à distance.</french>
+	</l12n>
 </unit>
 <unit>
-  <id>Nukilah</id>
-  <name>
-    <english>Nukilah</english>
-    <french>Nukilah</french>
-  </name>
-  <ethnicity>Mawohka</ethnicity>
-  <melee>8</melee>
-  <range>2</range>
-  <armor>4</armor>
-  <endurance>6</endurance>
-  <speed>2</speed>
-  <alignment>0</alignment>
-  <texture>canard</texture>
-  <description>
-    <english></english>
-    <french></french>
-  </description>
+	<id>HealingSprites</id>
+	<l12n key='name'>
+		<english>Healing sprites</english>
+		<french>Fées guérisseuses</french>
+	</l12n>
+	<ethnicity></ethnicity>
+	<melee>0</melee>
+	<range>0</range>
+	<armor>0</armor>
+	<endurance>1</endurance>
+	<speed>5</speed>
+	<alignment>1</alignment>
+	<skill luafile='Flying' />
+	<skill luafile='Healing' parameters='2' />
+	<texture>healingsprites</texture>
+	<l12n key='description'>
+		<english>The healing sprites are rather weak but fast, flying and useful healers.</english>
+		<french>Les fées guérisseuses sont des créatures assez faibles mais rapides, volantes et efficaces en soins.</french>
+	</l12n>
 </unit>
 <unit>
-  <id>Atanonak</id>
-  <name>
-    <english>Atanonak</english>
-    <french>Atanonak</french>
-  </name>
-  <ethnicity>Mawohka</ethnicity>
-  <melee>8</melee>
-  <range>2</range>
-  <armor>4</armor>
-  <endurance>6</endurance>
-  <speed>2</speed>
-  <alignment>0</alignment>
-  <texture>canard</texture>
-  <description>
-    <english></english>
-    <french></french>
-  </description>
+	<id>WarBears</id>
+	<l12n key='name'>
+		<english>War bears</english>
+		<french>Ours de guerre</french>
+	</l12n>
+	<ethnicity></ethnicity>
+	<melee>3</melee>
+	<range>0</range>
+	<armor>1</armor>
+	<endurance>4</endurance>
+	<speed>2</speed>
+	<alignment>1</alignment>
+	<texture>warbears</texture>
+	<l12n key='description'>
+		<english>War bears are simple but robust, effective fighting creatures.</english>
+		<french>Les ours de guerre sont des créatures combattantes simples mais robustes et efficaces.</french>
+	</l12n>
 </unit>
 <unit>
-  <id>KillingSprites</id>
-  <name>
-    <english>Killing sprites</english>
-    <french>Fées tueuses</french>
-  </name>
-  <ethnicity></ethnicity>
-  <melee>1</melee>
-  <range>1</range>
-  <armor>0</armor>
-  <endurance>1</endurance>
-  <speed>5</speed>
-  <alignment>1</alignment>
-  <skill luafile='Flying' />
-  <skill luafile='SpriteBlast' />
-  <texture>killingsprites</texture>
-  <description>
-    <english>The killing sprites are rather weak but fast, flying and range-attacking creature.</english>
-    <french>Les fées tueuses sont des créatures assez faibles mais rapides, volantes et capables d'attaquer à distance.</french>
-  </description>
+	<id>GreatWyrm</id>
+	<l12n key='name'>
+		<english>Great wyrm</english>
+		<french>Grande guivre</french>
+	</l12n>
+	<ethnicity></ethnicity>
+	<melee>9</melee>
+	<range>0</range>
+	<armor>0</armor>
+	<endurance>11</endurance>
+	<speed>10</speed>
+	<alignment>1</alignment>
+	<texture>greatwyrm</texture>
+	<l12n key='description'>
+		<english>The great wyrm is one of the strongest creature ever. Ultra fast and deadly.</english>
+		<french>La grande guivre est l'une des plus puissantes créatures existantes. Ultra rapide et mortelle.</french>
+	</l12n>
 </unit>
 <unit>
-  <id>HealingSprites</id>
-  <name>
-    <english>Healing sprites</english>
-    <french>Fées guérisseuses</french>
-  </name>
-  <ethnicity></ethnicity>
-  <melee>0</melee>
-  <range>0</range>
-  <armor>0</armor>
-  <endurance>1</endurance>
-  <speed>5</speed>
-  <alignment>1</alignment>
-  <skill luafile='Flying' />
-  <skill luafile='Healing' />
-  <texture>healingsprites</texture>
-  <description>
-    <english>The healing sprites are rather weak but fast, flying and useful healers.</english>
-    <french>Les fées guérisseuses sont des créatures assez faibles mais rapides, volantes et efficaces en soins.</french>
-  </description>
+	<id>HellHounds</id>
+	<l12n key='name'>
+		<english>Hell hounds</english>
+		<french>Chiens des enfers</french>
+	</l12n>
+	<ethnicity></ethnicity>
+	<melee>4</melee>
+	<range>0</range>
+	<armor>0</armor>
+	<endurance>3</endurance>
+	<speed>3</speed>
+	<alignment>8</alignment>
+	<skill luafile='FireBreathing' />
+	<texture>hellhounds</texture>
+	<l12n key='description'>
+		<english>Hell hounds are aggressive and dangerous creature with fire breathing.</english>
+		<french>Les chiens des enfers sont des créatures agressives et dangereuses, avec souffle de feu.</french>
+	</l12n>
 </unit>
 <unit>
-  <id>WarBears</id>
-  <name>
-    <english>War bears</english>
-    <french>Ours de guerre</french>
-  </name>
-  <ethnicity></ethnicity>
-  <melee>3</melee>
-  <range>0</range>
-  <armor>1</armor>
-  <endurance>4</endurance>
-  <speed>2</speed>
-  <alignment>1</alignment>
-  <texture>warbears</texture>
-  <description>
-    <english>War bears are simple but robust, effective fighting creatures.</english>
-    <french>Les ours de guerre sont des créatures combattantes simples mais robustes et efficaces.</french>
-  </description>
+	<id>RagingSpirit</id>
+	<l12n key='name'>
+		<english>Raging spirit</english>
+		<french>Esprit enragé</french>
+	</l12n>
+	<ethnicity></ethnicity>
+	<melee>4</melee>
+	<range>0</range>
+	<armor>0</armor>
+	<endurance>4</endurance>
+	<speed>4</speed>
+	<skill luafile='Flying' />
+	<skill luafile='Berserker' />
+	<alignment>8</alignment>
+	<texture>ragingspirit</texture>
+	<l12n key='description'>
+		<english>Powerful flying creature. For each hit point lost, it gain 1 melee.</english>
+		<french>Puissante créature volante. Pour chaque point de vie perdu, il gagne 1 en mêlée.</french>
+	</l12n>
 </unit>
 <unit>
-  <id>GreatWyrm</id>
-  <name>
-    <english>Great wyrm</english>
-    <french>Grande guivre</french>
-  </name>
-  <ethnicity></ethnicity>
-  <melee>9</melee>
-  <range>0</range>
-  <armor>0</armor>
-  <endurance>11</endurance>
-  <speed>10</speed>
-  <alignment>1</alignment>
-  <texture>greatwyrm</texture>
-  <description>
-    <english>The great wyrm is one of the strongest creature ever. Ultra fast and deadly.</english>
-    <french>La grande guivre est l'une des plus puissantes créatures existantes. Ultra rapide et mortelle.</french>
-  </description>
+	<id>Skeleton</id>
+	<l12n key='name'>
+		<english>Skeletons</english>
+		<french>Squelettes</french>
+	</l12n>
+	<ethnicity></ethnicity>
+	<melee>2</melee>
+	<range>0</range>
+	<armor>0</armor>
+	<endurance>1</endurance>
+	<speed>3</speed>
+	<alignment>4</alignment>
+	<texture>skeleton</texture>
+	<l12n key='description'>
+		<english>Skeleton is a basic, weak death creature.</english>
+		<french>Le squelette est une créature basique, assez faible, de la mort.</french>
+	</l12n>
 </unit>
 <unit>
-  <id>HellHounds</id>
-  <name>
-    <english>Hell hounds</english>
-    <french>Chiens des enfers</french>
-  </name>
-  <ethnicity></ethnicity>
-  <melee>4</melee>
-  <range>0</range>
-  <armor>0</armor>
-  <endurance>3</endurance>
-  <speed>3</speed>
-  <alignment>8</alignment>
-  <skill luafile='FireBreathing' />
-  <texture>hellhounds</texture>
-  <description>
-    <english>Hell hounds are aggressive and dangerous creature with fire breathing.</english>
-    <french>Les chiens des enfers sont des créatures agressives et dangereuses, avec souffle de feu.</french>
-  </description>
+	<id>Ghoul</id>
+	<l12n key='name'>
+		<english>Ghoul</english>
+		<french>Goule</french>
+	</l12n>
+	<ethnicity></ethnicity>
+	<melee>3</melee>
+	<range>0</range>
+	<armor>0</armor>
+	<endurance>3</endurance>
+	<speed>2</speed>
+	<alignment>4</alignment>
+	<texture>ghoul</texture>
+	<l12n key='description'>
+		<english></english>
+		<french></french>
+	</l12n>
 </unit>
 <unit>
-  <id>RagingSpirit</id>
-  <name>
-    <english>Raging spirit</english>
-    <french>Esprit enragé</french>
-  </name>
-  <ethnicity></ethnicity>
-  <melee>4</melee>
-  <range>0</range>
-  <armor>0</armor>
-  <endurance>4</endurance>
-  <speed>4</speed>
-  <skill luafile='Flying' />
-  <skill luafile='Berserker' />
-  <alignment>8</alignment>
-  <texture>ragingspirit</texture>
-  <description>
-    <english>Powerful flying creature. For each hit point lost, it gain 1 melee.</english>
-    <french>Puissante créature volante. Pour chaque point de vie perdu, il gagne 1 en mêlée.</french>
-  </description>
+	<id>Crusader</id>
+	<l12n key='name'>
+		<english>Crusader</english>
+		<french>Croisé</french>
+	</l12n>
+	<ethnicity></ethnicity>
+	<melee>2</melee>
+	<range>0</range>
+	<armor>1</armor>
+	<endurance>3</endurance>
+	<speed>3</speed>
+	<alignment>2</alignment>
+	<skill luafile='Piety' />
+	<texture>crusader</texture>
+	<l12n key='description'>
+		<english>The crusader is a bloodroot brute thinking to be invested with a divine mission.</english>
+		<french>Le croisé est une brute sanguinaire pensant être investi d'une mission divine.</french>
+	</l12n>
 </unit>
 <unit>
-  <id>Dark_Maggot</id>
-  <name>
-    <english>Dark maggot</english>
-    <french>Asticot des ténèbres</french>
-  </name>
-  <ethnicity></ethnicity>
-  <melee>1</melee>
-  <range>0</range>
-  <armor>0</armor>
-  <endurance>1</endurance>
-  <speed>1</speed>
-  <alignment>4</alignment>
-  <texture>asticot</texture>
-  <description>
-    <english></english>
-    <french></french>
-  </description>
+	<id>JusticeChampion</id>
+	<l12n key='name'>
+		<english>Justice champion</english>
+		<french>Champion justicier</french>
+	</l12n>
+	<ethnicity></ethnicity>
+	<melee>4</melee>
+	<range>1</range>
+	<armor>2</armor>
+	<endurance>3</endurance>
+	<speed>3</speed>
+	<alignment>2</alignment>
+	<skill luafile='Piety' />
+	<texture>justicechampion</texture>
+	<l12n key='description'>
+		<english>.</english>
+		<french>.</french>
+	</l12n>
 </unit>

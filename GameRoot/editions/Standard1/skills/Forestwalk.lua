@@ -1,4 +1,4 @@
-icon = "ane"
+icon = "forestwalk"
 
 function getName()
 	if language == "french" then

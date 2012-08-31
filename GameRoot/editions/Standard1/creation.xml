@@ -3,28 +3,28 @@
   <skill luafile='ManaProductor' parameters='0 1 0 0' cost=5 />
   <skill luafile='ManaProductor' parameters='0 0 1 0' cost=5 />
   <skill luafile='ManaProductor' parameters='0 0 0 1' cost=5 />
-  <skill luafile='EPODealer' cost=5 />
+  <skill luafile='Confuse' cost=5 />
   <skill luafile='FirstStrike' cost=8 />
   <skill luafile='MagicCircle' cost=3 />
   <ethnicity name='Galates' cost=3>
-	  <image name='elephant' />
-	  <image name='chien' />
+	  <image name='galateshahmah1' />
+	  <image name='galateshahmah2' />
   </ethnicity>
   <ethnicity name='Peraa' cost=3>
-	  <image name='gimp' />
-	  <image name='chien' />
+	  <image name='peraashahmah1' />
+	  <image name='peraashahmah2' />
   </ethnicity>
   <ethnicity name='Huanakos' cost=3>
-	  <image name='fee' />
-	  <image name='gimp' />
-	  <image name='chien' />
+	  <image name='huanakosshahmah1' />
+	  <image name='huanakosshahmah2' />
+	  <image name='huanakosshahmah3' />
   </ethnicity>
   <ethnicity name='Hakhamanes' cost=3>
-	  <image name='elephant' />
-	  <image name='fee' />
+	  <image name='hakhamaneshahmah1' />
+	  <image name='hakhamaneshahmah2' />
   </ethnicity>
   <ethnicity name='Mawohka' cost=3>
-	  <image name='fee' />
-	  <image name='gimp' />
+	  <image name='mawokhashahmah1' />
+	  <image name='mawokhashahmah2' />
   </ethnicity>
 </shahmah_creation>

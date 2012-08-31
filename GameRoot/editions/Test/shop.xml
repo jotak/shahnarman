@@ -1,0 +1,42 @@
+<item type='shahmah' id='General_Kroupyon'>
+  <cost>4</cost>
+</item>
+<item type='shahmah' id='Archmage_Soupalognon'>
+  <cost>7</cost>
+</item>
+<item type='shahmah' id='Dark_Maggot_Master'>
+  <cost>7</cost>
+</item>
+<item type='pack'>
+  <l12n key='name'>
+    <english>Test pack</english>
+    <french>Paquet test</french>
+  </l12n>
+  <texture>renard</texture>
+  <l12n key='description'>
+    <english>60 spells from the test edition.</english>
+    <french>60 sorts de l'édition de test.</french>
+  </l12n>
+  <cost>60</cost>
+  <content>
+    <spells quantity='60' mode='random' />
+  </content>
+</item>
+<item type='pack'>
+  <l12n key='name'>
+    <english>Test small pack</english>
+    <french>Petit paquet test</french>
+  </l12n>
+  <texture>renard</texture>
+  <l12n key='description'>
+    <english>20 spells from the test edition.</english>
+    <french>20 sorts de l'édition de test.</french>
+  </l12n>
+  <cost>30</cost>
+  <content>
+    <spells quantity='20' mode='random' />
+  </content>
+</item>
+<item type='artifact' id='Dwarven_axe'>
+  <cost>2</cost>
+</item>

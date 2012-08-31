@@ -1,5 +1,10 @@
 #include "AISolver.h"
 #include "Server.h"
+#include "TurnSolver.h"
+#include "SpellsSolver.h"
+#include "../Data/DataFactory.h"
+#include "../Players/Player.h"
+#include "../Players/AISpell.h"
 #include "../Gameboard/Unit.h"
 #include "../Gameboard/Town.h"
 #include "../Gameboard/MapTile.h"
@@ -12,6 +17,7 @@
 AISolver::AISolver(Server * pServer)
 {
   m_pServer = pServer;
+  m_pLuaSolver = new AILuaSolver(pServer);
 }
 
 // -----------------------------------------------------------------
@@ -20,6 +26,19 @@ AISolver::AISolver(Server * pServer)
 // -----------------------------------------------------------------
 AISolver::~AISolver()
 {
+  delete m_pLuaSolver;
+}
+
+// -----------------------------------------------------------------
+// Name : resolveAI
+// -----------------------------------------------------------------
+void AISolver::resolveAI(Player * pPlayer)
+{
+  // Do spells
+  m_pLuaSolver->resolveAISpells(pPlayer);
+  // Do units orders
+  // Finished
+  pPlayer->setState(finished);
 }
 
 // -----------------------------------------------------------------
@@ -155,4 +174,80 @@ int AISolver::getOpponentInterest(Unit * pUnit, Unit * pOpponent, bool * bRange)
   if (bRange != NULL)
     *bRange = (iRangeInterest > iMeleeInterest);
   return max(iRangeInterest, iMeleeInterest);
+}
+
+// -----------------------------------------------------------------
+// Name : evaluateUnit
+// -----------------------------------------------------------------
+float AISolver::evaluateUnit(CoordsMap mapPos, const char * sName, u8 uPlayer)
+{
+  Unit * pUnit = m_pServer->getSolver()->getSpellsSolver()->onAddUnit(mapPos, sName, uPlayer, true);
+  if (pUnit == NULL)
+    return 0;
+  float fInterest = evaluateUnit(pUnit);
+  delete pUnit;
+  return fInterest;
+}
+
+// -----------------------------------------------------------------
+// Name : evaluateUnit
+// -----------------------------------------------------------------
+float AISolver::evaluateUnit(Unit * pUnit)
+{
+  float fInterest = 0.0f;
+  fInterest += pUnit->getValue(STRING_MELEE) * AI_INTEREST_MELEE;
+  fInterest += pUnit->getValue(STRING_RANGE) * AI_INTEREST_RANGE;
+  fInterest += pUnit->getValue(STRING_ARMOR) * AI_INTEREST_ARMOR;
+  fInterest += pUnit->getValue(STRING_ENDURANCE) * AI_INTEREST_ENDURANCE;
+  fInterest += pUnit->getValue(STRING_SPEED) * AI_INTEREST_SPEED;
+  fInterest += pUnit->getValue(STRING_LIFE) * AI_INTEREST_LIFE;
+  fInterest += pUnit->callEffectHandler(L"getAIInterest", L"", NULL, HANDLER_RESULT_TYPE_ADD);
+  return fInterest;
+}
+
+// -----------------------------------------------------------------
+// Name : evaluateBattleModifications
+//  Appelée par les fonctions d'interface LUA telles que "setAttackerLife" en mode simulation
+// -----------------------------------------------------------------
+float AISolver::evaluateBattleModifications(int * pNewAttackLife, int * pNewDefendLife, int * pNewAttackArmor, int * pNewDefendArmor, int * pNewAttackDamages, int * pNewDefendDamages)
+{
+  Unit * pAttacker = m_pServer->getSolver()->getAttacker();
+  Unit * pDefender = m_pServer->getSolver()->getDefender();
+
+  if (pAttacker == NULL || pDefender == NULL)
+    return 0;
+
+  int newAttackLife = (pNewAttackLife == NULL) ? m_pServer->getSolver()->m_iAttackerLife : *pNewAttackLife;
+  int newDefendLife = (pNewDefendLife == NULL) ? m_pServer->getSolver()->m_iDefenderLife : *pNewDefendLife;
+  int newAttackArmor = (pNewAttackArmor == NULL) ? m_pServer->getSolver()->m_iAttackerArmor : *pNewAttackArmor;
+  int newDefendArmor = (pNewDefendArmor == NULL) ? m_pServer->getSolver()->m_iDefenderArmor : *pNewDefendArmor;
+  int newAttackDamages = (pNewAttackDamages == NULL) ? m_pServer->getSolver()->m_iAttackerDamages : *pNewAttackDamages;
+  int newDefendDamages = (pNewDefendDamages == NULL) ? m_pServer->getSolver()->m_iDefenderDamages : *pNewDefendDamages;
+
+  int iOldAttackerLife = m_pServer->getSolver()->m_iAttackerLife;
+  int iOldDefenderLife = m_pServer->getSolver()->m_iDefenderLife;
+  int iFinalAttackerLife = newAttackLife - max(0, newDefendDamages - newAttackArmor);
+  int iFinalDefenderLife = newDefendLife - max(0, newAttackDamages - newDefendArmor);
+
+  float fInterest = 0.0f;
+  if (iFinalAttackerLife != iOldAttackerLife) {
+    // iSign positive for ennemies
+    int iSign = (pAttacker->getOwner() == getCurrentPlayer()->m_uPlayerId) ? -1 : 1;
+    // except if life is increased
+    iSign = (iFinalAttackerLife > iOldAttackerLife) ? -iSign : iSign;
+    float fUnitInterest = evaluateUnit(pAttacker);
+    fInterest += (iSign * fUnitInterest * (iFinalAttackerLife <= 0 ? 1.0f : 0.33f));
+    fInterest += (iSign * (iOldAttackerLife - iFinalAttackerLife) * AI_INTEREST_LIFE);
+  }
+  if (iFinalDefenderLife != iOldDefenderLife) {
+    // iSign positive for ennemies
+    int iSign = (pDefender->getOwner() == getCurrentPlayer()->m_uPlayerId) ? -1 : 1;
+    // except if life is increased
+    iSign = (iFinalDefenderLife > iOldDefenderLife) ? -iSign : iSign;
+    float fUnitInterest = evaluateUnit(pDefender);
+    fInterest += (iSign * fUnitInterest * (iFinalDefenderLife <= 0 ? 1.0f : 0.33f));
+    fInterest += (iSign * (iOldDefenderLife - iFinalDefenderLife) * AI_INTEREST_LIFE);
+  }
+
+  return fInterest;
 }

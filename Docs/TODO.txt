@@ -25,11 +25,30 @@
 - Show dialog when gain new level?
 - Caches : hide creatures on map
 - Find a way to securely, witout changing real data, simulate things for AI (battle, spells, etc.). Then implement "getOpponentInterest"
-- AI: LUA
 - Building : dispensaire
+- LUA : coder un truc genre "chooseBetween" : input = n*LANG_OPTS + callback(int i)
+- Manage temples as spectiles
+- Skills, parameters : plutot que de passer un string parameters au "init" : passer des attributs customs genre <skill luafile='ManaProductor'><parameter name='life' value='1'/></skill>
+- Sources de mana réparties sur la carte (+ ou - pour remplacer les temples... lesquels seront faisables en sort)
+- AI: LUA
+	* Capable de lancer certains sorts (comme boule de feu)
+	* Mais pour l'instant pas d'enchantement, pas de summon etc.
+	* Ne se déplace pas
+- Rétablir le "CAST_SPELL_ON_machin" => à setter lors du cast local + lors de la réception de l'event de résolution (en cours : voir retrieveTargetsNames)
+- LUA : onResolve params, 1er paramètre = objtype
+- (Note : gros refactoring effectué sur les #define LUATARGET mergés avec SELECT_TYPE, ainsi que factorisation des divers switch/case sur ces ids)
 |
 |----DONE----
 |
+- BUG pathfinder, infinite loop
+- Scroll buttons
+- déplacer vers une extensions "test" les LUA / XML provisoires
+- Debug IA neutral attaque en boucle => reglé?? (non reproduit)
+- Debug sorts : protection divine, champion justicier, mutation, volcan
+- Checksum réactivé
+- Spell Rationalism => influe sur le mana
+- Sorts mort : peste marche pas ; Necrophilie pas testée
+- Status unit: US_Removed => more or less same as US_Dead ; but nothing shown on map, and LUA effects should not do anything on them
 - Faire fonction LUA splitint
 - Mana : producteur de mana influe sur le mana max. Mettre en place au niveau player une jauge de mana (current*4, max*4)
 - Les unités ne régénèrent pas

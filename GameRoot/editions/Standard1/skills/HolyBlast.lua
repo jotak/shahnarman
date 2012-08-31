@@ -1,7 +1,7 @@
 childEffectsCount = 1
 childEffectsCost = {{1,0,0,0}}	-- 1 life
-childEffectsIcon = {"ane"}
-icon = "ane"
+childEffectsIcon = {"holyblast"}
+icon = "holyblast"
 
 function getName()
 	if language == "french" then

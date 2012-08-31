@@ -1,67 +1,218 @@
 <shahmah>
-  <id>General_Kroupyon</id>
-  <name>
-    <english>General Kroupyon</english>
-    <french>Général Kroupyon</french>
-  </name>
-  <ethnicity>Galates</ethnicity>
-  <melee>15</melee>
-  <range>10</range>
-  <armor>2</armor>
-  <endurance>3</endurance>
-  <speed>8</speed>
-  <alignment>8</alignment>
-  <texture>soldat2</texture>
-  <skill luafile='ManaProductor' parameters='5 5 5 5' />
-  <skill luafile='EPODealer' />
-  <skill luafile='FirstStrike' />
-  <skill luafile='MagicCircle' />
-  <skill luafile='FirstStrike' />
-  <skill luafile='MagicCircle' />
-  <description>
-    <english></english>
-    <french></french>
-  </description>
+	<id>Numevog</id>
+	<l12n key='name'>
+		<english>Numevog</english>
+		<french>Numevog</french>
+	</l12n>
+	<ethnicity>Galates</ethnicity>
+	<melee>6</melee>
+	<range>0</range>
+	<armor>1</armor>
+	<endurance>8</endurance>
+	<speed>3</speed>
+	<alignment>1</alignment>
+	<texture>numevog</texture>
+	<skill luafile='ManaProductor' parameters='1 0 0 0' />
+	<skill luafile='FriendOfBears' parameters='4' />
+	<l12n key='description'>
+		<english>Numevog is Neerdunag's son, the famous tribe lord who defended his people against the Hakhamanes armies years ago, and killed the Empreror Felgaam in single combat. Numevog get this legacy, being a formidable melee warrior, ready to take the torch. Moreover, a powerful animal link gives him the abilty to call for war bears on his side.</english>
+		<french>Numevog est le fils du défunt chef de tribu Neerdunag, qui jadis défendit son peuple face aux armées Hakhamanes et tua l'Empereur Felgaam en combat singulier. Numevog a hérité de son adresse au combat, s'affirmant comme un redoutable guerrier au corps à corps, prêt à reprendre le flambeau. Un lien animal puissant lui donne le pouvoir d'appeler des ours de guerre à son secours.</french>
+	</l12n>
 </shahmah>
 <shahmah>
-  <id>Archmage_Soupalognon</id>
-  <name>
-    <english>Archmage Soupalognon</english>
-    <french>Archimage Soupalognon</french>
-  </name>
-  <ethnicity>Huanakos</ethnicity>
-  <melee>4</melee>
-  <range>0</range>
-  <armor>2</armor>
-  <endurance>5</endurance>
-  <speed>2</speed>
-  <alignment>2</alignment>
-  <texture>soldat1</texture>
-  <skill luafile='ManaProductor' parameters='5 5 5 5' />
-  <skill luafile='DeadlyCharm' />
-  <description>
-    <english>The Archmage Soupalognon is the first cooking-mage.</english>
-    <french>L'Archimage Soupalognon est précurseur dans la magie culinaire.</french>
-  </description>
+	<id>Hankhaicea</id>
+	<l12n key='name'>
+		<english>Hankhaicea</english>
+		<french>Hankhaicé</french>
+	</l12n>
+	<ethnicity>Galates</ethnicity>
+	<melee>5</melee>
+	<range>2</range>
+	<armor>0</armor>
+	<endurance>5</endurance>
+	<speed>6</speed>
+	<alignment>1</alignment>
+	<texture>hankhaicea</texture>
+	<skill luafile='ManaProductor' parameters='1 0 0 0' />
+	<skill luafile='Forestwalk' />
+	<skill luafile='FirstStrike' />
+	<skill luafile='WolvesCommander' />
+	<l12n key='description'>
+		<english>Hankhaicé is a young Galate girl brought up by wolves since her village were looted and her parents killed during the last Galate tribal wars. Not much tough, she is a great fighter, fast and acurate and deadly at blade throwing.</english>
+		<french>Hankhaicé est une jeune Galate élevée par les loups, son village ayant été rasé et ses parents massacrés lors des guerres tribales Galates. Peu endurante, elle est cependant une redoutable combattante, rapide, précise et mortelle au lancé de lames.</french>
+	</l12n>
 </shahmah>
 <shahmah>
-  <id>Dark_Maggot_Master</id>
-  <name>
-    <english>Dark Maggot Master</english>
-    <french>Maître Asticot des ténèbres</french>
-  </name>
-  <ethnicity>Peraa</ethnicity>
-  <melee>4</melee>
-  <range>0</range>
-  <armor>2</armor>
-  <endurance>5</endurance>
-  <speed>5</speed>
-  <alignment>4</alignment>
-  <texture>soldat3</texture>
-  <skill luafile='ManaProductor' parameters='5 5 5 5' />
-  <skill luafile='SummonMaggot' />
-  <description>
-    <english>The Dark Maggot Master can summon living-dead maggots.</english>
-    <french>Le Maître Asticot des ténèbres est capable d'invoquer des asticots morts-vivants.</french>
-  </description>
+	<id>Cehigos</id>
+	<l12n key='name'>
+		<english>Cehigos</english>
+		<french>Cehigos</french>
+	</l12n>
+	<ethnicity>Galates</ethnicity>
+	<melee>8</melee>
+	<range>0</range>
+	<armor>1</armor>
+	<endurance>8</endurance>
+	<speed>2</speed>
+	<alignment>8</alignment>
+	<texture>cehigos</texture>
+	<skill luafile='ManaProductor' parameters='0 0 0 6' />
+	<tmp><skill luafile='ManaProductor' parameters='0 0 0 6' /></tmp>
+	<skill luafile='RuneOfCourage' />
+	<l12n key='description'>
+		<english></english>
+		<french>Elevé dans la plus pure tradition guerrière Galate, Cehigos...</french>
+	</l12n>
+</shahmah>
+<shahmah>
+	<id>Yuglow</id>
+	<l12n key='name'>
+		<english>Yuglow</english>
+		<french>Yuglow</french>
+	</l12n>
+	<ethnicity>Mawohka</ethnicity>
+	<melee>7</melee>
+	<range>0</range>
+	<armor>0</armor>
+	<endurance>9</endurance>
+	<speed>8</speed>
+	<alignment>8</alignment>
+	<texture>yuglow</texture>
+	<skill luafile='ManaProductor' parameters='0 0 0 1' />
+	<skill luafile='Flying' />
+	<l12n key='description'>
+		<english></english>
+		<french>Initialement simple éleveur de vouivres peu porté sur le combat, Yuglow s'est engagé dans la lutte contre les envahisseurs Huanakos et s'est révélé d'une aide indispensable pour mener des escarmouches et raids dévastateurs, et saper le moral des armées adverses.</french>
+	</l12n>
+</shahmah>
+<shahmah>
+	<id>Toyugtano</id>
+	<l12n key='name'>
+		<english>Toyugtano</english>
+		<french>Toyugtano</french>
+	</l12n>
+	<ethnicity>Mawohka</ethnicity>
+	<melee>1</melee>
+	<range>0</range>
+	<armor>0</armor>
+	<endurance>9</endurance>
+	<speed>2</speed>
+	<alignment>1</alignment>
+	<texture>toyugtano</texture>
+	<skill luafile='ManaProductor' parameters='3 0 0 2' />
+	<skill luafile='Confuse' />
+	<skill luafile='Healing' parameters='3' />
+	<skill luafile='ShamanDefender' />
+	<l12n key='description'>
+		<english></english>
+		<french>Toyugtano est un shaman.</french>
+	</l12n>
+</shahmah>
+<shahmah>
+	<id>Thektoa</id>
+	<l12n key='name'>
+		<english>Thektoa</english>
+		<french>Thektoa</french>
+	</l12n>
+	<ethnicity>Mawohka</ethnicity>
+	<melee>1</melee>
+	<range>4</range>
+	<armor>0</armor>
+	<endurance>8</endurance>
+	<speed>6</speed>
+	<alignment>1</alignment>
+	<texture>thektoa</texture>
+	<skill luafile='ManaProductor' parameters='2 0 0 0' />
+	<l12n key='description'>
+		<english></english>
+		<french>Thektoa est une cavalière.</french>
+	</l12n>
+</shahmah>
+<shahmah>
+	<id>Farhig</id>
+	<l12n key='name'>
+		<english>Farhig</english>
+		<french>Farhig</french>
+	</l12n>
+	<ethnicity>Hakhamanes</ethnicity>
+	<melee>5</melee>
+	<range>0</range>
+	<armor>0</armor>
+	<endurance>9</endurance>
+	<speed>2</speed>
+	<alignment>8</alignment>
+	<texture>farhig</texture>
+	<skill luafile='ManaProductor' parameters='0 0 0 4' />
+	<skill luafile='WordOfDestruction' />
+	<skill luafile='Mountainwalk' />
+	<l12n key='description'>
+		<english></english>
+		<french>Farhig est un ermite originaire de la province d'Hayanru, conquise depuis 3 siècles par les armées Hakhamanes. Adroit au maniement du bâton, il a surtout développé des facultés magique, pactisant avec les forces du Chaos, et maîtrise le Mot de Destruction.</french>
+	</l12n>
+</shahmah>
+<shahmah>
+	<id>Silhebrus</id>
+	<l12n key='name'>
+		<english>Silhebrus</english>
+		<french>Silhebrus</french>
+	</l12n>
+	<ethnicity>Hakhamanes</ethnicity>
+	<melee>3</melee>
+	<range>2</range>
+	<armor>1</armor>
+	<endurance>8</endurance>
+	<speed>3</speed>
+	<alignment>8</alignment>
+	<texture>silhebrus</texture>
+	<skill luafile='ManaProductor' parameters='0 0 0 1' />
+	<skill luafile='Agitator' />
+	<skill luafile='FireBomb' parameters='3 3' />
+	<l12n key='description'>
+		<english></english>
+		<french>Silhebrus mène un réseau de résistance à l'Empire hakhamane, il excèle dans la fabrication de bombes incendiaires artisanales et aide au soulèvement des villes ennemies.</french>
+	</l12n>
+</shahmah>
+<shahmah>
+	<id>Pukkeh</id>
+	<l12n key='name'>
+		<english>Pukkeh</english>
+		<french>Pukkeh</french>
+	</l12n>
+	<ethnicity>Hakhamanes</ethnicity>
+	<melee>1</melee>
+	<range>0</range>
+	<armor>2</armor>
+	<endurance>8</endurance>
+	<speed>3</speed>
+	<alignment>2</alignment>
+	<texture>pukkeh</texture>
+	<skill luafile='ManaProductor' parameters='0 5 0 0' />
+	<skill luafile='Charming' />
+	<skill luafile='Recruitment' />
+	<l12n key='description'>
+		<english></english>
+		<french>Fille d'un prince hakhamane, Pukkeh est versée dans les arts magiques qu'elle dédie à la loi. Elle commande un bataillon de fantassins l'armée Hakhamane, sa compétence en recrutement permet d'accélérer la formation de troupes.</french>
+	</l12n>
+</shahmah>
+<shahmah>
+	<id>Felgadril</id>
+	<l12n key='name'>
+		<english>Felgadril</english>
+		<french>Felgadril</french>
+	</l12n>
+	<ethnicity>Hakhamanes</ethnicity>
+	<melee>6</melee>
+	<range>0</range>
+	<armor>2</armor>
+	<endurance>8</endurance>
+	<speed>2</speed>
+	<alignment>2</alignment>
+	<texture>felgadril</texture>
+	<skill luafile='ManaProductor' parameters='1 0 0 0' />
+	<skill luafile='FirstStrike' />
+	<skill luafile='Recruitment' />
+	<l12n key='description'>
+		<english></english>
+		<french>Felgadril est un vétéran Hackamane, maître d'armes au service de l'Empereur, bretteur hors pair, sa compétence en recrutement permet d'accélérer la formation de troupes.</french>
+	</l12n>
 </shahmah>

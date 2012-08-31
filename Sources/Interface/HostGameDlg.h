@@ -12,11 +12,19 @@ class guiButton;
 class guiLabel;
 class guiPopup;
 class AvatarData;
+class AIData;
 class Profile;
 class MapReader;
 
 class HostGameDlg : public guiDocument
 {
+  enum PlayerType {
+    LocalPlayer,
+    AI,
+    LAN,
+    Closed
+  };
+
   class PlayerData : public BaseObject
   {
   public:
@@ -26,8 +34,10 @@ class HostGameDlg : public guiDocument
     guiButton * m_pColorBtn;
 //    guiButton * m_pReadyBtn;
 //    guiLabel * m_pReadyLbl;
+    PlayerType m_Type;
     Profile * m_pSelectedPlayer;
     AvatarData * m_pSelectedAvatar;
+    AIData * m_pSelectedAI;
     int m_iColor;
   };
 
@@ -44,10 +54,14 @@ public:
 
 private:
   void addPlayerRow();
-  void removePlayerRow(PlayerData * pData);
+  void onClose(PlayerData * pData);
+  void onOpenPlayer(wchar_t * sName, PlayerData * pData);
+  void onOpenAI(PlayerData * pData);
   void onOpenLAN(PlayerData * pData);
-  void onSelectPlayer(wchar_t * sName, PlayerData * pData);
   void onSelectAvatar(AvatarData * pAvatar, PlayerData * pData);
+  void onSelectAI(AIData * pAI, PlayerData * pData);
+  void releaseAvatar(PlayerData * pData);
+  void releaseAI(PlayerData * pData);
   void onSelectRow(PlayerData * pData);
   void onSelectMap(wchar_t * sMapId);
   bool checkIfAvatarAvailable(AvatarData * pAvatar, PlayerData * pExceptHere);
@@ -71,6 +85,8 @@ private:
   bool m_bIsLocalClient;
   F_RGBA m_AllColors[MAX_COLORS];
   float m_fStartGameTimer;
+  ObjectList * m_pAvailableAIList;
+  ObjectList * m_pSelectedAIList;
 };
 
 #endif

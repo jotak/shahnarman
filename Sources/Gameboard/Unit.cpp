@@ -292,6 +292,9 @@ int Unit::getTexture()
   return ((GeometryCylinder*)m_pGeometry)->getTexture();
 }
 
+#include "../GameRoot.h"
+#include "../LocalClient.h"
+#include "../Debug/DebugManager.h"
 // -----------------------------------------------------------------
 // Name : computePath
 // -----------------------------------------------------------------
@@ -308,8 +311,26 @@ bool Unit::computePath(CoordsMap mapPos)
   // Call pathfinder
   CoordsMap * path = new CoordsMap[m_pMap->getNumberOfTiles()];
   s16 idx = m_pMap->findPath(this, mapPos, &path);
-  if (idx < 0)
+  if (idx < 0) {
+    // Check infinite loop spy
+    if (idx == -99) {
+      extern GameRoot * g_pMainGameRoot;
+      g_pMainGameRoot->m_pLocalClient->getDebug()->notifyErrorMessage(L"SPY infinite loop in pathfinder!!!");
+    }
+    if (idx == -98) {
+      extern GameRoot * g_pMainGameRoot;
+      g_pMainGameRoot->m_pLocalClient->getDebug()->notifyErrorMessage(L"SPY infinite loop in pathfinder: open list overflow");
+    }
+    if (idx == -97) {
+      extern GameRoot * g_pMainGameRoot;
+      g_pMainGameRoot->m_pLocalClient->getDebug()->notifyErrorMessage(L"SPY infinite loop in pathfinder: closed list overflow");
+    }
+    if (idx == -96) {
+      extern GameRoot * g_pMainGameRoot;
+      g_pMainGameRoot->m_pLocalClient->getDebug()->notifyErrorMessage(L"SPY infinite loop in pathfinder: extract, parent not found in closed list");
+    }
     return false;
+  }
 
   // Store results in m_pAStarPath list
   for (int i = 0; i <= idx; i++)
@@ -672,7 +693,8 @@ void Unit::addSkill(Skill * pSkill)
   }
   m_pSkillsRef->addLast(pSkill);
   attachEffect(pSkill);
-  pSkill->addTarget(this, LUATARGET_UNIT);
+  pSkill->addTarget(this, SELECT_TYPE_UNIT);
+  pSkill->setCaster(this);
   pSkill->callLuaFunction(L"setAttachedUnit", 0, L"s", m_sIdentifiers);
 }
 

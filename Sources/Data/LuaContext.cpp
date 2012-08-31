@@ -185,25 +185,7 @@ void LuaContext::serializeTargets(NetworkData * pData)
   {
     long type = pLua->getTargets()->getCurrentType(0);
     pData->addLong(type);
-    LuaTargetable * pTarget = NULL;
-    switch (type)
-    {
-    case LUATARGET_PLAYER:
-      pTarget = (Player*)pObj;
-      break;
-    case LUATARGET_TILE:
-      pTarget = (MapTile*)pObj;
-      break;
-    case LUATARGET_TOWN:
-      pTarget = (Town*)pObj;
-      break;
-    case LUATARGET_TEMPLE:
-      pTarget = (Temple*)pObj;
-      break;
-    case LUATARGET_UNIT:
-      pTarget = (Unit*)pObj;
-      break;
-    }
+    LuaTargetable * pTarget = LuaTargetable::convertFromBaseObject(pObj, type);
     assert(pTarget != NULL);
     if (pTarget->getDisabledEffects()->goTo(0, pLua))
       pData->addLong(0);
@@ -233,24 +215,7 @@ bool LuaContext::deserializeTargets(NetworkData * pData, PlayerManagerAbstract *
     pTarget->attachEffect(pLua);
     if (!bEnabled)
       pTarget->disableEffect(pLua);
-    switch (type)
-    {
-    case LUATARGET_PLAYER:
-      pLua->addTarget((Player*)pTarget, type);
-      break;
-    case LUATARGET_TILE:
-      pLua->addTarget((MapTile*)pTarget, type);
-      break;
-    case LUATARGET_TOWN:
-      pLua->addTarget((Town*)pTarget, type);
-      break;
-    case LUATARGET_TEMPLE:
-      pLua->addTarget((Temple*)pTarget, type);
-      break;
-    case LUATARGET_UNIT:
-      pLua->addTarget((Unit*)pTarget, type);
-      break;
-    }
+    pLua->addTarget(pTarget->convertToBaseObject(type), type);
   }
   return true;
 }

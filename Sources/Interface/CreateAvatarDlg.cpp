@@ -23,7 +23,7 @@
 #define MELEE_COST        4
 #define RANGE_COST        6
 #define ARMOR_COST        7
-#define ENDURANCE_COST    3
+#define ENDURANCE_COST    2
 #define SPEED_COST        4
 #define GOLD_COST         1
 #define INITIAL_POINTS    60

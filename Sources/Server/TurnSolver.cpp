@@ -67,7 +67,7 @@ void TurnSolver::onInitFinished()
     pSpec->callLuaFunction(L"onCreate", 0, L"l", (long) pSpec->getInstanceId());
     pSpec = m_pServer->getMap()->getNextSpecialTile();
   }
-  resetDataForNextTurn();
+  resetDataForNextTurn(true);
   NetworkData data(NETWORKMSG_RESOLVE_PHASE_ENDS);
   data.addLong((long)m_uFirstResolutionListIdx);
   m_pServer->sendMessageToAllClients(&data);
@@ -127,19 +127,33 @@ void TurnSolver::Update(double delta)
   case RS_NotResolving:
     {
       bool bAllFinished = true;
-      Player * pPlayer1 = (Player*) m_pPlayersList->getFirst(0);
-      while (pPlayer1 != NULL)
+      Player * pPlayer = (Player*) m_pPlayersList->getFirst(0);
+      while (pPlayer != NULL)
       {
-        bAllFinished &= (pPlayer1->getState() == finished);
-        pPlayer1 = (Player*) m_pPlayersList->getNext(0);
+        bAllFinished &= ((pPlayer->getState() == finished) || (pPlayer->m_bIsAI));
+        pPlayer = (Player*) m_pPlayersList->getNext(0);
       }
       if (bAllFinished)
         nextPhase();
       break;
     }
   case RS_ResolveAI:
-    nextPhase();
-    break;
+    {
+      bool bAllFinished = true;
+      Player * pPlayer = (Player*) m_pPlayersList->getFirst(0);
+      while (pPlayer != NULL)
+      {
+        if (pPlayer->m_bIsAI && pPlayer->getState() != finished) {
+          m_pAISolver->resolveAI(pPlayer);
+          bAllFinished = false;
+          break;
+        }
+        pPlayer = (Player*) m_pPlayersList->getNext(0);
+      }
+      if (bAllFinished)
+        nextPhase();
+      break;
+    }
   case RS_ResolveNeutral:
     {
       m_pCurrentUnit = (Unit*) m_pNeutralPlayer->m_pUnits->getCurrent(0);
@@ -299,7 +313,7 @@ void TurnSolver::nextPhase(ResolveSpellsState oldstate)
   case RS_EndResolve:
     {
       // Resolution phase finished
-      resetDataForNextTurn();
+      resetDataForNextTurn(false);
       if (!m_pServer->isGameOver())
       {
         NetworkData data(NETWORKMSG_RESOLVE_PHASE_ENDS);
@@ -373,12 +387,12 @@ bool TurnSolver::findDefenders(MapTile * pTile, Unit * pAttacker, bool bRange, O
       pArgs[0] = &bAttacker;
       pArgs[1] = &iRange;
       pArgs[2] = pOther->getIdentifiers();
-      bool bOk = pAttacker->callEffectHandler(L"isBattleValid", L"iis", pArgs, HANDLER_RESULT_TYPE_BAND);
+      bool bOk = (pAttacker->callEffectHandler(L"isBattleValid", L"iis", pArgs, HANDLER_RESULT_TYPE_BAND) == 1);
       if (bOk)
       {
         bAttacker = 0;
         pArgs[2] = pAttacker->getIdentifiers();
-        bOk = pOther->callEffectHandler(L"isBattleValid", L"iis", pArgs, HANDLER_RESULT_TYPE_BAND);
+        bOk = (pOther->callEffectHandler(L"isBattleValid", L"iis", pArgs, HANDLER_RESULT_TYPE_BAND) == 1);
         if (bOk)
         {
           bFound = true;
@@ -453,11 +467,13 @@ bool TurnSolver::findPlayerBattles()
         {
           // Attack
           m_pDefendingUnit = m_pCurrentUnit->getAttackTarget();
-          assert(m_pDefendingUnit != NULL);
-          m_pAISolver->getOpponentInterest(m_pCurrentUnit, m_pDefendingUnit, &m_bIsRangeAttack);
-          allowCastSpells(false);
-          m_ResolveState = RS_ResolveSpells;
-          return true;
+          if (m_pDefendingUnit != NULL && m_pDefendingUnit->getStatus() == US_Normal) {
+            // Function is only called to know if it's range or melee attack
+            m_pAISolver->getOpponentInterest(m_pCurrentUnit, m_pDefendingUnit, &m_bIsRangeAttack);
+            allowCastSpells(false);
+            m_ResolveState = RS_ResolveSpells;
+            return true;
+          }
         }
         m_pCurrentUnit = (Unit*) m_pCurrentPlayer->m_pUnits->getNext(0);
       }
@@ -586,7 +602,7 @@ void TurnSolver::resolveUnitMove()
 void TurnSolver::resolveBattle()
 {
   // Units may have been killed by spells
-  if (m_pCurrentUnit->getStatus() != US_Dead && m_pDefendingUnit->getStatus() != US_Dead)
+  if (m_pCurrentUnit->getStatus() == US_Normal && m_pDefendingUnit->getStatus() == US_Normal)
   {
     m_bUnitHasAttacked = true;
     if (m_bIsRangeAttack)
@@ -726,7 +742,7 @@ void TurnSolver::drawPlayerSpells()
 // -----------------------------------------------------------------
 // Name : resetDataForNextTurn
 // -----------------------------------------------------------------
-void TurnSolver::resetDataForNextTurn()
+void TurnSolver::resetDataForNextTurn(bool bFirstTurn)
 {
   // Remove any dead unit
   NetworkData msgdead(NETWORKMSG_DEAD_UNITS);
@@ -736,7 +752,7 @@ void TurnSolver::resetDataForNextTurn()
   while (m_pCurrentPlayer != NULL)
   {
     // Check if avatar is dead
-    if (m_pCurrentPlayer->getAvatar() && m_pCurrentPlayer->getAvatar()->getStatus() == US_Dead)
+    if (m_pCurrentPlayer->getAvatar() && m_pCurrentPlayer->getAvatar()->getStatus() != US_Normal)
     {
       Player * pDead = m_pCurrentPlayer;
       m_pCurrentPlayer = getNextPlayerAndNeutral(0);
@@ -750,7 +766,7 @@ void TurnSolver::resetDataForNextTurn()
       Unit * pUnit = (Unit*) m_pCurrentPlayer->m_pUnits->getFirst(0);
       while (pUnit != NULL)
       {
-        if (pUnit->getStatus() == US_Dead)
+        if (pUnit->getStatus() != US_Normal)
         {
           bDataDead = true;
           // Remove any attached spell
@@ -789,7 +805,8 @@ void TurnSolver::resetDataForNextTurn()
       m_pCurrentUnit->enableAllEffects();
       m_pCurrentUnit = (Unit*) m_pCurrentPlayer->m_pUnits->getNext(0);
     }
-    m_pCurrentPlayer->m_ManaMax.reset();
+    m_pCurrentPlayer->setBaseMana(Mana());
+//    m_pCurrentPlayer->m_ManaMax.reset();
     m_pCurrentPlayer = getNextPlayerAndNeutral(0);
   }
   NetworkData msgreset(NETWORKMSG_ENABLE_ALL_EFFECTS);
@@ -797,19 +814,19 @@ void TurnSolver::resetDataForNextTurn()
 
   callNewTurnHandlers(0);
 
-  // Also take mana from temples under player's influence
-  Temple * pTemple = (Temple*) m_pServer->getMap()->getFirstTemple();
-  while (pTemple != NULL)
-  {
-    u8 uPlayer = m_pServer->getMap()->getTileAt(pTemple->getMapPos())->m_uInfluence;
-    if (uPlayer > 0)
-    {
-      Player * pPlayer = findPlayer(uPlayer);
-      if (pPlayer != NULL)
-        pPlayer->m_ManaMax.mana[pTemple->getValue(STRING_MANATYPE)] += pTemple->getValue(STRING_AMOUNT);
-    }
-    pTemple = (Temple*) m_pServer->getMap()->getNextTemple();
-  }
+  //// Also take mana from temples under player's influence
+  //Temple * pTemple = (Temple*) m_pServer->getMap()->getFirstTemple();
+  //while (pTemple != NULL)
+  //{
+  //  u8 uPlayer = m_pServer->getMap()->getTileAt(pTemple->getMapPos())->m_uInfluence;
+  //  if (uPlayer > 0)
+  //  {
+  //    Player * pPlayer = findPlayer(uPlayer);
+  //    //if (pPlayer != NULL)
+  //    //  pPlayer->m_ManaMax.mana[pTemple->getValue(STRING_MANATYPE)] += pTemple->getValue(STRING_AMOUNT);
+  //  }
+  //  pTemple = (Temple*) m_pServer->getMap()->getNextTemple();
+  //}
 
   // Regenerate mana (+1 point to type where (max-current) is highest)
   m_pCurrentPlayer = getFirstPlayerAndNeutral(0);
@@ -818,16 +835,19 @@ void TurnSolver::resetDataForNextTurn()
     int iColor = -1;
     int maxDiff = 0;
     for (int i = 0; i < 4; i++) {
-      int diff = m_pCurrentPlayer->m_ManaMax[i] - m_pCurrentPlayer->m_Mana[i];
-      if (diff < 0)
-        m_pCurrentPlayer->m_Mana.mana[i] = m_pCurrentPlayer->m_ManaMax[i];
-      else if (diff > maxDiff) {
+      if (bFirstTurn) {
+        // First turn => init mana to 0 (ie. spent mana to total mana)
+        m_pCurrentPlayer->m_SpentMana.mana[i] = m_pCurrentPlayer->getMana(i);
+      }
+      if (m_pCurrentPlayer->m_SpentMana[i] < 0)
+        m_pCurrentPlayer->m_SpentMana.mana[i] = 0;
+      else if (m_pCurrentPlayer->m_SpentMana[i] > maxDiff) {
         iColor = i;
-        maxDiff = diff;
+        maxDiff = m_pCurrentPlayer->m_SpentMana[i];
       }
     }
     if (iColor >= 0) {
-      m_pCurrentPlayer->m_Mana.mana[iColor]++;
+      m_pCurrentPlayer->m_SpentMana.mana[iColor]--;
     }
     m_pCurrentPlayer = getNextPlayerAndNeutral(0);
   }
@@ -968,7 +988,7 @@ void TurnSolver::checkAllUnitUpdates(bool bUnsetModified)
 // -----------------------------------------------------------------
 // Name : addUnitToPlayer
 // -----------------------------------------------------------------
-Unit * TurnSolver::addUnitToPlayer(wchar_t * sEdition, wchar_t * sUnitId, u8 uPlayerId, CoordsMap mapPos)
+Unit * TurnSolver::addUnitToPlayer(wchar_t * sEdition, wchar_t * sUnitId, u8 uPlayerId, CoordsMap mapPos, bool bSimulate)
 {
   UnitData * pData = m_pServer->getFactory()->getUnitData(sEdition, sUnitId);
   if (pData != NULL)
@@ -976,6 +996,10 @@ Unit * TurnSolver::addUnitToPlayer(wchar_t * sEdition, wchar_t * sUnitId, u8 uPl
     Unit * unit = new Unit(mapPos, m_pServer->getMap(), getGlobalSpellsPtr());
     Player * pPlayer = findPlayer(uPlayerId);
     assert(pPlayer != NULL);
+    if (bSimulate) {
+      unit->init(m_uUnitsCount+1, uPlayerId, pData, m_pServer->getDebug());
+      return unit;
+    }
     pPlayer->m_pUnits->addFirst(unit);
     unit->init(++m_uUnitsCount, uPlayerId, pData, m_pServer->getDebug());
     return unit;

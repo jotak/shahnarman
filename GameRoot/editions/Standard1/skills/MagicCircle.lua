@@ -1,7 +1,7 @@
 childEffectsCount = 1
 childEffectsCost = {{0,1,0,0}}
-childEffectsIcon = {"frozen_land"}
-icon = "frozen_land"
+childEffectsIcon = {"magiccircle"}
+icon = "magiccircle"
 isCumulative = 1
 
 function getName()

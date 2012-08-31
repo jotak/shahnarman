@@ -19,12 +19,6 @@ Pathfinder::Pathfinder(MapTile *** pMap, u16 mapXSize, u16 mapYSize)
 // -----------------------------------------------------------------
 Pathfinder::~Pathfinder()
 {
-#ifdef DBG_VERBOSE1
-  printf("Begin destroy Pathfinder\n");
-#endif
-#ifdef DBG_VERBOSE1
-  printf("End destroy Pathfinder\n");
-#endif
 }
 
 // -----------------------------------------------------------------
@@ -77,9 +71,10 @@ s16 Pathfinder::aStar(MapObject * mapObj, CoordsMap goal, CoordsMap ** solution)
     {
       s16 nbMoves;
       if (solution != NULL) // If solution is null then we just want to know if it's true or false
-        nbMoves = aStar_ExtractSolution(closedList, closedListSize, goal, solution);
+        nbMoves = aStar_ExtractSolution(closedList, closedListSize, openList, openListSize, goal, solution);
       else
-        nbMoves = closedListSize;
+        nbMoves = aStar_GetSolutionSize(closedList, closedListSize, openList, openListSize);
+
       delete[] openList;
       delete[] closedList;
       return nbMoves; // YOU WIN
@@ -202,13 +197,15 @@ s16 Pathfinder::aStar(ObjectList * pList, CoordsMap goal, CoordsMap ** solution)
 
     // Ajouter n a CLOSED
     aStar_AddToList(closedList, &closedListSize, curNode);
+    if (closedListSize >= m_uMapXSize * m_uMapYSize)
+      return -97; // closed list overflow
 
     // Si n est le GOAL retourner la solution ;
     if (curNode.xMap == goal.x && curNode.yMap == goal.y)
     {
       s16 nbMoves = 1;
       if (solution != NULL) // If solution is null then we just want to know if it's true or false
-        nbMoves = aStar_ExtractSolution(closedList, closedListSize, goal, solution);
+        nbMoves = aStar_ExtractSolution(closedList, closedListSize, openList, openListSize, goal, solution);
       delete[] openList;
       delete[] closedList;
       return nbMoves; // YOU WIN
@@ -277,6 +274,8 @@ s16 Pathfinder::aStar(ObjectList * pList, CoordsMap goal, CoordsMap ** solution)
 
         // Ajouter n´ à la liste OPEN
         aStar_AddToList(openList, &openListSize, nPrime);
+        if (openListSize >= m_uMapXSize * m_uMapYSize)
+          return -98; // open list overflow
       }
     }
   }
@@ -341,9 +340,61 @@ ASTAR_NODE Pathfinder::aStar_RemoveFromList(ASTAR_NODE * list, int position, int
 }
 
 // -----------------------------------------------------------------
+// Name : aStar_GetSolutionSize
+// -----------------------------------------------------------------
+s16 Pathfinder::aStar_GetSolutionSize(ASTAR_NODE * closedList, int closedListSize, ASTAR_NODE * openList, int openListSize)
+{
+  int iSol = 1;
+  int iClosed = closedListSize - 1;
+  CoordsMap current;
+
+  current.x = closedList[iClosed].parentX;
+  current.y = closedList[iClosed].parentY;
+
+  // BUG sometimes infinite loop here
+  // Put a spy to track it
+  int spy = 0;
+  while (current.x != -1)
+  {
+    spy++;
+    if (spy > 1000)
+      return -99;
+    bool bFound = false;
+    for (iClosed = 0; iClosed < closedListSize; iClosed++)
+    {
+      if (closedList[iClosed].xMap == current.x && closedList[iClosed].yMap == current.y)
+      {
+        iSol++;
+        current.x = closedList[iClosed].parentX;
+        current.y = closedList[iClosed].parentY;
+        bFound = true;
+        break;
+      }
+    }
+    if (!bFound) {
+      // Not found in closed list => search in open list
+      for (iClosed = 0; iClosed < openListSize; iClosed++)
+      {
+        if (openList[iClosed].xMap == current.x && openList[iClosed].yMap == current.y)
+        {
+          iSol++;
+          current.x = openList[iClosed].parentX;
+          current.y = openList[iClosed].parentY;
+          bFound = true;
+          break;
+        }
+      }
+    }
+    if (!bFound)
+      return -96;
+  }
+  return iSol - 1;
+}
+
+// -----------------------------------------------------------------
 // Name : aStar_ExtractSolution
 // -----------------------------------------------------------------
-s16 Pathfinder::aStar_ExtractSolution(ASTAR_NODE * closedList, int closedListSize, CoordsMap goal, CoordsMap ** solution)
+s16 Pathfinder::aStar_ExtractSolution(ASTAR_NODE * closedList, int closedListSize, ASTAR_NODE * openList, int openListSize, CoordsMap goal, CoordsMap ** solution)
 {
   int iSol = 0;
   (*solution)[iSol++] = goal;
@@ -352,8 +403,15 @@ s16 Pathfinder::aStar_ExtractSolution(ASTAR_NODE * closedList, int closedListSiz
   (*solution)[iSol].x = closedList[iClosed].parentX;
   (*solution)[iSol].y = closedList[iClosed].parentY;
 
+  // BUG sometimes infinite loop here
+  // Put a spy to track it
+  int spy = 0;
   while ((*solution)[iSol].x != -1)
   {
+    spy++;
+    if (spy > 1000)
+      return -99;
+    bool bFound = false;
     for (iClosed = 0; iClosed < closedListSize; iClosed++)
     {
       if (closedList[iClosed].xMap == (*solution)[iSol].x && closedList[iClosed].yMap == (*solution)[iSol].y)
@@ -361,9 +419,26 @@ s16 Pathfinder::aStar_ExtractSolution(ASTAR_NODE * closedList, int closedListSiz
         iSol++;
         (*solution)[iSol].x = closedList[iClosed].parentX;
         (*solution)[iSol].y = closedList[iClosed].parentY;
+        bFound = true;
         break;
       }
     }
+    if (!bFound) {
+      // Not found in closed list => search in open list
+      for (iClosed = 0; iClosed < openListSize; iClosed++)
+      {
+        if (openList[iClosed].xMap == (*solution)[iSol].x && openList[iClosed].yMap == (*solution)[iSol].y)
+        {
+          iSol++;
+          (*solution)[iSol].x = openList[iClosed].parentX;
+          (*solution)[iSol].y = openList[iClosed].parentY;
+          bFound = true;
+          break;
+        }
+      }
+    }
+    if (!bFound)
+      return -96;
   }
 
   int iRev = 0;

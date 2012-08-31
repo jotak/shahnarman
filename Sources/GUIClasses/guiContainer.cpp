@@ -1,6 +1,32 @@
 #include "guiContainer.h"
 
 #define SCROLLSTEP          30    // in pixels
+#define SCROLLFIRSTDELTA    0.4f  // seconds
+#define SCROLLNEXTDELTA     0.12f; // seconds
+
+GeometryQuads * guiContainer::m_pScrollButtons[];
+int guiContainer::m_iScrollButtonWidth = 0;
+int guiContainer::m_iScrollButtonHeight = 0;
+
+// -----------------------------------------------------------------
+// Name : initStatic
+// -----------------------------------------------------------------
+void guiContainer::initStatic()
+{
+  for (int i = 0; i < 4; i++) {
+    m_pScrollButtons[i] = NULL;
+  }
+}
+
+// -----------------------------------------------------------------
+// Name : deleteStatic
+// -----------------------------------------------------------------
+void guiContainer::deleteStatic()
+{
+  for (int i = 0; i < 4; i++) {
+    FREE(m_pScrollButtons[i]);
+  }
+}
 
 // -----------------------------------------------------------------
 // Name : guiContainer
@@ -13,6 +39,11 @@ guiContainer::guiContainer() : guiComponent()
   m_pStencilGeometry = NULL;
   m_WidthFit = m_HeightFit = FB_NoFit;
   m_iXOffset = m_iYOffset = 0;
+  m_iClickedScroll = -1;
+  m_fScrollDelta = 0.0f;
+  for (int i = 0; i < 4; i++) {
+    m_bShowScrollButtons[i] = false;
+  }
 }
 
 // -----------------------------------------------------------------
@@ -21,14 +52,8 @@ guiContainer::guiContainer() : guiComponent()
 // -----------------------------------------------------------------
 guiContainer::~guiContainer()
 {
-#ifdef DBG_VERBOSE1
-  printf("Begin destroy guiContainer\n");
-#endif
   FREE(m_pDoc);
   FREE(m_pStencilGeometry);
-#ifdef DBG_VERBOSE1
-  printf("End destroy guiContainer\n");
-#endif
 }
 
 // -----------------------------------------------------------------
@@ -56,6 +81,42 @@ void guiContainer::init(FrameFitBehavior widthFit, FrameFitBehavior heightFit, i
   m_pGeometry = new GeometryQuads(nQuads, pQuads, VB_Static);
   QuadData::releaseQuads(nQuads, pQuads);
   m_pStencilGeometry = new StencilGeometry(m_iInnerWidth, m_iInnerHeight, VB_Static, pDisplay);
+
+  if (m_pScrollButtons[0] == NULL) {
+    // Initialize static data
+    int iTex = pDisplay->getTextureEngine()->findTexture(L"interface:ScrollTop");
+    Texture * pTex = pDisplay->getTextureEngine()->getTexture(iTex);
+    QuadData quadTop(0, pTex->m_iWidth, 0, pTex->m_iHeight, iTex, pDisplay);
+    m_pScrollButtons[0] = new GeometryQuads(&quadTop, VB_Static);
+    m_iScrollButtonWidth = pTex->m_iWidth;
+    m_iScrollButtonHeight = pTex->m_iHeight;
+    iTex = pDisplay->getTextureEngine()->findTexture(L"interface:ScrollBottom");
+    pTex = pDisplay->getTextureEngine()->getTexture(iTex);
+    QuadData quadBottom(0, pTex->m_iWidth, 0, pTex->m_iHeight, iTex, pDisplay);
+    m_pScrollButtons[1] = new GeometryQuads(&quadBottom, VB_Static);
+    iTex = pDisplay->getTextureEngine()->findTexture(L"interface:ScrollLeft");
+    pTex = pDisplay->getTextureEngine()->getTexture(iTex);
+    QuadData quadLeft(0, pTex->m_iWidth, 0, pTex->m_iHeight, iTex, pDisplay);
+    m_pScrollButtons[2] = new GeometryQuads(&quadLeft, VB_Static);
+    iTex = pDisplay->getTextureEngine()->findTexture(L"interface:ScrollRight");
+    pTex = pDisplay->getTextureEngine()->getTexture(iTex);
+    QuadData quadRight(0, pTex->m_iWidth, 0, pTex->m_iHeight, iTex, pDisplay);
+    m_pScrollButtons[3] = new GeometryQuads(&quadRight, VB_Static);
+  }
+
+  // Scroll buttons positions
+  m_ScrollButtonsCoords[0].x = m_iInnerXPxl + m_iInnerWidth - m_iScrollButtonWidth;
+  m_ScrollButtonsCoords[0].y = m_iInnerYPxl;
+  m_ScrollButtonsCoords[0].z = GUIPLANE;
+  m_ScrollButtonsCoords[1].x = m_iInnerXPxl + m_iInnerWidth - m_iScrollButtonWidth;
+  m_ScrollButtonsCoords[1].y = m_iInnerYPxl + m_iInnerHeight - m_iScrollButtonHeight;
+  m_ScrollButtonsCoords[1].z = GUIPLANE;
+  m_ScrollButtonsCoords[2].x = m_iInnerXPxl;
+  m_ScrollButtonsCoords[2].y = m_iInnerYPxl + m_iInnerHeight - m_iScrollButtonWidth;
+  m_ScrollButtonsCoords[2].z = GUIPLANE;
+  m_ScrollButtonsCoords[3].x = m_iInnerXPxl + m_iInnerWidth - m_iScrollButtonHeight;
+  m_ScrollButtonsCoords[3].y = m_iInnerYPxl + m_iInnerHeight - m_iScrollButtonWidth;
+  m_ScrollButtonsCoords[3].z = GUIPLANE;
 }
 
 // -----------------------------------------------------------------
@@ -111,6 +172,22 @@ void guiContainer::update(double delta)
         setEnabled(m_pDoc->isEnabled());
       updateSizeFit();
       m_pDoc->update(delta);
+
+      // Scroll?
+      if (m_iClickedScroll >= 0) {
+        m_fScrollDelta -= delta;
+        if (m_fScrollDelta <= 0) {
+          m_fScrollDelta = SCROLLNEXTDELTA;
+          stepScroll(m_iClickedScroll);
+        }
+      }
+      // Check if it can scroll
+      int iDocX = m_pDoc->getXPos();
+      int iDocY = m_pDoc->getYPos();
+      m_bShowScrollButtons[0] = (iDocY < 0);
+      m_bShowScrollButtons[1] = (iDocY + m_pDoc->getHeight() > m_iInnerHeight);
+      m_bShowScrollButtons[2] = (iDocX < 0);
+      m_bShowScrollButtons[3] = (iDocX + m_pDoc->getWidth() > m_iInnerWidth);
     }
   }
   guiComponent::update(delta);
@@ -196,6 +273,16 @@ void guiContainer::updateSizeFit()
       break;
     }
   }
+
+  // Scroll buttons positions
+  m_ScrollButtonsCoords[0].x = m_iInnerXPxl + m_iInnerWidth - m_iScrollButtonWidth;
+  m_ScrollButtonsCoords[0].y = m_iInnerYPxl;
+  m_ScrollButtonsCoords[1].x = m_iInnerXPxl + m_iInnerWidth - m_iScrollButtonWidth;
+  m_ScrollButtonsCoords[1].y = m_iInnerYPxl + m_iInnerHeight - m_iScrollButtonHeight;
+  m_ScrollButtonsCoords[2].x = m_iInnerXPxl;
+  m_ScrollButtonsCoords[2].y = m_iInnerYPxl + m_iInnerHeight - m_iScrollButtonWidth;
+  m_ScrollButtonsCoords[3].x = m_iInnerXPxl + m_iInnerWidth - m_iScrollButtonHeight;
+  m_ScrollButtonsCoords[3].y = m_iInnerYPxl + m_iInnerHeight - m_iScrollButtonWidth;
 }
 
 // -----------------------------------------------------------------
@@ -219,6 +306,13 @@ void guiContainer::displayAt(int iXOffset, int iYOffset, F_RGBA cpntColor, F_RGB
   }
   coords = CoordsScreen(m_iXPxl + iXOffset + m_iXOffset, m_iYPxl + iYOffset + m_iYOffset, GUIPLANE);
   m_pGeometry->display(coords, docColor);
+  // Draw scroll buttons
+  cpntColor.a *= 0.5f;
+  for (int i = 0; i < 4; i++) {
+    if (m_bShowScrollButtons[i]) {
+      m_pScrollButtons[i]->display(m_ScrollButtonsCoords[i] + CoordsScreen(iXOffset, iYOffset, 0), cpntColor);
+    }
+  }
 }
 
 // -----------------------------------------------------------------
@@ -258,7 +352,25 @@ guiObject * guiContainer::onButtonEvent(ButtonAction * pEvent)
   if (!m_bEnabled || !m_bVisible || m_pDoc == NULL)
     return NULL;
 
-  if (pEvent->eEvent == Event_Down && isDocumentAt(pEvent->xPos - pEvent->xOffset, pEvent->yPos - pEvent->yOffset))
+  int xPxl = pEvent->xPos - pEvent->xOffset;
+  int yPxl = pEvent->yPos - pEvent->yOffset;
+  if (pEvent->eEvent == Event_Down && pEvent->eButton == Button1) {
+    // Check click on scroll button
+    for (int i = 0; i < 4; i++) {
+      if (m_bShowScrollButtons[i] && xPxl >= m_ScrollButtonsCoords[i].x && yPxl >= m_ScrollButtonsCoords[i].y && xPxl <= m_ScrollButtonsCoords[i].x + (i < 2 ? m_iScrollButtonWidth : m_iScrollButtonHeight) && yPxl <= m_ScrollButtonsCoords[i].y + (i < 2 ? m_iScrollButtonHeight : m_iScrollButtonWidth)) {
+        m_iClickedScroll = i;
+        stepScroll(i);
+        m_fScrollDelta = SCROLLFIRSTDELTA;
+        return this;
+      }
+    }
+  }
+  else if (m_iClickedScroll >= 0 && pEvent->eButton == Button1) {
+    if (pEvent->eEvent == Event_Up)
+      m_iClickedScroll = -1;
+    return this;
+  }
+  if (pEvent->eEvent == Event_Down && isDocumentAt(xPxl, yPxl))
   {
     pEvent->xOffset += m_iInnerXPxl + m_pDoc->getXPos();
     pEvent->yOffset += m_iInnerYPxl + m_pDoc->getYPos();
@@ -400,6 +512,16 @@ void guiContainer::onResize(int iOldWidth, int iOldHeight)
     QuadData::releaseQuads(nQuads, pQuads);
     m_pStencilGeometry->resize(m_iInnerWidth, m_iInnerHeight);
   }
+
+  // Scroll buttons positions
+  m_ScrollButtonsCoords[0].x = m_iInnerXPxl + m_iInnerWidth - m_iScrollButtonWidth;
+  m_ScrollButtonsCoords[0].y = m_iInnerYPxl;
+  m_ScrollButtonsCoords[1].x = m_iInnerXPxl + m_iInnerWidth - m_iScrollButtonWidth;
+  m_ScrollButtonsCoords[1].y = m_iInnerYPxl + m_iInnerHeight - m_iScrollButtonHeight;
+  m_ScrollButtonsCoords[2].x = m_iInnerXPxl;
+  m_ScrollButtonsCoords[2].y = m_iInnerYPxl + m_iInnerHeight - m_iScrollButtonWidth;
+  m_ScrollButtonsCoords[3].x = m_iInnerXPxl + m_iInnerWidth - m_iScrollButtonHeight;
+  m_ScrollButtonsCoords[3].y = m_iInnerYPxl + m_iInnerHeight - m_iScrollButtonWidth;
 }
 
 // -----------------------------------------------------------------
@@ -433,6 +555,31 @@ void guiContainer::setVisible(bool bVisible)
     m_pDoc->onShow();
   else if (m_pDoc != NULL && !bVisible && bWasVisible)
     m_pDoc->onHide();
+}
+
+// -----------------------------------------------------------------
+// Name : stepScroll
+// -----------------------------------------------------------------
+void guiContainer::stepScroll(int iDir)
+{
+  switch (iDir) {
+  case 0: // top
+    m_pDoc->moveBy(0, SCROLLSTEP);
+    checkDocumentPosition();
+    break;
+  case 1: // bottom
+    m_pDoc->moveBy(0, -SCROLLSTEP);
+    checkDocumentPosition();
+    break;
+  case 2: // left
+    m_pDoc->moveBy(SCROLLSTEP, 0);
+    checkDocumentPosition();
+    break;
+  case 3: // right
+    m_pDoc->moveBy(-SCROLLSTEP, 0);
+    checkDocumentPosition();
+    break;
+  }
 }
 
 // -----------------------------------------------------------------

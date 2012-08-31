@@ -1,0 +1,21 @@
+<ai id='Pukkeh' shahmah='Pukkeh'>
+  <l12n key='name'>
+    <english>Pukkeh</english>
+    <french>Pukkeh</french>
+  </l12n>
+  <spells quantity='40' mode='random-law' />
+</ai>
+
+<ai id='Cehigos' shahmah='Cehigos'>
+  <l12n key='name'>
+    <english>Cehigos</english>
+    <french>Cehigos</french>
+  </l12n>
+  <spells quantity='8' mode='fixed' id='Fireball' />
+  <spells quantity='8' mode='fixed' id='HellHounds' />
+  <tmp>
+  <spells quantity='3' mode='fixed' id='Volcano' />
+  <spells quantity='2' mode='fixed' id='RagingSpirit' />
+  <spells quantity='2' mode='fixed' id='Anarchy' />
+  <spells quantity='8' mode='fixed' id='Mutation' /></tmp>
+</ai>

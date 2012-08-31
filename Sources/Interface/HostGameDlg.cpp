@@ -6,11 +6,15 @@
 #include "../Data/LocalisationTool.h"
 #include "../DeckData/Profile.h"
 #include "../DeckData/AvatarData.h"
+#include "../DeckData/Edition.h"
+#include "../DeckData/AIData.h"
+#include "../DeckData/ShopItem.h"
 #include "InterfaceManager.h"
 #include "StartMenuDlg.h"
 #include "../Debug/DebugManager.h"
 #include "../Data/DataFactory.h"
 #include "../Players/Player.h"
+#include "../Players/Spell.h"
 #include "../Players/Artifact.h"
 #include "../Server/Server.h"
 #include "../Server/TurnSolver.h"
@@ -36,6 +40,8 @@ HostGameDlg::HostGameDlg(int iWidth, int iHeight, LocalClient * pLocalClient) : 
   m_pMapReader = new MapReader(m_pLocalClient);
   m_pMapParameters = new ObjectList(true);
   m_fStartGameTimer = -1;
+  m_pAvailableAIList = new ObjectList(false);
+  m_pSelectedAIList = new ObjectList(false);
 
   int i = 0;
   m_AllColors[i++] = rgb(1, 0, 0);
@@ -257,6 +263,17 @@ HostGameDlg::HostGameDlg(int iWidth, int iHeight, LocalClient * pLocalClient) : 
   }
   pCombo->setItem(0);
 
+  // Fill available AI list
+  Edition * pEdition = m_pLocalClient->getDataFactory()->getFirstEdition();
+  while (pEdition != NULL) {
+    AIData * pAI = (AIData*) pEdition->getAIs()->getFirst(0);
+    while (pAI != NULL) {
+      m_pAvailableAIList->addLast(pAI);
+      pAI = (AIData*) pEdition->getAIs()->getNext(0);
+    }
+    pEdition = m_pLocalClient->getDataFactory()->getNextEdition();
+  }
+
   onSelectMap(sFirstMap);
 }
 
@@ -266,16 +283,12 @@ HostGameDlg::HostGameDlg(int iWidth, int iHeight, LocalClient * pLocalClient) : 
 // -----------------------------------------------------------------
 HostGameDlg::~HostGameDlg()
 {
-#ifdef DBG_VERBOSE1
-  printf("Begin destroy HostGameDlg\n");
-#endif
   delete m_pAllPlayersData;
   delete m_pMapReader;
   MapReader::deleteMapParameters(m_pMapParameters);
   delete m_pMapParameters;
-#ifdef DBG_VERBOSE1
-  printf("End destroy HostGameDlg\n");
-#endif
+  delete m_pAvailableAIList;
+  delete m_pSelectedAIList;
 }
 
 // -----------------------------------------------------------------
@@ -367,7 +380,7 @@ bool HostGameDlg::onButtonEvent(ButtonAction * pEvent, guiComponent * pCpnt)
   {
     PlayerData * pData = (PlayerData*) ((guiComboBox*)(pCpnt->getOwner()))->getAttachment();
     assert(pData != NULL);
-    onSelectPlayer(((guiComboBox*)(pCpnt->getOwner()))->getText(), pData);
+    onOpenPlayer(((guiComboBox*)(pCpnt->getOwner()))->getText(), pData);
     if (pData == m_pAllPlayersData->getLast(0)) // Last line
       addPlayerRow();
   }
@@ -379,13 +392,21 @@ bool HostGameDlg::onButtonEvent(ButtonAction * pEvent, guiComponent * pCpnt)
     if (pData == m_pAllPlayersData->getLast(0)) // Last line
       addPlayerRow();
   }
+  else if (wcscmp(pCpnt->getId(), L"AI") == 0)
+  {
+    PlayerData * pData = (PlayerData*) ((guiComboBox*)(pCpnt->getOwner()))->getAttachment();
+    assert(pData != NULL);
+    onOpenAI(pData);
+    if (pData == m_pAllPlayersData->getLast(0)) // Last line
+      addPlayerRow();
+  }
   else if (wcscmp(pCpnt->getId(), L"Closed") == 0)
   {
     PlayerData * pData = (PlayerData*) ((guiComboBox*)(pCpnt->getOwner()))->getAttachment();
     assert(pData != NULL);
     if (pData != m_pAllPlayersData->getLast(0)) // Closed not last : remove row
     {
-      removePlayerRow(pData);
+      onClose(pData);
       return false;
     }
   }
@@ -420,10 +441,25 @@ bool HostGameDlg::onButtonEvent(ButtonAction * pEvent, guiComponent * pCpnt)
       // Clicked on avatar in list?
       if (pOwner == pData->m_pAvatarCmb)
       {
-        AvatarData * pAvatar = (AvatarData*) pCpnt->getAttachment();
-        assert(pAvatar != NULL);
-        onSelectAvatar(pAvatar, pData);
-        break;
+        // Avatar combo can hold either avatars or AIs
+        // If previous avatar or AI was selected, release it for other combos
+        // Then select new one
+        if (pData->m_Type == LocalPlayer) {
+          if (pData->m_pSelectedAvatar != NULL)
+            releaseAvatar(pData);
+          AvatarData * pAvatar = (AvatarData*) pCpnt->getAttachment();
+          assert(pAvatar != NULL);
+          onSelectAvatar(pAvatar, pData);
+          break;
+        }
+        else if (pData->m_Type == AI) {
+          if (pData->m_pSelectedAI != NULL)
+            releaseAI(pData);
+          AIData * pAI = (AIData*) pCpnt->getAttachment();
+          assert(pAI != NULL);
+          onSelectAI(pAI, pData);
+          break;
+        }
       }
       pData = (PlayerData*) m_pAllPlayersData->getNext(0);
     }
@@ -438,8 +474,10 @@ void HostGameDlg::addPlayerRow()
 {
   // Create new PlayerData object
   PlayerData * pData = new PlayerData();
+  pData->m_Type = Closed;
   pData->m_pSelectedAvatar = NULL;
   pData->m_pSelectedPlayer = NULL;
+  pData->m_pSelectedAI = NULL;
   m_pAllPlayersData->addLast(pData);
 
   // Create "view info" button
@@ -508,100 +546,81 @@ void HostGameDlg::addPlayerRow()
     pProfile = m_pLocalClient->getDataFactory()->getNextProfile();
   }
   wchar_t str[64];
+  pData->m_pPlayerCmb->addString(i18n->getText(L"AI", str, 64), L"AI");
   pData->m_pPlayerCmb->addString(i18n->getText(L"LAN", str, 64), L"LANPlayer");
   pData->m_pPlayerCmb->addString(i18n->getText(L"CLOSED", str, 64), L"Closed");
-  pData->m_pPlayerCmb->setItem(nbProfiles + 1);
+  pData->m_pPlayerCmb->setItem(nbProfiles + 2);
 }
 
 // -----------------------------------------------------------------
-// Name : removePlayerRow
+// Name : onClose
 // -----------------------------------------------------------------
-void HostGameDlg::removePlayerRow(PlayerData * pData)
+void HostGameDlg::onClose(PlayerData * pData)
 {
-  Profile * pDeletedPlayer = pData->m_pSelectedPlayer;
-  AvatarData * pDeletedAvatar = pData->m_pSelectedAvatar;
+  // If avatar or AI was selected, release it for other combos
+  if (pData->m_Type == LocalPlayer && pData->m_pSelectedAvatar != NULL)
+    releaseAvatar(pData);
+  else if (pData->m_Type == AI && pData->m_pSelectedAI != NULL)
+    releaseAI(pData);
+
+  // Remove components
+  int rowHeight = pData->m_pPlayerCmb->getHeight() + 5;
+  int rowY = pData->m_pPlayerCmb->getYPos();
+  m_pAllPlayersPanel->getDocument()->deleteComponent(pData->m_pAvatarCmb);
+  m_pAllPlayersPanel->getDocument()->deleteComponent(pData->m_pPlayerCmb);
+  m_pAllPlayersPanel->getDocument()->deleteComponent(pData->m_pViewInfoBtn);
+  m_pAllPlayersPanel->getDocument()->deleteComponent(pData->m_pColorBtn);
+
+  // Remove pData
+  m_pAllPlayersData->deleteObject(pData, true);
+
+  // Pull up any components below
   PlayerData * p2 = (PlayerData*) m_pAllPlayersData->getFirst(0);
   while (p2 != NULL)
   {
-    if (p2 == pData)
-    {
-      int rowHeight = pData->m_pPlayerCmb->getHeight() + 5;
-      guiComponent * pCpnt = m_pAllPlayersPanel->getDocument()->getFirstComponent();
-      while (pCpnt != NULL)
-      {
-        if (pCpnt == pData->m_pAvatarCmb ||
-            pCpnt == pData->m_pPlayerCmb ||
-            pCpnt == pData->m_pViewInfoBtn ||
-            pCpnt == pData->m_pColorBtn)
-          pCpnt = m_pAllPlayersPanel->getDocument()->deleteCurrentComponent(true);
-        else
-          pCpnt = m_pAllPlayersPanel->getDocument()->getNextComponent();
-      }
-      p2 = (PlayerData*) m_pAllPlayersData->deleteCurrent(0, true);
-      while (p2 != NULL)
-      {
-        if (pDeletedPlayer != NULL && pDeletedPlayer == p2->m_pSelectedPlayer && pDeletedAvatar != NULL)
-        {
-          wchar_t sAvId[NAME_MAX_CHARS+64];
-          swprintf_s(sAvId, NAME_MAX_CHARS+64, L"%s:%s", pDeletedAvatar->m_sEdition, pDeletedAvatar->m_sObjectId);
-          p2->m_pAvatarCmb->getItem(sAvId)->setEnabled(true);
-        }
-        p2->m_pAvatarCmb->moveBy(0, -rowHeight);
-        p2->m_pPlayerCmb->moveBy(0, -rowHeight);
-        p2->m_pViewInfoBtn->moveBy(0, -rowHeight);
-        p2->m_pColorBtn->moveBy(0, -rowHeight);
-        p2 = (PlayerData*) m_pAllPlayersData->getNext(0);
-      }
-      m_pAllPlayersPanel->getDocument()->setHeight(5 + m_pAllPlayersData->size * rowHeight);
-      checkStartEnable();
-      break;
-    }
-    else
-    {
-      if (pDeletedPlayer != NULL && pDeletedPlayer == p2->m_pSelectedPlayer && pDeletedAvatar != NULL)
-      {
-        wchar_t sAvId[NAME_MAX_CHARS+64];
-        swprintf_s(sAvId, NAME_MAX_CHARS+64, L"%s:%s", pDeletedAvatar->m_sEdition, pDeletedAvatar->m_sObjectId);
-        p2->m_pAvatarCmb->getItem(sAvId)->setEnabled(true);
-      }
+    if (p2->m_pPlayerCmb->getYPos() > rowY) {
+      p2->m_pAvatarCmb->moveBy(0, -rowHeight);
+      p2->m_pPlayerCmb->moveBy(0, -rowHeight);
+      p2->m_pViewInfoBtn->moveBy(0, -rowHeight);
+      p2->m_pColorBtn->moveBy(0, -rowHeight);
     }
     p2 = (PlayerData*) m_pAllPlayersData->getNext(0);
   }
-}
-
-// -----------------------------------------------------------------
-// Name : onOpenLAN
-// -----------------------------------------------------------------
-void HostGameDlg::onOpenLAN(PlayerData * pData)
-{
-  pData->m_pAvatarCmb->setItem(-1);
-  onSelectAvatar(NULL, pData);
-  pData->m_pAvatarCmb->setEnabled(false);
-  pData->m_pViewInfoBtn->setEnabled(false);
-  pData->m_pColorBtn->setEnabled(false);
+  m_pAllPlayersPanel->getDocument()->setHeight(5 + m_pAllPlayersData->size * rowHeight);
   checkStartEnable();
 }
 
 // -----------------------------------------------------------------
-// Name : onSelectPlayer
+// Name : onOpenPlayer
 // -----------------------------------------------------------------
-void HostGameDlg::onSelectPlayer(wchar_t * sName, PlayerData * pData)
+void HostGameDlg::onOpenPlayer(wchar_t * sName, PlayerData * pData)
 {
   pData->m_pAvatarCmb->setItem(-1);
-  onSelectAvatar(NULL, pData);
+  // If avatar or AI was selected, release it for other combos
+  if (pData->m_Type == LocalPlayer && pData->m_pSelectedAvatar != NULL)
+    releaseAvatar(pData);
+  else if (pData->m_Type == AI && pData->m_pSelectedAI != NULL)
+    releaseAI(pData);
+  
+  // Reset pData values
+  pData->m_Type = LocalPlayer;
+  pData->m_pSelectedAvatar = NULL;
+  pData->m_pSelectedPlayer = NULL;
+  pData->m_pSelectedAI = NULL;
+
+  // Find player's profile
   Profile * pProfile = m_pLocalClient->getDataFactory()->getFirstProfile();
   while (pProfile != NULL)
   {
     if (wcscmp(sName, pProfile->getName()) == 0)
     {
+      // Found it; now build avatars list
       pData->m_pSelectedPlayer = pProfile;
       pData->m_pAvatarCmb->clearList();
       AvatarData * pFirstAvatar = NULL;
       AvatarData * pAvatar = (AvatarData*) pProfile->getAvatarsList()->getFirst(0);
       while (pAvatar != NULL)
       {
-//        wchar_t sAvName[NAME_MAX_CHARS];
-//        pAvatar->findLocalizedElement(sAvName, NAME_MAX_CHARS, i18n->getCurrentLanguageName(), L"name");
         wchar_t sAvId[NAME_MAX_CHARS+64];
         swprintf_s(sAvId, NAME_MAX_CHARS+64, L"%s:%s", pAvatar->m_sEdition, pAvatar->m_sObjectId);
         guiButton * pBtn = pData->m_pAvatarCmb->addString(pAvatar->m_sCustomName, sAvId);
@@ -611,6 +630,7 @@ void HostGameDlg::onSelectPlayer(wchar_t * sName, PlayerData * pData)
           pBtn->setEnabled(true);
           if (pFirstAvatar == NULL)
           {
+            // Auto-select first available avatar
             pFirstAvatar = pAvatar;
             pData->m_pAvatarCmb->setItem(pData->m_pAvatarCmb->getItemsCount() - 1);
           }
@@ -622,15 +642,106 @@ void HostGameDlg::onSelectPlayer(wchar_t * sName, PlayerData * pData)
       pData->m_pAvatarCmb->setEnabled(true);
       pData->m_pViewInfoBtn->setEnabled(true);
       pData->m_pColorBtn->setEnabled(true);
-      if (pFirstAvatar == NULL)
+      if (pFirstAvatar == NULL) {
         onSelectRow(pData);
+        checkStartEnable();
+      }
       else
         onSelectAvatar(pFirstAvatar, pData);
       return;
     }
     pProfile = m_pLocalClient->getDataFactory()->getNextProfile();
   }
-  m_pLocalClient->getDebug()->notifyErrorMessage(L"Error : player not found");
+  // Shouldn't be here
+  m_pLocalClient->getDebug()->notifyErrorMessage(L"Error: player not found");
+}
+
+// -----------------------------------------------------------------
+// Name : onOpenAI
+// -----------------------------------------------------------------
+void HostGameDlg::onOpenAI(PlayerData * pData)
+{
+  pData->m_pAvatarCmb->setItem(-1);
+  // If avatar or AI was selected, release it for other combos
+  if (pData->m_Type == LocalPlayer && pData->m_pSelectedAvatar != NULL)
+    releaseAvatar(pData);
+  else if (pData->m_Type == AI && pData->m_pSelectedAI != NULL)
+    releaseAI(pData);
+  
+  // Reset pData values
+  pData->m_Type = AI;
+  pData->m_pSelectedAvatar = NULL;
+  pData->m_pSelectedPlayer = NULL;
+  pData->m_pSelectedAI = NULL;
+
+  // Add available ais
+  pData->m_pAvatarCmb->clearList();
+  AIData * pFirstAI = NULL;
+  AIData * pAI = (AIData*) m_pAvailableAIList->getFirst(0);
+  while (pAI != NULL) {
+    wchar_t sId[NAME_MAX_CHARS+64];
+    wchar_t sText[LABEL_MAX_CHARS];
+    swprintf_s(sId, NAME_MAX_CHARS+64, L"%s:%s", pAI->m_sEdition, pAI->m_sObjectId);
+    pAI->findLocalizedElement(sText, LABEL_MAX_CHARS, i18n->getCurrentLanguageName(), L"name");
+    guiButton * pBtn = pData->m_pAvatarCmb->addString(sText, sId);
+    pBtn->setAttachment(pAI);
+    pBtn->setEnabled(true);
+    if (pFirstAI == NULL)
+    {
+      pFirstAI = pAI;
+      pData->m_pAvatarCmb->setItem(pData->m_pAvatarCmb->getItemsCount() - 1);
+    }
+    pAI = (AIData*) m_pAvailableAIList->getNext(0);
+  }
+
+  // Also add unavailable ai, as disabled items
+  pAI = (AIData*) m_pSelectedAIList->getFirst(0);
+  while (pAI != NULL) {
+    wchar_t sId[NAME_MAX_CHARS+64];
+    wchar_t sText[LABEL_MAX_CHARS];
+    swprintf_s(sId, NAME_MAX_CHARS+64, L"%s:%s", pAI->m_sEdition, pAI->m_sObjectId);
+    pAI->findLocalizedElement(sText, LABEL_MAX_CHARS, i18n->getCurrentLanguageName(), L"name");
+    guiButton * pBtn = pData->m_pAvatarCmb->addString(sText, sId);
+    pBtn->setAttachment(pAI);
+    pBtn->setEnabled(false);
+    pAI = (AIData*) m_pSelectedAIList->getNext(0);
+  }
+
+  pData->m_pAvatarCmb->setEnabled(true);
+  pData->m_pViewInfoBtn->setEnabled(true);
+  pData->m_pColorBtn->setEnabled(true);
+
+  if (pFirstAI == NULL) {
+    onSelectRow(pData);
+    checkStartEnable();
+  }
+  else
+    onSelectAI(pFirstAI, pData);
+}
+
+// -----------------------------------------------------------------
+// Name : onOpenLAN
+// -----------------------------------------------------------------
+void HostGameDlg::onOpenLAN(PlayerData * pData)
+{
+  pData->m_pAvatarCmb->setItem(-1);
+  // If avatar or AI was selected, release it for other combos
+  if (pData->m_Type == LocalPlayer && pData->m_pSelectedAvatar != NULL)
+    releaseAvatar(pData);
+  else if (pData->m_Type == AI && pData->m_pSelectedAI != NULL)
+    releaseAI(pData);
+  
+  // Reset pData values
+  pData->m_Type = LAN;
+  pData->m_pSelectedAvatar = NULL;
+  pData->m_pSelectedPlayer = NULL;
+  pData->m_pSelectedAI = NULL;
+
+  pData->m_pAvatarCmb->clearList();
+  pData->m_pAvatarCmb->setEnabled(false);
+  pData->m_pViewInfoBtn->setEnabled(false);
+  pData->m_pColorBtn->setEnabled(false);
+  checkStartEnable();
 }
 
 // -----------------------------------------------------------------
@@ -638,43 +749,18 @@ void HostGameDlg::onSelectPlayer(wchar_t * sName, PlayerData * pData)
 // -----------------------------------------------------------------
 void HostGameDlg::onSelectAvatar(AvatarData * pAvatar, PlayerData * pData)
 {
-  if (pAvatar == NULL)
+  assert(pAvatar != NULL);
+  if (checkIfAvatarAvailable(pAvatar, pData))
   {
-    if (pData->m_pSelectedAvatar != NULL)
-    {
-      wchar_t sOldAvId[NAME_MAX_CHARS+64];
-      swprintf_s(sOldAvId, NAME_MAX_CHARS+64, L"%s:%s", pData->m_pSelectedAvatar->m_sEdition, pData->m_pSelectedAvatar->m_sObjectId);
-      // Enable previous avatar in other combos
-      PlayerData * p2 = (PlayerData*) m_pAllPlayersData->getFirst(0);
-      while (p2 != NULL)
-      {
-        // Same player?
-        if (p2 != pData && p2->m_pSelectedPlayer == pData->m_pSelectedPlayer)
-          p2->m_pAvatarCmb->getItem(sOldAvId)->setEnabled(true);
-        p2 = (PlayerData*) m_pAllPlayersData->getNext(0);
-      }
-      pData->m_pSelectedAvatar = NULL;
-      checkStartEnable();
-    }
-  }
-  else if (checkIfAvatarAvailable(pAvatar, pData))
-  {
-    wchar_t sOldAvId[NAME_MAX_CHARS+64];
-    if (pData->m_pSelectedAvatar != NULL)
-      swprintf_s(sOldAvId, NAME_MAX_CHARS+64, L"%s:%s", pData->m_pSelectedAvatar->m_sEdition, pData->m_pSelectedAvatar->m_sObjectId);
-    wchar_t sNewAvId[NAME_MAX_CHARS+64];
-    swprintf_s(sNewAvId, NAME_MAX_CHARS+64, L"%s:%s", pAvatar->m_sEdition, pAvatar->m_sObjectId);
-    // Enable previous avatar in other combos, and disable new
+    wchar_t sNewId[NAME_MAX_CHARS+64];
+    swprintf_s(sNewId, NAME_MAX_CHARS+64, L"%s:%s", pAvatar->m_sEdition, pAvatar->m_sObjectId);
+    // Disable new avatar in other combos
     PlayerData * p2 = (PlayerData*) m_pAllPlayersData->getFirst(0);
     while (p2 != NULL)
     {
       // Same player?
-      if (p2 != pData && p2->m_pSelectedPlayer == pData->m_pSelectedPlayer)
-      {
-        if (pData->m_pSelectedAvatar != NULL)
-          p2->m_pAvatarCmb->getItem(sOldAvId)->setEnabled(true);
-        p2->m_pAvatarCmb->getItem(sNewAvId)->setEnabled(false);
-      }
+      if (p2 != pData && p2->m_Type == LocalPlayer && p2->m_pSelectedPlayer == pData->m_pSelectedPlayer)
+        p2->m_pAvatarCmb->getItem(sNewId)->setEnabled(false);
       p2 = (PlayerData*) m_pAllPlayersData->getNext(0);
     }
     pData->m_pSelectedAvatar = pAvatar;
@@ -707,11 +793,10 @@ void HostGameDlg::onSelectAvatar(AvatarData * pAvatar, PlayerData * pData)
         pPopup->flash(1.0f);
       }
     }
-    checkStartEnable();
   }
   else
   {
-    // raise message popup : This Avatar is already selected in antoher row
+    // raise message popup: this Avatar is already selected in another row
     wchar_t sText[128];
     i18n->getText(L"CANNOT_SELECT_AVATAR_TWICE", sText, 128);
     guiPopup * popup = guiPopup::createTimedPopup(sText, 4, 200, getDisplay());
@@ -720,6 +805,108 @@ void HostGameDlg::onSelectAvatar(AvatarData * pAvatar, PlayerData * pData)
     pData->m_pAvatarCmb->setItem(-1);
     pData->m_pSelectedAvatar = NULL;
   }
+  checkStartEnable();
+}
+
+// -----------------------------------------------------------------
+// Name : onSelectAI
+// -----------------------------------------------------------------
+void HostGameDlg::onSelectAI(AIData * pAI, PlayerData * pData)
+{
+  assert(pAI != NULL);
+  if (m_pAvailableAIList->goTo(0, pAI))
+  {
+    m_pAvailableAIList->deleteCurrent(0, false);
+    m_pSelectedAIList->addLast(pAI);
+    wchar_t sNewId[NAME_MAX_CHARS+64];
+    swprintf_s(sNewId, NAME_MAX_CHARS+64, L"%s:%s", pAI->m_sEdition, pAI->m_sObjectId);
+    // Disable new AI in other combos
+    PlayerData * p2 = (PlayerData*) m_pAllPlayersData->getFirst(0);
+    while (p2 != NULL)
+    {
+      // Other AI row?
+      if (p2 != pData && p2->m_Type == AI)
+        p2->m_pAvatarCmb->getItem(sNewId)->setEnabled(false);
+      p2 = (PlayerData*) m_pAllPlayersData->getNext(0);
+    }
+    pData->m_pSelectedAI = pAI;
+    pData->m_pColorBtn->setNormalTexture(getDisplay()->getTextureEngine()->loadTexture(L"blason1"));
+    onSelectRow(pData);
+
+    // Check if number of equipped spells is ok
+    guiComboBox * pCombo = (guiComboBox*) m_pServerOptionsPopup->getDocument()->getComponent(L"DeckSizeCombo");
+    int iDeckSize = 10 * pCombo->getSelectedItemId();
+    if (iDeckSize > 0)
+    {
+      int nbSpells = 0;
+      SpellsPackContent * pPack = (SpellsPackContent*) pAI->m_pSpellsPacks->getFirst(0);
+      while (pPack != NULL) {
+        nbSpells += pPack->m_iNbSpells;
+        pPack = (SpellsPackContent*) pAI->m_pSpellsPacks->getNext(0);
+      }
+      if (nbSpells > iDeckSize)
+      {
+        wchar_t sText[LABEL_MAX_CHARS];
+        guiPopup * pPopup = guiPopup::createOkAutoclosePopup(i18n->getText(L"WARNING_AVATAR_HAS_TOO_MUCH_SPELLS", sText, LABEL_MAX_CHARS), getDisplay());
+        m_pLocalClient->getInterface()->registerFrame(pPopup);
+        pPopup->moveTo((m_pLocalClient->getClientParameters()->screenXSize - pPopup->getWidth()) / 2, (m_pLocalClient->getClientParameters()->screenYSize - pPopup->getHeight()) / 2);
+        pPopup->flash(1.0f);
+      }
+    }
+    checkStartEnable();
+  }
+  else {
+    // raise message popup: this AI is already selected in another row
+    wchar_t sText[128];
+    i18n->getText(L"CANNOT_SELECT_AVATAR_TWICE", sText, 128);
+    guiPopup * popup = guiPopup::createTimedPopup(sText, 4, 200, getDisplay());
+    m_pLocalClient->getInterface()->registerFrame(popup);
+    popup->moveTo((m_pLocalClient->getClientParameters()->screenXSize - popup->getWidth()) / 2, (m_pLocalClient->getClientParameters()->screenYSize - popup->getHeight()) / 2);
+    pData->m_pAvatarCmb->setItem(-1);
+    pData->m_pSelectedAI = NULL;
+  }
+}
+
+// -----------------------------------------------------------------
+// Name : releaseAvatar
+// -----------------------------------------------------------------
+void HostGameDlg::releaseAvatar(PlayerData * pData)
+{
+  assert(pData != NULL && pData->m_pSelectedAvatar != NULL);
+  wchar_t sOldAvId[NAME_MAX_CHARS+64];
+  swprintf_s(sOldAvId, NAME_MAX_CHARS+64, L"%s:%s", pData->m_pSelectedAvatar->m_sEdition, pData->m_pSelectedAvatar->m_sObjectId);
+  // Enable previous avatar in other combos
+  PlayerData * p2 = (PlayerData*) m_pAllPlayersData->getFirst(0);
+  while (p2 != NULL)
+  {
+    // Same player?
+    if (p2 != pData && p2->m_Type == LocalPlayer && p2->m_pSelectedPlayer == pData->m_pSelectedPlayer)
+      p2->m_pAvatarCmb->getItem(sOldAvId)->setEnabled(true);
+    p2 = (PlayerData*) m_pAllPlayersData->getNext(0);
+  }
+  pData->m_pSelectedAvatar = NULL;
+}
+
+// -----------------------------------------------------------------
+// Name : releaseAI
+// -----------------------------------------------------------------
+void HostGameDlg::releaseAI(PlayerData * pData)
+{
+  assert(pData != NULL && pData->m_pSelectedAI != NULL);
+  m_pSelectedAIList->deleteObject(pData->m_pSelectedAI, false);
+  m_pAvailableAIList->addLast(pData->m_pSelectedAI);
+  wchar_t sOldId[NAME_MAX_CHARS+64];
+  swprintf_s(sOldId, NAME_MAX_CHARS+64, L"%s:%s", pData->m_pSelectedAI->m_sEdition, pData->m_pSelectedAI->m_sObjectId);
+  // Enable ai in other combos
+  PlayerData * p2 = (PlayerData*) m_pAllPlayersData->getFirst(0);
+  while (p2 != NULL)
+  {
+    // Same player?
+    if (p2->m_Type == AI)
+      p2->m_pAvatarCmb->getItem(sOldId)->setEnabled(true);
+    p2 = (PlayerData*) m_pAllPlayersData->getNext(0);
+  }
+  pData->m_pSelectedAI = NULL;
 }
 
 // -----------------------------------------------------------------
@@ -804,7 +991,7 @@ void HostGameDlg::onSelectRow(PlayerData * pData)
   m_pPlayerPanel->getDocument()->deleteAllComponents();
   m_pAvatarPanel->getDocument()->deleteAllComponents();
 
-  if (pData->m_pSelectedPlayer != NULL)
+  if (pData->m_Type == LocalPlayer && pData->m_pSelectedPlayer != NULL)
   {
     // Set player info
     wchar_t sText[LABEL_MAX_CHARS] = L"";
@@ -856,15 +1043,11 @@ void HostGameDlg::onSelectRow(PlayerData * pData)
     if (pData->m_pSelectedAvatar != NULL)
     {
       // Set avatar info
-//      wchar_t sName[NAME_MAX_CHARS] = L"";
-//      wchar_t sDescription[LABEL_MAX_CHARS] = L"";
       wchar_t sInfos[LABEL_MAX_CHARS];
-//      pData->m_pSelectedAvatar->findLocalizedElement(sName, NAME_MAX_CHARS, i18n->getCurrentLanguageName(), L"name");
-//      pData->m_pSelectedAvatar->findLocalizedElement(sDescription, LABEL_MAX_CHARS, i18n->getCurrentLanguageName(), L"description");
-      pData->m_pSelectedAvatar->getInfos(sInfos, LABEL_MAX_CHARS, L"\n", false, NULL, true, true, true, false);
-
       int iDocWidth = m_pAvatarPanel->getInnerWidth();
       int iImageSize = 64;
+
+      pData->m_pSelectedAvatar->getInfos(sInfos, LABEL_MAX_CHARS, L"\n", false, NULL, true, true, true, false);
 
       // Write title (Avatar name)
       yPxl = 5;
@@ -938,7 +1121,7 @@ void HostGameDlg::checkStartEnable()
   PlayerData * p = (PlayerData*) m_pAllPlayersData->getFirst(0);
   while (p != NULL)
   {
-    if (p->m_pSelectedPlayer != NULL && p->m_pSelectedAvatar != NULL)
+    if ((p->m_pSelectedPlayer != NULL && p->m_pSelectedAvatar != NULL) || p->m_pSelectedAI != NULL)
       nblocal++;
     p = (PlayerData*) m_pAllPlayersData->getNext(0);
   }
@@ -1045,15 +1228,38 @@ void HostGameDlg::_reallyStartGame()
   PlayerData * p = (PlayerData*) m_pAllPlayersData->getFirst(0);
   while (p != NULL)
   {
-    if (p->m_pSelectedPlayer != NULL && p->m_pSelectedAvatar != NULL)
-    {
-      // Create player object
+    pPlayer = NULL;
+    if (p->m_Type == AI && p->m_pSelectedAI != NULL) {
+      // Create AI player object
       pPlayer = new Player(playerId, 0, pServer->getSolver()->getGlobalSpellsPtr());
-      wsafecpy(pPlayer->m_sProfileName, NAME_MAX_CHARS, p->m_pSelectedPlayer->getName());
+      pServerPlayers->addLast(pPlayer);
+      pPlayer->m_bIsAI = true;
+      p->m_pSelectedAI->findLocalizedElement(pPlayer->m_sProfileName, NAME_MAX_CHARS, i18n->getCurrentLanguageName(), L"name");
+      wsafecpy(pPlayer->m_sBanner, 64, L"blason1");
       assert(p->m_iColor >= 0);
       pPlayer->m_Color = m_AllColors[p->m_iColor];
-      p->m_pSelectedAvatar->getBanner(pPlayer->m_sBanner, 64);
+      // Set Avatar
+      CoordsMap pos = m_pMapReader->getPlayerPosition(playerId-1);
+      pServer->getSolver()->setInitialAvatar(p->m_pSelectedAI->createAvatar(m_pLocalClient), pPlayer, pos);
+      // Add spells
+      ObjectList * pSpellsList = new ObjectList(false);
+      p->m_pSelectedAI->fillSpellsList(pSpellsList, m_pLocalClient);
+      Spell * pSpell = (Spell*) pSpellsList->getFirst(0);
+      while (pSpell != NULL) {
+        pServer->getSolver()->addInitialPlayerSpell(pPlayer, pSpell->getObjectEdition(), pSpell->getObjectName());
+        pSpell = (Spell*) pSpellsList->getNext(0);
+      }
+      delete pSpellsList;
+      playerId++;
+    }
+    if (p->m_Type == LocalPlayer && p->m_pSelectedPlayer != NULL && p->m_pSelectedAvatar != NULL) {
+      // Create player object
+      pPlayer = new Player(playerId, 0, pServer->getSolver()->getGlobalSpellsPtr());
       pServerPlayers->addLast(pPlayer);
+      wsafecpy(pPlayer->m_sProfileName, NAME_MAX_CHARS, p->m_pSelectedPlayer->getName());
+      p->m_pSelectedAvatar->getBanner(pPlayer->m_sBanner, 64);
+      assert(p->m_iColor >= 0);
+      pPlayer->m_Color = m_AllColors[p->m_iColor];
       // Set Avatar
       CoordsMap pos = m_pMapReader->getPlayerPosition(playerId-1);
       pServer->getSolver()->setInitialAvatar(p->m_pSelectedAvatar->clone(m_pLocalClient), pPlayer, pos);

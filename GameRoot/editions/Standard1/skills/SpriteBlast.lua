@@ -1,7 +1,7 @@
 childEffectsCount = 1
 childEffectsCost = {{0,0,0,0}}
-childEffectsIcon = {"ane"}
-icon = "ane"
+childEffectsIcon = {"spriteblast"}
+icon = "spriteblast"
 
 function getName()
 	if language == "french" then

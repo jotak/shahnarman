@@ -3,12 +3,15 @@
 
 #include "../Common/ObjectList.h"
 
+class XMLLiteElement;
+
 class XMLObject : public BaseObject
 {
 public:
   XMLObject();
   ~XMLObject();
 
+  void readLocalizedElementsFromXml(XMLLiteElement * pNode);
   void addLocalizedElement(const wchar_t * sKey, wchar_t * sValue, wchar_t * sLanguage);
   void findLocalizedElement(wchar_t * sValue, int iSize, wchar_t * sLanguage, wchar_t * sKey);
   wchar_t m_sObjectId[NAME_MAX_CHARS];    // name, language-independant

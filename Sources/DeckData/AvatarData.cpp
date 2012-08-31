@@ -29,7 +29,7 @@ AvatarData::AvatarData()
   }
   for (int i = 0; i < 5; i++)
     m_pEquippedArtifacts[i] = NULL;
-  m_uXP = 1000;
+  m_uXP = 0;
   m_pAllFames = new ObjectList(true);
   wsafecpy(m_sCustomDescription, CUSTOMDESC_MAX_CHARS, L"");
   wsafecpy(m_sCustomName, NAME_MAX_CHARS, L"");
@@ -46,90 +46,6 @@ AvatarData::~AvatarData()
 {
   delete m_pAllFames;
 }
-
-// -----------------------------------------------------------------
-// Name : serialize
-// -----------------------------------------------------------------
-//void AvatarData::serialize(NetworkData * pData)
-//{
-//  pData->addString(m_sObjectId);
-//  pData->addString(m_sEdition);
-//  long_hash::iterator it;
-//  for (it = m_lValues.begin(); it != m_lValues.end(); ++it)
-//    pData->addLong(it->second);
-//  pData->addLong(m_pSkills->size);
-//  Skill * pSkill = (Skill*) m_pSkills->getFirst(0);
-//  while (pSkill != NULL)
-//  {
-//    pSkill->serialize(pData);
-//    pSkill = (Skill*) m_pSkills->getNext(0);
-//  }
-//  pData->addLong(m_uBanner);
-//  pData->addLong(m_uXP);
-//  for (int i = 0; i < NB_PROGRESSION_TREES; i++)
-//  {
-//    pData->addString(m_pProgression[i].sTreeName);
-//    for (int j = 0; j < NB_PROGRESSION_LEVELS; j++)
-//      pData->addString(m_pProgression[i].sElements[j]);
-//  }
-//  pData->addLong(m_pAllFames->size);
-//  AvatarData::EthnicityAndFame * pFameObj = (AvatarData::EthnicityAndFame*) m_pAllFames->getFirst(0);
-//  while (pFameObj != NULL)
-//  {
-//    pData->addString(pFameObj->sEthnicity);
-//    pData->addLong(pFameObj->iFame);
-//    pFameObj = (AvatarData::EthnicityAndFame*) m_pAllFames->getNext(0);
-//  }
-//  pData->addString(m_sCustomName);
-//  pData->addString(m_sCustomDescription);
-//}
-//
-//// -----------------------------------------------------------------
-//// Name : deserialize
-//// -----------------------------------------------------------------
-//AvatarData * AvatarData::deserialize(NetworkData * pData, LocalClient * pLocalClient)
-//{
-//  wchar_t sId[NAME_MAX_CHARS];
-//  wchar_t sEdition[NAME_MAX_CHARS];
-//  pData->readString(sId);
-//  pData->readString(sEdition);
-//
-//  AvatarData * pBaseData = (AvatarData*) pLocalClient->getDataFactory()->getUnitData(sEdition, sId);
-//  assert(pBaseData != NULL);
-//  AvatarData * pAvatar = pBaseData->cloneStaticData(NULL, pLocalClient->getDebug());
-//
-//  long_hash::iterator it;
-//  for (it = pAvatar->m_lValues.begin(); it != pAvatar->m_lValues.end(); ++it)
-//    it->second = pData->readLong();
-//
-//  pAvatar->m_pSkills->deleteAll();
-//  int i = 0;
-//  int nbSkills = (int) pData->readLong();
-//  for (i = 0; i < nbSkills; i++)
-//  {
-//    Skill * pSkill = Skill::deserialize(i, pData, pLocalClient->getDebug());
-//    pAvatar->m_pSkills->addLast(pSkill);
-//  }
-//  pAvatar->m_uBanner = pData->readLong();
-//  pAvatar->m_uXP = pData->readLong();
-//  for (i = 0; i < NB_PROGRESSION_TREES; i++)
-//  {
-//    pData->readString(pAvatar->m_pProgression[i].sTreeName);
-//    for (int j = 0; j < NB_PROGRESSION_LEVELS; j++)
-//      pData->readString(pAvatar->m_pProgression[i].sElements[j]);
-//  }
-//  int size = pData->readLong();
-//  for (i = 0; i < size; i++)
-//  {
-//    AvatarData::EthnicityAndFame * pFameObj = new AvatarData::EthnicityAndFame();
-//    pData->readString(pFameObj->sEthnicity);
-//    pFameObj->iFame = pData->readLong();
-//    pAvatar->m_pAllFames->addLast(pFameObj);
-//  }
-//  pData->readString(pAvatar->m_sCustomName);
-//  pData->readString(pAvatar->m_sCustomDescription);
-//  return pAvatar;
-//}
 
 // -----------------------------------------------------------------
 // Name : serialize
