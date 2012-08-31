@@ -20,13 +20,8 @@ typedef long            s32;
   #include <queue>
 
   #define wfopen(a,b,c) _wfopen_s(a,b,c)
-
-  struct less_str { bool operator()(const std::wstring& s1, const std::wstring& s2) const { return s1<s2; }};
-  typedef stdext::hash_map<std::wstring, long, stdext::hash_compare<std::wstring, less_str>> long_hash;
-  typedef stdext::hash_map<std::wstring, long, stdext::hash_compare<std::wstring, less_str>>::value_type long_hash_pair;
-  typedef stdext::hash_map<std::wstring, std::wstring, stdext::hash_compare<std::wstring, less_str>> wstr_hash;
-  typedef stdext::hash_map<std::wstring, std::wstring, stdext::hash_compare<std::wstring, less_str>>::value_type wstr_hash_pair;
 #endif
+
 #ifdef LINUX
   #include <stdio.h>
   #include <string.h>
@@ -34,6 +29,8 @@ typedef long            s32;
   #include <assert.h>
   #include <wchar.h>
   #include <hash_map>
+  #include <queue>
+  #include <stdext.h>
 
   #define strcat_s(a,b,c)   strcat(a,c)
   #define strcpy_s(a,b,c)   strcpy(a,c)
@@ -52,6 +49,12 @@ typedef long            s32;
   #define GLUT_WHEEL_UP   3 // freeglut uses 3 and 4 as wheel buttons
   #define GLUT_WHEEL_DOWN 4
 #endif
+
+struct less_str { bool operator()(const std::wstring& s1, const std::wstring& s2) const { return s1<s2; }};
+typedef stdext::hash_map<std::wstring, long, stdext::hash_compare<std::wstring, less_str>> long_hash;
+typedef stdext::hash_map<std::wstring, long, stdext::hash_compare<std::wstring, less_str>>::value_type long_hash_pair;
+typedef stdext::hash_map<std::wstring, std::wstring, stdext::hash_compare<std::wstring, less_str>> wstr_hash;
+typedef stdext::hash_map<std::wstring, std::wstring, stdext::hash_compare<std::wstring, less_str>>::value_type wstr_hash_pair;
 
 #ifndef MAX_PATH
   #define MAX_PATH    512

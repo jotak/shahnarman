@@ -4,6 +4,7 @@
 #include <al/al.h>
 #include <al/alc.h>
 #include <vorbis/vorbisfile.h>
+#include "../SystemHeaders.h"
 #include "../utils.h"
 
 #define MUSIC_INTRO     0
@@ -49,7 +50,7 @@ private:
 
   void initMusicFiles();
   void initSoundData();
-  bool readOggSound(wchar_t * sName, int iSound);
+  bool readOggSound(const wchar_t * sName, int iSound);
   bool stream(ALuint buffer);
   void empty();
 

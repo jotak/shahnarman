@@ -36,8 +36,8 @@ AudioManager::AudioManager()
   }
   for (int i = 0; i < NB_SOUNDS; i++)
   {
-    m_iAllSoundBuffers[i] = -1;
-    m_iAllSoundSources[i] = -1;
+    m_iAllSoundBuffers[i] = 0;
+    m_iAllSoundSources[i] = 0;
   }
 }
 
@@ -52,9 +52,9 @@ AudioManager::~AudioManager()
     alDeleteSources(1, &m_uSourceID);
   for (int i = 0; i < NB_SOUNDS; i++)
   {
-    if (m_iAllSoundBuffers[i] >= 0)
+    if (m_iAllSoundBuffers[i] > 0)
       alDeleteBuffers(1, &(m_iAllSoundBuffers[i]));
-    if (m_iAllSoundSources[i] >= 0)
+    if (m_iAllSoundSources[i] > 0)
       alDeleteSources(1, &(m_iAllSoundSources[i]));
   }
   alcMakeContextCurrent(NULL);
@@ -120,7 +120,7 @@ void AudioManager::initSoundData()
 // -----------------------------------------------------------------
 // Name : readOggSound
 // -----------------------------------------------------------------
-bool AudioManager::readOggSound(wchar_t * sName, int iSound)
+bool AudioManager::readOggSound(const wchar_t * sName, int iSound)
 {
   // Decode Ogg file
   // Open for binary reading
@@ -375,7 +375,7 @@ void AudioManager::playMusic(int iMusicId)
   }
   alGenSources(1, &m_uSourceID);
   float fVol = (float)(m_pLocalClient->getClientParameters()->iMusicVolume) / 10.0f;
-  if (m_uSourceID >= 0)
+  if (m_uSourceID > 0)
     alSourcef(m_uSourceID, AL_GAIN, fVol);
 
   if (!stream(m_uBuffersID[0]))
@@ -438,7 +438,7 @@ bool AudioManager::stream(ALuint buffer)
         break;
     }
   }
-    
+
   if (size == 0)
       return false;
 
@@ -481,10 +481,10 @@ void AudioManager::updateVolume()
   float fVol = (float)(m_pLocalClient->getClientParameters()->iSoundVolume) / 10.0f;
   for (int i = 0; i < NB_SOUNDS; i++)
   {
-    if (m_iAllSoundSources[i] >= 0)
+    if (m_iAllSoundSources[i] > 0)
       alSourcef(m_iAllSoundSources[i], AL_GAIN, fVol);
   }
   fVol = (float)(m_pLocalClient->getClientParameters()->iMusicVolume) / 10.0f;
-  if (m_uSourceID >= 0)
+  if (m_uSourceID > 0)
     alSourcef(m_uSourceID, AL_GAIN, fVol);
 }
