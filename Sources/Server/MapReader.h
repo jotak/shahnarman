@@ -43,7 +43,7 @@ public:
   ~MapReader();
 
   // General
-  bool init(wchar_t * sMapPath);
+  bool init(const wchar_t * sMapPath);
   wchar_t * getMapFile() { return m_sLuaFile; };
   bool getMapName(wchar_t * sString, int size);
   bool getMapParameters(ObjectList * pList, int iLabelMaxSize);
@@ -59,7 +59,7 @@ public:
   CoordsMap getPlayerPosition(int iPlayer) { return m_pPlayersPos[iPlayer]; };
 
 private:
-  bool isLuaCallValid(int iError, wchar_t * sFuncName, wchar_t * sParams);
+  bool isLuaCallValid(int iError, const wchar_t * sFuncName, const wchar_t * sParams);
   Ethnicity * computeEthnicity(int x, int y, ObjectList * pList);
 
   LocalClient * m_pLocalClient;

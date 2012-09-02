@@ -2,6 +2,8 @@
 #include "XMLLiteReader.h"
 #include "../Debug/DebugManager.h"
 #include "Parameters.h"
+#include <stdarg.h>
+#include <stdio.h>
 
 LocalisationTool * LocalisationTool::mInst = NULL;
 
@@ -319,7 +321,8 @@ wchar_t * LocalisationTool::long_hashToString(wchar_t * sBuf, int iBufSize, cons
   for (int i = 0; i < nArgs; i++)
   {
     wchar_t * sKey = va_arg(pArgs, wchar_t*);
-    long_hash::iterator it = hm->find(sKey);
+    long_hash::const_iterator it = hm->find(sKey);
+//    long_hash::iterator it = hm->find(sKey);
     if (it != hm->end())
     {
       i18n->getText1stUp(sKey, sTranslatedKey, 64);

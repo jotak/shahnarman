@@ -24,7 +24,7 @@ public:
 class ArtifactEffect_Charac : public ArtifactEffect
 {
 public:
-  ArtifactEffect_Charac(wchar_t * sKey, int iMod) { wsafecpy(m_sKey, NAME_MAX_CHARS, sKey); m_iModifier = iMod; };
+  ArtifactEffect_Charac(const wchar_t * sKey, int iMod) { wsafecpy(m_sKey, NAME_MAX_CHARS, sKey); m_iModifier = iMod; };
   u8 getType() { return ARTIFACT_EFFECT_CHARAC; };
   wchar_t m_sKey[NAME_MAX_CHARS];
   int m_iModifier;
@@ -32,7 +32,7 @@ public:
 class ArtifactEffect_Spell : public ArtifactEffect
 {
 public:
-  ArtifactEffect_Spell(wchar_t * sEdition, wchar_t * sName) { wsafecpy(m_sSpellEdition, NAME_MAX_CHARS, sEdition); wsafecpy(m_sSpellName, NAME_MAX_CHARS, sName); };
+  ArtifactEffect_Spell(const wchar_t * sEdition, const wchar_t * sName) { wsafecpy(m_sSpellEdition, NAME_MAX_CHARS, sEdition); wsafecpy(m_sSpellName, NAME_MAX_CHARS, sName); };
   u8 getType() { return ARTIFACT_EFFECT_SPELL; };
   wchar_t m_sSpellEdition[NAME_MAX_CHARS];
   wchar_t m_sSpellName[NAME_MAX_CHARS];
@@ -40,7 +40,7 @@ public:
 class ArtifactEffect_Skill : public ArtifactEffect
 {
 public:
-  ArtifactEffect_Skill(wchar_t * sEdition, wchar_t * sName, wchar_t * sParams) { wsafecpy(m_sSkillEdition, NAME_MAX_CHARS, sEdition); wsafecpy(m_sSkillName, NAME_MAX_CHARS, sName); wsafecpy(m_sSkillParameters, NAME_MAX_CHARS, sParams); };
+  ArtifactEffect_Skill(const wchar_t * sEdition, const wchar_t * sName, const wchar_t * sParams) { wsafecpy(m_sSkillEdition, NAME_MAX_CHARS, sEdition); wsafecpy(m_sSkillName, NAME_MAX_CHARS, sName); wsafecpy(m_sSkillParameters, NAME_MAX_CHARS, sParams); };
   u8 getType() { return ARTIFACT_EFFECT_SKILL; };
   wchar_t m_sSkillEdition[NAME_MAX_CHARS];
   wchar_t m_sSkillName[NAME_MAX_CHARS];
@@ -50,7 +50,7 @@ public:
 class Artifact : public XMLObject
 {
 public:
-  Artifact(wchar_t * sEdition, wchar_t * sId, wchar_t * sTexture, u8 uPosition, bool bTwoHanded);
+  Artifact(const wchar_t * sEdition, const wchar_t * sId, const wchar_t * sTexture, u8 uPosition, bool bTwoHanded);
   ~Artifact();
 
   void addArtifactEffect(ArtifactEffect * pEffect) { m_pEffects->addLast(pEffect); };

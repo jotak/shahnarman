@@ -1,4 +1,5 @@
 #include "FileSerializer.h"
+#include <stdio.h>
 
 FileSerializer * FileSerializer::mInst = NULL;
 

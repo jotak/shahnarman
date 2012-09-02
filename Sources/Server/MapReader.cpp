@@ -34,9 +34,6 @@ MapReader::MapReader(LocalClient * pLocalClient)
 // -----------------------------------------------------------------
 MapReader::~MapReader()
 {
-#ifdef DBG_VERBOSE1
-  printf("Begin destroy MapReader\n");
-#endif
   // Free m_Map
   if (m_Map != NULL)
     delete[] m_Map;
@@ -47,15 +44,12 @@ MapReader::~MapReader()
     delete[] m_pPlayersPos;
   if (m_pLuaState != NULL)
     lua_close(m_pLuaState);
-#ifdef DBG_VERBOSE1
-  printf("End destroy MapReader\n");
-#endif
 }
 
 // -----------------------------------------------------------------
 // Name : init
 // -----------------------------------------------------------------
-bool MapReader::init(wchar_t * sMapPath)
+bool MapReader::init(const wchar_t * sMapPath)
 {
   // Clear any existing data
   if (m_Map != NULL)
@@ -314,7 +308,7 @@ void MapReader::deleteMapParameters(ObjectList * pList)
 // -----------------------------------------------------------------
 // Name : isLuaCallValid
 // -----------------------------------------------------------------
-bool MapReader::isLuaCallValid(int iError, wchar_t * sFuncName, wchar_t * sParams)
+bool MapReader::isLuaCallValid(int iError, const wchar_t * sFuncName, const wchar_t * sParams)
 {
   switch (iError)
   {

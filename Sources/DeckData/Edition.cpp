@@ -715,7 +715,7 @@ void Edition::parseXMLObjectData(XMLLiteElement * pRootNode, DebugManager * pDeb
         wsafecpy(pData->m_sEthnicityId, NAME_MAX_CHARS, pDataElt->getCharValue());
       else if (0 == _wcsicmp(pName, STRING_MELEE) || 0 == _wcsicmp(pName, STRING_RANGE) || 0 == _wcsicmp(pName, STRING_ARMOR) ||
                0 == _wcsicmp(pName, STRING_ENDURANCE) || 0 == _wcsicmp(pName, STRING_SPEED) || 0 == _wcsicmp(pName, STRING_ALIGNMENT))
-        pData->m_lValues.insert(long_hash_pair(pName, pDataElt->getIntValue()));
+        pData->m_lValues.insert(long_hash::value_type(pName, pDataElt->getIntValue()));
       else if (0 == _wcsicmp(pName, L"texture"))
         swprintf_s(pData->m_sTextureFilename, MAX_PATH, L"%s/%s", m_sObjectId, pDataElt->getCharValue());
       else if (0 == _wcsicmp(pName, L"skill"))

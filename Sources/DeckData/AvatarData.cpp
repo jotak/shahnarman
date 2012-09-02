@@ -137,7 +137,7 @@ AvatarData * AvatarData::cloneStaticData(Profile * pOwner, DebugManager * pDebug
 
   long_hash::iterator it;
   for (it = m_lValues.begin(); it != m_lValues.end(); ++it)
-    pClone->m_lValues.insert(long_hash_pair(it->first, it->second));
+    pClone->m_lValues.insert(long_hash::value_type(it->first, it->second));
   Skill * pSkill = (Skill*) m_pSkills->getFirst(0);
   while (pSkill != NULL)
   {
@@ -224,7 +224,7 @@ u16 AvatarData::getNextLevelXP()
 // -----------------------------------------------------------------
 void AvatarData::getBanner(u8 uBanner, wchar_t * sBuf, int iBufSize)
 {
-  wchar_t * sBanners[] = BANNERS;
+  const wchar_t * sBanners[] = BANNERS;
   wsafecpy(sBuf, iBufSize, sBanners[uBanner]);
 }
 
@@ -233,6 +233,6 @@ void AvatarData::getBanner(u8 uBanner, wchar_t * sBuf, int iBufSize)
 // -----------------------------------------------------------------
 void AvatarData::getBanner(wchar_t * sBuf, int iBufSize)
 {
-  wchar_t * sBanners[] = BANNERS;
+  const wchar_t * sBanners[] = BANNERS;
   wsafecpy(sBuf, iBufSize, sBanners[m_uBanner]);
 }

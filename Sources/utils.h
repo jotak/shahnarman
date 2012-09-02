@@ -23,14 +23,20 @@ typedef long            s32;
 #endif
 
 #ifdef LINUX
-  #include <stdio.h>
-  #include <string.h>
+  #include <cstring>
+  #include <iostream>
+//  #include <string>
   #include <cmath>
   #include <assert.h>
   #include <wchar.h>
-  #include <hash_map>
+//  #include <hash_map>
   #include <queue>
-  #include <stdext.h>
+//  #include <stdext.h>
+//  #include <ext/hash_map>
+  #include <tr1/unordered_map>
+  #include <tr1/memory>
+
+  namespace std { using namespace __gnu_cxx; }
 
   #define strcat_s(a,b,c)   strcat(a,c)
   #define strcpy_s(a,b,c)   strcpy(a,c)
@@ -50,11 +56,14 @@ typedef long            s32;
   #define GLUT_WHEEL_DOWN 4
 #endif
 
-struct less_str { bool operator()(const std::wstring& s1, const std::wstring& s2) const { return s1<s2; }};
-typedef stdext::hash_map<std::wstring, long, stdext::hash_compare<std::wstring, less_str>> long_hash;
-typedef stdext::hash_map<std::wstring, long, stdext::hash_compare<std::wstring, less_str>>::value_type long_hash_pair;
-typedef stdext::hash_map<std::wstring, std::wstring, stdext::hash_compare<std::wstring, less_str>> wstr_hash;
-typedef stdext::hash_map<std::wstring, std::wstring, stdext::hash_compare<std::wstring, less_str>>::value_type wstr_hash_pair;
+typedef std::tr1::unordered_map<std::wstring, long> long_hash;
+typedef std::tr1::unordered_map<std::wstring, std::wstring> wstr_hash;
+
+//struct less_str { bool operator()(const std::wstring& s1, const std::wstring& s2) const { return s1<s2; }};
+//typedef std::hash_map<std::wstring, long, std::tr1::hash<std::wstring, less_str > > long_hash;
+//typedef std::hash_map<std::wstring, long, std::hash_compare<std::wstring, less_str> >::value_type long_hash_pair;
+//typedef std::hash_map<std::wstring, std::wstring, std::hash_compare<std::wstring, less_str> > wstr_hash;
+//typedef std::hash_map<std::wstring, std::wstring, std::hash_compare<std::wstring, less_str> >::value_type wstr_hash_pair;
 
 #ifndef MAX_PATH
   #define MAX_PATH    512

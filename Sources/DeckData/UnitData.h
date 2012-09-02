@@ -32,7 +32,7 @@ public:
   UnitData();
   ~UnitData();
 
-  wchar_t * getInfos(wchar_t * sBuf, int iSize, wchar_t * sSeparator, bool bName = true, wchar_t * sEthn = NULL, bool bAlign = true, bool bCharacs = true, bool bSkills = true, bool bDesc = true);
+  wchar_t * getInfos(wchar_t * sBuf, int iSize, const wchar_t * sSeparator, bool bName = true, const wchar_t * sEthn = NULL, bool bAlign = true, bool bCharacs = true, bool bSkills = true, bool bDesc = true);
   static wchar_t * getAlignmentInfos(int iValue, wchar_t * sBuf, int iSize);
   void serialize(Serializer * pSerializer);
   void deserialize(Serializer * pSerializer, DebugManager * pDebug);

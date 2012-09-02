@@ -5,6 +5,7 @@
 #include "../Debug/DebugManager.h"
 #include "IniFile.h"
 #include <locale.h>
+#include <stdio.h>
 
 // -----------------------------------------------------------------
 // Name : Parameters

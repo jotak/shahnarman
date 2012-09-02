@@ -34,24 +34,24 @@ public:
 class LuaObject : public BaseObject
 {
 public:
-  LuaObject(u32 uInstance, wchar_t * sEdition, wchar_t * sObjectType, wchar_t * sObjectName, DebugManager * pDebug);
+  LuaObject(u32 uInstance, const wchar_t * sEdition, const wchar_t * sObjectType, const wchar_t * sObjectName, DebugManager * pDebug);
   ~LuaObject();
 
   virtual u32 getType() = 0;
   virtual void loadBasicData(DebugManager * pDebug) = 0;
   bool isLoaded() { return m_pLuaState != NULL; };
-  bool callLuaFunction(wchar_t * sFunc, int iNbResults, wchar_t * sParamsType, ...);
-  lua_State * prepareLuaFunction(wchar_t * sFunc);
-  bool callPreparedLuaFunction(int iNbParams, int iNbResults, wchar_t * sFunc, wchar_t * sParams);
+  bool callLuaFunction(const wchar_t * sFunc, int iNbResults, const wchar_t * sParamsType, ...);
+  lua_State * prepareLuaFunction(const wchar_t * sFunc);
+  bool callPreparedLuaFunction(int iNbParams, int iNbResults, const wchar_t * sFunc, const wchar_t * sParams);
   double getLuaNumber();
   void getLuaString(wchar_t * sString, int size);
-  bool getLuaVarNumber(wchar_t * sVarName, double * d);
-  bool getLuaVarString(wchar_t * sVarName, wchar_t * sString, int size);
-  bool getLuaVarNumberArray(wchar_t * sVarName, double * pArray, int size);
-  bool getLuaVarStringArray(wchar_t * sVarName, wchar_t ** pArray, int tabSize, int strSize);
+  bool getLuaVarNumber(const wchar_t * sVarName, double * d);
+  bool getLuaVarString(const wchar_t * sVarName, wchar_t * sString, int size);
+  bool getLuaVarNumberArray(const wchar_t * sVarName, double * pArray, int size);
+  bool getLuaVarStringArray(const wchar_t * sVarName, wchar_t ** pArray, int tabSize, int strSize);
   u32 getInstanceId() { return m_uInstanceId; };
   wchar_t * getUniqueId(wchar_t * sId, int iSize);
-  bool isUniqueId(wchar_t * sEdition, wchar_t * sObjectType, wchar_t * sObjectName);
+  bool isUniqueId(const wchar_t * sEdition, const wchar_t * sObjectType, const wchar_t * sObjectName);
   wchar_t * getObjectEdition() { return m_sObjectEdition; };
   wchar_t * getObjectName() { return m_sObjectName; };
   virtual wchar_t * getLocalizedName() { return NULL; };

@@ -13,6 +13,7 @@
 #include "../Interface/BuildDeckDlg.h"
 #include "../Interface/StartMenuDlg.h"
 #include "../Interface/ShopDlg.h"
+#include <stdio.h>
 
 // -----------------------------------------------------------------
 // Name : Profile

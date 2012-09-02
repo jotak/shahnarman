@@ -81,9 +81,6 @@ LocalClient::LocalClient()
 // -----------------------------------------------------------------
 LocalClient::~LocalClient()
 {
-#ifdef DBG_VERBOSE1
-  printf("Begin destroy LocalClient\n");
-#endif
   FREE(m_pGameboardManager);
   FREE(m_pInterfaceManager);
   FREE(m_pFxManager);
@@ -102,9 +99,6 @@ LocalClient::~LocalClient()
     delete m_Queue.front();
     m_Queue.pop();
   }
-#ifdef DBG_VERBOSE1
-  printf("End destroy LocalClient\n");
-#endif
 }
 
 // -----------------------------------------------------------------
@@ -400,7 +394,7 @@ void LocalClient::Display()
 // -----------------------------------------------------------------
 // Name : initServer
 // -----------------------------------------------------------------
-Server * LocalClient::initServer(wchar_t * sGameName, int nbClients, ClientData * clients, MapReader * pMapReader, int iTurnTimer, int iDeckSize)
+Server * LocalClient::initServer(const wchar_t * sGameName, int nbClients, ClientData * clients, MapReader * pMapReader, int iTurnTimer, int iDeckSize)
 {
 #ifdef DEBUG
   bool bLog = (m_pClientParameters->iLogLevel >= 2);
@@ -437,7 +431,7 @@ Server * LocalClient::initServer(wchar_t * sGameName, int nbClients, ClientData 
 // -----------------------------------------------------------------
 // Name : loadServer
 // -----------------------------------------------------------------
-Server * LocalClient::loadServer(wchar_t * sGameName)
+Server * LocalClient::loadServer(const wchar_t * sGameName)
 {
 #ifdef DEBUG
   bool bLog = (m_pClientParameters->iLogLevel >= 2);

@@ -2,6 +2,7 @@
 // XMLLITE READER
 // -----------------------------------------------------------------
 #include "XMLLiteReader.h"
+#include <stdio.h>
 
 // -----------------------------------------------------------------
 // Name : XMLLiteReader
@@ -17,14 +18,8 @@ XMLLiteReader::XMLLiteReader()
 // -----------------------------------------------------------------
 XMLLiteReader::~XMLLiteReader()
 {
-#ifdef DBG_VERBOSE1
-  printf("Begin destroy XMLLiteReader\n");
-#endif
   if (m_pRootNode != NULL)
     delete m_pRootNode;
-#ifdef DBG_VERBOSE1
-  printf("End destroy XMLLiteReader\n");
-#endif
 }
 
 // -----------------------------------------------------------------

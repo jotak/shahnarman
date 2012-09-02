@@ -51,7 +51,7 @@ void FontEngine::resetAllFonts()
 // Name : registerFont
 //  return negative number if success, to avoid confusion with guiObject::FontId
 // -----------------------------------------------------------------
-int FontEngine::registerFont(wchar_t * sFontName, TextureEngine * pTexEngine)
+int FontEngine::registerFont(const wchar_t * sFontName, TextureEngine * pTexEngine)
 {
   int iFont = 0;
   while (m_pAllFonts[iFont] != NULL)

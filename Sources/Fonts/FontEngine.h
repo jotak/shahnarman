@@ -18,7 +18,7 @@ public:
 
   // Font loading funtions
   void resetAllFonts();
-  int registerFont(wchar_t * sFontName, TextureEngine * pTexEngine);
+  int registerFont(const wchar_t * sFontName, TextureEngine * pTexEngine);
 
   // Member access functions
   Font * getFont(int iIndex);

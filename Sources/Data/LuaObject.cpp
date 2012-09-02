@@ -16,7 +16,7 @@ LuaObject * LuaObject::static_pCurrentLuaCaller = NULL;
 // Name : LuaObject
 //  Constructor
 // -----------------------------------------------------------------
-LuaObject::LuaObject(u32 uInstance, wchar_t * sEdition, wchar_t * sObjectType, wchar_t * sObjectName, DebugManager * pDebug)
+LuaObject::LuaObject(u32 uInstance, const wchar_t * sEdition, const wchar_t * sObjectType, const wchar_t * sObjectName, DebugManager * pDebug)
 {
   m_uInstanceId = (uInstance == 0) ? ++static_uIdGenerator : uInstance;
   wsafecpy(m_sObjectName, NAME_MAX_CHARS, sObjectName);
@@ -150,7 +150,7 @@ LuaObject::~LuaObject()
 // -----------------------------------------------------------------
 // Name : prepareLuaFunction
 // -----------------------------------------------------------------
-lua_State * LuaObject::prepareLuaFunction(wchar_t * sFunc)
+lua_State * LuaObject::prepareLuaFunction(const wchar_t * sFunc)
 {
   if (m_pLuaState == NULL)
     return NULL;
@@ -173,7 +173,7 @@ lua_State * LuaObject::prepareLuaFunction(wchar_t * sFunc)
 // -----------------------------------------------------------------
 // Name : callPreparedLuaFunction
 // -----------------------------------------------------------------
-bool LuaObject::callPreparedLuaFunction(int iNbParams, int iNbResults, wchar_t * sFunc, wchar_t * sParams)
+bool LuaObject::callPreparedLuaFunction(int iNbParams, int iNbResults, const wchar_t * sFunc, const wchar_t * sParams)
 {
 #ifdef DEBUG
   extern GameRoot * g_pMainGameRoot;
@@ -234,7 +234,7 @@ bool LuaObject::callPreparedLuaFunction(int iNbParams, int iNbResults, wchar_t *
 //    "s" stands for string (wchar_t*)
 //  For instance, if sParamsType is "idd", the following parameters must be int, double, double.
 // -----------------------------------------------------------------
-bool LuaObject::callLuaFunction(wchar_t * sFunc, int iNbResults, wchar_t * sParamsType, ...)
+bool LuaObject::callLuaFunction(const wchar_t * sFunc, int iNbResults, const wchar_t * sParamsType, ...)
 {
   if (!prepareLuaFunction(sFunc))
     return false;
@@ -297,7 +297,7 @@ bool LuaObject::callLuaFunction(wchar_t * sFunc, int iNbResults, wchar_t * sPara
 // -----------------------------------------------------------------
 // Name : getLuaVarNumber
 // -----------------------------------------------------------------
-bool LuaObject::getLuaVarNumber(wchar_t * sVarName, double * d)
+bool LuaObject::getLuaVarNumber(const wchar_t * sVarName, double * d)
 {
   // Convert wchar_t variable name to ASCII
   char sAsciiVar[64];
@@ -319,7 +319,7 @@ bool LuaObject::getLuaVarNumber(wchar_t * sVarName, double * d)
 // -----------------------------------------------------------------
 // Name : getLuaVarString
 // -----------------------------------------------------------------
-bool LuaObject::getLuaVarString(wchar_t * sVarName, wchar_t * sString, int size)
+bool LuaObject::getLuaVarString(const wchar_t * sVarName, wchar_t * sString, int size)
 {
   // Convert wchar_t variable name to ASCII
   char sAsciiVar[64];
@@ -342,7 +342,7 @@ bool LuaObject::getLuaVarString(wchar_t * sVarName, wchar_t * sString, int size)
 // -----------------------------------------------------------------
 // Name : getLuaVarNumberArray
 // -----------------------------------------------------------------
-bool LuaObject::getLuaVarNumberArray(wchar_t * sVarName, double * pArray, int size)
+bool LuaObject::getLuaVarNumberArray(const wchar_t * sVarName, double * pArray, int size)
 {
   // Convert wchar_t variable name to ASCII
   char sAsciiVar[64];
@@ -371,7 +371,7 @@ bool LuaObject::getLuaVarNumberArray(wchar_t * sVarName, double * pArray, int si
 // -----------------------------------------------------------------
 // Name : getLuaVarStringArray
 // -----------------------------------------------------------------
-bool LuaObject::getLuaVarStringArray(wchar_t * sVarName, wchar_t ** pArray, int tabSize, int strSize)
+bool LuaObject::getLuaVarStringArray(const wchar_t * sVarName, wchar_t ** pArray, int tabSize, int strSize)
 {
   // Convert wchar_t variable name to ASCII
   char sAsciiVar[64];
@@ -431,7 +431,7 @@ wchar_t * LuaObject::getUniqueId(wchar_t * sId, int iSize)
 // -----------------------------------------------------------------
 // Name : isUniqueId
 // -----------------------------------------------------------------
-bool LuaObject::isUniqueId(wchar_t * sEdition, wchar_t * sObjectType, wchar_t * sObjectName)
+bool LuaObject::isUniqueId(const wchar_t * sEdition, const wchar_t * sObjectType, const wchar_t * sObjectName)
 {
   return wcscmp(sEdition, m_sObjectEdition) == 0
     && wcscmp(sObjectType, m_sObjectType) == 0

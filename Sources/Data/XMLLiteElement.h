@@ -19,8 +19,8 @@ public:
   wchar_t * getCharValue();
   long getIntValue();
   double getFloatValue();
-  void setName(wchar_t * sName) { wsafecpy(m_sName, XMLLITE_MAX_NAME_CHARS, sName); };
-  void setValue(wchar_t * sValue) { wsafecpy(m_sValue, XMLLITE_MAX_VALUE_CHARS, sValue); };
+  void setName(const wchar_t * sName) { wsafecpy(m_sName, XMLLITE_MAX_NAME_CHARS, sName); };
+  void setValue(const wchar_t * sValue) { wsafecpy(m_sValue, XMLLITE_MAX_VALUE_CHARS, sValue); };
 
 private:
   wchar_t m_sName[XMLLITE_MAX_NAME_CHARS];
@@ -37,8 +37,8 @@ public:
   short getType() { return m_iType; };
   void setType(short iType) { m_iType = iType; };
   wchar_t * getName() { return m_sName; };
-  void setName(wchar_t * sName) { wsafecpy(m_sName, XMLLITE_MAX_NAME_CHARS, sName); };
-  void setValue(wchar_t * sValue) { wsafecpy(m_sValue, XMLLITE_MAX_VALUE_CHARS, sValue); };
+  void setName(const wchar_t * sName) { wsafecpy(m_sName, XMLLITE_MAX_NAME_CHARS, sName); };
+  void setValue(const wchar_t * sValue) { wsafecpy(m_sValue, XMLLITE_MAX_VALUE_CHARS, sValue); };
   wchar_t * getCharValue();
   long getIntValue();
   double getFloatValue();
@@ -47,11 +47,11 @@ public:
   XMLLiteElement * getLastChild() { return (XMLLiteElement*) m_pChildren->getLast(0); };
   XMLLiteElement * getPrevChild() { return (XMLLiteElement*) m_pChildren->getPrev(0); };
   void addChild(XMLLiteElement * pChild) { m_pChildren->addLast(pChild); };
-  XMLLiteElement * getChildByName(wchar_t * sName);
+  XMLLiteElement * getChildByName(const wchar_t * sName);
   XMLLiteAttribute * getFirstAttribute() { return (XMLLiteAttribute*) m_pAttributes->getFirst(0); };
   XMLLiteAttribute * getNextAttribute() { return (XMLLiteAttribute*) m_pAttributes->getNext(0); };
   void addAttribute(XMLLiteAttribute * pAttr) { m_pAttributes->addLast(pAttr); };
-  XMLLiteAttribute * getAttributeByName(wchar_t * sName);
+  XMLLiteAttribute * getAttributeByName(const wchar_t * sName);
 
 private:
   wchar_t m_sName[XMLLITE_MAX_NAME_CHARS];

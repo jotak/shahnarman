@@ -2,11 +2,12 @@
 // INI FILE
 // -----------------------------------------------------------------
 #include "IniFile.h"
+#include <stdio.h>
 
 // -----------------------------------------------------------------
 // Name : IniFile
 // -----------------------------------------------------------------
-IniFile::IniFile(wchar_t * sFileName, int iMaxLines)
+IniFile::IniFile(const wchar_t * sFileName, int iMaxLines)
 {
   FILE * pFile = NULL;
 
@@ -77,9 +78,6 @@ IniFile::IniFile(wchar_t * sFileName, int iMaxLines)
 // -----------------------------------------------------------------
 IniFile::~IniFile()
 {
-#ifdef DBG_VERBOSE1
-  printf("Begin destroy IniFile\n");
-#endif
   if (m_sAllValues != NULL)
   {
     for (int i = 0; i < m_iMaxLines; i++)
@@ -98,15 +96,12 @@ IniFile::~IniFile()
     }
     delete[] m_sAllKeys;
   }
-#ifdef DBG_VERBOSE1
-  printf("End destroy IniFile\n");
-#endif
 }
 
 // -----------------------------------------------------------------
 // Name : findValue
 // -----------------------------------------------------------------
-wchar_t * IniFile::findValue(wchar_t * sKey)
+wchar_t * IniFile::findValue(const wchar_t * sKey)
 {
   for (int i = 0; i < m_iMaxLines; i++)
   {
@@ -119,16 +114,16 @@ wchar_t * IniFile::findValue(wchar_t * sKey)
 // -----------------------------------------------------------------
 // Name : findCharValue
 // -----------------------------------------------------------------
-wchar_t * IniFile::findCharValue(wchar_t * sKey, wchar_t * sDefault)
+const wchar_t * IniFile::findCharValue(const wchar_t * sKey, const wchar_t * sDefault)
 {
-  wchar_t * res = findValue(sKey);
+  const wchar_t * res = findValue(sKey);
   return (res == NULL ? sDefault : res);
 }
 
 // -----------------------------------------------------------------
 // Name : findIntValue
 // -----------------------------------------------------------------
-int IniFile::findIntValue(wchar_t * sKey, int iDefault)
+int IniFile::findIntValue(const wchar_t * sKey, int iDefault)
 {
   wchar_t * res = findValue(sKey);
   if (res == NULL)
@@ -141,7 +136,7 @@ int IniFile::findIntValue(wchar_t * sKey, int iDefault)
 // -----------------------------------------------------------------
 // Name : findBoolValue
 // -----------------------------------------------------------------
-bool IniFile::findBoolValue(wchar_t * sKey, bool bDefault)
+bool IniFile::findBoolValue(const wchar_t * sKey, bool bDefault)
 {
   wchar_t * res = findValue(sKey);
   if (res == NULL)
@@ -152,7 +147,7 @@ bool IniFile::findBoolValue(wchar_t * sKey, bool bDefault)
 // -----------------------------------------------------------------
 // Name : findFloatValue
 // -----------------------------------------------------------------
-float IniFile::findFloatValue(wchar_t * sKey, float fDefault)
+float IniFile::findFloatValue(const wchar_t * sKey, float fDefault)
 {
   wchar_t * res = findValue(sKey);
   if (res == NULL)
@@ -165,7 +160,7 @@ float IniFile::findFloatValue(wchar_t * sKey, float fDefault)
 // -----------------------------------------------------------------
 // Name : setKeyAndCharValue
 // -----------------------------------------------------------------
-void IniFile::setKeyAndCharValue(wchar_t * sKey, wchar_t * sValue)
+void IniFile::setKeyAndCharValue(const wchar_t * sKey, const wchar_t * sValue)
 {
   wchar_t * res = findValue(sKey);
   if (res == NULL)
@@ -187,7 +182,7 @@ void IniFile::setKeyAndCharValue(wchar_t * sKey, wchar_t * sValue)
 // -----------------------------------------------------------------
 // Name : setKeyAndBoolValue
 // -----------------------------------------------------------------
-void IniFile::setKeyAndBoolValue(wchar_t * sKey, bool bValue)
+void IniFile::setKeyAndBoolValue(const wchar_t * sKey, bool bValue)
 {
   setKeyAndCharValue(sKey, bValue ? L"true" : L"false");
 }
@@ -195,7 +190,7 @@ void IniFile::setKeyAndBoolValue(wchar_t * sKey, bool bValue)
 // -----------------------------------------------------------------
 // Name : setKeyAndIntValue
 // -----------------------------------------------------------------
-void IniFile::setKeyAndIntValue(wchar_t * sKey, int iValue)
+void IniFile::setKeyAndIntValue(const wchar_t * sKey, int iValue)
 {
   wchar_t sValue[INI_READER_MAX_CHARS];
   swprintf_s(sValue, INI_READER_MAX_CHARS, L"%d", iValue);
@@ -205,7 +200,7 @@ void IniFile::setKeyAndIntValue(wchar_t * sKey, int iValue)
 // -----------------------------------------------------------------
 // Name : setKeyAndFloatValue
 // -----------------------------------------------------------------
-void IniFile::setKeyAndFloatValue(wchar_t * sKey, float fValue)
+void IniFile::setKeyAndFloatValue(const wchar_t * sKey, float fValue)
 {
   wchar_t sValue[INI_READER_MAX_CHARS];
   swprintf_s(sValue, INI_READER_MAX_CHARS, L"%f", fValue);
@@ -215,7 +210,7 @@ void IniFile::setKeyAndFloatValue(wchar_t * sKey, float fValue)
 // -----------------------------------------------------------------
 // Name : write
 // -----------------------------------------------------------------
-void IniFile::write(wchar_t * sFileName)
+void IniFile::write(const wchar_t * sFileName)
 {
   FILE * pFile = NULL;
   if (0 != wfopen(&pFile, sFileName, L"w"))
@@ -224,7 +219,7 @@ void IniFile::write(wchar_t * sFileName)
   for (int i = 0; i < m_iMaxLines; i++)
   {
     if (m_sAllKeys[i] != NULL && wcscmp(m_sAllKeys[i], L"") != 0)
-      fwprintf_s(pFile, L"%s = %s\n", m_sAllKeys[i], m_sAllValues[i]);
+      fwprintf(pFile, L"%s = %s\n", m_sAllKeys[i], m_sAllValues[i]);
   }
 
   fclose(pFile);

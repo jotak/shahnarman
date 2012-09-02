@@ -64,7 +64,7 @@ double XMLLiteElement::getFloatValue()
 // -----------------------------------------------------------------
 // Name : getChildByName
 // -----------------------------------------------------------------
-XMLLiteElement * XMLLiteElement::getChildByName(wchar_t * sName)
+XMLLiteElement * XMLLiteElement::getChildByName(const wchar_t * sName)
 {
   XMLLiteElement * pChild = getFirstChild();
   while (pChild != NULL)
@@ -79,7 +79,7 @@ XMLLiteElement * XMLLiteElement::getChildByName(wchar_t * sName)
 // -----------------------------------------------------------------
 // Name : getAttributeByName
 // -----------------------------------------------------------------
-XMLLiteAttribute * XMLLiteElement::getAttributeByName(wchar_t * sName)
+XMLLiteAttribute * XMLLiteElement::getAttributeByName(const wchar_t * sName)
 {
   XMLLiteAttribute * pAttr = getFirstAttribute();
   while (pAttr != NULL)

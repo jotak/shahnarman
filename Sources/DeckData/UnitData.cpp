@@ -93,7 +93,7 @@ void UnitData::deserialize(Serializer * pSerializer, DebugManager * pDebug)
 // -----------------------------------------------------------------
 // Name : getInfos
 // -----------------------------------------------------------------
-wchar_t * UnitData::getInfos(wchar_t * sBuf, int iSize, wchar_t * sSeparator, bool bName, wchar_t * sEthn, bool bAlign, bool bCharacs, bool bSkills, bool bDesc)
+wchar_t * UnitData::getInfos(wchar_t * sBuf, int iSize, const wchar_t * sSeparator, bool bName, const wchar_t * sEthn, bool bAlign, bool bCharacs, bool bSkills, bool bDesc)
 {
   // Item full description
   wsafecpy(sBuf, iSize, L"");

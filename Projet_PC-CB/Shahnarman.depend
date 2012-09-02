@@ -1,0 +1,568 @@
+# depslib dependency file v1.0
+1346448905 source:/media/Naymlap/dev/work/Shahnarman/Sources/Audio/AudioManager.cpp
+	"AudioManager.h"
+	"../LocalClient.h"
+	"../Debug/DebugManager.h"
+	"../Data/Parameters.h"
+
+1346449039 /media/Naymlap/dev/work/Shahnarman/Sources/Audio/AudioManager.h
+	<al/al.h>
+	<al/alc.h>
+	<vorbis/vorbisfile.h>
+	"../SystemHeaders.h"
+	"../utils.h"
+
+1346449618 /media/Naymlap/dev/work/Shahnarman/Sources/SystemHeaders.h
+	<stdlib.h>
+	<errno.h>
+	<windows.h>
+	<mmsystem.h>
+	"GL\glew.h"
+	"GL\glut.h"
+	<png.h>
+	<stdlib.h>
+	<errno.h>
+	<GL/glew.h>
+	<GL/glut.h>
+	<png.h>
+	<GLUT/glut.h>
+
+1346622822 /media/Naymlap/dev/work/Shahnarman/Sources/utils.h
+	<stdio.h>
+	<string.h>
+	<cmath>
+	<assert.h>
+	<windows.h>
+	<string>
+	<hash_map>
+	<queue>
+	<cstring>
+	<iostream>
+	<cmath>
+	<assert.h>
+	<wchar.h>
+	<queue>
+	<tr1/unordered_map>
+	<tr1/memory>
+
+1346623166 /media/Naymlap/dev/work/Shahnarman/Sources/LocalClient.h
+	"utils.h"
+
+1346439135 /media/Naymlap/dev/work/Shahnarman/Sources/Debug/DebugManager.h
+	"../Common/TimeController.h"
+
+1346433168 /media/Naymlap/dev/work/Shahnarman/Sources/Common/TimeController.h
+	"BaseObject.h"
+
+1346433168 /media/Naymlap/dev/work/Shahnarman/Sources/Common/BaseObject.h
+	"../utils.h"
+
+1346433168 /media/Naymlap/dev/work/Shahnarman/Sources/Data/Parameters.h
+	"../utils.h"
+
+1346433168 source:/media/Naymlap/dev/work/Shahnarman/Sources/Common/ObjectList.cpp
+	"ObjectList.h"
+
+1346433168 /media/Naymlap/dev/work/Shahnarman/Sources/Common/ObjectList.h
+	"BaseObject.h"
+
+1346433168 source:/media/Naymlap/dev/work/Shahnarman/Sources/Common/SortInterface.cpp
+	"SortInterface.h"
+
+1346433168 /media/Naymlap/dev/work/Shahnarman/Sources/Common/SortInterface.h
+	"ObjectList.h"
+
+1346433168 source:/media/Naymlap/dev/work/Shahnarman/Sources/Common/TimeController.cpp
+	"TimeController.h"
+
+1346433168 source:/media/Naymlap/dev/work/Shahnarman/Sources/Common/md5.cpp
+	"md5.h"
+
+1346433168 /media/Naymlap/dev/work/Shahnarman/Sources/Common/md5.h
+	<assert.h>
+	<stdlib.h>
+
+1165591858 /media/Naymlap/dev/sdk/Other includes/al/al.h
+
+1176476568 /media/Naymlap/dev/sdk/Other includes/al/alc.h
+
+1272494916 /media/Naymlap/dev/sdk/Other includes/vorbis/vorbisfile.h
+	<stdio.h>
+	"codec.h"
+
+1298746199 /media/Naymlap/dev/sdk/Other includes/vorbis/codec.h
+	<ogg/ogg.h>
+
+1298746151 /media/Naymlap/dev/sdk/Other includes/ogg/ogg.h
+	<stddef.h>
+	<ogg/os_types.h>
+
+1291374612 /media/Naymlap/dev/sdk/Other includes/ogg/os_types.h
+	<stdint.h>
+	<sys/types.h>
+	<sys/types.h>
+	<inttypes.h>
+	<sys/types.h>
+	<inttypes.h>
+	<ogg/config_types.h>
+
+1346442483 /media/Naymlap/dev/sdk/Other includes/ogg/config_types.h
+	<sys/types.h>
+
+1194340120 /media/Naymlap/dev/sdk/Other includes/png.h
+	"zlib.h"
+	"pngconf.h"
+	<crtdbg.h>
+
+1121657210 /media/Naymlap/dev/sdk/Other includes/zlib.h
+	"zconf.h"
+
+1117266036 /media/Naymlap/dev/sdk/Other includes/zconf.h
+	<windows.h>
+	<sys/types.h>
+	<unistd.h>
+	<unixio.h>
+
+1194340120 /media/Naymlap/dev/sdk/Other includes/pngconf.h
+	"pngusr.h"
+	"config.h"
+	<windows.h>
+	<stdio.h>
+	<stdio.h>
+	<sys/types.h>
+	<setjmp.h>
+	<strings.h>
+	<string.h>
+	<stdlib.h>
+	<fp.h>
+	<math.h>
+	<m68881.h>
+	<mem.h>
+	<alloc.h>
+	<malloc.h>
+	<time.h>
+	<dos.h>
+
+1198789810 /media/Naymlap/dev/sdk/Other includes/GL/glew.h
+	<stddef.h>
+	<OpenGL/glu.h>
+	<GL/glu.h>
+
+1098527008 /media/Naymlap/dev/sdk/Other includes/GL/glut.h
+	<windows.h>
+	<GL/gl.h>
+	<GL/glu.h>
+
+1346433168 source:/media/Naymlap/dev/work/Shahnarman/Sources/Data/DataFactory.cpp
+	"DataFactory.h"
+	"Parameters.h"
+	"../LocalClient.h"
+	"../Debug/DebugManager.h"
+	"../DeckData/Edition.h"
+	"../DeckData/Profile.h"
+	"../DeckData/AvatarData.h"
+
+1346433168 /media/Naymlap/dev/work/Shahnarman/Sources/Data/DataFactory.h
+	"../Common/ObjectList.h"
+
+1346439135 /media/Naymlap/dev/work/Shahnarman/Sources/DeckData/Edition.h
+	"../Data/XMLObject.h"
+
+1346623394 /media/Naymlap/dev/work/Shahnarman/Sources/Data/XMLObject.h
+	"../Common/ObjectList.h"
+
+1346433168 /media/Naymlap/dev/work/Shahnarman/Sources/DeckData/Profile.h
+	"../Common/BaseObject.h"
+
+1346433168 /media/Naymlap/dev/work/Shahnarman/Sources/DeckData/AvatarData.h
+	"UnitData.h"
+	"ProgressionTree.h"
+
+1346623598 /media/Naymlap/dev/work/Shahnarman/Sources/DeckData/UnitData.h
+	"../Data/XMLObject.h"
+	"../Gameboard/Skill.h"
+
+1346433168 /media/Naymlap/dev/work/Shahnarman/Sources/Gameboard/Skill.h
+	"../Data/LuaObject.h"
+	"../Server/NetworkData.h"
+
+1346622214 /media/Naymlap/dev/work/Shahnarman/Sources/Data/LuaObject.h
+	"../Common/ObjectList.h"
+	"../Players/Mana.h"
+	<lua.hpp>
+
+1346439135 /media/Naymlap/dev/work/Shahnarman/Sources/Players/Mana.h
+	"../Common/BaseObject.h"
+
+1222959296 /media/Naymlap/dev/sdk/Other includes/lua.hpp
+	"lua/lua.h"
+	"lua/lualib.h"
+	"lua/lauxlib.h"
+
+1218011412 /media/Naymlap/dev/sdk/Other includes/lua/lua.h
+	<stdarg.h>
+	<stddef.h>
+	"luaconf.h"
+
+1219919976 /media/Naymlap/dev/sdk/Other includes/lua/luaconf.h
+	<limits.h>
+	<stddef.h>
+	<unistd.h>
+	<io.h>
+	<stdio.h>
+	<stdio.h>
+	<readline/readline.h>
+	<readline/history.h>
+	<assert.h>
+	<math.h>
+	<unistd.h>
+
+1198749744 /media/Naymlap/dev/sdk/Other includes/lua/lualib.h
+	"lua.h"
+
+1198749744 /media/Naymlap/dev/sdk/Other includes/lua/lauxlib.h
+	<stddef.h>
+	<stdio.h>
+	"lua.h"
+
+1346433168 /media/Naymlap/dev/work/Shahnarman/Sources/Server/NetworkData.h
+
+1346433168 /media/Naymlap/dev/work/Shahnarman/Sources/DeckData/ProgressionTree.h
+	"ProgressionElement.h"
+
+1346433168 /media/Naymlap/dev/work/Shahnarman/Sources/DeckData/ProgressionElement.h
+	"../Data/XMLObject.h"
+	"../Data/LuaObject.h"
+
+1346622828 source:/media/Naymlap/dev/work/Shahnarman/Sources/Data/FileSerializer.cpp
+	"FileSerializer.h"
+	<stdio.h>
+
+1346433168 /media/Naymlap/dev/work/Shahnarman/Sources/Data/FileSerializer.h
+	"Serializer.h"
+	"../utils.h"
+
+1346433168 /media/Naymlap/dev/work/Shahnarman/Sources/Data/Serializer.h
+
+1346622839 source:/media/Naymlap/dev/work/Shahnarman/Sources/Data/IniFile.cpp
+	"IniFile.h"
+	<stdio.h>
+
+1346622483 /media/Naymlap/dev/work/Shahnarman/Sources/Data/IniFile.h
+	"../utils.h"
+
+1346622847 source:/media/Naymlap/dev/work/Shahnarman/Sources/Data/LocalisationTool.cpp
+	"LocalisationTool.h"
+	"XMLLiteReader.h"
+	"../Debug/DebugManager.h"
+	"Parameters.h"
+	<stdarg.h>
+	<stdio.h>
+
+1346433168 /media/Naymlap/dev/work/Shahnarman/Sources/Data/LocalisationTool.h
+	"../utils.h"
+
+1346433168 /media/Naymlap/dev/work/Shahnarman/Sources/Data/XMLLiteReader.h
+	"XMLLiteElement.h"
+
+1346622950 /media/Naymlap/dev/work/Shahnarman/Sources/Data/XMLLiteElement.h
+	"../Common/ObjectList.h"
+
+1346439135 source:/media/Naymlap/dev/work/Shahnarman/Sources/Data/LuaContext.cpp
+	"LuaContext.h"
+	"../Players/PlayerManagerAbstract.h"
+	"../Players/Player.h"
+	"../Players/Spell.h"
+	"../Gameboard/Unit.h"
+	"../Gameboard/Town.h"
+	"../Gameboard/Temple.h"
+	"../Gameboard/Building.h"
+	"../Gameboard/SpecialTile.h"
+
+1346433168 /media/Naymlap/dev/work/Shahnarman/Sources/Data/LuaContext.h
+	"../utils.h"
+
+1346439135 /media/Naymlap/dev/work/Shahnarman/Sources/Players/PlayerManagerAbstract.h
+	"../utils.h"
+
+1346439135 /media/Naymlap/dev/work/Shahnarman/Sources/Players/Player.h
+	"Mana.h"
+	"../Data/LuaTargetable.h"
+
+1346439135 /media/Naymlap/dev/work/Shahnarman/Sources/Data/LuaTargetable.h
+	"../lua_callbacks.h"
+	"../Common/ObjectList.h"
+	"LuaObject.h"
+
+1346439135 /media/Naymlap/dev/work/Shahnarman/Sources/lua_callbacks.h
+	<lua.hpp>
+
+1346439135 /media/Naymlap/dev/work/Shahnarman/Sources/Players/Spell.h
+	"../Data/LuaObject.h"
+	"Mana.h"
+	"../Server/NetworkData.h"
+
+1346439135 /media/Naymlap/dev/work/Shahnarman/Sources/Gameboard/Unit.h
+	"MapObject.h"
+	"../Physics/PhysicalObject.h"
+	"../DeckData/UnitData.h"
+	"../Players/Mana.h"
+
+1346433168 /media/Naymlap/dev/work/Shahnarman/Sources/Gameboard/MapObject.h
+	"../Common/GraphicObject.h"
+	"../Data/LuaTargetable.h"
+	"Map.h"
+
+1346439135 /media/Naymlap/dev/work/Shahnarman/Sources/Common/GraphicObject.h
+	"BaseObject.h"
+	"../Geometries/Geometry.h"
+
+1346433168 /media/Naymlap/dev/work/Shahnarman/Sources/Geometries/Geometry.h
+	"../Display/Texture.h"
+	"../Display/DisplayEngine.h"
+	"GeometryModifier.h"
+
+1346433168 /media/Naymlap/dev/work/Shahnarman/Sources/Display/Texture.h
+	"../utils.h"
+	"../SystemHeaders.h"
+
+1346433168 /media/Naymlap/dev/work/Shahnarman/Sources/Display/DisplayEngine.h
+	"../Data/Parameters.h"
+	"TextureEngine.h"
+	"../Fonts/FontEngine.h"
+	"../Common/ObjectList.h"
+
+1346433168 /media/Naymlap/dev/work/Shahnarman/Sources/Display/TextureEngine.h
+	"Texture.h"
+	"../Common/BaseObject.h"
+
+1346623133 /media/Naymlap/dev/work/Shahnarman/Sources/Fonts/FontEngine.h
+	"Font.h"
+
+1346433168 /media/Naymlap/dev/work/Shahnarman/Sources/Fonts/Font.h
+	"../utils.h"
+
+1346433168 /media/Naymlap/dev/work/Shahnarman/Sources/Geometries/GeometryModifier.h
+	"../Common/BaseObject.h"
+
+1346433168 /media/Naymlap/dev/work/Shahnarman/Sources/Gameboard/Map.h
+	"MapTile.h"
+	"Pathfinder.h"
+	"../Server/NetworkData.h"
+	"../Interface/StackGroupInterface.h"
+	"../Geometries/GeometryQuads.h"
+
+1346433168 /media/Naymlap/dev/work/Shahnarman/Sources/Gameboard/MapTile.h
+	"../Common/GraphicObject.h"
+	"../Data/LuaTargetable.h"
+
+1346439135 /media/Naymlap/dev/work/Shahnarman/Sources/Gameboard/Pathfinder.h
+	"MapTile.h"
+
+1346433168 /media/Naymlap/dev/work/Shahnarman/Sources/Interface/StackGroupInterface.h
+	"../Common/ObjectList.h"
+
+1346433168 /media/Naymlap/dev/work/Shahnarman/Sources/Geometries/GeometryQuads.h
+	"Geometry.h"
+
+1346433168 /media/Naymlap/dev/work/Shahnarman/Sources/Physics/PhysicalObject.h
+	"../Common/ObjectList.h"
+	"Movement.h"
+
+1346433168 /media/Naymlap/dev/work/Shahnarman/Sources/Physics/Movement.h
+	"../Common/BaseObject.h"
+
+1346433168 /media/Naymlap/dev/work/Shahnarman/Sources/Gameboard/Town.h
+	"MapObject.h"
+	"../DeckData/Ethnicity.h"
+
+1346433168 /media/Naymlap/dev/work/Shahnarman/Sources/DeckData/Ethnicity.h
+	"../Data/XMLObject.h"
+
+1346433168 /media/Naymlap/dev/work/Shahnarman/Sources/Gameboard/Temple.h
+	"MapObject.h"
+
+1346433168 /media/Naymlap/dev/work/Shahnarman/Sources/Gameboard/Building.h
+	"../Data/LuaObject.h"
+	"../Server/NetworkData.h"
+
+1346433168 /media/Naymlap/dev/work/Shahnarman/Sources/Gameboard/SpecialTile.h
+	"../Data/LuaObject.h"
+
+1346439135 source:/media/Naymlap/dev/work/Shahnarman/Sources/Data/LuaTargetable.cpp
+	"LuaTargetable.h"
+	"../Server/NetworkData.h"
+	"../Players/PlayerManager.h"
+	"../Players/Spell.h"
+	"../Players/Player.h"
+	"../Gameboard/Skill.h"
+	"../Gameboard/Building.h"
+	"../Gameboard/Temple.h"
+	"../Gameboard/Town.h"
+	"../Gameboard/Unit.h"
+	"../LocalClient.h"
+	"../Data/LocalisationTool.h"
+
+1346439135 /media/Naymlap/dev/work/Shahnarman/Sources/Players/PlayerManager.h
+	"PlayerManagerAbstract.h"
+
+1346433168 source:/media/Naymlap/dev/work/Shahnarman/Sources/Data/NetworkSerializer.cpp
+	"NetworkSerializer.h"
+
+1346433168 /media/Naymlap/dev/work/Shahnarman/Sources/Data/NetworkSerializer.h
+	"Serializer.h"
+	"../Server/NetworkData.h"
+	"../utils.h"
+
+1346622197 source:/media/Naymlap/dev/work/Shahnarman/Sources/Data/LuaObject.cpp
+	"LuaObject.h"
+	"../Debug/DebugManager.h"
+	"../Data/LocalisationTool.h"
+	"../lua_callbacks.h"
+	"../Gameboard/Town.h"
+	"../Gameboard/Unit.h"
+	"../Players/Player.h"
+	"../GameRoot.h"
+	"../LocalClient.h"
+	"../Data/Parameters.h"
+
+1346433168 /media/Naymlap/dev/work/Shahnarman/Sources/GameRoot.h
+
+1346622971 source:/media/Naymlap/dev/work/Shahnarman/Sources/Data/XMLLiteElement.cpp
+	"XMLLiteElement.h"
+
+1346623302 source:/media/Naymlap/dev/work/Shahnarman/Sources/Data/XMLObject.cpp
+	"XMLObject.h"
+	"XMLLiteElement.h"
+
+1346439135 source:/media/Naymlap/dev/work/Shahnarman/Sources/Debug/DebugManager.cpp
+	"DebugManager.h"
+	"../LocalClient.h"
+	"../errorcodes.h"
+	"../Data/IniFile.h"
+	"../Geometries/GeometryText.h"
+	"../Input/InputEngine.h"
+	"../Data/XMLLiteReader.h"
+	"../Data/LocalisationTool.h"
+	"../Data/DataFactory.h"
+	"../DeckData/Profile.h"
+	"../DeckData/AvatarData.h"
+	"../Server/Server.h"
+	"../Server/MapReader.h"
+	"../Server/TurnSolver.h"
+	"../GUIClasses/guiLabel.h"
+	"../Players/Player.h"
+	"../Players/Artifact.h"
+	"../Gameboard/Unit.h"
+
+1346433168 /media/Naymlap/dev/work/Shahnarman/Sources/errorcodes.h
+
+1346433168 /media/Naymlap/dev/work/Shahnarman/Sources/Geometries/GeometryText.h
+	"Geometry.h"
+
+1346433168 /media/Naymlap/dev/work/Shahnarman/Sources/Input/InputEngine.h
+	"EventListener.h"
+	<stack>
+
+1346433168 /media/Naymlap/dev/work/Shahnarman/Sources/Input/EventListener.h
+	"../utils.h"
+
+1346439135 /media/Naymlap/dev/work/Shahnarman/Sources/Server/Server.h
+	"../Gameboard/Map.h"
+
+1346623078 /media/Naymlap/dev/work/Shahnarman/Sources/Server/MapReader.h
+	"../Common/BaseObject.h"
+	<lua.hpp>
+
+1346439135 /media/Naymlap/dev/work/Shahnarman/Sources/Server/TurnSolver.h
+	"SpellsSolver.h"
+	"../Players/PlayerManagerAbstract.h"
+
+1346439135 /media/Naymlap/dev/work/Shahnarman/Sources/Server/SpellsSolver.h
+	"../Data/LuaContext.h"
+
+1346433168 /media/Naymlap/dev/work/Shahnarman/Sources/GUIClasses/guiLabel.h
+	"guiComponent.h"
+
+1346433168 /media/Naymlap/dev/work/Shahnarman/Sources/GUIClasses/guiComponent.h
+	"guiObject.h"
+
+1346433168 /media/Naymlap/dev/work/Shahnarman/Sources/GUIClasses/guiObject.h
+	"../Common/GraphicObject.h"
+	"../Input/InputEngine.h"
+
+1346623693 /media/Naymlap/dev/work/Shahnarman/Sources/Players/Artifact.h
+	"../Data/XMLObject.h"
+	"../Data/LuaObject.h"
+
+1346439135 source:/media/Naymlap/dev/work/Shahnarman/Sources/DeckData/AIData.cpp
+	"AIData.h"
+	"../LocalClient.h"
+	"../Debug/DebugManager.h"
+	"../Data/DataFactory.h"
+	"../Players/Spell.h"
+	"ShopItem.h"
+	"Edition.h"
+	"AvatarData.h"
+
+1346439135 /media/Naymlap/dev/work/Shahnarman/Sources/DeckData/AIData.h
+	"../Data/XMLObject.h"
+
+1346439135 /media/Naymlap/dev/work/Shahnarman/Sources/DeckData/ShopItem.h
+	"../GUIClasses/guiSmartSlider.h"
+
+1346433168 /media/Naymlap/dev/work/Shahnarman/Sources/GUIClasses/guiSmartSlider.h
+	"guiLabel.h"
+	"../Geometries/GeometryQuads.h"
+
+1346622863 source:/media/Naymlap/dev/work/Shahnarman/Sources/Data/Parameters.cpp
+	"Parameters.h"
+	"../Debug/DebugManager.h"
+	"IniFile.h"
+	<locale.h>
+	<stdio.h>
+
+1346622871 source:/media/Naymlap/dev/work/Shahnarman/Sources/Data/XMLLiteReader.cpp
+	"XMLLiteReader.h"
+	<stdio.h>
+
+1346623533 source:/media/Naymlap/dev/work/Shahnarman/Sources/DeckData/AvatarData.cpp
+	"AvatarData.h"
+	"Edition.h"
+	"../LocalClient.h"
+	"../Debug/DebugManager.h"
+	"../Display/TextureEngine.h"
+	"../Data/DataFactory.h"
+	"../Data/LocalisationTool.h"
+	"../Data/NetworkSerializer.h"
+
+1346623566 source:/media/Naymlap/dev/work/Shahnarman/Sources/DeckData/Edition.cpp
+	"Edition.h"
+	"../Debug/DebugManager.h"
+	"../Data/LocalisationTool.h"
+	"../Data/DataFactory.h"
+	"ShopItem.h"
+	"../Data/XMLLiteReader.h"
+	"../GUIClasses/guiSmartSlider.h"
+	"AvatarData.h"
+	"Ethnicity.h"
+	"ProgressionTree.h"
+	"ProgressionElement.h"
+	"Profile.h"
+	"ShahmahCreation.h"
+	"AIData.h"
+	"../Players/Spell.h"
+	"../Players/Artifact.h"
+	"../Gameboard/SpecialTile.h"
+	"../Common/ObjectList.h"
+	"../LocalClient.h"
+	<locale.h>
+
+1346433168 /media/Naymlap/dev/work/Shahnarman/Sources/DeckData/ShahmahCreation.h
+	"../Common/ObjectList.h"
+
+1346439135 source:/media/Naymlap/dev/work/Shahnarman/Sources/DeckData/Ethnicity.cpp
+	"Ethnicity.h"
+	"../Debug/DebugManager.h"
+	"../Data/XMLLiteReader.h"
+

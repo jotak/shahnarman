@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<CodeBlocks_layout_file>
+	<ActiveTarget name="Debug" />
+	<File name="../Sources/Audio/AudioManager.h" open="0" top="0" tabpos="0">
+		<Cursor position="751" topLine="0" />
+	</File>
+	<File name="../Sources/Data/FileSerializer.cpp" open="1" top="0" tabpos="5">
+		<Cursor position="48" topLine="0" />
+	</File>
+	<File name="../Sources/Data/IniFile.cpp" open="1" top="0" tabpos="6">
+		<Cursor position="194" topLine="0" />
+	</File>
+	<File name="../Sources/Data/IniFile.h" open="0" top="0" tabpos="0">
+		<Cursor position="519" topLine="0" />
+	</File>
+	<File name="../Sources/Data/LocalisationTool.cpp" open="1" top="0" tabpos="7">
+		<Cursor position="159" topLine="0" />
+	</File>
+	<File name="../Sources/Data/LocalisationTool.h" open="0" top="0" tabpos="0">
+		<Cursor position="566" topLine="0" />
+	</File>
+	<File name="../Sources/Data/LuaObject.cpp" open="0" top="0" tabpos="0">
+		<Cursor position="9044" topLine="244" />
+	</File>
+	<File name="../Sources/Data/LuaObject.h" open="0" top="0" tabpos="0">
+		<Cursor position="1781" topLine="31" />
+	</File>
+	<File name="../Sources/Data/Parameters.cpp" open="1" top="0" tabpos="2">
+		<Cursor position="277" topLine="0" />
+	</File>
+	<File name="../Sources/Data/Parameters.h" open="1" top="0" tabpos="3">
+		<Cursor position="230" topLine="0" />
+	</File>
+	<File name="../Sources/Data/XMLLiteElement.cpp" open="0" top="0" tabpos="0">
+		<Cursor position="2565" topLine="47" />
+	</File>
+	<File name="../Sources/Data/XMLLiteElement.h" open="0" top="0" tabpos="0">
+		<Cursor position="2538" topLine="10" />
+	</File>
+	<File name="../Sources/Data/XMLLiteReader.cpp" open="1" top="0" tabpos="4">
+		<Cursor position="3501" topLine="93" />
+	</File>
+	<File name="../Sources/Data/XMLObject.cpp" open="1" top="0" tabpos="8">
+		<Cursor position="1767" topLine="27" />
+	</File>
+	<File name="../Sources/Data/XMLObject.h" open="1" top="0" tabpos="9">
+		<Cursor position="335" topLine="0" />
+	</File>
+	<File name="../Sources/Debug/DebugManager.cpp" open="0" top="0" tabpos="0">
+		<Cursor position="12526" topLine="336" />
+	</File>
+	<File name="../Sources/DeckData/AvatarData.cpp" open="1" top="0" tabpos="10">
+		<Cursor position="5425" topLine="117" />
+	</File>
+	<File name="../Sources/DeckData/Edition.cpp" open="1" top="0" tabpos="11">
+		<Cursor position="36510" topLine="862" />
+	</File>
+	<File name="../Sources/DeckData/Profile.cpp" open="1" top="1" tabpos="13">
+		<Cursor position="8643" topLine="225" />
+	</File>
+	<File name="../Sources/DeckData/UnitData.cpp" open="0" top="0" tabpos="0">
+		<Cursor position="3343" topLine="87" />
+	</File>
+	<File name="../Sources/DeckData/UnitData.h" open="1" top="0" tabpos="12">
+		<Cursor position="1253" topLine="3" />
+	</File>
+	<File name="../Sources/Fonts/FontEngine.cpp" open="0" top="0" tabpos="0">
+		<Cursor position="1670" topLine="31" />
+	</File>
+	<File name="../Sources/Fonts/FontEngine.h" open="0" top="0" tabpos="0">
+		<Cursor position="449" topLine="0" />
+	</File>
+	<File name="../Sources/LocalClient.cpp" open="0" top="0" tabpos="0">
+		<Cursor position="31920" topLine="986" />
+	</File>
+	<File name="../Sources/LocalClient.h" open="0" top="0" tabpos="0">
+		<Cursor position="1795" topLine="26" />
+	</File>
+	<File name="../Sources/Players/Artifact.cpp" open="0" top="0" tabpos="0">
+		<Cursor position="1007" topLine="0" />
+	</File>
+	<File name="../Sources/Players/Artifact.h" open="0" top="0" tabpos="0">
+		<Cursor position="1720" topLine="13" />
+	</File>
+	<File name="../Sources/Server/MapReader.cpp" open="0" top="0" tabpos="0">
+		<Cursor position="10120" topLine="295" />
+	</File>
+	<File name="../Sources/Server/MapReader.h" open="0" top="0" tabpos="0">
+		<Cursor position="1128" topLine="27" />
+	</File>
+	<File name="../Sources/SystemHeaders.h" open="0" top="0" tabpos="0">
+		<Cursor position="0" topLine="2" />
+	</File>
+	<File name="../Sources/_System/linux_utils.cpp" open="0" top="0" tabpos="0">
+		<Cursor position="0" topLine="91" />
+	</File>
+	<File name="../Sources/utils.h" open="1" top="0" tabpos="1">
+		<Cursor position="502" topLine="19" />
+	</File>
+</CodeBlocks_layout_file>

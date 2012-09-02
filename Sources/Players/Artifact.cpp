@@ -4,7 +4,7 @@
 // Name : Artifact
 //  Constructor
 // -----------------------------------------------------------------
-Artifact::Artifact(wchar_t * sEdition, wchar_t * sId, wchar_t * sTexture, u8 uPosition, bool bTwoHanded)
+Artifact::Artifact(const wchar_t * sEdition, const wchar_t * sId, const wchar_t * sTexture, u8 uPosition, bool bTwoHanded)
 {
   wsafecpy(m_sEdition, NAME_MAX_CHARS, sEdition);
   wsafecpy(m_sObjectId, NAME_MAX_CHARS, sId);

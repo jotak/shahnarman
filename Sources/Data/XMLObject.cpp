@@ -47,7 +47,7 @@ void XMLObject::readLocalizedElementsFromXml(XMLLiteElement * pNode)
 // -----------------------------------------------------------------
 // Name : addLocalizedElement
 // -----------------------------------------------------------------
-void XMLObject::addLocalizedElement(const wchar_t * sKey, wchar_t * sValue, wchar_t * sLanguage)
+void XMLObject::addLocalizedElement(const wchar_t * sKey, const wchar_t * sValue, const wchar_t * sLanguage)
 {
   LocalizedElement * pLocElt = new LocalizedElement(sKey, sValue, sLanguage);
   m_pLocalizedElements->addLast(pLocElt);
@@ -56,7 +56,7 @@ void XMLObject::addLocalizedElement(const wchar_t * sKey, wchar_t * sValue, wcha
 // -----------------------------------------------------------------
 // Name : findLocalizedElement
 // -----------------------------------------------------------------
-void XMLObject::findLocalizedElement(wchar_t * sValue, int iSize, wchar_t * sLanguage, wchar_t * sKey)
+void XMLObject::findLocalizedElement(wchar_t * sValue, int iSize, const wchar_t * sLanguage, const wchar_t * sKey)
 {
   wsafecpy(sValue, iSize, L"");
   LocalizedElement * pElt = (LocalizedElement*) m_pLocalizedElements->getFirst(0);
@@ -97,7 +97,7 @@ void XMLObject::findLocalizedElement(wchar_t * sValue, int iSize, wchar_t * sLan
 // Name : LocalizedElement
 //  constructor
 // -----------------------------------------------------------------
-XMLObject::LocalizedElement::LocalizedElement(const wchar_t * sKey, wchar_t * sValue, wchar_t * sLanguage)
+XMLObject::LocalizedElement::LocalizedElement(const wchar_t * sKey, const wchar_t * sValue, const wchar_t * sLanguage)
 {
   int length = (int) wcslen(sValue);
   m_sValue = new wchar_t[length + 1];
