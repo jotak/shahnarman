@@ -32,26 +32,26 @@ InfoboxDlg::InfoboxDlg(int iWidth, LocalClient * pLocalClient) : guiDocument()
   //for (u8 i = 0; i < m_pLocalClient->getPlayerManager()->getPlayersCount(); i++)
   //  m_pPlayerStates[i] = -1;
   //m_iLastTurnTimer = -1;
-  //wsafecpy(m_sLastTurnTimer, 64, L"");
+  //wsafecpy(m_sLastTurnTimer, 64, "");
 
   m_iLittleSquareYDecal = 17;
   m_pLittleSquare = new guiImage();
   m_pLittleSquare->init(
-    pLocalClient->getDisplay()->getTextureEngine()->loadTexture(L"littleSquare"),
-    L"LittleSquare", 0, 0, -1, -1, m_pLocalClient->getDisplay());
+    pLocalClient->getDisplay()->getTextureEngine()->loadTexture("littleSquare"),
+    "LittleSquare", 0, 0, -1, -1, m_pLocalClient->getDisplay());
   addComponent(m_pLittleSquare);
 
-  wchar_t sTitle[64];
-  i18n->getText(L"INFO", sTitle, 64);
+  char sTitle[64];
+  i18n->getText("INFO", sTitle, 64);
   guiDocument::init(sTitle,
-    pLocalClient->getDisplay()->getTextureEngine()->findTexture(L"interface:WinBg"),
+    pLocalClient->getDisplay()->getTextureEngine()->findTexture("interface:WinBg"),
     0, 0, iWidth, 1, pLocalClient->getDisplay());
 
   m_pInfoText = new guiLabel();
-  m_pInfoText->init(L"", TEXT_FONT, TEXT_COLOR, L"InfoText", SPACING, SPACING, getWidth() - 10, 0, pLocalClient->getDisplay());
+  m_pInfoText->init("", TEXT_FONT, TEXT_COLOR, "InfoText", SPACING, SPACING, getWidth() - 10, 0, pLocalClient->getDisplay());
   addComponent(m_pInfoText);
   m_pPlayersList = new guiLabel();
-  m_pPlayersList->init(L"", TEXT_FONT, TEXT_COLOR, L"PlayersList", 9, ZONE_SPACING + m_pInfoText->getYPos() + m_pInfoText->getHeight(), 0, 0, pLocalClient->getDisplay());
+  m_pPlayersList->init("", TEXT_FONT, TEXT_COLOR, "PlayersList", 9, ZONE_SPACING + m_pInfoText->getYPos() + m_pInfoText->getHeight(), 0, 0, pLocalClient->getDisplay());
   addComponent(m_pPlayersList);
 
   // Stack data
@@ -112,45 +112,45 @@ void InfoboxDlg::update(double delta)
 // -----------------------------------------------------------------
 void InfoboxDlg::updatePlayersState()
 {
-  wchar_t sPlayersList[LABEL_MAX_CHARS] = L"";
+  char sPlayersList[LABEL_MAX_CHARS] = "";
   Player * pPlayer = (Player*) m_pLocalClient->getPlayerManager()->getPlayersList()->getFirst(0);
   int i = 0;
   while (pPlayer != NULL)
   {
     PlayerState state = pPlayer->getState();
     wsafecat(sPlayersList, LABEL_MAX_CHARS, pPlayer->getAvatarName());
-    wchar_t sStatus[64] = L"";
+    char sStatus[64] = "";
     switch (state)
     {
     case waiting:
-      i18n->getText(L"WAITING", sStatus, 64);
+      i18n->getText("WAITING", sStatus, 64);
       break;
     case playing:
-      i18n->getText(L"PLAYING", sStatus, 64);
+      i18n->getText("PLAYING", sStatus, 64);
       break;
     case finished:
-      i18n->getText(L"FINISHED", sStatus, 64);
+      i18n->getText("FINISHED", sStatus, 64);
       break;
     case connection_error:
-      i18n->getText(L"CONNECTION_PROBLEM", sStatus, 64);
+      i18n->getText("CONNECTION_PROBLEM", sStatus, 64);
       break;
       default:
       break;
     }
-    wsafecat(sPlayersList, LABEL_MAX_CHARS, L" (");
+    wsafecat(sPlayersList, LABEL_MAX_CHARS, " (");
     if (state == playing)
     {
       double fTimer = m_pLocalClient->getPlayerManager()->getTurnTimer();
       if (fTimer > 0)
       {
         int iTimer = (int) fTimer;
-        wchar_t sTimer[64];
-        swprintf(sTimer, 64, L"%d:%02d ", iTimer / 60, iTimer % 60);
+        char sTimer[64];
+        snprintf(sTimer, 64, "%d:%02d ", iTimer / 60, iTimer % 60);
         wsafecat(sPlayersList, LABEL_MAX_CHARS, sTimer);
       }
     }
     wsafecat(sPlayersList, LABEL_MAX_CHARS, sStatus);
-    wsafecat(sPlayersList, LABEL_MAX_CHARS, L")\n");
+    wsafecat(sPlayersList, LABEL_MAX_CHARS, ")\n");
     pPlayer = (Player*) m_pLocalClient->getPlayerManager()->getPlayersList()->getNext(0);
     i++;
   }
@@ -158,11 +158,11 @@ void InfoboxDlg::updatePlayersState()
   while (pPlayer != NULL)
   {
     wsafecat(sPlayersList, LABEL_MAX_CHARS, pPlayer->getAvatarName());
-    wchar_t sStatus[64] = L"";
-    i18n->getText(L"DEAD", sStatus, 64);
-    wsafecat(sPlayersList, LABEL_MAX_CHARS, L" (");
+    char sStatus[64] = "";
+    i18n->getText("DEAD", sStatus, 64);
+    wsafecat(sPlayersList, LABEL_MAX_CHARS, " (");
     wsafecat(sPlayersList, LABEL_MAX_CHARS, sStatus);
-    wsafecat(sPlayersList, LABEL_MAX_CHARS, L")\n");
+    wsafecat(sPlayersList, LABEL_MAX_CHARS, ")\n");
     pPlayer = (Player*) m_pLocalClient->getPlayerManager()->getDeadPlayers()->getNext(0);
     i++;
   }
@@ -176,9 +176,9 @@ void InfoboxDlg::updatePlayersState()
 // -----------------------------------------------------------------
 // Name : setInfoText
 // -----------------------------------------------------------------
-void InfoboxDlg::setInfoText(wchar_t * sText)
+void InfoboxDlg::setInfoText(char * sText)
 {
-  if (wcscmp(sText, m_pInfoText->getText()) != 0)
+  if (strcmp(sText, m_pInfoText->getText()) != 0)
   {
     int oldh = m_pInfoText->getHeight();
     m_pInfoText->setText(sText);
@@ -187,7 +187,7 @@ void InfoboxDlg::setInfoText(wchar_t * sText)
     guiComponent * pCpnt = getFirstComponent();
     while (pCpnt != NULL)
     {
-      if (wcscmp(pCpnt->getId(), L"StackObject") == 0)
+      if (strcmp(pCpnt->getId(), "StackObject") == 0)
         pCpnt->moveBy(0, diff);
       pCpnt = getNextComponent();
     }
@@ -220,7 +220,7 @@ void InfoboxDlg::checkSize()
 // -----------------------------------------------------------------
 bool InfoboxDlg::onButtonEvent(ButtonAction * pEvent, guiComponent * pCpnt)
 {
-  if (wcscmp(pCpnt->getId(), L"StackObject") == 0 && m_pGroupInterface != NULL && pCpnt->getAttachment() != NULL && (pCpnt->getType() & GOTYPE_BUTTON))
+  if (strcmp(pCpnt->getId(), "StackObject") == 0 && m_pGroupInterface != NULL && pCpnt->getAttachment() != NULL && (pCpnt->getType() & GOTYPE_BUTTON))
   {
     if ((m_pLocalClient->getInput()->hasKeyboard() && !((KeyboardInputEngine*)m_pLocalClient->getInput())->isCtrlPressed() && m_pCurrentGroup != NULL) ||
       (!m_pLocalClient->getInput()->hasKeyboard() && pEvent->eButton == Button1))
@@ -235,7 +235,7 @@ bool InfoboxDlg::onButtonEvent(ButtonAction * pEvent, guiComponent * pCpnt)
     {
       if (pCpnt->getType() & GOTYPE_BUTTON)
       {
-        if ((wcscmp(pCpnt->getId(), L"StackObject") == 0 && pCpnt->getAttachment() == NULL) || m_pCurrentGroup == NULL)
+        if ((strcmp(pCpnt->getId(), "StackObject") == 0 && pCpnt->getAttachment() == NULL) || m_pCurrentGroup == NULL)
           ((guiToggleButton*)pCpnt)->setClickState(false);
         else
           ((guiToggleButton*)pCpnt)->setClickState(m_pCurrentGroup->goTo(0, pCpnt->getAttachment()));
@@ -266,7 +266,7 @@ guiObject * InfoboxDlg::onCursorMoveEvent(int xPxl, int yPxl)
     {
       Player * pPlayer = (Player*) m_pLocalClient->getPlayerManager()->getPlayersList()->goTo(0, iPlayer);
       assert(pPlayer != NULL);
-      wchar_t sBuf[LABEL_MAX_CHARS] = L"";
+      char sBuf[LABEL_MAX_CHARS] = "";
       setInfoText(pPlayer->getInfo(sBuf, LABEL_MAX_CHARS));
     }
   }
@@ -277,13 +277,13 @@ guiObject * InfoboxDlg::onCursorMoveEvent(int xPxl, int yPxl)
     {
       if (cpnt->isAt(xPxl, yPxl))
       {
-        if (wcscmp(cpnt->getId(), L"StackObject") == 0)
+        if (strcmp(cpnt->getId(), "StackObject") == 0)
         {
           BaseObject * pAttachment = cpnt->getAttachment();
           if (pAttachment != NULL)
           {
             m_pTarget = cpnt;
-            wchar_t sBuf[LABEL_MAX_CHARS] = L"";
+            char sBuf[LABEL_MAX_CHARS] = "";
             if (((GraphicObject*)pAttachment)->getType() & GOTYPE_MAPTILE)
               setInfoText(((MapTile*)pAttachment)->getInfo(sBuf, LABEL_MAX_CHARS));
             else
@@ -331,7 +331,7 @@ void InfoboxDlg::setMapTile(MapTile * pTile, u32 uDisplayFilter, u32 uClickFilte
   guiComponent * pCpnt = getFirstComponent();
   while (pCpnt != NULL)
   {
-    if (wcscmp(pCpnt->getId(), L"StackObject") == 0)
+    if (strcmp(pCpnt->getId(), "StackObject") == 0)
       pCpnt = deleteCurrentComponent(true);
     else
       pCpnt = getNextComponent();
@@ -430,7 +430,7 @@ bool InfoboxDlg::addButton(GraphicObject * pObj, int xPxl, int yPxl, int iSize)
   }
   // Create button
   int itex = (pObj->getType() & GOTYPE_MAPTILE) ? ((MapTile*)pObj)->getTexture() : ((MapObject*)pObj)->getTexture();
-  guiToggleButton * pBtn = guiToggleButton::createDefaultTexturedToggleButton(itex, iSize, L"StackObject", getDisplay());
+  guiToggleButton * pBtn = guiToggleButton::createDefaultTexturedToggleButton(itex, iSize, "StackObject", getDisplay());
   pBtn->moveTo(xPxl, yPxl);
   pBtn->setAttachment(pObj);
   pBtn->setCatchButton2Events(!m_pLocalClient->getInput()->hasKeyboard());
@@ -441,7 +441,7 @@ bool InfoboxDlg::addButton(GraphicObject * pObj, int xPxl, int yPxl, int iSize)
     Player * pPlayer = m_pLocalClient->getPlayerManager()->findPlayer(((MapObject*)pObj)->getOwner());
     assert(pPlayer != NULL);
     guiImage * pImg = new guiImage();
-    pImg->init(pPlayer->m_iBannerTex, L"StackObject", xPxl + 2 * iSize / 3, yPxl, iSize / 3, iSize / 3, getDisplay());
+    pImg->init(pPlayer->m_iBannerTex, "StackObject", xPxl + 2 * iSize / 3, yPxl, iSize / 3, iSize / 3, getDisplay());
     pImg->setDiffuseColor(pPlayer->m_Color);
     addComponent(pImg);
   }
@@ -464,7 +464,7 @@ bool InfoboxDlg::addImage(GraphicObject * pObj, int xPxl, int yPxl, int iSize)
   // Create image
   int itex = (pObj->getType() & GOTYPE_MAPTILE) ? ((MapTile*)pObj)->getTexture() : ((MapObject*)pObj)->getTexture();
   guiImage * pImage = new guiImage();
-  pImage->init(itex, L"StackObject", xPxl, yPxl, iSize, iSize, getDisplay());
+  pImage->init(itex, "StackObject", xPxl, yPxl, iSize, iSize, getDisplay());
   pImage->setAttachment(pObj);
   addComponent(pImage);
   if (pObj->getType() & GOTYPE_UNIT)
@@ -473,7 +473,7 @@ bool InfoboxDlg::addImage(GraphicObject * pObj, int xPxl, int yPxl, int iSize)
     Player * pPlayer = m_pLocalClient->getPlayerManager()->findPlayer(((MapObject*)pObj)->getOwner());
     assert(pPlayer != NULL);
     guiImage * pImg = new guiImage();
-    pImg->init(pPlayer->m_iBannerTex, L"StackObject", xPxl + 2 * iSize / 3, yPxl, iSize / 3, iSize / 3, getDisplay());
+    pImg->init(pPlayer->m_iBannerTex, "StackObject", xPxl + 2 * iSize / 3, yPxl, iSize / 3, iSize / 3, getDisplay());
     pImg->setDiffuseColor(pPlayer->m_Color);
     addComponent(pImg);
   }

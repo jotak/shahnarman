@@ -2,7 +2,7 @@
 
 u8 g_uLuaSelectTargetType;
 u32 g_uLuaSelectConstraints = SELECT_CONSTRAINT_NONE;
-wchar_t g_sLuaSelectCallback[128] = L"";
+char g_sLuaSelectCallback[128] = "";
 bool g_bLuaSelectOnResolve = false;
 u32 g_uLuaCurrentObjectType;
 bool g_bLuaEvaluationMode = false;
@@ -13,7 +13,7 @@ extern GameRoot * g_pMainGameRoot;
 //************************************************************************************
 // Utility functions used in callbacks
 //************************************************************************************
-bool setValidFor(u32 uTypes, const wchar_t * sFuncName)
+bool setValidFor(u32 uTypes, const char * sFuncName)
 {
   Server * pServer = g_pMainGameRoot->m_pLocalClient->getServer();
   assert(pServer != NULL && pServer->isResolving());
@@ -23,20 +23,20 @@ bool setValidFor(u32 uTypes, const wchar_t * sFuncName)
     return true;
   else
   {
-    wchar_t sText[512];
-    swprintf(sText, 512, L"Lua interaction error: function \"%s\" called by invalid LUA type.", sFuncName);
+    char sText[512];
+    snprintf(sText, 512, "Lua interaction error: function \"%s\" called by invalid LUA type.", sFuncName);
     pServer->getDebug()->notifyErrorMessage(sText);
     return false;
   }
 }
 
-Server * checkServerResolving(const wchar_t * sFuncName)
+Server * checkServerResolving(const char * sFuncName)
 {
   Server * pServer = g_pMainGameRoot->m_pLocalClient->getServer();
   if (pServer == NULL || !pServer->isResolving())
   {
-    wchar_t sText[512];
-    swprintf(sText, 512, L"Lua interaction error: trying to call \"%s\" outside resolve phase.", sFuncName);
+    char sText[512];
+    snprintf(sText, 512, "Lua interaction error: trying to call \"%s\" outside resolve phase.", sFuncName);
     g_pMainGameRoot->m_pLocalClient->getDebug()->notifyErrorMessage(sText);
     return NULL;
   }
@@ -70,58 +70,58 @@ Player * getServerOrLocalPlayer(u8 uId)
     return g_pMainGameRoot->m_pLocalClient->getPlayerManager()->findPlayer(uId);
 }
 
-bool checkNumberOfParams(lua_State * pState, int iExpected, const wchar_t * sFuncName)
+bool checkNumberOfParams(lua_State * pState, int iExpected, const char * sFuncName)
 {
 #ifdef DEBUG
   bool bLog = (g_pMainGameRoot->m_pLocalClient->getClientParameters()->iLogLevel >= 3);
   if (bLog)
   {
-    wchar_t sText[1024];
-    swprintf(sText, 1024, L"call from LUA: %s", sFuncName);
+    char sText[1024];
+    snprintf(sText, 1024, "call from LUA: %s", sFuncName);
     g_pMainGameRoot->m_pLocalClient->getDebug()->log(sText);
   }
 #endif
   int nbParams = lua_gettop(pState);
   if (nbParams != iExpected)
   {
-    wchar_t sText[512];
-    swprintf(sText, 512, L"Lua interaction error: \"%s\" should receive %d arguments.", sFuncName, iExpected);
+    char sText[512];
+    snprintf(sText, 512, "Lua interaction error: \"%s\" should receive %d arguments.", sFuncName, iExpected);
     g_pMainGameRoot->m_pLocalClient->getDebug()->notifyErrorMessage(sText);
     return false;
   }
   return true;
 }
 
-int checkNumberOfParams(lua_State * pState, int iMinExpected, int iMaxExpected, const wchar_t * sFuncName)
+int checkNumberOfParams(lua_State * pState, int iMinExpected, int iMaxExpected, const char * sFuncName)
 {
 #ifdef DEBUG
   bool bLog = (g_pMainGameRoot->m_pLocalClient->getClientParameters()->iLogLevel >= 3);
   if (bLog)
   {
-    wchar_t sText[1024];
-    swprintf(sText, 1024, L"call from LUA: %s", sFuncName);
+    char sText[1024];
+    snprintf(sText, 1024, "call from LUA: %s", sFuncName);
     g_pMainGameRoot->m_pLocalClient->getDebug()->log(sText);
   }
 #endif
   int nbParams = lua_gettop(pState);
   if (nbParams < iMinExpected || nbParams > iMaxExpected)
   {
-    wchar_t sText[512];
-    swprintf(sText, 512, L"Lua interaction error: \"%s\" should receive between %d and %d arguments.", sFuncName, iMinExpected, iMaxExpected);
+    char sText[512];
+    snprintf(sText, 512, "Lua interaction error: \"%s\" should receive between %d and %d arguments.", sFuncName, iMinExpected, iMaxExpected);
     g_pMainGameRoot->m_pLocalClient->getDebug()->notifyErrorMessage(sText);
     return -1;
   }
   return nbParams;
 }
 
-bool readTargetData(const char * sType, const char * sConstraints, const char * sCallback, const wchar_t * sFuncName)
+bool readTargetData(const char * sType, const char * sConstraints, const char * sCallback, const char * sFuncName)
 {
   // Get target type
   g_uLuaSelectTargetType = getTargetTypeFromName(sType);
   if (g_uLuaSelectTargetType == 0)
   {
-    wchar_t sError[256];
-    swprintf(sError, 256, L"Lua interaction error: parameter \"type\" in \"%s\" is unknown.", sFuncName);
+    char sError[256];
+    snprintf(sError, 256, "Lua interaction error: parameter \"type\" in \"%s\" is unknown.", sFuncName);
     g_pMainGameRoot->m_pLocalClient->getDebug()->notifyErrorMessage(sError);
     return false;
   }
@@ -142,25 +142,25 @@ bool readTargetData(const char * sType, const char * sConstraints, const char * 
         iParse++;
       sWord[iWord] = '\0';
       iWord = 0;
-      if (_stricmp(sWord, "inrange") == 0)
+      if (strcasecmp(sWord, "inrange") == 0)
         g_uLuaSelectConstraints |= SELECT_CONSTRAINT_INRANGE;
-      else if (_stricmp(sWord, "owned") == 0)
+      else if (strcasecmp(sWord, "owned") == 0)
         g_uLuaSelectConstraints |= SELECT_CONSTRAINT_OWNED;
-      else if (_stricmp(sWord, "opponent") == 0)
+      else if (strcasecmp(sWord, "opponent") == 0)
         g_uLuaSelectConstraints |= SELECT_CONSTRAINT_OPPONENT;
-      else if (_stricmp(sWord, "not_avatar") == 0)
+      else if (strcasecmp(sWord, "not_avatar") == 0)
         g_uLuaSelectConstraints |= SELECT_CONSTRAINT_NOT_AVATAR;
-      else if (_stricmp(sWord, "custom") == 0)
+      else if (strcasecmp(sWord, "custom") == 0)
         g_uLuaSelectConstraints |= SELECT_CONSTRAINT_CUSTOM;
       else
       {
-        wchar_t sError[256];
-        swprintf(sError, 256, L"Lua interaction warning: parameter \"constraints\" in \"%s\" has an invalid constraint.", sFuncName);
+        char sError[256];
+        snprintf(sError, 256, "Lua interaction warning: parameter \"constraints\" in \"%s\" has an invalid constraint.", sFuncName);
         g_pMainGameRoot->m_pLocalClient->getDebug()->notifyErrorMessage(sError);
       }
     }
   }
-  strtow(g_sLuaSelectCallback, 128, sCallback);
+  wsafecpy(g_sLuaSelectCallback, 128, sCallback);
   return true;
 }
 
@@ -191,7 +191,7 @@ bool checkCustomConstraints(CoordsMap mp, BaseObject * pObj, u8 uType)
       {
         LuaTargetable * pTarget = LuaTargetable::convertFromBaseObject(pObj, uType);
         assert(pTarget != NULL);
-        wtostr(sParams, 64, pTarget->getIdentifiers());
+        wsafecpy(sParams, 64, pTarget->getIdentifiers());
       }
     }
     lua_pushstring(g_pLuaStateForTarget, sParams);
@@ -200,17 +200,17 @@ bool checkCustomConstraints(CoordsMap mp, BaseObject * pObj, u8 uType)
     {
     case LUA_ERRRUN:
       {
-        g_pMainGameRoot->m_pLocalClient->getDebug()->notifyErrorMessage(L"LUA runtime error when calling onCheckSelect.");
+        g_pMainGameRoot->m_pLocalClient->getDebug()->notifyErrorMessage("LUA runtime error when calling onCheckSelect.");
         return false;
       }
     case LUA_ERRMEM:
       {
-        g_pMainGameRoot->m_pLocalClient->getDebug()->notifyErrorMessage(L"LUA memory allocation error when calling onCheckSelect.");
+        g_pMainGameRoot->m_pLocalClient->getDebug()->notifyErrorMessage("LUA memory allocation error when calling onCheckSelect.");
         return false;
       }
     case LUA_ERRERR:
       {
-        g_pMainGameRoot->m_pLocalClient->getDebug()->notifyErrorMessage(L"LUA error handling error when calling onCheckSelect.");
+        g_pMainGameRoot->m_pLocalClient->getDebug()->notifyErrorMessage("LUA error handling error when calling onCheckSelect.");
         return false;
       }
     }
@@ -220,7 +220,7 @@ bool checkCustomConstraints(CoordsMap mp, BaseObject * pObj, u8 uType)
   }
   else
   {
-    g_pMainGameRoot->m_pLocalClient->getDebug()->notifyErrorMessage(L"LUA error: function onCheckSelect not found.");
+    g_pMainGameRoot->m_pLocalClient->getDebug()->notifyErrorMessage("LUA error: function onCheckSelect not found.");
     lua_pop(g_pLuaStateForTarget, 1);
     return false;
   }
@@ -475,7 +475,7 @@ LuaTargetable * checkTargetTile(CoordsMap mp, bool * bMultipleTargets)
   return NULL;
 }
 /*
-void getObjectParameters(LuaTargetable * pTarget, u8 uType, wchar_t * wParams, char * sParams)
+void getObjectParameters(LuaTargetable * pTarget, u8 uType, char * wParams, char * sParams)
 {
   switch (pTarget->get)
   {
@@ -484,7 +484,7 @@ void getObjectParameters(LuaTargetable * pTarget, u8 uType, wchar_t * wParams, c
       if (sParams != NULL)
         snprintf(sParams, 64, "tile %d %d", mp.x, mp.y);
       if (wParams != NULL)
-        swprintf(wParams, 64, L"tile %d %d", mp.x, mp.y);
+        snprintf(wParams, 64, "tile %d %d", mp.x, mp.y);
       break;
     }
   case SELECT_TYPE_UNIT:
@@ -493,7 +493,7 @@ void getObjectParameters(LuaTargetable * pTarget, u8 uType, wchar_t * wParams, c
       if (sParams != NULL)
         snprintf(sParams, 64, "%d %d %ld", ((Unit*)pObj)->getOwner(), (long)((Unit*)pObj)->getId());
       if (wParams != NULL)
-        swprintf(wParams, 64, L"%d %d %ld", ((Unit*)pObj)->getOwner(), (long)((Unit*)pObj)->getId());
+        snprintf(wParams, 64, "%d %d %ld", ((Unit*)pObj)->getOwner(), (long)((Unit*)pObj)->getId());
       break;
     }
   case SELECT_TYPE_TOWN:
@@ -501,7 +501,7 @@ void getObjectParameters(LuaTargetable * pTarget, u8 uType, wchar_t * wParams, c
       if (sParams != NULL)
         snprintf(sParams, 64, "%d %ld", (long)((Town*)pObj)->getId());
       if (wParams != NULL)
-        swprintf(wParams, 64, L"%d %ld", (long)((Town*)pObj)->getId());
+        snprintf(wParams, 64, "%d %ld", (long)((Town*)pObj)->getId());
       break;
     }
   case SELECT_TYPE_TEMPLE:
@@ -509,7 +509,7 @@ void getObjectParameters(LuaTargetable * pTarget, u8 uType, wchar_t * wParams, c
       if (sParams != NULL)
         snprintf(sParams, 64, "%d %ld", (long)((Temple*)pObj)->getId());
       if (wParams != NULL)
-        swprintf(wParams, 64, L"%d %ld", (long)((Temple*)pObj)->getId());
+        snprintf(wParams, 64, "%d %ld", (long)((Temple*)pObj)->getId());
       break;
     }
   case SELECT_TYPE_ANY_SPELL:
@@ -517,7 +517,7 @@ void getObjectParameters(LuaTargetable * pTarget, u8 uType, wchar_t * wParams, c
       if (sParams != NULL)
         snprintf(sParams, 64, "%d %d %ld", (int)((Spell*)pObj)->getPlayerId(), (long)((Spell*)pObj)->getInstanceId());
       if (wParams != NULL)
-        swprintf(wParams, 64, L"%d %d %ld", (int)((Spell*)pObj)->getPlayerId(), (long)((Spell*)pObj)->getInstanceId());
+        snprintf(wParams, 64, "%d %d %ld", (int)((Spell*)pObj)->getPlayerId(), (long)((Spell*)pObj)->getInstanceId());
       break;
     }
   case SELECT_TYPE_PLAYER:
@@ -525,7 +525,7 @@ void getObjectParameters(LuaTargetable * pTarget, u8 uType, wchar_t * wParams, c
       if (sParams != NULL)
         snprintf(sParams, 64, "%d %d", (int)((Player*)pObj)->m_uPlayerId);
       if (wParams != NULL)
-        swprintf(wParams, 64, L"%d %d", (int)((Player*)pObj)->m_uPlayerId);
+        snprintf(wParams, 64, "%d %d", (int)((Player*)pObj)->m_uPlayerId);
       break;
     }
   }
@@ -622,26 +622,26 @@ void clbkSelectTarget_OnClickGameboard(CoordsMap mp)
     g_pMainGameRoot->m_pLocalClient->getInterface()->getStatusDialog()->hide();
     g_pMainGameRoot->m_pLocalClient->getGameboard()->unsetTargetMode();
     g_pMainGameRoot->m_pLocalClient->getPlayerManager()->enableEOT(true);
-    wchar_t sParams[64];
-    wchar_t sInfos[256] = L"";
+    char sParams[64];
+    char sInfos[256] = "";
     wsafecpy(sParams, 64, pObj->getIdentifiers());
     if (g_uLuaCurrentObjectType == LUAOBJECT_SPELL)
     {
       Spell * pSpell = g_pMainGameRoot->m_pLocalClient->getPlayerManager()->getSpellBeingCast();
       pSpell->addResolveParameters(sParams);
-      if (wcscmp(g_sLuaSelectCallback, L"") == 0)
+      if (strcmp(g_sLuaSelectCallback, "") == 0)
         g_pMainGameRoot->m_pLocalClient->getPlayerManager()->castSpellFinished(true, g_bLuaSelectOnResolve);
       else
-        pSpell->callLuaFunction(g_sLuaSelectCallback, 0, L"");
+        pSpell->callLuaFunction(g_sLuaSelectCallback, 0, "");
     }
     else if (g_uLuaCurrentObjectType == LUAOBJECT_SKILL)
     {
       ChildEffect * pEffect = g_pMainGameRoot->m_pLocalClient->getPlayerManager()->getSkillBeingActivated();
       pEffect->addResolveParameters(sParams);
-      if (wcscmp(g_sLuaSelectCallback, L"") == 0)
+      if (strcmp(g_sLuaSelectCallback, "") == 0)
         g_pMainGameRoot->m_pLocalClient->getPlayerManager()->skillWasActivated(true, g_bLuaSelectOnResolve);
       else
-        pEffect->getLua()->callLuaFunction(g_sLuaSelectCallback, 0, L"");
+        pEffect->getLua()->callLuaFunction(g_sLuaSelectCallback, 0, "");
     }
   }
   else  // Invalid target
@@ -686,13 +686,13 @@ bool clbkSelectTarget_OnClickInterface(BaseObject * pObj, u8 enum1Spell2Player3M
 {
   if (pObj == NULL)
     return false;
-  wchar_t sParams[64] = L"";
-  wchar_t sInfos[256] = L"";
+  char sParams[64] = "";
+  char sInfos[256] = "";
   bool bOk = false;
   if (enum1Spell2Player3Mapobj == 1)
   {
     bOk = true;
-    swprintf(sParams, 64, L"spell %d %ld", (int)((Spell*)pObj)->getPlayerId(), (long)((Spell*)pObj)->getInstanceId());
+    snprintf(sParams, 64, "spell %d %ld", (int)((Spell*)pObj)->getPlayerId(), (long)((Spell*)pObj)->getInstanceId());
     g_pMainGameRoot->m_pLocalClient->getInterface()->getSpellsSelectorDialog()->hide();
   }
   else if (enum1Spell2Player3Mapobj == 2)
@@ -720,20 +720,20 @@ bool clbkSelectTarget_OnClickInterface(BaseObject * pObj, u8 enum1Spell2Player3M
       g_pMainGameRoot->m_pLocalClient->getGameboard()->unsetTargetMode();
       Spell * pSpell = g_pMainGameRoot->m_pLocalClient->getPlayerManager()->getSpellBeingCast();
       pSpell->addResolveParameters(sParams);
-      if (wcscmp(g_sLuaSelectCallback, L"") == 0)
+      if (strcmp(g_sLuaSelectCallback, "") == 0)
         g_pMainGameRoot->m_pLocalClient->getPlayerManager()->castSpellFinished(true, g_bLuaSelectOnResolve);
       else
-        pSpell->callLuaFunction(g_sLuaSelectCallback, 0, L"");
+        pSpell->callLuaFunction(g_sLuaSelectCallback, 0, "");
     }
     else if (g_uLuaCurrentObjectType == LUAOBJECT_SKILL)
     {
       g_pMainGameRoot->m_pLocalClient->getGameboard()->unsetTargetMode();
       ChildEffect * pEffect = g_pMainGameRoot->m_pLocalClient->getPlayerManager()->getSkillBeingActivated();
       pEffect->addResolveParameters(sParams);
-      if (wcscmp(g_sLuaSelectCallback, L"") == 0)
+      if (strcmp(g_sLuaSelectCallback, "") == 0)
         g_pMainGameRoot->m_pLocalClient->getPlayerManager()->skillWasActivated(true, g_bLuaSelectOnResolve);
       else
-        pEffect->getLua()->callLuaFunction(g_sLuaSelectCallback, 0, L"");
+        pEffect->getLua()->callLuaFunction(g_sLuaSelectCallback, 0, "");
     }
   }
   else
@@ -743,7 +743,7 @@ bool clbkSelectTarget_OnClickInterface(BaseObject * pObj, u8 enum1Spell2Player3M
 
 int LUA_split(lua_State * pState)
 {
-  if (!checkNumberOfParams(pState, 2, L"split"))
+  if (!checkNumberOfParams(pState, 2, "split"))
     return 0;
   char sParams[LUA_FUNCTION_PARAMS_MAX_CHARS];
   strncpy(sParams, lua_tostring(pState, 1), LUA_FUNCTION_PARAMS_MAX_CHARS);
@@ -779,7 +779,7 @@ int LUA_split(lua_State * pState)
 
 int LUA_splitint(lua_State * pState)
 {
-  if (!checkNumberOfParams(pState, 2, L"splitint"))
+  if (!checkNumberOfParams(pState, 2, "splitint"))
     return 0;
   char sParams[LUA_FUNCTION_PARAMS_MAX_CHARS];
   strncpy(sParams, lua_tostring(pState, 1), LUA_FUNCTION_PARAMS_MAX_CHARS);
@@ -804,10 +804,10 @@ int LUA_splitint(lua_State * pState)
         break;
     }
     else {
-      if (!bStarted && sParams[i] == L'-')
+      if (!bStarted && sParams[i] == '-')
         sign = -1;
       bStarted = true;
-      int digit = sParams[i] - L'0';
+      int digit = sParams[i] - '0';
       if (digit >= 0 && digit <= 9)
         iVal = 10 * iVal + digit;
     }

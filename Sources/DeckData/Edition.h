@@ -3,7 +3,7 @@
 
 #include "../Data/XMLObject.h"
 
-#define STRING_AVATAR_XML   L"shahmah"
+#define STRING_AVATAR_XML   "shahmah"
 #define MAX_SKILLS          1024
 
 class DebugManager;
@@ -27,7 +27,7 @@ class SpellsPackContent;
 class Edition : public XMLObject
 {
 public:
-  Edition(wchar_t * sName, LocalClient * pLocalClient);
+  Edition(const char * sName, LocalClient * pLocalClient);
   ~Edition();
 
   // Member access
@@ -37,33 +37,33 @@ public:
   bool activate(DebugManager * pDebug);
   void deactivate();
   void addShopItems(Profile * pPlayer, guiSmartSlider * pShopSlider, DebugManager * pDebug);
-  Ethnicity * findEthnicity(wchar_t * strId, bool bLookDependencies = true);
+  Ethnicity * findEthnicity(const char * strId, bool bLookDependencies = true);
   ObjectList * getEthnicities() { return m_pEthnicities; };
-  ProgressionTree * findProgressionTree(wchar_t * strId, bool bLookDependencies = true);
-  UnitData * findUnitData(wchar_t * strId, bool bLookDependencies = true);
-  Spell * findSpell(wchar_t * sName, bool bLookDependencies = true);
-  SpecialTile * findSpecialTile(wchar_t * sName, bool bLookDependencies = true);
-  Artifact * findArtifact(wchar_t * sName, bool bLookDependencies = true);
-  Edition * findSkillEdition(wchar_t * sName);
+  ProgressionTree * findProgressionTree(const char * strId, bool bLookDependencies = true);
+  UnitData * findUnitData(const char * strId, bool bLookDependencies = true);
+  Spell * findSpell(const char * sName, bool bLookDependencies = true);
+  SpecialTile * findSpecialTile(const char * sName, bool bLookDependencies = true);
+  Artifact * findArtifact(const char * sName, bool bLookDependencies = true);
+  Edition * findSkillEdition(const char * sName);
   Spell * selectRandomSpell(int iSelectMode);
   ObjectList * getSpecialTiles() { return m_pSpecTiles; };
   ObjectList * getAIs() { return m_pAIs; };
   void getAllTreesByType(ObjectList * pList, u8 uType);
   ShahmahCreation * getShahmahCreationData() { return m_pShahmahCreation; };
-  wchar_t * getChecksum() { return m_sChecksum; };
+  char * getChecksum() { return m_sChecksum; };
 
 protected:
-  XMLLiteElement * loadXMLFile(XMLLiteReader * pReader, wchar_t * fileName, DebugManager * pDebug);
+  XMLLiteElement * loadXMLFile(XMLLiteReader * pReader, const char * fileName, DebugManager * pDebug);
   void parseXMLObjectData(XMLLiteElement * pRootNode, DebugManager * pDebug);
   void checkShopItemValidity(Profile * pPlayer, ShopItem * pItem);
   void computeChecksum(DebugManager * pDebug);
-  SpellsPackContent * readSpellsPackContent(XMLLiteElement * pSpellsNode, DebugManager * pDebug, wchar_t * sFileName);
+  SpellsPackContent * readSpellsPackContent(XMLLiteElement * pSpellsNode, DebugManager * pDebug, const char * sFileName);
 
   bool m_bActive;
   int m_iTotalFreq;
-  wchar_t m_sLocale[32];
-  wchar_t m_sChecksum[NAME_MAX_CHARS];
-  wchar_t m_sVersion[16];
+  char m_sLocale[32];
+  char m_sChecksum[NAME_MAX_CHARS];
+  char m_sVersion[16];
   ObjectList * m_pAIs;
   ObjectList * m_pUnits;
   ObjectList * m_pSpells;

@@ -3,9 +3,6 @@
 
 #include "../utils.h"
 
-#define DEBUG
-//#define DBG_VERBOSE1    // For most of destructors verbose
-//#define DBG_VERBOSE2    // For destructors verbose in Object.cpp
 #define NAME_MAX_CHARS          64
 #define DESCRIPTION_MAX_CHARS   1024
 
@@ -24,8 +21,8 @@ protected:
 class StringObject : public BaseObject
 {
 public:
-  StringObject(wchar_t * sStr) { wsafecpy(m_sString, 256, sStr); };
-  wchar_t m_sString[256];
+  StringObject(char * sStr) { wsafecpy(m_sString, 256, sStr); };
+  char m_sString[256];
 };
 
 class CoordsObject : public BaseObject

@@ -68,7 +68,7 @@ char NetworkSerializer::readChar()
 // -----------------------------------------------------------------
 // Name : writeString
 // -----------------------------------------------------------------
-void NetworkSerializer::writeString(const wchar_t * s)
+void NetworkSerializer::writeString(const char * s)
 {
   m_pData->addString(s);
 }
@@ -76,7 +76,7 @@ void NetworkSerializer::writeString(const wchar_t * s)
 // -----------------------------------------------------------------
 // Name : readString
 // -----------------------------------------------------------------
-void NetworkSerializer::readString(wchar_t * s)
+void NetworkSerializer::readString(char * s)
 {
   m_pData->readString(s);
 }

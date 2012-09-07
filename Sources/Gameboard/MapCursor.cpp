@@ -34,7 +34,7 @@ MapCursor::~MapCursor()
 // -----------------------------------------------------------------
 void MapCursor::init(DisplayEngine * pDisplay)
 {
-  QuadData quad(0.0f, 1.0f, 0.0f, 1.0f, L"selection_circle", pDisplay);
+  QuadData quad(0.0f, 1.0f, 0.0f, 1.0f, "selection_circle", pDisplay);
   m_pGeometry = new GeometryQuads(&quad, VB_Static);
 //  ModProgressiveScaling * pMod = new ModProgressiveScaling(0, 0.8f, 1.0f, 1.0f, -0.3f, 0.5f, 0.5f, PSB_ForthAndBack);
 //  m_pGeometry->bindModifier(pMod);

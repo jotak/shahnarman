@@ -38,8 +38,8 @@ ArtifactsEquipDlg::ArtifactsEquipDlg(int iWidth, int iHeight, LocalClient * pLoc
   m_pEditAvatarCaller = NULL;
   m_pConfirmDelete = NULL;
 
-  init(L"ArtifactsEquipDlg",
-    pLocalClient->getDisplay()->getTextureEngine()->findTexture(L"interface:WinBg"),
+  init("ArtifactsEquipDlg",
+    pLocalClient->getDisplay()->getTextureEngine()->findTexture("interface:WinBg"),
     0, 0, iWidth, iHeight, m_pLocalClient->getDisplay());
 
   // Object popup
@@ -62,159 +62,159 @@ ArtifactsEquipDlg::ArtifactsEquipDlg(int iWidth, int iHeight, LocalClient * pLoc
 
   // Banner icon
   int yPxl = 0;
-  wchar_t sText[LABEL_MAX_CHARS];
-  int iTex = m_pLocalClient->getDisplay()->getTextureEngine()->loadTexture(L"blason1");
-  guiButton * pBtn1 = guiButton::createDefaultImageButton(iTex, L"Banner", getDisplay());
+  char sText[LABEL_MAX_CHARS];
+  int iTex = m_pLocalClient->getDisplay()->getTextureEngine()->loadTexture("blason1");
+  guiButton * pBtn1 = guiButton::createDefaultImageButton(iTex, "Banner", getDisplay());
   pBtn1->moveTo(0, yPxl);
-  pBtn1->setTooltipText(i18n->getText(L"CLICK_TO_CHANGE_BANNER", sText, LABEL_MAX_CHARS));
+  pBtn1->setTooltipText(i18n->getText("CLICK_TO_CHANGE_BANNER", sText, LABEL_MAX_CHARS));
   addComponent(pBtn1);
   int bannerWidth = pBtn1->getWidth();
 
   // Level up?
-  pBtn1 = guiButton::createDefaultWhiteButton(L"", 32, 32, L"LevelUp", getDisplay());
+  pBtn1 = guiButton::createDefaultWhiteButton("", 32, 32, "LevelUp", getDisplay());
   pBtn1->moveTo(iWidth - 32, yPxl);
   addComponent(pBtn1);
-  pBtn1->attachImage(getDisplay()->getTextureEngine()->loadTexture(L"levelup"));
-  i18n->getText(L"LEVEL_UP", sText, LABEL_MAX_CHARS);
+  pBtn1->attachImage(getDisplay()->getTextureEngine()->loadTexture("levelup"));
+  i18n->getText("LEVEL_UP", sText, LABEL_MAX_CHARS);
   pBtn1->setTooltipText(sText);
 
   // Create top label 2
   guiLabel * pLbl = new guiLabel();
-  pLbl->init(L"_", H2_FONT, H2_COLOR, L"TopLabel2", 0, 0, 0, 0, pLocalClient->getDisplay());
+  pLbl->init("_", H2_FONT, H2_COLOR, "TopLabel2", 0, 0, 0, 0, pLocalClient->getDisplay());
   pLbl->moveTo(0, 7);
   addComponent(pLbl);
 
   // Avatars list panel
-  m_pAvatarsPanel = guiContainer::createDefaultPanel(iWidth - 2 * (bannerWidth + SPACING), 36, L"AvatarsPanel", pLocalClient->getDisplay());
+  m_pAvatarsPanel = guiContainer::createDefaultPanel(iWidth - 2 * (bannerWidth + SPACING), 36, "AvatarsPane", pLocalClient->getDisplay());
   m_pAvatarsPanel->moveTo(bannerWidth + SPACING, yPxl);
   addComponent(m_pAvatarsPanel);
 
   // Create top label 1
   yPxl += m_pAvatarsPanel->getHeight() + 2 * SPACING;
   pLbl = new guiLabel();
-  pLbl->init(L"_", H1_FONT, H1_COLOR, L"TopLabel1", 0, 0, 0, 0, pLocalClient->getDisplay());
-  pLbl->setTooltipText(i18n->getText(L"CLICK_TO_EDIT_NAME_DESCR", sText, LABEL_MAX_CHARS));
+  pLbl->init("_", H1_FONT, H1_COLOR, "TopLabel1", 0, 0, 0, 0, pLocalClient->getDisplay());
+  pLbl->setTooltipText(i18n->getText("CLICK_TO_EDIT_NAME_DESCR", sText, LABEL_MAX_CHARS));
   pLbl->setCatchClicks(true);
   pLbl->moveTo((getWidth() - pLbl->getWidth()) / 2, yPxl);
   addComponent(pLbl);
 
   // Button delete
-  iTex = pLocalClient->getDisplay()->getTextureEngine()->loadTexture(L"delete");
-  guiButton * pBtn2 = guiButton::createDefaultImageButton(iTex, L"DeleteAvatar", pLocalClient->getDisplay());
+  iTex = pLocalClient->getDisplay()->getTextureEngine()->loadTexture("delete");
+  guiButton * pBtn2 = guiButton::createDefaultImageButton(iTex, "DeleteAvatar", pLocalClient->getDisplay());
   pBtn2->moveTo(pLbl->getXPos() + pLbl->getWidth() + 2*SPACING, yPxl + 3);
-  pBtn2->setTooltipText(i18n->getText(L"DELETE_AVATAR", sText, LABEL_MAX_CHARS));
+  pBtn2->setTooltipText(i18n->getText("DELETE_AVATAR", sText, LABEL_MAX_CHARS));
   addComponent(pBtn2);
 
   int buttonSize = 32;
 
   // Create label "Filters"
   yPxl += pLbl->getHeight() + 23;
-  wchar_t str[64];
-  i18n->getText(L"FILTERS", str, 64);
+  char str[64];
+  i18n->getText("FILTERS", str, 64);
   pLbl = new guiLabel();
-  pLbl->init(str, H2_FONT, H2_COLOR, L"FiltersLabel", 0, 0, 0, 0, pLocalClient->getDisplay());
+  pLbl->init(str, H2_FONT, H2_COLOR, "FiltersLabe", 0, 0, 0, 0, pLocalClient->getDisplay());
   addComponent(pLbl);
   int xPxl = SPACING;
   pLbl->moveTo(xPxl, yPxl);
 
   // Tooltip texts for following buttons
-  wchar_t sTooltip[128];
-  wchar_t sInclude[64];
-  wchar_t sWord[64];
+  char sTooltip[128];
+  char sInclude[64];
+  char sWord[64];
   void * pPhraseArgs[2];
   pPhraseArgs[0] = sInclude;
   pPhraseArgs[1] = sWord;
-  i18n->getText(L"INCLUDE", sInclude, 64);
+  i18n->getText("INCLUDE", sInclude, 64);
   xPxl = pLbl->getWidth() + 2 * SPACING;
   yPxl -= 8;
 
   // Create head filter button
   guiToggleButton * pBtn = guiToggleButton::createDefaultTexturedToggleButton(
-    pLocalClient->getDisplay()->getTextureEngine()->loadTexture(L"artifact_head"),
-    buttonSize, L"HeadButton", pLocalClient->getDisplay());
+    pLocalClient->getDisplay()->getTextureEngine()->loadTexture("artifact_head"),
+    buttonSize, "HeadButton", pLocalClient->getDisplay());
   pBtn->moveTo(xPxl, yPxl);
   pBtn->setClickState(true);
-  i18n->getTextUp(L"HEAD", sWord, 64);
-  i18n->getText(L"%$1s_ARTIFACTS_FOR_%$2s", sTooltip, 128, pPhraseArgs);
+  i18n->getTextUp("HEAD", sWord, 64);
+  i18n->getText("%$1s_ARTIFACTS_FOR_%$2s", sTooltip, 128, pPhraseArgs);
   pBtn->setTooltipText(sTooltip);
   addComponent(pBtn);
   xPxl += buttonSize + SPACING;
 
   // Create body filter button
   pBtn = guiToggleButton::createDefaultTexturedToggleButton(
-    pLocalClient->getDisplay()->getTextureEngine()->loadTexture(L"artifact_body"),
-    buttonSize, L"BodyButton", pLocalClient->getDisplay());
+    pLocalClient->getDisplay()->getTextureEngine()->loadTexture("artifact_body"),
+    buttonSize, "BodyButton", pLocalClient->getDisplay());
   pBtn->moveTo(xPxl, yPxl);
   pBtn->setClickState(true);
-  i18n->getTextUp(L"BODY", sWord, 64);
-  i18n->getText(L"%$1s_ARTIFACTS_FOR_%$2s", sTooltip, 128, pPhraseArgs);
+  i18n->getTextUp("BODY", sWord, 64);
+  i18n->getText("%$1s_ARTIFACTS_FOR_%$2s", sTooltip, 128, pPhraseArgs);
   pBtn->setTooltipText(sTooltip);
   addComponent(pBtn);
   xPxl += buttonSize + SPACING;
 
   // Create left hand filter button
   pBtn = guiToggleButton::createDefaultTexturedToggleButton(
-    pLocalClient->getDisplay()->getTextureEngine()->loadTexture(L"artifact_left_hand"),
-    buttonSize, L"LHandButton", pLocalClient->getDisplay());
+    pLocalClient->getDisplay()->getTextureEngine()->loadTexture("artifact_left_hand"),
+    buttonSize, "LHandButton", pLocalClient->getDisplay());
   pBtn->moveTo(xPxl, yPxl);
   pBtn->setClickState(true);
-  i18n->getTextUp(L"LEFT_HAND", sWord, 64);
-  i18n->getText(L"%$1s_ARTIFACTS_FOR_%$2s", sTooltip, 128, pPhraseArgs);
+  i18n->getTextUp("LEFT_HAND", sWord, 64);
+  i18n->getText("%$1s_ARTIFACTS_FOR_%$2s", sTooltip, 128, pPhraseArgs);
   pBtn->setTooltipText(sTooltip);
   addComponent(pBtn);
   xPxl += buttonSize + SPACING;
 
   // Create right hand filter button
   pBtn = guiToggleButton::createDefaultTexturedToggleButton(
-    pLocalClient->getDisplay()->getTextureEngine()->loadTexture(L"artifact_right_hand"),
-    buttonSize, L"RHandButton", pLocalClient->getDisplay());
+    pLocalClient->getDisplay()->getTextureEngine()->loadTexture("artifact_right_hand"),
+    buttonSize, "RHandButton", pLocalClient->getDisplay());
   pBtn->moveTo(xPxl, yPxl);
   pBtn->setClickState(true);
-  i18n->getTextUp(L"RIGHT_HAND", sWord, 64);
-  i18n->getText(L"%$1s_ARTIFACTS_FOR_%$2s", sTooltip, 128, pPhraseArgs);
+  i18n->getTextUp("RIGHT_HAND", sWord, 64);
+  i18n->getText("%$1s_ARTIFACTS_FOR_%$2s", sTooltip, 128, pPhraseArgs);
   pBtn->setTooltipText(sTooltip);
   addComponent(pBtn);
   xPxl += buttonSize + SPACING;
 
   // Create foot filter button
   pBtn = guiToggleButton::createDefaultTexturedToggleButton(
-    pLocalClient->getDisplay()->getTextureEngine()->loadTexture(L"artifact_foot"),
-    buttonSize, L"FootButton", pLocalClient->getDisplay());
+    pLocalClient->getDisplay()->getTextureEngine()->loadTexture("artifact_foot"),
+    buttonSize, "FootButton", pLocalClient->getDisplay());
   pBtn->moveTo(xPxl, yPxl);
   pBtn->setClickState(true);
-  i18n->getTextUp(L"FOOT", sWord, 64);
-  i18n->getText(L"%$1s_ARTIFACTS_FOR_%$2s", sTooltip, 128, pPhraseArgs);
+  i18n->getTextUp("FOOT", sWord, 64);
+  i18n->getText("%$1s_ARTIFACTS_FOR_%$2s", sTooltip, 128, pPhraseArgs);
   pBtn->setTooltipText(sTooltip);
   addComponent(pBtn);
   xPxl += buttonSize + SPACING;
 
   // Create avatar filter button
   pBtn = guiToggleButton::createDefaultTexturedToggleButton(
-    pLocalClient->getDisplay()->getTextureEngine()->loadTexture(L"avatar_filter"),
-    buttonSize, L"AvatarButton", pLocalClient->getDisplay());
+    pLocalClient->getDisplay()->getTextureEngine()->loadTexture("avatar_filter"),
+    buttonSize, "AvatarButton", pLocalClient->getDisplay());
   pBtn->moveTo(xPxl, yPxl);
   pBtn->setClickState(true);
-  i18n->getText(L"%$1s_ARTIFACTS_EQUIPPED_BY_ANOTHER", sTooltip, 128, pPhraseArgs);
+  i18n->getText("%$1s_ARTIFACTS_EQUIPPED_BY_ANOTHER", sTooltip, 128, pPhraseArgs);
   pBtn->setTooltipText(sTooltip);
   addComponent(pBtn);
   xPxl += buttonSize + SPACING;
 
   // Create button "spells"
   int w = getWidth() / 3;
-  pBtn2 = guiButton::createDefaultNormalButton(i18n->getText(L"SPELLS", str, 64), L"SpellsButton", pLocalClient->getDisplay());
+  pBtn2 = guiButton::createDefaultNormalButton(i18n->getText("SPELLS", str, 64), "SpellsButton", pLocalClient->getDisplay());
   int yPxl2 = getHeight() - pBtn2->getHeight() - SPACING;
   pBtn2->setWidth(w);
   pBtn2->moveTo(0, yPxl2);
   addComponent(pBtn2);
 
   // Create button "shop"
-  pBtn2 = guiButton::createDefaultNormalButton(i18n->getText(L"SHOP", str, 64), L"ShopButton", pLocalClient->getDisplay());
+  pBtn2 = guiButton::createDefaultNormalButton(i18n->getText("SHOP", str, 64), "ShopButton", pLocalClient->getDisplay());
   pBtn2->setWidth(w);
   pBtn2->moveTo(w+1, yPxl2);
   addComponent(pBtn2);
 
   // Create button "back"
-  pBtn2 = guiButton::createDefaultNormalButton(i18n->getText(L"MAIN_MENU", str, 64), L"BackButton", pLocalClient->getDisplay());
+  pBtn2 = guiButton::createDefaultNormalButton(i18n->getText("MAIN_MENU", str, 64), "BackButton", pLocalClient->getDisplay());
   pBtn2->setWidth(w);
   pBtn2->moveTo(2*w+1, yPxl2);
   addComponent(pBtn2);
@@ -223,16 +223,16 @@ ArtifactsEquipDlg::ArtifactsEquipDlg(int iWidth, int iHeight, LocalClient * pLoc
 
   // Create label "Not equiped"
   yPxl += pBtn->getHeight() + 3 * SPACING;
-  i18n->getText(L"NOT_EQUIPPED", str, 64);
+  i18n->getText("NOT_EQUIPPED", str, 64);
   pLbl = new guiLabel();
-  pLbl->init(str, H2_FONT, H2_COLOR, L"NotEquippedLabel", 0, 0, 0, 0, pLocalClient->getDisplay());
+  pLbl->init(str, H2_FONT, H2_COLOR, "NotEquippedLabe", 0, 0, 0, 0, pLocalClient->getDisplay());
   pLbl->moveTo(SPACING, yPxl);
   addComponent(pLbl);
 
   // Create label "Equiped"
-  i18n->getText(L"EQUIPPED", str, 64);
+  i18n->getText("EQUIPPED", str, 64);
   pLbl = new guiLabel();
-  pLbl->init(str, H2_FONT, H2_COLOR, L"EquippedLabel", 0, 0, 0, 0, pLocalClient->getDisplay());
+  pLbl->init(str, H2_FONT, H2_COLOR, "EquippedLabe", 0, 0, 0, 0, pLocalClient->getDisplay());
   pLbl->moveTo(SPACING, yPxl);  // Will x-align later
   addComponent(pLbl);
 
@@ -241,19 +241,19 @@ ArtifactsEquipDlg::ArtifactsEquipDlg(int iWidth, int iHeight, LocalClient * pLoc
   // Create panel for artifacts not equipped
   int bottom = yPxl2 - SPACING;
   yPxl += pLbl->getHeight() + 2 * SPACING;
-  m_pArtifactsPool = guiContainer::createDefaultPanel(panelWidth, bottom - yPxl, L"", pLocalClient->getDisplay());
+  m_pArtifactsPool = guiContainer::createDefaultPanel(panelWidth, bottom - yPxl, "", pLocalClient->getDisplay());
   m_pArtifactsPool->moveTo(SPACING, yPxl);
   addComponent(m_pArtifactsPool);
 
   // Create image for equipped artifacts
   xPxl = m_pArtifactsPool->getXPos() + m_pArtifactsPool->getWidth() + 2 * SPACING;
-  iTex = pLocalClient->getDisplay()->getTextureEngine()->loadTexture(L"Artifacts_Bg");
+  iTex = pLocalClient->getDisplay()->getTextureEngine()->loadTexture("Artifacts_Bg");
   Texture * pTex = pLocalClient->getDisplay()->getTextureEngine()->getTexture(iTex);
   assert(pTex != NULL);
   double ratio = ((double)(bottom - yPxl)) / (double)(pTex->m_iHeight);
   int width = (int) (ratio * (double)(pTex->m_iWidth));
   m_pPlayerBgImage = new guiImage();
-  m_pPlayerBgImage->init(iTex, L"AvatarImage", xPxl, yPxl, width, bottom - yPxl, pLocalClient->getDisplay());
+  m_pPlayerBgImage->init(iTex, "AvatarImage", xPxl, yPxl, width, bottom - yPxl, pLocalClient->getDisplay());
   addComponent(m_pPlayerBgImage);
   pLbl->moveTo(xPxl, pLbl->getYPos());  // Move last label (equipped) to align it
   if (xPxl + width > getWidth())
@@ -261,7 +261,7 @@ ArtifactsEquipDlg::ArtifactsEquipDlg(int iWidth, int iHeight, LocalClient * pLoc
 
   // Highlight image
   m_pHighlightImage = new guiImage();
-  m_pHighlightImage->init(pLocalClient->getDisplay()->getTextureEngine()->loadTexture(L"EmptyWhiteRoundedSquare"), L"", 0, 0, (int) (ratio * 128.0f), (int) (ratio * 128.0f), pLocalClient->getDisplay());
+  m_pHighlightImage->init(pLocalClient->getDisplay()->getTextureEngine()->loadTexture("EmptyWhiteRoundedSquare"), "", 0, 0, (int) (ratio * 128.0f), (int) (ratio * 128.0f), pLocalClient->getDisplay());
   m_pHighlightImage->setDiffuseColor(rgba(1, 1, 1, 0.2f));
   m_pHighlightImage->setVisible(false);
   addComponent(m_pHighlightImage);
@@ -273,7 +273,7 @@ ArtifactsEquipDlg::ArtifactsEquipDlg(int iWidth, int iHeight, LocalClient * pLoc
   {
     m_pArtifactsImages[i] = new guiImage();
     // Dummy texture (it will change)
-    m_pArtifactsImages[i]->init(pLocalClient->getDisplay()->getTextureEngine()->loadTexture(L"spellsdrag"), L"EquippedArtifact", m_pPlayerBgImage->getXPos() + (int) (ratio * pX[i]), m_pPlayerBgImage->getYPos() + (int) (ratio * pY[i]), (int) (ratio * 128.0f), (int) (ratio * 128.0f), pLocalClient->getDisplay());
+    m_pArtifactsImages[i]->init(pLocalClient->getDisplay()->getTextureEngine()->loadTexture("spellsdrag"), "EquippedArtifact", m_pPlayerBgImage->getXPos() + (int) (ratio * pX[i]), m_pPlayerBgImage->getYPos() + (int) (ratio * pY[i]), (int) (ratio * 128.0f), (int) (ratio * 128.0f), pLocalClient->getDisplay());
     m_pArtifactsImages[i]->setCatchClicks(true);
     m_pArtifactsImages[i]->setOwner(this);
     m_pArtifactsImages[i]->setVisible(false);
@@ -283,7 +283,7 @@ ArtifactsEquipDlg::ArtifactsEquipDlg(int iWidth, int iHeight, LocalClient * pLoc
   // Drag image
   m_pDragImage = new guiImage();
   // Dummy texture (it will change)
-  m_pDragImage->init(pLocalClient->getDisplay()->getTextureEngine()->loadTexture(L"spellsdrag"), L"", 0, 0, -1, -1, pLocalClient->getDisplay());
+  m_pDragImage->init(pLocalClient->getDisplay()->getTextureEngine()->loadTexture("spellsdrag"), "", 0, 0, -1, -1, pLocalClient->getDisplay());
   m_pDragImage->setVisible(false);
   addComponent(m_pDragImage);
 }
@@ -310,7 +310,7 @@ void ArtifactsEquipDlg::update(double delta)
     guiComponent * pCpnt = m_pConfirmDelete->getClickedComponent();
     if (pCpnt != NULL)
     {
-      if (wcscmp(pCpnt->getId(), L"YesButton") == 0)
+      if (strcmp(pCpnt->getId(), "YesButton") == 0)
       {
         // Remove frame
         m_pLocalClient->getInterface()->deleteFrame(m_pConfirmDelete);
@@ -325,7 +325,7 @@ void ArtifactsEquipDlg::update(double delta)
         else
           m_pLocalClient->getInterface()->setUniqueDialog(m_pLocalClient->getInterface()->getSelectPlayerDialog());
       }
-      else if (wcscmp(pCpnt->getId(), L"NoButton") == 0)
+      else if (strcmp(pCpnt->getId(), "NoButton") == 0)
       {
         m_pLocalClient->getInterface()->deleteFrame(m_pConfirmDelete);
         m_pConfirmDelete = NULL;
@@ -392,7 +392,7 @@ bool ArtifactsEquipDlg::onButtonEvent(ButtonAction * pEvent, guiComponent * pCpn
   {
     if (m_uDraggingFrom == 0)
     {
-      if (wcscmp(pCpnt->getId(), L"EquippedArtifact") == 0)
+      if (strcmp(pCpnt->getId(), "EquippedArtifact") == 0)
       {
         int iTex = ((guiImage*)pCpnt)->getImageTexture();
         m_pDragImage->setImageTexture(iTex);
@@ -400,7 +400,7 @@ bool ArtifactsEquipDlg::onButtonEvent(ButtonAction * pEvent, guiComponent * pCpn
         m_pHighlightImage->setYPos(m_pArtifactsImages[((Artifact*)(pCpnt->getAttachment()))->getPosition()]->getYPos());
         m_uDraggingFrom = 1;
       }
-      else if (wcscmp(pCpnt->getId(), L"ArtifactPoolImage") == 0)
+      else if (strcmp(pCpnt->getId(), "ArtifactPoolImage") == 0)
       {
         int iTex = ((guiImage*)pCpnt)->getImageTexture();
         m_pDragImage->setImageTexture(iTex);
@@ -420,47 +420,47 @@ bool ArtifactsEquipDlg::onButtonEvent(ButtonAction * pEvent, guiComponent * pCpn
   }
   else if (pEvent->eEvent == Event_Up)
   {
-    if (wcscmp(pCpnt->getId(), L"BackButton") == 0)
+    if (strcmp(pCpnt->getId(), "BackButton") == 0)
     {
       m_pLocalClient->getInterface()->setUniqueDialog(m_pLocalClient->getInterface()->getStartMenuDialog());
       return false;
     }
-    else if (wcscmp(pCpnt->getId(), L"SpellsButton") == 0)
+    else if (strcmp(pCpnt->getId(), "SpellsButton") == 0)
     {
       m_pLocalClient->getInterface()->setUniqueDialog(m_pLocalClient->getInterface()->getBuildDeckDialog());
       return false;
     }
-    else if (wcscmp(pCpnt->getId(), L"ShopButton") == 0)
+    else if (strcmp(pCpnt->getId(), "ShopButton") == 0)
     {
       m_pLocalClient->getInterface()->setUniqueDialog(m_pLocalClient->getInterface()->getShopDialog());
       return false;
     }
-    else if (wcscmp(pCpnt->getId(), L"LevelUp") == 0)
+    else if (strcmp(pCpnt->getId(), "LevelUp") == 0)
     {
       m_pLocalClient->getInterface()->getLevelUpDialog()->doAvatarLevelUp(m_pCurrentAvatar, this, false);
       return false;
     }
-    else if (wcscmp(pCpnt->getId(), L"Banner") == 0)
+    else if (strcmp(pCpnt->getId(), "Banner") == 0)
     {
       m_pCurrentAvatar->m_uBanner = (m_pCurrentAvatar->m_uBanner + 1) % NB_BANNERS;
       guiButton * pBtn = (guiButton*) pCpnt;
       assert(pBtn != NULL);
-      wchar_t sBanner[MAX_PATH] = L"";
+      char sBanner[MAX_PATH] = "";
       m_pCurrentAvatar->getBanner(sBanner, MAX_PATH);
       pBtn->setNormalTexture(getDisplay()->getTextureEngine()->loadTexture(sBanner));
       m_pCurrentPlayer->save();
     }
-    else if (wcscmp(pCpnt->getId(), L"HeadButton") == 0
-      || wcscmp(pCpnt->getId(), L"BodyButton") == 0
-      || wcscmp(pCpnt->getId(), L"LHandButton") == 0
-      || wcscmp(pCpnt->getId(), L"RHandButton") == 0
-      || wcscmp(pCpnt->getId(), L"FootButton") == 0
-      || wcscmp(pCpnt->getId(), L"AvatarButton") == 0
-      || wcscmp(pCpnt->getId(), L"EditionButton") == 0)
+    else if (strcmp(pCpnt->getId(), "HeadButton") == 0
+      || strcmp(pCpnt->getId(), "BodyButton") == 0
+      || strcmp(pCpnt->getId(), "LHandButton") == 0
+      || strcmp(pCpnt->getId(), "RHandButton") == 0
+      || strcmp(pCpnt->getId(), "FootButton") == 0
+      || strcmp(pCpnt->getId(), "AvatarButton") == 0
+      || strcmp(pCpnt->getId(), "EditionButton") == 0)
     {
       reloadArtifacts();
     }
-    else if (wcscmp(pCpnt->getId(), L"AvatarListButton") == 0)
+    else if (strcmp(pCpnt->getId(), "AvatarListButton") == 0)
     {
       guiComponent * pCpnt2 = m_pAvatarsPanel->getDocument()->getFirstComponent();
       while (pCpnt2 != NULL)
@@ -475,12 +475,12 @@ bool ArtifactsEquipDlg::onButtonEvent(ButtonAction * pEvent, guiComponent * pCpn
       assert(m_pCurrentAvatar != NULL);
       onAvatarSelected();
     }
-    else if (wcscmp(pCpnt->getId(), L"DeleteAvatar") == 0)
+    else if (strcmp(pCpnt->getId(), "DeleteAvatar") == 0)
     {
       // Raise confirm popup
       setEnabled(false);
-      wchar_t str[128];
-      m_pConfirmDelete = guiPopup::createYesNoPopup(i18n->getText(L"REALLY_DELETE_AVATAR", str, 128), m_pLocalClient->getDisplay());
+      char str[128];
+      m_pConfirmDelete = guiPopup::createYesNoPopup(i18n->getText("REALLY_DELETE_AVATAR", str, 128), m_pLocalClient->getDisplay());
       m_pLocalClient->getInterface()->registerFrame(m_pConfirmDelete);
       m_pConfirmDelete->moveTo((m_pLocalClient->getClientParameters()->screenXSize - m_pConfirmDelete->getWidth()) / 2, (m_pLocalClient->getClientParameters()->screenYSize - m_pConfirmDelete->getHeight()) / 2);
     }
@@ -511,14 +511,14 @@ bool ArtifactsEquipDlg::onButtonEvent(ButtonAction * pEvent, guiComponent * pCpn
   }
   else if (pEvent->eEvent == Event_Down)
   {
-    if (wcscmp(pCpnt->getId(), L"TopLabel1") == 0)
+    if (strcmp(pCpnt->getId(), "TopLabel1") == 0)
     {
       assert(m_pCurrentAvatar != NULL);
       m_pEditAvatarInfosPopup = m_pLocalClient->getInterface()->getBuildDeckDialog()->showEditAvatarInfosPopup(m_pCurrentAvatar, this);
     }
-    else if (wcscmp(pCpnt->getId(), L"EquippedArtifact") == 0)
+    else if (strcmp(pCpnt->getId(), "EquippedArtifact") == 0)
       onArtifactSelected(pCpnt->getAttachment());
-    else if (wcscmp(pCpnt->getId(), L"ArtifactPoolImage") == 0)
+    else if (strcmp(pCpnt->getId(), "ArtifactPoolImage") == 0)
       onArtifactSelected(pCpnt->getAttachment());
   }
   return true;
@@ -542,7 +542,7 @@ void ArtifactsEquipDlg::onShow()
   while (pAvatar != NULL)
   {
     int iTex = getDisplay()->getTextureEngine()->loadTexture(pAvatar->m_sTextureFilename);
-    guiToggleButton * pBtn = guiToggleButton::createDefaultTexturedToggleButton(iTex, buttonSize, L"AvatarListButton", getDisplay());
+    guiToggleButton * pBtn = guiToggleButton::createDefaultTexturedToggleButton(iTex, buttonSize, "AvatarListButton", getDisplay());
     pBtn->moveTo(xPxl, 0);
     pBtn->setAttachment(pAvatar);
     pBtn->setTooltipText(pAvatar->m_sCustomName);
@@ -582,12 +582,12 @@ void ArtifactsEquipDlg::reloadArtifacts()
     return;
 
   bool bPosition[5];
-  bPosition[ARTIFACT_POSITION_HEAD] = ((guiToggleButton*)getComponent(L"HeadButton"))->getClickState();
-  bPosition[ARTIFACT_POSITION_BODY] = ((guiToggleButton*)getComponent(L"BodyButton"))->getClickState();
-  bPosition[ARTIFACT_POSITION_LHAND] = ((guiToggleButton*)getComponent(L"LHandButton"))->getClickState();
-  bPosition[ARTIFACT_POSITION_RHAND] = ((guiToggleButton*)getComponent(L"RHandButton"))->getClickState();
-  bPosition[ARTIFACT_POSITION_FOOT] = ((guiToggleButton*)getComponent(L"FootButton"))->getClickState();
-  bool bAvatar = ((guiToggleButton*)getComponent(L"AvatarButton"))->getClickState();
+  bPosition[ARTIFACT_POSITION_HEAD] = ((guiToggleButton*)getComponent("HeadButton"))->getClickState();
+  bPosition[ARTIFACT_POSITION_BODY] = ((guiToggleButton*)getComponent("BodyButton"))->getClickState();
+  bPosition[ARTIFACT_POSITION_LHAND] = ((guiToggleButton*)getComponent("LHandButton"))->getClickState();
+  bPosition[ARTIFACT_POSITION_RHAND] = ((guiToggleButton*)getComponent("RHandButton"))->getClickState();
+  bPosition[ARTIFACT_POSITION_FOOT] = ((guiToggleButton*)getComponent("FootButton"))->getClickState();
+  bool bAvatar = ((guiToggleButton*)getComponent("AvatarButton"))->getClickState();
 
   // Update spells lists
   m_pArtifactsPool->getDocument()->deleteAllComponents();
@@ -607,9 +607,9 @@ void ArtifactsEquipDlg::reloadArtifacts()
       guiComponent * pCpnt = getFirstComponent();
       while (pCpnt != NULL)
       {
-        if (wcscmp(pCpnt->getId(), L"EditionButton") == 0)
+        if (strcmp(pCpnt->getId(), "EditionButton") == 0)
         {
-          if (((guiToggleButton*)pCpnt)->getClickState() == false && wcscmp(pArtifact->getEdition(), ((Edition*)(pCpnt->getAttachment()))->m_sObjectId) == 0)
+          if (((guiToggleButton*)pCpnt)->getClickState() == false && strcmp(pArtifact->getEdition(), ((Edition*)(pCpnt->getAttachment()))->m_sObjectId) == 0)
           {
             bOk = false;
             break;
@@ -621,10 +621,10 @@ void ArtifactsEquipDlg::reloadArtifacts()
     if (bOk)
     {
       AvatarData * pOwner = pArtifact->m_pOwner;
-      wchar_t sText[LABEL_MAX_CHARS];
-      pArtifact->findLocalizedElement(sText, LABEL_MAX_CHARS, i18n->getCurrentLanguageName(), L"name");
-      if (pOwner != NULL && wcscmp(m_pCurrentAvatar->m_sEdition, pOwner->m_sEdition) == 0  // equipped by current avatar
-        && wcscmp(m_pCurrentAvatar->m_sObjectId, pOwner->m_sObjectId) == 0)
+      char sText[LABEL_MAX_CHARS];
+      pArtifact->findLocalizedElement(sText, LABEL_MAX_CHARS, i18n->getCurrentLanguageName(), "name");
+      if (pOwner != NULL && strcmp(m_pCurrentAvatar->m_sEdition, pOwner->m_sEdition) == 0  // equipped by current avatar
+        && strcmp(m_pCurrentAvatar->m_sObjectId, pOwner->m_sObjectId) == 0)
       {
         int iTex = m_pLocalClient->getDisplay()->getTextureEngine()->loadTexture(pArtifact->getTexture());
         guiImage * pImg = m_pArtifactsImages[pArtifact->getPosition()];
@@ -644,15 +644,15 @@ void ArtifactsEquipDlg::reloadArtifacts()
         }
         else if (bAvatar)   // equipped by another avatar (and we want to see it)
         {
-          wchar_t sText2[LABEL_MAX_CHARS];
-          swprintf(sText2, LABEL_MAX_CHARS, L"%s (%s)", sText, pOwner->m_sCustomName);
+          char sText2[LABEL_MAX_CHARS];
+          snprintf(sText2, LABEL_MAX_CHARS, "%s (%s)", sText, pOwner->m_sCustomName);
           wsafecpy(sText, LABEL_MAX_CHARS, sText2);
           pImg = new guiImage();
           pImg->setDiffuseColor(rgba(0.7f, 0.7f, 0.7f, 1));
         }
         if (pImg != NULL)
         {
-          pImg->init(iTex, L"ArtifactPoolImage", xPxl, yPxl, btnSize, btnSize, getDisplay());
+          pImg->init(iTex, "ArtifactPoolImage", xPxl, yPxl, btnSize, btnSize, getDisplay());
           m_pArtifactsPool->getDocument()->addComponent(pImg);
           pImg->setAttachment(pArtifact);
           pImg->setTooltipText(sText);
@@ -696,25 +696,25 @@ void ArtifactsEquipDlg::onArtifactSelected(BaseObject * pObj)
   // Write title (artifact name)
   int xPxl = SPACING;
   int yPxl = SPACING;
-  wchar_t sText[LABEL_MAX_CHARS];
-  m_pCurrentArtifact->findLocalizedElement(sText, LABEL_MAX_CHARS, i18n->getCurrentLanguageName(), L"name");
+  char sText[LABEL_MAX_CHARS];
+  m_pCurrentArtifact->findLocalizedElement(sText, LABEL_MAX_CHARS, i18n->getCurrentLanguageName(), "name");
   guiLabel * pLbl = new guiLabel();
-  pLbl->init(sText, H2_FONT, H2_COLOR, L"TitleLabel", xPxl, yPxl, m_pObjectPopup->getInnerWidth() - xPxl, 0, getDisplay());
+  pLbl->init(sText, H2_FONT, H2_COLOR, "TitleLabe", xPxl, yPxl, m_pObjectPopup->getInnerWidth() - xPxl, 0, getDisplay());
   m_pObjectPopup->getDocument()->addComponent(pLbl);
 
   // Add image
   yPxl += pLbl->getHeight() + SPACING;
   int iTex = getDisplay()->getTextureEngine()->loadTexture(m_pCurrentArtifact->getTexture());
   guiImage * pImg = new guiImage();
-  pImg->init(iTex, L"Image", xPxl, yPxl, 64, 64, getDisplay());
+  pImg->init(iTex, "Image", xPxl, yPxl, 64, 64, getDisplay());
   m_pObjectPopup->getDocument()->addComponent(pImg);
 
   // Write desciption
   xPxl = SPACING;
   yPxl = pImg->getYPos() + pImg->getHeight() + SPACING;
-  m_pCurrentArtifact->findLocalizedElement(sText, LABEL_MAX_CHARS, i18n->getCurrentLanguageName(), L"description");
+  m_pCurrentArtifact->findLocalizedElement(sText, LABEL_MAX_CHARS, i18n->getCurrentLanguageName(), "description");
   pLbl = new guiLabel();
-  pLbl->init(sText, TEXT_FONT, TEXT_COLOR, L"DescLabel", xPxl, yPxl, m_pObjectPopup->getInnerWidth() - xPxl, 0, getDisplay());
+  pLbl->init(sText, TEXT_FONT, TEXT_COLOR, "DescLabe", xPxl, yPxl, m_pObjectPopup->getInnerWidth() - xPxl, 0, getDisplay());
   m_pObjectPopup->getDocument()->addComponent(pLbl);
   if (m_pObjectPopup->getDocument()->getHeight() < pLbl->getYPos() + pLbl->getHeight())
     m_pObjectPopup->getDocument()->setHeight(pLbl->getYPos() + pLbl->getHeight());
@@ -725,7 +725,7 @@ void ArtifactsEquipDlg::onArtifactSelected(BaseObject * pObj)
 // -----------------------------------------------------------------
 bool ArtifactsEquipDlg::onClickStart()
 {
-  doClick(L"BackButton");
+  doClick("BackButton");
   return true;
 }
 
@@ -738,21 +738,21 @@ void ArtifactsEquipDlg::loadEditionButtons()
   guiComponent * pCpnt = getFirstComponent();
   while (pCpnt != NULL)
   {
-    if (wcscmp(pCpnt->getId(), L"EditionButton") == 0)
+    if (strcmp(pCpnt->getId(), "EditionButton") == 0)
       pCpnt = deleteCurrentComponent(true);
     else
       pCpnt = getNextComponent();
   }
 
-  pCpnt = getComponent(L"AvatarButton");
+  pCpnt = getComponent("AvatarButton");
   assert(pCpnt != NULL);
 
   // Tooltip texts for following buttons
-  wchar_t sTooltip[128];
-  wchar_t sInclude[64];
-  wchar_t sWord[64];
+  char sTooltip[128];
+  char sInclude[64];
+  char sWord[64];
   void * pPhraseArgs[2] = { sInclude, sWord };
-  i18n->getText(L"INCLUDE", sInclude, 64);
+  i18n->getText("INCLUDE", sInclude, 64);
   int xPxl = pCpnt->getXPos() + pCpnt->getWidth() + SPACING;
   int yPxl = pCpnt->getYPos();
   int buttonSize = pCpnt->getHeight();
@@ -760,16 +760,16 @@ void ArtifactsEquipDlg::loadEditionButtons()
   Edition * pEd = m_pLocalClient->getDataFactory()->getFirstEdition();
   while (pEd != NULL)
   {
-    wchar_t sFile[MAX_PATH];
-    swprintf(sFile, MAX_PATH, L"%s/logo", pEd->m_sObjectId);
+    char sFile[MAX_PATH];
+    snprintf(sFile, MAX_PATH, "%s/logo", pEd->m_sObjectId);
     // Create edition filter button
     guiToggleButton * pBtn = guiToggleButton::createDefaultTexturedToggleButton(
       m_pLocalClient->getDisplay()->getTextureEngine()->loadTexture(sFile),
-      buttonSize, L"EditionButton", m_pLocalClient->getDisplay());
+      buttonSize, "EditionButton", m_pLocalClient->getDisplay());
     pBtn->moveTo(xPxl, yPxl);
     pBtn->setClickState(true);
-    pEd->findLocalizedElement(sWord, 64, i18n->getCurrentLanguageName(), L"name");
-    i18n->getText(L"%$1s_SPELLS_FROM_EDITION_%$2s", sTooltip, 128, pPhraseArgs);
+    pEd->findLocalizedElement(sWord, 64, i18n->getCurrentLanguageName(), "name");
+    i18n->getText("%$1s_SPELLS_FROM_EDITION_%$2s", sTooltip, 128, pPhraseArgs);
     pBtn->setTooltipText(sTooltip);
     pBtn->setAttachment(pEd);
     addComponent(pBtn);
@@ -783,28 +783,28 @@ void ArtifactsEquipDlg::loadEditionButtons()
 // -----------------------------------------------------------------
 void ArtifactsEquipDlg::onAvatarSelected()
 {
-  getComponent(L"LevelUp")->setVisible(m_pCurrentAvatar->isLevelUp());
-  guiButton * pBtn = (guiButton*) getComponent(L"Banner");
+  getComponent("LevelUp")->setVisible(m_pCurrentAvatar->isLevelUp());
+  guiButton * pBtn = (guiButton*) getComponent("Banner");
   assert(pBtn != NULL);
-  wchar_t sBanner[MAX_PATH] = L"";
+  char sBanner[MAX_PATH] = "";
   m_pCurrentAvatar->getBanner(sBanner, MAX_PATH);
   pBtn->setNormalTexture(getDisplay()->getTextureEngine()->loadTexture(sBanner));
 
   // Update top label 1
-  guiLabel * pLbl = (guiLabel*) getComponent(L"TopLabel1");
-  wchar_t str[NAME_MAX_CHARS];
+  guiLabel * pLbl = (guiLabel*) getComponent("TopLabel1");
+  char str[NAME_MAX_CHARS];
   pLbl->setText(m_pCurrentAvatar->m_sCustomName);
   pLbl->moveTo((getWidth() - pLbl->getWidth()) / 2, pLbl->getYPos());
 
   // Update delete avatar button
-  guiComponent * pCpnt = getComponent(L"DeleteAvatar");
+  guiComponent * pCpnt = getComponent("DeleteAvatar");
   pCpnt->moveTo(pLbl->getXPos() + pLbl->getWidth() + 2*SPACING, pLbl->getYPos() + 3);
 
   // Update top label 2
-  pLbl = (guiLabel*) getComponent(L"TopLabel2");
-  wchar_t sbuf[NAME_MAX_CHARS];
-  i18n->getText(L"%s_AVATARS", sbuf, NAME_MAX_CHARS);
-  swprintf(str, NAME_MAX_CHARS, sbuf, m_pCurrentPlayer->getName());
+  pLbl = (guiLabel*) getComponent("TopLabel2");
+  char sbuf[NAME_MAX_CHARS];
+  i18n->getText("%s_AVATARS", sbuf, NAME_MAX_CHARS);
+  snprintf(str, NAME_MAX_CHARS, sbuf, m_pCurrentPlayer->getName());
   pLbl->setText(str);
   pLbl->moveTo(getWidth() / 2 - pLbl->getWidth() / 2, pLbl->getYPos());
 
@@ -813,8 +813,8 @@ void ArtifactsEquipDlg::onAvatarSelected()
   // Update avatar popup
   m_pAvatarPopup->getDocument()->deleteAllComponents();
 
-  wchar_t sInfos[LABEL_MAX_CHARS];
-  m_pCurrentAvatar->getInfos(sInfos, LABEL_MAX_CHARS, L"\n", false, NULL, true, true, true, false);
+  char sInfos[LABEL_MAX_CHARS];
+  m_pCurrentAvatar->getInfos(sInfos, LABEL_MAX_CHARS, "\n", false, NULL, true, true, true, false);
 
   int iDocWidth = m_pAvatarPopup->getInnerWidth();
   int iImageSize = 64;
@@ -822,7 +822,7 @@ void ArtifactsEquipDlg::onAvatarSelected()
   // Write title (Avatar name)
   int yPxl = 5;
   pLbl = new guiLabel();
-  pLbl->init(m_pCurrentAvatar->m_sCustomName, H2_FONT, H2_COLOR, L"TitleLabel", 0, 0, 0, 0, getDisplay());
+  pLbl->init(m_pCurrentAvatar->m_sCustomName, H2_FONT, H2_COLOR, "TitleLabe", 0, 0, 0, 0, getDisplay());
   pLbl->moveTo((iDocWidth - pLbl->getWidth()) / 2, yPxl);
   m_pAvatarPopup->getDocument()->addComponent(pLbl);
 
@@ -830,33 +830,33 @@ void ArtifactsEquipDlg::onAvatarSelected()
   yPxl += pLbl->getHeight() + 5;
   int iTex = getDisplay()->getTextureEngine()->loadTexture(m_pCurrentAvatar->m_sTextureFilename);
   guiImage * pImg = new guiImage();
-  pImg->init(iTex, L"Image", 5, yPxl, iImageSize, iImageSize, getDisplay());
+  pImg->init(iTex, "Image", 5, yPxl, iImageSize, iImageSize, getDisplay());
   m_pAvatarPopup->getDocument()->addComponent(pImg);
 
   // Add label for characteristics
   pLbl = new guiLabel();
-  pLbl->init(sInfos, TEXT_FONT, TEXT_COLOR, L"CharacsLabel", 15 + iImageSize, yPxl, iDocWidth - 20 - iImageSize, 0, getDisplay());
+  pLbl->init(sInfos, TEXT_FONT, TEXT_COLOR, "CharacsLabe", 15 + iImageSize, yPxl, iDocWidth - 20 - iImageSize, 0, getDisplay());
   m_pAvatarPopup->getDocument()->addComponent(pLbl);
 
-  wchar_t sText[LABEL_MAX_CHARS];
+  char sText[LABEL_MAX_CHARS];
   // Count number of spells equipped
   int nbSpells = 0;
   Profile::SpellData * pObj2 = (Profile::SpellData*) m_pCurrentPlayer->getSpellsList()->getFirst(0);
   while (pObj2 != NULL)
   {
     AvatarData * pOwner = pObj2->m_pOwner;
-    if (pOwner != NULL && wcscmp(m_pCurrentAvatar->m_sEdition, pOwner->m_sEdition) == 0
-          && wcscmp(m_pCurrentAvatar->m_sObjectId, pOwner->m_sObjectId) == 0)
+    if (pOwner != NULL && strcmp(m_pCurrentAvatar->m_sEdition, pOwner->m_sEdition) == 0
+          && strcmp(m_pCurrentAvatar->m_sObjectId, pOwner->m_sObjectId) == 0)
       nbSpells++;
     pObj2 = (Profile::SpellData*) m_pCurrentPlayer->getSpellsList()->getNext(0);
   }
   yPxl += 5 + max(pLbl->getHeight(), iImageSize);
-  wchar_t sBuf[64];
-  wchar_t sNbSpells[128];
-  i18n->getText(L"SPELLS_(d)", sBuf, 64);
-  swprintf(sNbSpells, 128, sBuf, nbSpells);
+  char sBuf[64];
+  char sNbSpells[128];
+  i18n->getText("SPELLS_(d)", sBuf, 64);
+  snprintf(sNbSpells, 128, sBuf, nbSpells);
   pLbl = new guiLabel();
-  pLbl->init(sNbSpells, TEXT_FONT, TEXT_COLOR, L"NbSpells", 5, yPxl, iDocWidth - 10, 0, getDisplay());
+  pLbl->init(sNbSpells, TEXT_FONT, TEXT_COLOR, "NbSpells", 5, yPxl, iDocWidth - 10, 0, getDisplay());
   m_pAvatarPopup->getDocument()->addComponent(pLbl);
 
   // XP
@@ -865,16 +865,16 @@ void ArtifactsEquipDlg::onAvatarSelected()
   int next = m_pCurrentAvatar->getNextLevelXP();
   pArgs[0] = &xp;
   pArgs[1] = &next;
-  i18n->getText(L"TOTAL_XP(d1)_NEXT(d2)", sText, LABEL_MAX_CHARS, pArgs);
+  i18n->getText("TOTAL_XP(d1)_NEXT(d2)", sText, LABEL_MAX_CHARS, pArgs);
   yPxl += 3 + pLbl->getHeight();
   pLbl = new guiLabel();
-  pLbl->init(sText, TEXT_FONT, TEXT_COLOR, L"", 5, yPxl, iDocWidth - 10, 0, getDisplay());
+  pLbl->init(sText, TEXT_FONT, TEXT_COLOR, "", 5, yPxl, iDocWidth - 10, 0, getDisplay());
   m_pAvatarPopup->getDocument()->addComponent(pLbl);
 
   // Add description
   yPxl += 10 + pLbl->getHeight();
   pLbl = new guiLabel();
-  pLbl->init(m_pCurrentAvatar->m_sCustomDescription, TEXT_FONT, TEXT_COLOR, L"DescLabel", 5, yPxl, iDocWidth - 10, 0, getDisplay());
+  pLbl->init(m_pCurrentAvatar->m_sCustomDescription, TEXT_FONT, TEXT_COLOR, "DescLabe", 5, yPxl, iDocWidth - 10, 0, getDisplay());
   m_pAvatarPopup->getDocument()->addComponent(pLbl);
   m_pAvatarPopup->getDocument()->setHeight(yPxl + pLbl->getHeight());
 }

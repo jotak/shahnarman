@@ -81,9 +81,7 @@ void DisplayEngine::initGlutWindow()
   g_iOldH = m_pClientParams->screenYSize;
   if (m_pClientParams->fullscreen)
   {
-    char sString[64];
-    wtostr(sString, 64, m_pClientParams->sGameModeString);
-    glutGameModeString(sString);
+    glutGameModeString(m_pClientParams->sGameModeString);
     glutEnterGameMode();
     m_pClientParams->screenXSize = glutGameModeGet(GLUT_GAME_MODE_WIDTH);
     m_pClientParams->screenYSize = glutGameModeGet(GLUT_GAME_MODE_HEIGHT);
@@ -115,18 +113,16 @@ void DisplayEngine::initGlutWindow()
   {
     char sLog[1024] = "";
     snprintf(sLog, 1024, "Error in glewInit: %s.\n", glewGetErrorString(err));
-    wchar_t sWLog[1024];
-    strtow(sWLog, 1024, sLog);
-    m_pDebug->notifyErrorMessage(sWLog);
+    m_pDebug->notifyErrorMessage(sLog);
   }
   if (!glewIsSupported("GL_ARB_shading_language_100"))
-    m_pDebug->notifyErrorMessage(L"Warning: extension GL_ARB_shading_language_100 not supported.");
+    m_pDebug->notifyErrorMessage("Warning: extension GL_ARB_shading_language_100 not supported.");
   if (!glewIsSupported("GL_ARB_shader_objects"))
-    m_pDebug->notifyErrorMessage(L"Warning: extension GL_ARB_shader_objects not supported.");
+    m_pDebug->notifyErrorMessage("Warning: extension GL_ARB_shader_objects not supported.");
   if (!glewIsSupported("GL_ARB_vertex_shader"))
-    m_pDebug->notifyErrorMessage(L"Warning: extension GL_ARB_vertex_shader not supported.");
+    m_pDebug->notifyErrorMessage("Warning: extension GL_ARB_vertex_shader not supported.");
   if (!glewIsSupported("GL_ARB_fragment_shader"))
-    m_pDebug->notifyErrorMessage(L"Warning: extension GL_ARB_fragment_shader not supported.");
+    m_pDebug->notifyErrorMessage("Warning: extension GL_ARB_fragment_shader not supported.");
 
   Geometry * pGeometry = (Geometry*) m_pRegisteredGeometries->getFirst(0);
   while (pGeometry != NULL)
@@ -545,13 +541,11 @@ void DisplayEngine::setLookAtMode(bool bLookAt)
 // ------------------------------------------------------------------
 bool DisplayEngine::loadShader(GLuint * uShader, GLenum type, const char * sShader)
 {
-  wchar_t sError[1024];
-  wchar_t sWShader[MAX_PATH];
-  strtow(sWShader, MAX_PATH, sShader);
+  char sError[1024];
   *uShader = glCreateShader(type);
   if (*uShader == 0)
   {
-    wsafecpy(sError, 1024, L"Error in loadShader: can't create shader.");
+    wsafecpy(sError, 1024, "Error in loadShader: can't create shader.");
     m_pDebug->notifyErrorMessage(sError);
     return false;
   }
@@ -565,7 +559,7 @@ bool DisplayEngine::loadShader(GLuint * uShader, GLenum type, const char * sShad
   {
     glDeleteShader(*uShader);
     *uShader = 0;
-    swprintf(sError, 1024, L"Error in loadShader: can't find source file %s.", sWShader);
+    snprintf(sError, 1024, "Error in loadShader: can't find source file %s.", sShader);
     m_pDebug->notifyErrorMessage(sError);
     return false;
   }
@@ -573,7 +567,7 @@ bool DisplayEngine::loadShader(GLuint * uShader, GLenum type, const char * sShad
   {
     glDeleteShader(*uShader);
     *uShader = 0;
-    swprintf(sError, 1024, L"Error in loadShader: can't read source file %s.", sWShader);
+    snprintf(sError, 1024, "Error in loadShader: can't read source file %s.", sShader);
     m_pDebug->notifyErrorMessage(sError);
     return false;
   }
@@ -596,10 +590,8 @@ bool DisplayEngine::loadShader(GLuint * uShader, GLenum type, const char * sShad
     char sLog[1024] = "";
     GLint size = 1024;  // wtf?
     glGetShaderInfoLog(*uShader, size, &size, sLog);
-    swprintf(sError, 1024, L"Error in loadShader: can't compile %s.\n", sWShader);
-    wchar_t sWLog[1024];
-    strtow(sWLog, 1024, sLog);
-    wsafecat(sError, 1024, sWLog);
+    snprintf(sError, 1024, "Error in loadShader: can't compile %s.\n", sShader);
+    wsafecat(sError, 1024, sLog);
     m_pDebug->notifyErrorMessage(sError);
     glDeleteShader(*uShader);
     *uShader = 0;
@@ -613,10 +605,10 @@ bool DisplayEngine::loadShader(GLuint * uShader, GLenum type, const char * sShad
 // ------------------------------------------------------------------
 bool DisplayEngine::linkShaders(GLuint * uProgram, GLuint uVxShader, GLuint uPxShader)
 {
-  wchar_t sError[1024];
+  char sError[1024];
   if (uVxShader == 0 && uPxShader == 0)
   {
-    swprintf(sError, 1024, L"Error in linkShaders: invalid shaders.");
+    snprintf(sError, 1024, "Error in linkShaders: invalid shaders.");
     m_pDebug->notifyErrorMessage(sError);
     return false;
   }
@@ -634,10 +626,8 @@ bool DisplayEngine::linkShaders(GLuint * uProgram, GLuint uVxShader, GLuint uPxS
     char sLog[1024] = "";
     GLint size = 1024;  // wtf?
     glGetProgramInfoLog(*uProgram, size, &size, sLog);
-    swprintf(sError, 1024, L"Error in linkShaders: can't link program.\n");
-    wchar_t sWLog[1024];
-    strtow(sWLog, 1024, sLog);
-    wsafecat(sError, 1024, sWLog);
+    snprintf(sError, 1024, "Error in linkShaders: can't link program.\n");
+    wsafecat(sError, 1024, sLog);
     m_pDebug->notifyErrorMessage(sError);
     glDeleteProgram(*uProgram);
     *uProgram = 0;

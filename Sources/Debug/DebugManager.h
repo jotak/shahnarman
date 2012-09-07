@@ -29,14 +29,14 @@ public:
   virtual void Update(double delta);
 
   // Other function
-  void log(const wchar_t * sMsg);
-  void addCustomeLine(const wchar_t * sLine);
-  void notifyErrorMessage(s16 errorCode, const wchar_t * additionalInfo = NULL);
-  void notifyErrorMessage(const wchar_t * errorMsg);
-  void notifyINIErrorMessage(wchar_t * sFile, int errorCode);
-  void notifyXMLErrorMessage(wchar_t * sFile, int errorCode, int line, int col);
-  void notifyLoadingMessage(const wchar_t * msg);
-  wchar_t * getErrorMessage(wchar_t * errorMsg, s16 errorCode);
+  void log(const char * sMsg);
+  void addCustomeLine(const char * sLine);
+  void notifyErrorMessage(s16 errorCode, const char * additionalInfo = NULL);
+  void notifyErrorMessage(const char * errorMsg);
+  void notifyINIErrorMessage(const char * sFile, int errorCode);
+  void notifyXMLErrorMessage(const char * sFile, int errorCode, int line, int col);
+  void notifyLoadingMessage(const char * msg);
+  char * getErrorMessage(char * errorMsg, s16 errorCode);
   void clear();
   void switchShowFPS() { m_bShowFPS = !m_bShowFPS; };
   void autoStartGame();

@@ -58,7 +58,7 @@ void InputEngine::addCursoredEventListener(EventListener * pListener, DebugManag
     }
   }
   // No free slot for listener found => error
-  pDebug->notifyErrorMessage(L"InputEngine error: max number of EventListener cursored reached.");
+  pDebug->notifyErrorMessage("InputEngine error: max number of EventListener cursored reached.");
 }
 
 // -----------------------------------------------------------------

@@ -64,7 +64,7 @@ void TurnSolver::onInitFinished()
   SpecialTile * pSpec = m_pServer->getMap()->getFirstSpecialTile();
   while (pSpec != NULL)
   {
-    pSpec->callLuaFunction(L"onCreate", 0, L"l", (long) pSpec->getInstanceId());
+    pSpec->callLuaFunction("onCreate", 0, "", (long) pSpec->getInstanceId());
     pSpec = m_pServer->getMap()->getNextSpecialTile();
   }
   resetDataForNextTurn(true);
@@ -111,7 +111,7 @@ void TurnSolver::setInitialAvatar(UnitData * pAvatar, Player * pPlayer, CoordsMa
 // -----------------------------------------------------------------
 // Name : addInitialPlayerSpell
 // -----------------------------------------------------------------
-void TurnSolver::addInitialPlayerSpell(Player * pPlayer, wchar_t * sEdition, wchar_t * sName)
+void TurnSolver::addInitialPlayerSpell(Player * pPlayer, char * sEdition, char * sName)
 {
   Spell * pSpell = new Spell(pPlayer->m_uPlayerId, sEdition, 1, sName, m_pServer->getDebug());
   pPlayer->m_pDeck->addLast(pSpell);
@@ -389,12 +389,12 @@ bool TurnSolver::findDefenders(MapTile * pTile, Unit * pAttacker, bool bRange, O
       pArgs[0] = &bAttacker;
       pArgs[1] = &iRange;
       pArgs[2] = pOther->getIdentifiers();
-      bool bOk = (pAttacker->callEffectHandler(L"isBattleValid", L"iis", pArgs, HANDLER_RESULT_TYPE_BAND) == 1);
+      bool bOk = (pAttacker->callEffectHandler("isBattleValid", "iis", pArgs, HANDLER_RESULT_TYPE_BAND) == 1);
       if (bOk)
       {
         bAttacker = 0;
         pArgs[2] = pAttacker->getIdentifiers();
-        bOk = (pOther->callEffectHandler(L"isBattleValid", L"iis", pArgs, HANDLER_RESULT_TYPE_BAND) == 1);
+        bOk = (pOther->callEffectHandler("isBattleValid", "iis", pArgs, HANDLER_RESULT_TYPE_BAND) == 1);
         if (bOk)
         {
           bFound = true;
@@ -550,7 +550,7 @@ void TurnSolver::attackerChoosedUnits(NetworkData * pData)
 
   if (m_pCurrentUnit == NULL || m_pDefendingUnit == NULL)
   {
-    m_pServer->getDebug()->notifyErrorMessage(L"Error during resolve battle phase: wrong data sent to server, attacking or defending unit not found.");
+    m_pServer->getDebug()->notifyErrorMessage("Error during resolve battle phase: wrong data sent to server, attacking or defending unit not found.");
     return;
   }
   allowCastSpells(false);
@@ -613,8 +613,8 @@ void TurnSolver::resolveBattle()
       m_iDefenderDamages = 0;
       m_iAttackerArmor = m_pCurrentUnit->getValue(STRING_ARMOR);
       m_iDefenderArmor = m_pDefendingUnit->getValue(STRING_ARMOR);
-      m_pCurrentUnit->callEffectHandler(L"onRangeAttack");
-      m_pDefendingUnit->callEffectHandler(L"onRangeDefend");
+      m_pCurrentUnit->callEffectHandler("onRangeAttack");
+      m_pDefendingUnit->callEffectHandler("onRangeDefend");
     }
     else
     {
@@ -622,15 +622,15 @@ void TurnSolver::resolveBattle()
       m_iDefenderDamages = m_pDefendingUnit->getValue(STRING_MELEE);
       m_iAttackerArmor = m_pCurrentUnit->getValue(STRING_ARMOR);
       m_iDefenderArmor = m_pDefendingUnit->getValue(STRING_ARMOR);
-      m_pCurrentUnit->callEffectHandler(L"onMeleeAttack");
-      m_pDefendingUnit->callEffectHandler(L"onMeleeDefend");
+      m_pCurrentUnit->callEffectHandler("onMeleeAttack");
+      m_pDefendingUnit->callEffectHandler("onMeleeDefend");
     }
     m_iAttackerDamages = max(0, m_iAttackerDamages - m_iDefenderArmor);
     m_iDefenderDamages = max(0, m_iDefenderDamages - m_iAttackerArmor);
     m_iAttackerLife = m_pCurrentUnit->getValue(STRING_LIFE);
     m_iDefenderLife = m_pDefendingUnit->getValue(STRING_LIFE);
-    m_pCurrentUnit->callEffectHandler(L"onBattleResolved");
-    m_pDefendingUnit->callEffectHandler(L"onBattleResolved");
+    m_pCurrentUnit->callEffectHandler("onBattleResolved");
+    m_pDefendingUnit->callEffectHandler("onBattleResolved");
     m_iAttackerLife -= m_iDefenderDamages;
     m_iDefenderLife -= m_iAttackerDamages;
     m_pCurrentUnit->setBaseValue(STRING_LIFE, m_iAttackerLife);
@@ -640,7 +640,7 @@ void TurnSolver::resolveBattle()
     if (m_iDefenderLife <= 0)
       m_pDefendingUnit->setStatus(US_Dead);
     m_pCurrentUnit->setHasAttacked(m_bUnitHasAttacked);
-    m_pServer->sendCustomLogToAll(L"(1s)_ATTACKED_(2s)", 0, L"pp", m_pCurrentUnit->getOwner(), m_pDefendingUnit->getOwner());
+    m_pServer->sendCustomLogToAll("(1s)_ATTACKED_(2s)", 0, "pp", m_pCurrentUnit->getOwner(), m_pDefendingUnit->getOwner());
   }
   checkAllUnitUpdates(true);
 }
@@ -880,25 +880,25 @@ void TurnSolver::resetDataForNextTurn(bool bFirstTurn)
 // -----------------------------------------------------------------
 void TurnSolver::callNewTurnHandlers(u8 uStep)
 {
-  wchar_t sFuncTpl[64];
-  wchar_t sFunc[64];
+  char sFuncTpl[64];
+  char sFunc[64];
   if (uStep == 0)
-    wsafecpy(sFuncTpl, 64, L"onNew%sTurn");
+    wsafecpy(sFuncTpl, 64, "onNew%sTurn");
   else
-    swprintf(sFuncTpl, 64, L"onNew%sTurn_step%d", L"%s", (int)uStep);
+    snprintf(sFuncTpl, 64, "onNew%sTurn_step%d", "%s", (int)uStep);
   // Loop through global spells to trigger any effect
-  swprintf(sFunc, 64, sFuncTpl, L"");
+  snprintf(sFunc, 64, sFuncTpl, "");
   int sit = m_pGlobalSpells->getIterator();
   LuaObject * pLua = (LuaObject*) m_pGlobalSpells->getFirst(sit);
   while (pLua != NULL)
   {
-    pLua->callLuaFunction(sFunc, 0, L"");
+    pLua->callLuaFunction(sFunc, 0, "");
     pLua = (LuaObject*) m_pGlobalSpells->getNext(sit);
   }
   m_pGlobalSpells->releaseIterator(sit);
 
   // Tiles
-  swprintf(sFunc, 64, sFuncTpl, L"Tile");
+  snprintf(sFunc, 64, sFuncTpl, "Tile");
   int iWidth = m_pServer->getMap()->getWidth();
   int iHeight = m_pServer->getMap()->getHeight();
   for (int x = 0; x < iWidth; x++) {
@@ -929,10 +929,10 @@ void TurnSolver::callNewTurnHandlers(u8 uStep)
   while (m_pCurrentPlayer != NULL)
   {
     // Call new turn effects
-    swprintf(sFunc, 64, sFuncTpl, L"Player");
+    snprintf(sFunc, 64, sFuncTpl, "Player");
     m_pCurrentPlayer->callEffectHandler(sFunc);
     // Loop through units attached effects to trigger any effect
-    swprintf(sFunc, 64, sFuncTpl, L"Unit");
+    snprintf(sFunc, 64, sFuncTpl, "Unit");
     int uit = m_pCurrentPlayer->m_pUnits->getIterator();
     m_pCurrentUnit = (Unit*) m_pCurrentPlayer->m_pUnits->getFirst(uit);
     while (m_pCurrentUnit != NULL)
@@ -990,7 +990,7 @@ void TurnSolver::checkAllUnitUpdates(bool bUnsetModified)
 // -----------------------------------------------------------------
 // Name : addUnitToPlayer
 // -----------------------------------------------------------------
-Unit * TurnSolver::addUnitToPlayer(wchar_t * sEdition, wchar_t * sUnitId, u8 uPlayerId, CoordsMap mapPos, bool bSimulate)
+Unit * TurnSolver::addUnitToPlayer(const char * sEdition, const char * sUnitId, u8 uPlayerId, CoordsMap mapPos, bool bSimulate)
 {
   UnitData * pData = m_pServer->getFactory()->getUnitData(sEdition, sUnitId);
   if (pData != NULL)

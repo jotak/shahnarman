@@ -10,7 +10,7 @@
 // -----------------------------------------------------------------
 XMLObject::XMLObject()
 {
-  wsafecpy(m_sObjectId, NAME_MAX_CHARS, L"");
+  wsafecpy(m_sObjectId, NAME_MAX_CHARS, "");
   m_pLocalizedElements = new ObjectList(true);
 }
 
@@ -30,9 +30,9 @@ void XMLObject::readLocalizedElementsFromXml(XMLLiteElement * pNode)
 {
   XMLLiteElement * pSubNode = pNode->getFirstChild();
   while (pSubNode != NULL) {
-    if (_wcsicmp(pSubNode->getName(), L"l12n") == 0) {
-      XMLLiteAttribute * pKey = pSubNode->getAttributeByName(L"key");
-      if (pKey != NULL && wcslen(pKey->getCharValue()) > 0) {
+    if (strcasecmp(pSubNode->getName(), "l12n") == 0) {
+      XMLLiteAttribute * pKey = pSubNode->getAttributeByName("key");
+      if (pKey != NULL && strlen(pKey->getCharValue()) > 0) {
         XMLLiteElement * pLang = pSubNode->getFirstChild();
         while (pLang != NULL) {
           addLocalizedElement(pKey->getCharValue(), pLang->getCharValue(), pLang->getName());
@@ -47,7 +47,7 @@ void XMLObject::readLocalizedElementsFromXml(XMLLiteElement * pNode)
 // -----------------------------------------------------------------
 // Name : addLocalizedElement
 // -----------------------------------------------------------------
-void XMLObject::addLocalizedElement(const wchar_t * sKey, const wchar_t * sValue, const wchar_t * sLanguage)
+void XMLObject::addLocalizedElement(const char * sKey, const char * sValue, const char * sLanguage)
 {
   LocalizedElement * pLocElt = new LocalizedElement(sKey, sValue, sLanguage);
   m_pLocalizedElements->addLast(pLocElt);
@@ -56,13 +56,13 @@ void XMLObject::addLocalizedElement(const wchar_t * sKey, const wchar_t * sValue
 // -----------------------------------------------------------------
 // Name : findLocalizedElement
 // -----------------------------------------------------------------
-void XMLObject::findLocalizedElement(wchar_t * sValue, int iSize, const wchar_t * sLanguage, const wchar_t * sKey)
+void XMLObject::findLocalizedElement(char * sValue, int iSize, const char * sLanguage, const char * sKey)
 {
-  wsafecpy(sValue, iSize, L"");
+  wsafecpy(sValue, iSize, "");
   LocalizedElement * pElt = (LocalizedElement*) m_pLocalizedElements->getFirst(0);
   while (pElt != NULL)
   {
-    if (_wcsicmp(sLanguage, pElt->m_sLanguage) == 0 && _wcsicmp(sKey, pElt->m_sKey) == 0)
+    if (strcasecmp(sLanguage, pElt->m_sLanguage) == 0 && strcasecmp(sKey, pElt->m_sKey) == 0)
     {
       wsafecpy(sValue, iSize, pElt->m_sValue);
       return;
@@ -73,7 +73,7 @@ void XMLObject::findLocalizedElement(wchar_t * sValue, int iSize, const wchar_t 
   pElt = (LocalizedElement*) m_pLocalizedElements->getFirst(0);
   while (pElt != NULL)
   {
-    if (_wcsicmp(L"english", pElt->m_sLanguage) == 0 && _wcsicmp(sKey, pElt->m_sKey) == 0)
+    if (strcasecmp("english", pElt->m_sLanguage) == 0 && strcasecmp(sKey, pElt->m_sKey) == 0)
     {
       wsafecpy(sValue, iSize, pElt->m_sValue);
       return;
@@ -84,7 +84,7 @@ void XMLObject::findLocalizedElement(wchar_t * sValue, int iSize, const wchar_t 
   pElt = (LocalizedElement*) m_pLocalizedElements->getFirst(0);
   while (pElt != NULL)
   {
-    if (_wcsicmp(sKey, pElt->m_sKey) == 0)
+    if (strcasecmp(sKey, pElt->m_sKey) == 0)
     {
       wsafecpy(sValue, iSize, pElt->m_sValue);
       return;
@@ -97,10 +97,10 @@ void XMLObject::findLocalizedElement(wchar_t * sValue, int iSize, const wchar_t 
 // Name : LocalizedElement
 //  constructor
 // -----------------------------------------------------------------
-XMLObject::LocalizedElement::LocalizedElement(const wchar_t * sKey, const wchar_t * sValue, const wchar_t * sLanguage)
+XMLObject::LocalizedElement::LocalizedElement(const char * sKey, const char * sValue, const char * sLanguage)
 {
-  int length = (int) wcslen(sValue);
-  m_sValue = new wchar_t[length + 1];
+  int length = (int) strlen(sValue);
+  m_sValue = new char[length + 1];
   wsafecpy(m_sValue, length + 1, sValue);
   wsafecpy(m_sKey, 64, sKey);
   wsafecpy(m_sLanguage, 64, sLanguage);

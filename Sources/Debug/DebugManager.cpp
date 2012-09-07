@@ -24,7 +24,7 @@ DebugManager::DebugManager(LocalClient * pLocalClient)
   m_iCustomInfoNbLines = 0;
   m_bShowFPS = true;
   FILE * f = NULL;
-  wfopen(&f, L"logs/out.log", L"w");
+  fopen_s(&f, "logs/out.log", "w");
   if (f)
     fclose(f);
 }
@@ -75,8 +75,8 @@ void DebugManager::Update(double delta)
       Coords3D c3 = m_pLocalClient->getDisplay()->get3DCoords(cs, DMS_3D);
       CoordsMap cm = m_pLocalClient->getDisplay()->getMapCoords(cs);
       Coords3D cam = m_pLocalClient->getDisplay()->getCamera();
-      wchar_t sInfo[512];
-      swprintf(sInfo, 512, L"ScreenX=%d ; ScreenY=%d\n3dX=%.1f ; 3dY=%.1f\nMapX=%d ; MapY=%d\nCamX=%.1f ; CamY=%.1f ; CamZ=%.1f\nFPS : %.0f", cs.x, cs.y, c3.x, c3.y, cm.x, cm.y, cam.x, cam.y, cam.z, fFps);
+      char sInfo[512];
+      snprintf(sInfo, 512, "ScreenX=%d ; ScreenY=%d\n3dX=%.1f ; 3dY=%.1f\nMapX=%d ; MapY=%d\nCamX=%.1f ; CamY=%.1f ; CamZ=%.1f\nFPS : %.0f", cs.x, cs.y, c3.x, c3.y, cm.x, cm.y, cam.x, cam.y, cam.z, fFps);
       if (m_pFPSGeometry == NULL)
         m_pFPSGeometry = new GeometryText(sInfo, m_iFontId, VB_Static, m_pLocalClient->getDisplay());
       else
@@ -108,49 +108,49 @@ void DebugManager::Display()
 // -----------------------------------------------------------------
 // Name : addCustomeLine
 // -----------------------------------------------------------------
-void DebugManager::addCustomeLine(const wchar_t * sLine)
+void DebugManager::addCustomeLine(const char * sLine)
 {
   if (m_pLocalClient->getDisplay()->isReady() && IS_VALID_FONTID(m_iFontId))
   {
     if (m_iCustomInfoNbLines < DBG_MAX_LINES - 1)
       m_pGeometries[m_iCustomInfoNbLines++] = new GeometryText(sLine, m_iFontId, VB_Static, m_pLocalClient->getDisplay());
     else if (m_iCustomInfoNbLines == DBG_MAX_LINES - 1)
-      m_pGeometries[m_iCustomInfoNbLines++] = new GeometryText(L"Max number of lines reached!", m_iFontId, VB_Static, m_pLocalClient->getDisplay());
+      m_pGeometries[m_iCustomInfoNbLines++] = new GeometryText("Max number of lines reached!", m_iFontId, VB_Static, m_pLocalClient->getDisplay());
   }
   else
   {
-    wprintf(sLine);
-    wprintf(L"\n");
+    printf("%s", sLine);
+    printf("\n");
   }
   FILE * f = NULL;
-  wfopen(&f, L"logs/out.log", L"a");
+  fopen_s(&f, "logs/out.log", "a");
   if (f)
   {
-    fputws(sLine, f);
-    fputws(L"\n", f);
+    fputs(sLine, f);
+    fputs("\n", f);
     fclose(f);
   }
   else
-    wprintf(L"Can't open log file!\n");
+    printf("Can't open log file!\n");
 }
 
 // -----------------------------------------------------------------
 // Name : log
 // -----------------------------------------------------------------
-void DebugManager::log(const wchar_t * sMsg)
+void DebugManager::log(const char * sMsg)
 {
   if (m_pLocalClient->getClientParameters()->iLogLevel > 0)
   {
     FILE * f = NULL;
-    wfopen(&f, L"logs/out.log", L"a");
+    fopen_s(&f, "logs/out.log", "a");
     if (f)
     {
-      fputws(sMsg, f);
-      fputws(L"\n", f);
+      fputs(sMsg, f);
+      fputs("\n", f);
       fclose(f);
     }
     else
-      wprintf(L"Can't open log file!\n");
+      printf("Can't open log file!\n");
   }
 }
 
@@ -173,31 +173,31 @@ void DebugManager::clear()
 // -----------------------------------------------------------------
 // Name : getErrorMessage
 // -----------------------------------------------------------------
-wchar_t * DebugManager::getErrorMessage(wchar_t * errorMsg, s16 errorCode)
+char * DebugManager::getErrorMessage(char * errorMsg, s16 errorCode)
 {
   switch (errorCode)
   {
-  case 0: wsafecpy(errorMsg, ERROR_MESSAGE_SIZE, L"No error");
+  case 0: wsafecpy(errorMsg, ERROR_MESSAGE_SIZE, "No error");
     break;
-  case TEX_FILENOTFOUND: wsafecpy(errorMsg, ERROR_MESSAGE_SIZE, L"TEX_FILENOTFOUND");
+  case TEX_FILENOTFOUND: wsafecpy(errorMsg, ERROR_MESSAGE_SIZE, "TEX_FILENOTFOUND");
     break;
-  case TEX_ERRORONREADING: wsafecpy(errorMsg, ERROR_MESSAGE_SIZE, L"TEX_ERRORONREADING");
+  case TEX_ERRORONREADING: wsafecpy(errorMsg, ERROR_MESSAGE_SIZE, "TEX_ERRORONREADING");
     break;
-  case TEX_INVALIDFORMAT: wsafecpy(errorMsg, ERROR_MESSAGE_SIZE, L"TEX_INVALIDFORMAT");
+  case TEX_INVALIDFORMAT: wsafecpy(errorMsg, ERROR_MESSAGE_SIZE, "TEX_INVALIDFORMAT");
     break;
-  case TEX_NOTLOADED: wsafecpy(errorMsg, ERROR_MESSAGE_SIZE, L"TEX_NOTLOADED");
+  case TEX_NOTLOADED: wsafecpy(errorMsg, ERROR_MESSAGE_SIZE, "TEX_NOTLOADED");
     break;
-  case TEX_PNGERROR: wsafecpy(errorMsg, ERROR_MESSAGE_SIZE, L"TEX_PNGERROR");
+  case TEX_PNGERROR: wsafecpy(errorMsg, ERROR_MESSAGE_SIZE, "TEX_PNGERROR");
     break;
-  case FNT_FILENOTFOUND: wsafecpy(errorMsg, ERROR_MESSAGE_SIZE, L"FNT_FILENOTFOUND");
+  case FNT_FILENOTFOUND: wsafecpy(errorMsg, ERROR_MESSAGE_SIZE, "FNT_FILENOTFOUND");
     break;
-  case FNT_ERRORONREADING: wsafecpy(errorMsg, ERROR_MESSAGE_SIZE, L"FNT_ERRORONREADING");
+  case FNT_ERRORONREADING: wsafecpy(errorMsg, ERROR_MESSAGE_SIZE, "FNT_ERRORONREADING");
     break;
-  case FNT_INVALIDFORMAT: wsafecpy(errorMsg, ERROR_MESSAGE_SIZE, L"FNT_INVALIDFORMAT");
+  case FNT_INVALIDFORMAT: wsafecpy(errorMsg, ERROR_MESSAGE_SIZE, "FNT_INVALIDFORMAT");
     break;
-  case FNT_NOTLOADED: wsafecpy(errorMsg, ERROR_MESSAGE_SIZE, L"FNT_NOTLOADED");
+  case FNT_NOTLOADED: wsafecpy(errorMsg, ERROR_MESSAGE_SIZE, "FNT_NOTLOADED");
     break;
-  default: wsafecpy(errorMsg, ERROR_MESSAGE_SIZE, L"Unregistered error");
+  default: wsafecpy(errorMsg, ERROR_MESSAGE_SIZE, "Unregistered error");
     break;
   }
   return errorMsg;
@@ -206,13 +206,13 @@ wchar_t * DebugManager::getErrorMessage(wchar_t * errorMsg, s16 errorCode)
 // -----------------------------------------------------------------
 // Name : notifyErrorMessage
 // -----------------------------------------------------------------
-void DebugManager::notifyErrorMessage(s16 errorCode, const wchar_t * additionalInfo)
+void DebugManager::notifyErrorMessage(s16 errorCode, const char * additionalInfo)
 {
-  wchar_t msg[ERROR_MESSAGE_SIZE + 128] = L"";
+  char msg[ERROR_MESSAGE_SIZE + 128] = "";
   getErrorMessage(msg, errorCode);
   if (additionalInfo != NULL)
   {
-    wsafecat(msg, ERROR_MESSAGE_SIZE + 128, L" - ");
+    wsafecat(msg, ERROR_MESSAGE_SIZE + 128, " - ");
     wsafecat(msg, ERROR_MESSAGE_SIZE + 128, additionalInfo);
   }
   addCustomeLine(msg);
@@ -221,7 +221,7 @@ void DebugManager::notifyErrorMessage(s16 errorCode, const wchar_t * additionalI
 // -----------------------------------------------------------------
 // Name : notifyErrorMessage
 // -----------------------------------------------------------------
-void DebugManager::notifyErrorMessage(const wchar_t * errorMsg)
+void DebugManager::notifyErrorMessage(const char * errorMsg)
 {
   addCustomeLine(errorMsg);
 }
@@ -229,29 +229,29 @@ void DebugManager::notifyErrorMessage(const wchar_t * errorMsg)
 // -----------------------------------------------------------------
 // Name : notifyLoadingMessage
 // -----------------------------------------------------------------
-void DebugManager::notifyLoadingMessage(const wchar_t * msg)
+void DebugManager::notifyLoadingMessage(const char * msg)
 {
-    wprintf(L"\t");
-    wprintf(msg);
-    wprintf(L"\n");
+    printf("\t");
+    printf("%s", msg);
+    printf("\n");
 }
 
 // -----------------------------------------------------------------
 // Name : notifyINIErrorMessage
 // -----------------------------------------------------------------
-void DebugManager::notifyINIErrorMessage(wchar_t * sFile, int errorCode)
+void DebugManager::notifyINIErrorMessage(const char * sFile, int errorCode)
 {
-  wchar_t sError[1024] = L"";
+  char sError[1024] = "";
   switch (errorCode)
   {
   case INIREADER_ERROR_CANT_OPEN_FILE:
-    swprintf(sError, 1024, L"%s: INIREADER_ERROR_CANT_OPEN_FILE.", sFile);
+    snprintf(sError, 1024, "%s: INIREADER_ERROR_CANT_OPEN_FILE.", sFile);
     break;
   case INIREADER_ERROR_MAX_LINES_REACHED:
-    swprintf(sError, 1024, L"%s: INIREADER_ERROR_MAX_LINES_REACHED.", sFile);
+    snprintf(sError, 1024, "%s: INIREADER_ERROR_MAX_LINES_REACHED.", sFile);
     break;
   default:
-    swprintf(sError, 1024, L"%s: Unknown error.", sFile);
+    snprintf(sError, 1024, "%s: Unknown error.", sFile);
     break;
   }
   addCustomeLine(sError);
@@ -260,40 +260,40 @@ void DebugManager::notifyINIErrorMessage(wchar_t * sFile, int errorCode)
 // -----------------------------------------------------------------
 // Name : notifyXMLErrorMessage
 // -----------------------------------------------------------------
-void DebugManager::notifyXMLErrorMessage(wchar_t * sFile, int errorCode, int line, int col)
+void DebugManager::notifyXMLErrorMessage(const char * sFile, int errorCode, int line, int col)
 {
-  wchar_t sError[1024] = L"";
+  char sError[1024] = "";
   switch (errorCode)
   {
   case XMLLITE_ERROR_ELEMENT_EXPECTED:
-    swprintf(sError, 1024, L"%s: XMLLITE_ERROR_ELEMENT_EXPECTED: line %d, col %d.", sFile, line, col);
+    snprintf(sError, 1024, "%s: XMLLITE_ERROR_ELEMENT_EXPECTED: line %d, col %d.", sFile, line, col);
     break;
   case XMLLITE_ERROR_EOF_NOT_EXPECTED:
-    swprintf(sError, 1024, L"%s: XMLLITE_ERROR_EOF_NOT_EXPECTED: line %d, col %d.", sFile, line, col);
+    snprintf(sError, 1024, "%s: XMLLITE_ERROR_EOF_NOT_EXPECTED: line %d, col %d.", sFile, line, col);
     break;
   case XMLLITE_ERROR_LINEBREAK_IN_ELEMENT:
-    swprintf(sError, 1024, L"%s: XMLLITE_ERROR_LINEBREAK_IN_ELEMENT: line %d, col %d.", sFile, line, col);
+    snprintf(sError, 1024, "%s: XMLLITE_ERROR_LINEBREAK_IN_ELEMENT: line %d, col %d.", sFile, line, col);
     break;
   case XMLLITE_ERROR_ELEMENT_END_EXPECTED:
-    swprintf(sError, 1024, L"%s: XMLLITE_ERROR_ELEMENT_END_EXPECTED: line %d, col %d.", sFile, line, col);
+    snprintf(sError, 1024, "%s: XMLLITE_ERROR_ELEMENT_END_EXPECTED: line %d, col %d.", sFile, line, col);
     break;
   case XMLLITE_ERROR_LINEBREAK_IN_ATTRIBUTE:
-    swprintf(sError, 1024, L"%s: XMLLITE_ERROR_LINEBREAK_IN_ATTRIBUTE: line %d, col %d.", sFile, line, col);
+    snprintf(sError, 1024, "%s: XMLLITE_ERROR_LINEBREAK_IN_ATTRIBUTE: line %d, col %d.", sFile, line, col);
     break;
   case XMLLITE_ERROR_EQUAL_EXPECTED_IN_ATTRIBUTE:
-    swprintf(sError, 1024, L"%s: XMLLITE_ERROR_EQUAL_EXPECTED_IN_ATTRIBUTE: line %d, col %d.", sFile, line, col);
+    snprintf(sError, 1024, "%s: XMLLITE_ERROR_EQUAL_EXPECTED_IN_ATTRIBUTE: line %d, col %d.", sFile, line, col);
     break;
   case XMLLITE_ERROR_CLOSING_TAG_DOESNT_MATCH:
-    swprintf(sError, 1024, L"%s: XMLLITE_ERROR_CLOSING_TAG_DOESNT_MATCH: line %d, col %d.", sFile, line, col);
+    snprintf(sError, 1024, "%s: XMLLITE_ERROR_CLOSING_TAG_DOESNT_MATCH: line %d, col %d.", sFile, line, col);
     break;
   case XMLLITE_ERROR_CLOSING_TAG_EXPECTED:
-    swprintf(sError, 1024, L"%s: XMLLITE_ERROR_CLOSING_TAG_EXPECTED: line %d, col %d.", sFile, line, col);
+    snprintf(sError, 1024, "%s: XMLLITE_ERROR_CLOSING_TAG_EXPECTED: line %d, col %d.", sFile, line, col);
     break;
   case XMLLITE_ERROR_CANT_OPEN_FILE:
-    swprintf(sError, 1024, L"%s: XMLLITE_ERROR_CANT_OPEN_FILE: line %d, col %d.", sFile, line, col);
+    snprintf(sError, 1024, "%s: XMLLITE_ERROR_CANT_OPEN_FILE: line %d, col %d.", sFile, line, col);
     break;
   default:
-    swprintf(sError, 1024, L"%s: Unknown error: line %d, col %d.", sFile, line, col);
+    snprintf(sError, 1024, "%s: Unknown error: line %d, col %d.", sFile, line, col);
     break;
   }
   addCustomeLine(sError);
@@ -305,7 +305,7 @@ void DebugManager::notifyXMLErrorMessage(wchar_t * sFile, int errorCode, int lin
 // -----------------------------------------------------------------
 void DebugManager::registerTextures(TextureEngine * pTexEngine, FontEngine * pFontEngine)
 {
-  m_iFontId = pFontEngine->registerFont(L"BookAntiqua_16", pTexEngine);
+  m_iFontId = pFontEngine->registerFont("BookAntiqua_16", pTexEngine);
 }
 
 #include "../Data/LocalisationTool.h"
@@ -332,7 +332,7 @@ void DebugManager::autoStartGame()
 
   // Re-init map data
   MapReader * pMapReader = new MapReader(m_pLocalClient);
-  pMapReader->init(L"standard.lua");
+  pMapReader->init("standard.lua");
   ObjectList * pMapParameters = new ObjectList(true);
   pMapReader->getMapParameters(pMapParameters, LABEL_MAX_CHARS);
 
@@ -356,23 +356,23 @@ void DebugManager::autoStartGame()
   delete pMapParameters;
 
   // Init server
-  Server * pServer = m_pLocalClient->initServer(L"", 1, clients, pMapReader, -1, -1);
+  Server * pServer = m_pLocalClient->initServer("", 1, clients, pMapReader, -1, -1);
   delete[] clients;
   if (pServer == NULL)
   {
-    notifyErrorMessage(L"Error: server could not be initialized.");
+    notifyErrorMessage("Error: server could not be initialized.");
     return;
   }
 
   // Build players data
   ObjectList * pServerPlayers = pServer->getSolver()->getPlayersList();
   // Create neutral player
-  wchar_t sName[NAME_MAX_CHARS];
-  i18n->getText(L"NEUTRAL", sName, NAME_MAX_CHARS);
+  char sName[NAME_MAX_CHARS];
+  i18n->getText("NEUTRA", sName, NAME_MAX_CHARS);
   Player * pPlayer = new Player(0, 0, pServer->getSolver()->getGlobalSpellsPtr());
   wsafecpy(pPlayer->m_sProfileName, NAME_MAX_CHARS, sName);
   pPlayer->m_Color = rgb(0.5, 0.5, 0.5);
-  wsafecpy(pPlayer->m_sBanner, 64, L"blason1");
+  wsafecpy(pPlayer->m_sBanner, 64, "blason1");
   pServer->getSolver()->setNeutralPlayer(pPlayer);
   // Human players
   int playerId = 1;
@@ -380,7 +380,7 @@ void DebugManager::autoStartGame()
   {
     // Create player object
     pPlayer = new Player(playerId, 0, pServer->getSolver()->getGlobalSpellsPtr());
-    swprintf(pPlayer->m_sProfileName, NAME_MAX_CHARS, L"test%d", playerId);
+    snprintf(pPlayer->m_sProfileName, NAME_MAX_CHARS, "test%d", playerId);
     Profile * pProfile = m_pLocalClient->getDataFactory()->findProfile(pPlayer->m_sProfileName);
     AvatarData * pAvatar = (AvatarData*) pProfile->getAvatarsList()->getFirst(0);
     pPlayer->m_Color = rgb(1, 1, 1);
@@ -394,8 +394,8 @@ void DebugManager::autoStartGame()
     while (pSpellDesc != NULL)
     {
       AvatarData * pOwner = pSpellDesc->m_pOwner;
-      if (pOwner != NULL && wcscmp(pAvatar->m_sEdition, pOwner->m_sEdition) == 0
-            && wcscmp(pAvatar->m_sObjectId, pOwner->m_sObjectId) == 0)
+      if (pOwner != NULL && strcmp(pAvatar->m_sEdition, pOwner->m_sEdition) == 0
+            && strcmp(pAvatar->m_sObjectId, pOwner->m_sObjectId) == 0)
         pServer->getSolver()->addInitialPlayerSpell(pPlayer, pSpellDesc->m_sEdition, pSpellDesc->m_sName);
       pSpellDesc = (Profile::SpellData*) pProfile->getSpellsList()->getNext(0);
     }
@@ -404,8 +404,8 @@ void DebugManager::autoStartGame()
     while (pArtifact != NULL)
     {
       AvatarData * pOwner = pArtifact->m_pOwner;
-      if (pOwner != NULL && wcscmp(pAvatar->m_sEdition, pOwner->m_sEdition) == 0
-            && wcscmp(pAvatar->m_sObjectId, pOwner->m_sObjectId) == 0)
+      if (pOwner != NULL && strcmp(pAvatar->m_sEdition, pOwner->m_sEdition) == 0
+            && strcmp(pAvatar->m_sObjectId, pOwner->m_sObjectId) == 0)
       {
         Unit * pAvatarInGame = pPlayer->getAvatar();
         assert(pAvatarInGame != NULL);
@@ -422,8 +422,8 @@ void DebugManager::autoStartGame()
                 pAvatarInGame->setBaseValue(((ArtifactEffect_Charac*)pEffect)->m_sKey, max(0, val + ((ArtifactEffect_Charac*)pEffect)->m_iModifier));
               else
               {
-                wchar_t sError[1024];
-                swprintf(sError, 1024, L"Warning: artifact %s tries to modify characteristic that doesn't exist (%s)", pArtifact->m_sObjectId, ((ArtifactEffect_Charac*)pEffect)->m_sKey);
+                char sError[1024];
+                snprintf(sError, 1024, "Warning: artifact %s tries to modify characteristic that doesn't exist (%s)", pArtifact->m_sObjectId, ((ArtifactEffect_Charac*)pEffect)->m_sKey);
                 m_pLocalClient->getDebug()->notifyErrorMessage(sError);
               }
               break;
@@ -435,8 +435,8 @@ void DebugManager::autoStartGame()
                 pServer->getSolver()->addInitialPlayerSpell(pPlayer, ((ArtifactEffect_Spell*)pEffect)->m_sSpellEdition, ((ArtifactEffect_Spell*)pEffect)->m_sSpellName);
               else
               {
-                wchar_t sError[1024];
-                swprintf(sError, 1024, L"Warning: artifact %s tries to add spell that doesn't exist (%s)", pArtifact->m_sObjectId, ((ArtifactEffect_Spell*)pEffect)->m_sSpellName);
+                char sError[1024];
+                snprintf(sError, 1024, "Warning: artifact %s tries to add spell that doesn't exist (%s)", pArtifact->m_sObjectId, ((ArtifactEffect_Spell*)pEffect)->m_sSpellName);
                 m_pLocalClient->getDebug()->notifyErrorMessage(sError);
               }
               break;
@@ -448,8 +448,8 @@ void DebugManager::autoStartGame()
                 pAvatarInGame->addSkill(pSkill);
               else
               {
-                wchar_t sError[1024];
-                swprintf(sError, 1024, L"Warning: artifact %s tries to add skill that doesn't exist or that can't be loaded (%s)", pArtifact->m_sObjectId, ((ArtifactEffect_Skill*)pEffect)->m_sSkillName);
+                char sError[1024];
+                snprintf(sError, 1024, "Warning: artifact %s tries to add skill that doesn't exist or that can't be loaded (%s)", pArtifact->m_sObjectId, ((ArtifactEffect_Skill*)pEffect)->m_sSkillName);
                 m_pLocalClient->getDebug()->notifyErrorMessage(sError);
               }
               break;

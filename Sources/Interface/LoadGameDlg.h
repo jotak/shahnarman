@@ -18,12 +18,12 @@ public:
 
 protected:
   void loadGamesList();
-  void loadGameInfo(wchar_t * sGameName);
+  void loadGameInfo(char * sGameName);
 
   LocalClient * m_pLocalClient;
   guiContainer * m_pGamesPanel;
   guiContainer * m_pGameInfoPanel;
-  wchar_t m_sSelectedGameName[MAX_PATH];
+  char m_sSelectedGameName[MAX_PATH];
 };
 
 #endif

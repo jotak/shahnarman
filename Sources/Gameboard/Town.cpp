@@ -20,14 +20,14 @@
 // Name : Town
 //  Constructor
 // -----------------------------------------------------------------
-Town::Town(CoordsMap mapPos, Map * pMap, ObjectList ** pGlobalEffects) : MapObject(mapPos, pMap, pGlobalEffects, L"")
+Town::Town(CoordsMap mapPos, Map * pMap, ObjectList ** pGlobalEffects) : MapObject(mapPos, pMap, pGlobalEffects, "")
 {
   m_pLocalClient = NULL;
   m_pCurrentBuildingUnit = NULL;
   m_pBuildings = new ObjectList(true);
   m_pExtraBuildableUnits = new ObjectList(true);
   m_pHeroes = new ObjectList(false);
-  wsafecpy(m_sCurrentBuilding, NAME_MAX_CHARS, L"");
+  wsafecpy(m_sCurrentBuilding, NAME_MAX_CHARS, "");
   registerValue(STRING_GROWTH, 0);
   registerValue(STRING_PRODUCTIVITY, 0);
   registerValue(STRING_UNITPROD, 0);
@@ -70,11 +70,11 @@ void Town::init(u32 uTownId, u8 uSize, Ethnicity * pEthn, LocalClient * pLocalCl
 {
   m_pLocalClient = pLocalClient;
   m_uTownId = uTownId;
-  wchar_t * pName = pEthn->getRandomTownName();
+  char * pName = pEthn->getRandomTownName();
   if (pName != NULL)
     wsafecpy(m_sName, NAME_MAX_CHARS, pName);
   else
-    wsafecpy(m_sName, NAME_MAX_CHARS, L"NULL");
+    wsafecpy(m_sName, NAME_MAX_CHARS, "NUL");
   wsafecpy(m_sEthnicityEdition, NAME_MAX_CHARS, pEthn->m_sEdition);
   wsafecpy(m_sEthnicityId, NAME_MAX_CHARS, pEthn->m_sObjectId);
   for (int i = 0; i < 5; i++)
@@ -96,7 +96,7 @@ void Town::init(u32 uTownId, u8 uSize, Ethnicity * pEthn, LocalClient * pLocalCl
   m_pCurrentBuildingUnit = NULL;
 
   // Buildings
-  wsafecpy(m_sCurrentBuilding, NAME_MAX_CHARS, L"");
+  wsafecpy(m_sCurrentBuilding, NAME_MAX_CHARS, "");
   Ethnicity::BuildingFile * pBuildFile = (Ethnicity::BuildingFile*) pEthn->m_pBuildingFiles->getFirst(0);
   while (pBuildFile != NULL)
   {
@@ -225,7 +225,7 @@ void Town::deserialize(NetworkData * pData, LocalClient * pLocalClient)
     u32 id = (u32) pData->readLong();
     int iX = (int) pData->readLong();
     int iY = (int) pData->readLong();
-    wchar_t sName[NAME_MAX_CHARS];
+    char sName[NAME_MAX_CHARS];
     pData->readString(sName);
     Building * pBuilding = new Building(id, iX, iY, m_sEthnicityEdition, sName, m_pLocalClient->getDebug());
     bool bBuilt = (pData->readLong() == 1);
@@ -240,7 +240,7 @@ void Town::deserialize(NetworkData * pData, LocalClient * pLocalClient)
   listsize = pData->readLong();
   if (listsize != 0)
   {
-    wchar_t sName[NAME_MAX_CHARS];
+    char sName[NAME_MAX_CHARS];
     pData->readString(sName);
     u8 cost = (u8) pData->readLong();
     m_pCurrentBuildingUnit = new Ethnicity::TownUnit(sName, cost);
@@ -285,7 +285,7 @@ void Town::deserializeForUpdate(NetworkData * pData)
   long listsize = pData->readLong();
   if (listsize != 0)
   {
-    wchar_t sName[NAME_MAX_CHARS];
+    char sName[NAME_MAX_CHARS];
     pData->readString(sName);
     u8 cost = (u8) pData->readLong();
     m_pCurrentBuildingUnit = new Ethnicity::TownUnit(sName, cost);
@@ -317,17 +317,17 @@ void Town::getOrders(NetworkData * pData)
 // -----------------------------------------------------------------
 void Town::updateOrders(NetworkData * pData)
 {
-  wchar_t sName[NAME_MAX_CHARS];
+  char sName[NAME_MAX_CHARS];
   pData->readString(sName);
   setCurrentBuilding(sName);
 
   // Unit being produced
   if (pData->readLong() == 1)
   {
-    wchar_t sName[NAME_MAX_CHARS];
+    char sName[NAME_MAX_CHARS];
     pData->readString(sName);
     u8 cost = (u8) pData->readLong();
-    if (m_pCurrentBuildingUnit == NULL || wcscmp(m_pCurrentBuildingUnit->m_sId, sName) != 0)
+    if (m_pCurrentBuildingUnit == NULL || strcmp(m_pCurrentBuildingUnit->m_sId, sName) != 0)
     {
       FREE(m_pCurrentBuildingUnit);
       m_pCurrentBuildingUnit = new Ethnicity::TownUnit(sName, cost);
@@ -389,19 +389,19 @@ int Town::getBigTexture()
 // -----------------------------------------------------------------
 // Name : getInfo
 // -----------------------------------------------------------------
-wchar_t * Town::getInfo(wchar_t * sBuf, int iSize, InfoDest eDest)
+char * Town::getInfo(char * sBuf, int iSize, InfoDest eDest)
 {
   // Get ethnicity name
-  wchar_t sEthn[NAME_MAX_CHARS];
+  char sEthn[NAME_MAX_CHARS];
   Edition * pEdition = m_pLocalClient->getDataFactory()->findEdition(m_sEthnicityEdition);
   assert(pEdition != NULL);
   Ethnicity * pEthn = pEdition->findEthnicity(m_sEthnicityId);
   assert(pEthn != NULL);
-  pEthn->findLocalizedElement(sEthn, NAME_MAX_CHARS, i18n->getCurrentLanguageName(), L"name");
+  pEthn->findLocalizedElement(sEthn, NAME_MAX_CHARS, i18n->getCurrentLanguageName(), "name");
 
-  wchar_t sText[128];
+  char sText[128];
   void * pPhraseArgs[2] = { getName(), sEthn };
-  i18n->getText(L"TOWN_OF_%$1s_(%$2s)", sText, 128, pPhraseArgs);
+  i18n->getText("TOWN_OF_%$1s_(%$2s)", sText, 128, pPhraseArgs);
   wsafecpy(sBuf, iSize, sText);
   return sBuf;
 }
@@ -473,9 +473,9 @@ void Town::newTurn(Player * pOwner, Server * pServer)
     setOwner(pOwner->m_uPlayerId);
     setBaseValue(STRING_HEROECHANCES, 0);
     if (pOwner->m_uPlayerId != 0)
-      pServer->sendCustomLogToAll(L"(1s)_TOWN_CAPTURED_(2s)", 1, L"atp", (u8)LOG_ACTION_TOWNSCREEN, getId(), getId(), pOwner->m_uPlayerId);
+      pServer->sendCustomLogToAll("(1s)_TOWN_CAPTURED_(2s)", 1, "atp", (u8)LOG_ACTION_TOWNSCREEN, getId(), getId(), pOwner->m_uPlayerId);
     else
-      pServer->sendCustomLogToAll(L"(s)_TOWN_LIBERATED", 1, L"at", (u8)LOG_ACTION_TOWNSCREEN, getId(), getId());
+      pServer->sendCustomLogToAll("(s)_TOWN_LIBERATED", 1, "at", (u8)LOG_ACTION_TOWNSCREEN, getId(), getId());
   }
   // Owner XP
   pOwner->m_uXPTownPoints += m_uSize;
@@ -487,11 +487,11 @@ void Town::newTurn(Player * pOwner, Server * pServer)
     {
       m_uFoodInStock = 0;
       m_uSize++;
-      pServer->sendCustomLogToAll(L"TOWN_(s)_HAS_GROWN_TO_(d)", 0, L"ati", (u8)LOG_ACTION_TOWNSCREEN, getId(), getId(), (int)m_uSize);
+      pServer->sendCustomLogToAll("TOWN_(s)_HAS_GROWN_TO_(d)", 0, "ati", (u8)LOG_ACTION_TOWNSCREEN, getId(), getId(), (int)m_uSize);
       if (m_uSize == 5)
       {
         pOwner->m_pCapitalTown = this;
-        pServer->sendCustomLogToAll(L"IT_IS_NOW_CAPITAL_OF_(s)", 0, L"p", pOwner->m_uPlayerId);
+        pServer->sendCustomLogToAll("IT_IS_NOW_CAPITAL_OF_(s)", 0, "p", pOwner->m_uPlayerId);
       }
     }
     else
@@ -504,7 +504,7 @@ void Town::newTurn(Player * pOwner, Server * pServer)
     m_uProdInStock += getProdPerTurn();
     if (m_uProdInStock >= pBuild->getProductionCost())
     {
-      pServer->sendCustomLogToAll(L"BUILDING_(1s)_WAS_BUILT_IN_(2s)", 0, L"abt", (u8)LOG_ACTION_TOWNSCREEN, getId(), getId(), m_sCurrentBuilding, getId());
+      pServer->sendCustomLogToAll("BUILDING_(1s)_WAS_BUILT_IN_(2s)", 0, "abt", (u8)LOG_ACTION_TOWNSCREEN, getId(), getId(), m_sCurrentBuilding, getId());
       buildBuilding(m_sCurrentBuilding, pServer);
     }
   }
@@ -521,9 +521,9 @@ void Town::newTurn(Player * pOwner, Server * pServer)
       NetworkData unitData(NETWORKMSG_CREATE_UNIT_DATA);
       pUnit->serialize(&unitData);
       pServer->sendMessageToAllClients(&unitData);
-      pServer->sendCustomLogToAll(L"(1s)_PRODUCED_UNIT_(2s)", 0, L"atu", (u8)LOG_ACTION_TOWNSCREEN, getId(), getId(), pUnit->getOwner(), pUnit->getId());
+      pServer->sendCustomLogToAll("(1s)_PRODUCED_UNIT_(2s)", 0, "atu", (u8)LOG_ACTION_TOWNSCREEN, getId(), getId(), pUnit->getOwner(), pUnit->getId());
       void * p = pUnit->getIdentifiers();
-      callEffectHandler(L"onUnitProduced", L"s", &p);
+      callEffectHandler("onUnitProduced", "s", &p);
     }
   }
   calculateUsedTiles();
@@ -611,7 +611,7 @@ void Town::updateHeroes(Server * pServer)
   {
     UnitData * pAvatar = (UnitData*) pServer->getSolver()->findPlayer(m_uOwner)->m_pAvatarData;
     assert(pAvatar != NULL);
-    if (wcscmp(pAvatar->m_sEdition, m_sEthnicityEdition) == 0 && wcscmp(pAvatar->m_sEthnicityId, m_sEthnicityId) == 0)
+    if (strcmp(pAvatar->m_sEdition, m_sEthnicityEdition) == 0 && strcmp(pAvatar->m_sEthnicityId, m_sEthnicityId) == 0)
       baseHappy += m_uSize;
   }
   int baseFear = pEthn->m_iTownsFearBonus;
@@ -622,7 +622,7 @@ void Town::updateHeroes(Server * pServer)
   {
     UnitData * pData = pUnit->getUnitData(m_pLocalClient);
     assert(pData != NULL);
-    if (wcscmp(pData->m_sEdition, m_sEthnicityEdition) == 0 && wcscmp(pData->m_sEthnicityId, m_sEthnicityId) == 0)
+    if (strcmp(pData->m_sEdition, m_sEthnicityEdition) == 0 && strcmp(pData->m_sEthnicityId, m_sEthnicityId) == 0)
       baseFear--;
     else
       baseFear++;
@@ -649,7 +649,7 @@ void Town::updateHeroes(Server * pServer)
       do {
         owner = getRandom(nbPlayers) + 1;
       } while (owner == m_uOwner);
-      pServer->sendCustomLogToAll(L"%$1s_HAS_TURNED_COAT_FOR_%$2s", 2, L"aup", (u8)LOG_ACTION_UNITSCREEN, pUnit->getOwner(), pUnit->getId(), pUnit->getOwner(), pUnit->getId(), owner);
+      pServer->sendCustomLogToAll("%$1s_HAS_TURNED_COAT_FOR_%$2s", 2, "aup", (u8)LOG_ACTION_UNITSCREEN, pUnit->getOwner(), pUnit->getId(), pUnit->getOwner(), pUnit->getId(), owner);
       pServer->getSolver()->getSpellsSolver()->onChangeUnitOwner(m_uOwner, pUnit->getId(), owner);
     }
     pUnit = (Unit*) m_pHeroes->getNext(0);
@@ -700,16 +700,16 @@ void Town::updateHeroes(Server * pServer)
     NetworkData unitData(NETWORKMSG_CREATE_UNIT_DATA);
     pUnit->serialize(&unitData);
     pServer->sendMessageToAllClients(&unitData);
-    pServer->sendCustomLogToAll(L"A_HEROE_%$1s_IS_BORN_FOR_%$2s", 2, L"aup", (u8)LOG_ACTION_TOWNSCREEN, getId(), pUnit->getOwner(), pUnit->getId(), pUnit->getOwner());
+    pServer->sendCustomLogToAll("A_HEROE_%$1s_IS_BORN_FOR_%$2s", 2, "aup", (u8)LOG_ACTION_TOWNSCREEN, getId(), pUnit->getOwner(), pUnit->getId(), pUnit->getOwner());
   }
 }
 
 // -----------------------------------------------------------------
 // Name : setCurrentBuilding
 // -----------------------------------------------------------------
-void Town::setCurrentBuilding(const wchar_t * sName)
+void Town::setCurrentBuilding(const char * sName)
 {
-  if (wcscmp(m_sCurrentBuilding, sName) != 0)
+  if (strcmp(m_sCurrentBuilding, sName) != 0)
   {
     wsafecpy(m_sCurrentBuilding, NAME_MAX_CHARS, sName);
     m_uProdInStock = 0;
@@ -732,7 +732,7 @@ void Town::setCurrentUnit(Ethnicity::TownUnit * pUnit)
     m_pCurrentBuildingUnit = new Ethnicity::TownUnit(pUnit->m_sId, pUnit->m_uCost);
     m_uUnitProdInStock = 0;
   }
-  else if (wcscmp(m_pCurrentBuildingUnit->m_sId, pUnit->m_sId) != 0)
+  else if (strcmp(m_pCurrentBuildingUnit->m_sId, pUnit->m_sId) != 0)
   {
     wsafecpy(m_pCurrentBuildingUnit->m_sId, NAME_MAX_CHARS, pUnit->m_sId);
     m_pCurrentBuildingUnit->m_uCost = pUnit->m_uCost;
@@ -743,13 +743,13 @@ void Town::setCurrentUnit(Ethnicity::TownUnit * pUnit)
 // -----------------------------------------------------------------
 // Name : buildBuilding
 // -----------------------------------------------------------------
-void Town::buildBuilding(wchar_t * sName, Server * pServer)
+void Town::buildBuilding(const char * sName, Server * pServer)
 {
   int _it = m_pBuildings->getIterator();
   Building * pBuild = getFirstBuilding(_it);
   while (pBuild != NULL)
   {
-    if (wcscmp(pBuild->getObjectName(), sName) == 0)
+    if (strcmp(pBuild->getObjectName(), sName) == 0)
     {
       if (!pBuild->isBuilt() && isBuildingAllowed(pBuild))
       {
@@ -764,8 +764,8 @@ void Town::buildBuilding(wchar_t * sName, Server * pServer)
           pServer->sendMessageToAllClients(&msg);
         }
       }
-      if (wcscmp(sName, m_sCurrentBuilding) == 0)
-        setCurrentBuilding(L"");
+      if (strcmp(sName, m_sCurrentBuilding) == 0)
+        setCurrentBuilding("");
       m_pBuildings->releaseIterator(_it);
       return;
     }
@@ -779,7 +779,7 @@ void Town::buildBuilding(wchar_t * sName, Server * pServer)
 // -----------------------------------------------------------------
 bool Town::isBuildingAllowed(Building * pBuild)
 {
-  if (pBuild->callLuaFunction(L"isAllowed", 1, L"l", (long)getId()))
+  if (pBuild->callLuaFunction("isAllowed", 1, "", (long)getId()))
   {
     double resp = pBuild->getLuaNumber();
     return (resp == 1);
@@ -799,13 +799,13 @@ ObjectList * Town::getExtraBuildableUnit()
   while (pEffect != NULL)
   {
     double d;
-    if (pEffect->getLuaVarNumber(L"nbProducedUnits", &d))
+    if (pEffect->getLuaVarNumber("nbProducedUnits", &d))
     {
       int size = (int)d;
       if (size > 0)
       {
-        pEffect->callLuaFunction(L"getProducedUnits", 2*size, L"");
-        wchar_t sName[NAME_MAX_CHARS];
+        pEffect->callLuaFunction("getProducedUnits", 2*size, "");
+        char sName[NAME_MAX_CHARS];
         for (int i = 0; i < size; i++)
         {
           u8 uCost = (u8) pEffect->getLuaNumber();
@@ -825,12 +825,12 @@ ObjectList * Town::getExtraBuildableUnit()
 // -----------------------------------------------------------------
 Building * Town::getCurrentBuilding()
 {
-  if (wcscmp(m_sCurrentBuilding, L"") == 0)
+  if (strcmp(m_sCurrentBuilding, "") == 0)
     return NULL;
   Building * pBuild = getFirstBuilding(0);
   while (pBuild != NULL)
   {
-    if (wcscmp(pBuild->getObjectName(), m_sCurrentBuilding) == 0)
+    if (strcmp(pBuild->getObjectName(), m_sCurrentBuilding) == 0)
       return pBuild;
     pBuild = getNextBuilding(0);
   }

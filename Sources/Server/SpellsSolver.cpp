@@ -156,18 +156,18 @@ bool SpellsSolver::startResolvePlayerSpell(Player * pPlayer)
   if (mana < pPlayer->m_SpentMana + pSpell->getCost()) // if no mana left, try next spell
   {
     pPlayer->m_pCastSpells->deleteCurrent(0, true);
-    m_pServer->sendCustomLogToAll(L"(s)_TRIED_CAST_SPELL_BUT_NO_MANA", 0, L"ps", pPlayer->m_uPlayerId, pPlayer->m_uPlayerId, L"hand", pSpell->getInstanceId());
+    m_pServer->sendCustomLogToAll("(s)_TRIED_CAST_SPELL_BUT_NO_MANA", 0, "ps", pPlayer->m_uPlayerId, pPlayer->m_uPlayerId, "hand", pSpell->getInstanceId());
   }
   else if (pPlayer->m_pHand->goTo(0, pSpell) == false)  // spell may have been discarded for instance: it's not in hand anymore, so ignore it
   {
     pPlayer->m_pCastSpells->deleteCurrent(0, true);
-    m_pServer->sendCustomLogToAll(L"(s)_CANT_FIND_SPELL", 0, L"p", pPlayer->m_uPlayerId);
+    m_pServer->sendCustomLogToAll("(s)_CANT_FIND_SPEL", 0, "p", pPlayer->m_uPlayerId);
   }
   else
   {
     pPlayer->m_SpentMana += pSpell->getCost();
     NetworkData msg(NETWORKMSG_SEND_CAST_SPELLS_DATA);
-    msg.addLong(0); // stands for "start cast spell"
+    msg.addLong(0); // stands for "start cast spel"
     msg.addLong((long) pPlayer->m_uPlayerId);
     msg.addLong((long) pSpell->getInstanceId());
     m_pServer->sendMessageToAllClients(&msg);
@@ -176,7 +176,7 @@ bool SpellsSolver::startResolvePlayerSpell(Player * pPlayer)
     pSpell->setCaster(pPlayer);
     pSpell->setCurrentEffect(-1);
     // In what follows, it's possible that m_pSpellNetworkData is modified during the "onResolve" call
-    pSpell->callLuaFunction(L"onResolve", 0, L"sil", pSpell->getResolveParameters(), (int) pPlayer->m_uPlayerId, (long) pSpell->getInstanceId());
+    pSpell->callLuaFunction("onResolve", 0, "si", pSpell->getResolveParameters(), (int) pPlayer->m_uPlayerId, (long) pSpell->getInstanceId());
     if (!m_bPauseResolving)  // During call of "onResolve", it's possible that it was paused for instance to select a target during resolve
       endCastSpell(false);
   }
@@ -211,11 +211,11 @@ void SpellsSolver::resolveChildEffect(Player * pPlayer, Unit * pUnit, ChildEffec
     {
     case LUAOBJECT_SPELL:
       ((Spell*)pLua)->setCaster(pPlayer);
-      pLua->callLuaFunction(L"onResolveChild", 0, L"isi", (int) (pChild->id + 1), pChild->sResolveParams, (int) pPlayer->m_uPlayerId);
+      pLua->callLuaFunction("onResolveChild", 0, "isi", (int) (pChild->id + 1), pChild->sResolveParams, (int) pPlayer->m_uPlayerId);
       break;
     case LUAOBJECT_SKILL:
       ((Skill*)pLua)->setCaster(pUnit);
-      pLua->callLuaFunction(L"onResolveChild", 0, L"isii", (int) (pChild->id + 1), pChild->sResolveParams, (int) pPlayer->m_uPlayerId, (int) pUnit->getId());
+      pLua->callLuaFunction("onResolveChild", 0, "isii", (int) (pChild->id + 1), pChild->sResolveParams, (int) pPlayer->m_uPlayerId, (int) pUnit->getId());
       break;
     }
     if (!m_bPauseResolving)  // During call of "onResolve", it's possible that it was paused for instance to select a target during resolve
@@ -236,7 +236,7 @@ void SpellsSolver::endCastSpell(bool bCancel)
   pPlayer->m_pCastSpells->deleteCurrent(0, true);
   pPlayer->m_pHand->deleteObject(pSpell, true, true);
   NetworkData msg(NETWORKMSG_SEND_CAST_SPELLS_DATA);
-  msg.addLong(1); // stands for "finished cast spell"
+  msg.addLong(1); // stands for "finished cast spel"
   msg.addLong((long) pPlayer->m_uPlayerId);
   msg.addLong((long) pSpell->getInstanceId());
   if (bCancel)
@@ -311,7 +311,7 @@ void SpellsSolver::receiveSpells(NetworkData * pData)
         Spell * pSpell = pPlayer->findSpell(0, uSpellId, pPlayer->m_pHand);
         if (pSpell != NULL)
         {
-          wchar_t spellParams[LUA_FUNCTION_PARAMS_MAX_CHARS];
+          char spellParams[LUA_FUNCTION_PARAMS_MAX_CHARS];
           // Note: keep spell in hand, it still can be discarded by opponent for instance
           pPlayer->m_pCastSpells->addLast(pSpell);
           pData->readString(spellParams);
@@ -319,11 +319,11 @@ void SpellsSolver::receiveSpells(NetworkData * pData)
           pSpell->addResolveParameters(spellParams);
         }
         else
-          m_pServer->getDebug()->notifyErrorMessage(L"Inconsistant data received from client: spell not found in player's hand.");
+          m_pServer->getDebug()->notifyErrorMessage("Inconsistant data received from client: spell not found in player's hand.");
       }
     }
     else
-      m_pServer->getDebug()->notifyErrorMessage(L"Inconsistant data received from client: player not found.");
+      m_pServer->getDebug()->notifyErrorMessage("Inconsistant data received from client: player not found.");
   }
 }
 
@@ -356,13 +356,13 @@ void SpellsSolver::receiveTargetOnResolve(NetworkData * pData)
   //      pLua = pUnit->findSkill(uId);
   //    else
   //    {
-  //      m_pServer->getDebug()->notifyErrorMessage(L"Inconsistant data received from client: unit doesn't exist.");
+  //      m_pServer->getDebug()->notifyErrorMessage("Inconsistant data received from client: unit doesn't exist.");
   //      return;
   //    }
   //  }
   //  if (pLua == NULL)
   //  {
-  //    m_pServer->getDebug()->notifyErrorMessage(L"Inconsistant data received from client: skill or spell can't be found.");
+  //    m_pServer->getDebug()->notifyErrorMessage("Inconsistant data received from client: skill or spell can't be found.");
   //    return;
   //  }
     bool bCancel = (pData->readLong() == 1);
@@ -375,9 +375,9 @@ void SpellsSolver::receiveTargetOnResolve(NetworkData * pData)
       return;
     }
     assert(m_pLuaBeingResolved != NULL);
-    wchar_t sResolveFunc[128];
+    char sResolveFunc[128];
     pData->readString(sResolveFunc);
-    wchar_t sParams[LUA_FUNCTION_PARAMS_MAX_CHARS];
+    char sParams[LUA_FUNCTION_PARAMS_MAX_CHARS];
     m_bPauseResolving = false;
     if (isChild)
     {
@@ -385,7 +385,7 @@ void SpellsSolver::receiveTargetOnResolve(NetworkData * pData)
       ChildEffect * pChild = m_pLuaBeingResolved->getChildEffect(id);
       pData->readString(sParams);
       m_pLuaBeingResolved->setCurrentEffect(pChild->id);
-      m_pLuaBeingResolved->callLuaFunction(sResolveFunc, 0, L"is", (int) (pChild->id + 1), sParams);
+      m_pLuaBeingResolved->callLuaFunction(sResolveFunc, 0, "is", (int) (pChild->id + 1), sParams);
       if (!m_bPauseResolving)  // During call of "onResolve", it's possible that it was paused for instance to select a target during resolve
         endActivateEffect(false);
     }
@@ -394,14 +394,14 @@ void SpellsSolver::receiveTargetOnResolve(NetworkData * pData)
       if (uType == LUAOBJECT_SPELL)
       {
         pData->readString(sParams);
-        m_pLuaBeingResolved->callLuaFunction(sResolveFunc, 0, L"s", sParams);
+        m_pLuaBeingResolved->callLuaFunction(sResolveFunc, 0, "s", sParams);
         if (!m_bPauseResolving)  // During call of "onResolve", it's possible that it was paused for instance to select a target during resolve
           endCastSpell(false);
       }
       else
       {
         // Case doesn't happen until now
-        //pLua->callLuaFunction(sResolveFunc, L"", 0);
+        //pLua->callLuaFunction(sResolveFunc, "", 0);
         //if (!m_bPauseResolving)  // During call of "onResolve", it's possible that it was paused for instance to select a target during resolve
         //  endResolveLua(false, false);
       }
@@ -409,7 +409,7 @@ void SpellsSolver::receiveTargetOnResolve(NetworkData * pData)
 
   //}
   //else
-  //  m_pServer->getDebug()->notifyErrorMessage(L"Inconsistant data received from client: player not found.");
+  //  m_pServer->getDebug()->notifyErrorMessage("Inconsistant data received from client: player not found.");
 }
 
 // -----------------------------------------------------------------
@@ -425,7 +425,7 @@ LuaContext * SpellsSolver::retrieveLuaContext(u32 uExpectedType, NetworkData * p
   }
   if (uExpectedType != 0 && m_LuaContext.pLua->getType() != uExpectedType)
   {
-    m_pServer->getDebug()->notifyErrorMessage(L"retrieveLuaContext: got unexpected type!");
+    m_pServer->getDebug()->notifyErrorMessage("retrieveLuaContext: got unexpected type!");
     return NULL;
   }
   if (iEffect >= 0)
@@ -452,10 +452,10 @@ void SpellsSolver::onDamageUnit(u8 uPlayerId, u32 uUnitId, u8 uDamages)
         pUnit->setStatus(US_Dead);
     }
     else
-      m_pServer->getDebug()->notifyErrorMessage(L"Lua interaction error in function damageUnit: unit not found.");
+      m_pServer->getDebug()->notifyErrorMessage("Lua interaction error in function damageUnit: unit not found.");
   }
   else
-    m_pServer->getDebug()->notifyErrorMessage(L"Lua interaction error in function damageUnit: player not found.");
+    m_pServer->getDebug()->notifyErrorMessage("Lua interaction error in function damageUnit: player not found.");
 }
 
 // -----------------------------------------------------------------
@@ -463,12 +463,9 @@ void SpellsSolver::onDamageUnit(u8 uPlayerId, u32 uUnitId, u8 uDamages)
 // -----------------------------------------------------------------
 Unit * SpellsSolver::onAddUnit(CoordsMap mapPos, const char * sName, u8 uOwner, bool bSimulate)
 {
-  // We need to convert ascii to wchar_t first
-  wchar_t sNameId[NAME_MAX_CHARS] = L"";
-  strtow(sNameId, NAME_MAX_CHARS, sName);
   retrieveLuaContext();
   assert(m_LuaContext.pLua != NULL);
-  Unit * pUnit = m_pSolver->addUnitToPlayer(m_LuaContext.pLua->getObjectEdition(), sNameId, uOwner, mapPos, bSimulate);
+  Unit * pUnit = m_pSolver->addUnitToPlayer(m_LuaContext.pLua->getObjectEdition(), sName, uOwner, mapPos, bSimulate);
   if (!bSimulate) {
     // Send data to clients
     NetworkData unitData(NETWORKMSG_CREATE_UNIT_DATA);
@@ -504,15 +501,15 @@ void SpellsSolver::onAttachToUnit(u8 uPlayerId, u32 uUnitId)
     }
     else
     {
-      wchar_t sError[128];
-      swprintf(sError, 128, L"Lua interaction error: lua script %s sent wrong unit id at resolve stage.", m_LuaContext.pLua->getLocalizedName(), NAME_MAX_CHARS);
+      char sError[128];
+      snprintf(sError, 128, "Lua interaction error: lua script %s sent wrong unit id at resolve stage.", m_LuaContext.pLua->getLocalizedName());
       m_pServer->getDebug()->notifyErrorMessage(sError);
     }
   }
   else
   {
-    wchar_t sError[128];
-    swprintf(sError, 128, L"Lua interaction error: lua script %s sent wrong player id at resolve stage.", m_LuaContext.pLua->getLocalizedName(), NAME_MAX_CHARS);
+    char sError[128];
+    snprintf(sError, 128, "Lua interaction error: lua script %s sent wrong player id at resolve stage.", m_LuaContext.pLua->getLocalizedName());
     m_pServer->getDebug()->notifyErrorMessage(sError);
   }
 }
@@ -544,15 +541,15 @@ void SpellsSolver::onAddChildEffectToUnit(int iEffectId, u8 uPlayerId, u32 uUnit
     }
     else
     {
-      wchar_t sError[128];
-      swprintf(sError, 128, L"Lua interaction error: effect %s sent wrong unit id at resolve stage.", m_LuaContext.pLua->getLocalizedName(), NAME_MAX_CHARS);
+      char sError[128];
+      snprintf(sError, 128, "Lua interaction error: effect %s sent wrong unit id at resolve stage.", m_LuaContext.pLua->getLocalizedName());
       m_pServer->getDebug()->notifyErrorMessage(sError);
     }
   }
   else
   {
-    wchar_t sError[128];
-    swprintf(sError, 128, L"Lua interaction error: effect %s sent wrong player id at resolve stage.", m_LuaContext.pLua->getLocalizedName(), NAME_MAX_CHARS);
+    char sError[128];
+    snprintf(sError, 128, "Lua interaction error: effect %s sent wrong player id at resolve stage.", m_LuaContext.pLua->getLocalizedName());
     m_pServer->getDebug()->notifyErrorMessage(sError);
   }
 }
@@ -570,7 +567,7 @@ void SpellsSolver::onRemoveChildEffectFromUnit(int iEffectId, u8 uPlayerId, u32 
   ChildEffect * pChild = m_LuaContext.pLua->getChildEffect(iEffectId);
   if (pChild == NULL)
   {
-    m_pServer->getDebug()->notifyErrorMessage(L"Lua interaction error: child effect not found while calling SpellsSolver::onRemoveChildEffectFromUnit.");
+    m_pServer->getDebug()->notifyErrorMessage("Lua interaction error: child effect not found while calling SpellsSolver::onRemoveChildEffectFromUnit.");
     return;
   }
 
@@ -590,22 +587,22 @@ void SpellsSolver::onRemoveChildEffectFromUnit(int iEffectId, u8 uPlayerId, u32 
       }
       else
       {
-        wchar_t sError[128];
-        swprintf(sError, 128, L"Lua interaction error: can't detach effect %s.", m_LuaContext.pLua->getLocalizedName(), NAME_MAX_CHARS);
+        char sError[128];
+        snprintf(sError, 128, "Lua interaction error: can't detach effect %s.", m_LuaContext.pLua->getLocalizedName());
         m_pServer->getDebug()->notifyErrorMessage(sError);
       }
     }
     else
     {
-      wchar_t sError[128];
-      swprintf(sError, 128, L"Lua interaction error: effect %s sent wrong unit id at resolve stage.", m_LuaContext.pLua->getLocalizedName(), NAME_MAX_CHARS);
+      char sError[128];
+      snprintf(sError, 128, "Lua interaction error: effect %s sent wrong unit id at resolve stage.", m_LuaContext.pLua->getLocalizedName());
       m_pServer->getDebug()->notifyErrorMessage(sError);
     }
   }
   else
   {
-    wchar_t sError[128];
-    swprintf(sError, 128, L"Lua interaction error: effect %s sent wrong player id at resolve stage.", m_LuaContext.pLua->getLocalizedName(), NAME_MAX_CHARS);
+    char sError[128];
+    snprintf(sError, 128, "Lua interaction error: effect %s sent wrong player id at resolve stage.", m_LuaContext.pLua->getLocalizedName());
     m_pServer->getDebug()->notifyErrorMessage(sError);
   }
 }
@@ -633,8 +630,8 @@ void SpellsSolver::onAddChildEffectToTown(int iEffectId, u32 uTownId)
   }
   else
   {
-    wchar_t sError[128];
-    swprintf(sError, 128, L"Lua interaction error: effect %s sent wrong town id at resolve stage.", m_LuaContext.pLua->getLocalizedName(), NAME_MAX_CHARS);
+    char sError[128];
+    snprintf(sError, 128, "Lua interaction error: effect %s sent wrong town id at resolve stage.", m_LuaContext.pLua->getLocalizedName());
     m_pServer->getDebug()->notifyErrorMessage(sError);
   }
 }
@@ -652,7 +649,7 @@ void SpellsSolver::onRemoveChildEffectFromTown(int iEffectId, u32 uTownId)
   ChildEffect * pChild = m_LuaContext.pLua->getChildEffect(iEffectId);
   if (pChild == NULL)
   {
-    m_pServer->getDebug()->notifyErrorMessage(L"Lua interaction error: child effect not found while calling SpellsSolver::onRemoveChildEffectFromTown.");
+    m_pServer->getDebug()->notifyErrorMessage("Lua interaction error: child effect not found while calling SpellsSolver::onRemoveChildEffectFromTown.");
     return;
   }
 
@@ -668,15 +665,15 @@ void SpellsSolver::onRemoveChildEffectFromTown(int iEffectId, u32 uTownId)
     }
     else
     {
-      wchar_t sError[128];
-      swprintf(sError, 128, L"Lua interaction error: can't detach effect %s.", m_LuaContext.pLua->getLocalizedName(), NAME_MAX_CHARS);
+      char sError[128];
+      snprintf(sError, 128, "Lua interaction error: can't detach effect %s.", m_LuaContext.pLua->getLocalizedName());
       m_pServer->getDebug()->notifyErrorMessage(sError);
     }
   }
   else
   {
-    wchar_t sError[128];
-    swprintf(sError, 128, L"Lua interaction error: effect %s sent wrong town id at resolve stage.", m_LuaContext.pLua->getLocalizedName(), NAME_MAX_CHARS);
+    char sError[128];
+    snprintf(sError, 128, "Lua interaction error: effect %s sent wrong town id at resolve stage.", m_LuaContext.pLua->getLocalizedName());
     m_pServer->getDebug()->notifyErrorMessage(sError);
   }
 }
@@ -703,8 +700,8 @@ void SpellsSolver::onAttachToPlayer(u8 uPlayerId)
   }
   else
   {
-    wchar_t sError[128];
-    swprintf(sError, 128, L"Lua interaction error: spell %s sent wrong player id at resolve stage.", m_LuaContext.pLua->getLocalizedName(), NAME_MAX_CHARS);
+    char sError[128];
+    snprintf(sError, 128, "Lua interaction error: spell %s sent wrong player id at resolve stage.", m_LuaContext.pLua->getLocalizedName());
     m_pServer->getDebug()->notifyErrorMessage(sError);
   }
 }
@@ -731,8 +728,8 @@ void SpellsSolver::onAttachToTown(u32 uTownId)
   }
   else
   {
-    wchar_t sError[128];
-    swprintf(sError, 128, L"Lua interaction error: spell %s sent wrong town id at resolve stage.", m_LuaContext.pLua->getLocalizedName(), NAME_MAX_CHARS);
+    char sError[128];
+    snprintf(sError, 128, "Lua interaction error: spell %s sent wrong town id at resolve stage.", m_LuaContext.pLua->getLocalizedName());
     m_pServer->getDebug()->notifyErrorMessage(sError);
   }
 }
@@ -759,8 +756,8 @@ void SpellsSolver::onAttachToTemple(u32 uTempleId)
   }
   else
   {
-    wchar_t sError[128];
-    swprintf(sError, 128, L"Lua interaction error: spell %s sent wrong temple id at resolve stage.", m_LuaContext.pLua->getLocalizedName(), NAME_MAX_CHARS);
+    char sError[128];
+    snprintf(sError, 128, "Lua interaction error: spell %s sent wrong temple id at resolve stage.", m_LuaContext.pLua->getLocalizedName());
     m_pServer->getDebug()->notifyErrorMessage(sError);
   }
 }
@@ -788,8 +785,8 @@ void SpellsSolver::onAttachToTile(CoordsMap pos)
   }
   else
   {
-    wchar_t sError[128];
-    swprintf(sError, 128, L"Lua interaction error: spell %s sent wrong coords at resolve stage.", m_LuaContext.pLua->getLocalizedName(), NAME_MAX_CHARS);
+    char sError[128];
+    snprintf(sError, 128, "Lua interaction error: spell %s sent wrong coords at resolve stage.", m_LuaContext.pLua->getLocalizedName());
     m_pServer->getDebug()->notifyErrorMessage(sError);
   }
 }
@@ -817,8 +814,8 @@ void SpellsSolver::onDiscardSpell(u8 uSrc, int iPlayerId, int iSpellId)
     pPlayer = m_LuaContext.pPlayer;
   if (pPlayer == NULL)
   {
-    wchar_t sError[128];
-    swprintf(sError, 128, L"Lua interaction error: spell %s sent wrong player id at resolve stage.", m_LuaContext.pLua->getLocalizedName(), NAME_MAX_CHARS);
+    char sError[128];
+    snprintf(sError, 128, "Lua interaction error: spell %s sent wrong player id at resolve stage.", m_LuaContext.pLua->getLocalizedName());
     m_pServer->getDebug()->notifyErrorMessage(sError);
     return;
   }
@@ -847,8 +844,8 @@ void SpellsSolver::onDiscardSpell(u8 uSrc, int iPlayerId, int iSpellId)
   }
   if (pSpell == NULL && (iSpellId >= 0 || uSrc == 2))
   {
-    wchar_t sError[128];
-    swprintf(sError, 128, L"Lua interaction error: spell %s sent wrong spell id at resolve stage.", m_LuaContext.pLua->getLocalizedName(), NAME_MAX_CHARS);
+    char sError[128];
+    snprintf(sError, 128, "Lua interaction error: spell %s sent wrong spell id at resolve stage.", m_LuaContext.pLua->getLocalizedName());
     m_pServer->getDebug()->notifyErrorMessage(sError);
     return;
   }
@@ -879,8 +876,8 @@ void SpellsSolver::onDiscardSpell(u8 uSrc, int iPlayerId, int iSpellId)
             }
             else
             {
-              wchar_t sError[128];
-              swprintf(sError, 128, L"Lua interaction error: can't detach effect %s.", pSpell->getLocalizedName());
+              char sError[128];
+              snprintf(sError, 128, "Lua interaction error: can't detach effect %s.", pSpell->getLocalizedName());
               m_pServer->getDebug()->notifyErrorMessage(sError);
             }
           }
@@ -961,15 +958,15 @@ void SpellsSolver::onDrawSpell(u8 uPlayerId, u32 uSpellId)
     }
     else
     {
-      wchar_t sError[128];
-      swprintf(sError, 128, L"Lua interaction error: spell %s sent wrong spell id at resolve stage.", m_LuaContext.pLua->getLocalizedName(), NAME_MAX_CHARS);
+      char sError[128];
+      snprintf(sError, 128, "Lua interaction error: spell %s sent wrong spell id at resolve stage.", m_LuaContext.pLua->getLocalizedName());
       m_pServer->getDebug()->notifyErrorMessage(sError);
     }
   }
   else
   {
-    wchar_t sError[128];
-    swprintf(sError, 128, L"Lua interaction error: spell %s sent wrong player id at resolve stage.", m_LuaContext.pLua->getLocalizedName(), NAME_MAX_CHARS);
+    char sError[128];
+    snprintf(sError, 128, "Lua interaction error: spell %s sent wrong player id at resolve stage.", m_LuaContext.pLua->getLocalizedName());
     m_pServer->getDebug()->notifyErrorMessage(sError);
   }
 }
@@ -977,7 +974,7 @@ void SpellsSolver::onDrawSpell(u8 uPlayerId, u32 uSpellId)
 // -----------------------------------------------------------------
 // Name : onRecallSpell
 // -----------------------------------------------------------------
-void SpellsSolver::onRecallSpell(const wchar_t * sType, u8 uPlayerId, u32 uSpellId)
+void SpellsSolver::onRecallSpell(const char * sType, u8 uPlayerId, u32 uSpellId)
 {
   if (!retrieveLuaContext())
     return;
@@ -986,13 +983,13 @@ void SpellsSolver::onRecallSpell(const wchar_t * sType, u8 uPlayerId, u32 uSpell
   if (pPlayer != NULL)
   {
     ObjectList * pSrc = NULL;
-    if (wcscmp(sType, L"spell_in_play") == 0)
+    if (strcmp(sType, "spell_in_play") == 0)
       pSrc = pPlayer->m_pActiveSpells;
-    else if (wcscmp(sType, L"spell_in_discard") == 0)
+    else if (strcmp(sType, "spell_in_discard") == 0)
       pSrc = pPlayer->m_pDiscard;
     else
     {
-      m_pServer->getDebug()->notifyErrorMessage(L"Error in LUA: invalid type provided to function onRecallSpell");
+      m_pServer->getDebug()->notifyErrorMessage("Error in LUA: invalid type provided to function onRecallSpel");
       return;
     }
 
@@ -1019,15 +1016,15 @@ void SpellsSolver::onRecallSpell(const wchar_t * sType, u8 uPlayerId, u32 uSpell
     }
     else
     {
-      wchar_t sError[128];
-      swprintf(sError, 128, L"Lua interaction error: spell %s sent wrong spell id to function onRecallSpell.", m_LuaContext.pLua->getLocalizedName(), NAME_MAX_CHARS);
+      char sError[128];
+      snprintf(sError, 128, "Lua interaction error: spell %s sent wrong spell id to function onRecallSpell.", m_LuaContext.pLua->getLocalizedName());
       m_pServer->getDebug()->notifyErrorMessage(sError);
     }
   }
   else
   {
-    wchar_t sError[128];
-    swprintf(sError, 128, L"Lua interaction error: spell %s sent wrong player id to function onRecallSpell.", m_LuaContext.pLua->getLocalizedName(), NAME_MAX_CHARS);
+    char sError[128];
+    snprintf(sError, 128, "Lua interaction error: spell %s sent wrong player id to function onRecallSpell.", m_LuaContext.pLua->getLocalizedName());
     m_pServer->getDebug()->notifyErrorMessage(sError);
   }
 }
@@ -1045,7 +1042,7 @@ void SpellsSolver::onAttachAsGlobal()
     ((Spell*)(m_LuaContext.pLua))->setGlobal();
   // now we'll complete the current network message m_pSpellNetworkData
   // that is going to be send from function resolvePlayerSpells
-  msg.addLong(0);                      // stands for "spell was attached as global"
+  msg.addLong(0);                      // stands for "spell was attached as globa"
   m_pServer->sendMessageToAllClients(&msg);
 }
 
@@ -1058,14 +1055,14 @@ void SpellsSolver::onDetachFromGlobal()
   if (!retrieveLuaContext(0, &msg))
     return;
   m_pSolver->getGlobalSpells()->deleteObject(m_LuaContext.pLua, true);
-  msg.addLong(0);                      // stands for "spell was detached from global"
+  msg.addLong(0);                      // stands for "spell was detached from globa"
   m_pServer->sendMessageToAllClients(&msg);
 }
 
 // -----------------------------------------------------------------
 // Name : onSelectTargetThenResolve
 // -----------------------------------------------------------------
-void SpellsSolver::onSelectTargetThenResolve(u8 uType, u32 uConstraints, wchar_t * sCallback)
+void SpellsSolver::onSelectTargetThenResolve(u8 uType, u32 uConstraints, const char * sCallback)
 {
   NetworkData msg(NETWORKMSG_RESOLVE_NEED_SELECT_TARGET);
   if (!retrieveLuaContext(0, &msg))
@@ -1095,7 +1092,7 @@ void SpellsSolver::onDeactivateSkill(long iPlayerId, long iUnitId, long iSkillId
     pPlayer = m_LuaContext.pPlayer;
   if (pPlayer == NULL)
   {
-    m_pServer->getDebug()->notifyErrorMessage(L"Error in LUA: invalid player provided to function onDeactivateSkill");
+    m_pServer->getDebug()->notifyErrorMessage("Error in LUA: invalid player provided to function onDeactivateSkil");
     return;
   }
   if (iUnitId >= 0)
@@ -1104,7 +1101,7 @@ void SpellsSolver::onDeactivateSkill(long iPlayerId, long iUnitId, long iSkillId
     pUnit = m_LuaContext.pUnit;
   if (pUnit == NULL)
   {
-    m_pServer->getDebug()->notifyErrorMessage(L"Error in LUA: invalid unit provided to function onDeactivateSkill");
+    m_pServer->getDebug()->notifyErrorMessage("Error in LUA: invalid unit provided to function onDeactivateSkil");
     return;
   }
   bool bIsActive;
@@ -1115,13 +1112,13 @@ void SpellsSolver::onDeactivateSkill(long iPlayerId, long iUnitId, long iSkillId
       pSkill = pUnit->findSkill(((Skill*)m_LuaContext.pLua)->getInstanceId(), &bIsActive);
     else
     {
-      m_pServer->getDebug()->notifyErrorMessage(L"Error in LUA: function onDeactivateSkill expected current LUA to be a skill");
+      m_pServer->getDebug()->notifyErrorMessage("Error in LUA: function onDeactivateSkill expected current LUA to be a skil");
       return;
     }
   }
   if (pSkill == NULL)
   {
-    m_pServer->getDebug()->notifyErrorMessage(L"Error in LUA: invalid skill provided to function onDeactivateSkill");
+    m_pServer->getDebug()->notifyErrorMessage("Error in LUA: invalid skill provided to function onDeactivateSkil");
     return;
   }
   if (bIsActive)
@@ -1137,53 +1134,53 @@ void SpellsSolver::onDeactivateSkill(long iPlayerId, long iUnitId, long iSkillId
 // -----------------------------------------------------------------
 // Name : onChangeSpellOwner
 // -----------------------------------------------------------------
-void SpellsSolver::onChangeSpellOwner(const wchar_t * sType, u8 uOldOwner, u32 uSpellId, u8 uNewOwner)
+void SpellsSolver::onChangeSpellOwner(const char * sType, u8 uOldOwner, u32 uSpellId, u8 uNewOwner)
 {
   Player * pOldOwner = m_pSolver->findPlayer(uOldOwner);
   if (pOldOwner == NULL)
   {
-    m_pServer->getDebug()->notifyErrorMessage(L"Error in LUA: invalid old owner provided to function onChangeSpellOwner");
+    m_pServer->getDebug()->notifyErrorMessage("Error in LUA: invalid old owner provided to function onChangeSpellOwner");
     return;
   }
   Player * pNewOwner = m_pSolver->findPlayer(uNewOwner);
   if (pNewOwner == NULL)
   {
-    m_pServer->getDebug()->notifyErrorMessage(L"Error in LUA: invalid new owner provided to function onChangeSpellOwner");
+    m_pServer->getDebug()->notifyErrorMessage("Error in LUA: invalid new owner provided to function onChangeSpellOwner");
     return;
   }
   ObjectList * pSrc = NULL;
   ObjectList * pDst = NULL;
-  if (wcscmp(sType, L"spell_in_hand") == 0)
+  if (strcmp(sType, "spell_in_hand") == 0)
   {
     pSrc = pOldOwner->m_pHand;
     pDst = pNewOwner->m_pHand;
   }
-  else if (wcscmp(sType, L"spell_in_play") == 0)
+  else if (strcmp(sType, "spell_in_play") == 0)
   {
     pSrc = pOldOwner->m_pActiveSpells;
     pDst = pNewOwner->m_pActiveSpells;
   }
-  else if (wcscmp(sType, L"spell_in_discard") == 0)
+  else if (strcmp(sType, "spell_in_discard") == 0)
   {
     pSrc = pOldOwner->m_pDiscard;
     pDst = pNewOwner->m_pDiscard;
   }
   else
   {
-    m_pServer->getDebug()->notifyErrorMessage(L"Error in LUA: invalid type provided to function onChangeSpellOwner");
+    m_pServer->getDebug()->notifyErrorMessage("Error in LUA: invalid type provided to function onChangeSpellOwner");
     return;
   }
 
   Spell * pSpell = pOldOwner->findSpell(0, uSpellId, pSrc);
   if (pSpell == NULL)
   {
-    m_pServer->getDebug()->notifyErrorMessage(L"Error in LUA: invalid spell provided to function onChangeSpellOwner");
+    m_pServer->getDebug()->notifyErrorMessage("Error in LUA: invalid spell provided to function onChangeSpellOwner");
     return;
   }
   pSrc->deleteCurrent(0, true, true);
   pDst->addLast(pSpell);
   pSpell->setCaster(pNewOwner);
-  pSpell->callLuaFunction(L"onChangedOwner", 0, L"i", (int)uNewOwner);  // if a spell stores the caster in a variable for whatever reason, it probably wants to know that the owner changed
+  pSpell->callLuaFunction("onChangedOwner", 0, "i", (int)uNewOwner);  // if a spell stores the caster in a variable for whatever reason, it probably wants to know that the owner changed
 
   NetworkData msg(NETWORKMSG_CHANGE_SPELL_OWNER);
   msg.addString(sType);
@@ -1201,24 +1198,24 @@ void SpellsSolver::onChangeUnitOwner(u8 uOldOwner, u32 uUnitId, u8 uNewOwner)
   Player * pOldOwner = m_pSolver->findPlayer(uOldOwner);
   if (pOldOwner == NULL)
   {
-    m_pServer->getDebug()->notifyErrorMessage(L"Error in LUA: invalid old owner provided to function onChangeUnitOwner");
+    m_pServer->getDebug()->notifyErrorMessage("Error in LUA: invalid old owner provided to function onChangeUnitOwner");
     return;
   }
   Player * pNewOwner = m_pSolver->findPlayer(uNewOwner);
   if (pNewOwner == NULL)
   {
-    m_pServer->getDebug()->notifyErrorMessage(L"Error in LUA: invalid new owner provided to function onChangeUnitOwner");
+    m_pServer->getDebug()->notifyErrorMessage("Error in LUA: invalid new owner provided to function onChangeUnitOwner");
     return;
   }
   Unit * pUnit = pOldOwner->findUnit(uUnitId);
   if (pUnit == NULL)
   {
-    m_pServer->getDebug()->notifyErrorMessage(L"Error in LUA: invalid unit provided to function onChangeUnitOwner");
+    m_pServer->getDebug()->notifyErrorMessage("Error in LUA: invalid unit provided to function onChangeUnitOwner");
     return;
   }
   if (pUnit == pOldOwner->getAvatar())
   {
-    m_pServer->getDebug()->notifyErrorMessage(L"Error in LUA: unit provided to function onChangeUnitOwner is an avatar");
+    m_pServer->getDebug()->notifyErrorMessage("Error in LUA: unit provided to function onChangeUnitOwner is an avatar");
     return;
   }
   pOldOwner->m_pUnits->deleteObject(pUnit, true, true);
@@ -1241,13 +1238,13 @@ void SpellsSolver::onChangeTownOwner(u32 uTownId, u8 uNewOwner)
   Player * pNewOwner = m_pSolver->findPlayer(uNewOwner);
   if (pNewOwner == NULL)
   {
-    m_pServer->getDebug()->notifyErrorMessage(L"Error in LUA: invalid new owner provided to function onChangeTownOwner");
+    m_pServer->getDebug()->notifyErrorMessage("Error in LUA: invalid new owner provided to function onChangeTownOwner");
     return;
   }
   Town * pTown = m_pServer->getMap()->findTown(uTownId);
   if (pTown == NULL)
   {
-    m_pServer->getDebug()->notifyErrorMessage(L"Error in LUA: invalid town provided to function onChangeTownOwner");
+    m_pServer->getDebug()->notifyErrorMessage("Error in LUA: invalid town provided to function onChangeTownOwner");
     return;
   }
   pTown->setOwner(uNewOwner);
@@ -1262,12 +1259,12 @@ void SpellsSolver::onChangeTownOwner(u32 uTownId, u8 uNewOwner)
 // -----------------------------------------------------------------
 // Name : onBuildBuilding
 // -----------------------------------------------------------------
-void SpellsSolver::onBuildBuilding(u32 uTownId, wchar_t * sName)
+void SpellsSolver::onBuildBuilding(u32 uTownId, const char * sName)
 {
   Town * pTown = m_pServer->getMap()->findTown(uTownId);
   if (pTown == NULL)
   {
-    m_pServer->getDebug()->notifyErrorMessage(L"Error in LUA: invalid town id provided to function onBuildBuilding");
+    m_pServer->getDebug()->notifyErrorMessage("Error in LUA: invalid town id provided to function onBuildBuilding");
     return;
   }
   pTown->buildBuilding(sName, m_pServer);
@@ -1319,18 +1316,18 @@ void SpellsSolver::onProduceMana(int playerId, CoordsMap srcPos, u8 * pMana)
 // -----------------------------------------------------------------
 // Name : onAddSkillToUnit
 // -----------------------------------------------------------------
-void SpellsSolver::onAddSkillToUnit(wchar_t * sSkillName, wchar_t * sSkillParams, u8 uPlayerId, u32 uUnitId)
+void SpellsSolver::onAddSkillToUnit(const char * sSkillName, const char * sSkillParams, u8 uPlayerId, u32 uUnitId)
 {
   Player * pPlayer = m_pSolver->findPlayer(uPlayerId);
   if (pPlayer == NULL)
   {
-    m_pServer->getDebug()->notifyErrorMessage(L"Error in LUA: invalid player id provided to function onAddSkillToUnit");
+    m_pServer->getDebug()->notifyErrorMessage("Error in LUA: invalid player id provided to function onAddSkillToUnit");
     return;
   }
   Unit * pUnit = pPlayer->findUnit(uUnitId);
   if (pUnit == NULL)
   {
-    m_pServer->getDebug()->notifyErrorMessage(L"Error in LUA: invalid unit id provided to function onAddSkillToUnit");
+    m_pServer->getDebug()->notifyErrorMessage("Error in LUA: invalid unit id provided to function onAddSkillToUnit");
     return;
   }
   if (!retrieveLuaContext())
@@ -1373,7 +1370,7 @@ void SpellsSolver::onHideSpecialTile(u32 uTileId)
       }
     }
   }
-  m_pServer->getDebug()->notifyErrorMessage(L"Error in LUA: invalid special tile id provided to function onRemoveSpecialTile");
+  m_pServer->getDebug()->notifyErrorMessage("Error in LUA: invalid special tile id provided to function onRemoveSpecialTile");
 }
 
 // -----------------------------------------------------------------
@@ -1384,7 +1381,7 @@ void SpellsSolver::onTeleport(MapObject * pMapObj, CoordsMap pos)
   MapTile * pTile = m_pServer->getMap()->getTileAt(pos);
   if (pTile == NULL)
   {
-    m_pServer->getDebug()->notifyErrorMessage(L"Error in LUA: invalid position provided to function teleport");
+    m_pServer->getDebug()->notifyErrorMessage("Error in LUA: invalid position provided to function teleport");
     return;
   }
   pMapObj->setMapPos(pos);
@@ -1409,13 +1406,13 @@ void SpellsSolver::onResurrect(u8 uPlayerId, u32 uUnitId)
   Player * pPlayer = m_pSolver->findPlayer(uPlayerId);
   if (pPlayer == NULL)
   {
-    m_pServer->getDebug()->notifyErrorMessage(L"Lua interaction error: invalid player in function \"resurrect\".");
+    m_pServer->getDebug()->notifyErrorMessage("Lua interaction error: invalid player in function \"resurrect\".");
     return;
   }
   Unit * pUnit = pPlayer->findUnit(uUnitId);
   if (pUnit == NULL)
   {
-    m_pServer->getDebug()->notifyErrorMessage(L"Lua interaction error: unit not found in function \"resurrect\".");
+    m_pServer->getDebug()->notifyErrorMessage("Lua interaction error: unit not found in function \"resurrect\".");
     return;
   }
 
@@ -1436,13 +1433,13 @@ void SpellsSolver::onRemoveUnit(u8 uPlayerId, u32 uUnitId)
   Player * pPlayer = m_pSolver->findPlayer(uPlayerId);
   if (pPlayer == NULL)
   {
-    m_pServer->getDebug()->notifyErrorMessage(L"Lua interaction error: invalid player in function \"removeUnit\".");
+    m_pServer->getDebug()->notifyErrorMessage("Lua interaction error: invalid player in function \"removeUnit\".");
     return;
   }
   Unit * pUnit = pPlayer->findUnit(uUnitId);
   if (pUnit == NULL)
   {
-    m_pServer->getDebug()->notifyErrorMessage(L"Lua interaction error: unit not found in function \"removeUnit\".");
+    m_pServer->getDebug()->notifyErrorMessage("Lua interaction error: unit not found in function \"removeUnit\".");
     return;
   }
 
@@ -1475,7 +1472,7 @@ int SpellsSolver::onAddMagicCircle(Player * pPlayer, CoordsMap pos)
       return i;
     }
   }
-  m_pServer->getDebug()->notifyErrorMessage(L"Warning: max number of magic circles reached.");
+  m_pServer->getDebug()->notifyErrorMessage("Warning: max number of magic circles reached.");
   return -1;
 }
 
@@ -1502,22 +1499,22 @@ void SpellsSolver::onAddGoldToPlayer(u8 uPlayerId, int iAmount)
   Player * pPlayer = m_pSolver->findPlayer(uPlayerId);
   if (pPlayer == NULL)
   {
-    m_pServer->getDebug()->notifyErrorMessage(L"Lua interaction error: invalid player in function \"addGoldToPlayer\".");
+    m_pServer->getDebug()->notifyErrorMessage("Lua interaction error: invalid player in function \"addGoldToPlayer\".");
     return;
   }
   pPlayer->m_iWonGold += iAmount;
-  m_pServer->sendCustomLogToAll(L"%$1s_WON_%$2d_GOLD", 0, L"pi", uPlayerId, iAmount);
+  m_pServer->sendCustomLogToAll("%$1s_WON_%$2d_GOLD", 0, "pi", uPlayerId, iAmount);
 }
 
 // -----------------------------------------------------------------
 // Name : onAddSpellToPlayer
 // -----------------------------------------------------------------
-void SpellsSolver::onAddSpellToPlayer(u8 uPlayerId, wchar_t * sName)
+void SpellsSolver::onAddSpellToPlayer(u8 uPlayerId, const char * sName)
 {
   Player * pPlayer = m_pSolver->findPlayer(uPlayerId);
   if (pPlayer == NULL)
   {
-    m_pServer->getDebug()->notifyErrorMessage(L"Lua interaction error: invalid player in function \"addSpellToPlayer\".");
+    m_pServer->getDebug()->notifyErrorMessage("Lua interaction error: invalid player in function \"addSpellToPlayer\".");
     return;
   }
   retrieveLuaContext();
@@ -1525,22 +1522,22 @@ void SpellsSolver::onAddSpellToPlayer(u8 uPlayerId, wchar_t * sName)
   Spell * pSpell = m_pServer->getFactory()->findSpell(m_LuaContext.pLua->getObjectEdition(), sName);
   if (pSpell == NULL)
   {
-    m_pServer->getDebug()->notifyErrorMessage(L"Lua interaction error: invalid spell in function \"addSpellToPlayer\".");
+    m_pServer->getDebug()->notifyErrorMessage("Lua interaction error: invalid spell in function \"addSpellToPlayer\".");
     return;
   }
   pPlayer->m_pWonSpells->addLast(pSpell);
-  m_pServer->sendCustomLogToAll(L"%$1s_WON_SPELL_%$2s", 0, L"pS", uPlayerId, pSpell->getObjectEdition(), pSpell->getObjectName());
+  m_pServer->sendCustomLogToAll("%$1s_WON_SPELL_%$2s", 0, "pS", uPlayerId, pSpell->getObjectEdition(), pSpell->getObjectName());
 }
 
 // -----------------------------------------------------------------
 // Name : onAddArtifactToPlayer
 // -----------------------------------------------------------------
-void SpellsSolver::onAddArtifactToPlayer(u8 uPlayerId, wchar_t * sName)
+void SpellsSolver::onAddArtifactToPlayer(u8 uPlayerId, const char * sName)
 {
   Player * pPlayer = m_pSolver->findPlayer(uPlayerId);
   if (pPlayer == NULL)
   {
-    m_pServer->getDebug()->notifyErrorMessage(L"Lua interaction error: invalid player in function \"addArtifactToPlayer\".");
+    m_pServer->getDebug()->notifyErrorMessage("Lua interaction error: invalid player in function \"addArtifactToPlayer\".");
     return;
   }
   retrieveLuaContext();
@@ -1550,22 +1547,22 @@ void SpellsSolver::onAddArtifactToPlayer(u8 uPlayerId, wchar_t * sName)
   Artifact * pArtifact = pEdition->findArtifact(sName);
   if (pArtifact == NULL)
   {
-    m_pServer->getDebug()->notifyErrorMessage(L"Lua interaction error: invalid artifact in function \"addArtifactToPlayer\".");
+    m_pServer->getDebug()->notifyErrorMessage("Lua interaction error: invalid artifact in function \"addArtifactToPlayer\".");
     return;
   }
   pPlayer->m_pWonArtifacts->addLast(pArtifact);
-  m_pServer->sendCustomLogToAll(L"%$1s_WON_ARTIFACT_%$2s", 0, L"pA", uPlayerId, pArtifact->getEdition(), sName);
+  m_pServer->sendCustomLogToAll("%$1s_WON_ARTIFACT_%$2s", 0, "pA", uPlayerId, pArtifact->getEdition(), sName);
 }
 
 // -----------------------------------------------------------------
 // Name : onAddAvatarToPlayer
 // -----------------------------------------------------------------
-void SpellsSolver::onAddAvatarToPlayer(u8 uPlayerId, wchar_t * sName)
+void SpellsSolver::onAddAvatarToPlayer(u8 uPlayerId, const char * sName)
 {
   Player * pPlayer = m_pSolver->findPlayer(uPlayerId);
   if (pPlayer == NULL)
   {
-    m_pServer->getDebug()->notifyErrorMessage(L"Lua interaction error: invalid player in function \"addShahamahToPlayer\".");
+    m_pServer->getDebug()->notifyErrorMessage("Lua interaction error: invalid player in function \"addShahamahToPlayer\".");
     return;
   }
   retrieveLuaContext();
@@ -1573,9 +1570,9 @@ void SpellsSolver::onAddAvatarToPlayer(u8 uPlayerId, wchar_t * sName)
   AvatarData * pAvatar = (AvatarData*) m_pServer->getFactory()->getUnitData(m_LuaContext.pLua->getObjectEdition(), sName);
   if (pAvatar == NULL)
   {
-    m_pServer->getDebug()->notifyErrorMessage(L"Lua interaction error: invalid shahmah in function \"addShahamahToPlayer\".");
+    m_pServer->getDebug()->notifyErrorMessage("Lua interaction error: invalid shahmah in function \"addShahamahToPlayer\".");
     return;
   }
   pPlayer->m_pWonAvatars->addLast(pAvatar);
-  m_pServer->sendCustomLogToAll(L"%$1s_WON_AVATAR_%$2s", 0, L"pU", uPlayerId, pAvatar->m_sEdition, sName);
+  m_pServer->sendCustomLogToAll("%$1s_WON_AVATAR_%$2s", 0, "pU", uPlayerId, pAvatar->m_sEdition, sName);
 }

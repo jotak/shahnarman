@@ -30,9 +30,9 @@ public:
   class TargetData : public BaseObject
   {
   public:
-    TargetData() { m_pTarget = NULL; wsafecpy(params, 64, L""); };
+    TargetData() { m_pTarget = NULL; wsafecpy(params, 64, ""); };
     BaseObject * m_pTarget;
-    wchar_t params[64];
+    char params[64];
   };
 
   // Constructor / destructor

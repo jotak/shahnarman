@@ -20,17 +20,17 @@ public:
   XMLLiteReader();
   ~XMLLiteReader();
 
-  XMLLiteElement * parseFile(wchar_t * sFileName);
+  XMLLiteElement * parseFile(const char * sFileName);
   int getCurrentLine() { return m_iCurrentLine; };
   int getCurrentCol() { return m_iCurrentCol; };
 
 private:
   bool skipSpaces(FILE * pFile, wint_t * c);
   void skipComments(FILE * pFile);
-  void readElement(FILE * pFile, wchar_t cFirstChar, XMLLiteElement * pParent);
-  bool readAttribute(FILE * pFile, wchar_t cFirstChar, wint_t * cfinal, XMLLiteElement * pParent);
-  void readClosingTag(FILE * pFile, wchar_t * sName);
-  void readWordUntil(FILE * pFile, wchar_t cUntil, wchar_t * sWord, int iSize);
+  void readElement(FILE * pFile, char cFirstChar, XMLLiteElement * pParent);
+  bool readAttribute(FILE * pFile, char cFirstChar, wint_t * cfinal, XMLLiteElement * pParent);
+  void readClosingTag(FILE * pFile, char * sName);
+  void readWordUntil(FILE * pFile, char cUntil, char * sWord, int iSize);
   bool readChar(FILE * pFile, wint_t * c);
 
   XMLLiteElement * m_pRootNode;

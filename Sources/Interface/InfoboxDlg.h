@@ -21,7 +21,7 @@ public:
 
   bool onButtonEvent(ButtonAction * pEvent, guiComponent * pCpnt);
   void update(double delta);
-  void setInfoText(wchar_t * sText);
+  void setInfoText(char * sText);
   virtual guiObject * onCursorMoveEvent(int xPxl, int yPxl);
   void setMapTile(MapTile * pTile, u32 uDisplayFilter, u32 uClickFilter, StackGroupInterface * pGroupInterface, Player * pCurrentPlayer, GraphicObject * pDefaultSelectedObject);
   virtual BaseObject * getTargetedObject(u8 * isLuaPlayerGO) { *isLuaPlayerGO = 3; return (m_pTarget == NULL) ? NULL : m_pTarget->getAttachment(); };
@@ -47,7 +47,7 @@ protected:
   guiLabel * m_pInfoText;
   //int * m_pPlayerStates;
   //int m_iLastTurnTimer;
-//  wchar_t m_sLastTurnTimer[64];
+//  char m_sLastTurnTimer[64];
   int m_iStackHeight;
   bool m_bIsSpellDlgSticked;
   guiFrame * m_pSpellFrm;

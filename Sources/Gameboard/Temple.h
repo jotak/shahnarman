@@ -3,8 +3,8 @@
 
 #include "MapObject.h"
 
-#define STRING_MANATYPE         L"manatype"
-#define STRING_AMOUNT           L"amount"
+#define STRING_MANATYPE         "manatype"
+#define STRING_AMOUNT           "amount"
 
 class Temple : public MapObject
 {
@@ -24,10 +24,10 @@ public:
 
   // MapObject virtual functions
   virtual int getTexture();
-  virtual void updateIdentifiers() { swprintf(m_sIdentifiers, 16, L"temple %d %ld", (int) m_uOwner, (long) m_uTempleId); };
+  virtual void updateIdentifiers() { snprintf(m_sIdentifiers, 16, "temple %d %ld", (int) m_uOwner, (long) m_uTempleId); };
 
   // Other functions
-  virtual wchar_t * getInfo(wchar_t * sBuf, int iSize, InfoDest eDest);
+  virtual char * getInfo(char * sBuf, int iSize, InfoDest eDest);
 
   // Member access
   u32 getId() { return m_uTempleId; };
@@ -35,7 +35,7 @@ public:
 protected:
   // Permanent data
   u32 m_uTempleId;
-  wchar_t m_sTexture[MAX_PATH];
+  char m_sTexture[MAX_PATH];
 };
 
 #endif

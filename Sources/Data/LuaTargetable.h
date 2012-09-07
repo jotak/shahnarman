@@ -15,11 +15,11 @@ class LocalClient;
 class LuaTargetable
 {
 public:
-  LuaTargetable(ObjectList ** pGlobalEffects, const wchar_t * sIdentifiers);
+  LuaTargetable(ObjectList ** pGlobalEffects, const char * sIdentifiers);
   ~LuaTargetable();
 
   // General
-  wchar_t * getIdentifiers() { return m_sIdentifiers; };
+  char * getIdentifiers() { return m_sIdentifiers; };
 
   // Effects
   LuaObject * getFirstEffect(int _it) { return (LuaObject*) m_pEffects->getFirst(_it); };
@@ -40,13 +40,13 @@ public:
   bool detachChildEffect(ChildEffect * pEffect);
 
   // Variables
-  void registerValue(const wchar_t * sName, long baseValue);
-  virtual long getValue(const wchar_t * sName, bool bBase = false, bool * bFound = NULL);
-  virtual bool setBaseValue(const wchar_t * sName, long val);
+  void registerValue(const char * sName, long baseValue);
+  virtual long getValue(const char * sName, bool bBase = false, bool * bFound = NULL);
+  virtual bool setBaseValue(const char * sName, long val);
 
   // Other
-  long callEffectHandler(const wchar_t * sFunc, const wchar_t * sArgsType = L"", void ** pArgs = NULL, u8 uResultType = HANDLER_RESULT_TYPE_NONE);
-  void getInfo_AddValue(wchar_t * sBuf, int iSize, const wchar_t * sKey, const wchar_t * sSeparator);
+  long callEffectHandler(const char * sFunc, const char * sArgsType = "", void ** pArgs = NULL, u8 uResultType = HANDLER_RESULT_TYPE_NONE);
+  void getInfo_AddValue(char * sBuf, int iSize, const char * sKey, const char * sSeparator);
   static LuaTargetable * convertFromBaseObject(BaseObject * pObj, u8 uType);
   BaseObject * convertToBaseObject(u8 uType);
 
@@ -56,10 +56,10 @@ protected:
 
   long_hash m_lValues;
   ObjectList ** m_pGlobalEffects;
-  wchar_t m_sIdentifiers[16];
+  char m_sIdentifiers[16];
 
 private:
-  bool _callEffectHandlerForEffect(LuaObject * pLua, int iChild, const wchar_t * sFunc, const wchar_t * sArgsType, void ** pArgs, int nbResults);
+  bool _callEffectHandlerForEffect(LuaObject * pLua, int iChild, const char * sFunc, const char * sArgsType, void ** pArgs, int nbResults);
 
   ObjectList * m_pEffects;
   ObjectList * m_pDisabledEffects;

@@ -25,7 +25,7 @@ public:
   Player * pPlayer;
   Unit * pUnit;
   Town * pTown;
-  wchar_t sError[256];
+  char sError[256];
 };
 
 #endif

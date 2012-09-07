@@ -35,7 +35,7 @@ public:
   bool isFocused() { return m_bFocused; };
 
   // Clone / init
-  virtual void init(FramePosition positionType, FrameFitBehavior widthFit, FrameFitBehavior heightFit, int iXOffset, int iYOffset, int iMaxWidth, int iMaxHeight, int * iMainTexs, const wchar_t * sCpntId, int xPxl, int yPxl, int wPxl, int hPxl, DisplayEngine * pDisplay);
+  virtual void init(FramePosition positionType, FrameFitBehavior widthFit, FrameFitBehavior heightFit, int iXOffset, int iYOffset, int iMaxWidth, int iMaxHeight, int * iMainTexs, const char * sCpntId, int xPxl, int yPxl, int wPxl, int hPxl, DisplayEngine * pDisplay);
   virtual guiObject * clone();
 
   // Effect
@@ -54,7 +54,7 @@ public:
   void setMovable(bool bMovable) { m_bMovable = bMovable; };
 
   // Static default constructors
-  static guiFrame * createDefaultFrame(FrameFitBehavior widthFit, FrameFitBehavior heightFit, int width, int height, bool bAlpha, const wchar_t * sId, DisplayEngine * pDisplay);
+  static guiFrame * createDefaultFrame(FrameFitBehavior widthFit, FrameFitBehavior heightFit, int width, int height, bool bAlpha, const char * sId, DisplayEngine * pDisplay);
 
 protected:
   FramePosition m_PositionType;

@@ -42,8 +42,8 @@ public:
   Player * getNextPlayerAndNeutral(int _it);
 
   // Other
-  LuaTargetable * findTargetFromIdentifiers(long iType, wchar_t * sIds, Map * pMap);
-  wchar_t * retrieveTargetsNames(wchar_t * sBuf, int iSize, wchar_t * sIds, Map * pMap);
+  LuaTargetable * findTargetFromIdentifiers(long iType, char * sIds, Map * pMap);
+  char * retrieveTargetsNames(char * sBuf, int iSize, char * sIds, Map * pMap);
 
 protected:
   u8 m_uFirstResolutionListIdx;

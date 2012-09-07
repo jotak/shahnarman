@@ -29,8 +29,8 @@ LevelUpDlg::LevelUpDlg(LocalClient * pLocalClient) : guiDocument()
 
   int iWidth = 675; // 4 * (TREE_WIDTH + SPACING) + FIRSTCOLUMN_WIDTH + 2 * SPACING
   init(
-    L"LevelUpDoc",
-    pLocalClient->getDisplay()->getTextureEngine()->findTexture(L"interface:WinBg"),
+    "LevelUpDoc",
+    pLocalClient->getDisplay()->getTextureEngine()->findTexture("interface:WinBg"),
     0, 0, iWidth, 1, pLocalClient->getDisplay());
 }
 
@@ -57,7 +57,7 @@ void LevelUpDlg::update(double delta)
 // -----------------------------------------------------------------
 bool LevelUpDlg::onButtonEvent(ButtonAction * pEvent, guiComponent * pCpnt)
 {
-  if (wcscmp(pCpnt->getId(), L"OkButton") == 0)
+  if (strcmp(pCpnt->getId(), "OkButton") == 0)
   {
     // Update avatar progression
     assert(m_pCurrentAvatar != NULL);
@@ -67,7 +67,7 @@ bool LevelUpDlg::onButtonEvent(ButtonAction * pEvent, guiComponent * pCpnt)
       // find selected tree
       for (int i = 0; i < NB_PROGRESSION_TREES; i++)
       {
-        if (wcscmp(m_pSelectedElement->m_pTree->m_sObjectId, m_pCurrentAvatar->m_pProgression[i].sTreeName) == 0)
+        if (strcmp(m_pSelectedElement->m_pTree->m_sObjectId, m_pCurrentAvatar->m_pProgression[i].sTreeName) == 0)
         {
           iTree = i;
           break;
@@ -82,7 +82,7 @@ bool LevelUpDlg::onButtonEvent(ButtonAction * pEvent, guiComponent * pCpnt)
     else
     {
       // Should be opening a tree
-      guiComboBox * pBox = (guiComboBox*) getComponent(L"OpenTreeCombo");
+      guiComboBox * pBox = (guiComboBox*) getComponent("OpenTreeCombo");
       assert(pBox != NULL);
       guiButton * pBtn = pBox->getSelectedItem();
       assert(pBtn != NULL);
@@ -93,27 +93,27 @@ bool LevelUpDlg::onButtonEvent(ButtonAction * pEvent, guiComponent * pCpnt)
       return false;
     }
   }
-  else if (wcscmp(pCpnt->getId(), L"DoItLaterButton") == 0)
+  else if (strcmp(pCpnt->getId(), "DoItLaterButton") == 0)
   {
     // Hide frame
     m_pLocalClient->getInterface()->setUniqueDialog(m_pCaller);
     return false;
   }
-  else if (wcscmp(pCpnt->getId(), L"OpenTreeButton") == 0)
+  else if (strcmp(pCpnt->getId(), "OpenTreeButton") == 0)
   {
-    getComponent(L"OkButton")->setEnabled(true);
+    getComponent("OkButton")->setEnabled(true);
   }
-  else if (wcscmp(pCpnt->getId(), L"ChoiceButton") == 0)
+  else if (strcmp(pCpnt->getId(), "ChoiceButton") == 0)
   {
     if (((guiToggleButton*)pCpnt)->getClickState())
     {
       m_pSelectedElement = (ProgressionElement*) pCpnt->getAttachment();
       assert(m_pSelectedElement != NULL);
-      getComponent(L"OkButton")->setEnabled(true);
+      getComponent("OkButton")->setEnabled(true);
       guiComponent * pCpnt2 = getFirstComponent();
       while (pCpnt2 != NULL)
       {
-        if (wcscmp(pCpnt2->getId(), L"ChoiceButton") == 0 && pCpnt2 != pCpnt && pCpnt2->isEnabled())
+        if (strcmp(pCpnt2->getId(), "ChoiceButton") == 0 && pCpnt2 != pCpnt && pCpnt2->isEnabled())
           ((guiToggleButton*)pCpnt2)->setClickState(false);
         pCpnt2 = getNextComponent();
       }
@@ -121,7 +121,7 @@ bool LevelUpDlg::onButtonEvent(ButtonAction * pEvent, guiComponent * pCpnt)
     else
     {
       m_pSelectedElement = NULL;
-      getComponent(L"OkButton")->setEnabled(false);
+      getComponent("OkButton")->setEnabled(false);
     }
   }
   return true;
@@ -144,7 +144,7 @@ ProgressionElement * LevelUpDlg::getChosenElementAtLevel(ProgressionTree * pTree
   ProgressionElement * pElt = (ProgressionElement*) pTree->m_pElements[iLevel]->getFirst(0);
   while (pElt != NULL)
   {
-    if (wcscmp(m_pCurrentAvatar->m_pProgression[iTree].sElements[iLevel], pElt->m_sObjectId) == 0)
+    if (strcmp(m_pCurrentAvatar->m_pProgression[iTree].sElements[iLevel], pElt->m_sObjectId) == 0)
       return pElt;
     pElt = (ProgressionElement*) pTree->m_pElements[iLevel]->getNext(0);
   }
@@ -158,12 +158,12 @@ ProgressionElement * LevelUpDlg::getChosenElementAtLevel(ProgressionTree * pTree
 void LevelUpDlg::addChoiceButton(int xPxl, int yPxl, int btnSize, ProgressionElement * pElt, u8 uState)
 {
   assert(m_pCurrentAvatar != NULL);
-  wchar_t sText[LABEL_MAX_CHARS];
-  s32 iSelTex = m_pLocalClient->getDisplay()->getTextureEngine()->findTexture(L"interface:Selector");
+  char sText[LABEL_MAX_CHARS];
+  s32 iSelTex = m_pLocalClient->getDisplay()->getTextureEngine()->findTexture("interface:Selector");
   // Choice
   int iTex = getDisplay()->getTextureEngine()->loadTexture(pElt->m_sTexture);
   guiToggleButton * pBtn = new guiToggleButton();
-  pBtn->init(L"", TEXT_FONT, TEXT_COLOR, iSelTex, BCO_AddTex, -1, BCO_None, iTex, L"ChoiceButton", xPxl, yPxl, btnSize, btnSize, getDisplay());
+  pBtn->init("", TEXT_FONT, TEXT_COLOR, iSelTex, BCO_AddTex, -1, BCO_None, iTex, "ChoiceButton", xPxl, yPxl, btnSize, btnSize, getDisplay());
   pBtn->setAttachment(pElt);
   pBtn->setTooltipText(pElt->getDescription(sText, LABEL_MAX_CHARS, m_pLocalClient));
   if (uState != 2)
@@ -191,10 +191,10 @@ void LevelUpDlg::setCurrentAvatar(AvatarData * pAvatar)
   int yPxl = 10;
 
   // Top label
-  wchar_t sText[LABEL_MAX_CHARS];
-  i18n->getText(L"LEVEL_UP", sText, LABEL_MAX_CHARS);
+  char sText[LABEL_MAX_CHARS];
+  i18n->getText("LEVEL_UP", sText, LABEL_MAX_CHARS);
   guiLabel * pLbl = new guiLabel();
-  pLbl->init(sText, H1_FONT, H1_COLOR, L"TopLabel", 0, 0, iWidth - 10, 0, m_pLocalClient->getDisplay());
+  pLbl->init(sText, H1_FONT, H1_COLOR, "TopLabe", 0, 0, iWidth - 10, 0, m_pLocalClient->getDisplay());
   pLbl->moveTo((iWidth - pLbl->getWidth()) / 2, yPxl);
   addComponent(pLbl);
 
@@ -202,11 +202,11 @@ void LevelUpDlg::setCurrentAvatar(AvatarData * pAvatar)
   yPxl += pLbl->getHeight() + 15;
   u16 uLevel = pAvatar->getRealLevel() + 1;
   assert(uLevel > 1);
-  wchar_t sBuf[256];
-  i18n->getText(L"(s)_LEVELED_UP_AND_IS_(d)", sBuf, 256);
-  swprintf(sText, LABEL_MAX_CHARS, sBuf, pAvatar->m_sCustomName, (int)uLevel);
+  char sBuf[256];
+  i18n->getText("(s)_LEVELED_UP_AND_IS_(d)", sBuf, 256);
+  snprintf(sText, LABEL_MAX_CHARS, sBuf, pAvatar->m_sCustomName, (int)uLevel);
   pLbl = new guiLabel();
-  pLbl->init(sText, TEXT_FONT, TEXT_COLOR, L"CenterLabel", 0, 0, iWidth - 10, 0, m_pLocalClient->getDisplay());
+  pLbl->init(sText, TEXT_FONT, TEXT_COLOR, "CenterLabe", 0, 0, iWidth - 10, 0, m_pLocalClient->getDisplay());
   pLbl->moveTo(5, yPxl);
   addComponent(pLbl);
 
@@ -217,17 +217,17 @@ void LevelUpDlg::setCurrentAvatar(AvatarData * pAvatar)
   if (m_iSpecialLevel >= 0)
   {
     u8 uTreeType = -1;
-    wchar_t sPhraseKey[128] = L"";
+    char sPhraseKey[128] = "";
     switch (m_iSpecialLevel)
     {
     case 1:
       uTreeType = PROGRESSION_MAGIC;
-      wsafecpy(sPhraseKey, 128, L"CHOOSE_MAGIC_PATH");
+      wsafecpy(sPhraseKey, 128, "CHOOSE_MAGIC_PATH");
       break;
     case 2:
     case 3:
       uTreeType = PROGRESSION_TRAIT;
-      wsafecpy(sPhraseKey, 128, L"CHOOSE_CHARACTER_TRAIT");
+      wsafecpy(sPhraseKey, 128, "CHOOSE_CHARACTER_TRAIT");
       break;
     }
     assert(uTreeType >= 0);
@@ -236,12 +236,12 @@ void LevelUpDlg::setCurrentAvatar(AvatarData * pAvatar)
     i18n->getText(sPhraseKey, sText, LABEL_MAX_CHARS);
     yPxl += pLbl->getHeight() + 2 * SPACING;
     pLbl = new guiLabel();
-    pLbl->init(sText, TEXT_FONT, TEXT_COLOR, L"", SPACING, yPxl, iWidth - 2 * SPACING, 0, getDisplay());
+    pLbl->init(sText, TEXT_FONT, TEXT_COLOR, "", SPACING, yPxl, iWidth - 2 * SPACING, 0, getDisplay());
     addComponent(pLbl);
 
     // Open tree combo
     yPxl += pLbl->getHeight() + SPACING;
-    guiComboBox * pCombo = guiComboBox::createDefaultComboBox(L"OpenTreeCombo", m_pLocalClient->getInterface(), getDisplay());
+    guiComboBox * pCombo = guiComboBox::createDefaultComboBox("OpenTreeCombo", m_pLocalClient->getInterface(), getDisplay());
     pCombo->moveTo(SPACING, yPxl);
     addComponent(pCombo);
 
@@ -250,8 +250,8 @@ void LevelUpDlg::setCurrentAvatar(AvatarData * pAvatar)
     ProgressionTree * pTree = (ProgressionTree*) pTrees->getFirst(0);
     while (pTree != NULL)
     {
-      pTree->findLocalizedElement(sText, LABEL_MAX_CHARS, i18n->getCurrentLanguageName(), L"name");
-      guiButton * pBtn = pCombo->addString(sText, L"OpenTreeButton");
+      pTree->findLocalizedElement(sText, LABEL_MAX_CHARS, i18n->getCurrentLanguageName(), "name");
+      guiButton * pBtn = pCombo->addString(sText, "OpenTreeButton");
       pBtn->setAttachment(pTree);
       pTree->getDescription(sText, LABEL_MAX_CHARS, m_pLocalClient);
       pBtn->setTooltipText(sText);
@@ -270,7 +270,7 @@ void LevelUpDlg::setCurrentAvatar(AvatarData * pAvatar)
     // Trees
     for (int i = 0; i < NB_PROGRESSION_TREES; i++)
     {
-      if (wcscmp(pAvatar->m_pProgression[i].sTreeName, L"") == 0)
+      if (strcmp(pAvatar->m_pProgression[i].sTreeName, "") == 0)
         continue;
 
       ProgressionTree * pTree = pEdition->findProgressionTree(pAvatar->m_pProgression[i].sTreeName);
@@ -278,23 +278,23 @@ void LevelUpDlg::setCurrentAvatar(AvatarData * pAvatar)
 
       // Top label
       yPxl = treeTop;
-      pTree->findLocalizedElement(sText, LABEL_MAX_CHARS, i18n->getCurrentLanguageName(), L"name");
+      pTree->findLocalizedElement(sText, LABEL_MAX_CHARS, i18n->getCurrentLanguageName(), "name");
       pLbl = new guiLabel();
-      pLbl->init(sText, H2_FONT, H2_COLOR, L"", 0, 0, 0, 0, getDisplay());
+      pLbl->init(sText, H2_FONT, H2_COLOR, "", 0, 0, 0, 0, getDisplay());
       pLbl->moveTo(xTree + treeWidth / 2 - pLbl->getWidth() / 2, yPxl);
       addComponent(pLbl);
 
       // Choices
-      s32 iTexChoice = m_pLocalClient->getDisplay()->getTextureEngine()->loadTexture(L"progression_choice");
-      s32 iTexChoiceLeft = m_pLocalClient->getDisplay()->getTextureEngine()->loadTexture(L"progression_choice_l");
-      s32 iTexChoiceRight = m_pLocalClient->getDisplay()->getTextureEngine()->loadTexture(L"progression_choice_r");
+      s32 iTexChoice = m_pLocalClient->getDisplay()->getTextureEngine()->loadTexture("progression_choice");
+      s32 iTexChoiceLeft = m_pLocalClient->getDisplay()->getTextureEngine()->loadTexture("progression_choice_");
+      s32 iTexChoiceRight = m_pLocalClient->getDisplay()->getTextureEngine()->loadTexture("progression_choice_r");
       int iChoiceWidth = m_pLocalClient->getDisplay()->getTextureEngine()->getTexture(iTexChoice)->m_iWidth;  // image is centered on texture, so we take its width
       bool bLastChosenLeft = true;
 
       // branch image
       yPxl += pLbl->getHeight() + SPACING;
       guiImage * pImg = new guiImage();
-      pImg->init(iTexChoice, L"", xTree + treeWidth / 2 - iChoiceWidth / 2, yPxl, -1, -1, getDisplay());
+      pImg->init(iTexChoice, "", xTree + treeWidth / 2 - iChoiceWidth / 2, yPxl, -1, -1, getDisplay());
       addComponent(pImg);
 
       // Get tree root choices
@@ -325,7 +325,7 @@ void LevelUpDlg::setCurrentAvatar(AvatarData * pAvatar)
       {
         // branch image
         pImg = new guiImage();
-        pImg->init(bLastChosenLeft ? iTexChoiceLeft : iTexChoiceRight, L"", xTree + treeWidth / 2 - iChoiceWidth / 2, yPxl, -1, -1, getDisplay());
+        pImg->init(bLastChosenLeft ? iTexChoiceLeft : iTexChoiceRight, "", xTree + treeWidth / 2 - iChoiceWidth / 2, yPxl, -1, -1, getDisplay());
         addComponent(pImg);
         yPxl += pImg->getHeight();
         xPxl = xTree;
@@ -359,16 +359,16 @@ void LevelUpDlg::setCurrentAvatar(AvatarData * pAvatar)
   // Create button "Do it later"
   yPxl += SPACING;
   float fx = getWidth() / 8;
-  guiButton * pBtn = guiButton::createDefaultNormalButton(i18n->getText(L"DO_IT_LATER", sText, 256), L"DoItLaterButton", m_pLocalClient->getDisplay());
+  guiButton * pBtn = guiButton::createDefaultNormalButton(i18n->getText("DO_IT_LATER", sText, 256), "DoItLaterButton", m_pLocalClient->getDisplay());
   pBtn->moveTo((int)fx, yPxl);
   pBtn->setWidth(2*fx);
-  pBtn->setTooltipText(i18n->getText(L"DO_IT_LATER_EXPL", sText, 256));
+  pBtn->setTooltipText(i18n->getText("DO_IT_LATER_EXP", sText, 256));
   addComponent(pBtn);
 
   // Create button "Ok"
   pBtn = (guiButton*) pBtn->clone();
-  pBtn->setText(i18n->getText1stUp(L"OK", sText, 256));
-  pBtn->setId(L"OkButton");
+  pBtn->setText(i18n->getText1stUp("OK", sText, 256));
+  pBtn->setId("OkButton");
   pBtn->moveBy((int)(4 * fx), 0);
   pBtn->setEnabled(false);
   addComponent(pBtn);

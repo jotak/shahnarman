@@ -40,18 +40,18 @@ ResolveDlg::ResolveDlg(int iWidth, LocalClient * pLocalClient) : guiDocument()
   m_iMaxHeight = 400;
   m_iTimerConcerned = 10;
   m_iTimerNotConcerned = 10;
-  m_iSelectTexture = pLocalClient->getDisplay()->getTextureEngine()->findTexture(L"interface:Selector");
-  m_iRangeAttackTex = pLocalClient->getDisplay()->getTextureEngine()->loadTexture(L"range_attack", false, 0, 24, 0, 24);
+  m_iSelectTexture = pLocalClient->getDisplay()->getTextureEngine()->findTexture("interface:Selector");
+  m_iRangeAttackTex = pLocalClient->getDisplay()->getTextureEngine()->loadTexture("range_attack", false, 0, 24, 0, 24);
   m_pAllowedDefendersPerAttacker = new ObjectList(true);
   m_pAttacker = NULL;
   m_pAttackingUnit = NULL;
   m_pDefendingUnit = NULL;
   m_iNbBattles = 0;
 
-  wchar_t sTitle[64];
-  i18n->getText(L"RESOLVE", sTitle, 64);
+  char sTitle[64];
+  i18n->getText("RESOLVE", sTitle, 64);
   init(sTitle,
-    pLocalClient->getDisplay()->getTextureEngine()->findTexture(L"interface:WinBg"),
+    pLocalClient->getDisplay()->getTextureEngine()->findTexture("interface:WinBg"),
     0, 0, iWidth, 1, pLocalClient->getDisplay());
 
   m_iPlayerIt = pLocalClient->getPlayerManager()->getPlayersList()->getIterator();
@@ -88,7 +88,7 @@ ResolveDlg::~ResolveDlg()
 int ResolveDlg::initSimpleStatusScreen()
 {
   guiLabel * pLbl = new guiLabel();
-  pLbl->init(L"...\n...", TEXT_FONT, TEXT_COLOR, L"Status", 5, SPACING, getWidth() - 10, 0, getDisplay());
+  pLbl->init("...\n...", TEXT_FONT, TEXT_COLOR, "Status", 5, SPACING, getWidth() - 10, 0, getDisplay());
   addComponent(pLbl);
   return pLbl->getYPos() + pLbl->getHeight() + 2*SPACING;
 }
@@ -98,26 +98,26 @@ int ResolveDlg::initSimpleStatusScreen()
 // -----------------------------------------------------------------
 void ResolveDlg::initChooseBattleScreen(int yPos, int boxHeight)
 {
-  m_pBattlesListPanel = guiContainer::createDefaultPanel(getWidth() - 2 * SPACING, boxHeight, L"BattlesListPanel", getDisplay());
+  m_pBattlesListPanel = guiContainer::createDefaultPanel(getWidth() - 2 * SPACING, boxHeight, "BattlesListPane", getDisplay());
   m_pBattlesListPanel->moveTo(SPACING, yPos);
   addComponent(m_pBattlesListPanel);
 
-  wchar_t sText[64];
+  char sText[64];
   yPos += m_pBattlesListPanel->getHeight() + 2 * SPACING;
-  i18n->getText1stUp(L"IGNORE_BATTLES", sText, 64);
-  guiButton * pBtn = guiButton::createDefaultNormalButton(sText, L"SkipButton", getDisplay());
+  i18n->getText1stUp("IGNORE_BATTLES", sText, 64);
+  guiButton * pBtn = guiButton::createDefaultNormalButton(sText, "SkipButton", getDisplay());
   pBtn->autoPadWidth(6, 64);
   pBtn->moveTo(SPACING + 2, yPos);
   addComponent(pBtn);
 
-  i18n->getText(L"SELECT_BATTLE", sText, 64);
-  pBtn = guiButton::createDefaultNormalButton(sText, L"SelectBattleButton", getDisplay());
+  i18n->getText("SELECT_BATTLE", sText, 64);
+  pBtn = guiButton::createDefaultNormalButton(sText, "SelectBattleButton", getDisplay());
   pBtn->autoPadWidth(6, 64);
   pBtn->moveTo(getWidth() - SPACING - pBtn->getWidth() - 2, yPos);
   addComponent(pBtn);
 
   m_pBattleSelectorImg = new guiImage();
-  m_pBattleSelectorImg->init(m_iSelectTexture, L"SelectorImage1", 0, 0, m_pBattlesListPanel->getInnerWidth(), 2 * SMALL_ICON_SIZE + SPACING, getDisplay());
+  m_pBattleSelectorImg->init(m_iSelectTexture, "SelectorImage1", 0, 0, m_pBattlesListPanel->getInnerWidth(), 2 * SMALL_ICON_SIZE + SPACING, getDisplay());
   m_pBattlesListPanel->getDocument()->addComponent(m_pBattleSelectorImg);
 }
 
@@ -126,50 +126,50 @@ void ResolveDlg::initChooseBattleScreen(int yPos, int boxHeight)
 // -----------------------------------------------------------------
 int ResolveDlg::initChooseUnitsScreen(int yPos)
 {
-  wchar_t sText[64];
-  i18n->getText(L"ATTACKERS", sText, 64);
+  char sText[64];
+  i18n->getText("ATTACKERS", sText, 64);
   guiLabel * pLbl = new guiLabel();
-  pLbl->init(sText, TEXT_FONT, TEXT_COLOR, L"AttackersLabel", 0, yPos, 0, 0, getDisplay());
+  pLbl->init(sText, TEXT_FONT, TEXT_COLOR, "AttackersLabe", 0, yPos, 0, 0, getDisplay());
   pLbl->moveBy((getWidth()-pLbl->getWidth()) / 2, 0);
   addComponent(pLbl);
 
   int boxHeight = (m_iMaxHeight - 10*SPACING - 3 * pLbl->getHeight() - 26) / 2;
   yPos = pLbl->getYPos() + pLbl->getHeight() + SPACING;
-  m_pAttackersPanel = guiContainer::createDefaultPanel(getWidth() - 2 * SPACING, boxHeight, L"AttackersPanel", getDisplay());
+  m_pAttackersPanel = guiContainer::createDefaultPanel(getWidth() - 2 * SPACING, boxHeight, "AttackersPane", getDisplay());
   m_pAttackersPanel->moveTo(SPACING, yPos);
   addComponent(m_pAttackersPanel);
 
   yPos = m_pAttackersPanel->getYPos() + m_pAttackersPanel->getHeight() + 2 * SPACING;
-  i18n->getText(L"DEFENDERS", sText, 64);
+  i18n->getText("DEFENDERS", sText, 64);
   pLbl = new guiLabel();
-  pLbl->init(sText, TEXT_FONT, TEXT_COLOR, L"DefendersLabel", 0, yPos, 0, 0, getDisplay());
+  pLbl->init(sText, TEXT_FONT, TEXT_COLOR, "DefendersLabe", 0, yPos, 0, 0, getDisplay());
   pLbl->moveBy((getWidth()-pLbl->getWidth()) / 2, 0);
   addComponent(pLbl);
 
   yPos = pLbl->getYPos() + pLbl->getHeight() + SPACING;
-  m_pDefendersPanel = guiContainer::createDefaultPanel(getWidth() - 2 * SPACING, boxHeight, L"DefendersPanel", getDisplay());
+  m_pDefendersPanel = guiContainer::createDefaultPanel(getWidth() - 2 * SPACING, boxHeight, "DefendersPane", getDisplay());
   m_pDefendersPanel->moveTo(SPACING, yPos);
   addComponent(m_pDefendersPanel);
 
   yPos = m_pDefendersPanel->getYPos() + m_pDefendersPanel->getHeight() + SPACING;
-  i18n->getText1stUp(L"CANCEL", sText, 64);
-  guiButton * pBtn = guiButton::createDefaultNormalButton(sText, L"CancelButton", getDisplay());
+  i18n->getText1stUp("CANCE", sText, 64);
+  guiButton * pBtn = guiButton::createDefaultNormalButton(sText, "CancelButton", getDisplay());
   pBtn->autoPadWidth(6, 64);
   pBtn->moveTo(SPACING + 2, yPos);
   addComponent(pBtn);
 
-  i18n->getText(L"NEXT", sText, 64);
-  pBtn = guiButton::createDefaultNormalButton(sText, L"NextButton", getDisplay());
+  i18n->getText("NEXT", sText, 64);
+  pBtn = guiButton::createDefaultNormalButton(sText, "NextButton", getDisplay());
   pBtn->autoPadWidth(6, 64);
   pBtn->moveTo(getWidth() - SPACING - pBtn->getWidth() - 2, yPos);
   addComponent(pBtn);
 
   m_pAttackerSelectorImg = new guiImage();
-  m_pAttackerSelectorImg->init(m_iSelectTexture, L"SelectorImage2", 0, 0, SMALL_ICON_SIZE, SMALL_ICON_SIZE, getDisplay());
+  m_pAttackerSelectorImg->init(m_iSelectTexture, "SelectorImage2", 0, 0, SMALL_ICON_SIZE, SMALL_ICON_SIZE, getDisplay());
   m_pAttackersPanel->getDocument()->addComponent(m_pAttackerSelectorImg);
 
   m_pDefenderSelectorImg = new guiImage();
-  m_pDefenderSelectorImg->init(m_iSelectTexture, L"SelectorImage3", 0, 0, m_pDefendersPanel->getInnerWidth(), 2 * SMALL_ICON_SIZE + SPACING, getDisplay());
+  m_pDefenderSelectorImg->init(m_iSelectTexture, "SelectorImage3", 0, 0, m_pDefendersPanel->getInnerWidth(), 2 * SMALL_ICON_SIZE + SPACING, getDisplay());
   m_pDefendersPanel->getDocument()->addComponent(m_pDefenderSelectorImg);
 
   return boxHeight;
@@ -205,9 +205,9 @@ void ResolveDlg::update(double delta)
 // -----------------------------------------------------------------
 // Name : setStatus
 // -----------------------------------------------------------------
-void ResolveDlg::setStatus(wchar_t * sStatus)
+void ResolveDlg::setStatus(char * sStatus)
 {
-  guiLabel * pLbl = (guiLabel*) getComponent(L"Status");
+  guiLabel * pLbl = (guiLabel*) getComponent("Status");
   pLbl->setText(sStatus);
   setHeight(pLbl->getYPos() + pLbl->getHeight());
 }
@@ -244,7 +244,7 @@ void ResolveDlg::setSimpleStatusScreen()
   while (pCpnt != NULL)
   {
     pCpnt->setVisible(
-      wcscmp(pCpnt->getId(), L"Status") == 0
+      strcmp(pCpnt->getId(), "Status") == 0
       );
     if (pCpnt->isVisible())
       maxY = max(maxY, pCpnt->getYPos() + pCpnt->getHeight());
@@ -266,12 +266,12 @@ void ResolveDlg::setChooseBattleScreen()
   while (pCpnt != NULL)
   {
     pCpnt->setVisible(
-      wcscmp(pCpnt->getId(), L"Status") == 0
-      || wcscmp(pCpnt->getId(), L"SelectBattleButton") == 0
-      || wcscmp(pCpnt->getId(), L"SkipButton") == 0
-      || wcscmp(pCpnt->getId(), L"BattlesListPanel") == 0
+      strcmp(pCpnt->getId(), "Status") == 0
+      || strcmp(pCpnt->getId(), "SelectBattleButton") == 0
+      || strcmp(pCpnt->getId(), "SkipButton") == 0
+      || strcmp(pCpnt->getId(), "BattlesListPane") == 0
       );
-    if (wcscmp(pCpnt->getId(), L"SelectBattleButton") == 0)
+    if (strcmp(pCpnt->getId(), "SelectBattleButton") == 0)
       pCpnt->setEnabled(false);
     if (pCpnt->isVisible())
       maxY = max(maxY, pCpnt->getYPos() + pCpnt->getHeight());
@@ -295,15 +295,15 @@ void ResolveDlg::setChooseUnitsScreen()
   while (pCpnt != NULL)
   {
     pCpnt->setVisible(
-      wcscmp(pCpnt->getId(), L"Status") == 0
-      || wcscmp(pCpnt->getId(), L"AttackersLabel") == 0
-      || wcscmp(pCpnt->getId(), L"DefendersLabel") == 0
-      || (m_BattleStep == RBS_ChooseUnits && wcscmp(pCpnt->getId(), L"CancelButton") == 0)
-      || (m_BattleStep != RBS_AskCastBattleSpells && wcscmp(pCpnt->getId(), L"NextButton") == 0)
-      || wcscmp(pCpnt->getId(), L"AttackersPanel") == 0
-      || wcscmp(pCpnt->getId(), L"DefendersPanel") == 0
+      strcmp(pCpnt->getId(), "Status") == 0
+      || strcmp(pCpnt->getId(), "AttackersLabe") == 0
+      || strcmp(pCpnt->getId(), "DefendersLabe") == 0
+      || (m_BattleStep == RBS_ChooseUnits && strcmp(pCpnt->getId(), "CancelButton") == 0)
+      || (m_BattleStep != RBS_AskCastBattleSpells && strcmp(pCpnt->getId(), "NextButton") == 0)
+      || strcmp(pCpnt->getId(), "AttackersPane") == 0
+      || strcmp(pCpnt->getId(), "DefendersPane") == 0
       );
-    if (wcscmp(pCpnt->getId(), L"NextButton") == 0)
+    if (strcmp(pCpnt->getId(), "NextButton") == 0)
     {
       if (m_BattleStep == RBS_ChooseUnits && m_pAttackingUnit != NULL && m_pDefendingUnit != NULL)
         pCpnt->setEnabled(true);
@@ -347,15 +347,15 @@ void ResolveDlg::setCurrentBattleScreen()
   while (pCpnt != NULL)
   {
     pCpnt->setVisible(
-      wcscmp(pCpnt->getId(), L"Status") == 0
-      || wcscmp(pCpnt->getId(), L"AttackersLabel") == 0
-      || wcscmp(pCpnt->getId(), L"DefendersLabel") == 0
-      || (m_BattleStep == RBS_ChooseUnits && wcscmp(pCpnt->getId(), L"CancelButton") == 0)
-      || (m_BattleStep != RBS_AskCastBattleSpells && wcscmp(pCpnt->getId(), L"NextButton") == 0)
-      || wcscmp(pCpnt->getId(), L"AttackersPanel") == 0
-      || wcscmp(pCpnt->getId(), L"DefendersPanel") == 0
+      strcmp(pCpnt->getId(), "Status") == 0
+      || strcmp(pCpnt->getId(), "AttackersLabe") == 0
+      || strcmp(pCpnt->getId(), "DefendersLabe") == 0
+      || (m_BattleStep == RBS_ChooseUnits && strcmp(pCpnt->getId(), "CancelButton") == 0)
+      || (m_BattleStep != RBS_AskCastBattleSpells && strcmp(pCpnt->getId(), "NextButton") == 0)
+      || strcmp(pCpnt->getId(), "AttackersPane") == 0
+      || strcmp(pCpnt->getId(), "DefendersPane") == 0
       );
-    if (wcscmp(pCpnt->getId(), L"NextButton") == 0)
+    if (strcmp(pCpnt->getId(), "NextButton") == 0)
     {
       if (m_BattleStep == RBS_ChooseUnits && m_pAttackingUnit != NULL && m_pDefendingUnit != NULL)
         pCpnt->setEnabled(true);
@@ -410,8 +410,8 @@ void ResolveDlg::updateChooseBattlePanel(NetworkData * pData)
     m_pBattlesPositions[i].y = (int) pData->readLong();
 
     guiImage * pMainImg = new guiImage();
-    wchar_t sId[8] = L"0";
-    swprintf(sId, 8, L"%d", i);
+    char sId[8] = "0";
+    snprintf(sId, 8, "%d", i);
     pMainImg->init(m_pLocalClient->getGameboard()->getBattleTexture(), sId, 0, yPxl, 2 * SMALL_ICON_SIZE + SPACING, 2 * SMALL_ICON_SIZE + SPACING, getDisplay());
     m_pBattlesListPanel->getDocument()->addComponent(pMainImg);
 
@@ -426,7 +426,7 @@ void ResolveDlg::updateChooseBattlePanel(NetworkData * pData)
         if (((Unit*)mapObj)->getOwner() == m_pAttacker->m_uPlayerId)
         {
           guiImage * pImage = new guiImage();
-          pImage->init(mapObj->getTexture(), L"", xPxlHigh, yPxl, SMALL_ICON_SIZE, SMALL_ICON_SIZE, getDisplay());
+          pImage->init(mapObj->getTexture(), "", xPxlHigh, yPxl, SMALL_ICON_SIZE, SMALL_ICON_SIZE, getDisplay());
           pImage->setAttachment(mapObj);
           m_pBattlesListPanel->getDocument()->addComponent(pImage);
           xPxlHigh += SMALL_ICON_SIZE + SPACING;
@@ -436,7 +436,7 @@ void ResolveDlg::updateChooseBattlePanel(NetworkData * pData)
         else
         {
           guiImage * pImage = new guiImage();
-          pImage->init(mapObj->getTexture(), L"", xPxlLow, yPxl + SMALL_ICON_SIZE + SPACING, SMALL_ICON_SIZE, SMALL_ICON_SIZE, getDisplay());
+          pImage->init(mapObj->getTexture(), "", xPxlLow, yPxl + SMALL_ICON_SIZE + SPACING, SMALL_ICON_SIZE, SMALL_ICON_SIZE, getDisplay());
           pImage->setAttachment(mapObj);
           m_pBattlesListPanel->getDocument()->addComponent(pImage);
           xPxlLow += SMALL_ICON_SIZE + SPACING;
@@ -536,14 +536,14 @@ void ResolveDlg::updateChooseUnitsPanel(NetworkData * pData)
           pPlayerNextUnitPosition[uPlayerId].y = pAllPlayers[uPlayerId] * 2 * (SMALL_ICON_SIZE + SPACING);
           pPlayerNextUnitPosition[uPlayerId].z = 0; // "z" coord is used as boolean to know if we're on top line or bottom line
           guiImage * pAvatarImg = new guiImage();
-          pAvatarImg->init(pPlayer->m_iBannerTex, L"", 0, pPlayerNextUnitPosition[uPlayerId].y, 2 * SMALL_ICON_SIZE + SPACING, 2 * SMALL_ICON_SIZE + SPACING, getDisplay());
+          pAvatarImg->init(pPlayer->m_iBannerTex, "", 0, pPlayerNextUnitPosition[uPlayerId].y, 2 * SMALL_ICON_SIZE + SPACING, 2 * SMALL_ICON_SIZE + SPACING, getDisplay());
           pAvatarImg->setDiffuseColor(pPlayer->m_Color);
           m_pDefendersPanel->getDocument()->addComponent(pAvatarImg);
           if (m_pDefendersPanel->getDocument()->getHeight() < m_iNbPlayers * 2 * (SMALL_ICON_SIZE + SPACING))
             m_pDefendersPanel->getDocument()->setHeight(m_iNbPlayers * 2 * (SMALL_ICON_SIZE + SPACING));
         }
         guiImage * pImage = new guiImage();
-        pImage->init(pUnit->getTexture(), L"", pPlayerNextUnitPosition[uPlayerId].x, pPlayerNextUnitPosition[uPlayerId].y, SMALL_ICON_SIZE, SMALL_ICON_SIZE, getDisplay());
+        pImage->init(pUnit->getTexture(), "", pPlayerNextUnitPosition[uPlayerId].x, pPlayerNextUnitPosition[uPlayerId].y, SMALL_ICON_SIZE, SMALL_ICON_SIZE, getDisplay());
         pImage->setAttachment(pUnit);
         if (!bFirstAtt)
           pImage->setEnabled(false);
@@ -591,7 +591,7 @@ guiImage * ResolveDlg::addUnitToFlowPanel(guiContainer * pPanel, Unit * pUnit, i
   guiComponent * pCpnt = (guiComponent*) pPanel->getDocument()->getComponentsList()->getFirst(0);
   while (pCpnt != NULL)
   {
-    if (wcscmp(pCpnt->getId(), L"UnitButton") == 0)
+    if (strcmp(pCpnt->getId(), "UnitButton") == 0)
       nbButtons++;
     pCpnt = (guiComponent*) pPanel->getDocument()->getComponentsList()->getNext(0);
   }
@@ -599,21 +599,21 @@ guiImage * ResolveDlg::addUnitToFlowPanel(guiContainer * pPanel, Unit * pUnit, i
   int xPxl = SPACING + (nbButtons % nbButtonsPerLine) * (SPACING + SMALL_ICON_SIZE);
   int yPxl = SPACING + (nbButtons / nbButtonsPerLine) * (SPACING + SMALL_ICON_SIZE);
   guiImage * pImage = new guiImage();
-  pImage->init(pUnit->getTexture(), L"UnitButton", xPxl, yPxl, SMALL_ICON_SIZE, SMALL_ICON_SIZE, getDisplay());
+  pImage->init(pUnit->getTexture(), "UnitButton", xPxl, yPxl, SMALL_ICON_SIZE, SMALL_ICON_SIZE, getDisplay());
   pImage->setAttachment(pUnit);
   pPanel->getDocument()->addComponent(pImage);
-  wchar_t sText[256];
+  char sText[256];
   if (iOverTex >= 0)
   {
     guiImage * pImage2 = new guiImage();
-    pImage2->init(iOverTex, L"RangeAttackIcon", xPxl + SMALL_ICON_SIZE - 16, yPxl, 16, 16, getDisplay());
+    pImage2->init(iOverTex, "RangeAttackIcon", xPxl + SMALL_ICON_SIZE - 16, yPxl, 16, 16, getDisplay());
     pImage2->setAttachment(pImage);
     pPanel->getDocument()->addComponent(pImage2);
-    pImage2->setTooltipText(i18n->getText(L"RANGE_ATTACK", sText, 256));
+    pImage2->setTooltipText(i18n->getText("RANGE_ATTACK", sText, 256));
     pImage->setTooltipText(sText);
   }
   else
-    pImage->setTooltipText(i18n->getText(L"MELEE_ATTACK", sText, 256));
+    pImage->setTooltipText(i18n->getText("MELEE_ATTACK", sText, 256));
   return pImage;
 }
 
@@ -650,8 +650,8 @@ void ResolveDlg::askNextPlayerCastSpells()
   m_pLocalClient->sendMessage(m_pSpellData);
   delete m_pSpellData;
   m_pSpellData = NULL;
-  wchar_t sStatus[128];
-  i18n->getText(L"WAIT_SPELLS", sStatus, 128);
+  char sStatus[128];
+  i18n->getText("WAIT_SPELLS", sStatus, 128);
   setStatus(sStatus);
   setSimpleStatusScreen();
   m_BattleStep = RBS_Passive;
@@ -671,12 +671,12 @@ guiObject * ResolveDlg::onButtonEvent(ButtonAction * pEvent)
     {
       m_iSelectedBattle = -1;
       selectComponent(m_pBattleSelectorImg, NULL);
-      getComponent(L"SelectBattleButton")->setEnabled(false);
+      getComponent("SelectBattleButton")->setEnabled(false);
     }
     else
     {
       selectComponent(m_pBattleSelectorImg, NULL, m_pBattlesListPanel, m_iSelectedBattle);
-      getComponent(L"SelectBattleButton")->setEnabled(true);
+      getComponent("SelectBattleButton")->setEnabled(true);
       m_pLocalClient->getFx()->zoomToMapPos(m_pBattlesPositions[m_iSelectedBattle]);
     }
   }
@@ -688,7 +688,7 @@ guiObject * ResolveDlg::onButtonEvent(ButtonAction * pEvent)
     {
       if (pClicked != (guiComponent*) m_pAttackerSelectorImg)
       {
-        if (wcscmp(pClicked->getId(), L"RangeAttackIcon") == 0)
+        if (strcmp(pClicked->getId(), "RangeAttackIcon") == 0)
         {
           pClicked = (guiComponent*) pClicked->getAttachment();
           assert(pClicked != NULL);
@@ -699,7 +699,7 @@ guiObject * ResolveDlg::onButtonEvent(ButtonAction * pEvent)
         guiComponent * pCpnt = m_pDefendersPanel->getDocument()->getFirstComponent();
         while (pCpnt != NULL)
         {
-          if (wcscmp(pCpnt->getId(), L"UnitButton") == 0)
+          if (strcmp(pCpnt->getId(), "UnitButton") == 0)
           {
             Unit * pDef = (Unit*) pCpnt->getAttachment();
             assert(pDef != NULL);
@@ -707,14 +707,14 @@ guiObject * ResolveDlg::onButtonEvent(ButtonAction * pEvent)
           }
           pCpnt = m_pDefendersPanel->getDocument()->getNextComponent();
         }
-        getComponent(L"NextButton")->setEnabled(m_pDefenderSelectorImg->isVisible());
+        getComponent("NextButton")->setEnabled(m_pDefenderSelectorImg->isVisible());
       }
     }
     else
     {
       m_pAttackingUnit = NULL;
       selectComponent(m_pAttackerSelectorImg, NULL);
-      getComponent(L"NextButton")->setEnabled(false);
+      getComponent("NextButton")->setEnabled(false);
     }
     return pResult;
   }
@@ -732,7 +732,7 @@ guiObject * ResolveDlg::onButtonEvent(ButtonAction * pEvent)
         if (m_pDefendingUnit != NULL)
         {
           selectComponent(m_pDefenderSelectorImg, pClicked);
-          getComponent(L"NextButton")->setEnabled(true);
+          getComponent("NextButton")->setEnabled(true);
         }
         else
           pClicked = NULL;
@@ -742,7 +742,7 @@ guiObject * ResolveDlg::onButtonEvent(ButtonAction * pEvent)
     {
       m_pDefendingUnit = NULL;
       selectComponent(m_pDefenderSelectorImg, NULL);
-      getComponent(L"NextButton")->setEnabled(false);
+      getComponent("NextButton")->setEnabled(false);
     }
     return pResult;
   }
@@ -782,7 +782,7 @@ void ResolveDlg::mouseOverPanel(guiContainer * pPanel, int xPxl, int yPxl)
       if (pAttachment != NULL)
       {
         m_pTarget = cpnt;
-        wchar_t sBuf[LABEL_MAX_CHARS] = L"";
+        char sBuf[LABEL_MAX_CHARS] = "";
         m_pLocalClient->getInterface()->getInfoDialog()->setInfoText(((MapObject*)pAttachment)->getInfo(sBuf, LABEL_MAX_CHARS, Dest_InfoDialog));
         break;
       }
@@ -805,7 +805,7 @@ bool ResolveDlg::onButtonEvent(ButtonAction * pEvent, guiComponent * pCpnt)
     break;
   case RBS_ChooseBattle:
     {
-      if (wcscmp(pCpnt->getId(), L"SelectBattleButton") == 0)
+      if (strcmp(pCpnt->getId(), "SelectBattleButton") == 0)
       {
         assert(m_iSelectedBattle >= 0);
         NetworkData msg(NETWORKMSG_RESOLVE_SELECT_BATTLE);
@@ -813,7 +813,7 @@ bool ResolveDlg::onButtonEvent(ButtonAction * pEvent, guiComponent * pCpnt)
         msg.addLong((long)m_pBattlesPositions[m_iSelectedBattle].y);
         m_pLocalClient->sendMessage(&msg);
       }
-      else if (wcscmp(pCpnt->getId(), L"SkipButton") == 0)
+      else if (strcmp(pCpnt->getId(), "SkipButton") == 0)
       {
         m_iNbBattles = 0;
         NetworkData msg(NETWORKMSG_RESOLVE_DIALOG_NO_MORE_BATTLE);
@@ -823,7 +823,7 @@ bool ResolveDlg::onButtonEvent(ButtonAction * pEvent, guiComponent * pCpnt)
     }
   case RBS_ChooseUnits:
     {
-      if (wcscmp(pCpnt->getId(), L"NextButton") == 0)
+      if (strcmp(pCpnt->getId(), "NextButton") == 0)
       {
         assert(m_pAttackingUnit != NULL);
         assert(m_pDefendingUnit != NULL);
@@ -836,13 +836,13 @@ bool ResolveDlg::onButtonEvent(ButtonAction * pEvent, guiComponent * pCpnt)
         msg.addLong((long)m_pDefendingUnit->getId());
         m_pLocalClient->sendMessage(&msg);
       }
-      else if (wcscmp(pCpnt->getId(), L"CancelButton") == 0)
+      else if (strcmp(pCpnt->getId(), "CancelButton") == 0)
       {
-        wchar_t sBuf1[512] = L"";
-        wchar_t sBuf2[512] = L"";
-        i18n->getText(L"(s)_CHOOSE_BATTLE", sBuf1, 512);
+        char sBuf1[512] = "";
+        char sBuf2[512] = "";
+        i18n->getText("(s)_CHOOSE_BATTLE", sBuf1, 512);
         assert(m_pAttacker != NULL);
-        swprintf(sBuf2, 512, sBuf1, m_pAttacker->getAvatarName());
+        snprintf(sBuf2, 512, sBuf1, m_pAttacker->getAvatarName());
         setStatus(sBuf2);
         setChooseBattleScreen();
         m_BattleStep = RBS_ChooseBattle;
@@ -862,10 +862,10 @@ void ResolveDlg::onMessage(int iMessage, NetworkData * pData)
   {
   case NETWORKMSG_PROCESS_AI:
     {
-      wchar_t sBuf1[512] = L"";
-      wchar_t sBuf2[512] = L"temp";
+      char sBuf1[512] = "";
+      char sBuf2[512] = "temp";
       void * p = &sBuf2;
-      i18n->getText(L"PROCESSING_AI_%$1s", sBuf1, 512, &p);
+      i18n->getText("PROCESSING_AI_%$1s", sBuf1, 512, &p);
       setStatus(sBuf1);
       setSimpleStatusScreen();
       m_BattleStep = RBS_Passive;
@@ -873,8 +873,8 @@ void ResolveDlg::onMessage(int iMessage, NetworkData * pData)
     }
   case NETWORKMSG_RESOLVE_NEUTRAL_AI:
     {
-      wchar_t sBuf1[512] = L"";
-      i18n->getText(L"PROCESSING_NEUTRAL_AI", sBuf1, 512);
+      char sBuf1[512] = "";
+      i18n->getText("PROCESSING_NEUTRAL_AI", sBuf1, 512);
       setStatus(sBuf1);
       setSimpleStatusScreen();
       m_BattleStep = RBS_Passive;
@@ -882,12 +882,12 @@ void ResolveDlg::onMessage(int iMessage, NetworkData * pData)
     }
   case NETWORKMSG_RESOLVING_SPELL_ORDERS:
     {
-      wchar_t sBuf1[512] = L"";
-      wchar_t sBuf2[512] = L"";
-      i18n->getText(L"RESOLVING_SPELLS_(s)", sBuf1, 512);
+      char sBuf1[512] = "";
+      char sBuf2[512] = "";
+      i18n->getText("RESOLVING_SPELLS_(s)", sBuf1, 512);
       Player * pPlayer = m_pLocalClient->getPlayerManager()->findPlayer((u8)pData->readLong());
       assert(pPlayer != NULL);
-      swprintf(sBuf2, 512, sBuf1, pPlayer->getAvatarName());
+      snprintf(sBuf2, 512, sBuf1, pPlayer->getAvatarName());
       setStatus(sBuf2);
       setSimpleStatusScreen();
       m_BattleStep = RBS_Passive;
@@ -895,12 +895,12 @@ void ResolveDlg::onMessage(int iMessage, NetworkData * pData)
     }
   case NETWORKMSG_RESOLVING_MOVE_ORDERS:
     {
-      wchar_t sBuf1[512] = L"";
-      wchar_t sBuf2[512] = L"";
-      i18n->getText(L"RESOLVING_MOVES_(s)", sBuf1, 512);
+      char sBuf1[512] = "";
+      char sBuf2[512] = "";
+      i18n->getText("RESOLVING_MOVES_(s)", sBuf1, 512);
       Player * pPlayer = m_pLocalClient->getPlayerManager()->findPlayer((u8)pData->readLong());
       assert(pPlayer != NULL);
-      swprintf(sBuf2, 512, sBuf1, pPlayer->getAvatarName());
+      snprintf(sBuf2, 512, sBuf1, pPlayer->getAvatarName());
       setStatus(sBuf2);
       setSimpleStatusScreen();
       m_BattleStep = RBS_Passive;
@@ -911,12 +911,12 @@ void ResolveDlg::onMessage(int iMessage, NetworkData * pData)
       u8 uNbAllPlayers = m_pLocalClient->getPlayerManager()->getPlayersCount();
       for (int i = 0; i < uNbAllPlayers; i++)
         m_pCastSpellForThisBattle[i] = true;
-      wchar_t sBuf1[512] = L"";
-      wchar_t sBuf2[512] = L"";
-      i18n->getText(L"(s)_CHOOSE_BATTLE", sBuf1, 512);
+      char sBuf1[512] = "";
+      char sBuf2[512] = "";
+      i18n->getText("(s)_CHOOSE_BATTLE", sBuf1, 512);
       m_pAttacker = m_pLocalClient->getPlayerManager()->findPlayer((u8)pData->readLong());
       assert(m_pAttacker != NULL);
-      swprintf(sBuf2, 512, sBuf1, m_pAttacker->getAvatarName());
+      snprintf(sBuf2, 512, sBuf1, m_pAttacker->getAvatarName());
       setStatus(sBuf2);
       updateChooseBattlePanel(pData);
       setChooseBattleScreen();
@@ -928,12 +928,12 @@ void ResolveDlg::onMessage(int iMessage, NetworkData * pData)
       u8 uNbAllPlayers = m_pLocalClient->getPlayerManager()->getPlayersCount();
       for (int i = 0; i < uNbAllPlayers; i++)
         m_pCastSpellForThisBattle[i] = true;
-      wchar_t sBuf1[512] = L"";
-      wchar_t sBuf2[512] = L"";
-      i18n->getText(L"WAIT_(s)_CHOOSING_BATTLES", sBuf1, 512);
+      char sBuf1[512] = "";
+      char sBuf2[512] = "";
+      i18n->getText("WAIT_(s)_CHOOSING_BATTLES", sBuf1, 512);
       m_pAttacker = m_pLocalClient->getPlayerManager()->findPlayer((u8)pData->readLong());
       assert(m_pAttacker != NULL);
-      swprintf(sBuf2, 512, sBuf1, m_pAttacker->getAvatarName());
+      snprintf(sBuf2, 512, sBuf1, m_pAttacker->getAvatarName());
       setStatus(sBuf2);
       setSimpleStatusScreen();
       m_BattleStep = RBS_Passive;
@@ -941,11 +941,11 @@ void ResolveDlg::onMessage(int iMessage, NetworkData * pData)
     }
   case NETWORKMSG_SET_RESOLVE_DIALOG_UNITS:
     {
-      wchar_t sBuf1[512] = L"";
-      wchar_t sBuf2[512] = L"";
-      i18n->getText(L"(s)_SELECT_ATTACKER_AND_TARGET", sBuf1, 512);
+      char sBuf1[512] = "";
+      char sBuf2[512] = "";
+      i18n->getText("(s)_SELECT_ATTACKER_AND_TARGET", sBuf1, 512);
       assert(m_pAttacker != NULL);
-      swprintf(sBuf2, 512, sBuf1, m_pAttacker->getAvatarName());
+      snprintf(sBuf2, 512, sBuf1, m_pAttacker->getAvatarName());
       setStatus(sBuf2);
       updateChooseUnitsPanel(pData);
       m_BattleStep = RBS_ChooseUnits;
@@ -970,11 +970,11 @@ void ResolveDlg::onMessage(int iMessage, NetworkData * pData)
       m_pDefendingUnit = pDef->findUnit(pData->readLong());
       assert(m_pDefendingUnit != NULL);
 
-      wchar_t sBuf[512] = L"";
+      char sBuf[512] = "";
       void * pPhraseArgs[2];
       pPhraseArgs[0] = m_pAttacker->getAvatarName();
       pPhraseArgs[1] = pDef->getAvatarName();
-      i18n->getText(L"(1s)_IS_ATTACKING_(2s)_CAN_CAST_SPELLS", sBuf, 512, pPhraseArgs);
+      i18n->getText("(1s)_IS_ATTACKING_(2s)_CAN_CAST_SPELLS", sBuf, 512, pPhraseArgs);
       setStatus(sBuf);
       // Loop through all local players that haven't answered yet "i don't want to cast any spell on this battle"
       // Ask them, one after another, if they cast spell
@@ -989,8 +989,8 @@ void ResolveDlg::onMessage(int iMessage, NetworkData * pData)
     }
   case NETWORKMSG_RESOLVE_START_CAST_POST_BATTLE_SPELL:
     {
-      wchar_t sBuf1[512] = L"";
-      i18n->getText(L"NO_MORE_BATTLES_CAN_CAST_SPELLS", sBuf1, 512);
+      char sBuf1[512] = "";
+      i18n->getText("NO_MORE_BATTLES_CAN_CAST_SPELLS", sBuf1, 512);
       setStatus(sBuf1);
       m_iNbBattles = 0;
       m_pAttacker = NULL;
@@ -1009,8 +1009,8 @@ void ResolveDlg::onMessage(int iMessage, NetworkData * pData)
     }
   case NETWORKMSG_RESOLVE_DIALOG_UPDATE_TOWNS:
     {
-      wchar_t sBuf[512] = L"";
-      i18n->getText(L"UPDATING_TOWNS", sBuf, 512);
+      char sBuf[512] = "";
+      i18n->getText("UPDATING_TOWNS", sBuf, 512);
       setStatus(sBuf);
       setSimpleStatusScreen();
       m_BattleStep = RBS_Passive;
@@ -1027,7 +1027,7 @@ void ResolveDlg::onMessage(int iMessage, NetworkData * pData)
       g_uLuaSelectConstraints = (u32) pData->readLong();
       pData->readString(m_sSelectTargetLuaCallback);
 
-      wchar_t sStatus[512] = L"";
+      char sStatus[512] = "";
       switch (context.pLua->getType())
       {
       case LUAOBJECT_SPELL:
@@ -1036,7 +1036,7 @@ void ResolveDlg::onMessage(int iMessage, NetworkData * pData)
           void * pPhraseArgs[2];
           pPhraseArgs[0] = context.pPlayer->getAvatarName();
           pPhraseArgs[1] = context.pLua->getLocalizedName();
-          i18n->getText(L"(1s)_CAST_(2s)_SELECT_TARGET", sStatus, 512, pPhraseArgs);
+          i18n->getText("(1s)_CAST_(2s)_SELECT_TARGET", sStatus, 512, pPhraseArgs);
           // Set current spell and caster
           m_pLocalClient->getPlayerManager()->setSpellBeingCastOnResolve((Spell*) (context.pLua));
           m_pLocalClient->getInterface()->getSpellDialog()->updateContent(context.pPlayer, false, true);
@@ -1048,7 +1048,7 @@ void ResolveDlg::onMessage(int iMessage, NetworkData * pData)
           void * pPhraseArgs[2];
           pPhraseArgs[0] = context.pPlayer->getAvatarName();
           pPhraseArgs[1] = context.pLua->getLocalizedName();
-          i18n->getText(L"(1s)_ACTIVATE_(2s)_SELECT_TARGET", sStatus, 512, pPhraseArgs);
+          i18n->getText("(1s)_ACTIVATE_(2s)_SELECT_TARGET", sStatus, 512, pPhraseArgs);
           // Set current spell and caster
           m_pLocalClient->getPlayerManager()->setSkillBeingActivatedOnResolve(context.pUnit, context.pLua->getChildEffect(context.pLua->getCurrentEffect()));
           m_pLocalClient->getInterface()->getSpellDialog()->updateContent(context.pPlayer, false, true);

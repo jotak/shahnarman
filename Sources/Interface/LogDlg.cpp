@@ -24,10 +24,10 @@ LogDlg::LogDlg(LocalClient * pLocalClient) : guiDocument()
   m_pAllLogs = new ObjectList(true);
   m_pMapPosList = new ObjectList(true);
 
-  wchar_t sTitle[64];
-  i18n->getText(L"LOG", sTitle, 64);
+  char sTitle[64];
+  i18n->getText("LOG", sTitle, 64);
   init(sTitle,
-    pLocalClient->getDisplay()->getTextureEngine()->findTexture(L"interface:WinBg"),
+    pLocalClient->getDisplay()->getTextureEngine()->findTexture("interface:WinBg"),
     0, 0, 1, 1, pLocalClient->getDisplay());
   m_bLastLogIsNewTurn = true;
 }
@@ -53,7 +53,7 @@ LogDlg::~LogDlg()
 // -----------------------------------------------------------------
 bool LogDlg::onButtonEvent(ButtonAction * pEvent, guiComponent * pCpnt)
 {
-  if (wcscmp(pCpnt->getId(), L"MapObjScreen") == 0)
+  if (strcmp(pCpnt->getId(), "MapObjScreen") == 0)
   {
     MapObject * pObj = (MapObject*) pCpnt->getAttachment();
     assert(pObj != NULL);
@@ -64,7 +64,7 @@ bool LogDlg::onButtonEvent(ButtonAction * pEvent, guiComponent * pCpnt)
     pDlg->setSelectedObject(pObj);
     m_pLocalClient->getFx()->zoomToMapPos(pObj->getMapPos());
   }
-  else if (wcscmp(pCpnt->getId(), L"ZoomTo") == 0)
+  else if (strcmp(pCpnt->getId(), "ZoomTo") == 0)
   {
     CoordsObject * pObj = (CoordsObject*) pCpnt->getAttachment();
     assert(pObj != NULL);
@@ -76,35 +76,35 @@ bool LogDlg::onButtonEvent(ButtonAction * pEvent, guiComponent * pCpnt)
 // -----------------------------------------------------------------
 // Name : log
 // -----------------------------------------------------------------
-void LogDlg::log(wchar_t * sText, u8 uLevel, u8 uAction, void * pParam)
+void LogDlg::log(char * sText, u8 uLevel, u8 uAction, void * pParam)
 {
   int xPxl = SPACING;
   int yPxl = SPACING;
   guiButton * pBtn = NULL;
-  wchar_t sTooltip[LABEL_MAX_CHARS];
+  char sTooltip[LABEL_MAX_CHARS];
   switch (uAction)
   {
   case LOG_ACTION_ZOOMTO:
     {
       CoordsObject * pCoords = new CoordsObject(*(CoordsMap*) pParam);
       m_pMapPosList->addLast(pCoords);
-      int iTex = getDisplay()->getTextureEngine()->loadTexture(L"eye", false, 0, 25, 0, 16);
-      pBtn = guiButton::createDefaultImageButton(iTex, L"ZoomTo", getDisplay());
+      int iTex = getDisplay()->getTextureEngine()->loadTexture("eye", false, 0, 25, 0, 16);
+      pBtn = guiButton::createDefaultImageButton(iTex, "ZoomTo", getDisplay());
       pBtn->moveTo(xPxl, yPxl);
       pBtn->setAttachment(pCoords);
-      i18n->getText(L"SEE", sTooltip, LABEL_MAX_CHARS);
+      i18n->getText("SEE", sTooltip, LABEL_MAX_CHARS);
       pBtn->setTooltipText(sTooltip);
       break;
     }
   case LOG_ACTION_UNITSCREEN:
   case LOG_ACTION_TOWNSCREEN:
     {
-      int iTex = getDisplay()->getTextureEngine()->loadTexture(L"eye", false, 0, 25, 0, 16);
-      pBtn = guiButton::createDefaultImageButton(iTex, L"MapObjScreen", getDisplay());
+      int iTex = getDisplay()->getTextureEngine()->loadTexture("eye", false, 0, 25, 0, 16);
+      pBtn = guiButton::createDefaultImageButton(iTex, "MapObjScreen", getDisplay());
       pBtn->moveTo(xPxl, yPxl);
       BaseObject * pObj = (BaseObject*) pParam;
       pBtn->setAttachment(pObj);
-      i18n->getText(L"SEE", sTooltip, LABEL_MAX_CHARS);
+      i18n->getText("SEE", sTooltip, LABEL_MAX_CHARS);
       pBtn->setTooltipText(sTooltip);
       break;
     }
@@ -115,7 +115,7 @@ void LogDlg::log(wchar_t * sText, u8 uLevel, u8 uAction, void * pParam)
   xPxl += (pBtn == NULL) ? 0 : pBtn->getWidth() + SPACING;
   int wPxl = getWidth() - xPxl;
   guiLabel * pLbl = new guiLabel();
-  pLbl->init(sText, TEXT_FONT, TEXT_COLOR, L"", xPxl, yPxl, wPxl, 0, getDisplay());
+  pLbl->init(sText, TEXT_FONT, TEXT_COLOR, "", xPxl, yPxl, wPxl, 0, getDisplay());
 
   int lblHeight = pLbl->getHeight();
   guiLabel * pLbl2 = pLbl;
@@ -156,10 +156,10 @@ void LogDlg::logNewTurn()
 {
   if (!m_bLastLogIsNewTurn)
   {
-    wchar_t sText[64];
-    wchar_t sBuf[64];
-    i18n->getText(L"NEW_TURN", sBuf, 64);
-    swprintf(sText, 64, L"** %s **", sBuf);
+    char sText[64];
+    char sBuf[64];
+    i18n->getText("NEW_TURN", sBuf, 64);
+    snprintf(sText, 64, "** %s **", sBuf);
     log(sText);
     m_bLastLogIsNewTurn = true;
   }

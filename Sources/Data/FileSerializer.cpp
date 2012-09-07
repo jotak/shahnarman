@@ -75,19 +75,19 @@ char FileSerializer::readChar()
 // -----------------------------------------------------------------
 // Name : writeString
 // -----------------------------------------------------------------
-void FileSerializer::writeString(const wchar_t * s)
+void FileSerializer::writeString(const char * s)
 {
-  int len = wcslen(s) + 1;
+  int len = strlen(s) + 1;
   fwrite(&len, sizeof(int), 1, m_pFile);
-  fwrite(s, sizeof(wchar_t), len, m_pFile);
+  fwrite(s, sizeof(char), len, m_pFile);
 }
 
 // -----------------------------------------------------------------
 // Name : readString
 // -----------------------------------------------------------------
-void FileSerializer::readString(wchar_t * s)
+void FileSerializer::readString(char * s)
 {
   int len = 0;
   fread(&len, sizeof(int), 1, m_pFile);
-  fread(s, sizeof(wchar_t), len, m_pFile);
+  fread(s, sizeof(char), len, m_pFile);
 }

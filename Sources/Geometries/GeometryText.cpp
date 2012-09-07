@@ -7,7 +7,7 @@
 // Name : GeometryText
 //  Constructor
 // -----------------------------------------------------------------
-GeometryText::GeometryText(const wchar_t * sText, int iFontId, VBType type, DisplayEngine * pDisplay) : Geometry(type, pDisplay)
+GeometryText::GeometryText(const char * sText, int iFontId, VBType type, DisplayEngine * pDisplay) : Geometry(type, pDisplay)
 {
   m_VboId = 0;
   m_sText = NULL;
@@ -19,7 +19,7 @@ GeometryText::GeometryText(const wchar_t * sText, int iFontId, VBType type, Disp
 // Name : GeometryText
 //  Constructor
 // -----------------------------------------------------------------
-GeometryText::GeometryText(const wchar_t * sText, int iFontId, float fFontHeight, VBType type, DisplayEngine * pDisplay) : Geometry(type, pDisplay)
+GeometryText::GeometryText(const char * sText, int iFontId, float fFontHeight, VBType type, DisplayEngine * pDisplay) : Geometry(type, pDisplay)
 {
   m_VboId = 0;
   m_sText = NULL;
@@ -93,12 +93,12 @@ void GeometryText::display(Coords3D d3Coords, F_RGBA color)
 // -----------------------------------------------------------------
 // Name : setText
 // -----------------------------------------------------------------
-void GeometryText::setText(const wchar_t * sText, int iFontId)
+void GeometryText::setText(const char * sText, int iFontId)
 {
-  m_iTextLength = wcslen(sText) + 1;
+  m_iTextLength = strlen(sText) + 1;
   if (m_sText != NULL)
     delete[] m_sText;
-  m_sText = new wchar_t[m_iTextLength];
+  m_sText = new char[m_iTextLength];
   wsafecpy(m_sText, m_iTextLength, sText);
   m_iFontId = iFontId;
   GLenum glType;
@@ -123,7 +123,7 @@ void GeometryText::setText(const wchar_t * sText, int iFontId)
   float fTexHeight = (float) m_pDisplay->getTextureEngine()->getTexture(pFont->getTextureId())->m_iHeight;
   int iXPxl = 0;
   int iYPxl = 0;
-  int iLength = (int) wcslen(sText);
+  int iLength = (int) strlen(sText);
   m_iNbQuads = 0;
   Vertex * vertices = new Vertex[iLength * 8];  // double number of vertice, because of acutes
   for (int i = 0; i < iLength; i++)
@@ -203,7 +203,7 @@ void GeometryText::reload()
   float fTexHeight = (float) m_pDisplay->getTextureEngine()->getTexture(pFont->getTextureId())->m_iHeight;
   int iXPxl = 0;
   int iYPxl = 0;
-  int iLength = (int) wcslen(m_sText);
+  int iLength = (int) strlen(m_sText);
   m_iNbQuads = 0;
   Vertex * vertices = new Vertex[iLength * 8];  // double number of vertice, because of acutes
   for (int i = 0; i < iLength; i++)

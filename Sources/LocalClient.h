@@ -64,8 +64,8 @@ public:
   DataFactory * getDataFactory() { return m_pDataFactory; };
 
   // Server related functions
-  Server * initServer(const wchar_t * sGameName, int nbClients, ClientData * clients, MapReader * pMapReader, int iTurnTimer, int iDeckSize);
-  Server * loadServer(const wchar_t * sGameName);
+  Server * initServer(const char * sGameName, int nbClients, ClientData * clients, MapReader * pMapReader, int iTurnTimer, int iDeckSize);
+  Server * loadServer(const char * sGameName);
   Server * getServer() { return m_pServer; };
   void receiveMessage(NetworkData * pData);
   void sendMessage(NetworkData * pData);

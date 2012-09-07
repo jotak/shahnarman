@@ -17,7 +17,7 @@ public:
   SpellDlg(LocalClient * pLocalClient, bool bHideSpells);
   ~SpellDlg();
 
-  void setCustomData(const wchar_t * sKey, const wchar_t * sData, DisplayEngine * pDisplay);
+  void setCustomData(const char * sKey, const char * sData, DisplayEngine * pDisplay);
   bool onButtonEvent(ButtonAction * pEvent, guiComponent * pCpnt);
   void updateContent(Player * pPlayer, bool bOnlyInstants = false, bool bCantCastSpells = false);
   void cancelCastSpell(Spell * pSpell);

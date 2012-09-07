@@ -12,12 +12,12 @@ public:
   NetworkData * clone();
 
   void addLong(long l);
-  void addString(const wchar_t * str);
+  void addString(const char * str);
   void addDouble(double d);
   void addCustom(void * p, long size);
 
   long readLong();
-  void readString(wchar_t * str);
+  void readString(char * str);
   double readDouble();
   long readCustom(void * p);
 

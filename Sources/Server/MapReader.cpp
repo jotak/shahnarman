@@ -21,7 +21,7 @@ MapReader::MapReader(LocalClient * pLocalClient)
   m_pLocalClient = pLocalClient;
   m_pLuaState = NULL;
   m_Map = NULL;
-  wsafecpy(m_sLuaFile, MAX_PATH, L"");
+  wsafecpy(m_sLuaFile, MAX_PATH, "");
   m_iWidth = m_iHeight = 0;
   m_pPlayersPos = NULL;
   m_iNbPlayers = 0;
@@ -49,7 +49,7 @@ MapReader::~MapReader()
 // -----------------------------------------------------------------
 // Name : init
 // -----------------------------------------------------------------
-bool MapReader::init(const wchar_t * sMapPath)
+bool MapReader::init(const char * sMapPath)
 {
   // Clear any existing data
   if (m_Map != NULL)
@@ -74,18 +74,15 @@ bool MapReader::init(const wchar_t * sMapPath)
   luaL_openlibs(m_pLuaState);
 
   // construct the file name
-  wchar_t sFilename[MAX_PATH];
-  swprintf(sFilename, MAX_PATH, L"%s%s", MAPS_PATH, sMapPath);
-  // we must convert unicode file name to ascii
-  char sAsciiFilename[MAX_PATH];
-  wtostr(sAsciiFilename, MAX_PATH, sFilename);
-	if (luaL_dofile(m_pLuaState, sAsciiFilename) != 0)
+  char sFilename[MAX_PATH];
+  snprintf(sFilename, MAX_PATH, "%s%s", MAPS_PATH, sMapPath);
+	if (luaL_dofile(m_pLuaState, sFilename) != 0)
 	{
 		// LUA error
-    wchar_t sError[512] = L"";
-    strtow(sError, 512, lua_tostring(m_pLuaState, -1));
+    char sError[512] = "";
+    wsafecpy(sError, 512, lua_tostring(m_pLuaState, -1));
     m_pLocalClient->getDebug()->notifyErrorMessage(sError);
-    wsafecpy(m_sLuaFile, MAX_PATH, L"");
+    wsafecpy(m_sLuaFile, MAX_PATH, "");
     m_pLuaState = NULL;
     return false;
 	}
@@ -96,24 +93,21 @@ bool MapReader::init(const wchar_t * sMapPath)
 // -----------------------------------------------------------------
 // Name : getMapName
 // -----------------------------------------------------------------
-bool MapReader::getMapName(wchar_t * sString, int size)
+bool MapReader::getMapName(char * sString, int size)
 {
   if (m_pLuaState == NULL)
     return false;
-
-  char sLanguage[256];
-  wtostr(sLanguage, 256, i18n->getCurrentLanguageName());
 
   // Call lua function
   lua_getglobal(m_pLuaState, "getName");
   if (lua_isfunction(m_pLuaState, -1))
   {
-    lua_pushstring(m_pLuaState, sLanguage);
+    lua_pushstring(m_pLuaState, i18n->getCurrentLanguageName());
     int err = lua_pcall(m_pLuaState, 1, 1, 0);
-    if (isLuaCallValid(err, L"getName", i18n->getCurrentLanguageName()))
+    if (isLuaCallValid(err, "getName", i18n->getCurrentLanguageName()))
     {
       // convert ascii string to unicode
-      strtow(sString, size, lua_tostring(m_pLuaState, -1));
+      wsafecpy(sString, size, lua_tostring(m_pLuaState, -1));
       lua_pop(m_pLuaState, 1);
     }
     else
@@ -122,8 +116,8 @@ bool MapReader::getMapName(wchar_t * sString, int size)
   else
   {
     lua_pop(m_pLuaState, 1);
-    wchar_t sError[512];
-    swprintf(sError, 512, L"Lua map error: file %s has no name defined.", m_sLuaFile);
+    char sError[512];
+    snprintf(sError, 512, "Lua map error: file %s has no name defined.", m_sLuaFile);
     m_pLocalClient->getDebug()->notifyErrorMessage(sError);
     return false;
   }
@@ -155,31 +149,26 @@ bool MapReader::getMapParameters(ObjectList * pList, int iLabelMaxSize)
   for (int i = 0; i < nbParams; i++)
     pList->addLast(new MapParameters());
 
-  // Get parameter labels
-  char sLanguage[256];
-  wtostr(sLanguage, 256, i18n->getCurrentLanguageName());
-
   // Call lua function
   lua_getglobal(m_pLuaState, "getParamLabels");
   if (!lua_isfunction(m_pLuaState, -1))
   {
     lua_pop(m_pLuaState, 1);
-    wchar_t sError[512];
-    swprintf(sError, 512, L"Lua map error: file %s has no label defined for its params.", m_sLuaFile);
+    char sError[512];
+    snprintf(sError, 512, "Lua map error: file %s has no label defined for its params.", m_sLuaFile);
     m_pLocalClient->getDebug()->notifyErrorMessage(sError);
     return false;
   }
-  lua_pushstring(m_pLuaState, sLanguage);
+  lua_pushstring(m_pLuaState, i18n->getCurrentLanguageName());
   int err = lua_pcall(m_pLuaState, 1, nbParams, 0);
-  if (!isLuaCallValid(err, L"getParamLabels", i18n->getCurrentLanguageName()))
+  if (!isLuaCallValid(err, "getParamLabels", i18n->getCurrentLanguageName()))
     return false;
 
   // Get 1 result per parameter
   MapParameters * pParam = (MapParameters*) pList->getLast(0);
   while (pParam != NULL)
   {
-    // convert ascii string to unicode
-    strtow(pParam->sLabel, 256, lua_tostring(m_pLuaState, -1));
+    wsafecpy(pParam->sLabel, 256, lua_tostring(m_pLuaState, -1));
     lua_pop(m_pLuaState, 1);
     pParam = (MapParameters*) pList->getPrev(0);
   }
@@ -191,8 +180,8 @@ bool MapReader::getMapParameters(ObjectList * pList, int iLabelMaxSize)
   if (!lua_istable(m_pLuaState, 1))
   {
     lua_pop(m_pLuaState, 1);
-    wchar_t sError[512];
-    swprintf(sError, 512, L"Lua map error: variable 'nbParamsValues' incorrect in file %s.", m_sLuaFile);
+    char sError[512];
+    snprintf(sError, 512, "Lua map error: variable 'nbParamsValues' incorrect in file %s.", m_sLuaFile);
     m_pLocalClient->getDebug()->notifyErrorMessage(sError);
     return false;
   }
@@ -205,16 +194,16 @@ bool MapReader::getMapParameters(ObjectList * pList, int iLabelMaxSize)
     if (!lua_isnumber(m_pLuaState, -1))
     {
       lua_pop(m_pLuaState, 2);
-      wchar_t sError[512];
-      swprintf(sError, 512, L"Lua map error: variable 'nbParamsValues' incorrect in file %s. Content is not a number.", m_sLuaFile);
+      char sError[512];
+      snprintf(sError, 512, "Lua map error: variable 'nbParamsValues' incorrect in file %s. Content is not a number.", m_sLuaFile);
       m_pLocalClient->getDebug()->notifyErrorMessage(sError);
       return false;
     }
     pParam->nbValues = (int) lua_tonumber(m_pLuaState, -1);
     pParam->pPossibleValues = new int[pParam->nbValues];
-    pParam->pPossibleValueLabels = new wchar_t*[pParam->nbValues];
+    pParam->pPossibleValueLabels = new char*[pParam->nbValues];
     for (int i = 0; i < pParam->nbValues; i++)
-      pParam->pPossibleValueLabels[i] = new wchar_t[iLabelMaxSize];
+      pParam->pPossibleValueLabels[i] = new char[iLabelMaxSize];
     nbTotalPossibleValues += pParam->nbValues;
     lua_pop(m_pLuaState, 1);
     pParam = (MapParameters*) pList->getNext(0);
@@ -227,8 +216,8 @@ bool MapReader::getMapParameters(ObjectList * pList, int iLabelMaxSize)
   if (!lua_istable(m_pLuaState, 1))
   {
     lua_pop(m_pLuaState, 1);
-    wchar_t sError[512];
-    swprintf(sError, 512, L"Lua map error: variable 'paramDefaultValues' incorrect in file %s.", m_sLuaFile);
+    char sError[512];
+    snprintf(sError, 512, "Lua map error: variable 'paramDefaultValues' incorrect in file %s.", m_sLuaFile);
     m_pLocalClient->getDebug()->notifyErrorMessage(sError);
     return false;
   }
@@ -241,8 +230,8 @@ bool MapReader::getMapParameters(ObjectList * pList, int iLabelMaxSize)
     if (!lua_isnumber(m_pLuaState, -1))
     {
       lua_pop(m_pLuaState, 2);
-      wchar_t sError[512];
-      swprintf(sError, 512, L"Lua map error: variable 'paramDefaultValues' incorrect in file %s. Content is not a number.", m_sLuaFile);
+      char sError[512];
+      snprintf(sError, 512, "Lua map error: variable 'paramDefaultValues' incorrect in file %s. Content is not a number.", m_sLuaFile);
       m_pLocalClient->getDebug()->notifyErrorMessage(sError);
       return false;
     }
@@ -258,14 +247,14 @@ bool MapReader::getMapParameters(ObjectList * pList, int iLabelMaxSize)
   if (!lua_isfunction(m_pLuaState, -1))
   {
     lua_pop(m_pLuaState, 1);
-    wchar_t sError[512];
-    swprintf(sError, 512, L"Lua map error: file %s has no function 'getParamValueLabels' defined.", m_sLuaFile);
+    char sError[512];
+    snprintf(sError, 512, "Lua map error: file %s has no function 'getParamValueLabels' defined.", m_sLuaFile);
     m_pLocalClient->getDebug()->notifyErrorMessage(sError);
     return false;
   }
-  lua_pushstring(m_pLuaState, sLanguage);
+  lua_pushstring(m_pLuaState, i18n->getCurrentLanguageName());
   err = lua_pcall(m_pLuaState, 1, nbTotalPossibleValues, 0);
-  if (!isLuaCallValid(err, L"getParamValueLabels", i18n->getCurrentLanguageName()))
+  if (!isLuaCallValid(err, "getParamValueLabels", i18n->getCurrentLanguageName()))
     return false;
 
   // Get 1 result per parameter
@@ -274,8 +263,7 @@ bool MapReader::getMapParameters(ObjectList * pList, int iLabelMaxSize)
   {
     for (int i = pParam->nbValues-1; i >= 0; i--)
     {
-      // convert ascii string to unicode
-      strtow(pParam->pPossibleValueLabels[i], iLabelMaxSize, lua_tostring(m_pLuaState, -1));
+      wsafecpy(pParam->pPossibleValueLabels[i], iLabelMaxSize, lua_tostring(m_pLuaState, -1));
       lua_pop(m_pLuaState, 1);
     }
     pParam = (MapParameters*) pList->getPrev(0);
@@ -308,28 +296,28 @@ void MapReader::deleteMapParameters(ObjectList * pList)
 // -----------------------------------------------------------------
 // Name : isLuaCallValid
 // -----------------------------------------------------------------
-bool MapReader::isLuaCallValid(int iError, const wchar_t * sFuncName, const wchar_t * sParams)
+bool MapReader::isLuaCallValid(int iError, const char * sFuncName, const char * sParams)
 {
   switch (iError)
   {
   case LUA_ERRRUN:
     {
-      wchar_t sError[512] = L"";
-      swprintf(sError, 512, L"LUA runtime error in file %s, when calling %s with params %s.", m_sLuaFile, sFuncName, sParams);
+      char sError[512] = "";
+      snprintf(sError, 512, "LUA runtime error in file %s, when calling %s with params %s.", m_sLuaFile, sFuncName, sParams);
       m_pLocalClient->getDebug()->notifyErrorMessage(sError);
       return false;
     }
   case LUA_ERRMEM:
     {
-      wchar_t sError[512] = L"";
-      swprintf(sError, 512, L"LUA memory allocation error in file %s, when calling %s::%s with params %s.", m_sLuaFile, sFuncName, sParams);
+      char sError[512] = "";
+      snprintf(sError, 512, "LUA memory allocation error in file %s, when calling %s with params %s.", m_sLuaFile, sFuncName, sParams);
       m_pLocalClient->getDebug()->notifyErrorMessage(sError);
       return false;
     }
   case LUA_ERRERR:
     {
-      wchar_t sError[512] = L"";
-      swprintf(sError, 512, L"LUA error handling error in file %s, when calling %s::%s with params %s.", m_sLuaFile, sFuncName, sParams);
+      char sError[512] = "";
+      snprintf(sError, 512, "LUA error handling error in file %s, when calling %s with params %s.", m_sLuaFile, sFuncName, sParams);
       m_pLocalClient->getDebug()->notifyErrorMessage(sError);
       return false;
     }
@@ -374,8 +362,8 @@ void MapReader::setMapParameters(int * pCustomParams, int nbParams, int nbPlayer
     }
     else
     {
-      wchar_t sError[512];
-      swprintf(sError, 512, L"Lua map error: 'params' array not correctly defined in file %s.", m_sLuaFile);
+      char sError[512];
+      snprintf(sError, 512, "Lua map error: 'params' array not correctly defined in file %s.", m_sLuaFile);
       m_pLocalClient->getDebug()->notifyErrorMessage(sError);
       lua_pop(m_pLuaState, 1);
     }
@@ -400,8 +388,8 @@ bool MapReader::generate()
   if (!lua_isfunction(m_pLuaState, -1))
   {
     lua_pop(m_pLuaState, 1);
-    wchar_t sError[512];
-    swprintf(sError, 512, L"Lua map error: file %s has no function 'generate' defined.", m_sLuaFile);
+    char sError[512];
+    snprintf(sError, 512, "Lua map error: file %s has no function 'generate' defined.", m_sLuaFile);
     m_pLocalClient->getDebug()->notifyErrorMessage(sError);
     return false;
   }
@@ -415,8 +403,8 @@ bool MapReader::generate()
   {
     lua_pop(m_pLuaState, 1);
     // error : variable not found
-    wchar_t sError[512];
-    swprintf(sError, 512, L"Lua map error: file %s has no variable 'width' defined.", m_sLuaFile);
+    char sError[512];
+    snprintf(sError, 512, "Lua map error: file %s has no variable 'width' defined.", m_sLuaFile);
     m_pLocalClient->getDebug()->notifyErrorMessage(sError);
     lua_pop(m_pLuaState, 1);
     return false;
@@ -431,8 +419,8 @@ bool MapReader::generate()
   {
     lua_pop(m_pLuaState, 1);
     // error : variable not found
-    wchar_t sError[512];
-    swprintf(sError, 512, L"Lua map error: file %s has no variable 'height' defined.", m_sLuaFile);
+    char sError[512];
+    snprintf(sError, 512, "Lua map error: file %s has no variable 'height' defined.", m_sLuaFile);
     m_pLocalClient->getDebug()->notifyErrorMessage(sError);
     lua_pop(m_pLuaState, 1);
     return false;
@@ -453,8 +441,8 @@ bool MapReader::generate()
   {
     lua_pop(m_pLuaState, 1);
     // error : variable not found
-    wchar_t sError[512];
-    swprintf(sError, 512, L"Lua map error: file %s has no variable 'map' defined.", m_sLuaFile);
+    char sError[512];
+    snprintf(sError, 512, "Lua map error: file %s has no variable 'map' defined.", m_sLuaFile);
     m_pLocalClient->getDebug()->notifyErrorMessage(sError);
     return false;
   }
@@ -478,8 +466,8 @@ bool MapReader::generate()
   {
     lua_pop(m_pLuaState, 1);
     // error : variable not found
-    wchar_t sError[512];
-    swprintf(sError, 512, L"Lua map error: file %s has no variable 'players' defined.", m_sLuaFile);
+    char sError[512];
+    snprintf(sError, 512, "Lua map error: file %s has no variable 'players' defined.", m_sLuaFile);
     m_pLocalClient->getDebug()->notifyErrorMessage(sError);
     return false;
   }
@@ -505,8 +493,8 @@ bool MapReader::generate()
   {
     lua_pop(m_pLuaState, 1);
     // error : variable not found
-    wchar_t sError[512];
-    swprintf(sError, 512, L"Lua map error: file %s has no variable 'nbTowns' defined.", m_sLuaFile);
+    char sError[512];
+    snprintf(sError, 512, "Lua map error: file %s has no variable 'nbTowns' defined.", m_sLuaFile);
     m_pLocalClient->getDebug()->notifyErrorMessage(sError);
     lua_pop(m_pLuaState, 1);
     return false;
@@ -519,8 +507,8 @@ bool MapReader::generate()
   if (!lua_istable(m_pLuaState, 1))
   {
     // error : variable not found
-    wchar_t sError[512];
-    swprintf(sError, 512, L"Lua map error: file %s has no variable 'towns' defined.", m_sLuaFile);
+    char sError[512];
+    snprintf(sError, 512, "Lua map error: file %s has no variable 'towns' defined.", m_sLuaFile);
     m_pLocalClient->getDebug()->notifyErrorMessage(sError);
     lua_pop(m_pLuaState, 1);
     return false;
@@ -611,8 +599,8 @@ bool MapReader::generate()
   {
     lua_pop(m_pLuaState, 1);
     // error : variable not found
-    wchar_t sError[512];
-    swprintf(sError, 512, L"Lua map error: file %s has no variable 'nbTemples' defined.", m_sLuaFile);
+    char sError[512];
+    snprintf(sError, 512, "Lua map error: file %s has no variable 'nbTemples' defined.", m_sLuaFile);
     m_pLocalClient->getDebug()->notifyErrorMessage(sError);
     lua_pop(m_pLuaState, 1);
     return false;
@@ -625,8 +613,8 @@ bool MapReader::generate()
   if (!lua_istable(m_pLuaState, 1))
   {
     // error : variable not found
-    wchar_t sError[512];
-    swprintf(sError, 512, L"Lua map error: file %s has no variable 'temples' defined.", m_sLuaFile);
+    char sError[512];
+    snprintf(sError, 512, "Lua map error: file %s has no variable 'temples' defined.", m_sLuaFile);
     m_pLocalClient->getDebug()->notifyErrorMessage(sError);
     lua_pop(m_pLuaState, 1);
     return false;
@@ -686,8 +674,8 @@ bool MapReader::generate()
   {
     lua_pop(m_pLuaState, 1);
     // error : variable not found
-    wchar_t sError[512];
-    swprintf(sError, 512, L"Lua map error: file %s has no variable 'nbSpecTiles' defined.", m_sLuaFile);
+    char sError[512];
+    snprintf(sError, 512, "Lua map error: file %s has no variable 'nbSpecTiles' defined.", m_sLuaFile);
     m_pLocalClient->getDebug()->notifyErrorMessage(sError);
     lua_pop(m_pLuaState, 1);
     return false;
@@ -700,8 +688,8 @@ bool MapReader::generate()
   if (!lua_istable(m_pLuaState, 1))
   {
     // error : variable not found
-    wchar_t sError[512];
-    swprintf(sError, 512, L"Lua map error: file %s has no variable 'spectiles' defined.", m_sLuaFile);
+    char sError[512];
+    snprintf(sError, 512, "Lua map error: file %s has no variable 'spectiles' defined.", m_sLuaFile);
     m_pLocalClient->getDebug()->notifyErrorMessage(sError);
     lua_pop(m_pLuaState, 1);
     return false;

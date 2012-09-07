@@ -33,22 +33,22 @@ public:
   virtual void setDimensions(int iWidth, int iHeight);
 
   // List elements
-  void clearList() { m_pList->getDocument()->deleteAllComponents(); m_pLabel->setText(L""); };
-  guiButton * addString(const wchar_t * sText, const wchar_t * sId);
-  wchar_t * getText() { return m_pLabel->getText(); };
+  void clearList() { m_pList->getDocument()->deleteAllComponents(); m_pLabel->setText(""); };
+  guiButton * addString(const char * sText, const char * sId);
+  char * getText() { return m_pLabel->getText(); };
   void setItem(int id);
-  guiButton * getItem(const wchar_t * sId);
+  guiButton * getItem(const char * sId);
   guiButton * getItem(u16 uId);
   guiButton * getSelectedItem();
   int getSelectedItemId();
   u16 getItemsCount();
 
   // Clone / init
-  virtual void init(int * iMainTex, int iDocTex, F_RGBA textColor, FontId fontId, FrameFitBehavior wfit, FrameFitBehavior hfit, int iMaxWidth, int iMaxHeight, int btnTex1, int btnTex2, BtnClickOptions btnClickOpt, int btnHeight, int * frameTexs, const wchar_t * sCpntId, int xPxl, int yPxl, int wPxl, int hPxl, DisplayEngine * pDisplay);
+  virtual void init(int * iMainTex, int iDocTex, F_RGBA textColor, FontId fontId, FrameFitBehavior wfit, FrameFitBehavior hfit, int iMaxWidth, int iMaxHeight, int btnTex1, int btnTex2, BtnClickOptions btnClickOpt, int btnHeight, int * frameTexs, const char * sCpntId, int xPxl, int yPxl, int wPxl, int hPxl, DisplayEngine * pDisplay);
   virtual guiObject * clone();
 
   // Static default constructors
-  static guiComboBox * createDefaultComboBox(const wchar_t * sId, InterfaceManager * pInterface, DisplayEngine * pDisplay);
+  static guiComboBox * createDefaultComboBox(const char * sId, InterfaceManager * pInterface, DisplayEngine * pDisplay);
 
 protected:
   void centerLabel();

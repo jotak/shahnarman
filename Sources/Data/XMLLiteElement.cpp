@@ -2,11 +2,12 @@
 // XMLLITE ELEMENT (and related classes)
 // -----------------------------------------------------------------
 #include "XMLLiteElement.h"
+#include <stdlib.h>
 
 // -----------------------------------------------------------------
 // Name : getCharValue
 // -----------------------------------------------------------------
-wchar_t * XMLLiteAttribute::getCharValue()
+char * XMLLiteAttribute::getCharValue()
 {
   // return copy of value instead?
   return m_sValue;
@@ -17,9 +18,7 @@ wchar_t * XMLLiteAttribute::getCharValue()
 // -----------------------------------------------------------------
 long XMLLiteAttribute::getIntValue()
 {
-  long value;
-  swscanf(m_sValue, L"%ld", &value);
-  return value;
+  return atol(m_sValue);
 }
 
 // -----------------------------------------------------------------
@@ -27,15 +26,13 @@ long XMLLiteAttribute::getIntValue()
 // -----------------------------------------------------------------
 double XMLLiteAttribute::getFloatValue()
 {
-  double value;
-  swscanf(m_sValue, L"%lf", &value);
-  return value;
+    return atof(m_sValue);
 }
 
 // -----------------------------------------------------------------
 // Name : getCharValue
 // -----------------------------------------------------------------
-wchar_t * XMLLiteElement::getCharValue()
+char * XMLLiteElement::getCharValue()
 {
   // return copy of value instead?
   return m_sValue;
@@ -46,9 +43,7 @@ wchar_t * XMLLiteElement::getCharValue()
 // -----------------------------------------------------------------
 long XMLLiteElement::getIntValue()
 {
-  long value;
-  swscanf(m_sValue, L"%ld", &value);
-  return value;
+  return atol(m_sValue);
 }
 
 // -----------------------------------------------------------------
@@ -56,20 +51,18 @@ long XMLLiteElement::getIntValue()
 // -----------------------------------------------------------------
 double XMLLiteElement::getFloatValue()
 {
-  double value;
-  swscanf(m_sValue, L"%lf", &value);
-  return value;
+    return atof(m_sValue);
 }
 
 // -----------------------------------------------------------------
 // Name : getChildByName
 // -----------------------------------------------------------------
-XMLLiteElement * XMLLiteElement::getChildByName(const wchar_t * sName)
+XMLLiteElement * XMLLiteElement::getChildByName(const char * sName)
 {
   XMLLiteElement * pChild = getFirstChild();
   while (pChild != NULL)
   {
-    if (wcscmp(sName, pChild->getName()) == 0)
+    if (strcmp(sName, pChild->getName()) == 0)
       return pChild;
     pChild = getNextChild();
   }
@@ -79,12 +72,12 @@ XMLLiteElement * XMLLiteElement::getChildByName(const wchar_t * sName)
 // -----------------------------------------------------------------
 // Name : getAttributeByName
 // -----------------------------------------------------------------
-XMLLiteAttribute * XMLLiteElement::getAttributeByName(const wchar_t * sName)
+XMLLiteAttribute * XMLLiteElement::getAttributeByName(const char * sName)
 {
   XMLLiteAttribute * pAttr = getFirstAttribute();
   while (pAttr != NULL)
   {
-    if (wcscmp(sName, pAttr->getName()) == 0)
+    if (strcmp(sName, pAttr->getName()) == 0)
       return pAttr;
     pAttr = getNextAttribute();
   }

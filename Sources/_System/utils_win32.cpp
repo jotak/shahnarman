@@ -8,25 +8,25 @@ u32 getRandom(u32 max)
   return ((u32)rand()) % max;
 }
 
-size_t strtow(wchar_t * sDst, int sizemax, const char * sSrc)
+size_t strtow(char * sDst, int sizemax, const char * sSrc)
 {
   size_t nbConvertedChars = 0;
   mbstowcs_s(&nbConvertedChars, sDst, sizemax, sSrc, _TRUNCATE);
   return nbConvertedChars;
 }
 
-size_t wtostr(char * sDst, int sizemax, const wchar_t * sSrc)
+size_t wtostr(char * sDst, int sizemax, const char * sSrc)
 {
   size_t nbConvertedChars = 0;
   wcstombs_s(&nbConvertedChars, sDst, sizemax, sSrc, _TRUNCATE);
   return nbConvertedChars;
 }
 
-bool copyStringToClipboard(wchar_t * wsource)
+bool copyStringToClipboard(char * wsource)
 {
   if (!OpenClipboard(NULL))
     return false;
-  int len = wcslen(wsource) + 1;
+  int len = strlen(wsource) + 1;
   char * source = new char[len];
   wtostr(source, len, wsource);
   HGLOBAL clipbuffer;
@@ -42,7 +42,7 @@ bool copyStringToClipboard(wchar_t * wsource)
   return true;
 }
 
-wchar_t * getStringFromClipboard(wchar_t * sBuffer, int iBufSize)
+char * getStringFromClipboard(char * sBuffer, int iBufSize)
 {
   if (!OpenClipboard(NULL))
     return NULL;

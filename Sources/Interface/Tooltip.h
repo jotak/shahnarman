@@ -11,7 +11,7 @@ public:
   ~Tooltip();
 
   virtual u32 getType() { return guiDocument::getType() | GOTYPE_PERSISTANT; };
-  void setText(wchar_t * sText);
+  void setText(char * sText);
 };
 */
 #endif

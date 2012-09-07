@@ -20,8 +20,8 @@ GameOverDlg::GameOverDlg(LocalClient * pLocalClient, int iWidth, int iHeight) : 
   m_pLocalClient = pLocalClient;
   m_pGainsPanel = NULL;
   m_pStatsPanel = NULL;
-  init(L"",
-    pLocalClient->getDisplay()->getTextureEngine()->findTexture(L"interface:WinBg"),
+  init("",
+    pLocalClient->getDisplay()->getTextureEngine()->findTexture("interface:WinBg"),
     0, 0, 1, 1, pLocalClient->getDisplay());
 
   // Other
@@ -48,7 +48,7 @@ GameOverDlg::~GameOverDlg()
 // -----------------------------------------------------------------
 bool GameOverDlg::onButtonEvent(ButtonAction * pEvent, guiComponent * pCpnt)
 {
-  if (wcscmp(pCpnt->getId(), L"OkButton") == 0)
+  if (strcmp(pCpnt->getId(), "OkButton") == 0)
   {
     m_pLocalClient->endGame();
     return false;
@@ -65,46 +65,46 @@ void GameOverDlg::onShow()
   assert(m_pWinners != NULL);
 
   // Build main label string
-  wchar_t sText[LABEL_MAX_CHARS];
+  char sText[LABEL_MAX_CHARS];
   if (m_pWinners->size == 1)
-    i18n->getText(L"VICTORY", sText, LABEL_MAX_CHARS);
+    i18n->getText("VICTORY", sText, LABEL_MAX_CHARS);
   else
-    i18n->getText(L"SHARED_VICTORY", sText, LABEL_MAX_CHARS);
+    i18n->getText("SHARED_VICTORY", sText, LABEL_MAX_CHARS);
   Player * pPlayer = (Player*) m_pWinners->getFirst(0);
   wsafecat(sText, LABEL_MAX_CHARS, pPlayer->getAvatarName());
   pPlayer = (Player*) m_pWinners->getNext(0);
   while (pPlayer != NULL)
   {
-    wsafecat(sText, LABEL_MAX_CHARS, L", ");
+    wsafecat(sText, LABEL_MAX_CHARS, ", ");
     wsafecat(sText, LABEL_MAX_CHARS, pPlayer->getAvatarName());
     pPlayer = (Player*) m_pWinners->getNext(0);
   }
-  wsafecat(sText, LABEL_MAX_CHARS, L".");
+  wsafecat(sText, LABEL_MAX_CHARS, ".");
 
   // Create main label
   int yPxl = SPACING;
   guiLabel * pLbl = new guiLabel();
-  pLbl->init(sText, H1_FONT, H1_COLOR, L"", 0, 0, 0, 0, m_pLocalClient->getDisplay());
+  pLbl->init(sText, H1_FONT, H1_COLOR, "", 0, 0, 0, 0, m_pLocalClient->getDisplay());
   pLbl->moveTo(getWidth() / 2 - pLbl->getWidth() / 2, yPxl);
   addComponent(pLbl);
 
   // Ok button
-  i18n->getText1stUp(L"OK", sText, LABEL_MAX_CHARS);
-  guiButton * pBtn = guiButton::createDefaultNormalButton(sText, L"OkButton", m_pLocalClient->getDisplay());
+  i18n->getText1stUp("OK", sText, LABEL_MAX_CHARS);
+  guiButton * pBtn = guiButton::createDefaultNormalButton(sText, "OkButton", m_pLocalClient->getDisplay());
   pBtn->moveTo((getWidth() - pBtn->getWidth()) / 2, getHeight() - SPACING - pBtn->getHeight());
   addComponent(pBtn);
 
   // Gains panel
   yPxl += pLbl->getHeight() + SPACING;
   int panelHeight = (getHeight() - yPxl - pBtn->getHeight() - 4 * SPACING) / 2;
-  m_pGainsPanel = guiContainer::createDefaultPanel(getWidth() - 2 * SPACING, panelHeight, L"GainsPanel", m_pLocalClient->getDisplay());
+  m_pGainsPanel = guiContainer::createDefaultPanel(getWidth() - 2 * SPACING, panelHeight, "GainsPane", m_pLocalClient->getDisplay());
   m_pGainsPanel->setHeightFitBehavior(FB_FitDocumentToFrameWhenSmaller);
   m_pGainsPanel->moveTo(SPACING, yPxl);
   addComponent(m_pGainsPanel);
 
   // Stats panel
   yPxl += m_pGainsPanel->getHeight() + 2 * SPACING;
-  m_pStatsPanel = guiContainer::createDefaultPanel(getWidth() - 2 * SPACING, panelHeight, L"StatsPanel", m_pLocalClient->getDisplay());
+  m_pStatsPanel = guiContainer::createDefaultPanel(getWidth() - 2 * SPACING, panelHeight, "StatsPane", m_pLocalClient->getDisplay());
   m_pStatsPanel->setHeightFitBehavior(FB_FitDocumentToFrameWhenSmaller);
   m_pStatsPanel->moveTo(SPACING, yPxl);
   addComponent(m_pStatsPanel);
@@ -134,19 +134,19 @@ int GameOverDlg::addPlayerGains(Player * pPlayer, int yPxl)
 {
   // Add player image
   guiImage * pImg = new guiImage();
-  pImg->init(pPlayer->getAvatarTexture(), L"", 0, yPxl, 2 * SMALL_ICON_SIZE, 2 * SMALL_ICON_SIZE, m_pLocalClient->getDisplay());
+  pImg->init(pPlayer->getAvatarTexture(), "", 0, yPxl, 2 * SMALL_ICON_SIZE, 2 * SMALL_ICON_SIZE, m_pLocalClient->getDisplay());
   m_pGainsPanel->getDocument()->addComponent(pImg);
 
   // Show gained XP
-  wchar_t sText[LABEL_MAX_CHARS];
+  char sText[LABEL_MAX_CHARS];
   void * pArgs[2];
   int net = (int) pPlayer->m_uXPNet;
   int gross = (int) pPlayer->m_uXPGross;
   pArgs[0] = &net;
   pArgs[1] = &gross;
-  i18n->getText(L"GAINED_XP(d1)_BEFORE(d2)", sText, LABEL_MAX_CHARS, pArgs);
+  i18n->getText("GAINED_XP(d1)_BEFORE(d2)", sText, LABEL_MAX_CHARS, pArgs);
   guiLabel * pLbl = new guiLabel();
-  pLbl->init(sText, TEXT_FONT, TEXT_COLOR, L"", pImg->getWidth() + SPACING, yPxl, 0, 0, m_pLocalClient->getDisplay());
+  pLbl->init(sText, TEXT_FONT, TEXT_COLOR, "", pImg->getWidth() + SPACING, yPxl, 0, 0, m_pLocalClient->getDisplay());
   m_pGainsPanel->getDocument()->addComponent(pLbl);
 
   // Show total XP
@@ -155,9 +155,9 @@ int GameOverDlg::addPlayerGains(Player * pPlayer, int yPxl)
   int next = (int) pPlayer->m_pAvatarData->getNextLevelXP();
   pArgs[0] = &total;
   pArgs[1] = &next;
-  i18n->getText(L"TOTAL_XP(d1)_NEXT(d2)", sText, LABEL_MAX_CHARS, pArgs);
+  i18n->getText("TOTAL_XP(d1)_NEXT(d2)", sText, LABEL_MAX_CHARS, pArgs);
   pLbl = new guiLabel();
-  pLbl->init(sText, TEXT_FONT, TEXT_COLOR, L"", pImg->getWidth() + SPACING, yPxl2, 0, 0, m_pLocalClient->getDisplay());
+  pLbl->init(sText, TEXT_FONT, TEXT_COLOR, "", pImg->getWidth() + SPACING, yPxl2, 0, 0, m_pLocalClient->getDisplay());
   m_pGainsPanel->getDocument()->addComponent(pLbl);
 
   return yPxl + pImg->getHeight() + SPACING;

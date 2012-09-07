@@ -26,6 +26,6 @@
 extern void registerLuaCallbacks(lua_State * pState);
 
 extern unsigned char getTargetTypeFromName(const char * sType);
-extern unsigned char getTargetTypeFromName(const wchar_t * sType);
+extern unsigned char getTargetTypeFromName(const char * sType);
 
 #endif

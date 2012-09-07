@@ -7,13 +7,13 @@
 class Texture
 {
 public:
-  Texture(const wchar_t * sFilename, bool bMipMap);
+  Texture(const char * sFilename, bool bMipMap);
   ~Texture();
 
   virtual s16 load();
   virtual void unload();
 
-  wchar_t m_sFilename[MAX_PATH];
+  char m_sFilename[MAX_PATH];
   GLuint m_iWidth, m_iHeight;
   GLfloat m_fU0, m_fU1, m_fV0, m_fV1;
   GLenum m_Format;          // RVB, RVBA, Luminance, Luminance Alpha

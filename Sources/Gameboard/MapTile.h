@@ -23,11 +23,11 @@
 #define MASK_CORNER_SW      64
 #define MASK_CORNER_NW      128
 
-#define STRING_FOOD         L"food"
-#define STRING_PROD         L"production"
+#define STRING_FOOD         "food"
+#define STRING_PROD         "production"
 
 #define TERRAIN_NAMES       { "unset", "plain", "forest", "mountain", "toundra", "desert", "sea" }
-#define LTERRAIN_NAMES      { L"unset", L"plain", L"forest", L"mountain", L"toundra", L"desert", L"sea" }
+#define LTERRAIN_NAMES      { "unset", "plain", "forest", "mountain", "toundra", "desert", "sea" }
 
 class MapObject;
 class SpecialTile;
@@ -45,7 +45,7 @@ public:
   void initGraphics(Geometry * pTileGeo, DisplayEngine * pDisplay);
   void resetTexture(DisplayEngine * pDisplay);
   void display(CoordsMap mapPos);
-  wchar_t * getInfo(wchar_t * sBuf, int iSize);
+  char * getInfo(char * sBuf, int iSize);
   int getTexture() { return m_iTexture; };
   MapObject * getFirstMapObject(u32 uType = GOTYPE_MAPOBJECT, int _it = 0);
   MapObject * getNextMapObject(u32 uType = GOTYPE_MAPOBJECT, int _it = 0);

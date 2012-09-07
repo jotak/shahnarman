@@ -29,20 +29,20 @@
 
 extern u8 g_uLuaSelectTargetType;
 extern u32 g_uLuaSelectConstraints;
-extern wchar_t g_sLuaSelectCallback[128];
+extern char g_sLuaSelectCallback[128];
 extern bool g_bLuaSelectOnResolve;
 extern u32 g_uLuaCurrentObjectType;
 extern bool g_bLuaEvaluationMode;
 extern lua_State * g_pLuaStateForTarget;
 
-extern bool setValidFor(u32 uTypes, const wchar_t * sFuncName);
-extern Server * checkServerResolving(const wchar_t * sFuncName);
+extern bool setValidFor(u32 uTypes, const char * sFuncName);
+extern Server * checkServerResolving(const char * sFuncName);
 extern Map * getServerOrLocalMap();
 extern PlayerManagerAbstract * getServerOrLocalPlayerManager();
 extern Player * getServerOrLocalPlayer(u8 uId);
-extern bool checkNumberOfParams(lua_State * pState, int iExpected, const wchar_t * sFuncName);
-extern int checkNumberOfParams(lua_State * pState, int iMinExpected, int iMaxExpected, const wchar_t * sFuncName);
-extern bool readTargetData(const char * sType, const char * sConstraints, const char * sCallback, const wchar_t * sFuncName);
+extern bool checkNumberOfParams(lua_State * pState, int iExpected, const char * sFuncName);
+extern int checkNumberOfParams(lua_State * pState, int iMinExpected, int iMaxExpected, const char * sFuncName);
+extern bool readTargetData(const char * sType, const char * sConstraints, const char * sCallback, const char * sFuncName);
 extern bool checkCustomConstraints(CoordsMap mp, BaseObject * pObj, u8 uType);
 extern bool checkRange(Player * pCaster, Unit * pUnit, CoordsMap mp);
 extern bool checkTileConstraints(CoordsMap mp);

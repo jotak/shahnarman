@@ -17,8 +17,8 @@ class Artifact;
 class ProgressionData
 {
 public:
-  wchar_t sTreeName[NAME_MAX_CHARS];
-  wchar_t sElements[NB_PROGRESSION_LEVELS][NAME_MAX_CHARS];
+  char sTreeName[NAME_MAX_CHARS];
+  char sElements[NB_PROGRESSION_LEVELS][NAME_MAX_CHARS];
 };
 
 class AvatarData : public UnitData
@@ -28,7 +28,7 @@ public:
   {
   public:
     s8 iFame;
-    wchar_t sEthnicity[NAME_MAX_CHARS];
+    char sEthnicity[NAME_MAX_CHARS];
   };
   AvatarData();
   ~AvatarData();
@@ -41,14 +41,14 @@ public:
   u16 getPotentialLevel();
   u16 getRealLevel();
   u16 getNextLevelXP();
-  static void getBanner(u8 uBanner, wchar_t * sBuf, int iBufSize);
-  void getBanner(wchar_t * sBuf, int iBufSize);
+  static void getBanner(u8 uBanner, char * sBuf, int iBufSize);
+  void getBanner(char * sBuf, int iBufSize);
 
   u16 m_uXP;
   ProgressionData m_pProgression[NB_PROGRESSION_TREES];
   ObjectList * m_pAllFames;
-  wchar_t m_sCustomName[NAME_MAX_CHARS];
-  wchar_t m_sCustomDescription[CUSTOMDESC_MAX_CHARS];
+  char m_sCustomName[NAME_MAX_CHARS];
+  char m_sCustomDescription[CUSTOMDESC_MAX_CHARS];
   bool m_bLoaded;
   Profile * m_pOwner;
   u8 m_uBanner;

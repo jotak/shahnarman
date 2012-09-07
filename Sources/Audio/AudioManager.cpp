@@ -31,7 +31,7 @@ AudioManager::AudioManager()
   m_pOggStream = NULL;
   for (int i = 0; i < NB_MUSICS; i++)
   {
-    wsafecpy(m_sAllMusicFiles[i], MAX_PATH, L"");
+    wsafecpy(m_sAllMusicFiles[i], MAX_PATH, "");
     m_iChainedMusics[i] = -1;
   }
   for (int i = 0; i < NB_SOUNDS; i++)
@@ -77,13 +77,13 @@ void AudioManager::Init(LocalClient * pLocalClient)
   m_pDevice = alcOpenDevice(NULL);  // use default system device
   if (m_pDevice == NULL)
   {
-    m_pDebug->notifyErrorMessage(L"Error in AudioManager: can't initialize device");
+    m_pDebug->notifyErrorMessage("Error in AudioManager: can't initialize device");
     return;
   }
   m_pContext = alcCreateContext(m_pDevice, NULL);
   if (m_pContext == NULL)
   {
-    m_pDebug->notifyErrorMessage(L"Error in AudioManager: can't initialize context");
+    m_pDebug->notifyErrorMessage("Error in AudioManager: can't initialize context");
     return;
   }
   alcMakeContextCurrent(m_pContext);
@@ -99,9 +99,9 @@ void AudioManager::Init(LocalClient * pLocalClient)
 // -----------------------------------------------------------------
 void AudioManager::initMusicFiles()
 {
-  wsafecpy(m_sAllMusicFiles[MUSIC_INTRO], MAX_PATH, L"LMK-Prologue");
-  wsafecpy(m_sAllMusicFiles[MUSIC_INGAME1], MAX_PATH, L"LMK-LaSerenissima");
-  wsafecpy(m_sAllMusicFiles[MUSIC_INGAME2], MAX_PATH, L"LMK-TheMummersDance");
+  wsafecpy(m_sAllMusicFiles[MUSIC_INTRO], MAX_PATH, "LMK-Prologue");
+  wsafecpy(m_sAllMusicFiles[MUSIC_INGAME1], MAX_PATH, "LMK-LaSerenissima");
+  wsafecpy(m_sAllMusicFiles[MUSIC_INGAME2], MAX_PATH, "LMK-TheMummersDance");
   m_iChainedMusics[MUSIC_INGAME1] = MUSIC_INGAME2;
   m_iChainedMusics[MUSIC_INGAME2] = MUSIC_INGAME1;
 }
@@ -111,39 +111,39 @@ void AudioManager::initMusicFiles()
 // -----------------------------------------------------------------
 void AudioManager::initSoundData()
 {
-  readOggSound(L"click", SOUND_CLICK);
-  readOggSound(L"cast", SOUND_CAST_SPELL);
-  readOggSound(L"cancelspell", SOUND_CANCEL_SPELL);
-  readOggSound(L"mapclick", SOUND_MAP_CLICK);
+  readOggSound("click", SOUND_CLICK);
+  readOggSound("cast", SOUND_CAST_SPELL);
+  readOggSound("cancelspell", SOUND_CANCEL_SPELL);
+  readOggSound("mapclick", SOUND_MAP_CLICK);
 }
 
 // -----------------------------------------------------------------
 // Name : readOggSound
 // -----------------------------------------------------------------
-bool AudioManager::readOggSound(const wchar_t * sName, int iSound)
+bool AudioManager::readOggSound(const char * sName, int iSound)
 {
   // Decode Ogg file
   // Open for binary reading
-  wchar_t sFilePath[MAX_PATH] = GAME_SOUNDS_PATH;
+  char sFilePath[MAX_PATH] = GAME_SOUNDS_PATH;
   wsafecat(sFilePath, MAX_PATH, sName);
-  wsafecat(sFilePath, MAX_PATH, L".ogg");
+  wsafecat(sFilePath, MAX_PATH, ".ogg");
   FILE * f = NULL;
-  errno_t err = wfopen(&f, sFilePath, L"rb");
+  errno_t err = fopen_s(&f, sFilePath, "rb");
   if (err != 0)
   {
     switch (err)
     {
     case ENOENT:
       {
-        wchar_t sError[1024];
-        swprintf(sError, 1024, L"Can't read music, file %s not found", sName);
+        char sError[1024];
+        snprintf(sError, 1024, "Can't read music, file %s not found", sName);
         m_pDebug->notifyErrorMessage(sError);
         return false;
       }
     default:
       {
-        wchar_t sError[1024];
-        swprintf(sError, 1024, L"Can't read music, error on reading (%s)", sName);
+        char sError[1024];
+        snprintf(sError, 1024, "Can't read music, error on reading (%s)", sName);
         m_pDebug->notifyErrorMessage(sError);
         return false;
       }
@@ -159,8 +159,8 @@ bool AudioManager::readOggSound(const wchar_t * sName, int iSound)
   if (result < 0)
   {
     fclose(f);
-    wchar_t sError[1024];
-    swprintf(sError, 1024, L"Can't read music file %s, can't read ogg", sName);
+    char sError[1024];
+    snprintf(sError, 1024, "Can't read music file %s, can't read ogg", sName);
     m_pDebug->notifyErrorMessage(sError);
     return false;
   }
@@ -222,8 +222,8 @@ bool AudioManager::readOggSound(const wchar_t * sName, int iSound)
   {
     if (totalBuffer != NULL)
       delete[] totalBuffer;
-    wchar_t sError[1024];
-    swprintf(sError, 1024, L"Can't read content of ogg file %s", sName);
+    char sError[1024];
+    snprintf(sError, 1024, "Can't read content of ogg file %s", sName);
     m_pDebug->notifyErrorMessage(sError);
     return false;
   }
@@ -306,26 +306,26 @@ void AudioManager::playMusic(int iMusicId)
 
   // Decode Ogg file
   // Open for binary reading
-  wchar_t sFilePath[MAX_PATH] = GAME_MUSICS_PATH;
+  char sFilePath[MAX_PATH] = GAME_MUSICS_PATH;
   wsafecat(sFilePath, MAX_PATH, m_sAllMusicFiles[iMusicId]);
-  wsafecat(sFilePath, MAX_PATH, L".ogg");
+  wsafecat(sFilePath, MAX_PATH, ".ogg");
   FILE * f = NULL;
-  errno_t err = wfopen(&f, sFilePath, L"rb");
+  errno_t err = fopen_s(&f, sFilePath, "rb");
   if (err != 0)
   {
     switch (err)
     {
     case ENOENT:
       {
-        wchar_t sError[1024];
-        swprintf(sError, 1024, L"Can't read music, file %s not found", m_sAllMusicFiles[iMusicId]);
+        char sError[1024];
+        snprintf(sError, 1024, "Can't read music, file %s not found", m_sAllMusicFiles[iMusicId]);
         m_pDebug->notifyErrorMessage(sError);
         return;
       }
     default:
       {
-        wchar_t sError[1024];
-        swprintf(sError, 1024, L"Can't read music, error on reading (%s)", m_sAllMusicFiles[iMusicId]);
+        char sError[1024];
+        snprintf(sError, 1024, "Can't read music, error on reading (%s)", m_sAllMusicFiles[iMusicId]);
         m_pDebug->notifyErrorMessage(sError);
         return;
       }
@@ -347,8 +347,8 @@ void AudioManager::playMusic(int iMusicId)
   if (result < 0)
   {
     fclose(f);
-    wchar_t sError[1024];
-    swprintf(sError, 1024, L"Can't read music file %s, can't read ogg", m_sAllMusicFiles[iMusicId]);
+    char sError[1024];
+    snprintf(sError, 1024, "Can't read music file %s, can't read ogg", m_sAllMusicFiles[iMusicId]);
     m_pDebug->notifyErrorMessage(sError);
     return;
   }
@@ -431,7 +431,7 @@ bool AudioManager::stream(ALuint buffer)
     {
       if (result < 0)
       {
-        m_pDebug->notifyErrorMessage(L"Can't read music stream");
+        m_pDebug->notifyErrorMessage("Can't read music stream");
         return false;
       }
       else

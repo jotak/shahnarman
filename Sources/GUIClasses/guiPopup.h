@@ -31,18 +31,18 @@ public:
   void update(double delta);
 
   // Member access
-  guiEditBox * getEditBox() { return (guiEditBox*) m_pDoc->getComponent(L"DefaultEditBox"); };
+  guiEditBox * getEditBox() { return (guiEditBox*) m_pDoc->getComponent("DefaultEditBox"); };
   guiComponent * getClickedComponent() { return ((guiPopupDocument*)getDocument())->getClickedComponent(); };
   guiButton * getButton(int iButton);
 
   // Static default constructors
   static guiPopup * createEmptyPopup(DisplayEngine * pDisplay);
-  static guiPopup * createYesNoPopup(const wchar_t * sText, DisplayEngine * pDisplay);
-  static guiPopup * createOkAutoclosePopup(const wchar_t * sText, DisplayEngine * pDisplay);
-  static guiPopup * createOkCancelPopup(const wchar_t * sText, DisplayEngine * pDisplay);
-  static guiPopup * createTextAndMultiButtonsPopup(const wchar_t * sText, int iNbButtons, int iWidth, DisplayEngine * pDisplay);
-  static guiPopup * createTextInputPopup(const wchar_t * sText, int iNbLines, bool bMultiLines, int iBoxWidth, InputEngine * pInput, DisplayEngine * pDisplay);
-  static guiPopup * createTimedPopup(const wchar_t * sText, double fTimer, int iWidth, DisplayEngine * pDisplay);
+  static guiPopup * createYesNoPopup(const char * sText, DisplayEngine * pDisplay);
+  static guiPopup * createOkAutoclosePopup(const char * sText, DisplayEngine * pDisplay);
+  static guiPopup * createOkCancelPopup(const char * sText, DisplayEngine * pDisplay);
+  static guiPopup * createTextAndMultiButtonsPopup(const char * sText, int iNbButtons, int iWidth, DisplayEngine * pDisplay);
+  static guiPopup * createTextInputPopup(const char * sText, int iNbLines, bool bMultiLines, int iBoxWidth, InputEngine * pInput, DisplayEngine * pDisplay);
+  static guiPopup * createTimedPopup(const char * sText, double fTimer, int iWidth, DisplayEngine * pDisplay);
 
 protected:
   guiPopup(); // constructor is private ; use static constructor functions instead, or write subclass

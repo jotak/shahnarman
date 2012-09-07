@@ -29,16 +29,16 @@ Font::Font()
 // -----------------------------------------------------------------
 // Name : load
 // -----------------------------------------------------------------
-s16 Font::load(const wchar_t * sFontName, TextureEngine * pTexEngine)
+s16 Font::load(const char * sFontName, TextureEngine * pTexEngine)
 {
     wsafecpy(m_sFontName, 64, sFontName);
 
-    wchar_t descFile[MAX_PATH] = LDATA_PATH;
-    wsafecat(descFile, MAX_PATH, L"fonts/");
+    char descFile[MAX_PATH] = DATA_PATH;
+    wsafecat(descFile, MAX_PATH, "fonts/");
     wsafecat(descFile, MAX_PATH, sFontName);
-    wsafecat(descFile, MAX_PATH, L".fnt");
+    wsafecat(descFile, MAX_PATH, ".fnt");
     FILE * f = NULL;
-    errno_t err = wfopen(&f, descFile, L"r");
+    errno_t err = fopen_s(&f, descFile, "r");
     if (err != 0)
     {
         switch (err)
@@ -50,9 +50,9 @@ s16 Font::load(const wchar_t * sFontName, TextureEngine * pTexEngine)
         }
     }
 
-    wchar_t sTitle[64];
-    wchar_t sKey[64];
-    wchar_t sValue[64];
+    char sTitle[64];
+    char sKey[64];
+    char sValue[64];
     bool bGuillemets;
     int curchar = 0;
     while (!feof(f))
@@ -62,13 +62,13 @@ s16 Font::load(const wchar_t * sFontName, TextureEngine * pTexEngine)
         {
             c = fgetwc(f);
         }
-        while (c == L' ' || c == L'\t' || c == L'\n' || c == L'\r');
+        while (c == ' ' || c == '\t' || c == '\n' || c == '\r');
         do
         {
-            sTitle[curchar++] = (wchar_t)c;
+            sTitle[curchar++] = (char)c;
             c = fgetwc(f);
         }
-        while (c != L' ' && c != L'\t' && c != L'\n' && c != L'\r' && !feof(f));
+        while (c != ' ' && c != '\t' && c != '\n' && c != '\r' && !feof(f));
         sTitle[curchar] = '\0';
         curchar = 0;
         if (feof(f))
@@ -77,28 +77,28 @@ s16 Font::load(const wchar_t * sFontName, TextureEngine * pTexEngine)
         {
             c = fgetwc(f);
         }
-        while (c == L' ' || c == L'\t');
-        while (c != L'\n' && c != L'\r')
+        while (c == ' ' || c == '\t');
+        while (c != '\n' && c != '\r')
         {
             do
             {
-                sKey[curchar++] = (wchar_t)c;
+                sKey[curchar++] = (char)c;
                 c = fgetwc(f);
             }
-            while (c != L'=');
+            while (c != '=');
             sKey[curchar] = '\0';
             curchar = 0;
             c = fgetwc(f);
-            if (c == L'\"')
+            if (c == '\"')
             {
                 bGuillemets = true;
                 c = fgetwc(f);
             }
             else
                 bGuillemets = false;
-            while ((bGuillemets && c != L'\"') || (!bGuillemets && c != L' ' && c != L'\t' && c != L'\n' && c != L'\r'))
+            while ((bGuillemets && c != '\"') || (!bGuillemets && c != ' ' && c != '\t' && c != '\n' && c != '\r'))
             {
-                sValue[curchar++] = (wchar_t)c;
+                sValue[curchar++] = (char)c;
                 c = fgetwc(f);
             }
             sValue[curchar] = '\0';
@@ -106,13 +106,13 @@ s16 Font::load(const wchar_t * sFontName, TextureEngine * pTexEngine)
             storeData(sTitle, sKey, sValue);
             if (bGuillemets)
                 c = fgetwc(f);
-            while (c == L' ' || c == L'\t')
+            while (c == ' ' || c == '\t')
                 c = fgetwc(f);
         }
     }
     fclose(f);
     wsafecpy(descFile, MAX_PATH, sFontName);
-//  wsafecat(descFile, MAX_PATH, L"");
+//  wsafecat(descFile, MAX_PATH, "");
     m_iTexId = pTexEngine->loadTexture(descFile);
     m_pTexEngine = pTexEngine;
     return FNT_OK;
@@ -121,48 +121,41 @@ s16 Font::load(const wchar_t * sFontName, TextureEngine * pTexEngine)
 // -----------------------------------------------------------------
 // Name : storeData
 // -----------------------------------------------------------------
-void Font::storeData(wchar_t * sTitle, wchar_t * sKey, wchar_t * sValue)
+void Font::storeData(char * sTitle, char * sKey, char * sValue)
 {
-    int iVal;
-    if (wcscmp(sTitle, L"common") == 0 && wcscmp(sKey, L"lineHeight") == 0)
-    {
-        swscanf(sValue, L"%d", &iVal);
-        m_uFontHeight = (u8) iVal;
-    }
-    else if (wcscmp(sTitle, L"char") == 0 && wcscmp(sKey, L"id") == 0)
-    {
-        swscanf(sValue, L"%d", &iVal);
-        m_AllChars[m_iNbDescriptor++].c = (wint_t)iVal;
-    }
-    else if (wcscmp(sTitle, L"char") == 0 && wcscmp(sKey, L"x") == 0)
-        swscanf(sValue, L"%d", &(m_AllChars[m_iNbDescriptor-1].x));
-    else if (wcscmp(sTitle, L"char") == 0 && wcscmp(sKey, L"y") == 0)
-        swscanf(sValue, L"%d", &(m_AllChars[m_iNbDescriptor-1].y));
-    else if (wcscmp(sTitle, L"char") == 0 && wcscmp(sKey, L"width") == 0)
-        swscanf(sValue, L"%d", &(m_AllChars[m_iNbDescriptor-1].width));
-    else if (wcscmp(sTitle, L"char") == 0 && wcscmp(sKey, L"height") == 0)
-        swscanf(sValue, L"%d", &(m_AllChars[m_iNbDescriptor-1].height));
-    else if (wcscmp(sTitle, L"char") == 0 && wcscmp(sKey, L"xoffset") == 0)
-        swscanf(sValue, L"%d", &(m_AllChars[m_iNbDescriptor-1].xoffset));
-    else if (wcscmp(sTitle, L"char") == 0 && wcscmp(sKey, L"yoffset") == 0)
-        swscanf(sValue, L"%d", &(m_AllChars[m_iNbDescriptor-1].yoffset));
-    else if (wcscmp(sTitle, L"char") == 0 && wcscmp(sKey, L"xadvance") == 0)
-        swscanf(sValue, L"%d", &(m_AllChars[m_iNbDescriptor-1].xadvance));
+    if (strcmp(sTitle, "common") == 0 && strcmp(sKey, "lineHeight") == 0)
+        m_uFontHeight = (u8) atoi(sValue);
+    else if (strcmp(sTitle, "char") == 0 && strcmp(sKey, "id") == 0)
+        m_AllChars[m_iNbDescriptor++].c = (wint_t) atoi(sValue);
+    else if (strcmp(sTitle, "char") == 0 && strcmp(sKey, "x") == 0)
+        m_AllChars[m_iNbDescriptor-1].x = atoi(sValue);
+    else if (strcmp(sTitle, "char") == 0 && strcmp(sKey, "y") == 0)
+        m_AllChars[m_iNbDescriptor-1].y = atoi(sValue);
+    else if (strcmp(sTitle, "char") == 0 && strcmp(sKey, "width") == 0)
+        m_AllChars[m_iNbDescriptor-1].width = atoi(sValue);
+    else if (strcmp(sTitle, "char") == 0 && strcmp(sKey, "height") == 0)
+        m_AllChars[m_iNbDescriptor-1].height = atoi(sValue);
+    else if (strcmp(sTitle, "char") == 0 && strcmp(sKey, "xoffset") == 0)
+        m_AllChars[m_iNbDescriptor-1].xoffset = atoi(sValue);
+    else if (strcmp(sTitle, "char") == 0 && strcmp(sKey, "yoffset") == 0)
+        m_AllChars[m_iNbDescriptor-1].yoffset = atoi(sValue);
+    else if (strcmp(sTitle, "char") == 0 && strcmp(sKey, "xadvance") == 0)
+        m_AllChars[m_iNbDescriptor-1].xadvance = atoi(sValue);
 }
 
 // ------------------------------------------------------------------
 // Name : getStringLength
 // ------------------------------------------------------------------
-int Font::getStringLength(const wchar_t * sText)
+int Font::getStringLength(const char * sText)
 {
     assert(m_pTexEngine != NULL);
     assert(m_iTexId >= 0);
     int iWidth = 0;
     int iMaxWidth = 0;
-    int iLength = (int) wcslen(sText);
+    int iLength = (int) strlen(sText);
     for (int i = 0; i < iLength; i++)
     {
-        if (sText[i] == L'\n')
+        if (sText[i] == '\n')
         {
             if (iWidth > iMaxWidth)
                 iMaxWidth = iWidth;
@@ -183,7 +176,7 @@ int Font::getStringLength(const wchar_t * sText)
 // ------------------------------------------------------------------
 // Name : findCharDescriptor
 // ------------------------------------------------------------------
-CharDescriptor * Font::findCharDescriptor(wchar_t c, bool checkAcute)
+CharDescriptor * Font::findCharDescriptor(char c, bool checkAcute)
 {
     if (checkAcute)
         m_pLastAcute = NULL;
@@ -213,14 +206,14 @@ CharDescriptor * Font::findCharDescriptor(wchar_t c, bool checkAcute)
 // ------------------------------------------------------------------
 // Name : putStringInBox
 // ------------------------------------------------------------------
-int Font::putStringInBox(wchar_t * sText, int iBoxWidth)
+int Font::putStringInBox(char * sText, int iBoxWidth)
 {
     assert(m_pTexEngine != NULL);
     assert(m_iTexId >= 0);
     int iWidth = 0;
     int iHeight = m_uFontHeight;
-    int iLength = (int) wcslen(sText);
-    wchar_t * sOldText = new wchar_t[iLength+1];
+    int iLength = (int) strlen(sText);
+    char * sOldText = new char[iLength+1];
     wsafecpy(sOldText, iLength+1, sText);
     int iNew = 0;
     int iLastSpace = -1;
@@ -228,7 +221,7 @@ int Font::putStringInBox(wchar_t * sText, int iBoxWidth)
     for (int i = 0; i < iLength; i++)
     {
         sText[iNew] = sOldText[i];
-        if (sOldText[i] == L'\n')
+        if (sOldText[i] == '\n')
         {
             iHeight += m_uFontHeight;
             iWidth = 0;
@@ -243,7 +236,7 @@ int Font::putStringInBox(wchar_t * sText, int iBoxWidth)
             continue;
         iWidth += charDesc->xadvance;
         iWidthSinceLastSpace += charDesc->xadvance;
-        if (sOldText[i] == L' ' || sOldText[i] == L'\t')
+        if (sOldText[i] == ' ' || sOldText[i] == '\t')
         {
             iLastSpace = iNew;
             iWidthSinceLastSpace = 0;
@@ -253,9 +246,9 @@ int Font::putStringInBox(wchar_t * sText, int iBoxWidth)
         if (iWidth > iBoxWidth)
         {
             if (iLastSpace >= 0)
-                sText[iLastSpace] = L'\n';
+                sText[iLastSpace] = '\n';
             else
-                sText[iNew++] = L'\n';
+                sText[iNew++] = '\n';
             iHeight += m_uFontHeight;
             iWidth = iWidthSinceLastSpace;
             iWidthSinceLastSpace = 0;
@@ -269,17 +262,17 @@ int Font::putStringInBox(wchar_t * sText, int iBoxWidth)
 // ------------------------------------------------------------------
 // Name : getCharacterPosition
 // ------------------------------------------------------------------
-CoordsScreen Font::getCharacterPosition(int iPos, const wchar_t * sText)
+CoordsScreen Font::getCharacterPosition(int iPos, const char * sText)
 {
     assert(m_pTexEngine != NULL);
     assert(m_iTexId >= 0);
     CoordsScreen cs(0,0);
-    int iLength = (int) wcslen(sText);
+    int iLength = (int) strlen(sText);
     for (int i = 0; i < iPos; i++)
     {
         if (i >= iLength)
             break;
-        if (sText[i] == L'\n')
+        if (sText[i] == '\n')
         {
             cs.x = 0;
             cs.y += m_uFontHeight;
@@ -296,15 +289,15 @@ CoordsScreen Font::getCharacterPosition(int iPos, const wchar_t * sText)
 // ------------------------------------------------------------------
 // Name : getCharacterPosition
 // ------------------------------------------------------------------
-int Font::getCharacterPosition(CoordsScreen cs, const wchar_t * sText)
+int Font::getCharacterPosition(CoordsScreen cs, const char * sText)
 {
     assert(m_pTexEngine != NULL);
     assert(m_iTexId >= 0);
     CoordsScreen cs2(0,m_uFontHeight);
-    int iLength = (int) wcslen(sText);
+    int iLength = (int) strlen(sText);
     for (int i = 0; i < iLength; i++)
     {
-        if (sText[i] == L'\n')
+        if (sText[i] == '\n')
         {
             if (cs.y <= cs2.y)  // clicked on previous line
                 return i;
@@ -335,70 +328,70 @@ void Font::initUnicodeTables()
 //wch_hash Font::m_hmUnicodeReplacementAcutesTable;
 
 // See http://fr.wikipedia.org/wiki/Table_des_caract%C3%A8res_Unicode_%280000-0FFF%29
-    m_hmUnicodeReplacementTable[L'\u00C0'] = L'A';
-    Font::m_hmUnicodeReplacementTable[L'\u00C1'] = L'A';
-    Font::m_hmUnicodeReplacementTable[L'\u00C2'] = L'A';
-    Font::m_hmUnicodeReplacementTable[L'\u00C3'] = L'A';
-    Font::m_hmUnicodeReplacementTable[L'\u00C4'] = L'A';
-    Font::m_hmUnicodeReplacementTable[L'\u00C5'] = L'A';
-    Font::m_hmUnicodeReplacementTable[L'\u00C6'] = L'A';
-    Font::m_hmUnicodeReplacementTable[L'\u00C7'] = L'C';
-    Font::m_hmUnicodeReplacementTable[L'\u00C8'] = L'E';
-    Font::m_hmUnicodeReplacementTable[L'\u00C9'] = L'E';
-    Font::m_hmUnicodeReplacementTable[L'\u00CA'] = L'E';
-    Font::m_hmUnicodeReplacementTable[L'\u00CB'] = L'E';
-    Font::m_hmUnicodeReplacementTable[L'\u00CC'] = L'I';
-    Font::m_hmUnicodeReplacementTable[L'\u00CD'] = L'I';
-    Font::m_hmUnicodeReplacementTable[L'\u00CE'] = L'I';
-    Font::m_hmUnicodeReplacementTable[L'\u00CF'] = L'I';
-    Font::m_hmUnicodeReplacementTable[L'\u00D0'] = L'D';
-    Font::m_hmUnicodeReplacementTable[L'\u00D1'] = L'N';
-    Font::m_hmUnicodeReplacementTable[L'\u00D2'] = L'O';
-    Font::m_hmUnicodeReplacementTable[L'\u00D3'] = L'O';
-    Font::m_hmUnicodeReplacementTable[L'\u00D4'] = L'O';
-    Font::m_hmUnicodeReplacementTable[L'\u00D5'] = L'O';
-    Font::m_hmUnicodeReplacementTable[L'\u00D6'] = L'O';
-    Font::m_hmUnicodeReplacementTable[L'\u00D7'] = L'X';
-    Font::m_hmUnicodeReplacementTable[L'\u00D8'] = L'O';
-    Font::m_hmUnicodeReplacementTable[L'\u00D9'] = L'U';
-    Font::m_hmUnicodeReplacementTable[L'\u00DA'] = L'U';
-    Font::m_hmUnicodeReplacementTable[L'\u00DB'] = L'U';
-    Font::m_hmUnicodeReplacementTable[L'\u00DC'] = L'U';
-    Font::m_hmUnicodeReplacementTable[L'\u00DD'] = L'Y';
-    Font::m_hmUnicodeReplacementTable[L'\u00DE'] = L'D';
-    Font::m_hmUnicodeReplacementTable[L'\u00DF'] = L's';
-    Font::m_hmUnicodeReplacementTable[L'\u00E0'] = L'a';
-    Font::m_hmUnicodeReplacementTable[L'\u00E1'] = L'a';
-    Font::m_hmUnicodeReplacementTable[L'\u00E2'] = L'a';
-    Font::m_hmUnicodeReplacementTable[L'\u00E3'] = L'a';
-    Font::m_hmUnicodeReplacementTable[L'\u00E4'] = L'a';
-    Font::m_hmUnicodeReplacementTable[L'\u00E5'] = L'a';
-    Font::m_hmUnicodeReplacementTable[L'\u00E6'] = L'a';
-    Font::m_hmUnicodeReplacementTable[L'\u00E7'] = L'c';
-    Font::m_hmUnicodeReplacementTable[L'\u00E8'] = L'e';
-    Font::m_hmUnicodeReplacementTable[L'\u00E9'] = L'e';
-    Font::m_hmUnicodeReplacementTable[L'\u00EA'] = L'e';
-    Font::m_hmUnicodeReplacementTable[L'\u00EB'] = L'e';
-    Font::m_hmUnicodeReplacementTable[L'\u00EC'] = L'i';
-    Font::m_hmUnicodeReplacementTable[L'\u00ED'] = L'i';
-    Font::m_hmUnicodeReplacementTable[L'\u00EE'] = L'i';
-    Font::m_hmUnicodeReplacementTable[L'\u00EF'] = L'i';
-    Font::m_hmUnicodeReplacementTable[L'\u00F0'] = L'o';
-    Font::m_hmUnicodeReplacementTable[L'\u00F1'] = L'n';
-    Font::m_hmUnicodeReplacementTable[L'\u00F2'] = L'o';
-    Font::m_hmUnicodeReplacementTable[L'\u00F3'] = L'o';
-    Font::m_hmUnicodeReplacementTable[L'\u00F4'] = L'o';
-    Font::m_hmUnicodeReplacementTable[L'\u00F5'] = L'o';
-    Font::m_hmUnicodeReplacementTable[L'\u00F6'] = L'o';
-    Font::m_hmUnicodeReplacementTable[L'\u00F7'] = L'/';
-    Font::m_hmUnicodeReplacementTable[L'\u00F8'] = L'o';
-    Font::m_hmUnicodeReplacementTable[L'\u00F9'] = L'u';
-    Font::m_hmUnicodeReplacementTable[L'\u00FA'] = L'u';
-    Font::m_hmUnicodeReplacementTable[L'\u00FB'] = L'u';
-    Font::m_hmUnicodeReplacementTable[L'\u00FC'] = L'u';
-    Font::m_hmUnicodeReplacementTable[L'\u00FD'] = L'y';
-    Font::m_hmUnicodeReplacementTable[L'\u00FE'] = L'b';
-    Font::m_hmUnicodeReplacementTable[L'\u00FF'] = L'y';
+    Font::m_hmUnicodeReplacementTable[L'\u00C0'] = 'A';
+    Font::m_hmUnicodeReplacementTable[L'\u00C1'] = 'A';
+    Font::m_hmUnicodeReplacementTable[L'\u00C2'] = 'A';
+    Font::m_hmUnicodeReplacementTable[L'\u00C3'] = 'A';
+    Font::m_hmUnicodeReplacementTable[L'\u00C4'] = 'A';
+    Font::m_hmUnicodeReplacementTable[L'\u00C5'] = 'A';
+    Font::m_hmUnicodeReplacementTable[L'\u00C6'] = 'A';
+    Font::m_hmUnicodeReplacementTable[L'\u00C7'] = 'C';
+    Font::m_hmUnicodeReplacementTable[L'\u00C8'] = 'E';
+    Font::m_hmUnicodeReplacementTable[L'\u00C9'] = 'E';
+    Font::m_hmUnicodeReplacementTable[L'\u00CA'] = 'E';
+    Font::m_hmUnicodeReplacementTable[L'\u00CB'] = 'E';
+    Font::m_hmUnicodeReplacementTable[L'\u00CC'] = 'I';
+    Font::m_hmUnicodeReplacementTable[L'\u00CD'] = 'I';
+    Font::m_hmUnicodeReplacementTable[L'\u00CE'] = 'I';
+    Font::m_hmUnicodeReplacementTable[L'\u00CF'] = 'I';
+    Font::m_hmUnicodeReplacementTable[L'\u00D0'] = 'D';
+    Font::m_hmUnicodeReplacementTable[L'\u00D1'] = 'N';
+    Font::m_hmUnicodeReplacementTable[L'\u00D2'] = 'O';
+    Font::m_hmUnicodeReplacementTable[L'\u00D3'] = 'O';
+    Font::m_hmUnicodeReplacementTable[L'\u00D4'] = 'O';
+    Font::m_hmUnicodeReplacementTable[L'\u00D5'] = 'O';
+    Font::m_hmUnicodeReplacementTable[L'\u00D6'] = 'O';
+    Font::m_hmUnicodeReplacementTable[L'\u00D7'] = 'X';
+    Font::m_hmUnicodeReplacementTable[L'\u00D8'] = 'O';
+    Font::m_hmUnicodeReplacementTable[L'\u00D9'] = 'U';
+    Font::m_hmUnicodeReplacementTable[L'\u00DA'] = 'U';
+    Font::m_hmUnicodeReplacementTable[L'\u00DB'] = 'U';
+    Font::m_hmUnicodeReplacementTable[L'\u00DC'] = 'U';
+    Font::m_hmUnicodeReplacementTable[L'\u00DD'] = 'Y';
+    Font::m_hmUnicodeReplacementTable[L'\u00DE'] = 'D';
+    Font::m_hmUnicodeReplacementTable[L'\u00DF'] = 's';
+    Font::m_hmUnicodeReplacementTable[L'\u00E0'] = 'a';
+    Font::m_hmUnicodeReplacementTable[L'\u00E1'] = 'a';
+    Font::m_hmUnicodeReplacementTable[L'\u00E2'] = 'a';
+    Font::m_hmUnicodeReplacementTable[L'\u00E3'] = 'a';
+    Font::m_hmUnicodeReplacementTable[L'\u00E4'] = 'a';
+    Font::m_hmUnicodeReplacementTable[L'\u00E5'] = 'a';
+    Font::m_hmUnicodeReplacementTable[L'\u00E6'] = 'a';
+    Font::m_hmUnicodeReplacementTable[L'\u00E7'] = 'c';
+    Font::m_hmUnicodeReplacementTable[L'\u00E8'] = 'e';
+    Font::m_hmUnicodeReplacementTable[L'\u00E9'] = 'e';
+    Font::m_hmUnicodeReplacementTable[L'\u00EA'] = 'e';
+    Font::m_hmUnicodeReplacementTable[L'\u00EB'] = 'e';
+    Font::m_hmUnicodeReplacementTable[L'\u00EC'] = 'i';
+    Font::m_hmUnicodeReplacementTable[L'\u00ED'] = 'i';
+    Font::m_hmUnicodeReplacementTable[L'\u00EE'] = 'i';
+    Font::m_hmUnicodeReplacementTable[L'\u00EF'] = 'i';
+    Font::m_hmUnicodeReplacementTable[L'\u00F0'] = 'o';
+    Font::m_hmUnicodeReplacementTable[L'\u00F1'] = 'n';
+    Font::m_hmUnicodeReplacementTable[L'\u00F2'] = 'o';
+    Font::m_hmUnicodeReplacementTable[L'\u00F3'] = 'o';
+    Font::m_hmUnicodeReplacementTable[L'\u00F4'] = 'o';
+    Font::m_hmUnicodeReplacementTable[L'\u00F5'] = 'o';
+    Font::m_hmUnicodeReplacementTable[L'\u00F6'] = 'o';
+    Font::m_hmUnicodeReplacementTable[L'\u00F7'] = '/';
+    Font::m_hmUnicodeReplacementTable[L'\u00F8'] = 'o';
+    Font::m_hmUnicodeReplacementTable[L'\u00F9'] = 'u';
+    Font::m_hmUnicodeReplacementTable[L'\u00FA'] = 'u';
+    Font::m_hmUnicodeReplacementTable[L'\u00FB'] = 'u';
+    Font::m_hmUnicodeReplacementTable[L'\u00FC'] = 'u';
+    Font::m_hmUnicodeReplacementTable[L'\u00FD'] = 'y';
+    Font::m_hmUnicodeReplacementTable[L'\u00FE'] = 'b';
+    Font::m_hmUnicodeReplacementTable[L'\u00FF'] = 'y';
 
     Font::m_hmUnicodeReplacementAcutesTable[L'\u00C0'] = L'\u0060';  // `
     Font::m_hmUnicodeReplacementAcutesTable[L'\u00C1'] = 171;

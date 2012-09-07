@@ -99,7 +99,7 @@ public:
   Server(LocalClient * pLocalClient);
   ~Server();
 
-  bool Init(const wchar_t * sGameName, int nbClients, ClientData * clients, MapReader * pMapReader, int iTurnTimer, int iDeckSize);
+  bool Init(const char * sGameName, int nbClients, ClientData * clients, MapReader * pMapReader, int iTurnTimer, int iDeckSize);
   void Update(double delta);
 
   DataFactory * getFactory();
@@ -114,8 +114,8 @@ public:
   bool isResolving();
   void onInitFinished();
   void saveGame();
-  bool loadGame(const wchar_t * sGameName);
-  void sendCustomLogToAll(const wchar_t * sMsgKey, u8 uLevel = 0, const wchar_t * sData = L"", ...);
+  bool loadGame(const char * sGameName);
+  void sendCustomLogToAll(const char * sMsgKey, u8 uLevel = 0, const char * sData = "", ...);
   void gameOver(ObjectList * pTieList);
   bool isGameOver() { return m_bGameOver; };
   void addGarbage(BaseObject * pObj) { m_pGC->addLast(pObj); };
@@ -144,7 +144,7 @@ protected:
   bool m_bGameOver;
 
   // Server parameters
-  wchar_t m_sGameName[64];
+  char m_sGameName[64];
   int m_iMaxDeckSize;
 
   // Permanent map data

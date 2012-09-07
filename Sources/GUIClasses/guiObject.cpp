@@ -24,7 +24,7 @@ guiObject::guiObject() : GraphicObject()
   m_iWidth = 0;
   m_iHeight = 0;
   m_DiffuseColor = F_RGBA_NULL;
-  wsafecpy(m_sTooltip, 128, L"");
+  wsafecpy(m_sTooltip, 128, "");
 }
 
 // -----------------------------------------------------------------
@@ -112,9 +112,9 @@ void guiObject::init(int xPxl, int yPxl, int wPxl, int hPxl)
 // -----------------------------------------------------------------
 void guiObject::registerTextures(TextureEngine * pTexEngine, FontEngine * pFontEngine)
 {
-  m_aiAllFonts[(int)Arabolical_wh_16] = pFontEngine->registerFont(L"Arabolical_16", pTexEngine);
-  m_aiAllFonts[(int)Arabolical_wh_32] = pFontEngine->registerFont(L"Arabolical_32", pTexEngine);
-  m_aiAllFonts[(int)Argos_wh_16] = pFontEngine->registerFont(L"Argos_16", pTexEngine);
-  m_aiAllFonts[(int)Blackchancery_wh_16] = pFontEngine->registerFont(L"BlackChancery_16", pTexEngine);
-  m_aiAllFonts[(int)Bookantiqua_wh_16] = pFontEngine->registerFont(L"BookAntiqua_16", pTexEngine);
+  m_aiAllFonts[(int)Arabolical_wh_16] = pFontEngine->registerFont("Arabolical_16", pTexEngine);
+  m_aiAllFonts[(int)Arabolical_wh_32] = pFontEngine->registerFont("Arabolical_32", pTexEngine);
+  m_aiAllFonts[(int)Argos_wh_16] = pFontEngine->registerFont("Argos_16", pTexEngine);
+  m_aiAllFonts[(int)Blackchancery_wh_16] = pFontEngine->registerFont("BlackChancery_16", pTexEngine);
+  m_aiAllFonts[(int)Bookantiqua_wh_16] = pFontEngine->registerFont("BookAntiqua_16", pTexEngine);
 }

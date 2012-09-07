@@ -6,7 +6,7 @@
 // -----------------------------------------------------------------
 guiComponent::guiComponent() : guiObject()
 {
-  wsafecpy(m_sCpntId, 32, L"");
+  wsafecpy(m_sCpntId, 32, "");
   m_bEnabled = m_bVisible = true;
   m_uHighlight = HIGHLIGHT_TYPE_NONE;
   m_pOwner = NULL;
@@ -23,7 +23,7 @@ guiComponent::~guiComponent()
 // -----------------------------------------------------------------
 // Name : init
 // -----------------------------------------------------------------
-void guiComponent::init(const wchar_t * sCpntId, int xPxl, int yPxl, int wPxl, int hPxl)
+void guiComponent::init(const char * sCpntId, int xPxl, int yPxl, int wPxl, int hPxl)
 {
   guiObject::init(xPxl, yPxl, wPxl, hPxl);
   wsafecpy(m_sCpntId, CPNT_ID_MAX_CHARS, sCpntId);

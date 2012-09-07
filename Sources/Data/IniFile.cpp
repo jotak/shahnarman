@@ -3,11 +3,12 @@
 // -----------------------------------------------------------------
 #include "IniFile.h"
 #include <stdio.h>
+#include <stdlib.h>
 
 // -----------------------------------------------------------------
 // Name : IniFile
 // -----------------------------------------------------------------
-IniFile::IniFile(const wchar_t * sFileName, int iMaxLines)
+IniFile::IniFile(const char * sFileName, int iMaxLines)
 {
   FILE * pFile = NULL;
 
@@ -15,17 +16,17 @@ IniFile::IniFile(const wchar_t * sFileName, int iMaxLines)
   m_sAllValues = NULL;
   m_sAllKeys = NULL;
 
-  if (0 != wfopen(&pFile, sFileName, L"r"))
+  if (0 != fopen_s(&pFile, sFileName, "r"))
     throw INIREADER_ERROR_CANT_OPEN_FILE;
 
-  m_sAllValues = new wchar_t*[iMaxLines];
-  m_sAllKeys = new wchar_t*[iMaxLines];
+  m_sAllValues = new char*[iMaxLines];
+  m_sAllKeys = new char*[iMaxLines];
   for (int i = 0; i < iMaxLines; i++)
   {
-    m_sAllValues[i] = new wchar_t[INI_READER_MAX_CHARS];
-    m_sAllKeys[i] = new wchar_t[INI_READER_MAX_CHARS];
-    wsafecpy(m_sAllValues[i], INI_READER_MAX_CHARS, L"");
-    wsafecpy(m_sAllKeys[i], INI_READER_MAX_CHARS, L"");
+    m_sAllValues[i] = new char[INI_READER_MAX_CHARS];
+    m_sAllKeys[i] = new char[INI_READER_MAX_CHARS];
+    wsafecpy(m_sAllValues[i], INI_READER_MAX_CHARS, "");
+    wsafecpy(m_sAllKeys[i], INI_READER_MAX_CHARS, "");
   }
 
   int iLine = 0;
@@ -33,15 +34,15 @@ IniFile::IniFile(const wchar_t * sFileName, int iMaxLines)
   bool bKey = true;
   while (!feof(pFile))
   {
-    wchar_t c = fgetwc(pFile);
+    char c = fgetwc(pFile);
     if (bKey)
     {
-      if ((c >= L'a' && c <= L'z') || (c >= L'A' && c <= L'Z') || (c >= L'0' && c <= L'9') || c == L'_')
+      if ((c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z') || (c >= '0' && c <= '9') || c == '_')
       {
         m_sAllKeys[iLine][iChar++] = c;
-        m_sAllKeys[iLine][iChar] = L'\0';
+        m_sAllKeys[iLine][iChar] = '\0';
       }
-      else if (c == L'=')
+      else if (c == '=')
       {
         bKey = false;
         iChar = 0;
@@ -49,9 +50,9 @@ IniFile::IniFile(const wchar_t * sFileName, int iMaxLines)
     }
     else
     {
-      if (iChar == 0 && (c == L' ' || c == '\t'))
+      if (iChar == 0 && (c == ' ' || c == '\t'))
         continue;
-      if (c == L'\r' || c == '\n')
+      if (c == '\r' || c == '\n')
       {
         bKey = true;
         iChar = 0;
@@ -65,7 +66,7 @@ IniFile::IniFile(const wchar_t * sFileName, int iMaxLines)
       else
       {
         m_sAllValues[iLine][iChar++] = c;
-        m_sAllValues[iLine][iChar] = L'\0';
+        m_sAllValues[iLine][iChar] = '\0';
       }
     }
   }
@@ -101,11 +102,11 @@ IniFile::~IniFile()
 // -----------------------------------------------------------------
 // Name : findValue
 // -----------------------------------------------------------------
-wchar_t * IniFile::findValue(const wchar_t * sKey)
+char * IniFile::findValue(const char * sKey)
 {
   for (int i = 0; i < m_iMaxLines; i++)
   {
-    if (m_sAllKeys[i] != NULL && wcscmp(m_sAllKeys[i], sKey) == 0)
+    if (m_sAllKeys[i] != NULL && strcmp(m_sAllKeys[i], sKey) == 0)
       return m_sAllValues[i];
   }
   return NULL;
@@ -114,60 +115,56 @@ wchar_t * IniFile::findValue(const wchar_t * sKey)
 // -----------------------------------------------------------------
 // Name : findCharValue
 // -----------------------------------------------------------------
-const wchar_t * IniFile::findCharValue(const wchar_t * sKey, const wchar_t * sDefault)
+const char * IniFile::findCharValue(const char * sKey, const char * sDefault)
 {
-  const wchar_t * res = findValue(sKey);
+  const char * res = findValue(sKey);
   return (res == NULL ? sDefault : res);
 }
 
 // -----------------------------------------------------------------
 // Name : findIntValue
 // -----------------------------------------------------------------
-int IniFile::findIntValue(const wchar_t * sKey, int iDefault)
+int IniFile::findIntValue(const char * sKey, int iDefault)
 {
-  wchar_t * res = findValue(sKey);
+  char * res = findValue(sKey);
   if (res == NULL)
     return iDefault;
-  int ires = 0;
-  swscanf(res, L"%d", &ires);
-  return ires;
+  return atoi(res);
 }
 
 // -----------------------------------------------------------------
 // Name : findBoolValue
 // -----------------------------------------------------------------
-bool IniFile::findBoolValue(const wchar_t * sKey, bool bDefault)
+bool IniFile::findBoolValue(const char * sKey, bool bDefault)
 {
-  wchar_t * res = findValue(sKey);
+  char * res = findValue(sKey);
   if (res == NULL)
     return bDefault;
-  return (wcscmp(res, L"1") == 0 || wcscmp(res, L"true") == 0);
+  return (strcmp(res, "1") == 0 || strcmp(res, "true") == 0);
 }
 
 // -----------------------------------------------------------------
 // Name : findFloatValue
 // -----------------------------------------------------------------
-float IniFile::findFloatValue(const wchar_t * sKey, float fDefault)
+float IniFile::findFloatValue(const char * sKey, float fDefault)
 {
-  wchar_t * res = findValue(sKey);
+  char * res = findValue(sKey);
   if (res == NULL)
     return fDefault;
-  float fres = 0;
-  swscanf(res, L"%f", &fres);
-  return fres;
+  return atof(res);
 }
 
 // -----------------------------------------------------------------
 // Name : setKeyAndCharValue
 // -----------------------------------------------------------------
-void IniFile::setKeyAndCharValue(const wchar_t * sKey, const wchar_t * sValue)
+void IniFile::setKeyAndCharValue(const char * sKey, const char * sValue)
 {
-  wchar_t * res = findValue(sKey);
+  char * res = findValue(sKey);
   if (res == NULL)
   {
     for (int i = 0; i < m_iMaxLines; i++)
     {
-      if (wcscmp(m_sAllKeys[i], L"") == 0)
+      if (strcmp(m_sAllKeys[i], "") == 0)
       {
         wsafecpy(m_sAllKeys[i], INI_READER_MAX_CHARS, sKey);
         wsafecpy(m_sAllValues[i], INI_READER_MAX_CHARS, sValue);
@@ -182,44 +179,44 @@ void IniFile::setKeyAndCharValue(const wchar_t * sKey, const wchar_t * sValue)
 // -----------------------------------------------------------------
 // Name : setKeyAndBoolValue
 // -----------------------------------------------------------------
-void IniFile::setKeyAndBoolValue(const wchar_t * sKey, bool bValue)
+void IniFile::setKeyAndBoolValue(const char * sKey, bool bValue)
 {
-  setKeyAndCharValue(sKey, bValue ? L"true" : L"false");
+  setKeyAndCharValue(sKey, bValue ? "true" : "false");
 }
 
 // -----------------------------------------------------------------
 // Name : setKeyAndIntValue
 // -----------------------------------------------------------------
-void IniFile::setKeyAndIntValue(const wchar_t * sKey, int iValue)
+void IniFile::setKeyAndIntValue(const char * sKey, int iValue)
 {
-  wchar_t sValue[INI_READER_MAX_CHARS];
-  swprintf(sValue, INI_READER_MAX_CHARS, L"%d", iValue);
+  char sValue[INI_READER_MAX_CHARS];
+  snprintf(sValue, INI_READER_MAX_CHARS, "%d", iValue);
   setKeyAndCharValue(sKey, sValue);
 }
 
 // -----------------------------------------------------------------
 // Name : setKeyAndFloatValue
 // -----------------------------------------------------------------
-void IniFile::setKeyAndFloatValue(const wchar_t * sKey, float fValue)
+void IniFile::setKeyAndFloatValue(const char * sKey, float fValue)
 {
-  wchar_t sValue[INI_READER_MAX_CHARS];
-  swprintf(sValue, INI_READER_MAX_CHARS, L"%f", fValue);
+  char sValue[INI_READER_MAX_CHARS];
+  snprintf(sValue, INI_READER_MAX_CHARS, "%f", fValue);
   setKeyAndCharValue(sKey, sValue);
 }
 
 // -----------------------------------------------------------------
 // Name : write
 // -----------------------------------------------------------------
-void IniFile::write(const wchar_t * sFileName)
+void IniFile::write(const char * sFileName)
 {
   FILE * pFile = NULL;
-  if (0 != wfopen(&pFile, sFileName, L"w"))
+  if (0 != fopen_s(&pFile, sFileName, "w"))
     throw INIREADER_ERROR_CANT_OPEN_FILE;
 
   for (int i = 0; i < m_iMaxLines; i++)
   {
-    if (m_sAllKeys[i] != NULL && wcscmp(m_sAllKeys[i], L"") != 0)
-      fwprintf(pFile, L"%s = %s\n", m_sAllKeys[i], m_sAllValues[i]);
+    if (m_sAllKeys[i] != NULL && strcmp(m_sAllKeys[i], "") != 0)
+      fprintf(pFile, "%s = %s\n", m_sAllKeys[i], m_sAllValues[i]);
   }
 
   fclose(pFile);

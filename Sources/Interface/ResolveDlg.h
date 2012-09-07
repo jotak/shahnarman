@@ -55,7 +55,7 @@ public:
   CoordsMap getBattlePosition(int idx) { return m_pBattlesPositions[idx]; };
 
   // Specific functions
-  void setStatus(wchar_t * sStatus);
+  void setStatus(char * sStatus);
   void resolveTargetSelectionFinished(bool bCanceled, LuaObject * pLua, ChildEffect * pChild = NULL, Unit * pUnit = NULL);
 
 protected:
@@ -108,7 +108,7 @@ protected:
 
   // Other
   int m_iRangeAttackTex;
-  wchar_t m_sSelectTargetLuaCallback[128];
+  char m_sSelectTargetLuaCallback[128];
 };
 
 #endif

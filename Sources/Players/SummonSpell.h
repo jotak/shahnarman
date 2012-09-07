@@ -9,7 +9,7 @@ public:
   SummonSpell();
   ~SummonSpell();
 
-  wchar_t m_sCreatureName[NAME_MAX_CHARS];
+  char m_sCreatureName[NAME_MAX_CHARS];
 };
 
 #endif

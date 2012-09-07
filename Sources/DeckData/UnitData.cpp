@@ -13,9 +13,9 @@
 UnitData::UnitData()
 {
   m_pSkills = new ObjectList(true);
-  wsafecpy(m_sTextureFilename, MAX_PATH, L"");
-  wsafecpy(m_sEdition, NAME_MAX_CHARS, L"");
-  wsafecpy(m_sEthnicityId, NAME_MAX_CHARS, L"");
+  wsafecpy(m_sTextureFilename, MAX_PATH, "");
+  wsafecpy(m_sEdition, NAME_MAX_CHARS, "");
+  wsafecpy(m_sEthnicityId, NAME_MAX_CHARS, "");
 }
 
 // -----------------------------------------------------------------
@@ -69,7 +69,7 @@ void UnitData::deserialize(Serializer * pSerializer, DebugManager * pDebug)
   int len = pSerializer->readLong();
   for (int i = 0; i < len; i++)
   {
-    wchar_t str[1024];
+    char str[1024];
     long val = 0;
     pSerializer->readString(str);
     val = pSerializer->readLong();
@@ -79,9 +79,9 @@ void UnitData::deserialize(Serializer * pSerializer, DebugManager * pDebug)
   len = pSerializer->readLong();
   for (int i = 0; i < len; i++)
   {
-    wchar_t sEdition[NAME_MAX_CHARS];
-    wchar_t sName[NAME_MAX_CHARS];
-    wchar_t sParameters[LUA_FUNCTION_PARAMS_MAX_CHARS];
+    char sEdition[NAME_MAX_CHARS];
+    char sName[NAME_MAX_CHARS];
+    char sParameters[LUA_FUNCTION_PARAMS_MAX_CHARS];
     pSerializer->readString(sEdition);
     pSerializer->readString(sName);
     pSerializer->readString(sParameters);
@@ -93,19 +93,19 @@ void UnitData::deserialize(Serializer * pSerializer, DebugManager * pDebug)
 // -----------------------------------------------------------------
 // Name : getInfos
 // -----------------------------------------------------------------
-wchar_t * UnitData::getInfos(wchar_t * sBuf, int iSize, const wchar_t * sSeparator, bool bName, const wchar_t * sEthn, bool bAlign, bool bCharacs, bool bSkills, bool bDesc)
+char * UnitData::getInfos(char * sBuf, int iSize, const char * sSeparator, bool bName, const char * sEthn, bool bAlign, bool bCharacs, bool bSkills, bool bDesc)
 {
   // Item full description
-  wsafecpy(sBuf, iSize, L"");
-  wchar_t sTemp[512];
-  wchar_t s2P[8];
-  wchar_t sSep[8] = L"";
-  i18n->getText(L"2P", s2P, 8);
+  wsafecpy(sBuf, iSize, "");
+  char sTemp[512];
+  char s2P[8];
+  char sSep[8] = "";
+  i18n->getText("2P", s2P, 8);
 
   // Name
   if (bName)
   {
-    findLocalizedElement(sTemp, 512, i18n->getCurrentLanguageName(), L"name");
+    findLocalizedElement(sTemp, 512, i18n->getCurrentLanguageName(), "name");
     wsafecat(sBuf, iSize, sTemp);
     wsafecpy(sSep, 8, sSeparator);
   }
@@ -114,7 +114,7 @@ wchar_t * UnitData::getInfos(wchar_t * sBuf, int iSize, const wchar_t * sSeparat
   if (sEthn != NULL)
   {
     wsafecat(sBuf, iSize, sSep);
-    i18n->getText1stUp(L"ETHNICITY", sTemp, 512);
+    i18n->getText1stUp("ETHNICITY", sTemp, 512);
     wsafecat(sBuf, iSize, sTemp);
     wsafecat(sBuf, iSize, s2P);
     wsafecat(sBuf, iSize, sEthn);
@@ -158,19 +158,19 @@ wchar_t * UnitData::getInfos(wchar_t * sBuf, int iSize, const wchar_t * sSeparat
   if (bSkills)
   {
     wsafecat(sBuf, iSize, sSep);
-    i18n->getText1stUp(L"SKILLS", sTemp, 512);
+    i18n->getText1stUp("SKILLS", sTemp, 512);
     wsafecat(sBuf, iSize, sTemp);
     wsafecat(sBuf, iSize, s2P);
-    wchar_t sSep2[4] = L"";
+    char sSep2[4] = "";
     Skill * pSkill = (Skill*) m_pSkills->getFirst(0);
     if (pSkill == NULL)
     {
-      wsafecat(sBuf, iSize, i18n->getText(L"NONE", sTemp, 512));
+      wsafecat(sBuf, iSize, i18n->getText("NONE", sTemp, 512));
     }
     while (pSkill != NULL)
     {
       wsafecat(sBuf, iSize, sSep2);
-      wsafecpy(sSep2, 4, L", ");
+      wsafecpy(sSep2, 4, ", ");
       wsafecat(sBuf, iSize, pSkill->getLocalizedName());
       pSkill = (Skill*) m_pSkills->getNext(0);
     }
@@ -181,7 +181,7 @@ wchar_t * UnitData::getInfos(wchar_t * sBuf, int iSize, const wchar_t * sSeparat
   if (bDesc)
   {
     wsafecat(sBuf, iSize, sSep);
-    findLocalizedElement(sTemp, 512, i18n->getCurrentLanguageName(), L"description");
+    findLocalizedElement(sTemp, 512, i18n->getCurrentLanguageName(), "description");
     wsafecat(sBuf, iSize, sTemp);
   }
   return sBuf;
@@ -190,36 +190,36 @@ wchar_t * UnitData::getInfos(wchar_t * sBuf, int iSize, const wchar_t * sSeparat
 // -----------------------------------------------------------------
 // Name : getAlignmentInfos
 // -----------------------------------------------------------------
-wchar_t * UnitData::getAlignmentInfos(int iValue, wchar_t * sBuf, int iSize)
+char * UnitData::getAlignmentInfos(int iValue, char * sBuf, int iSize)
 {
-  wchar_t sTemp[64];
-  wchar_t sSeparator[8] = L"";
-  wsafecpy(sBuf, iSize, L"");
+  char sTemp[64];
+  char sSeparator[8] = "";
+  wsafecpy(sBuf, iSize, "");
   if (iValue == 0)
-    wsafecat(sBuf, iSize, i18n->getText(L"NONE", sTemp, 64));
+    wsafecat(sBuf, iSize, i18n->getText("NONE", sTemp, 64));
   else
   {
     if (iValue & ALIGNMENT_LIFE)
     {
-      wsafecat(sBuf, iSize, i18n->getText(L"LIFE", sTemp, 64));
-      wsafecpy(sSeparator, 8, L", ");
+      wsafecat(sBuf, iSize, i18n->getText("LIFE", sTemp, 64));
+      wsafecpy(sSeparator, 8, ", ");
     }
     if (iValue & ALIGNMENT_LAW)
     {
       wsafecat(sBuf, iSize, sSeparator);
-      wsafecat(sBuf, iSize, i18n->getText(L"LAW", sTemp, 64));
-      wsafecpy(sSeparator, 8, L", ");
+      wsafecat(sBuf, iSize, i18n->getText("LAW", sTemp, 64));
+      wsafecpy(sSeparator, 8, ", ");
     }
     if (iValue & ALIGNMENT_DEATH)
     {
       wsafecat(sBuf, iSize, sSeparator);
-      wsafecat(sBuf, iSize, i18n->getText(L"DEATH", sTemp, 64));
-      wsafecpy(sSeparator, 8, L", ");
+      wsafecat(sBuf, iSize, i18n->getText("DEATH", sTemp, 64));
+      wsafecpy(sSeparator, 8, ", ");
     }
     if (iValue & ALIGNMENT_CHAOS)
     {
       wsafecat(sBuf, iSize, sSeparator);
-      wsafecat(sBuf, iSize, i18n->getText(L"CHAOS", sTemp, 64));
+      wsafecat(sBuf, iSize, i18n->getText("CHAOS", sTemp, 64));
     }
   }
   return sBuf;

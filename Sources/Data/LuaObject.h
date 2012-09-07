@@ -21,42 +21,42 @@ public:
   ChildEffect() { pTargets = new ObjectList(false); };
   ~ChildEffect() { delete pTargets; };
   int id;
-  wchar_t sName[NAME_MAX_CHARS];
-  wchar_t sIcon[MAX_PATH];
+  char sName[NAME_MAX_CHARS];
+  char sIcon[MAX_PATH];
   Mana cost;
   ObjectList * pTargets;
-  void resetResolveParameters() { wsafecpy(sResolveParams, LUA_FUNCTION_PARAMS_MAX_CHARS, L""); };
-  void addResolveParameters(wchar_t * sParams) { wsafecat(sResolveParams, LUA_FUNCTION_PARAMS_MAX_CHARS, L" "); wsafecat(sResolveParams, LUA_FUNCTION_PARAMS_MAX_CHARS, sParams); };
-  wchar_t sResolveParams[LUA_FUNCTION_PARAMS_MAX_CHARS];
+  void resetResolveParameters() { wsafecpy(sResolveParams, LUA_FUNCTION_PARAMS_MAX_CHARS, ""); };
+  void addResolveParameters(char * sParams) { wsafecat(sResolveParams, LUA_FUNCTION_PARAMS_MAX_CHARS, " "); wsafecat(sResolveParams, LUA_FUNCTION_PARAMS_MAX_CHARS, sParams); };
+  char sResolveParams[LUA_FUNCTION_PARAMS_MAX_CHARS];
   LuaObject * getLua() { return (LuaObject*) getAttachment(); };
 };
 
 class LuaObject : public BaseObject
 {
 public:
-  LuaObject(u32 uInstance, const wchar_t * sEdition, const wchar_t * sObjectType, const wchar_t * sObjectName, DebugManager * pDebug);
+  LuaObject(u32 uInstance, const char * sEdition, const char * sObjectType, const char * sObjectName, DebugManager * pDebug);
   ~LuaObject();
 
   virtual u32 getType() = 0;
   virtual void loadBasicData(DebugManager * pDebug) = 0;
   bool isLoaded() { return m_pLuaState != NULL; };
-  bool callLuaFunction(const wchar_t * sFunc, int iNbResults, const wchar_t * sParamsType, ...);
-  lua_State * prepareLuaFunction(const wchar_t * sFunc);
-  bool callPreparedLuaFunction(int iNbParams, int iNbResults, const wchar_t * sFunc, const wchar_t * sParams);
+  bool callLuaFunction(const char * sFunc, int iNbResults, const char * sParamsType, ...);
+  lua_State * prepareLuaFunction(const char * sFunc);
+  bool callPreparedLuaFunction(int iNbParams, int iNbResults, const char * sFunc, const char * sParams);
   double getLuaNumber();
-  void getLuaString(wchar_t * sString, int size);
-  bool getLuaVarNumber(const wchar_t * sVarName, double * d);
-  bool getLuaVarString(const wchar_t * sVarName, wchar_t * sString, int size);
-  bool getLuaVarNumberArray(const wchar_t * sVarName, double * pArray, int size);
-  bool getLuaVarStringArray(const wchar_t * sVarName, wchar_t ** pArray, int tabSize, int strSize);
+  void getLuaString(char * sString, int size);
+  bool getLuaVarNumber(const char * sVarName, double * d);
+  bool getLuaVarString(const char * sVarName, char * sString, int size);
+  bool getLuaVarNumberArray(const char * sVarName, double * pArray, int size);
+  bool getLuaVarStringArray(const char * sVarName, char ** pArray, int tabSize, int strSize);
   u32 getInstanceId() { return m_uInstanceId; };
-  wchar_t * getUniqueId(wchar_t * sId, int iSize);
-  bool isUniqueId(const wchar_t * sEdition, const wchar_t * sObjectType, const wchar_t * sObjectName);
-  wchar_t * getObjectEdition() { return m_sObjectEdition; };
-  wchar_t * getObjectName() { return m_sObjectName; };
-  virtual wchar_t * getLocalizedName() { return NULL; };
-  virtual wchar_t * getLocalizedDescription() { return NULL; };
-  virtual wchar_t * getIconPath() = 0;
+  char * getUniqueId(char * sId, int iSize);
+  bool isUniqueId(const char * sEdition, const char * sObjectType, const char * sObjectName);
+  char * getObjectEdition() { return m_sObjectEdition; };
+  char * getObjectName() { return m_sObjectName; };
+  virtual char * getLocalizedName() { return NULL; };
+  virtual char * getLocalizedDescription() { return NULL; };
+  virtual char * getIconPath() = 0;
   void setExtraMana(Mana mana) { m_ExtraMana = mana; };
   Mana getExtraMana() { return m_ExtraMana; };
 
@@ -77,9 +77,9 @@ public:
 
 protected:
   u32 m_uInstanceId;
-  wchar_t m_sObjectEdition[NAME_MAX_CHARS];
-  wchar_t m_sObjectName[NAME_MAX_CHARS];
-  wchar_t m_sObjectType[NAME_MAX_CHARS];
+  char m_sObjectEdition[NAME_MAX_CHARS];
+  char m_sObjectName[NAME_MAX_CHARS];
+  char m_sObjectType[NAME_MAX_CHARS];
   lua_State * m_pLuaState;
   DebugManager * m_pDebug;
   int m_iNbChildEffects;

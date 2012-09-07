@@ -8,7 +8,7 @@
 // Name : Skill
 //  Constructor
 // -----------------------------------------------------------------
-Skill::Skill(wchar_t * sEdition, wchar_t * sObjectName, wchar_t * sParams, DebugManager * pDebug) : LuaObject(0, sEdition, SKILL_OBJECT_NAME, sObjectName, pDebug)
+Skill::Skill(const char * sEdition, const char * sObjectName, const char * sParams, DebugManager * pDebug) : LuaObject(0, sEdition, SKILL_OBJECT_NAME, sObjectName, pDebug)
 {
   init(sParams, pDebug);
 }
@@ -17,7 +17,7 @@ Skill::Skill(wchar_t * sEdition, wchar_t * sObjectName, wchar_t * sParams, Debug
 // Name : Skill
 //  Constructor with id
 // -----------------------------------------------------------------
-Skill::Skill(u32 uId, wchar_t * sEdition, wchar_t * sObjectName, wchar_t * sParams, DebugManager * pDebug) : LuaObject(uId, sEdition, SKILL_OBJECT_NAME, sObjectName, pDebug)
+Skill::Skill(u32 uId, const char * sEdition, const char * sObjectName, const char * sParams, DebugManager * pDebug) : LuaObject(uId, sEdition, SKILL_OBJECT_NAME, sObjectName, pDebug)
 {
   init(sParams, pDebug);
 }
@@ -25,17 +25,17 @@ Skill::Skill(u32 uId, wchar_t * sEdition, wchar_t * sObjectName, wchar_t * sPara
 // -----------------------------------------------------------------
 // Name : init
 // -----------------------------------------------------------------
-void Skill::init(wchar_t * sParams, DebugManager * pDebug)
+void Skill::init(const char * sParams, DebugManager * pDebug)
 {
   if (sParams == NULL)
-    wsafecpy(m_sParameters, LUA_FUNCTION_PARAMS_MAX_CHARS, L"");
+    wsafecpy(m_sParameters, LUA_FUNCTION_PARAMS_MAX_CHARS, "");
   else
     wsafecpy(m_sParameters, LUA_FUNCTION_PARAMS_MAX_CHARS, sParams);
 
   m_bMergeable = false;
   m_bCumulative = false;
-  if (wcscmp(m_sParameters, L"") != 0)
-    callLuaFunction(L"init", 0, L"s", m_sParameters);
+  if (strcmp(m_sParameters, "") != 0)
+    callLuaFunction("init", 0, "s", m_sParameters);
 
   loadBasicData(pDebug);
 }
@@ -47,47 +47,47 @@ void Skill::loadBasicData(DebugManager * pDebug)
 {
   // Get some basic parameters
   // Skill name
-  if (callLuaFunction(L"getName", 1, L""))
+  if (callLuaFunction("getName", 1, ""))
     getLuaString(m_sName, NAME_MAX_CHARS);
   else
   {
-    wchar_t sError[512];
-    swprintf(sError, 512, L"Lua interaction error: skill in file %s has no name defined.", m_sObjectName);
+    char sError[512];
+    snprintf(sError, 512, "Lua interaction error: skill in file %s has no name defined.", m_sObjectName);
     pDebug->notifyErrorMessage(sError);
-    wsafecpy(m_sName, NAME_MAX_CHARS, L"");
+    wsafecpy(m_sName, NAME_MAX_CHARS, "");
   }
 
   // Description
-  if (callLuaFunction(L"getDescription", 1, L""))
+  if (callLuaFunction("getDescription", 1, ""))
     getLuaString(m_sDescription, DESCRIPTION_MAX_CHARS);
   else
   {
-    wchar_t sError[512];
-    swprintf(sError, 512, L"Lua interaction error: skill in file %s has no description defined.", m_sObjectName);
+    char sError[512];
+    snprintf(sError, 512, "Lua interaction error: skill in file %s has no description defined.", m_sObjectName);
     pDebug->notifyErrorMessage(sError);
-    wsafecpy(m_sDescription, DESCRIPTION_MAX_CHARS, L"");
+    wsafecpy(m_sDescription, DESCRIPTION_MAX_CHARS, "");
   }
 
   // Icon texture
-  wchar_t sStr[MAX_PATH];
-  if (!getLuaVarString(L"icon", sStr, MAX_PATH))
+  char sStr[MAX_PATH];
+  if (!getLuaVarString("icon", sStr, MAX_PATH))
   {
 	  // error : icon not found
-    wchar_t sError[512] = L"";
-    swprintf(sError, 512, L"Lua interaction error: skill in file %s has no icon path defined.", m_sObjectName);
+    char sError[512] = "";
+    snprintf(sError, 512, "Lua interaction error: skill in file %s has no icon path defined.", m_sObjectName);
     pDebug->notifyErrorMessage(sError);
-    wsafecpy(m_sIconPath, MAX_PATH, L"");
+    wsafecpy(m_sIconPath, MAX_PATH, "");
   }
   else
-    swprintf(m_sIconPath, MAX_PATH, L"%s/%s", m_sObjectEdition, sStr);
+    snprintf(m_sIconPath, MAX_PATH, "%s/%s", m_sObjectEdition, sStr);
 
   // is mergeable?
   double d;
-  if (getLuaVarNumber(L"isMergeable", &d))
+  if (getLuaVarNumber("isMergeable", &d))
     m_bMergeable = (d == 1);
 
   // is cumulative?
-  if (getLuaVarNumber(L"isCumulative", &d))
+  if (getLuaVarNumber("isCumulative", &d))
     m_bCumulative = (d == 1);
 }
 
@@ -105,9 +105,9 @@ Skill::~Skill()
 // -----------------------------------------------------------------
 Skill * Skill::deserialize(u32 uInstanceId, NetworkData * pData, DebugManager * pDebug)
 {
-  wchar_t sEdition[NAME_MAX_CHARS];
-  wchar_t sObjectName[NAME_MAX_CHARS];
-  wchar_t sParameters[LUA_FUNCTION_PARAMS_MAX_CHARS];
+  char sEdition[NAME_MAX_CHARS];
+  char sObjectName[NAME_MAX_CHARS];
+  char sParameters[LUA_FUNCTION_PARAMS_MAX_CHARS];
   pData->readString(sEdition);
   pData->readString(sObjectName);
   pData->readString(sParameters);
@@ -140,25 +140,25 @@ Skill * Skill::clone(bool bKeepInstance, DebugManager * pDebug)
 // -----------------------------------------------------------------
 void Skill::merge(Skill * pOther)
 {
-  callLuaFunction(L"merge", 1, L"s", pOther->getParameters());
+  callLuaFunction("merge", 1, "s", pOther->getParameters());
   getLuaString(m_sParameters, LUA_FUNCTION_PARAMS_MAX_CHARS);
 
   // Retrieve some basic parameters again, they may have changed
   // Skill name
-  if (callLuaFunction(L"getName", 1, L""))
+  if (callLuaFunction("getName", 1, ""))
     getLuaString(m_sName, NAME_MAX_CHARS);
 
   // Description
-  if (callLuaFunction(L"getDescription", 1, L""))
+  if (callLuaFunction("getDescription", 1, ""))
     getLuaString(m_sDescription, DESCRIPTION_MAX_CHARS);
 
   // Icon texture
-  wchar_t sStr[MAX_PATH];
-  if (getLuaVarString(L"icon", sStr, MAX_PATH))
-    swprintf(m_sIconPath, MAX_PATH, L"%s/%s", m_sObjectEdition, sStr);
+  char sStr[MAX_PATH];
+  if (getLuaVarString("icon", sStr, MAX_PATH))
+    snprintf(m_sIconPath, MAX_PATH, "%s/%s", m_sObjectEdition, sStr);
 
   // is mergeable?
   double d;
-  if (getLuaVarNumber(L"isMergeable", &d))
+  if (getLuaVarNumber("isMergeable", &d))
     m_bMergeable = (d == 1);
 }

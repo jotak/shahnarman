@@ -19,11 +19,11 @@ public:
   virtual void onResize(int iOldWidth, int iOldHeight);
 
   // Clone / init
-  virtual void init(int iRef, int iVal, F_RGBA color, int iFgTex, int iBgTex, const wchar_t * sCpntId, int xPxl, int yPxl, int wPxl, int hPxl, DisplayEngine * pDisplay);
+  virtual void init(int iRef, int iVal, F_RGBA color, int iFgTex, int iBgTex, const char * sCpntId, int xPxl, int yPxl, int wPxl, int hPxl, DisplayEngine * pDisplay);
   virtual guiObject * clone();
 
   // Static default constructors
-  static guiGauge * createDefaultGauge(int iRef, F_RGBA color, int iWidth, int iHeight, const wchar_t * sId, DisplayEngine * pDisplay);
+  static guiGauge * createDefaultGauge(int iRef, F_RGBA color, int iWidth, int iHeight, const char * sId, DisplayEngine * pDisplay);
 
   // Other
   void setMax(int iVal);

@@ -133,7 +133,7 @@ bool AISolver::isInterestedByTile(Unit * pUnit, MapTile * pTile, Unit ** pOppone
     if (pObj->getType() & GOTYPE_TOWN)
     {
       // Go to town only if same ethnicity
-      if (wcscmp(((Town*)pObj)->getEthnicityId(), pUnit->getUnitData(m_pServer)->m_sEthnicityId) == 0)
+      if (strcmp(((Town*)pObj)->getEthnicityId(), pUnit->getUnitData(m_pServer)->m_sEthnicityId) == 0)
         return true;
     }
     pObj = pTile->getNextMapObject(GOTYPE_MAPOBJECT, it);
@@ -201,7 +201,7 @@ float AISolver::evaluateUnit(Unit * pUnit)
   fInterest += pUnit->getValue(STRING_ENDURANCE) * AI_INTEREST_ENDURANCE;
   fInterest += pUnit->getValue(STRING_SPEED) * AI_INTEREST_SPEED;
   fInterest += pUnit->getValue(STRING_LIFE) * AI_INTEREST_LIFE;
-  fInterest += pUnit->callEffectHandler(L"getAIInterest", L"", NULL, HANDLER_RESULT_TYPE_ADD);
+  fInterest += pUnit->callEffectHandler("getAIInterest", "", NULL, HANDLER_RESULT_TYPE_ADD);
   return fInterest;
 }
 

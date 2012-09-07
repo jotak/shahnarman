@@ -8,7 +8,7 @@
 // -----------------------------------------------------------------
 guiLabel::guiLabel() : guiComponent()
 {
-  wsafecpy(m_sText, LABEL_MAX_CHARS, L"");
+  wsafecpy(m_sText, LABEL_MAX_CHARS, "");
   m_FontId = (FontId)0;
   m_iBoxWidth = 0;
   m_bCatchClicks = false;
@@ -26,7 +26,7 @@ guiLabel::~guiLabel()
 // -----------------------------------------------------------------
 // Name : init
 // -----------------------------------------------------------------
-void guiLabel::init(const wchar_t * sText, FontId fontId, F_RGBA textColor, const wchar_t * sCpntId, int xPxl, int yPxl, int wPxl, int hPxl, DisplayEngine * pDisplay)
+void guiLabel::init(const char * sText, FontId fontId, F_RGBA textColor, const char * sCpntId, int xPxl, int yPxl, int wPxl, int hPxl, DisplayEngine * pDisplay)
 {
   guiComponent::init(sCpntId, xPxl, yPxl, wPxl, hPxl);
   m_FontId = fontId;
@@ -61,9 +61,9 @@ void guiLabel::displayAt(int iXOffset, int iYOffset, F_RGBA cpntColor, F_RGBA do
 // -----------------------------------------------------------------
 // Name : setText
 // -----------------------------------------------------------------
-void guiLabel::setText(const wchar_t * sText)
+void guiLabel::setText(const char * sText)
 {
-  if (wcscmp(sText, m_sText) == 0)
+  if (strcmp(sText, m_sText) == 0)
     return;
   wsafecpy(m_sText, LABEL_MAX_CHARS, sText);
   computeGeometry(getDisplay());

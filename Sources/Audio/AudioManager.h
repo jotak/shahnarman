@@ -50,7 +50,7 @@ private:
 
   void initMusicFiles();
   void initSoundData();
-  bool readOggSound(const wchar_t * sName, int iSound);
+  bool readOggSound(const char * sName, int iSound);
   bool stream(ALuint buffer);
   void empty();
 
@@ -60,7 +60,7 @@ private:
   ALCdevice * m_pDevice;
   ALuint m_iAllSoundBuffers[NB_SOUNDS];
   ALuint m_iAllSoundSources[NB_SOUNDS];
-  wchar_t m_sAllMusicFiles[NB_MUSICS][MAX_PATH];
+  char m_sAllMusicFiles[NB_MUSICS][MAX_PATH];
   int m_iChainedMusics[NB_MUSICS];
   int m_iCurrentMusic;
   ALuint m_uBuffersID[2];  // Front & back buffers

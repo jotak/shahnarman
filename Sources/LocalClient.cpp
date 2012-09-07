@@ -119,51 +119,51 @@ void LocalClient::Init()
 
 #ifdef DEBUG
   if (bLog)
-    m_pDebugManager->log(L"m_pDisplayEngine->Init");
+    m_pDebugManager->log("m_pDisplayEngine->Init");
 #endif
   m_pDisplayEngine->Init(m_pClientParameters, m_pDebugManager);
 #ifdef DEBUG
   if (bLog)
-    m_pDebugManager->log(L"m_pDisplayEngine->getFontEngine()->resetAllFonts");
+    m_pDebugManager->log("m_pDisplayEngine->getFontEngine()->resetAllFonts");
 #endif
   m_pDisplayEngine->getFontEngine()->resetAllFonts();
 #ifdef DEBUG
   if (bLog)
-    m_pDebugManager->log(L"i18n->Init");
+    m_pDebugManager->log("i18n->Init");
 #endif
   i18n->Init(m_pClientParameters, m_pDebugManager);
 #ifdef DEBUG
   if (bLog)
-    m_pDebugManager->log(L"m_pAudioManager->Init");
+    m_pDebugManager->log("m_pAudioManager->Init");
 #endif
   m_pAudioManager->Init(this);
 
   // Register textures
 #ifdef DEBUG
   if (bLog)
-    m_pDebugManager->log(L"guiObject::registerTextures");
+    m_pDebugManager->log("guiObject::registerTextures");
 #endif
   guiObject::registerTextures(m_pDisplayEngine->getTextureEngine(), m_pDisplayEngine->getFontEngine());
 #ifdef DEBUG
   if (bLog)
-    m_pDebugManager->log(L"m_pDebugManager->registerTextures");
+    m_pDebugManager->log("m_pDebugManager->registerTextures");
 #endif
   m_pDebugManager->registerTextures(m_pDisplayEngine->getTextureEngine(), m_pDisplayEngine->getFontEngine());
 
 #ifdef DEBUG
   if (bLog)
-    m_pDebugManager->log(L"m_pDataFactory->Init");
+    m_pDebugManager->log("m_pDataFactory->Init");
 #endif
   m_pDataFactory->Init(this);
 #ifdef DEBUG
   if (bLog)
-    m_pDebugManager->log(L"m_pInterfaceManager->Init");
+    m_pDebugManager->log("m_pInterfaceManager->Init");
 #endif
   m_pInterfaceManager->Init();
 
 #ifdef DEBUG
   if (bLog)
-    m_pDebugManager->log(L"m_pDisplayEngine->setReady");
+    m_pDebugManager->log("m_pDisplayEngine->setReady");
 #endif
   m_pDisplayEngine->setReady();
 }
@@ -176,7 +176,7 @@ void LocalClient::Update(double delta)
 #ifdef DEBUG
   bool bLog = (m_pClientParameters->iLogLevel >= 3 || (m_pClientParameters->iLogLevel >= 2 && m_pServer != NULL && m_pServer->getSolver() != NULL && m_pServer->getSolver()->getState() != RS_NotResolving));
   if (bLog)
-    m_pDebugManager->log(L"LocalClient::Update");
+    m_pDebugManager->log("LocalClient::Update");
 #endif
 
   if (m_GameStep == GS_GameIntro)
@@ -192,27 +192,27 @@ void LocalClient::Update(double delta)
 
 #ifdef DEBUG
   if (bLog)
-    m_pDebugManager->log(L"processNextMessage");
+    m_pDebugManager->log("processNextMessage");
 #endif
   processNextMessage();
 #ifdef DEBUG
   if (bLog)
-    m_pDebugManager->log(L"m_pInputEngine->update");
+    m_pDebugManager->log("m_pInputEngine->update");
 #endif
   m_pInputEngine->update(delta);
 #ifdef DEBUG
   if (bLog)
-    m_pDebugManager->log(L"m_pDebugManager->Update");
+    m_pDebugManager->log("m_pDebugManager->Update");
 #endif
   m_pDebugManager->Update(delta);
 #ifdef DEBUG
   if (bLog)
-    m_pDebugManager->log(L"m_pInterfaceManager->Update");
+    m_pDebugManager->log("m_pInterfaceManager->Update");
 #endif
   m_pInterfaceManager->Update(delta);
 #ifdef DEBUG
   if (bLog)
-    m_pDebugManager->log(L"m_pAudioManager->Update");
+    m_pDebugManager->log("m_pAudioManager->Update");
 #endif
   m_pAudioManager->Update(delta);
 
@@ -220,17 +220,17 @@ void LocalClient::Update(double delta)
   {
 #ifdef DEBUG
   if (bLog)
-    m_pDebugManager->log(L"m_pPlayerManager->Update");
+    m_pDebugManager->log("m_pPlayerManager->Update");
 #endif
     m_pPlayerManager->Update(delta);
 #ifdef DEBUG
   if (bLog)
-    m_pDebugManager->log(L"m_pGameboardManager->Update");
+    m_pDebugManager->log("m_pGameboardManager->Update");
 #endif
     m_pGameboardManager->Update(delta);
 #ifdef DEBUG
   if (bLog)
-    m_pDebugManager->log(L"m_pFxManager->Update");
+    m_pDebugManager->log("m_pFxManager->Update");
 #endif
     m_pFxManager->Update(delta);
 
@@ -240,7 +240,7 @@ void LocalClient::Update(double delta)
       endGame();
       bWaitEnd = false;
   FILE * f = NULL;
-  wfopen(&f, L"logs/out.log", L"w");
+  fopen_s(&f, "logs/out.log", "w");
   if (f)
     fclose(f);
     }
@@ -250,12 +250,12 @@ void LocalClient::Update(double delta)
   {
 #ifdef DEBUG
   if (bLog)
-    m_pDebugManager->log(L"m_pGameboardManager->Update");
+    m_pDebugManager->log("m_pGameboardManager->Update");
 #endif
     m_pGameboardManager->Update(delta);
 #ifdef DEBUG
   if (bLog)
-    m_pDebugManager->log(L"m_pFxManager->Update");
+    m_pDebugManager->log("m_pFxManager->Update");
 #endif
     m_pFxManager->Update(delta);
   }
@@ -279,14 +279,14 @@ void LocalClient::Display()
 #ifdef DEBUG
   bool bLog = (m_pClientParameters->iLogLevel >= 3 || (m_pClientParameters->iLogLevel >= 2 && m_pServer != NULL && m_pServer->getSolver() != NULL && m_pServer->getSolver()->getState() != RS_NotResolving));
   if (bLog)
-    m_pDebugManager->log(L"LocalClient::Display");
+    m_pDebugManager->log("LocalClient::Display");
 #endif
   if (!m_pDisplayEngine->isReady())
     return;
 
 #ifdef DEBUG
   if (bLog)
-    m_pDebugManager->log(L"m_pDisplayEngine->beginDisplay");
+    m_pDebugManager->log("m_pDisplayEngine->beginDisplay");
 #endif
   m_pDisplayEngine->beginDisplay();
   switch (m_GameStep)
@@ -297,22 +297,22 @@ void LocalClient::Display()
     {
 #ifdef DEBUG
   if (bLog)
-    m_pDebugManager->log(L"m_pDisplayEngine->begin2D");
+    m_pDebugManager->log("m_pDisplayEngine->begin2D");
 #endif
       m_pDisplayEngine->begin2D();
 #ifdef DEBUG
   if (bLog)
-    m_pDebugManager->log(L"m_pInterfaceManager->Display");
+    m_pDebugManager->log("m_pInterfaceManager->Display");
 #endif
       m_pInterfaceManager->Display();
 #ifdef DEBUG
   if (bLog)
-    m_pDebugManager->log(L"m_pDebugManager->Display");
+    m_pDebugManager->log("m_pDebugManager->Display");
 #endif
       m_pDebugManager->Display();
 #ifdef DEBUG
   if (bLog)
-    m_pDebugManager->log(L"m_pDisplayEngine->end2D");
+    m_pDebugManager->log("m_pDisplayEngine->end2D");
 #endif
       m_pDisplayEngine->end2D();
       break;
@@ -323,62 +323,62 @@ void LocalClient::Display()
     {
 #ifdef DEBUG
   if (bLog)
-    m_pDebugManager->log(L"m_pDisplayEngine->begin2D");
+    m_pDebugManager->log("m_pDisplayEngine->begin2D");
 #endif
       m_pDisplayEngine->begin2D();
 #ifdef DEBUG
   if (bLog)
-    m_pDebugManager->log(L"m_pGameboardManager->displayBackground");
+    m_pDebugManager->log("m_pGameboardManager->displayBackground");
 #endif
       m_pGameboardManager->displayBackground();
 #ifdef DEBUG
   if (bLog)
-    m_pDebugManager->log(L"m_pDisplayEngine->end2D");
+    m_pDebugManager->log("m_pDisplayEngine->end2D");
 #endif
       m_pDisplayEngine->end2D();
 #ifdef DEBUG
   if (bLog)
-    m_pDebugManager->log(L"m_pDisplayEngine->begin3D");
+    m_pDebugManager->log("m_pDisplayEngine->begin3D");
 #endif
       m_pDisplayEngine->begin3D();
 #ifdef DEBUG
   if (bLog)
-    m_pDebugManager->log(L"m_pGameboardManager->Display");
+    m_pDebugManager->log("m_pGameboardManager->Display");
 #endif
       m_pGameboardManager->Display();
 #ifdef DEBUG
   if (bLog)
-    m_pDebugManager->log(L"m_pFxManager->Display");
+    m_pDebugManager->log("m_pFxManager->Display");
 #endif
       m_pFxManager->Display();
 #ifdef DEBUG
   if (bLog)
-    m_pDebugManager->log(L"m_pDisplayEngine->end3D");
+    m_pDebugManager->log("m_pDisplayEngine->end3D");
 #endif
       m_pDisplayEngine->end3D();
 #ifdef DEBUG
   if (bLog)
-    m_pDebugManager->log(L"m_pDisplayEngine->begin2D");
+    m_pDebugManager->log("m_pDisplayEngine->begin2D");
 #endif
       m_pDisplayEngine->begin2D();
 #ifdef DEBUG
   if (bLog)
-    m_pDebugManager->log(L"m_pInterfaceManager->Display");
+    m_pDebugManager->log("m_pInterfaceManager->Display");
 #endif
       m_pInterfaceManager->Display();
 #ifdef DEBUG
   if (bLog)
-    m_pDebugManager->log(L"m_pFxManager->displayHUD");
+    m_pDebugManager->log("m_pFxManager->displayHUD");
 #endif
       m_pFxManager->displayHUD();
 #ifdef DEBUG
   if (bLog)
-    m_pDebugManager->log(L"m_pDebugManager->Display");
+    m_pDebugManager->log("m_pDebugManager->Display");
 #endif
       m_pDebugManager->Display();
 #ifdef DEBUG
   if (bLog)
-    m_pDebugManager->log(L"m_pDisplayEngine->end2D");
+    m_pDebugManager->log("m_pDisplayEngine->end2D");
 #endif
       m_pDisplayEngine->end2D();
       break;
@@ -386,7 +386,7 @@ void LocalClient::Display()
   }
 #ifdef DEBUG
   if (bLog)
-    m_pDebugManager->log(L"m_pDisplayEngine->endDisplay");
+    m_pDebugManager->log("m_pDisplayEngine->endDisplay");
 #endif
   m_pDisplayEngine->endDisplay();
 }
@@ -394,7 +394,7 @@ void LocalClient::Display()
 // -----------------------------------------------------------------
 // Name : initServer
 // -----------------------------------------------------------------
-Server * LocalClient::initServer(const wchar_t * sGameName, int nbClients, ClientData * clients, MapReader * pMapReader, int iTurnTimer, int iDeckSize)
+Server * LocalClient::initServer(const char * sGameName, int nbClients, ClientData * clients, MapReader * pMapReader, int iTurnTimer, int iDeckSize)
 {
 #ifdef DEBUG
   bool bLog = (m_pClientParameters->iLogLevel >= 2);
@@ -402,7 +402,7 @@ Server * LocalClient::initServer(const wchar_t * sGameName, int nbClients, Clien
 
 #ifdef DEBUG
   if (bLog)
-    m_pDebugManager->log(L"new Server");
+    m_pDebugManager->log("new Server");
 #endif
   FREE(m_pServer);
   m_pServer = new Server(this);
@@ -410,7 +410,7 @@ Server * LocalClient::initServer(const wchar_t * sGameName, int nbClients, Clien
   m_uClientId = 0;
 #ifdef DEBUG
   if (bLog)
-    m_pDebugManager->log(L"m_pServer->Init");
+    m_pDebugManager->log("m_pServer->Init");
 #endif
   bool bOk = m_pServer->Init(sGameName, nbClients, clients, pMapReader, iTurnTimer, iDeckSize);
   if (!bOk)
@@ -421,7 +421,7 @@ Server * LocalClient::initServer(const wchar_t * sGameName, int nbClients, Clien
   }
 #ifdef DEBUG
   if (bLog)
-    m_pDebugManager->log(L"m_pDisplayEngine->setMapData");
+    m_pDebugManager->log("m_pDisplayEngine->setMapData");
 #endif
   m_pDisplayEngine->setMapData(pMapReader->getMapWidth(), pMapReader->getMapHeight());
   // other initialisations will be done after receiving CREATE_DATA message
@@ -431,7 +431,7 @@ Server * LocalClient::initServer(const wchar_t * sGameName, int nbClients, Clien
 // -----------------------------------------------------------------
 // Name : loadServer
 // -----------------------------------------------------------------
-Server * LocalClient::loadServer(const wchar_t * sGameName)
+Server * LocalClient::loadServer(const char * sGameName)
 {
 #ifdef DEBUG
   bool bLog = (m_pClientParameters->iLogLevel >= 2);
@@ -439,7 +439,7 @@ Server * LocalClient::loadServer(const wchar_t * sGameName)
 
 #ifdef DEBUG
   if (bLog)
-    m_pDebugManager->log(L"new Server");
+    m_pDebugManager->log("new Server");
 #endif
   FREE(m_pServer);
   m_pServer = new Server(this);
@@ -447,12 +447,12 @@ Server * LocalClient::loadServer(const wchar_t * sGameName)
   m_uClientId = 0;
 #ifdef DEBUG
   if (bLog)
-    m_pDebugManager->log(L"m_pServer->loadGame");
+    m_pDebugManager->log("m_pServer->loadGame");
 #endif
   m_pServer->loadGame(sGameName);
 #ifdef DEBUG
   if (bLog)
-    m_pDebugManager->log(L"m_pDisplayEngine->setMapData");
+    m_pDebugManager->log("m_pDisplayEngine->setMapData");
 #endif
   m_pDisplayEngine->setMapData(m_pServer->getMap()->getWidth(), m_pServer->getMap()->getHeight());
   // other initialisations will be done after receiving CREATE_DATA message
@@ -627,8 +627,8 @@ void LocalClient::processNextMessage()
         break;
       default:
         {
-          wchar_t sError[512];
-          swprintf(sError, 512, L"Unknown message sent to server: code %d", (int)iMessage);
+          char sError[512];
+          snprintf(sError, 512, "Unknown message sent to server: code %d", (int)iMessage);
           getDebug()->notifyErrorMessage(sError);
           break;
         }
@@ -662,38 +662,38 @@ void LocalClient::createGameData(NetworkData * pData)
   m_pAudioManager->stopMusic();
 #ifdef DEBUG
   if (bLog)
-    m_pDebugManager->log(L"m_pGameboardManager->getMap()->createFromNetwork");
+    m_pDebugManager->log("m_pGameboardManager->getMap()->createFromNetwork");
 #endif
   m_pGameboardManager->getMap()->createFromNetwork(pData, this);
 #ifdef DEBUG
   if (bLog)
-    m_pDebugManager->log(L"m_pPlayerManager->deserializePlayersData");
+    m_pDebugManager->log("m_pPlayerManager->deserializePlayersData");
 #endif
   m_pPlayerManager->deserializePlayersData(pData, this, m_pGameboardManager->getMap());
 #ifdef DEBUG
   if (bLog)
-    m_pDebugManager->log(L"m_pPlayerManager->deserializeLuaTargets");
+    m_pDebugManager->log("m_pPlayerManager->deserializeLuaTargets");
 #endif
   m_pPlayerManager->deserializeLuaTargets(pData, this, m_pGameboardManager->getMap());
   // Init other managers
 #ifdef DEBUG
   if (bLog)
-    m_pDebugManager->log(L"m_pFxManager->Init");
+    m_pDebugManager->log("m_pFxManager->Init");
 #endif
   m_pFxManager->Init();
 #ifdef DEBUG
   if (bLog)
-    m_pDebugManager->log(L"m_pGameboardManager->Init");
+    m_pDebugManager->log("m_pGameboardManager->Init");
 #endif
   m_pGameboardManager->Init();
 #ifdef DEBUG
   if (bLog)
-    m_pDebugManager->log(L"m_pPlayerManager->Init");
+    m_pDebugManager->log("m_pPlayerManager->Init");
 #endif
   m_pPlayerManager->Init();
 #ifdef DEBUG
   if (bLog)
-    m_pDebugManager->log(L"m_pInterfaceManager->InitGame");
+    m_pDebugManager->log("m_pInterfaceManager->InitGame");
 #endif
   m_pInterfaceManager->InitGame();
   m_iTurn = 0;
@@ -784,9 +784,9 @@ void LocalClient::gameOver(NetworkData * pData)
     int size = pData->readLong();
     for (int i = 0; i < size; i++)
     {
-      wchar_t sEdition[NAME_MAX_CHARS];
+      char sEdition[NAME_MAX_CHARS];
       pData->readString(sEdition);
-      wchar_t sName[NAME_MAX_CHARS];
+      char sName[NAME_MAX_CHARS];
       pData->readString(sName);
       Spell * pSpell = m_pDataFactory->findSpell(sEdition, sName);
       assert(pSpell != NULL);
@@ -795,9 +795,9 @@ void LocalClient::gameOver(NetworkData * pData)
     size = pData->readLong();
     for (int i = 0; i < size; i++)
     {
-      wchar_t sEdition[NAME_MAX_CHARS];
+      char sEdition[NAME_MAX_CHARS];
       pData->readString(sEdition);
-      wchar_t sName[NAME_MAX_CHARS];
+      char sName[NAME_MAX_CHARS];
       pData->readString(sName);
       Edition * pEdition = m_pDataFactory->findEdition(sEdition);
       assert(pEdition != NULL);
@@ -808,9 +808,9 @@ void LocalClient::gameOver(NetworkData * pData)
     size = pData->readLong();
     for (int i = 0; i < size; i++)
     {
-      wchar_t sEdition[NAME_MAX_CHARS];
+      char sEdition[NAME_MAX_CHARS];
       pData->readString(sEdition);
-      wchar_t sName[NAME_MAX_CHARS];
+      char sName[NAME_MAX_CHARS];
       pData->readString(sName);
       UnitData * pData = m_pDataFactory->getUnitData(sEdition, sName);
       assert(pData != NULL);
@@ -859,9 +859,9 @@ void LocalClient::gameOver(NetworkData * pData)
 // -----------------------------------------------------------------
 void LocalClient::logCustomMessage(NetworkData * pData)
 {
-  wchar_t sMsgKey[256];
-  wchar_t sMsg[512];
-  wchar_t sNotFound[64] = L"[not found]";
+  char sMsgKey[256];
+  char sMsg[512];
+  char sNotFound[64] = "[not found]";
   u8 uAction = LOG_ACTION_NONE;
   void * pAction = NULL;
   CoordsMap cm;
@@ -876,16 +876,16 @@ void LocalClient::logCustomMessage(NetworkData * pData)
     {
       switch (pData->readLong())
       {
-      case L'i': // integer
+      case 'i': // integer
         {
           integers[i] = (int)pData->readLong();
           pPhraseArgs[i] = &(integers[i]);
           break;
         }
-      case L'S': // edition spell
+      case 'S': // edition spell
         {
-          wchar_t sEdition[NAME_MAX_CHARS];
-          wchar_t sName[NAME_MAX_CHARS];
+          char sEdition[NAME_MAX_CHARS];
+          char sName[NAME_MAX_CHARS];
           pData->readString(sEdition);
           pData->readString(sName);
           Spell * pSpell = m_pDataFactory->findSpell(sEdition, sName);
@@ -893,33 +893,33 @@ void LocalClient::logCustomMessage(NetworkData * pData)
           pPhraseArgs[i] = pSpell->getLocalizedName();
           break;
         }
-      case L'A': // edition artifact
+      case 'A': // edition artifact
         {
-          wchar_t sEdition[NAME_MAX_CHARS];
-          wchar_t sName[NAME_MAX_CHARS];
+          char sEdition[NAME_MAX_CHARS];
+          char sName[NAME_MAX_CHARS];
           pData->readString(sEdition);
           pData->readString(sName);
           Edition * pEdition = m_pDataFactory->findEdition(sEdition);
           assert(pEdition != NULL);
           Artifact * pArtifact = pEdition->findArtifact(sName);
           assert(pArtifact != NULL);
-          pArtifact->findLocalizedElement(sName, NAME_MAX_CHARS, i18n->getCurrentLanguageName(), L"name");
+          pArtifact->findLocalizedElement(sName, NAME_MAX_CHARS, i18n->getCurrentLanguageName(), "name");
           pPhraseArgs[i] = sName;
           break;
         }
-      case L'U': // edition unit
+      case 'U': // edition unit
         {
-          wchar_t sEdition[NAME_MAX_CHARS];
-          wchar_t sName[NAME_MAX_CHARS];
+          char sEdition[NAME_MAX_CHARS];
+          char sName[NAME_MAX_CHARS];
           pData->readString(sEdition);
           pData->readString(sName);
           UnitData * pData = m_pDataFactory->getUnitData(sEdition, sName);
           assert(pData != NULL);
-          pData->findLocalizedElement(sName, NAME_MAX_CHARS, i18n->getCurrentLanguageName(), L"name");
+          pData->findLocalizedElement(sName, NAME_MAX_CHARS, i18n->getCurrentLanguageName(), "name");
           pPhraseArgs[i] = sName;
           break;
         }
-      case L'p': // player
+      case 'p': // player
         {
           u8 uPlayerId = (u8) pData->readLong();
           Player * pPlayer = m_pPlayerManager->findPlayer(uPlayerId);
@@ -927,21 +927,21 @@ void LocalClient::logCustomMessage(NetworkData * pData)
           pPhraseArgs[i] = pPlayer->getAvatarName();
           break;
         }
-      case L's': // spell
+      case 's': // spell
         {
           u8 uPlayerId = (u8) pData->readLong();
           Player * pPlayer = m_pPlayerManager->findPlayer(uPlayerId);
           assert(pPlayer != NULL);
-          wchar_t sSrc[16];
+          char sSrc[16];
           pData->readString(sSrc);
           ObjectList * pList = NULL;
-          if (wcscmp(sSrc, L"hand") == 0)
+          if (strcmp(sSrc, "hand") == 0)
             pList = pPlayer->m_pHand;
-          else if (wcscmp(sSrc, L"deck") == 0)
+          else if (strcmp(sSrc, "deck") == 0)
             pList = pPlayer->m_pDeck;
-          else if (wcscmp(sSrc, L"active") == 0)
+          else if (strcmp(sSrc, "active") == 0)
             pList = pPlayer->m_pActiveSpells;
-          else if (wcscmp(sSrc, L"discard") == 0)
+          else if (strcmp(sSrc, "discard") == 0)
             pList = pPlayer->m_pDiscard;
           assert(pList != NULL);
           Spell * pSpell = pPlayer->findSpell(0, (u32) pData->readLong(), pList);
@@ -949,7 +949,7 @@ void LocalClient::logCustomMessage(NetworkData * pData)
           pPhraseArgs[i] = pSpell->getLocalizedName();
           break;
         }
-      case L'u': // unit
+      case 'u': // unit
         {
           u8 uPlayerId = (u8) pData->readLong();
           Player * pPlayer = m_pPlayerManager->findPlayer(uPlayerId);
@@ -959,7 +959,7 @@ void LocalClient::logCustomMessage(NetworkData * pData)
           pPhraseArgs[i] = pUnit->getName();
           break;
         }
-      case L't': // town
+      case 't': // town
         {
           u32 uTownId = (u32) pData->readLong();
           Town * pTown = m_pGameboardManager->getMap()->findTown(uTownId);
@@ -967,18 +967,18 @@ void LocalClient::logCustomMessage(NetworkData * pData)
           pPhraseArgs[i] = pTown->getName();
           break;
         }
-      case L'b': // building
+      case 'b': // building
         {
           u32 uTownId = (u32) pData->readLong();
           Town * pTown = m_pGameboardManager->getMap()->findTown(uTownId);
           assert(pTown != NULL);
-          wchar_t sName[NAME_MAX_CHARS];
+          char sName[NAME_MAX_CHARS];
           pData->readString(sName);
           pPhraseArgs[i] = sNotFound;
           Building * pBuild = pTown->getFirstBuilding(0);
           while (pBuild != NULL)
           {
-            if (wcscmp(pBuild->getObjectName(), sName) == 0)
+            if (strcmp(pBuild->getObjectName(), sName) == 0)
             {
               pPhraseArgs[i] = pBuild->getLocalizedName();
               break;
@@ -987,7 +987,7 @@ void LocalClient::logCustomMessage(NetworkData * pData)
           }
           break;
         }
-      case L'a': // define click action on log
+      case 'a': // define click action on log
         {
           i--;  // because pPhraseArgs is not used here
           uAction = (u8) pData->readLong();

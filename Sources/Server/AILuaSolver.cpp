@@ -130,7 +130,7 @@ void AILuaSolver::resolveAISpells(Player * pPlayer)
 //  This function initializes the environment to start evaluating a spell. It is called through AI resolution for each spell of the current player.
 //  (mainly set m_pEvaluationTargets to true)
 //  Then it "casts" the spell (in simulation mode)
-//  Eventually the spell may need targets ; so it calls "getTargetsForSpell" which will recursively construct
+//  Eventually the spell may need targets ; so it calls "getTargetsForSpel" which will recursively construct
 //    the whole tree of possible targets (list of lists)
 //  For each set of targets the spell is "resolved" (still in simulation mode), which allows to get an interest value
 //    for the spell associated to a set of targets.
@@ -151,7 +151,7 @@ AISpell * AILuaSolver::evaluateSpell(Player * pCaster, Spell * pRealSpell)
   pClone->resetResolveParameters();
   pClone->setInterest(0);
   pClone->setExtraMana(Mana());
-  pClone->callLuaFunction(L"onCast", 0, L"");
+  pClone->callLuaFunction("onCast", 0, "");
   getTargetsForSpell(pCaster, pClone, NULL, NULL);
   MetaObjectList * pList = (MetaObjectList*) m_pTryTargets->getFirst(0);
   while (pList != NULL) {
@@ -164,7 +164,7 @@ AISpell * AILuaSolver::evaluateSpell(Player * pCaster, Spell * pRealSpell)
     m_pCurrentPlayer = pCaster;
     m_pCurrentLua = pClone;
     m_fCurrentInterest = 0;
-    pClone->callLuaFunction(L"onResolve", 0, L"sil", pClone->getResolveParameters(), (int) pCaster->m_uPlayerId, (long) pClone->getInstanceId());
+    pClone->callLuaFunction("onResolve", 0, "si", pClone->getResolveParameters(), (int) pCaster->m_uPlayerId, (long) pClone->getInstanceId());
     // TODO : evaluate other function like "getMod..."
     if (m_fCurrentInterest > pClone->getInterest()) {
       pClone->setInterest(m_fCurrentInterest);
@@ -179,7 +179,7 @@ AISpell * AILuaSolver::evaluateSpell(Player * pCaster, Spell * pRealSpell)
 
 // -----------------------------------------------------------------
 // Name : findTargetForLua
-//  During the LUA evaluation process (like to evaluate interest of a spell), this function is called by "getTargetsForSpell"
+//  During the LUA evaluation process (like to evaluate interest of a spell), this function is called by "getTargetsForSpel"
 //  (See getTargetsForSpell comments for global algorithm)
 //  The "pInfoPtr" argument contains the demanded target type and current iterators to loop through game data
 //  If it's NULL, the info is retrieved from member "m_pEvaluationTargets" (the spell may need several targets, so it's a list)
@@ -234,7 +234,7 @@ AILuaSolver::TargetData * AILuaSolver::findTargetForLua(Player * pCaster, Evalua
             if (!(pInfo->m_uConstraints & SELECT_CONSTRAINT_NOT_AVATAR) || !(pPlayer->getAvatar() == pUnit)) {
               // Ok, we found a unit that fits the constraints ; use it now
               pTarget->m_pTarget = pUnit;
-              swprintf(pTarget->params, 64, L"%d %ld", (int) pUnit->getOwner(), (long) pUnit->getId());
+              snprintf(pTarget->params, 64, "%d %ld", (int) pUnit->getOwner(), (long) pUnit->getId());
               return pTarget;
             }
             pUnit = (Unit*) pPlayer->m_pUnits->getNext(pInfo->it2);
@@ -292,9 +292,9 @@ void AILuaSolver::getTargetsForSpell(Player * pCaster, Spell * pSpell, Evaluatio
       // We have a target.
       pList->addLast(pTargetData);
       // Does the spell ask for a second, third etc. target???
-      extern wchar_t g_sLuaSelectCallback[128];
-      if (wcscmp(g_sLuaSelectCallback, L"") != 0) {
-        pSpell->callLuaFunction(g_sLuaSelectCallback, 0, L"");
+      extern char g_sLuaSelectCallback[128];
+      if (strcmp(g_sLuaSelectCallback, "") != 0) {
+        pSpell->callLuaFunction(g_sLuaSelectCallback, 0, "");
         getTargetsForSpell(pCaster, pSpell, NULL, pList);
       }
       getTargetsForSpell(pCaster, pSpell, pInfo, NULL);

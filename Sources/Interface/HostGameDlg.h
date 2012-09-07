@@ -55,7 +55,7 @@ public:
 private:
   void addPlayerRow();
   void onClose(PlayerData * pData);
-  void onOpenPlayer(wchar_t * sName, PlayerData * pData);
+  void onOpenPlayer(char * sName, PlayerData * pData);
   void onOpenAI(PlayerData * pData);
   void onOpenLAN(PlayerData * pData);
   void onSelectAvatar(AvatarData * pAvatar, PlayerData * pData);
@@ -63,7 +63,7 @@ private:
   void releaseAvatar(PlayerData * pData);
   void releaseAI(PlayerData * pData);
   void onSelectRow(PlayerData * pData);
-  void onSelectMap(wchar_t * sMapId);
+  void onSelectMap(char * sMapId);
   bool checkIfAvatarAvailable(AvatarData * pAvatar, PlayerData * pExceptHere);
   void checkStartEnable();
   void checkGameNameWarning();

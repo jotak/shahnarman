@@ -5,7 +5,7 @@
 // Name : Temple
 //  Constructor
 // -----------------------------------------------------------------
-Temple::Temple(CoordsMap mapPos, Map * pMap, ObjectList ** pGlobalEffects) : MapObject(mapPos, pMap, pGlobalEffects, L"")
+Temple::Temple(CoordsMap mapPos, Map * pMap, ObjectList ** pGlobalEffects) : MapObject(mapPos, pMap, pGlobalEffects, "")
 {
   m_uTempleId = 0;
   registerValue(STRING_MANATYPE, 0);
@@ -40,16 +40,16 @@ void Temple::init(u32 uTempleId, u8 uType, u8 uAmount)
   switch (uType)
   {
   case MANA_LAW:
-    wsafecpy(m_sTexture, MAX_PATH, L"temple_law");
+    wsafecpy(m_sTexture, MAX_PATH, "temple_law");
     break;
   case MANA_LIFE:
-    wsafecpy(m_sTexture, MAX_PATH, L"temple_life");
+    wsafecpy(m_sTexture, MAX_PATH, "temple_life");
     break;
   case MANA_DEATH:
-    wsafecpy(m_sTexture, MAX_PATH, L"temple_death");
+    wsafecpy(m_sTexture, MAX_PATH, "temple_death");
     break;
   case MANA_CHAOS:
-    wsafecpy(m_sTexture, MAX_PATH, L"temple_chaos");
+    wsafecpy(m_sTexture, MAX_PATH, "temple_chaos");
     break;
   }
 }
@@ -92,16 +92,16 @@ void Temple::deserialize(NetworkData * pData, LocalClient * pLocalClient)
   switch (getValue(STRING_MANATYPE))
   {
   case MANA_LAW:
-    wsafecpy(m_sTexture, MAX_PATH, L"temple_law");
+    wsafecpy(m_sTexture, MAX_PATH, "temple_law");
     break;
   case MANA_LIFE:
-    wsafecpy(m_sTexture, MAX_PATH, L"temple_life");
+    wsafecpy(m_sTexture, MAX_PATH, "temple_life");
     break;
   case MANA_DEATH:
-    wsafecpy(m_sTexture, MAX_PATH, L"temple_death");
+    wsafecpy(m_sTexture, MAX_PATH, "temple_death");
     break;
   case MANA_CHAOS:
-    wsafecpy(m_sTexture, MAX_PATH, L"temple_chaos");
+    wsafecpy(m_sTexture, MAX_PATH, "temple_chaos");
     break;
   }
 }
@@ -137,32 +137,32 @@ int Temple::getTexture()
 // -----------------------------------------------------------------
 // Name : getInfo
 // -----------------------------------------------------------------
-wchar_t * Temple::getInfo(wchar_t * sBuf, int iSize, InfoDest eDest)
+char * Temple::getInfo(char * sBuf, int iSize, InfoDest eDest)
 {
-  wchar_t sText[128];
-  wchar_t sType[32];
-  wchar_t sAmount[32];
-  wchar_t sSigns[4] = MANA_SIGNS;
+  char sText[128];
+  char sType[32];
+  char sAmount[32];
+  char sSigns[4] = MANA_SIGNS;
   u8 uType = getValue(STRING_MANATYPE);
   u8 uAmount = getValue(STRING_AMOUNT);
   switch (uType)
   {
   case MANA_LIFE:
-    i18n->getText(L"LIFE", sType, 32);
+    i18n->getText("LIFE", sType, 32);
     break;
   case MANA_LAW:
-    i18n->getText(L"LAW", sType, 32);
+    i18n->getText("LAW", sType, 32);
     break;
   case MANA_DEATH:
-    i18n->getText(L"DEATH", sType, 32);
+    i18n->getText("DEATH", sType, 32);
     break;
   case MANA_CHAOS:
-    i18n->getText(L"CHAOS", sType, 32);
+    i18n->getText("CHAOS", sType, 32);
     break;
   }
-  swprintf(sAmount, 32, L"%c %d", sSigns[uType], (int) uAmount);
+  snprintf(sAmount, 32, "%c %d", sSigns[uType], (int) uAmount);
   void * pPhraseArgs[2] = { sType, sAmount };
-  i18n->getText(L"TEMPLE_OF_%$1s_(%$2s)", sText, 128, pPhraseArgs);
+  i18n->getText("TEMPLE_OF_%$1s_(%$2s)", sText, 128, pPhraseArgs);
 
   wsafecpy(sBuf, iSize, sText);
   return sBuf;

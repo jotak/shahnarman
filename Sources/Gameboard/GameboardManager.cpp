@@ -71,21 +71,21 @@ void GameboardManager::Init()
 
   // Prepare other graphics
   // texture must be loaded with special parameters (wrap: repeat), so load it manually
-  int iTex = pDisplay->getTextureEngine()->loadTexture(L"darker_map");
+  int iTex = pDisplay->getTextureEngine()->loadTexture("darker_map");
   QuadData bgquad(0, m_pLocalClient->getClientParameters()->screenXSize, 0, m_pLocalClient->getClientParameters()->screenYSize, iTex, pDisplay);
   // modify quad so that texture is repeated
   Texture * pTex = pDisplay->getTextureEngine()->getTexture(iTex);
   bgquad.m_fUEnd = ((double)m_pLocalClient->getClientParameters()->screenXSize) / ((double)pTex->m_iWidth);
   bgquad.m_fVEnd = ((double)m_pLocalClient->getClientParameters()->screenYSize) / ((double)pTex->m_iHeight);
   m_pBackgroundGeometry = new GeometryQuads(&bgquad, VB_Static);
-  QuadData quad0(0, 170, 0, 86, L"terra_incognita", pDisplay);
+  QuadData quad0(0, 170, 0, 86, "terra_incognita", pDisplay);
   m_pTerraIncognitaGeometry = new GeometryQuads(&quad0, VB_Static);
-  QuadData quad1(0.0f, 0.2f, 0.0f, 0.2f, L"path_dot", pDisplay);
+  QuadData quad1(0.0f, 0.2f, 0.0f, 0.2f, "path_dot", pDisplay);
   m_pPathDot = new GeometryQuads(&quad1, VB_Static);
-  QuadData quad2(0.0f, 2.0f, 0.0f, 2.0f, L"battle", pDisplay);
+  QuadData quad2(0.0f, 2.0f, 0.0f, 2.0f, "battle", pDisplay);
   m_pBattleIcon = new GeometryQuads(&quad2, VB_Static);
   m_pBattleIcon->bindModifier(new ModProgressiveScaling(0, 0.8f, 1.0f, 1.0f, -0.3f, 0.5f, 0.5f, PSB_ForthAndBack));
-  QuadData quad3(0.0f, 1.0f, 0.0f, 1.0f, L"magic_circle", pDisplay);
+  QuadData quad3(0.0f, 1.0f, 0.0f, 1.0f, "magic_circle", pDisplay);
   m_pMagicCircleGeometry = new GeometryQuads(&quad3, VB_Static);
   GeometryModifier * pMod = new ModProgressiveScaling(0, 0.8f, 1.0f, 1.0f, -0.3f, 0.5f, 0.5f, PSB_ForthAndBack);
   pMod->setActive(false);
@@ -397,16 +397,16 @@ void GameboardManager::enableNextPlayer(Player * pPlayer)
           foes++;
         pMapObj = pTile->getNextMapObject(GOTYPE_UNIT);
       }
-      wchar_t sNb[8];
-      int iFont = m_pLocalClient->getDisplay()->getFontEngine()->registerFont(L"Arabolical_32", m_pLocalClient->getDisplay()->getTextureEngine());
+      char sNb[8];
+      int iFont = m_pLocalClient->getDisplay()->getFontEngine()->registerFont("Arabolical_32", m_pLocalClient->getDisplay()->getTextureEngine());
       if (allies > 1)
       {
-        swprintf(sNb, 8, L"%d", allies);
+        snprintf(sNb, 8, "%d", allies);
         pTile->m_pNbAlliesGeo = new GeometryText(sNb, iFont, 0.3f, VB_Static, m_pLocalClient->getDisplay());
       }
       if (foes > 0 && allies + foes > 1)
       {
-        swprintf(sNb, 8, L"%d", foes);
+        snprintf(sNb, 8, "%d", foes);
         pTile->m_pNbFoesGeo = new GeometryText(sNb, iFont, 0.3f, VB_Static, m_pLocalClient->getDisplay());
       }
       // Again, loop into map objects to put owned units first
@@ -455,7 +455,7 @@ void GameboardManager::updateTownsData(NetworkData * pData)
     u32 uTownId = (u32) pData->readLong();
     Town * pTown = m_Map.findTown(uTownId);
     if (pTown == NULL)
-      m_pLocalClient->getDebug()->notifyErrorMessage(L"Error at updateTownsData: town id not found.");
+      m_pLocalClient->getDebug()->notifyErrorMessage("Error at updateTownsData: town id not found.");
     else
       pTown->deserializeForUpdate(pData);
   }

@@ -179,37 +179,37 @@ Player * PlayerManagerAbstract::getNextPlayerAndNeutral(int _it)
 // -----------------------------------------------------------------
 // Name : findTargetFromIdentifiers
 // -----------------------------------------------------------------
-LuaTargetable * PlayerManagerAbstract::findTargetFromIdentifiers(long iType, wchar_t * sIds, Map * pMap)
+LuaTargetable * PlayerManagerAbstract::findTargetFromIdentifiers(long iType, char * sIds, Map * pMap)
 {
-  wchar_t sType[64];
+  char sType[64];
   if (iType == SELECT_TYPE_PLAYER)
   {
     int id;
-    swscanf(sIds, L"%s %d", sType, 64, &id);
+    sscanf(sIds, "%s %d", sType, &id);
     return findPlayer(id);
   }
   else if (iType == SELECT_TYPE_TEMPLE)
   {
     long id, owner;
-    swscanf(sIds, L"%s %ld %ld", sType, 64, &owner, &id);
+    sscanf(sIds, "%s %ld %ld", sType, &owner, &id);
     return pMap->findTemple(id);
   }
   else if (iType == SELECT_TYPE_TOWN)
   {
     long id, owner;
-    swscanf(sIds, L"%s %ld %ld", sType, 64, &owner, &id);
+    sscanf(sIds, "%s %ld %ld", sType, &owner, &id);
     return pMap->findTown(id);
   }
   else if (iType == SELECT_TYPE_TILE)
   {
     long x, y;
-    swscanf(sIds, L"%s %ld %ld", sType, 64, &x, &y);
+    sscanf(sIds, "%s %ld %ld", sType, &x, &y);
     return pMap->getTileAt(CoordsMap(x, y));
   }
   else if (iType == SELECT_TYPE_UNIT)
   {
     long id, owner;
-    swscanf(sIds, L"%s %ld %ld", sType, 64, &owner, &id);
+    sscanf(sIds, "%s %ld %ld", sType, &owner, &id);
     Player * pPlayer = findPlayer(owner);
     assert(pPlayer != NULL);
     return pPlayer->findUnit(id);
@@ -220,14 +220,14 @@ LuaTargetable * PlayerManagerAbstract::findTargetFromIdentifiers(long iType, wch
 // -----------------------------------------------------------------
 // Name : retrieveTargetsNames
 // -----------------------------------------------------------------
-wchar_t * PlayerManagerAbstract::retrieveTargetsNames(wchar_t * sBuf, int iSize, wchar_t * sIds, Map * pMap)
+char * PlayerManagerAbstract::retrieveTargetsNames(char * sBuf, int iSize, char * sIds, Map * pMap)
 {
-  wsafecpy(sBuf, iSize, L"");
-  wchar_t sep[8] = L"";
+  wsafecpy(sBuf, iSize, "");
+  char sep[8] = "";
   // The first element in sIds is object type
-  wchar_t sType[64];
+  char sType[64];
   int id;
-  swscanf(sIds, L"%s %d", sType, 64, &id);
+  sscanf(sIds, "%s %d", sType, &id);
   u8 uType = getTargetTypeFromName(sType);
   LuaTargetable * pTarget = findTargetFromIdentifiers((long) uType, sIds, pMap);
   if (pTarget != NULL) {

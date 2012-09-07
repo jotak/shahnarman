@@ -17,7 +17,7 @@ guiEditBox::guiEditBox(KeyboardInputEngine * pInputs) : guiComponent()
   m_pCaretGeometry = NULL;
   m_pSelectionGeometry = NULL;
   m_iNbLines = 0;
-  wsafecpy(m_sText, LABEL_MAX_CHARS, L"");
+  wsafecpy(m_sText, LABEL_MAX_CHARS, "");
   m_FontId = (FontId)0;
   m_TextColor = F_RGBA_NULL;
   m_iCaretPos = 0;
@@ -45,7 +45,7 @@ guiEditBox::~guiEditBox()
 // -----------------------------------------------------------------
 // Name : init
 // -----------------------------------------------------------------
-void guiEditBox::init(int iCaretTex, const wchar_t * sText, FontId fontId, F_RGBA textColor, int iNbLines, bool bMultiLines, int * iMainTexs, const wchar_t * sCpntId, int xPxl, int yPxl, int wPxl, int hPxl, DisplayEngine * pDisplay)
+void guiEditBox::init(int iCaretTex, const char * sText, FontId fontId, F_RGBA textColor, int iNbLines, bool bMultiLines, int * iMainTexs, const char * sCpntId, int xPxl, int yPxl, int wPxl, int hPxl, DisplayEngine * pDisplay)
 {
   guiComponent::init(sCpntId, xPxl, yPxl, wPxl, hPxl);
   m_FontId = fontId;
@@ -355,10 +355,10 @@ bool guiEditBox::onKeyDown(unsigned char c)
           if (c == 3 || c == 24) // get selected text
           {
             int nbChars = m_iSelectionEnd - m_iSelectionStart;
-            wchar_t * sClipboard = new wchar_t[nbChars+1];
+            char * sClipboard = new char[nbChars+1];
             for (int i = m_iSelectionStart; i <= m_iSelectionEnd; i++)
               sClipboard[i-m_iSelectionStart] = m_sText[i];
-            sClipboard[nbChars] = L'\0';
+            sClipboard[nbChars] = '\0';
             copyStringToClipboard(sClipboard);
             delete[] sClipboard;
           }
@@ -367,7 +367,7 @@ bool guiEditBox::onKeyDown(unsigned char c)
             FREE(m_pSelectionGeometry);
             int nDel = m_iSelectionEnd - m_iSelectionStart;
             m_iCaretPos = m_iSelectionStart;
-            int iLength = (int) wcslen(m_sText);
+            int iLength = (int) strlen(m_sText);
             for (int i = m_iCaretPos; i < 1 + iLength - nDel; i++)
               m_sText[i] = m_sText[i+nDel];
             if (m_pTextGeometry != NULL)
@@ -376,13 +376,13 @@ bool guiEditBox::onKeyDown(unsigned char c)
         }
         if (c == 22) // paste
         {
-          wchar_t sBuffer[1024] = L"";
+          char sBuffer[1024] = "";
           getStringFromClipboard(sBuffer, 1024);
-          int iLength = (int) wcslen(m_sText);
-          int iBufLen = (int) wcslen(sBuffer);
+          int iLength = (int) strlen(m_sText);
+          int iBufLen = (int) strlen(sBuffer);
           if (iLength + iBufLen < LABEL_MAX_CHARS-1) // paste only if no overflow
           {
-            m_sText[iLength+iBufLen] = L'\0';
+            m_sText[iLength+iBufLen] = '\0';
             for (int i = iLength-1; i >= m_iCaretPos; i--)
               m_sText[i+iBufLen] = m_sText[i];
             for (int i = 0; i < iBufLen; i++)
@@ -417,7 +417,7 @@ bool guiEditBox::onKeyDown(unsigned char c)
         nDel = m_iSelectionEnd - m_iSelectionStart;
         m_iCaretPos = m_iSelectionStart;
       }
-      int iLength = (int) wcslen(m_sText);
+      int iLength = (int) strlen(m_sText);
       for (int i = m_iCaretPos; i < 1 + iLength - nDel; i++)
         m_sText[i] = m_sText[i+nDel];
       if (m_pTextGeometry != NULL)
@@ -425,18 +425,16 @@ bool guiEditBox::onKeyDown(unsigned char c)
     }
     if (c != 127)
     {
-      int iLength = (int) wcslen(m_sText);
+      int iLength = (int) strlen(m_sText);
       for (int i = iLength; i > m_iCaretPos; i--)
         m_sText[i] = m_sText[i-1];
       if (iLength == LABEL_MAX_CHARS - 1)
-        m_sText[iLength] = L'\0';
+        m_sText[iLength] = '\0';
       else
-        m_sText[iLength+1] = L'\0';
+        m_sText[iLength+1] = '\0';
       char str[2] = "a";
       str[0] = (char) c;
-      wchar_t wstr[4] = L"";
-      strtow(wstr, 4, str);
-      m_sText[m_iCaretPos] = wstr[0];
+      m_sText[m_iCaretPos] = str[0];
       if (m_pTextGeometry != NULL)
         ((GeometryText*)m_pTextGeometry)->setText(m_sText, m_aiAllFonts[(int)m_FontId]);
       m_iCaretPos++;
@@ -490,7 +488,7 @@ bool guiEditBox::onSpecialKeyDown(int key)
         if (m_pInputs->isCtrlPressed())
           m_iCaretPos = getEndOfWord(m_iCaretPos);
         else
-          m_iCaretPos = min(m_iCaretPos+1, (int) wcslen(m_sText));
+          m_iCaretPos = min(m_iCaretPos+1, (int) strlen(m_sText));
         break;
       }
     case SPECKEY_UP:
@@ -518,7 +516,7 @@ bool guiEditBox::onSpecialKeyDown(int key)
     case SPECKEY_END:
       {
         if (m_pInputs->isCtrlPressed())
-          m_iCaretPos = (int) wcslen(m_sText);
+          m_iCaretPos = (int) strlen(m_sText);
         else
           m_iCaretPos = getEndOfLine(m_iCaretPos);
         break;
@@ -589,9 +587,9 @@ bool guiEditBox::onSpecialKeyDown(int key)
 // -----------------------------------------------------------------
 // Name : setText
 // -----------------------------------------------------------------
-void guiEditBox::setText(const wchar_t * sText)
+void guiEditBox::setText(const char * sText)
 {
-  if (wcscmp(sText, m_sText) == 0)
+  if (strcmp(sText, m_sText) == 0)
     return;
   wsafecpy(m_sText, LABEL_MAX_CHARS, sText);
   if (m_pTextGeometry != NULL)
@@ -632,11 +630,11 @@ void guiEditBox::updateSelectionGeometry()
   int nbSelLines = 1;
   for (int i = m_iSelectionStart; i < m_iSelectionEnd; i++)
   {
-    if (m_sText[i] == L'\n')
+    if (m_sText[i] == '\n')
       nbSelLines++;
   }
 
-  int texture = (m_pSelectionGeometry == NULL) ? getDisplay()->getTextureEngine()->loadTexture(L"EmptyWhiteSquare") : m_pSelectionGeometry->getTexture();
+  int texture = (m_pSelectionGeometry == NULL) ? getDisplay()->getTextureEngine()->loadTexture("EmptyWhiteSquare") : m_pSelectionGeometry->getTexture();
   QuadData ** pQuads = new QuadData*[nbSelLines];
 
   // Upper-left quad 1
@@ -645,7 +643,7 @@ void guiEditBox::updateSelectionGeometry()
   int iQuad = 0;
   for (int i = m_iSelectionStart; i < m_iSelectionEnd; i++)
   {
-    if (m_sText[i] == L'\n')
+    if (m_sText[i] == '\n')
     {
       cs2 = getDisplay()->getFontEngine()->getCharacterPosition(i, m_sText, m_aiAllFonts[(int)m_FontId]);
       cs2.y += getDisplay()->getFontEngine()->getFontHeight(m_aiAllFonts[(int)m_FontId]);
@@ -675,54 +673,54 @@ int guiEditBox::getStartOfWord(int caretpos)
   if (caretpos-1 < 0)
     return start;
   start--;
-  bool isFirstWord = !(m_sText[start] == L' ' ||
-                  m_sText[start] == L'\n' ||
-                  m_sText[start] == L'\t' ||
-                  m_sText[start] == L'.' ||
-                  m_sText[start] == L'-' ||
-                  m_sText[start] == L',' ||
-                  m_sText[start] == L'!' ||
-                  m_sText[start] == L'?' ||
-                  m_sText[start] == L';' ||
-                  m_sText[start] == L'<' ||
-                  m_sText[start] == L'>' ||
-                  m_sText[start] == L'(' ||
-                  m_sText[start] == L')' ||
-                  m_sText[start] == L'\"' ||
-                  m_sText[start] == L'\'' ||
-                  m_sText[start] == L'[' ||
-                  m_sText[start] == L']' ||
-                  m_sText[start] == L'{' ||
-                  m_sText[start] == L'}' ||
-                  m_sText[start] == L'%' ||
-                  m_sText[start] == L'*' ||
-                  m_sText[start] == L':' ||
-                  m_sText[start] == L'\\');
+  bool isFirstWord = !(m_sText[start] == ' ' ||
+                  m_sText[start] == '\n' ||
+                  m_sText[start] == '\t' ||
+                  m_sText[start] == '.' ||
+                  m_sText[start] == '-' ||
+                  m_sText[start] == ',' ||
+                  m_sText[start] == '!' ||
+                  m_sText[start] == '?' ||
+                  m_sText[start] == ';' ||
+                  m_sText[start] == '<' ||
+                  m_sText[start] == '>' ||
+                  m_sText[start] == '(' ||
+                  m_sText[start] == ')' ||
+                  m_sText[start] == '\"' ||
+                  m_sText[start] == '\'' ||
+                  m_sText[start] == '[' ||
+                  m_sText[start] == ']' ||
+                  m_sText[start] == '{' ||
+                  m_sText[start] == '}' ||
+                  m_sText[start] == '%' ||
+                  m_sText[start] == '*' ||
+                  m_sText[start] == ':' ||
+                  m_sText[start] == '\\');
   for (int i = caretpos-2; i >= 0; i--)
   {
-    bool isWord = !(m_sText[start-1] == L' ' ||
-                    m_sText[start-1] == L'\n' ||
-                    m_sText[start-1] == L'\t' ||
-                    m_sText[start-1] == L'.' ||
-                    m_sText[start-1] == L'-' ||
-                    m_sText[start-1] == L',' ||
-                    m_sText[start-1] == L'!' ||
-                    m_sText[start-1] == L'?' ||
-                    m_sText[start-1] == L';' ||
-                    m_sText[start-1] == L'<' ||
-                    m_sText[start-1] == L'>' ||
-                    m_sText[start-1] == L'(' ||
-                    m_sText[start-1] == L')' ||
-                    m_sText[start-1] == L'\"' ||
-                    m_sText[start-1] == L'\'' ||
-                    m_sText[start-1] == L'[' ||
-                    m_sText[start-1] == L']' ||
-                    m_sText[start-1] == L'{' ||
-                    m_sText[start-1] == L'}' ||
-                    m_sText[start-1] == L'%' ||
-                    m_sText[start-1] == L'*' ||
-                    m_sText[start-1] == L':' ||
-                    m_sText[start-1] == L'\\');
+    bool isWord = !(m_sText[start-1] == ' ' ||
+                    m_sText[start-1] == '\n' ||
+                    m_sText[start-1] == '\t' ||
+                    m_sText[start-1] == '.' ||
+                    m_sText[start-1] == '-' ||
+                    m_sText[start-1] == ',' ||
+                    m_sText[start-1] == '!' ||
+                    m_sText[start-1] == '?' ||
+                    m_sText[start-1] == ';' ||
+                    m_sText[start-1] == '<' ||
+                    m_sText[start-1] == '>' ||
+                    m_sText[start-1] == '(' ||
+                    m_sText[start-1] == ')' ||
+                    m_sText[start-1] == '\"' ||
+                    m_sText[start-1] == '\'' ||
+                    m_sText[start-1] == '[' ||
+                    m_sText[start-1] == ']' ||
+                    m_sText[start-1] == '{' ||
+                    m_sText[start-1] == '}' ||
+                    m_sText[start-1] == '%' ||
+                    m_sText[start-1] == '*' ||
+                    m_sText[start-1] == ':' ||
+                    m_sText[start-1] == '\\');
     if (isWord == isFirstWord)
       start--;
     else
@@ -737,57 +735,57 @@ int guiEditBox::getStartOfWord(int caretpos)
 int guiEditBox::getEndOfWord(int caretpos)
 {
   int end = caretpos;
-  int iLength = (int) wcslen(m_sText);
+  int iLength = (int) strlen(m_sText);
   if (end >= iLength)
     return end;
-  bool isFirstWord = !(m_sText[end] == L' ' ||
-                  m_sText[end] == L'\n' ||
-                  m_sText[end] == L'\t' ||
-                  m_sText[end] == L'.' ||
-                  m_sText[end] == L'-' ||
-                  m_sText[end] == L',' ||
-                  m_sText[end] == L'!' ||
-                  m_sText[end] == L'?' ||
-                  m_sText[end] == L';' ||
-                  m_sText[end] == L'<' ||
-                  m_sText[end] == L'>' ||
-                  m_sText[end] == L'(' ||
-                  m_sText[end] == L')' ||
-                  m_sText[end] == L'\"' ||
-                  m_sText[end] == L'\'' ||
-                  m_sText[end] == L'[' ||
-                  m_sText[end] == L']' ||
-                  m_sText[end] == L'{' ||
-                  m_sText[end] == L'}' ||
-                  m_sText[end] == L'%' ||
-                  m_sText[end] == L'*' ||
-                  m_sText[end] == L':' ||
-                  m_sText[end] == L'\\');
+  bool isFirstWord = !(m_sText[end] == ' ' ||
+                  m_sText[end] == '\n' ||
+                  m_sText[end] == '\t' ||
+                  m_sText[end] == '.' ||
+                  m_sText[end] == '-' ||
+                  m_sText[end] == ',' ||
+                  m_sText[end] == '!' ||
+                  m_sText[end] == '?' ||
+                  m_sText[end] == ';' ||
+                  m_sText[end] == '<' ||
+                  m_sText[end] == '>' ||
+                  m_sText[end] == '(' ||
+                  m_sText[end] == ')' ||
+                  m_sText[end] == '\"' ||
+                  m_sText[end] == '\'' ||
+                  m_sText[end] == '[' ||
+                  m_sText[end] == ']' ||
+                  m_sText[end] == '{' ||
+                  m_sText[end] == '}' ||
+                  m_sText[end] == '%' ||
+                  m_sText[end] == '*' ||
+                  m_sText[end] == ':' ||
+                  m_sText[end] == '\\');
   for (int i = caretpos+1; i <= iLength; i++)
   {
-    bool isWord = !(m_sText[end] == L' ' ||
-                    m_sText[end] == L'\n' ||
-                    m_sText[end] == L'\t' ||
-                    m_sText[end] == L'.' ||
-                    m_sText[end] == L'-' ||
-                    m_sText[end] == L',' ||
-                    m_sText[end] == L'!' ||
-                    m_sText[end] == L'?' ||
-                    m_sText[end] == L';' ||
-                    m_sText[end] == L'<' ||
-                    m_sText[end] == L'>' ||
-                    m_sText[end] == L'(' ||
-                    m_sText[end] == L')' ||
-                    m_sText[end] == L'\"' ||
-                    m_sText[end] == L'\'' ||
-                    m_sText[end] == L'[' ||
-                    m_sText[end] == L']' ||
-                    m_sText[end] == L'{' ||
-                    m_sText[end] == L'}' ||
-                    m_sText[end] == L'%' ||
-                    m_sText[end] == L'*' ||
-                    m_sText[end] == L':' ||
-                    m_sText[end] == L'\\');
+    bool isWord = !(m_sText[end] == ' ' ||
+                    m_sText[end] == '\n' ||
+                    m_sText[end] == '\t' ||
+                    m_sText[end] == '.' ||
+                    m_sText[end] == '-' ||
+                    m_sText[end] == ',' ||
+                    m_sText[end] == '!' ||
+                    m_sText[end] == '?' ||
+                    m_sText[end] == ';' ||
+                    m_sText[end] == '<' ||
+                    m_sText[end] == '>' ||
+                    m_sText[end] == '(' ||
+                    m_sText[end] == ')' ||
+                    m_sText[end] == '\"' ||
+                    m_sText[end] == '\'' ||
+                    m_sText[end] == '[' ||
+                    m_sText[end] == ']' ||
+                    m_sText[end] == '{' ||
+                    m_sText[end] == '}' ||
+                    m_sText[end] == '%' ||
+                    m_sText[end] == '*' ||
+                    m_sText[end] == ':' ||
+                    m_sText[end] == '\\');
     if (isWord == isFirstWord)
       end++;
     else
@@ -801,7 +799,7 @@ int guiEditBox::getEndOfWord(int caretpos)
 // -----------------------------------------------------------------
 int guiEditBox::getStartOfLine(int caretpos)
 {
-  while (caretpos - 1 >= 0 && m_sText[caretpos-1] != L'\n' && m_sText[caretpos-1] != L'\r')
+  while (caretpos - 1 >= 0 && m_sText[caretpos-1] != '\n' && m_sText[caretpos-1] != '\r')
     caretpos--;
   return caretpos;
 }
@@ -811,8 +809,8 @@ int guiEditBox::getStartOfLine(int caretpos)
 // -----------------------------------------------------------------
 int guiEditBox::getEndOfLine(int caretpos)
 {
-  int len = (int) wcslen(m_sText);
-  while (caretpos + 1 <= len && m_sText[caretpos] != L'\n' && m_sText[caretpos] != L'\r')
+  int len = (int) strlen(m_sText);
+  while (caretpos + 1 <= len && m_sText[caretpos] != '\n' && m_sText[caretpos] != '\r')
     caretpos++;
   return caretpos;
 }
@@ -830,22 +828,22 @@ void guiEditBox::setFocus()
 // Name : createDefaultEditBox
 //  Static default constructor
 // -----------------------------------------------------------------
-guiEditBox * guiEditBox::createDefaultEditBox(int iNbLines, bool bMultiLines, int wPxl, const wchar_t * sId, KeyboardInputEngine * pInputs, DisplayEngine * pDisplay)
+guiEditBox * guiEditBox::createDefaultEditBox(int iNbLines, bool bMultiLines, int wPxl, const char * sId, KeyboardInputEngine * pInputs, DisplayEngine * pDisplay)
 {
   int iTexs[9];
-  iTexs[0] = pDisplay->getTextureEngine()->findTexture(L"interface:LstTL");
-  iTexs[1] = pDisplay->getTextureEngine()->findTexture(L"interface:LstTC");
-  iTexs[2] = pDisplay->getTextureEngine()->findTexture(L"interface:LstTR");
-  iTexs[3] = pDisplay->getTextureEngine()->findTexture(L"interface:LstCL");
-  iTexs[4] = pDisplay->getTextureEngine()->findTexture(L"interface:EditBg");
-  iTexs[5] = pDisplay->getTextureEngine()->findTexture(L"interface:LstCR");
-  iTexs[6] = pDisplay->getTextureEngine()->findTexture(L"interface:LstBL");
-  iTexs[7] = pDisplay->getTextureEngine()->findTexture(L"interface:LstBC");
-  iTexs[8] = pDisplay->getTextureEngine()->findTexture(L"interface:LstBR");
+  iTexs[0] = pDisplay->getTextureEngine()->findTexture("interface:LstT");
+  iTexs[1] = pDisplay->getTextureEngine()->findTexture("interface:LstTC");
+  iTexs[2] = pDisplay->getTextureEngine()->findTexture("interface:LstTR");
+  iTexs[3] = pDisplay->getTextureEngine()->findTexture("interface:LstC");
+  iTexs[4] = pDisplay->getTextureEngine()->findTexture("interface:EditBg");
+  iTexs[5] = pDisplay->getTextureEngine()->findTexture("interface:LstCR");
+  iTexs[6] = pDisplay->getTextureEngine()->findTexture("interface:LstB");
+  iTexs[7] = pDisplay->getTextureEngine()->findTexture("interface:LstBC");
+  iTexs[8] = pDisplay->getTextureEngine()->findTexture("interface:LstBR");
   guiEditBox * pBox = new guiEditBox(pInputs);
   pBox->init(
-    pDisplay->getTextureEngine()->findTexture(L"interface:Caret"),
-    L"", TEXT_FONT, TEXT_COLOR_DARK, iNbLines, bMultiLines, iTexs,
+    pDisplay->getTextureEngine()->findTexture("interface:Caret"),
+    "", TEXT_FONT, TEXT_COLOR_DARK, iNbLines, bMultiLines, iTexs,
     sId, 0, 0, wPxl, 1, pDisplay);
   return pBox;
 }

@@ -12,8 +12,8 @@ StatusDlg::StatusDlg(LocalClient * pLocalClient) : guiDocument()
 {
   m_pLocalClient = pLocalClient;
 
-  init(L"StatusDlg",
-    pLocalClient->getDisplay()->getTextureEngine()->findTexture(L"interface:WinBg"),
+  init("StatusDlg",
+    pLocalClient->getDisplay()->getTextureEngine()->findTexture("interface:WinBg"),
     0, 0, 1, 1, pLocalClient->getDisplay());
 }
 
@@ -34,12 +34,12 @@ StatusDlg::~StatusDlg()
 // -----------------------------------------------------------------
 // Name : showStatus
 // -----------------------------------------------------------------
-void StatusDlg::showStatus(wchar_t * sMessage)
+void StatusDlg::showStatus(char * sMessage)
 {
   deleteAllComponents();
 
   guiLabel * pLbl = new guiLabel();
-  pLbl->init(sMessage, TEXT_FONT, TEXT_COLOR, L"", 0, 0, 400, 0, getDisplay());
+  pLbl->init(sMessage, TEXT_FONT, TEXT_COLOR, "", 0, 0, 400, 0, getDisplay());
   addComponent(pLbl);
 
   setDimensions(pLbl->getWidth(), pLbl->getHeight());

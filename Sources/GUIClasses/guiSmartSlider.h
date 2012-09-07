@@ -9,15 +9,15 @@
 class guiSliderItem : public BaseObject
 {
 public:
-  virtual wchar_t * getInfo(wchar_t * str, int strsize)
+  virtual char * getInfo(char * str, int strsize)
   {
     wsafecpy(str, strsize, m_sName);
     return str;
   };
   int m_iTexId;
-  wchar_t m_sName[SLIDER_ITEM_MAX_CHARS];
+  char m_sName[SLIDER_ITEM_MAX_CHARS];
   bool m_bEnabled;
-  wchar_t m_sDisabledReason[SLIDER_ITEM_MAX_CHARS];
+  char m_sDisabledReason[SLIDER_ITEM_MAX_CHARS];
 };
 
 class guiSmartSlider : public guiComponent
@@ -28,7 +28,7 @@ public:
   ~guiSmartSlider();
 
   // Inherited functions
-  virtual void init(int iItemSize, int iSpacing, FontId fontId, F_RGBA textColor, const wchar_t * sCpntId, int xPxl, int yPxl, int wPxl, int hPxl, DisplayEngine * pDisplay);
+  virtual void init(int iItemSize, int iSpacing, FontId fontId, F_RGBA textColor, const char * sCpntId, int xPxl, int yPxl, int wPxl, int hPxl, DisplayEngine * pDisplay);
   virtual guiObject * clone();
   virtual u32 getType() { return guiComponent::getType() | GOTYPE_SMARTSLIDER; };
   virtual void displayAt(int iXOffset, int iYOffset, F_RGBA cpntColor = F_RGBA_NULL, F_RGBA docColor = F_RGBA_NULL);

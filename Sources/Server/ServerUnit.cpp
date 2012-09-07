@@ -79,7 +79,7 @@ void Unit::onNewTurn()
 // -----------------------------------------------------------------
 // Name : setBaseValue
 // -----------------------------------------------------------------
-bool Unit::setBaseValue(const wchar_t * sName, long val)
+bool Unit::setBaseValue(const char * sName, long val)
 {
   m_bModified = true;
   return LuaTargetable::setBaseValue(sName, val);

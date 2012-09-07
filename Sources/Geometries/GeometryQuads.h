@@ -31,11 +31,11 @@ class QuadData
 {
 friend class GeometryQuads;
 public:
-  QuadData(int xstart, int xend, int ystart, int yend, const wchar_t * texture, DisplayEngine * pDisplay);
+  QuadData(int xstart, int xend, int ystart, int yend, const char * texture, DisplayEngine * pDisplay);
   QuadData(int xstart, int xend, int ystart, int yend, int texture, DisplayEngine * pDisplay);
-  QuadData(int xstart, int xend, int ystart, int yend, int ustart, int uend, int vstart, int vend, const wchar_t * texture, DisplayEngine * pDisplay);
-  QuadData(float xstart, float xend, float ystart, float yend, const wchar_t * texture, DisplayEngine * pDisplay);
-  QuadData(float xstart, float xend, float ystart, float yend, int ustart, int uend, int vstart, int vend, const wchar_t * texture, DisplayEngine * pDisplay);
+  QuadData(int xstart, int xend, int ystart, int yend, int ustart, int uend, int vstart, int vend, const char * texture, DisplayEngine * pDisplay);
+  QuadData(float xstart, float xend, float ystart, float yend, const char * texture, DisplayEngine * pDisplay);
+  QuadData(float xstart, float xend, float ystart, float yend, int ustart, int uend, int vstart, int vend, const char * texture, DisplayEngine * pDisplay);
   QuadData(float xstart, float xend, float ystart, float yend, float ustart, float uend, float vstart, float vend, int texture, DisplayEngine * pDisplay);
 
   static void releaseQuads(int nQuads, QuadData ** pQuads);

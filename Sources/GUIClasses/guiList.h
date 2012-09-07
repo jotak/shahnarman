@@ -63,12 +63,12 @@ public:
   bool hasFocus() { return m_bHasFocus; };
 
   // Clone / init
-  virtual void init(FontId fontId, F_RGBA textColor, int * iMainTexs, const wchar_t * sCpntId, int xPxl, int yPxl, int wPxl, int hPxl, DisplayEngine * pDisplay);
+  virtual void init(FontId fontId, F_RGBA textColor, int * iMainTexs, const char * sCpntId, int xPxl, int yPxl, int wPxl, int hPxl, DisplayEngine * pDisplay);
   virtual guiObject * clone();
 
   // Other
   void setFocus();
-  guiListLabel * addItem(wchar_t * sText, wchar_t * sId);
+  guiListLabel * addItem(char * sText, char * sId);
   void clear();
   guiListLabel * getFirstSelectedItem();
   guiListLabel * getNextSelectedItem();
@@ -80,7 +80,7 @@ public:
   bool sortCompare(BaseObject * A, BaseObject * B);
 
   // Static default constructors
-  static guiList * createDefaultList(int width, int height, const wchar_t * sId, KeyboardInputEngine * pInputs, DisplayEngine * pDisplay);
+  static guiList * createDefaultList(int width, int height, const char * sId, KeyboardInputEngine * pInputs, DisplayEngine * pDisplay);
 
 protected:
   void updateSelectionGeometry();

@@ -30,8 +30,8 @@ public:
   virtual void setEnabled(bool bEnabled) { m_bEnabled = bEnabled; };
 
   // Member access
-  void setId(const wchar_t * id) { wsafecpy(m_sCpntId, 32, id); };
-  wchar_t * getId() { return m_sCpntId; };
+  void setId(const char * id) { wsafecpy(m_sCpntId, 32, id); };
+  char * getId() { return m_sCpntId; };
   void setOwner(ComponentOwnerInterface * pDoc) { m_pOwner = pDoc; };
   ComponentOwnerInterface * getOwner() { return m_pOwner; };
 
@@ -41,14 +41,14 @@ public:
   void centerOnComponent(guiComponent * pOther);
 
   // Clone / init
-  virtual void init(const wchar_t * sCpntId, int xPxl, int yPxl, int wPxl, int hPxl);
+  virtual void init(const char * sCpntId, int xPxl, int yPxl, int wPxl, int hPxl);
 //  virtual guiObject * clone();
 
 protected:
   bool m_bVisible;
   bool m_bEnabled;
   u8 m_uHighlight;
-  wchar_t m_sCpntId[CPNT_ID_MAX_CHARS];
+  char m_sCpntId[CPNT_ID_MAX_CHARS];
   ComponentOwnerInterface * m_pOwner;
 };
 

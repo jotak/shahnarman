@@ -15,7 +15,7 @@
 // Name : Unit
 //  Constructor
 // -----------------------------------------------------------------
-Unit::Unit(CoordsMap mapPos, Map * pMap, ObjectList ** pGlobalEffects) : MapObject(mapPos, pMap, pGlobalEffects, L"")
+Unit::Unit(CoordsMap mapPos, Map * pMap, ObjectList ** pGlobalEffects) : MapObject(mapPos, pMap, pGlobalEffects, "")
 {
   m_pAStarPath = new ObjectList(true);
   m_iPathTurnIterator = m_pAStarPath->getIterator();
@@ -150,9 +150,9 @@ void Unit::deserialize(NetworkData * pData, LocalClient * pLocalClient, std::que
   long size = pData->readLong();
   for (int i = 0; i < size; i++)
   {
-    wchar_t sEdition[NAME_MAX_CHARS];
-    wchar_t sName[NAME_MAX_CHARS];
-    wchar_t sParams[LUA_FUNCTION_PARAMS_MAX_CHARS];
+    char sEdition[NAME_MAX_CHARS];
+    char sName[NAME_MAX_CHARS];
+    char sParams[LUA_FUNCTION_PARAMS_MAX_CHARS];
     u32 id = (u32) pData->readLong();
     pData->readString(sEdition);
     pData->readString(sName);
@@ -173,8 +173,8 @@ void Unit::deserialize(NetworkData * pData, LocalClient * pLocalClient, std::que
   if (pUnitData != NULL)
   {
     // L12N elements + texture
-    pUnitData->findLocalizedElement(m_sName, NAME_MAX_CHARS, i18n->getCurrentLanguageName(), L"name");
-    pUnitData->findLocalizedElement(m_sDescription, DESCRIPTION_MAX_CHARS, i18n->getCurrentLanguageName(), L"description");
+    pUnitData->findLocalizedElement(m_sName, NAME_MAX_CHARS, i18n->getCurrentLanguageName(), "name");
+    pUnitData->findLocalizedElement(m_sDescription, DESCRIPTION_MAX_CHARS, i18n->getCurrentLanguageName(), "description");
     wsafecpy(m_sTexture, MAX_PATH, pUnitData->m_sTextureFilename);
   }
 
@@ -225,7 +225,7 @@ void Unit::deserializeForUpdate(NetworkData * pData, LocalClient * pLocalClient)
   int nbValues = (int) pData->readLong();
   for (int i = 0; i < nbValues; i++)
   {
-    wchar_t sKey[64];
+    char sKey[64];
     pData->readString(sKey);
     setBaseValue(sKey, (double) pData->readLong());
   }
@@ -315,19 +315,19 @@ bool Unit::computePath(CoordsMap mapPos)
     // Check infinite loop spy
     if (idx == -99) {
       extern GameRoot * g_pMainGameRoot;
-      g_pMainGameRoot->m_pLocalClient->getDebug()->notifyErrorMessage(L"SPY infinite loop in pathfinder!!!");
+      g_pMainGameRoot->m_pLocalClient->getDebug()->notifyErrorMessage("SPY infinite loop in pathfinder!!!");
     }
     if (idx == -98) {
       extern GameRoot * g_pMainGameRoot;
-      g_pMainGameRoot->m_pLocalClient->getDebug()->notifyErrorMessage(L"SPY infinite loop in pathfinder: open list overflow");
+      g_pMainGameRoot->m_pLocalClient->getDebug()->notifyErrorMessage("SPY infinite loop in pathfinder: open list overflow");
     }
     if (idx == -97) {
       extern GameRoot * g_pMainGameRoot;
-      g_pMainGameRoot->m_pLocalClient->getDebug()->notifyErrorMessage(L"SPY infinite loop in pathfinder: closed list overflow");
+      g_pMainGameRoot->m_pLocalClient->getDebug()->notifyErrorMessage("SPY infinite loop in pathfinder: closed list overflow");
     }
     if (idx == -96) {
       extern GameRoot * g_pMainGameRoot;
-      g_pMainGameRoot->m_pLocalClient->getDebug()->notifyErrorMessage(L"SPY infinite loop in pathfinder: extract, parent not found in closed list");
+      g_pMainGameRoot->m_pLocalClient->getDebug()->notifyErrorMessage("SPY infinite loop in pathfinder: extract, parent not found in closed list");
     }
     return false;
   }
@@ -681,7 +681,7 @@ void Unit::addSkill(Skill * pSkill)
     Skill * pOther = (Skill*) m_pSkillsRef->getFirst(0);
     while (pOther != NULL)
     {
-      if (wcscmp(pOther->getObjectEdition(), pSkill->getObjectEdition()) == 0 && wcscmp(pOther->getObjectName(), pSkill->getObjectName()) == 0)
+      if (strcmp(pOther->getObjectEdition(), pSkill->getObjectEdition()) == 0 && strcmp(pOther->getObjectName(), pSkill->getObjectName()) == 0)
       {
         if (pSkill->isMergeable())
           pOther->merge(pSkill);
@@ -695,13 +695,13 @@ void Unit::addSkill(Skill * pSkill)
   attachEffect(pSkill);
   pSkill->addTarget(this, SELECT_TYPE_UNIT);
   pSkill->setCaster(this);
-  pSkill->callLuaFunction(L"setAttachedUnit", 0, L"s", m_sIdentifiers);
+  pSkill->callLuaFunction("setAttachedUnit", 0, "s", m_sIdentifiers);
 }
 
 // -----------------------------------------------------------------
 // Name : setNameDescriptionTexture
 // -----------------------------------------------------------------
-void Unit::setNameDescriptionTexture(wchar_t * sName, wchar_t * sDesc, wchar_t * sTex)
+void Unit::setNameDescriptionTexture(char * sName, char * sDesc, char * sTex)
 {
   wsafecpy(m_sName, NAME_MAX_CHARS, sName);
   wsafecpy(m_sDescription, DESCRIPTION_MAX_CHARS, sDesc);
@@ -711,10 +711,10 @@ void Unit::setNameDescriptionTexture(wchar_t * sName, wchar_t * sDesc, wchar_t *
 // -----------------------------------------------------------------
 // Name : getValue
 // -----------------------------------------------------------------
-long Unit::getValue(const wchar_t * sName, bool bBase, bool * bFound)
+long Unit::getValue(const char * sName, bool bBase, bool * bFound)
 {
   long val = LuaTargetable::getValue(sName, bBase, bFound);
-  if (wcscmp(sName, STRING_MELEE) == 0 && m_Order == OrderFortify && !bBase)
+  if (strcmp(sName, STRING_MELEE) == 0 && m_Order == OrderFortify && !bBase)
     val = max((val * 6) / 5, val+1);
   return val;
 }
@@ -722,14 +722,14 @@ long Unit::getValue(const wchar_t * sName, bool bBase, bool * bFound)
 // -----------------------------------------------------------------
 // Name : getInfo
 // -----------------------------------------------------------------
-wchar_t * Unit::getInfo(wchar_t * sBuf, int iSize, InfoDest eDest)
+char * Unit::getInfo(char * sBuf, int iSize, InfoDest eDest)
 {
-  wchar_t sName[NAME_MAX_CHARS + 16];
+  char sName[NAME_MAX_CHARS + 16];
   if (m_Status == US_Dead)
   {
-    wchar_t sDead[16];
-    i18n->getText(L"DEAD", sDead, 16);
-    swprintf(sName, NAME_MAX_CHARS + 16, L"%s (%s)", m_sName, sDead);
+    char sDead[16];
+    i18n->getText("DEAD", sDead, 16);
+    snprintf(sName, NAME_MAX_CHARS + 16, "%s (%s)", m_sName, sDead);
   }
   else
     wsafecpy(sName, NAME_MAX_CHARS, m_sName);
@@ -740,56 +740,56 @@ wchar_t * Unit::getInfo(wchar_t * sBuf, int iSize, InfoDest eDest)
     return sBuf;
   }
 
-  wchar_t s2P[8];
-  i18n->getText(L"2P", s2P, 8);
+  char s2P[8];
+  i18n->getText("2P", s2P, 8);
 
   // Alignment
-  wchar_t sAlignment[128];
-  wchar_t sTemp1[64];
-  wchar_t sTemp2[64];
+  char sAlignment[128];
+  char sTemp1[64];
+  char sTemp2[64];
   int alignment = getValue(STRING_ALIGNMENT);
-  swprintf(sAlignment, 128, L"%s%s%s", i18n->getText1stUp(STRING_ALIGNMENT, sTemp1, 64), s2P, UnitData::getAlignmentInfos(alignment, sTemp2, 64));
+  snprintf(sAlignment, 128, "%s%s%s", i18n->getText1stUp(STRING_ALIGNMENT, sTemp1, 64), s2P, UnitData::getAlignmentInfos(alignment, sTemp2, 64));
 
   // Skills
-  wchar_t sSkills[512] = L"";
-  i18n->getText1stUp(L"SKILLS", sSkills, 512);
+  char sSkills[512] = "";
+  i18n->getText1stUp("SKILLS", sSkills, 512);
   wsafecat(sSkills, 512, s2P);
-  wchar_t sSep2[4] = L"";
+  char sSep2[4] = "";
   Skill * pSkill = (Skill*) m_pSkillsRef->getFirst(0);
   while (pSkill != NULL)
   {
     wsafecat(sSkills, 512, sSep2);
-    wsafecpy(sSep2, 4, L", ");
+    wsafecpy(sSep2, 4, ", ");
     wsafecat(sSkills, 512, pSkill->getLocalizedName());
     pSkill = (Skill*) m_pSkillsRef->getNext(0);
   }
 
   if (eDest == Dest_InfoDialog)
   {
-    swprintf(sBuf, iSize, L"%s\n", sName);
-    getInfo_AddValue(sBuf, iSize, STRING_MELEE, L"\n");
-    getInfo_AddValue(sBuf, iSize, STRING_RANGE, L"\n");
-    getInfo_AddValue(sBuf, iSize, STRING_ARMOR, L"\n");
-    getInfo_AddValue(sBuf, iSize, STRING_ENDURANCE, L"\n");
-    getInfo_AddValue(sBuf, iSize, STRING_SPEED, L"\n");
-    getInfo_AddValue(sBuf, iSize, STRING_LIFE, L"\n");
+    snprintf(sBuf, iSize, "%s\n", sName);
+    getInfo_AddValue(sBuf, iSize, STRING_MELEE, "\n");
+    getInfo_AddValue(sBuf, iSize, STRING_RANGE, "\n");
+    getInfo_AddValue(sBuf, iSize, STRING_ARMOR, "\n");
+    getInfo_AddValue(sBuf, iSize, STRING_ENDURANCE, "\n");
+    getInfo_AddValue(sBuf, iSize, STRING_SPEED, "\n");
+    getInfo_AddValue(sBuf, iSize, STRING_LIFE, "\n");
     wsafecat(sBuf, iSize, sAlignment);
-    wsafecat(sBuf, iSize, L"\n");
+    wsafecat(sBuf, iSize, "\n");
     wsafecat(sBuf, iSize, sSkills);
   }
   else
   {
-    wsafecpy(sBuf, iSize, L"");
-    getInfo_AddValue(sBuf, iSize, STRING_MELEE, L"    ");
-    getInfo_AddValue(sBuf, iSize, STRING_RANGE, L"    ");
-    getInfo_AddValue(sBuf, iSize, STRING_ARMOR, L"    ");
-    getInfo_AddValue(sBuf, iSize, STRING_ENDURANCE, L"    ");
-    getInfo_AddValue(sBuf, iSize, STRING_SPEED, L"    ");
-    getInfo_AddValue(sBuf, iSize, STRING_LIFE, L"    ");
+    wsafecpy(sBuf, iSize, "");
+    getInfo_AddValue(sBuf, iSize, STRING_MELEE, "    ");
+    getInfo_AddValue(sBuf, iSize, STRING_RANGE, "    ");
+    getInfo_AddValue(sBuf, iSize, STRING_ARMOR, "    ");
+    getInfo_AddValue(sBuf, iSize, STRING_ENDURANCE, "    ");
+    getInfo_AddValue(sBuf, iSize, STRING_SPEED, "    ");
+    getInfo_AddValue(sBuf, iSize, STRING_LIFE, "    ");
     wsafecat(sBuf, iSize, sAlignment);
-    wsafecat(sBuf, iSize, L"\n");
+    wsafecat(sBuf, iSize, "\n");
     wsafecat(sBuf, iSize, sSkills);
-    wsafecat(sBuf, iSize, L"\n");
+    wsafecat(sBuf, iSize, "\n");
     wsafecat(sBuf, iSize, m_sDescription);
   }
   return sBuf;

@@ -15,26 +15,26 @@ MoveOrAttackDlg::MoveOrAttackDlg(LocalClient * pLocalClient, Unit * pUnit, Coord
 {
   m_pLocalClient = pLocalClient;
   m_pTarget = NULL;
-  m_iMoveToTex = pLocalClient->getDisplay()->getTextureEngine()->loadTexture(L"moveto_icon");
+  m_iMoveToTex = pLocalClient->getDisplay()->getTextureEngine()->loadTexture("moveto_icon");
 
   // Document
-  init(L"MoveOrAttackPopupDocument",
-    pLocalClient->getDisplay()->getTextureEngine()->findTexture(L"interface:WinBg"),
+  init("MoveOrAttackPopupDocument",
+    pLocalClient->getDisplay()->getTextureEngine()->findTexture("interface:WinBg"),
     0, 0, 1, 1, pLocalClient->getDisplay());
 
   // Button "Move to position"
   int xPxl = 0;
   int yPxl = 0;
   int iButton = 1;
-  guiToggleButton * pBtn = guiToggleButton::createDefaultTexturedToggleButton(m_iMoveToTex, SMALL_ICON_SIZE, L"MoveBtn", pLocalClient->getDisplay());
+  guiToggleButton * pBtn = guiToggleButton::createDefaultTexturedToggleButton(m_iMoveToTex, SMALL_ICON_SIZE, "MoveBtn", pLocalClient->getDisplay());
   pBtn->moveTo(xPxl, yPxl);
   addComponent(pBtn);
-  wchar_t sText[LABEL_MAX_CHARS] = L"";
-  i18n->getText(L"MOVE_TO_POS", sText, LABEL_MAX_CHARS);
+  char sText[LABEL_MAX_CHARS] = "";
+  i18n->getText("MOVE_TO_POS", sText, LABEL_MAX_CHARS);
   pBtn->setTooltipText(sText);
 
   // Find foe units on this tile
-  wchar_t sBuf[LABEL_MAX_CHARS] = L"";
+  char sBuf[LABEL_MAX_CHARS] = "";
   xPxl += SMALL_ICON_SIZE + SMALL_ICON_SPACING;
   MapTile * pTile = pLocalClient->getGameboard()->getMap()->getTileAt(mapPos);
   assert(pTile != NULL);
@@ -47,12 +47,12 @@ MoveOrAttackDlg::MoveOrAttackDlg(LocalClient * pLocalClient, Unit * pUnit, Coord
       xPxl = (iButton % 8) * (SMALL_ICON_SIZE + SMALL_ICON_SPACING);
       yPxl = (iButton / 8) * (SMALL_ICON_SIZE + SMALL_ICON_SPACING);
       int itex = pOther->getTexture();
-      pBtn = guiToggleButton::createDefaultTexturedToggleButton(itex, SMALL_ICON_SIZE, L"EnnemyBtn", pLocalClient->getDisplay());
+      pBtn = guiToggleButton::createDefaultTexturedToggleButton(itex, SMALL_ICON_SIZE, "EnnemyBtn", pLocalClient->getDisplay());
       pBtn->moveTo(xPxl, yPxl);
       pBtn->setAttachment(pOther);
       addComponent(pBtn);
-      i18n->getText(L"ATTACK_(s)", sBuf, LABEL_MAX_CHARS);
-      swprintf(sText, LABEL_MAX_CHARS, sBuf, pOther->getName());
+      i18n->getText("ATTACK_(s)", sBuf, LABEL_MAX_CHARS);
+      snprintf(sText, LABEL_MAX_CHARS, sBuf, pOther->getName());
       pBtn->setTooltipText(sText);
       iButton++;
     }
@@ -90,7 +90,7 @@ guiObject * MoveOrAttackDlg::onCursorMoveEvent(int xPxl, int yPxl)
   {
     if (cpnt->isAt(xPxl, yPxl))
     {
-      if (wcscmp(cpnt->getId(), L"MoveBtn") == 0)
+      if (strcmp(cpnt->getId(), "MoveBtn") == 0)
       {
         m_pTarget = cpnt;
         break;
@@ -99,7 +99,7 @@ guiObject * MoveOrAttackDlg::onCursorMoveEvent(int xPxl, int yPxl)
       if (pAttachment != NULL)
       {
         m_pTarget = pAttachment;
-        wchar_t sBuf[LABEL_MAX_CHARS] = L"";
+        char sBuf[LABEL_MAX_CHARS] = "";
         m_pLocalClient->getInterface()->getInfoDialog()->setInfoText(pAttachment->getInfo(sBuf, LABEL_MAX_CHARS, Dest_InfoDialog));
       }
       break;

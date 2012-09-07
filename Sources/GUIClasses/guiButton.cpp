@@ -42,10 +42,10 @@ guiButton::~guiButton()
 // -----------------------------------------------------------------
 // Name : init
 // -----------------------------------------------------------------
-void guiButton::init(const wchar_t * sText, FontId fontId, F_RGBA textColor, int iClickedTex, BtnClickOptions clickOption, int iOverTex, BtnClickOptions overOption, int iTexId, const wchar_t * sCpntId, int xPxl, int yPxl, int wPxl, int hPxl, DisplayEngine * pDisplay)
+void guiButton::init(const char * sText, FontId fontId, F_RGBA textColor, int iClickedTex, BtnClickOptions clickOption, int iOverTex, BtnClickOptions overOption, int iTexId, const char * sCpntId, int xPxl, int yPxl, int wPxl, int hPxl, DisplayEngine * pDisplay)
 {
   guiImage::init(iTexId, sCpntId, xPxl, yPxl, wPxl, hPxl, pDisplay);
-  m_pLabel->init(sText, fontId, textColor, L"ButtonLabel", 0, 0, 0, 0, pDisplay);
+  m_pLabel->init(sText, fontId, textColor, "ButtonLabe", 0, 0, 0, 0, pDisplay);
   m_pLabel->centerOnComponent(this);
   m_pGeometryNormal = (GeometryQuads*) m_pGeometry;
   m_ClickOption = clickOption;
@@ -304,7 +304,7 @@ void guiButton::setNormalTexture(int iTexId)
 // -----------------------------------------------------------------
 // Name : setText
 // -----------------------------------------------------------------
-void guiButton::setText(const wchar_t * sText)
+void guiButton::setText(const char * sText)
 {
   m_pLabel->setText(sText);
   m_pLabel->centerOnComponent(this);
@@ -383,16 +383,16 @@ void guiButton::setEnabled(bool bEnabled)
 //  Static default constructor
 //  Use it to avoid passing always the same 3591218 arguments to "init"
 // -----------------------------------------------------------------
-guiButton * guiButton::createDefaultNormalButton(const wchar_t * sText, const wchar_t * sId, DisplayEngine * pDisplay)
+guiButton * guiButton::createDefaultNormalButton(const char * sText, const char * sId, DisplayEngine * pDisplay)
 {
   guiButton * pBtn = new guiButton();
   pBtn->init(
     sText, H2_FONT, H2_COLOR,
-    pDisplay->getTextureEngine()->findTexture(L"interface:Transparent"),
+    pDisplay->getTextureEngine()->findTexture("interface:Transparent"),
     BCO_None,
-    pDisplay->getTextureEngine()->findTexture(L"interface:Transparent"),
+    pDisplay->getTextureEngine()->findTexture("interface:Transparent"),
     BCO_Decal,
-    pDisplay->getTextureEngine()->findTexture(L"interface:Transparent"),
+    pDisplay->getTextureEngine()->findTexture("interface:Transparent"),
     sId, 0, 0, 50, 32, pDisplay);
   return pBtn;
 }
@@ -402,15 +402,15 @@ guiButton * guiButton::createDefaultNormalButton(const wchar_t * sText, const wc
 //  Static default constructor
 //  Use it to avoid passing always the same 3591218 arguments to "init"
 // -----------------------------------------------------------------
-guiButton * guiButton::createDefaultSmallButton(const wchar_t * sText, int width, const wchar_t * sId, DisplayEngine * pDisplay)
+guiButton * guiButton::createDefaultSmallButton(const char * sText, int width, const char * sId, DisplayEngine * pDisplay)
 {
   guiButton * pBtn = new guiButton();
   pBtn->init(
     sText, TEXT_FONT, TEXT_COLOR,
-    pDisplay->getTextureEngine()->findTexture(L"interface:SmallButtonClicked"),
+    pDisplay->getTextureEngine()->findTexture("interface:SmallButtonClicked"),
     BCO_ReplaceTex,
     -1, BCO_None,
-    pDisplay->getTextureEngine()->findTexture(L"interface:SmallButtonNormal"),
+    pDisplay->getTextureEngine()->findTexture("interface:SmallButtonNorma"),
     sId, 0, 0, width, 20, pDisplay);
   return pBtn;
 }
@@ -420,15 +420,15 @@ guiButton * guiButton::createDefaultSmallButton(const wchar_t * sText, int width
 //  Static default constructor
 //  Use it to avoid passing always the same 3591218 arguments to "init"
 // -----------------------------------------------------------------
-guiButton * guiButton::createDefaultWhiteButton(const wchar_t * sText, int width, int height, const wchar_t * sId, DisplayEngine * pDisplay)
+guiButton * guiButton::createDefaultWhiteButton(const char * sText, int width, int height, const char * sId, DisplayEngine * pDisplay)
 {
   guiButton * pBtn = new guiButton();
   pBtn->init(
     sText, TEXT_FONT, TEXT_COLOR,
-    pDisplay->getTextureEngine()->findTexture(L"interface:WhiteButtonClicked"),
+    pDisplay->getTextureEngine()->findTexture("interface:WhiteButtonClicked"),
     BCO_ReplaceTex,
     -1, BCO_None,
-    pDisplay->getTextureEngine()->findTexture(L"interface:WhiteButtonNormal"),
+    pDisplay->getTextureEngine()->findTexture("interface:WhiteButtonNorma"),
     sId, 0, 0, width, height, pDisplay);
   return pBtn;
 }
@@ -438,11 +438,11 @@ guiButton * guiButton::createDefaultWhiteButton(const wchar_t * sText, int width
 //  Static default constructor
 //  Use it to avoid passing always the same 3591218 arguments to "init"
 // -----------------------------------------------------------------
-guiButton * guiButton::createDefaultImageButton(int iTex, const wchar_t * sId, DisplayEngine * pDisplay)
+guiButton * guiButton::createDefaultImageButton(int iTex, const char * sId, DisplayEngine * pDisplay)
 {
   guiButton * pBtn = new guiButton();
   pBtn->init(
-    L"", TEXT_FONT, TEXT_COLOR,
+    "", TEXT_FONT, TEXT_COLOR,
     0, BCO_Decal, -1, BCO_None,
     iTex, sId, 0, 0, -1, -1, pDisplay);
   return pBtn;

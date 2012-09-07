@@ -26,11 +26,11 @@ public:
   Profile * getCurrentPlayer() { return m_pCurrentPlayer; };
 
 protected:
-  bool createPlayer(wchar_t * sName);
-  void loadPlayer(wchar_t * sName);
+  bool createPlayer(char * sName);
+  void loadPlayer(char * sName);
   void onPlayerDataChanged();
   void unloadPlayer();
-  void loadPlayersList(wchar_t * sSelect = NULL);
+  void loadPlayersList(char * sSelect = NULL);
 
   LocalClient * m_pLocalClient;
   guiPopup * m_pTextInput;

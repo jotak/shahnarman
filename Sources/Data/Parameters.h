@@ -14,7 +14,7 @@ public:
   ~Parameters();
 
   void Init(DebugManager * pDebug);
-  void resetLocale(DebugManager * pDebug);
+//  void resetLocale(DebugManager * pDebug);
   void loadParameters();
   void saveParameters();
 
@@ -25,9 +25,9 @@ public:
   float fZoomStep;
   int language;
   char sLocale[32];
-  wchar_t sGameModeString[64];
+  char sGameModeString[64];
   int iNbLanguages;
-  wchar_t ** sLanguages;
+  char ** sLanguages;
   int iLogLevel;
   int iGameLogsLifetime;
   int iSoundVolume;

@@ -29,9 +29,9 @@ TextureEngine::~TextureEngine()
 // -----------------------------------------------------------------
 // Name : loadTexture
 // -----------------------------------------------------------------
-s32 TextureEngine::loadTexture(const wchar_t * sFilename, bool bMipmap, int ustart, int uend, int vstart, int vend)
+s32 TextureEngine::loadTexture(const char * sFilename, bool bMipmap, int ustart, int uend, int vstart, int vend)
 {
-  if (sFilename == NULL || wcscmp(sFilename, L"") == 0)
+  if (sFilename == NULL || strcmp(sFilename, "") == 0)
     return -1;
 
   s16 res = findTexture(sFilename);
@@ -108,14 +108,14 @@ void TextureEngine::textureLoaded(Texture * pTex)
 // -----------------------------------------------------------------
 // Name : findTexture
 // -----------------------------------------------------------------
-s32 TextureEngine::findTexture(const wchar_t * sFilename)
+s32 TextureEngine::findTexture(const char * sFilename)
 {
-  if (sFilename == NULL || wcscmp(sFilename, L"") == 0)
+  if (sFilename == NULL || strcmp(sFilename, "") == 0)
     return -1;
 
   for (u16 i = 0; i < m_AllTextures.size(); i++)
   {
-    if (wcscmp(m_AllTextures[i]->m_sFilename, sFilename) == 0)
+    if (strcmp(m_AllTextures[i]->m_sFilename, sFilename) == 0)
       return i;
   }
   return -1;
@@ -124,7 +124,7 @@ s32 TextureEngine::findTexture(const wchar_t * sFilename)
 // -----------------------------------------------------------------
 // Name : loadComposedTexture
 // -----------------------------------------------------------------
-s32 TextureEngine::loadComposedTexture(const wchar_t * sFilename)
+s32 TextureEngine::loadComposedTexture(const char * sFilename)
 {
   // Get "master texture", ie big texture
   int iMasterTexture = loadTexture(sFilename);
@@ -133,11 +133,11 @@ s32 TextureEngine::loadComposedTexture(const wchar_t * sFilename)
   Texture * pMaster = m_AllTextures[iMasterTexture];
 
   // Build file names
-  wchar_t pngfile[MAX_PATH] = GAME_TEXTURES_PATH;
+  char pngfile[MAX_PATH] = GAME_TEXTURES_PATH;
   wsafecat(pngfile, MAX_PATH, sFilename);
-  wchar_t xmlfile[MAX_PATH];
+  char xmlfile[MAX_PATH];
   wsafecpy(xmlfile, MAX_PATH, pngfile);
-  wsafecat(xmlfile, MAX_PATH, L".xml");
+  wsafecat(xmlfile, MAX_PATH, ".xm");
 
   // Read XML
   XMLLiteReader reader;
@@ -152,59 +152,59 @@ s32 TextureEngine::loadComposedTexture(const wchar_t * sFilename)
   }
   assert(pRootNode != NULL);
 
-  wchar_t sError[1024];
+  char sError[1024];
   XMLLiteElement * pChild = pRootNode->getFirstChild();
   while (pChild != NULL)
   {
-    if (0 != _wcsicmp(pChild->getName(), L"item"))
+    if (0 != strcasecmp(pChild->getName(), "item"))
     {
       pChild = pRootNode->getNextChild();
       continue;
     }
-    XMLLiteAttribute * pAttr = pChild->getAttributeByName(L"name");
+    XMLLiteAttribute * pAttr = pChild->getAttributeByName("name");
     if (pAttr == NULL)
     {
-      swprintf(sError, 1024, L"XML formation error : missing \"name\" attribute in node item. Check out file %s.", pRootNode->getName());
+      snprintf(sError, 1024, "XML formation error : missing \"name\" attribute in node item. Check out file %s.", pRootNode->getName());
       m_pDebug->notifyErrorMessage(sError);
       pChild = pRootNode->getNextChild();
       continue;
     }
-    XMLLiteElement * pUStartElt = pChild->getChildByName(L"ustart");
+    XMLLiteElement * pUStartElt = pChild->getChildByName("ustart");
     if (pUStartElt == NULL)
     {
-      swprintf(sError, 1024, L"XML formation error : missing \"ustart\" node in node item. Check out file %s.", pRootNode->getName());
+      snprintf(sError, 1024, "XML formation error : missing \"ustart\" node in node item. Check out file %s.", pRootNode->getName());
       m_pDebug->notifyErrorMessage(sError);
       pChild = pRootNode->getNextChild();
       continue;
     }
-    XMLLiteElement * pUEndElt = pChild->getChildByName(L"uend");
+    XMLLiteElement * pUEndElt = pChild->getChildByName("uend");
     if (pUEndElt == NULL)
     {
-      swprintf(sError, 1024, L"XML formation error : missing \"uend\" node in node item. Check out file %s.", pRootNode->getName());
+      snprintf(sError, 1024, "XML formation error : missing \"uend\" node in node item. Check out file %s.", pRootNode->getName());
       m_pDebug->notifyErrorMessage(sError);
       pChild = pRootNode->getNextChild();
       continue;
     }
-    XMLLiteElement * pVStartElt = pChild->getChildByName(L"vstart");
+    XMLLiteElement * pVStartElt = pChild->getChildByName("vstart");
     if (pVStartElt == NULL)
     {
-      swprintf(sError, 1024, L"XML formation error : missing \"vstart\" node in node item. Check out file %s.", pRootNode->getName());
+      snprintf(sError, 1024, "XML formation error : missing \"vstart\" node in node item. Check out file %s.", pRootNode->getName());
       m_pDebug->notifyErrorMessage(sError);
       pChild = pRootNode->getNextChild();
       continue;
     }
-    XMLLiteElement * pVEndElt = pChild->getChildByName(L"vend");
+    XMLLiteElement * pVEndElt = pChild->getChildByName("vend");
     if (pVEndElt == NULL)
     {
-      swprintf(sError, 1024, L"XML formation error : missing \"vend\" node in node item. Check out file %s.", pRootNode->getName());
+      snprintf(sError, 1024, "XML formation error : missing \"vend\" node in node item. Check out file %s.", pRootNode->getName());
       m_pDebug->notifyErrorMessage(sError);
       pChild = pRootNode->getNextChild();
       continue;
     }
 
     // Create kind of virtual texture
-    wchar_t sTexPath[MAX_PATH];
-    swprintf(sTexPath, MAX_PATH, L"%s:%s", sFilename, pAttr->getCharValue());
+    char sTexPath[MAX_PATH];
+    snprintf(sTexPath, MAX_PATH, "%s:%s", sFilename, pAttr->getCharValue());
     Texture * pTex = new Texture(sTexPath, false);
     int ustart = (int) pUStartElt->getIntValue();
     int uend = (int) pUEndElt->getIntValue();

@@ -19,7 +19,7 @@ bool LuaContext::retrieve(PlayerManagerAbstract * pMngr)
   pLua = LuaObject::static_pCurrentLuaCaller;
   if (pLua == NULL)
   {
-    wsafecpy(sError, 256, L"Lua interaction error: no current LUA caller defined while calling SpellsSolver::retrieveLostContext.");
+    wsafecpy(sError, 256, "Lua interaction error: no current LUA caller defined while calling SpellsSolver::retrieveLostContext.");
     return false;
   }
   u32 uType = pLua->getType();
@@ -28,13 +28,13 @@ bool LuaContext::retrieve(PlayerManagerAbstract * pMngr)
     pUnit = ((Skill*)pLua)->getCaster();
     if (pUnit == NULL)
     {
-      swprintf(sError, 256, L"Lua interaction error: effect %s activated by invalid unit.", pLua->getLocalizedName(), NAME_MAX_CHARS);
+      snprintf(sError, 256, "Lua interaction error: effect %s activated by invalid unit.", pLua->getLocalizedName());
       return false;
     }
     pPlayer = pMngr->findPlayer(pUnit->getOwner());
     if (pPlayer == NULL)
     {
-      swprintf(sError, 256, L"Lua interaction error: effect %s activated by invalid player.", pLua->getLocalizedName(), NAME_MAX_CHARS);
+      snprintf(sError, 256, "Lua interaction error: effect %s activated by invalid player.", pLua->getLocalizedName());
       return false;
     }
   }
@@ -43,7 +43,7 @@ bool LuaContext::retrieve(PlayerManagerAbstract * pMngr)
     pPlayer = ((Spell*)pLua)->getCaster();
     if (pPlayer == NULL)
     {
-      swprintf(sError, 256, L"Lua interaction error: effect %s activated but current player is null.", pLua->getLocalizedName(), NAME_MAX_CHARS);
+      snprintf(sError, 256, "Lua interaction error: effect %s activated but current player is null.", pLua->getLocalizedName());
       return false;
     }
   }
@@ -52,13 +52,13 @@ bool LuaContext::retrieve(PlayerManagerAbstract * pMngr)
     pTown = ((Building*)pLua)->getCaster();
     if (pTown == NULL)
     {
-      swprintf(sError, 256, L"Lua interaction error: building effect %s activated but current town is null.", pLua->getLocalizedName(), NAME_MAX_CHARS);
+      snprintf(sError, 256, "Lua interaction error: building effect %s activated but current town is null.", pLua->getLocalizedName());
       return false;
     }
     pPlayer = pMngr->findPlayer(pTown->getOwner());
     if (pPlayer == NULL)
     {
-      swprintf(sError, 256, L"Lua interaction error: building effect %s activated by invalid player.", pLua->getLocalizedName(), NAME_MAX_CHARS);
+      snprintf(sError, 256, "Lua interaction error: building effect %s activated by invalid player.", pLua->getLocalizedName());
       return false;
     }
   }
@@ -205,7 +205,7 @@ bool LuaContext::deserializeTargets(NetworkData * pData, PlayerManagerAbstract *
     return false;
   pLua->getTargets()->deleteAll();
   int nbTargets = pData->readLong();
-  wchar_t ids[16];
+  char ids[16];
   for (int i = 0; i < nbTargets; i++)
   {
     long type = pData->readLong();

@@ -113,11 +113,11 @@ void InterfaceManager::deleteAllFrames()
 // -----------------------------------------------------------------
 void InterfaceManager::Init()
 {
-  int iTex = m_pLocalClient->getDisplay()->getTextureEngine()->loadTexture(L"menubg");
+  int iTex = m_pLocalClient->getDisplay()->getTextureEngine()->loadTexture("menubg");
   QuadData quad(0, m_pLocalClient->getClientParameters()->screenXSize, 0, m_pLocalClient->getClientParameters()->screenYSize, iTex, m_pLocalClient->getDisplay());
   m_pMenuBgGeometry = new GeometryQuads(&quad, VB_Static);
 
-  m_pLocalClient->getDisplay()->getTextureEngine()->loadComposedTexture(L"interface");
+  m_pLocalClient->getDisplay()->getTextureEngine()->loadComposedTexture("interface");
   InitMenu();
   m_pLocalClient->getInput()->addCursoredEventListener(this, m_pLocalClient->getDebug());
   m_pLocalClient->getInput()->pushUncursoredEventListener(this);
@@ -140,7 +140,7 @@ void InterfaceManager::InitMenu()
   m_pFrameList->addLast(m_pTooltip);
 
   // Create menu frame
-  guiFrame * pFrame = guiFrame::createDefaultFrame(FB_FitDocumentToFrame, FB_FitDocumentToFrame, 600, 600, true, L"StartMenu", m_pLocalClient->getDisplay());
+  guiFrame * pFrame = guiFrame::createDefaultFrame(FB_FitDocumentToFrame, FB_FitDocumentToFrame, 600, 600, true, "StartMenu", m_pLocalClient->getDisplay());
 
   // Start menu dialog
   pFrame->setDimensions(350, 450);
@@ -152,7 +152,7 @@ void InterfaceManager::InitMenu()
 
   // Clone frame
   pFrame = (guiFrame*) pFrame->clone();
-  pFrame->setId(L"OptionsFrame");
+  pFrame->setId("OptionsFrame");
 
   // Options dialog
   m_pOptionsWnd = new OptionsDlg(pFrame->getInnerWidth(), pFrame->getInnerHeight(), m_pLocalClient);
@@ -161,7 +161,7 @@ void InterfaceManager::InitMenu()
   pFrame->setVisible(false);
 
   // Clone frame
-  guiFrame * pFrame2 = guiFrame::createDefaultFrame(FB_FitFrameToDocument, FB_FitFrameToDocument, 1, 1, true, L"SelectPlayerFrame", m_pLocalClient->getDisplay());
+  guiFrame * pFrame2 = guiFrame::createDefaultFrame(FB_FitFrameToDocument, FB_FitFrameToDocument, 1, 1, true, "SelectPlayerFrame", m_pLocalClient->getDisplay());
 
   // Select player and avatar dialog (build deck)
   m_pSelectPlayerAvatarWnd = new SelectPlayerAvatarDlg(m_pLocalClient);
@@ -173,7 +173,7 @@ void InterfaceManager::InitMenu()
 
   // Clone frame
   pFrame = (guiFrame*) pFrame->clone();
-  pFrame->setId(L"BuildDeckFrame");
+  pFrame->setId("BuildDeckFrame");
   pFrame->moveTo(m_pLocalClient->getClientParameters()->screenXSize / 2 - 300, m_pLocalClient->getClientParameters()->screenYSize / 2 - 300);
   pFrame->setDimensions(600, 600);
 
@@ -185,7 +185,7 @@ void InterfaceManager::InitMenu()
 
   // Clone frame
   pFrame = (guiFrame*) pFrame->clone();
-  pFrame->setId(L"ArtifactsEquipFrame");
+  pFrame->setId("ArtifactsEquipFrame");
   pFrame->setWidthFitBehavior(FB_FitFrameToDocument);
 
   // ArtifactsEquip dialog
@@ -196,7 +196,7 @@ void InterfaceManager::InitMenu()
 
   // Clone frame
   pFrame = (guiFrame*) pFrame->clone();
-  pFrame->setId(L"ShopFrame");
+  pFrame->setId("ShopFrame");
   pFrame->setWidthFitBehavior(FB_FitDocumentToFrame);
 
   // Shop dialog
@@ -207,7 +207,7 @@ void InterfaceManager::InitMenu()
 
   // Clone frame
   pFrame = (guiFrame*) pFrame->clone();
-  pFrame->setId(L"CreateShahmahFrame");
+  pFrame->setId("CreateShahmahFrame");
 
   // Create Shahmah dialog
   m_pCreateAvatarDlg = new CreateAvatarDlg(pFrame->getInnerWidth(), pFrame->getInnerHeight(), m_pLocalClient);
@@ -217,7 +217,7 @@ void InterfaceManager::InitMenu()
 
   // Clone frame
   pFrame = (guiFrame*) pFrame->clone();
-  pFrame->setId(L"LoadGameFrame");
+  pFrame->setId("LoadGameFrame");
 
   // Load game dialog
   m_pLoadGameWnd = new LoadGameDlg(pFrame->getInnerWidth(), pFrame->getInnerHeight(), m_pLocalClient);
@@ -227,7 +227,7 @@ void InterfaceManager::InitMenu()
 
   // Clone frame
   pFrame = (guiFrame*) pFrame->clone();
-  pFrame->setId(L"HostGameFrame");
+  pFrame->setId("HostGameFrame");
   pFrame->setHeight(m_pLocalClient->getClientParameters()->screenYSize - 20);
   pFrame->moveTo(pFrame->getXPos(), 10);
 
@@ -239,7 +239,7 @@ void InterfaceManager::InitMenu()
 
   // Clone frame
   pFrame = (guiFrame*) pFrame->clone();
-  pFrame->setId(L"LevelUpFrame");
+  pFrame->setId("LevelUpFrame");
   pFrame->setDimensions(10, 10);
   pFrame->setWidthFitBehavior(FB_FitFrameToDocument);
   pFrame->setHeightFitBehavior(FB_FitFrameToDocument);
@@ -273,7 +273,7 @@ void InterfaceManager::InitGame()
   createInGameMenu();
 
   // Log window
-  guiFrame * pFrame = guiFrame::createDefaultFrame(FB_FitDocumentToFrameWhenSmaller, FB_FitFrameToDocumentWhenSmaller, 400, 250, true, L"LogFrame", m_pLocalClient->getDisplay());
+  guiFrame * pFrame = guiFrame::createDefaultFrame(FB_FitDocumentToFrameWhenSmaller, FB_FitFrameToDocumentWhenSmaller, 400, 250, true, "LogFrame", m_pLocalClient->getDisplay());
   pFrame->setMovable(false);
   pFrame->setRetractible(4);  // left side
   pFrame->moveTo(0, 0);
@@ -282,7 +282,7 @@ void InterfaceManager::InitGame()
   pFrame->setDocument(m_pLogWnd);
 
   // Infos window
-  pFrame = guiFrame::createDefaultFrame(FB_FitDocumentToFrameWhenSmaller, FB_FitFrameToDocument, 240, 300, true, L"InfosFrame", m_pLocalClient->getDisplay());
+  pFrame = guiFrame::createDefaultFrame(FB_FitDocumentToFrameWhenSmaller, FB_FitFrameToDocument, 240, 300, true, "InfosFrame", m_pLocalClient->getDisplay());
   pFrame->setMovable(false);
   pFrame->moveTo(m_pLocalClient->getClientParameters()->screenXSize - 239, m_pLocalClient->getClientParameters()->screenYSize - 299);
   m_pFrameList->addLast(pFrame);
@@ -290,7 +290,7 @@ void InterfaceManager::InitGame()
   pFrame->setDocument(m_pInfoWnd);
 
   // Unit options window
-  pFrame = guiFrame::createDefaultFrame(FB_FitFrameToDocument, FB_NoFit, 172, 64, true, L"UnitOptionsFrame", m_pLocalClient->getDisplay());
+  pFrame = guiFrame::createDefaultFrame(FB_FitFrameToDocument, FB_NoFit, 172, 64, true, "UnitOptionsFrame", m_pLocalClient->getDisplay());
   pFrame->setMovable(false);
   pFrame->moveTo(m_pLocalClient->getClientParameters()->screenXSize / 2 - 85, m_pLocalClient->getClientParameters()->screenYSize - 64);
   pFrame->setPositionType(FP_Fixed);
@@ -299,7 +299,7 @@ void InterfaceManager::InitGame()
   pFrame->setDocument(m_pUnitOptionsWnd);
 
   // Spell window
-  pFrame = guiFrame::createDefaultFrame(FB_FitDocumentToFrame, FB_FitDocumentToFrameWhenSmaller, 80, m_pLocalClient->getClientParameters()->screenYSize, true, L"SpellFrame", m_pLocalClient->getDisplay());
+  pFrame = guiFrame::createDefaultFrame(FB_FitDocumentToFrame, FB_FitDocumentToFrameWhenSmaller, 80, m_pLocalClient->getClientParameters()->screenYSize, true, "SpellFrame", m_pLocalClient->getDisplay());
   pFrame->setMovable(false);
   pFrame->moveTo(m_pLocalClient->getClientParameters()->screenXSize - 79, 0);
   pFrame->setRetractible(2);  // right side
@@ -308,7 +308,7 @@ void InterfaceManager::InitGame()
   pFrame->setDocument(m_pSpellWnd);
 
   // Resolve window
-  pFrame = guiFrame::createDefaultFrame(FB_FitDocumentToFrame, FB_FitFrameToDocument, 400, 500, true, L"ResolveFrame", m_pLocalClient->getDisplay());
+  pFrame = guiFrame::createDefaultFrame(FB_FitDocumentToFrame, FB_FitFrameToDocument, 400, 500, true, "ResolveFrame", m_pLocalClient->getDisplay());
   pFrame->setMovable(false);
   pFrame->moveTo(0, m_pLocalClient->getClientParameters()->screenYSize - 500);
   m_pFrameList->addLast(pFrame);
@@ -316,45 +316,45 @@ void InterfaceManager::InitGame()
   pFrame->setDocument(m_pResolveWnd);
 
   // Map object window
-  pFrame = guiFrame::createDefaultFrame(FB_FitDocumentToFrame, FB_FitDocumentToFrame, m_pLocalClient->getClientParameters()->screenXSize - 80, m_pLocalClient->getClientParameters()->screenYSize - 80, false, L"MapObjFrame", m_pLocalClient->getDisplay());
+  pFrame = guiFrame::createDefaultFrame(FB_FitDocumentToFrame, FB_FitDocumentToFrame, m_pLocalClient->getClientParameters()->screenXSize - 80, m_pLocalClient->getClientParameters()->screenYSize - 80, false, "MapObjFrame", m_pLocalClient->getDisplay());
   m_pFrameList->addLast(pFrame);
   m_pMapObjectWnd = new MapObjectDlg(m_pLocalClient, pFrame->getInnerWidth(), pFrame->getInnerHeight());
   pFrame->setDocument(m_pMapObjectWnd);
   pFrame->moveTo(40, 40);
 
   // Game over window
-  pFrame = guiFrame::createDefaultFrame(FB_FitDocumentToFrame, FB_FitDocumentToFrame, m_pLocalClient->getClientParameters()->screenXSize - 80, m_pLocalClient->getClientParameters()->screenYSize - 80, false, L"GameOverFrame", m_pLocalClient->getDisplay());
+  pFrame = guiFrame::createDefaultFrame(FB_FitDocumentToFrame, FB_FitDocumentToFrame, m_pLocalClient->getClientParameters()->screenXSize - 80, m_pLocalClient->getClientParameters()->screenYSize - 80, false, "GameOverFrame", m_pLocalClient->getDisplay());
   m_pFrameList->addLast(pFrame);
   m_pGameOverWnd = new GameOverDlg(m_pLocalClient, pFrame->getInnerWidth(), pFrame->getInnerHeight());
   pFrame->setDocument(m_pGameOverWnd);
   pFrame->moveTo(40, 40);
 
   // Spells selector window
-  pFrame = guiFrame::createDefaultFrame(FB_FitDocumentToFrame, FB_FitDocumentToFrame, m_pLocalClient->getClientParameters()->screenXSize - 80, m_pLocalClient->getClientParameters()->screenYSize - 80, false, L"SpellsSelectorFrame", m_pLocalClient->getDisplay());
+  pFrame = guiFrame::createDefaultFrame(FB_FitDocumentToFrame, FB_FitDocumentToFrame, m_pLocalClient->getClientParameters()->screenXSize - 80, m_pLocalClient->getClientParameters()->screenYSize - 80, false, "SpellsSelectorFrame", m_pLocalClient->getDisplay());
   m_pFrameList->addLast(pFrame);
   m_pSpellsSelectorWnd = new SpellsSelectorDlg(m_pLocalClient, pFrame->getInnerWidth(), pFrame->getInnerHeight());
   pFrame->setDocument(m_pSpellsSelectorWnd);
   pFrame->moveTo(40, 40);
 
   // Player selector window
-  pFrame = guiFrame::createDefaultFrame(FB_FitFrameToDocument, FB_FitFrameToDocument, 1, 1, false, L"PlayerSelectorFrame", m_pLocalClient->getDisplay());
+  pFrame = guiFrame::createDefaultFrame(FB_FitFrameToDocument, FB_FitFrameToDocument, 1, 1, false, "PlayerSelectorFrame", m_pLocalClient->getDisplay());
   m_pFrameList->addLast(pFrame);
   m_pPlayerSelectorWnd = new PlayerSelectorDlg(m_pLocalClient);
   pFrame->setDocument(m_pPlayerSelectorWnd);
 
   // Player selector window
-  pFrame = guiFrame::createDefaultFrame(FB_FitFrameToDocument, FB_FitFrameToDocument, 1, 1, false, L"StatusFrame", m_pLocalClient->getDisplay());
+  pFrame = guiFrame::createDefaultFrame(FB_FitFrameToDocument, FB_FitFrameToDocument, 1, 1, false, "StatusFrame", m_pLocalClient->getDisplay());
   m_pFrameList->addLast(pFrame);
   m_pStatusWnd = new StatusDlg(m_pLocalClient);
   pFrame->setDocument(m_pStatusWnd);
 
-  findFrame(L"UnitOptionsFrame")->setVisible(false);
-  findFrame(L"ResolveFrame")->setVisible(false);
-  findFrame(L"MapObjFrame")->setVisible(false);
-  findFrame(L"GameOverFrame")->setVisible(false);
-  findFrame(L"SpellsSelectorFrame")->setVisible(false);
-  findFrame(L"PlayerSelectorFrame")->setVisible(false);
-  findFrame(L"StatusFrame")->setVisible(false);
+  findFrame("UnitOptionsFrame")->setVisible(false);
+  findFrame("ResolveFrame")->setVisible(false);
+  findFrame("MapObjFrame")->setVisible(false);
+  findFrame("GameOverFrame")->setVisible(false);
+  findFrame("SpellsSelectorFrame")->setVisible(false);
+  findFrame("PlayerSelectorFrame")->setVisible(false);
+  findFrame("StatusFrame")->setVisible(false);
 }
 
 // -----------------------------------------------------------------
@@ -400,8 +400,8 @@ void InterfaceManager::Update(double delta)
     if (m_fTooltipTime <= 0)
     {
       m_fTooltipTime = 0;
-      wchar_t * sText = m_pPointedObject->getTooltipText();
-      if (wcscmp(sText, L"") != 0)
+      char * sText = m_pPointedObject->getTooltipText();
+      if (strcmp(sText, "") != 0)
       {
         m_pTooltip->getDocument()->deleteAllComponents();
         m_pTooltip->getDocument()->setDimensions(0, 0);
@@ -608,12 +608,12 @@ guiComponent * InterfaceManager::getObjectAt(int xPxl, int yPxl, int * xoffset, 
 // -----------------------------------------------------------------
 // Name : findFrame
 // -----------------------------------------------------------------
-guiFrame * InterfaceManager::findFrame(const wchar_t * frmId)
+guiFrame * InterfaceManager::findFrame(const char * frmId)
 {
   guiFrame * frm = (guiFrame*) m_pFrameList->getFirst(0);
   while (frm != NULL)
   {
-    if (wcscmp(frm->getId(), frmId) == 0)
+    if (strcmp(frm->getId(), frmId) == 0)
       return frm;
     frm = (guiFrame*) m_pFrameList->getNext(0);
   }
@@ -657,7 +657,7 @@ void InterfaceManager::waitLocalPlayer()
   {
     if (pPlayer->m_uClientId == m_pLocalClient->getClientId() && !pPlayer->m_bIsAI)
     {
-      guiButton * pBtn = guiButton::createDefaultSmallButton(pPlayer->getAvatarName(), width, L"", m_pLocalClient->getDisplay());
+      guiButton * pBtn = guiButton::createDefaultSmallButton(pPlayer->getAvatarName(), width, "", m_pLocalClient->getDisplay());
       pBtn->moveTo(0, yPxl);
       pBtn->setAttachment(pPlayer);
       if (pPlayer->getState() == waiting)
@@ -673,13 +673,13 @@ void InterfaceManager::waitLocalPlayer()
     pPlayer = (Player*) m_pLocalClient->getPlayerManager()->getPlayersList()->getNext(0);
   }
 
-  wchar_t sText[256] = L"";
+  char sText[256] = "";
   guiLabel * pLbl = new guiLabel();
   if (nbLocalPlayersWaiting == 0)
-    i18n->getText(L"WAIT_WHILE_FINISHING_TURNS", sText, 256);
+    i18n->getText("WAIT_WHILE_FINISHING_TURNS", sText, 256);
   else
-    i18n->getText(L"CHOOSE_NEXT_PLAYER", sText, 256);
-  pLbl->init(sText, H2_FONT, H2_COLOR, L"", 0, 3, width-6, 0, m_pLocalClient->getDisplay());
+    i18n->getText("CHOOSE_NEXT_PLAYER", sText, 256);
+  pLbl->init(sText, H2_FONT, H2_COLOR, "", 0, 3, width-6, 0, m_pLocalClient->getDisplay());
   pLbl->setXPos(width / 2 - pLbl->getWidth() / 2);
   int yDecal = pLbl->getHeight() + 6;
   guiComponent * pCpnt = pDoc->getFirstComponent();
@@ -736,7 +736,7 @@ void InterfaceManager::updateUnitOptionsDialog(Unit * unit)
   else
   {
     m_pUnitOptionsWnd->setUnit(unit);
-    findFrame(L"UnitOptionsFrame")->setVisible(unit != NULL);
+    findFrame("UnitOptionsFrame")->setVisible(unit != NULL);
   }
 }
 
@@ -745,7 +745,7 @@ void InterfaceManager::updateUnitOptionsDialog(Unit * unit)
 // -----------------------------------------------------------------
 void InterfaceManager::showStack(MapTile * pTile, u32 uDisplayFilter, u32 uClickFilter, StackGroupInterface * pGroupInterface, GraphicObject * pDefaultSelectedObject)
 {
-//  findFrame(L"StackFrame")->setVisible(true);
+//  findFrame("StackFrame")->setVisible(true);
   m_pInfoWnd->setMapTile(pTile, uDisplayFilter, uClickFilter, pGroupInterface, m_pLocalClient->getPlayerManager()->getActiveLocalPlayer(), pDefaultSelectedObject);
 }
 
@@ -754,7 +754,7 @@ void InterfaceManager::showStack(MapTile * pTile, u32 uDisplayFilter, u32 uClick
 // -----------------------------------------------------------------
 void InterfaceManager::showMapObjectDialog(MapTile * pTile)
 {
-  guiFrame * pFrm = findFrame(L"MapObjFrame");
+  guiFrame * pFrm = findFrame("MapObjFrame");
   pFrm->setVisible(true);
   bringFrameAbove(pFrm);
   m_pMapObjectWnd->setTile(pTile);
@@ -765,7 +765,7 @@ void InterfaceManager::showMapObjectDialog(MapTile * pTile)
 // -----------------------------------------------------------------
 void InterfaceManager::hideMapObjectDialog()
 {
-  findFrame(L"MapObjFrame")->setVisible(false);
+  findFrame("MapObjFrame")->setVisible(false);
 }
 
 // -----------------------------------------------------------------
@@ -778,7 +778,7 @@ void InterfaceManager::showResolveDialog()
     deleteFrame(m_pNextLocalPlayerDlg);
     m_pNextLocalPlayerDlg = NULL;
   }
-  findFrame(L"ResolveFrame")->setVisible(true);
+  findFrame("ResolveFrame")->setVisible(true);
 }
 
 // -----------------------------------------------------------------
@@ -786,7 +786,7 @@ void InterfaceManager::showResolveDialog()
 // -----------------------------------------------------------------
 void InterfaceManager::hideResolveDialog()
 {
-  findFrame(L"ResolveFrame")->setVisible(false);
+  findFrame("ResolveFrame")->setVisible(false);
 }
 
 // -----------------------------------------------------------------
@@ -795,7 +795,7 @@ void InterfaceManager::hideResolveDialog()
 void InterfaceManager::showGameOverDialog(ObjectList * pWinners)
 {
   m_pGameOverWnd->setWinners(pWinners);
-  findFrame(L"GameOverFrame")->setVisible(true);
+  findFrame("GameOverFrame")->setVisible(true);
 }
 
 // -----------------------------------------------------------------
@@ -803,7 +803,7 @@ void InterfaceManager::showGameOverDialog(ObjectList * pWinners)
 // -----------------------------------------------------------------
 void InterfaceManager::hideGameOverDialog()
 {
-  findFrame(L"GameOverFrame")->setVisible(false);
+  findFrame("GameOverFrame")->setVisible(false);
 }
 
 extern bool clbkMoveOrAttack_OnMouseOverInterface(BaseObject * pObj, u8 isLua);
@@ -816,7 +816,7 @@ void InterfaceManager::showMoveOrAttackDialog(Unit * pUnit, CoordsMap mapPos)
   assert(m_pMoveOrAttackDlg == NULL);
   m_pMoveOrAttackDlg = new MoveOrAttackDlg(m_pLocalClient, pUnit, mapPos);
   CoordsScreen cs = m_pLocalClient->getInput()->getCurrentCursorPosition();
-  guiFrame * pFrm = guiFrame::createDefaultFrame(FB_FitFrameToDocument, FB_FitFrameToDocument, 1, 1, false, L"MoveOrAttackFrame", m_pLocalClient->getDisplay());
+  guiFrame * pFrm = guiFrame::createDefaultFrame(FB_FitFrameToDocument, FB_FitFrameToDocument, 1, 1, false, "MoveOrAttackFrame", m_pLocalClient->getDisplay());
   pFrm->moveTo(cs.x, cs.y);
   pFrm->setDocument(m_pMoveOrAttackDlg);
   registerFrame(pFrm);
@@ -994,7 +994,7 @@ void InterfaceManager::onResize(int oldw, int oldh)
     pFrm = (guiFrame*) m_pFrameList->getNext(0);
   }
   FREE(m_pMenuBgGeometry);
-  int iTex = m_pLocalClient->getDisplay()->getTextureEngine()->loadTexture(L"menubg");
+  int iTex = m_pLocalClient->getDisplay()->getTextureEngine()->loadTexture("menubg");
   QuadData quad(0, m_pLocalClient->getClientParameters()->screenXSize, 0, m_pLocalClient->getClientParameters()->screenYSize, iTex, m_pLocalClient->getDisplay());
   m_pMenuBgGeometry = new GeometryQuads(&quad, VB_Static);
 }
@@ -1019,17 +1019,17 @@ void InterfaceManager::createInGameMenu()
 
   // Resume game button
   int yPxl = 10;
-  wchar_t sText[64];
-  i18n->getText(L"RESUME_GAME", sText, 64);
-  guiButton * pBtn = guiButton::createDefaultNormalButton(sText, L"Resume", m_pLocalClient->getDisplay());
+  char sText[64];
+  i18n->getText("RESUME_GAME", sText, 64);
+  guiButton * pBtn = guiButton::createDefaultNormalButton(sText, "Resume", m_pLocalClient->getDisplay());
   pBtn->setWidth(docwidth-20);
   pBtn->moveTo(10, yPxl);
   pDoc->addComponent(pBtn);
 
   // Save game button
   yPxl += pBtn->getHeight() + 10;
-  i18n->getText(L"SAVE_GAME", sText, 64);
-  pBtn = guiButton::createDefaultNormalButton(sText, L"Save", m_pLocalClient->getDisplay());
+  i18n->getText("SAVE_GAME", sText, 64);
+  pBtn = guiButton::createDefaultNormalButton(sText, "Save", m_pLocalClient->getDisplay());
   pBtn->setWidth(docwidth-20);
   pBtn->moveTo(10, yPxl);
   pBtn->setEnabled(m_pLocalClient->getServer() != NULL);
@@ -1037,16 +1037,16 @@ void InterfaceManager::createInGameMenu()
 
   // Options button
   yPxl += pBtn->getHeight() + 10;
-  i18n->getText(L"OPTIONS", sText, 64);
-  pBtn = guiButton::createDefaultNormalButton(sText, L"Options", m_pLocalClient->getDisplay());
+  i18n->getText("OPTIONS", sText, 64);
+  pBtn = guiButton::createDefaultNormalButton(sText, "Options", m_pLocalClient->getDisplay());
   pBtn->setWidth(docwidth-20);
   pBtn->moveTo(10, yPxl);
   pDoc->addComponent(pBtn);
 
   // Quit button
   yPxl += pBtn->getHeight() + 10;
-  i18n->getText(L"QUIT", sText, 64);
-  pBtn = guiButton::createDefaultNormalButton(sText, L"Quit", m_pLocalClient->getDisplay());
+  i18n->getText("QUIT", sText, 64);
+  pBtn = guiButton::createDefaultNormalButton(sText, "Quit", m_pLocalClient->getDisplay());
   pBtn->setWidth(docwidth-20);
   pBtn->moveTo(10, yPxl);
   pDoc->addComponent(pBtn);
@@ -1061,19 +1061,19 @@ void InterfaceManager::createInGameMenu()
 // -----------------------------------------------------------------
 void InterfaceManager::onClickInGameMenu(guiComponent * pCpnt)
 {
-  if (wcscmp(pCpnt->getId(), L"Resume") == 0)
+  if (strcmp(pCpnt->getId(), "Resume") == 0)
     m_pInGameMenu->setVisible(false);
-  else if (wcscmp(pCpnt->getId(), L"Save") == 0)
+  else if (strcmp(pCpnt->getId(), "Save") == 0)
   {
     m_pInGameMenu->setVisible(false);
     Server * pServer = m_pLocalClient->getServer();
     assert(pServer != NULL);
     pServer->saveGame();
   }
-  else if (wcscmp(pCpnt->getId(), L"Options") == 0)
+  else if (strcmp(pCpnt->getId(), "Options") == 0)
   {
   }
-  else if (wcscmp(pCpnt->getId(), L"Quit") == 0)
+  else if (strcmp(pCpnt->getId(), "Quit") == 0)
     m_pLocalClient->endGame();
 }
 
@@ -1100,7 +1100,7 @@ bool InterfaceManager::onClickStart()
   }
   if (m_pExtraMana != NULL && m_pExtraMana->isVisible())
   {
-    m_pExtraMana->getDocument()->doClick(L"Ok");
+    m_pExtraMana->getDocument()->doClick("Ok");
     return true;
   }
 
@@ -1127,7 +1127,7 @@ bool InterfaceManager::onClickStart()
 // -----------------------------------------------------------------
 // Name : askForExtraMana
 // -----------------------------------------------------------------
-void InterfaceManager::askForExtraMana(wchar_t * sDescription, u16 mana, int min, int max, wchar_t * sCallback, u32 uSourceType)
+void InterfaceManager::askForExtraMana(char * sDescription, u16 mana, int min, int max, char * sCallback, u32 uSourceType)
 {
   // Show popup "enter extra mana"
   m_pExtraMana = guiPopup::createEmptyPopup(m_pLocalClient->getDisplay());
@@ -1137,41 +1137,41 @@ void InterfaceManager::askForExtraMana(wchar_t * sDescription, u16 mana, int min
   LuaObject * pLua = NULL;
   int yPxl = 5;
   int iWidth = 300;
-  wchar_t sText[LABEL_MAX_CHARS];
-  wchar_t sBuf[LABEL_MAX_CHARS];
+  char sText[LABEL_MAX_CHARS];
+  char sBuf[LABEL_MAX_CHARS];
   if (uSourceType == LUAOBJECT_SPELL)
   {
     pLua = m_pLocalClient->getPlayerManager()->getSpellBeingCast();
-    i18n->getText(L"SPELL_(s)_ASK_EXTRA_MANA", sBuf, LABEL_MAX_CHARS);
+    i18n->getText("SPELL_(s)_ASK_EXTRA_MANA", sBuf, LABEL_MAX_CHARS);
   }
   else if (uSourceType == LUAOBJECT_SKILL)
   {
     pLua = (Skill*) m_pLocalClient->getPlayerManager()->getSkillBeingActivated()->getAttachment();
-    i18n->getText(L"SKILL_(s)_ASK_EXTRA_MANA", sBuf, LABEL_MAX_CHARS);
+    i18n->getText("SKILL_(s)_ASK_EXTRA_MANA", sBuf, LABEL_MAX_CHARS);
   } // Note : this function should not be called by a building or a special tile, since it asks for extra mana in reaction to a spell casting or skill activation.
   assert(pLua != NULL);
-  swprintf(sText, LABEL_MAX_CHARS, sBuf, pLua->getLocalizedName());
-  if (sDescription[0] != L'\0')
+  snprintf(sText, LABEL_MAX_CHARS, sBuf, pLua->getLocalizedName());
+  if (sDescription[0] != '\0')
   {
-    wsafecat(sText, LABEL_MAX_CHARS, L" - ");
+    wsafecat(sText, LABEL_MAX_CHARS, " - ");
     wsafecat(sText, LABEL_MAX_CHARS, sDescription);
   }
 
   // Invisible information
   guiLabel * pLbl = new guiLabel();
-  pLbl->init(sCallback, TEXT_FONT, TEXT_COLOR, L"Hidden", uSourceType, 0, 0, 0, m_pLocalClient->getDisplay());
+  pLbl->init(sCallback, TEXT_FONT, TEXT_COLOR, "Hidden", uSourceType, 0, 0, 0, m_pLocalClient->getDisplay());
   pLbl->setVisible(false);
   pDoc->addComponent(pLbl);
 
   pLbl = new guiLabel();
-  pLbl->init(sText, TEXT_FONT, TEXT_COLOR, L"", 5, yPxl, iWidth - 10, 0, m_pLocalClient->getDisplay());
+  pLbl->init(sText, TEXT_FONT, TEXT_COLOR, "", 5, yPxl, iWidth - 10, 0, m_pLocalClient->getDisplay());
   pDoc->addComponent(pLbl);
   yPxl += pLbl->getHeight() + 10;
 
   int nbCombos = 0;
   Mana remainingMana = getSpellDialog()->getRemainingMana();
-  wchar_t signs[4] = MANA_SIGNS;
-  wchar_t texts[4][LABEL_MAX_CHARS] = MANA_TEXTS;
+  char signs[4] = MANA_SIGNS;
+  char texts[4][LABEL_MAX_CHARS] = MANA_TEXTS;
   int _2powi = 1;
   for (int iMana = 0; iMana < 4; iMana++)
   {
@@ -1181,17 +1181,17 @@ void InterfaceManager::askForExtraMana(wchar_t * sDescription, u16 mana, int min
       nbCombos++;
       i18n->getText(texts[iMana], sText, LABEL_MAX_CHARS);
       pLbl = new guiLabel();
-      pLbl->init(sText, TEXT_FONT, TEXT_COLOR, L"", 5, yPxl, iWidth - 10, 0, m_pLocalClient->getDisplay());
+      pLbl->init(sText, TEXT_FONT, TEXT_COLOR, "", 5, yPxl, iWidth - 10, 0, m_pLocalClient->getDisplay());
       pDoc->addComponent(pLbl);
       yPxl += pLbl->getHeight();
       guiComboBox * pCombo = guiComboBox::createDefaultComboBox(texts[iMana], this, m_pLocalClient->getDisplay());
       pCombo->moveTo(5, yPxl);
       int max2 = (max < 0) ? max = remainingMana[iMana] : min(max, remainingMana[iMana]);
-      wchar_t sMana[8];
+      char sMana[8];
       for (int i = min; i <= max2; i++)
       {
-        swprintf(sMana, 8, L"%d", i);
-        swprintf(sText, LABEL_MAX_CHARS, L"%c %d", signs[iMana], i);
+        snprintf(sMana, 8, "%d", i);
+        snprintf(sText, LABEL_MAX_CHARS, "%c %d", signs[iMana], i);
         pCombo->addString(sText, sMana);
       }
       pCombo->setItem(0);
@@ -1203,23 +1203,23 @@ void InterfaceManager::askForExtraMana(wchar_t * sDescription, u16 mana, int min
 
   if (nbCombos == 0)
   {
-    i18n->getText(L"NO_MANA_AVAILABLE", sText, LABEL_MAX_CHARS);
+    i18n->getText("NO_MANA_AVAILABLE", sText, LABEL_MAX_CHARS);
     pLbl = new guiLabel();
-    pLbl->init(sText, TEXT_FONT, TEXT_COLOR, L"", 5, yPxl, iWidth - 10, 0, m_pLocalClient->getDisplay());
+    pLbl->init(sText, TEXT_FONT, TEXT_COLOR, "", 5, yPxl, iWidth - 10, 0, m_pLocalClient->getDisplay());
     pDoc->addComponent(pLbl);
     yPxl += pLbl->getHeight() + 10;
   }
 
   // Buttons
-  i18n->getText(L"OK", sText, LABEL_MAX_CHARS);
-  guiButton * pBtn = guiButton::createDefaultNormalButton(sText, L"Ok", m_pLocalClient->getDisplay());
+  i18n->getText("OK", sText, LABEL_MAX_CHARS);
+  guiButton * pBtn = guiButton::createDefaultNormalButton(sText, "Ok", m_pLocalClient->getDisplay());
   pBtn->moveTo(3 * iWidth / 4 - pBtn->getWidth() / 2, yPxl);
   pDoc->addComponent(pBtn);
   if (nbCombos == 0)
     pBtn->setEnabled(false);
 
-  i18n->getText(L"CANCEL", sText, LABEL_MAX_CHARS);
-  pBtn = guiButton::createDefaultNormalButton(sText, L"Cancel", m_pLocalClient->getDisplay());
+  i18n->getText("CANCE", sText, LABEL_MAX_CHARS);
+  pBtn = guiButton::createDefaultNormalButton(sText, "Cance", m_pLocalClient->getDisplay());
   pBtn->moveTo(iWidth / 4 - pBtn->getWidth() / 2, yPxl);
   pDoc->addComponent(pBtn);
   yPxl += pBtn->getHeight() + 5;
@@ -1233,41 +1233,37 @@ void InterfaceManager::askForExtraMana(wchar_t * sDescription, u16 mana, int min
 // -----------------------------------------------------------------
 void InterfaceManager::onClickExtraMana(guiComponent * pCpnt)
 {
-  if (wcscmp(pCpnt->getId(), L"Ok") == 0)
+  if (strcmp(pCpnt->getId(), "Ok") == 0)
   {
-    wchar_t texts[4][LABEL_MAX_CHARS] = MANA_TEXTS;
+    char texts[4][LABEL_MAX_CHARS] = MANA_TEXTS;
     Mana amount;
     for (int i = 0; i < 4; i++)
     {
       guiComboBox * pCombo = (guiComboBox*) m_pExtraMana->getDocument()->getComponent(texts[i]);
       if (pCombo)
-      {
-        int val;
-        swscanf(pCombo->getSelectedItem()->getId(), L"%d", &val);
-        amount.mana[i] = val;
-      }
+        amount.mana[i] = atoi(pCombo->getSelectedItem()->getId());
     }
     // No logic in what follows!
-    guiLabel * pLbl = (guiLabel*) m_pExtraMana->getDocument()->getComponent(L"Hidden");
+    guiLabel * pLbl = (guiLabel*) m_pExtraMana->getDocument()->getComponent("Hidden");
     m_pLocalClient->getPlayerManager()->addExtraMana(pLbl->getXPos(), true, pLbl->getText(), amount);
     //if (pLbl->getXPos() == LUAOBJECT_SPELL)
     //{
     //  Spell * pSpell = m_pLocalClient->getPlayerManager()->getSpellBeingCast();
-    //  pSpell->callLuaFunction(pLbl->getText(), 0, L"i", value);
+    //  pSpell->callLuaFunction(pLbl->getText(), 0, "i", value);
     //}
     //else
     //{
     //  Skill * pSkill = (Skill*) m_pLocalClient->getPlayerManager()->getSkillBeingActivated()->getAttachment();
-    //  pSkill->callLuaFunction(pLbl->getText(), 0, L"i", value);
+    //  pSkill->callLuaFunction(pLbl->getText(), 0, "i", value);
     //}
     deleteFrame(m_pExtraMana);
     m_pExtraMana = NULL;
   }
-  else if (wcscmp(pCpnt->getId(), L"Cancel") == 0)
+  else if (strcmp(pCpnt->getId(), "Cance") == 0)
   {
     // No logic in what follows!
-    guiComponent * pLbl = m_pExtraMana->getDocument()->getComponent(L"Hidden");
-    m_pLocalClient->getPlayerManager()->addExtraMana(pLbl->getXPos(), false, L"", Mana());
+    guiComponent * pLbl = m_pExtraMana->getDocument()->getComponent("Hidden");
+    m_pLocalClient->getPlayerManager()->addExtraMana(pLbl->getXPos(), false, "", Mana());
     //if (pLbl->getXPos() == LUAOBJECT_SPELL)
     //  m_pLocalClient->getPlayerManager()->castSpellFinished(false, false);
     //else
@@ -1286,16 +1282,16 @@ void InterfaceManager::onClickExtraMana(guiComponent * pCpnt)
 // Example:
 //    #fH1#Hello#n#ismiley_smile##n#fTEXT#Welcome to this game!
 // -----------------------------------------------------------------
-void InterfaceManager::getRichText(guiDocument * pDest, CoordsScreen offset, wchar_t * sSource)
+void InterfaceManager::getRichText(guiDocument * pDest, CoordsScreen offset, char * sSource)
 {
-  wchar_t sCurrentText[LABEL_MAX_CHARS] = L"";
-  int iSrcLen = wcslen(sSource);
+  char sCurrentText[LABEL_MAX_CHARS] = "";
+  int iSrcLen = strlen(sSource);
   int iSrc = 0;
   int iDst = 0;
   int iX = offset.x;
   int iY = offset.y;
   int maxX = iX;
-  wchar_t curObject = L'0';  // 0 for normal label
+  char curObject = '0';  // 0 for normal label
   guiComponent * pLastObj = NULL;
   FontId font = TEXT_FONT;
   F_RGBA color = TEXT_COLOR;
@@ -1303,29 +1299,29 @@ void InterfaceManager::getRichText(guiDocument * pDest, CoordsScreen offset, wch
   {
     switch (curObject)
     {
-    case L'#':  // '#' (new object)
+    case '#':  // '#' (new object)
         curObject = sSource[iSrc];
-        if (curObject == L'n')  // Start new normal object
+        if (curObject == 'n')  // Start new normal object
         {
           if (iX > maxX)
             maxX = iX;
           iX = offset.x;
           iY += (pLastObj == NULL) ? 4 : pLastObj->getHeight() + 4;
-          curObject = L'0';
+          curObject = '0';
           iDst = 0;
         }
         break;
-    case L'0':   // normal label
+    case '0':   // normal label
       {
-        if (sSource[iSrc] == L'#')  // start new object
+        if (sSource[iSrc] == '#')  // start new object
         {
-          curObject = L'#'; // new object (#)
+          curObject = '#'; // new object (#)
           // Register previous object (normal label)
-          sCurrentText[iDst] = L'\0';
+          sCurrentText[iDst] = '\0';
           if (iDst > 0)
           {
             guiLabel * pLbl = new guiLabel();
-            pLbl->init(sCurrentText, font, color, L"", iX, iY, 0, 0, m_pLocalClient->getDisplay());
+            pLbl->init(sCurrentText, font, color, "", iX, iY, 0, 0, m_pLocalClient->getDisplay());
             pDest->addComponent(pLbl);
             iX += pLbl->getWidth();
             pLastObj = pLbl;
@@ -1336,22 +1332,22 @@ void InterfaceManager::getRichText(guiDocument * pDest, CoordsScreen offset, wch
           sCurrentText[iDst++] = sSource[iSrc];
         break;
       }
-    case L'f':
+    case 'f':
       {
-        if (sSource[iSrc] == L'#')  // end FONT object
+        if (sSource[iSrc] == '#')  // end FONT object
         {
-          sCurrentText[iDst] = L'\0';
-          if (wcscmp(sCurrentText, L"H1") == 0)
+          sCurrentText[iDst] = '\0';
+          if (strcmp(sCurrentText, "H1") == 0)
           {
             font = H1_FONT;
             color = H1_COLOR;
           }
-          else if (wcscmp(sCurrentText, L"H2") == 0)
+          else if (strcmp(sCurrentText, "H2") == 0)
           {
             font = H2_FONT;
             color = H2_COLOR;
           }
-          else if (wcscmp(sCurrentText, L"DARK") == 0)
+          else if (strcmp(sCurrentText, "DARK") == 0)
           {
             font = TEXT_FONT;
             color = TEXT_COLOR_DARK;
@@ -1361,28 +1357,28 @@ void InterfaceManager::getRichText(guiDocument * pDest, CoordsScreen offset, wch
             font = TEXT_FONT;
             color = TEXT_COLOR;
           }
-          curObject = L'0';
+          curObject = '0';
           iDst = 0;
         }
         else
           sCurrentText[iDst++] = sSource[iSrc];
         break;
       }
-    case L'i':
+    case 'i':
       {
-        if (sSource[iSrc] == L'#')  // end IMAGE object
+        if (sSource[iSrc] == '#')  // end IMAGE object
         {
-          sCurrentText[iDst] = L'\0';
+          sCurrentText[iDst] = '\0';
           int iTex = m_pLocalClient->getDisplay()->getTextureEngine()->loadTexture(sCurrentText);
           if (iTex >= 0)
           {
             guiImage * pImg = new guiImage();
-            pImg->init(iTex, L"", iX, iY, -1, -1, m_pLocalClient->getDisplay());
+            pImg->init(iTex, "", iX, iY, -1, -1, m_pLocalClient->getDisplay());
             pDest->addComponent(pImg);
             iX += pImg->getWidth();
             pLastObj = pImg;
           }
-          curObject = L'0';
+          curObject = '0';
           iDst = 0;
         }
         else
@@ -1395,9 +1391,9 @@ void InterfaceManager::getRichText(guiDocument * pDest, CoordsScreen offset, wch
   // Ending normal label
   if (iDst > 0)
   {
-    sCurrentText[iDst] = L'\0';
+    sCurrentText[iDst] = '\0';
     guiLabel * pLbl = new guiLabel();
-    pLbl->init(sCurrentText, font, color, L"", iX, iY, 0, 0, m_pLocalClient->getDisplay());
+    pLbl->init(sCurrentText, font, color, "", iX, iY, 0, 0, m_pLocalClient->getDisplay());
     pDest->addComponent(pLbl);
     iX += pLbl->getWidth();
     pLastObj = pLbl;

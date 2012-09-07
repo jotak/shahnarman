@@ -32,7 +32,7 @@ public:
 
   // Other
   void logNewTurn();
-  void log(wchar_t * sText, u8 uLevel = 0, u8 uAction = LOG_ACTION_NONE, void * pParam = NULL);
+  void log(char * sText, u8 uLevel = 0, u8 uAction = LOG_ACTION_NONE, void * pParam = NULL);
 
 private:
   u16 m_uLogs;

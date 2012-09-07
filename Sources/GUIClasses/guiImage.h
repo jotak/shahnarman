@@ -17,7 +17,7 @@ public:
   virtual void onResize(int iOldWidth, int iOldHeight);
 
   // Clone / init
-  virtual void init(int iTex, const wchar_t * sCpntId, int xPxl, int yPxl, int wPxl, int hPxl, DisplayEngine * pDisplay);
+  virtual void init(int iTex, const char * sCpntId, int xPxl, int yPxl, int wPxl, int hPxl, DisplayEngine * pDisplay);
   virtual guiObject * clone();
 
   // Misc.

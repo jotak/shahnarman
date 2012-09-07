@@ -18,18 +18,18 @@ public:
 
   // Font loading funtions
   void resetAllFonts();
-  int registerFont(const wchar_t * sFontName, TextureEngine * pTexEngine);
+  int registerFont(const char * sFontName, TextureEngine * pTexEngine);
 
   // Member access functions
   Font * getFont(int iIndex);
 
   // Misc
-  int getStringLength(const wchar_t * sText, int iIndex);
-  int getStringHeight(const wchar_t * sText, int iIndex);
+  int getStringLength(const char * sText, int iIndex);
+  int getStringHeight(const char * sText, int iIndex);
   int getFontHeight(int iIndex);
-  int putStringInBox(wchar_t * sText, int iBoxWidth, int iIndex);
-  CoordsScreen getCharacterPosition(int iPos, const wchar_t * sText, int iIndex);
-  int getCharacterPosition(CoordsScreen cs, const wchar_t * sText, int iIndex);
+  int putStringInBox(char * sText, int iBoxWidth, int iIndex);
+  CoordsScreen getCharacterPosition(int iPos, const char * sText, int iIndex);
+  int getCharacterPosition(CoordsScreen cs, const char * sText, int iIndex);
 
 protected:
   Font * m_pAllFonts[MAX_FONTS];

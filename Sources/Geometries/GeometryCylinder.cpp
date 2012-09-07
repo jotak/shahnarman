@@ -12,8 +12,8 @@ GeometryCylinder::GeometryCylinder(float fDiameter, float fHeight, u16 uSlices, 
   m_VboId = m_BordersVboId = 0;
   m_pQuadric = gluNewQuadric();
   gluQuadricTexture(m_pQuadric, GL_TRUE);
-  m_iTopTex = pDisplay->getTextureEngine()->loadTexture(L"pastille_top", true);
-  m_iRoundTex = pDisplay->getTextureEngine()->loadTexture(L"pastille_tour", true);
+  m_iTopTex = pDisplay->getTextureEngine()->loadTexture("pastille_top", true);
+  m_iRoundTex = pDisplay->getTextureEngine()->loadTexture("pastille_tour", true);
   modify(fDiameter, fHeight, uSlices, iTex);
 }
 

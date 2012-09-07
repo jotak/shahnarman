@@ -168,21 +168,21 @@ void FxManager::Update(double delta)
       if (score >= 500)
       {
         void * p = &score;
-        wchar_t sText[256];
-        i18n->getText(L"YOU_GOT_%$1ld_AT_THROW_THE_MAP", sText, 256, &p);
-        wchar_t sComment[256];
+        char sText[256];
+        i18n->getText("YOU_GOT_%$1ld_AT_THROW_THE_MAP", sText, 256, &p);
+        char sComment[256];
         if (score < 3000)
-          i18n->getText(L"TTH_SCORE_1", sComment, 256);
+          i18n->getText("TTH_SCORE_1", sComment, 256);
         else if (score < 10000)
-          i18n->getText(L"TTH_SCORE_2", sComment, 256);
+          i18n->getText("TTH_SCORE_2", sComment, 256);
         else if (score < 100000)
-          i18n->getText(L"TTH_SCORE_3", sComment, 256);
+          i18n->getText("TTH_SCORE_3", sComment, 256);
         else if (score < 500000)
-          i18n->getText(L"TTH_SCORE_4", sComment, 256);
+          i18n->getText("TTH_SCORE_4", sComment, 256);
         else if (score < 1000000)
-          i18n->getText(L"TTH_SCORE_5", sComment, 256);
+          i18n->getText("TTH_SCORE_5", sComment, 256);
         else
-          i18n->getText(L"TTH_SCORE_6", sComment, 256);
+          i18n->getText("TTH_SCORE_6", sComment, 256);
         showMessage(sComment);
         showMessage(sText);
       }
@@ -353,9 +353,9 @@ void FxManager::dragInertness(Coords3D inertnessVector)
 // -----------------------------------------------------------------
 // Name : showMessage
 // -----------------------------------------------------------------
-void FxManager::showMessage(wchar_t * sText)
+void FxManager::showMessage(char * sText)
 {
-  int font = m_pLocalClient->getDisplay()->getFontEngine()->registerFont(L"Arabolical_32", m_pLocalClient->getDisplay()->getTextureEngine());
+  int font = m_pLocalClient->getDisplay()->getFontEngine()->registerFont("Arabolical_32", m_pLocalClient->getDisplay()->getTextureEngine());
   GeometryText * pGeo = new GeometryText(sText, font, VB_Static, m_pLocalClient->getDisplay());
   m_pAllMessages->addLast(pGeo);
   TimeController * pCtrl = new TimeController();

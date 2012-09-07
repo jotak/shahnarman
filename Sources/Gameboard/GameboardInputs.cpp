@@ -420,21 +420,21 @@ bool GameboardInputs::onCursorMoveEvent(int xPxl, int yPxl)
   if (m_pGameboard->getMap()->isInBounds(mapPos))
   {
     // Tile info
-    wchar_t sText[LABEL_MAX_CHARS] = L"";
+    char sText[LABEL_MAX_CHARS] = "";
     MapTile * pTile = m_pGameboard->getMap()->getTileAt(mapPos);
     pTile->getInfo(sText, LABEL_MAX_CHARS);
 
     // Influence info
-    wchar_t sInfluence[128] = L"";
+    char sInfluence[128] = "";
     Player * pPlayer = m_pLocalClient->getPlayerManager()->findPlayer(pTile->m_uInfluence);
     assert(pPlayer != NULL);
     void * p = pPlayer->getAvatarName();
-    i18n->getText(L"HIGHEST_INFLUENCE_%$1s", sInfluence, 128, &p);
-    wsafecat(sText, LABEL_MAX_CHARS, L"\n");
+    i18n->getText("HIGHEST_INFLUENCE_%$1s", sInfluence, 128, &p);
+    wsafecat(sText, LABEL_MAX_CHARS, "\n");
     wsafecat(sText, LABEL_MAX_CHARS, sInfluence);
 
     // Magic circles info
-    wchar_t sMagicCircle[128] = L"";
+    char sMagicCircle[128] = "";
     ObjectList * pMagicCircles = m_pGameboard->getMagicCircles();
     CoordsObject * pCoords = (CoordsObject*) pMagicCircles->getFirst(0);
     while (pCoords != NULL)
@@ -444,8 +444,8 @@ bool GameboardInputs::onCursorMoveEvent(int xPxl, int yPxl)
         Player * pPlayer = (Player*) (pCoords->getAttachment());
         assert(pPlayer != NULL);
         p = pPlayer->getAvatarName();
-        i18n->getText(L"MAGIC_CIRCLE_(%$1s)", sMagicCircle, 128, &p);
-        wsafecat(sText, LABEL_MAX_CHARS, L"\n");
+        i18n->getText("MAGIC_CIRCLE_(%$1s)", sMagicCircle, 128, &p);
+        wsafecat(sText, LABEL_MAX_CHARS, "\n");
         wsafecat(sText, LABEL_MAX_CHARS, sMagicCircle);
       }
       pCoords = (CoordsObject*) pMagicCircles->getNext(0);
@@ -457,8 +457,8 @@ bool GameboardInputs::onCursorMoveEvent(int xPxl, int yPxl)
     {
       MapObject * mapObj = m_pGameboard->getMap()->getFirstObjectAt(mapPos);
       assert(mapObj != NULL);
-      wchar_t sBuf1[LABEL_MAX_CHARS] = L"";
-      wsafecat(sText, LABEL_MAX_CHARS, L"\n");
+      char sBuf1[LABEL_MAX_CHARS] = "";
+      wsafecat(sText, LABEL_MAX_CHARS, "\n");
       wsafecat(sText, LABEL_MAX_CHARS, mapObj->getInfo(sBuf1, LABEL_MAX_CHARS, Dest_InfoDialog));
     }
     else
@@ -466,8 +466,8 @@ bool GameboardInputs::onCursorMoveEvent(int xPxl, int yPxl)
       MapObject * mapObj = m_pGameboard->getMap()->getFirstObjectAt(mapPos);
       while (mapObj != NULL)
       {
-        wchar_t sBuf1[LABEL_MAX_CHARS] = L"";
-        wsafecat(sText, LABEL_MAX_CHARS, L"\n");
+        char sBuf1[LABEL_MAX_CHARS] = "";
+        wsafecat(sText, LABEL_MAX_CHARS, "\n");
         wsafecat(sText, LABEL_MAX_CHARS, mapObj->getInfo(sBuf1, LABEL_MAX_CHARS, Dest_ShortInfoDialog));
         mapObj = m_pGameboard->getMap()->getNextObjectAt(mapPos);
       }

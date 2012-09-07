@@ -21,19 +21,19 @@ public:
   void setFontId(FontId id) { m_FontId = id; };
   int getBoxWidth() { return m_iBoxWidth; };
   void setBoxWidth(int iWidth);
-  void setText(const wchar_t * sText);
-  wchar_t * getText() { return m_sText; };
+  void setText(const char * sText);
+  char * getText() { return m_sText; };
   void setCatchClicks(bool b) { m_bCatchClicks = b; };
   void setComponentOwner(guiComponent * pOwner) { m_pComponentOwner = pOwner; };
 
   // Clone / init
-  virtual void init(const wchar_t * sText, FontId fontId, F_RGBA textColor, const wchar_t * sCpntId, int xPxl, int yPxl, int wPxl, int hPxl, DisplayEngine * pDisplay);
+  virtual void init(const char * sText, FontId fontId, F_RGBA textColor, const char * sCpntId, int xPxl, int yPxl, int wPxl, int hPxl, DisplayEngine * pDisplay);
   virtual guiObject * clone();
 
 protected:
   void computeGeometry(DisplayEngine * pDisplay);
 
-  wchar_t m_sText[LABEL_MAX_CHARS];
+  char m_sText[LABEL_MAX_CHARS];
   FontId m_FontId;
   int m_iBoxWidth;
   bool m_bCatchClicks;

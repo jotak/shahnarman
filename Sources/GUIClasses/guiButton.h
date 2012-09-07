@@ -38,8 +38,8 @@ public:
   virtual void onCursorMoveOutEvent();
 
   // Member access functions
-  wchar_t * getText() { return m_pLabel->getText(); };
-  void setText(const wchar_t * sText);
+  char * getText() { return m_pLabel->getText(); };
+  void setText(const char * sText);
   void setFontId(FontId id) { m_pLabel->setFontId(id); };
   void setTextColor(F_RGBA textColor) { m_pLabel->setDiffuseColor(textColor); };
   BtnClickOptions getClickOption() { return m_ClickOption; };
@@ -55,7 +55,7 @@ public:
   void setNormalTexture(int iTexId);
 
   // Clone / init
-  virtual void init(const wchar_t * sText, FontId fontId, F_RGBA textColor, int iClickedTex, BtnClickOptions clickOption, int iOverTex, BtnClickOptions overOption, int iTex, const wchar_t * sCpntId, int xPxl, int yPxl, int wPxl, int hPxl, DisplayEngine * pDisplay);
+  virtual void init(const char * sText, FontId fontId, F_RGBA textColor, int iClickedTex, BtnClickOptions clickOption, int iOverTex, BtnClickOptions overOption, int iTex, const char * sCpntId, int xPxl, int yPxl, int wPxl, int hPxl, DisplayEngine * pDisplay);
   virtual guiObject * clone();
 
   // Size & position
@@ -67,10 +67,10 @@ public:
   void attachImage(int iTex);
 
   // Static default constructors
-  static guiButton * createDefaultNormalButton(const wchar_t * sText, const wchar_t * sId, DisplayEngine * pDisplay);
-  static guiButton * createDefaultSmallButton(const wchar_t * sText, int width, const wchar_t * sId, DisplayEngine * pDisplay);
-  static guiButton * createDefaultWhiteButton(const wchar_t * sText, int width, int height, const wchar_t * sId, DisplayEngine * pDisplay);
-  static guiButton * createDefaultImageButton(int iTex, const wchar_t * sId, DisplayEngine * pDisplay);
+  static guiButton * createDefaultNormalButton(const char * sText, const char * sId, DisplayEngine * pDisplay);
+  static guiButton * createDefaultSmallButton(const char * sText, int width, const char * sId, DisplayEngine * pDisplay);
+  static guiButton * createDefaultWhiteButton(const char * sText, int width, int height, const char * sId, DisplayEngine * pDisplay);
+  static guiButton * createDefaultImageButton(int iTex, const char * sId, DisplayEngine * pDisplay);
 
 protected:
   bool m_bMouseDown;

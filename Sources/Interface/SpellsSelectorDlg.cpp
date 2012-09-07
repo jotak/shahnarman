@@ -22,18 +22,18 @@ SpellsSelectorDlg::SpellsSelectorDlg(LocalClient * pLocalClient, int iWidth, int
   m_pTarget = NULL;
   m_pCancelCallback = NULL;
 
-  init(L"",
-    pLocalClient->getDisplay()->getTextureEngine()->findTexture(L"interface:WinBg"),
+  init("",
+    pLocalClient->getDisplay()->getTextureEngine()->findTexture("interface:WinBg"),
     0, 0, 1, 1, pLocalClient->getDisplay());
 
   // Cancel button
-  wchar_t sText[LABEL_MAX_CHARS];
-  guiButton * pBtn = guiButton::createDefaultNormalButton(i18n->getText(L"CLOSE", sText, LABEL_MAX_CHARS), L"CancelButton", m_pLocalClient->getDisplay());
+  char sText[LABEL_MAX_CHARS];
+  guiButton * pBtn = guiButton::createDefaultNormalButton(i18n->getText("CLOSE", sText, LABEL_MAX_CHARS), "CancelButton", m_pLocalClient->getDisplay());
   pBtn->moveTo(iWidth / 2 - pBtn->getWidth() / 2, iHeight - pBtn->getHeight() - SPACING);
   addComponent(pBtn);
 
   // Create container
-  m_pSpellsContainer = guiContainer::createDefaultPanel(iWidth - 2 * SPACING, iHeight - pBtn->getHeight() - 3 * SPACING, L"", m_pLocalClient->getDisplay());
+  m_pSpellsContainer = guiContainer::createDefaultPanel(iWidth - 2 * SPACING, iHeight - pBtn->getHeight() - 3 * SPACING, "", m_pLocalClient->getDisplay());
   m_pSpellsContainer->moveTo(SPACING, SPACING);
   addComponent(m_pSpellsContainer);
 }
@@ -57,7 +57,7 @@ SpellsSelectorDlg::~SpellsSelectorDlg()
 // -----------------------------------------------------------------
 bool SpellsSelectorDlg::onButtonEvent(ButtonAction * pEvent, guiComponent * pCpnt)
 {
-  if (wcscmp(pCpnt->getId(), L"CancelButton") == 0)
+  if (strcmp(pCpnt->getId(), "CancelButton") == 0)
   {
     if (m_pCancelCallback != NULL)
       m_pCancelCallback();
@@ -81,12 +81,12 @@ guiObject * SpellsSelectorDlg::onCursorMoveEvent(int xPxl, int yPxl)
   {
     if (cpnt->isAt(xPxlRel, yPxlRel))
     {
-      if (wcscmp(cpnt->getId(), L"SpellButton") == 0)
+      if (strcmp(cpnt->getId(), "SpellButton") == 0)
       {
         m_pTarget = cpnt;
         break;
       }
-      else if (wcscmp(cpnt->getId(), L"SpellLabel") == 0)
+      else if (strcmp(cpnt->getId(), "SpellLabe") == 0)
       {
         m_pTarget = (guiComponent*) cpnt->getAttachment();
         break;
@@ -133,14 +133,14 @@ void SpellsSelectorDlg::showActiveSpellsOnTile(MapTile * pTile)
   m_pSpellsContainer->getDocument()->deleteAllComponents();
   m_pTarget = NULL;
 
-  wchar_t sText[LABEL_MAX_CHARS];
+  char sText[LABEL_MAX_CHARS];
   int yPxl = 0;
   MapObject * pObj = pTile->getFirstMapObject();
   while (pObj != NULL)
   {
     // MapObject icon
     guiImage * pImg = new guiImage();
-    pImg->init(pObj->getTexture(), L"", 0, yPxl, 2 * SMALL_ICON_SIZE, 2 * SMALL_ICON_SIZE, getDisplay());
+    pImg->init(pObj->getTexture(), "", 0, yPxl, 2 * SMALL_ICON_SIZE, 2 * SMALL_ICON_SIZE, getDisplay());
     pImg->setTooltipText(pObj->getInfo(sText, LABEL_MAX_CHARS, Dest_ShortInfoDialog));
     m_pSpellsContainer->getDocument()->addComponent(pImg);
 
@@ -155,7 +155,7 @@ void SpellsSelectorDlg::showActiveSpellsOnTile(MapTile * pTile)
       {
         // Spell icon
         int iTex = getDisplay()->getTextureEngine()->loadTexture(((Spell*)pLua)->getIconPath());
-        guiToggleButton * pBtn = guiToggleButton::createDefaultTexturedToggleButton(iTex, SMALL_ICON_SIZE, L"SpellButton", getDisplay());
+        guiToggleButton * pBtn = guiToggleButton::createDefaultTexturedToggleButton(iTex, SMALL_ICON_SIZE, "SpellButton", getDisplay());
         pBtn->moveTo(xPxl[switchY], yPxl + switchY * SMALL_ICON_SIZE);
         pBtn->setAttachment(pLua);
         pBtn->setTooltipText(((Spell*)pLua)->getInfo(sText, LABEL_MAX_CHARS));
@@ -164,7 +164,7 @@ void SpellsSelectorDlg::showActiveSpellsOnTile(MapTile * pTile)
 
         // Spell label
         guiLabel * pLbl = new guiLabel();
-        pLbl->init(((Spell*)pLua)->getLocalizedName(), TEXT_FONT, TEXT_COLOR, L"SpellLabel", xPxl[switchY], yPxl + switchY * SMALL_ICON_SIZE, -1, -1, getDisplay());
+        pLbl->init(((Spell*)pLua)->getLocalizedName(), TEXT_FONT, TEXT_COLOR, "SpellLabe", xPxl[switchY], yPxl + switchY * SMALL_ICON_SIZE, -1, -1, getDisplay());
         pLbl->setAttachment(pBtn);
         pLbl->setTooltipText(sText);
         m_pSpellsContainer->getDocument()->addComponent(pLbl);
@@ -196,13 +196,13 @@ void SpellsSelectorDlg::showActiveSpellsOnTile(MapTile * pTile)
 void SpellsSelectorDlg::showPlayersSpells(ObjectList * pPlayers, int iSrc, CLBK_ON_CANCEL * pCancelCallback)
 {
   m_pCancelCallback = pCancelCallback;
-  wchar_t sText[LABEL_MAX_CHARS];
-  guiButton * pBtn = (guiButton*) getComponent(L"CancelButton");
+  char sText[LABEL_MAX_CHARS];
+  guiButton * pBtn = (guiButton*) getComponent("CancelButton");
   assert(pBtn != NULL);
   if (pCancelCallback != NULL)
-    i18n->getText(L"CANCEL", sText, LABEL_MAX_CHARS);
+    i18n->getText("CANCE", sText, LABEL_MAX_CHARS);
   else
-    i18n->getText(L"CLOSE", sText, LABEL_MAX_CHARS);
+    i18n->getText("CLOSE", sText, LABEL_MAX_CHARS);
   pBtn->setText(sText);
 
   bool bGlobal = false;
@@ -222,12 +222,12 @@ void SpellsSelectorDlg::showPlayersSpells(ObjectList * pPlayers, int iSrc, CLBK_
   {
     // Player icon
     guiImage * pImg = new guiImage();
-    pImg->init(pPlayer->getAvatarTexture(), L"", 0, yPxl, 2 * SMALL_ICON_SIZE, 2 * SMALL_ICON_SIZE, getDisplay());
+    pImg->init(pPlayer->getAvatarTexture(), "", 0, yPxl, 2 * SMALL_ICON_SIZE, 2 * SMALL_ICON_SIZE, getDisplay());
     m_pSpellsContainer->getDocument()->addComponent(pImg);
 
     // Player name
     guiLabel * pLbl = new guiLabel();
-    pLbl->init(pPlayer->getAvatarName(), H1_FONT, H1_COLOR, L"", 2 * SMALL_ICON_SIZE + SPACING, yPxl, -1, -1, getDisplay());
+    pLbl->init(pPlayer->getAvatarName(), H1_FONT, H1_COLOR, "", 2 * SMALL_ICON_SIZE + SPACING, yPxl, -1, -1, getDisplay());
     m_pSpellsContainer->getDocument()->addComponent(pLbl);
     yPxl += pImg->getHeight() + SPACING;
 
@@ -241,7 +241,7 @@ void SpellsSelectorDlg::showPlayersSpells(ObjectList * pPlayers, int iSrc, CLBK_
       {
         // Spell icon
         int iTex = getDisplay()->getTextureEngine()->loadTexture(pSpell->getIconPath());
-        guiToggleButton * pBtn = guiToggleButton::createDefaultTexturedToggleButton(iTex, SMALL_ICON_SIZE, L"SpellButton", getDisplay());
+        guiToggleButton * pBtn = guiToggleButton::createDefaultTexturedToggleButton(iTex, SMALL_ICON_SIZE, "SpellButton", getDisplay());
         pBtn->moveTo(xPxl, yPxl);
         pBtn->setAttachment(pSpell);
         pBtn->setTooltipText(pSpell->getInfo(sText, LABEL_MAX_CHARS));

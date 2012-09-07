@@ -16,7 +16,7 @@
 // Name : Player
 //  Constructor
 // -----------------------------------------------------------------
-Player::Player(u8 playerId, u8 clientId, ObjectList ** pGlobalEffects) : LuaTargetable(pGlobalEffects, L"")
+Player::Player(u8 playerId, u8 clientId, ObjectList ** pGlobalEffects) : LuaTargetable(pGlobalEffects, "")
 {
   m_pUnits = new ObjectList(true);
   m_pDeadUnits = new ObjectList(true);
@@ -27,8 +27,8 @@ Player::Player(u8 playerId, u8 clientId, ObjectList ** pGlobalEffects) : LuaTarg
   m_pCastSpells = new ObjectList(false);
   m_uPlayerId = playerId;
   m_uClientId = clientId;
-  wsafecpy(m_sProfileName, NAME_MAX_CHARS, L"");
-  wsafecpy(m_sBanner, 64, L"");
+  wsafecpy(m_sProfileName, NAME_MAX_CHARS, "");
+  wsafecpy(m_sBanner, 64, "");
   m_iBannerTex = 0;
   m_Color = F_RGBA_NULL;
   m_pAvatarData = NULL;
@@ -50,7 +50,7 @@ Player::Player(u8 playerId, u8 clientId, ObjectList ** pGlobalEffects) : LuaTarg
   m_pWonArtifacts = new ObjectList(false);
   m_pWonAvatars = new ObjectList(false);
   resetState();
-  swprintf(m_sIdentifiers, 16, L"player %d", (int) m_uPlayerId);
+  snprintf(m_sIdentifiers, 16, "player %d", (int) m_uPlayerId);
   for (int i = 0; i < MAX_MAGIC_CIRCLES; i++)
     m_MagicCirclePos[i].x = -1;
   m_bIsAI = false;
@@ -181,9 +181,9 @@ void Player::deserialize(NetworkData * pData, bool bShort, LocalClient * pLocalC
     int size = pData->readLong();
     for (int i = 0; i < size; i++)
     {
-      wchar_t sEdition[NAME_MAX_CHARS];
+      char sEdition[NAME_MAX_CHARS];
       pData->readString(sEdition);
-      wchar_t sName[NAME_MAX_CHARS];
+      char sName[NAME_MAX_CHARS];
       pData->readString(sName);
       Spell * pSpell = pLocalClient->getDataFactory()->findSpell(sEdition, sName);
       assert(pSpell != NULL);
@@ -192,9 +192,9 @@ void Player::deserialize(NetworkData * pData, bool bShort, LocalClient * pLocalC
     size = pData->readLong();
     for (int i = 0; i < size; i++)
     {
-      wchar_t sEdition[NAME_MAX_CHARS];
+      char sEdition[NAME_MAX_CHARS];
       pData->readString(sEdition);
-      wchar_t sName[NAME_MAX_CHARS];
+      char sName[NAME_MAX_CHARS];
       pData->readString(sName);
       Edition * pEdition = pLocalClient->getDataFactory()->findEdition(sEdition);
       assert(pEdition != NULL);
@@ -205,15 +205,15 @@ void Player::deserialize(NetworkData * pData, bool bShort, LocalClient * pLocalC
     size = pData->readLong();
     for (int i = 0; i < size; i++)
     {
-      wchar_t sEdition[NAME_MAX_CHARS];
+      char sEdition[NAME_MAX_CHARS];
       pData->readString(sEdition);
-      wchar_t sName[NAME_MAX_CHARS];
+      char sName[NAME_MAX_CHARS];
       pData->readString(sName);
       AvatarData * pAvatar = (AvatarData*) pLocalClient->getDataFactory()->getUnitData(sEdition, sName);
       assert(pAvatar != NULL);
       m_pWonAvatars->addLast(pAvatar);
     }
-    swprintf(m_sIdentifiers, 16, L"player %d", (int) m_uPlayerId);
+    snprintf(m_sIdentifiers, 16, "player %d", (int) m_uPlayerId);
   }
 }
 
@@ -423,7 +423,7 @@ void Player::setAvatar(AvatarData * pAvatarData, Unit * pUnit)
 // -----------------------------------------------------------------
 // Name : getAvatarName
 // -----------------------------------------------------------------
-wchar_t * Player::getAvatarName()
+char * Player::getAvatarName()
 {
   if (m_uPlayerId == 0)
     return m_sProfileName;
@@ -509,7 +509,7 @@ Unit * Player::findUnit(u32 uUnit)
 // -----------------------------------------------------------------
 void Player::castSpell(Spell * pSpell)
 {
-  pSpell->callLuaFunction(L"onCast", 0, L"");
+  pSpell->callLuaFunction("onCast", 0, "");
 }
 
 // -----------------------------------------------------------------
@@ -640,24 +640,24 @@ void Player::setBaseMana(u8 uColor, u8 value)
 // -----------------------------------------------------------------
 // Name : getInfo
 // -----------------------------------------------------------------
-wchar_t * Player::getInfo(wchar_t * sBuf, int iSize)
+char * Player::getInfo(char * sBuf, int iSize)
 {
-  wchar_t sAvatar[64];
-  wchar_t sAvailMana[64];
-  wchar_t sDeuxPoints[4];
-  i18n->getText1stUp(L"AVATAR", sAvatar, 64);
-  i18n->getText1stUp(L"AVAILABLE_MANA", sAvailMana, 64);
-  i18n->getText(L"2P", sDeuxPoints, 4);
-  swprintf(sBuf, iSize, L"%s%s%s\n%s%s\n  ",
+  char sAvatar[64];
+  char sAvailMana[64];
+  char sDeuxPoints[4];
+  i18n->getText1stUp("AVATAR", sAvatar, 64);
+  i18n->getText1stUp("AVAILABLE_MANA", sAvailMana, 64);
+  i18n->getText("2P", sDeuxPoints, 4);
+  snprintf(sBuf, iSize, "%s%s%s\n%s%s\n  ",
         sAvatar,
         sDeuxPoints,
         m_pAvatar->getName(),
         sAvailMana,
         sDeuxPoints
   );
-  getInfo_AddValue(sBuf, iSize, STRING_MANA_LIFE, L"\n  ");
-  getInfo_AddValue(sBuf, iSize, STRING_MANA_LAW, L"\n  ");
-  getInfo_AddValue(sBuf, iSize, STRING_MANA_DEATH, L"\n  ");
-  getInfo_AddValue(sBuf, iSize, STRING_MANA_CHAOS, L"");
+  getInfo_AddValue(sBuf, iSize, STRING_MANA_LIFE, "\n  ");
+  getInfo_AddValue(sBuf, iSize, STRING_MANA_LAW, "\n  ");
+  getInfo_AddValue(sBuf, iSize, STRING_MANA_DEATH, "\n  ");
+  getInfo_AddValue(sBuf, iSize, STRING_MANA_CHAOS, "");
   return sBuf;
 }

@@ -14,9 +14,9 @@ public:
   ~TextureEngine();
 
   // Texture loading funtions
-  s32 loadComposedTexture(const wchar_t * sFilename);
-  s32 loadTexture(const wchar_t * sFilename, bool bMipmap = false, int ustart = -1, int uend = -1, int vstart = -1, int vend = -1);
-  s32 findTexture(const wchar_t * sFilename);
+  s32 loadComposedTexture(const char * sFilename);
+  s32 loadTexture(const char * sFilename, bool bMipmap = false, int ustart = -1, int uend = -1, int vstart = -1, int vend = -1);
+  s32 findTexture(const char * sFilename);
   void reloadAllTextures();
 
   // Member access functions

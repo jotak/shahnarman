@@ -25,11 +25,11 @@ XMLLiteReader::~XMLLiteReader()
 // -----------------------------------------------------------------
 // Name : parseFile
 // -----------------------------------------------------------------
-XMLLiteElement * XMLLiteReader::parseFile(wchar_t * sFileName)
+XMLLiteElement * XMLLiteReader::parseFile(const char * sFileName)
 {
   FILE * pFile = NULL;
 
-  if (0 != wfopen(&pFile, sFileName, L"r"))
+  if (0 != fopen_s(&pFile, sFileName, "r"))
     throw XMLLITE_ERROR_CANT_OPEN_FILE;
 
   if (m_pRootNode != NULL)
@@ -45,10 +45,10 @@ XMLLiteElement * XMLLiteReader::parseFile(wchar_t * sFileName)
       bool bEscape = skipSpaces(pFile, &c);
       if (c == WEOF) // EOF
         break;
-      else if (c != (wint_t)L'<' || bEscape)
+      else if (c != (wint_t)'<' || bEscape)
         throw XMLLITE_ERROR_ELEMENT_EXPECTED;
       bEscape = skipSpaces(pFile, &c);
-      readElement(pFile, (wchar_t)c, m_pRootNode);
+      readElement(pFile, (char)c, m_pRootNode);
     }
   }
   catch (int errorCode)
@@ -64,10 +64,10 @@ XMLLiteElement * XMLLiteReader::parseFile(wchar_t * sFileName)
 // -----------------------------------------------------------------
 // Name : readElement
 // -----------------------------------------------------------------
-void XMLLiteReader::readElement(FILE * pFile, wchar_t cFirstChar, XMLLiteElement * pParent)
+void XMLLiteReader::readElement(FILE * pFile, char cFirstChar, XMLLiteElement * pParent)
 {
   wint_t c;
-  wchar_t sName[XMLLITE_MAX_NAME_CHARS] = L"";
+  char sName[XMLLITE_MAX_NAME_CHARS] = "";
   int cursor = 1;
   sName[0] = cFirstChar;
   bool bEscape;
@@ -78,49 +78,49 @@ void XMLLiteReader::readElement(FILE * pFile, wchar_t cFirstChar, XMLLiteElement
     m_iCurrentCol++;
     if (c == WEOF)
       throw XMLLITE_ERROR_EOF_NOT_EXPECTED;
-    else if (c == (wint_t)L'\r' || c == (wint_t)L'\n')
+    else if (c == (wint_t)'\r' || c == (wint_t)'\n')
       throw XMLLITE_ERROR_LINEBREAK_IN_ELEMENT;
-    else if (c == (wint_t)L' ' || c == (wint_t)L'\t' || (c == (wint_t)L'/' && !bEscape) || (c == (wint_t)L'>' && !bEscape))
+    else if (c == (wint_t)' ' || c == (wint_t)'\t' || (c == (wint_t)'/' && !bEscape) || (c == (wint_t)'>' && !bEscape))
       break;
     else
-      sName[cursor++] = (wchar_t)c;
+      sName[cursor++] = (char)c;
     if (cursor == 3)
     {
-      if (sName[0] == L'!' && sName[1] == L'-' && sName[2] == L'-')
+      if (sName[0] == '!' && sName[1] == '-' && sName[2] == '-')
       {
         skipComments(pFile);
         return;
       }
     }
   }
-  sName[cursor] = L'\0';
-  if (c == (wint_t)L' ' || c == (wint_t)L'\t')
+  sName[cursor] = '\0';
+  if (c == (wint_t)' ' || c == (wint_t)'\t')
     bEscape = skipSpaces(pFile, &c);
 
   XMLLiteElement * pElt = new XMLLiteElement(XMLLITE_ELEMENT_TYPE_NODE);  // we don't know yet if it's a node or a value. In case of value, we'll change it later
   pElt->setName(sName);
   pParent->addChild(pElt);
-  while (bEscape || (c != (wint_t)L'/' && c != (wint_t)L'>'))   // it's attributes
+  while (bEscape || (c != (wint_t)'/' && c != (wint_t)'>'))   // it's attributes
   {
     if (c == WEOF)
       throw XMLLITE_ERROR_EOF_NOT_EXPECTED;
     bEscape = readAttribute(pFile, c, &c, pElt);
   }
 
-  if (c == (wint_t)L'/' && !bEscape)
+  if (c == (wint_t)'/' && !bEscape)
   {
     bEscape = skipSpaces(pFile, &c);
-    if (c != (wint_t)L'>' || bEscape)
+    if (c != (wint_t)'>' || bEscape)
       throw XMLLITE_ERROR_ELEMENT_END_EXPECTED;
     pElt->setType(XMLLITE_ELEMENT_TYPE_VALUE);
-    pElt->setValue(L"");
+    pElt->setValue("");
     return;
   }
 
   bEscape = skipSpaces(pFile, &c);
   if (c == WEOF)
     throw XMLLITE_ERROR_EOF_NOT_EXPECTED;
-  else if (c == (wint_t)L'<' && !bEscape)
+  else if (c == (wint_t)'<' && !bEscape)
   {
     while (true)
     {
@@ -128,7 +128,7 @@ void XMLLiteReader::readElement(FILE * pFile, wchar_t cFirstChar, XMLLiteElement
       bEscape = skipSpaces(pFile, &c);
       if (c == WEOF)
         throw XMLLITE_ERROR_EOF_NOT_EXPECTED;
-      else if (c == (wint_t)L'/' && !bEscape)
+      else if (c == (wint_t)'/' && !bEscape)
       {
         readClosingTag(pFile, sName);
         return;
@@ -136,11 +136,11 @@ void XMLLiteReader::readElement(FILE * pFile, wchar_t cFirstChar, XMLLiteElement
       else
       {
         // it's a node ; so, read child elements
-        readElement(pFile, (wchar_t)c, pElt);
+        readElement(pFile, (char)c, pElt);
         bEscape = skipSpaces(pFile, &c);
         if (c == WEOF)
           throw XMLLITE_ERROR_EOF_NOT_EXPECTED;
-        if (c != (wint_t)L'<' || bEscape)
+        if (c != (wint_t)'<' || bEscape)
           throw XMLLITE_ERROR_ELEMENT_EXPECTED;
       }
     }
@@ -149,27 +149,27 @@ void XMLLiteReader::readElement(FILE * pFile, wchar_t cFirstChar, XMLLiteElement
   {
     // it's a value ; read it
     pElt->setType(XMLLITE_ELEMENT_TYPE_VALUE);
-    wchar_t sValue[XMLLITE_MAX_VALUE_CHARS] = L"";
+    char sValue[XMLLITE_MAX_VALUE_CHARS] = "";
     cursor = 1;
-    sValue[0] = (wchar_t)c;
+    sValue[0] = (char)c;
     while (true)
     {
       bEscape = readChar(pFile, &c);
       m_iCurrentCol++;
       if (c == WEOF)
         throw XMLLITE_ERROR_EOF_NOT_EXPECTED;
-      else if (c == (wint_t)L'<' && !bEscape)
+      else if (c == (wint_t)'<' && !bEscape)
         break;
-      sValue[cursor++] = (wchar_t)c;
+      sValue[cursor++] = (char)c;
     }
-    sValue[cursor] = L'\0';
+    sValue[cursor] = '\0';
     pElt->setValue(sValue);
 
     // closing tag
     bEscape = skipSpaces(pFile, &c);
     if (c == WEOF)
       throw XMLLITE_ERROR_EOF_NOT_EXPECTED;
-    else if (c != (wint_t)L'/' || bEscape)
+    else if (c != (wint_t)'/' || bEscape)
       throw XMLLITE_ERROR_CLOSING_TAG_EXPECTED;
     else
     {
@@ -182,11 +182,11 @@ void XMLLiteReader::readElement(FILE * pFile, wchar_t cFirstChar, XMLLiteElement
 // -----------------------------------------------------------------
 // Name : readAttribute
 // -----------------------------------------------------------------
-bool XMLLiteReader::readAttribute(FILE * pFile, wchar_t cFirstChar, wint_t * cfinal, XMLLiteElement * pParent)
+bool XMLLiteReader::readAttribute(FILE * pFile, char cFirstChar, wint_t * cfinal, XMLLiteElement * pParent)
 {
   wint_t c;
-  wchar_t sName[XMLLITE_MAX_NAME_CHARS] = L"";
-  wchar_t sValue[XMLLITE_MAX_VALUE_CHARS] = L"";
+  char sName[XMLLITE_MAX_NAME_CHARS] = "";
+  char sValue[XMLLITE_MAX_VALUE_CHARS] = "";
   int cursor = 1;
   sName[0] = cFirstChar;
   bool bEscape;
@@ -197,30 +197,30 @@ bool XMLLiteReader::readAttribute(FILE * pFile, wchar_t cFirstChar, wint_t * cfi
     m_iCurrentCol++;
     if (c == WEOF)
       throw XMLLITE_ERROR_EOF_NOT_EXPECTED;
-    else if (c == (wint_t)L'\r' || c == (wint_t)L'\n')
+    else if (c == (wint_t)'\r' || c == (wint_t)'\n')
       throw XMLLITE_ERROR_LINEBREAK_IN_ATTRIBUTE;
-    else if (c == (wint_t)L' ' || c == (wint_t)L'\t' || (c == (wint_t)L'=' && !bEscape))
+    else if (c == (wint_t)' ' || c == (wint_t)'\t' || (c == (wint_t)'=' && !bEscape))
       break;
     else
-      sName[cursor++] = (wchar_t)c;
+      sName[cursor++] = (char)c;
   }
-  sName[cursor] = L'\0';
-  if (c == (wint_t)L' ' || c == (wint_t)L'\t')
+  sName[cursor] = '\0';
+  if (c == (wint_t)' ' || c == (wint_t)'\t')
     bEscape = skipSpaces(pFile, &c);
 
-  if (c != (wint_t)L'=' || bEscape)
+  if (c != (wint_t)'=' || bEscape)
     throw XMLLITE_ERROR_EQUAL_EXPECTED_IN_ATTRIBUTE;
 
   bEscape = skipSpaces(pFile, &c);
   cursor = 0;
-  if (c == (wint_t)L'\'' && !bEscape)
+  if (c == (wint_t)'\'' && !bEscape)
   {
-    readWordUntil(pFile, L'\'', sValue, XMLLITE_MAX_VALUE_CHARS);
+    readWordUntil(pFile, '\'', sValue, XMLLITE_MAX_VALUE_CHARS);
     bEscape = skipSpaces(pFile, &c);
   }
-  else if (c == (wint_t)L'\"' && !bEscape)
+  else if (c == (wint_t)'\"' && !bEscape)
   {
-    readWordUntil(pFile, L'\"', sValue, XMLLITE_MAX_VALUE_CHARS);
+    readWordUntil(pFile, '\"', sValue, XMLLITE_MAX_VALUE_CHARS);
     bEscape = skipSpaces(pFile, &c);
   }
   else
@@ -229,16 +229,16 @@ bool XMLLiteReader::readAttribute(FILE * pFile, wchar_t cFirstChar, wint_t * cfi
     {
       if (c == WEOF)
         throw XMLLITE_ERROR_EOF_NOT_EXPECTED;
-      else if (c == (wint_t)L'\r' || c == (wint_t)L'\n')
+      else if (c == (wint_t)'\r' || c == (wint_t)'\n')
         throw XMLLITE_ERROR_LINEBREAK_IN_ATTRIBUTE;
-      else if (c == (wint_t)L' ' || c == (wint_t)L'\t' || (c == (wint_t)L'/' && !bEscape) || (c == (wint_t)L'>' && !bEscape))
+      else if (c == (wint_t)' ' || c == (wint_t)'\t' || (c == (wint_t)'/' && !bEscape) || (c == (wint_t)'>' && !bEscape))
         break;
-      sValue[cursor++] = (wchar_t)c;
+      sValue[cursor++] = (char)c;
       bEscape = readChar(pFile, &c);
       m_iCurrentCol++;
     }
-    sValue[cursor] = L'\0';
-    if (c == (wint_t)L' ' || c == (wint_t)L'\t')
+    sValue[cursor] = '\0';
+    if (c == (wint_t)' ' || c == (wint_t)'\t')
       bEscape = skipSpaces(pFile, &c);
   }
 
@@ -254,7 +254,7 @@ bool XMLLiteReader::readAttribute(FILE * pFile, wchar_t cFirstChar, wint_t * cfi
 // -----------------------------------------------------------------
 // Name : readClosingTag
 // -----------------------------------------------------------------
-void XMLLiteReader::readClosingTag(FILE * pFile, wchar_t * sName)
+void XMLLiteReader::readClosingTag(FILE * pFile, char * sName)
 {
   wint_t c;
   bool bEscape = skipSpaces(pFile, &c);
@@ -266,16 +266,16 @@ void XMLLiteReader::readClosingTag(FILE * pFile, wchar_t * sName)
     m_iCurrentCol++;
     if (c == WEOF)
       throw XMLLITE_ERROR_EOF_NOT_EXPECTED;
-    else if (c == (wint_t)L'\r' || c == (wint_t)L'\n')
+    else if (c == (wint_t)'\r' || c == (wint_t)'\n')
       throw XMLLITE_ERROR_LINEBREAK_IN_ELEMENT;
-    else if (c == (wint_t)L' ' || c == (wint_t)L'\t' || (c == (wint_t)L'>' && !bEscape))
+    else if (c == (wint_t)' ' || c == (wint_t)'\t' || (c == (wint_t)'>' && !bEscape))
       break;
     else
       bMatch = ((wint_t)(sName[cursor++]) == c);
   }
-  if (c == (wint_t)L' ' || c == (wint_t)L'\t')
+  if (c == (wint_t)' ' || c == (wint_t)'\t')
     bEscape = skipSpaces(pFile, &c);
-  if (c != (wint_t)L'>' || bEscape)
+  if (c != (wint_t)'>' || bEscape)
     throw XMLLITE_ERROR_ELEMENT_END_EXPECTED;
   if (!bMatch)
     throw XMLLITE_ERROR_CLOSING_TAG_DOESNT_MATCH;
@@ -284,7 +284,7 @@ void XMLLiteReader::readClosingTag(FILE * pFile, wchar_t * sName)
 // -----------------------------------------------------------------
 // Name : readWordUntil
 // -----------------------------------------------------------------
-void XMLLiteReader::readWordUntil(FILE * pFile, wchar_t cUntil, wchar_t * sWord, int iSize)
+void XMLLiteReader::readWordUntil(FILE * pFile, char cUntil, char * sWord, int iSize)
 {
   wint_t c;
   int cursor = 0;
@@ -294,7 +294,7 @@ void XMLLiteReader::readWordUntil(FILE * pFile, wchar_t cUntil, wchar_t * sWord,
     m_iCurrentCol++;
     if (c == WEOF)
       throw XMLLITE_ERROR_EOF_NOT_EXPECTED;
-    sWord[cursor++] = (wchar_t)c;
+    sWord[cursor++] = (char)c;
     if (cursor >= iSize)
     {
       m_iCurrentCol--;
@@ -317,39 +317,39 @@ bool XMLLiteReader::skipSpaces(FILE * pFile, wint_t * c)
   {
     bEscape = readChar(pFile, c);
 #ifdef WIN32
-    if (*c == (wint_t)L'\n' && !bEscape)
+    if (*c == (wint_t)'\n' && !bEscape)
     {
       m_iCurrentLine++;
       m_iCurrentCol = 1;
     }
-    else if ((*c == (wint_t)L'\r' || *c == (wint_t)L'\t' || *c == (wint_t)L' ') && !bEscape)
+    else if ((*c == (wint_t)'\r' || *c == (wint_t)'\t' || *c == (wint_t)' ') && !bEscape)
       m_iCurrentCol++;
 #endif
 #ifdef UNIX
-    if (*c == (wint_t)L'\n' && !bEscape)
+    if (*c == (wint_t)'\n' && !bEscape)
     {
       m_iCurrentLine++;
       m_iCurrentCol = 1;
     }
-    else if ((*c == (wint_t)L'\r' || *c == (wint_t)L'\t' || *c == (wint_t)L' ') && !bEscape)
+    else if ((*c == (wint_t)'\r' || *c == (wint_t)'\t' || *c == (wint_t)' ') && !bEscape)
       m_iCurrentCol++;
 #endif
 #ifdef LINUX
-    if (*c == (wint_t)L'\n' && !bEscape)
+    if (*c == (wint_t)'\n' && !bEscape)
     {
       m_iCurrentLine++;
       m_iCurrentCol = 1;
     }
-    else if ((*c == (wint_t)L'\r' || *c == (wint_t)L'\t' || *c == (wint_t)L' ') && !bEscape)
+    else if ((*c == (wint_t)'\r' || *c == (wint_t)'\t' || *c == (wint_t)' ') && !bEscape)
       m_iCurrentCol++;
 #endif
 #ifdef MACOS
-    if (*c == (wint_t)L'\r' && !bEscape)
+    if (*c == (wint_t)'\r' && !bEscape)
     {
       m_iCurrentLine++;
       m_iCurrentCol = 1;
     }
-    else if ((*c == (wint_t)L'\n' || *c == (wint_t)L'\t' || *c == (wint_t)L' ') && !bEscape)
+    else if ((*c == (wint_t)'\n' || *c == (wint_t)'\t' || *c == (wint_t)' ') && !bEscape)
       m_iCurrentCol++;
 #endif
     else
@@ -371,12 +371,12 @@ void XMLLiteReader::skipComments(FILE * pFile)
   while (true)
   {
     skipSpaces(pFile, &c);
-    if (c == (wint_t)L'-')
+    if (c == (wint_t)'-')
     {
       if (endcomment == 0 || endcomment == 1)
         endcomment++;
     }
-    else if (c == (wint_t)L'>' && endcomment == 2)
+    else if (c == (wint_t)'>' && endcomment == 2)
       break;
     else
       endcomment = 0;
@@ -390,7 +390,7 @@ void XMLLiteReader::skipComments(FILE * pFile)
 bool XMLLiteReader::readChar(FILE * pFile, wint_t * c)
 {
   *c = fgetwc(pFile);
-  if (*c == (wint_t)L'\\')
+  if (*c == (wint_t)'\\')
   {
     *c = fgetwc(pFile);
     return true;

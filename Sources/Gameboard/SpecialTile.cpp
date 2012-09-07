@@ -8,7 +8,7 @@
 // Name : SpecialTile
 //  Constructor
 // -----------------------------------------------------------------
-SpecialTile::SpecialTile(int iFreq, CoordsMap mapPos, wchar_t * sEdition, wchar_t * sObjectName, DebugManager * pDebug) : LuaObject(0, sEdition, SPECTILE_OBJECT_NAME, sObjectName, pDebug)
+SpecialTile::SpecialTile(int iFreq, CoordsMap mapPos, char * sEdition, char * sObjectName, DebugManager * pDebug) : LuaObject(0, sEdition, SPECTILE_OBJECT_NAME, sObjectName, pDebug)
 {
   init(iFreq, mapPos, pDebug);
 }
@@ -17,7 +17,7 @@ SpecialTile::SpecialTile(int iFreq, CoordsMap mapPos, wchar_t * sEdition, wchar_
 // Name : SpecialTile
 //  Constructor with id
 // -----------------------------------------------------------------
-SpecialTile::SpecialTile(u32 uId, int iFreq, CoordsMap mapPos, wchar_t * sEdition, wchar_t * sObjectName, DebugManager * pDebug) : LuaObject(uId, sEdition, SPECTILE_OBJECT_NAME, sObjectName, pDebug)
+SpecialTile::SpecialTile(u32 uId, int iFreq, CoordsMap mapPos, char * sEdition, char * sObjectName, DebugManager * pDebug) : LuaObject(uId, sEdition, SPECTILE_OBJECT_NAME, sObjectName, pDebug)
 {
   init(iFreq, mapPos, pDebug);
 }
@@ -30,7 +30,7 @@ void SpecialTile::init(int iFreq, CoordsMap mapPos, DebugManager * pDebug)
   m_iFreq = iFreq;
 
   // Init object
-  callLuaFunction(L"init", 0, L"ii", mapPos.x, mapPos.y);
+  callLuaFunction("init", 0, "ii", mapPos.x, mapPos.y);
   m_bAttractAI = false;
 
   loadBasicData(pDebug);
@@ -43,43 +43,43 @@ void SpecialTile::loadBasicData(DebugManager * pDebug)
 {
   // Get some basic parameters
   // Object name
-  if (callLuaFunction(L"getName", 1, L""))
+  if (callLuaFunction("getName", 1, ""))
     getLuaString(m_sName, NAME_MAX_CHARS);
   else
   {
-    wchar_t sError[512];
-    swprintf(sError, 512, L"Lua interaction error: special tile in file %s has no name defined.", m_sObjectName);
+    char sError[512];
+    snprintf(sError, 512, "Lua interaction error: special tile in file %s has no name defined.", m_sObjectName);
     pDebug->notifyErrorMessage(sError);
-    wsafecpy(m_sName, NAME_MAX_CHARS, L"");
+    wsafecpy(m_sName, NAME_MAX_CHARS, "");
   }
 
   // Description
-  if (callLuaFunction(L"getDescription", 1, L""))
+  if (callLuaFunction("getDescription", 1, ""))
     getLuaString(m_sDescription, DESCRIPTION_MAX_CHARS);
   else
   {
-    wchar_t sError[512];
-    swprintf(sError, 512, L"Lua interaction error: special tile in file %s has no description defined.", m_sObjectName);
+    char sError[512];
+    snprintf(sError, 512, "Lua interaction error: special tile in file %s has no description defined.", m_sObjectName);
     pDebug->notifyErrorMessage(sError);
-    wsafecpy(m_sDescription, DESCRIPTION_MAX_CHARS, L"");
+    wsafecpy(m_sDescription, DESCRIPTION_MAX_CHARS, "");
   }
 
   // Texture
-  wchar_t sFile[MAX_PATH];
-  if (!getLuaVarString(L"texture", sFile, MAX_PATH))
+  char sFile[MAX_PATH];
+  if (!getLuaVarString("texture", sFile, MAX_PATH))
   {
 	  // error : texture not found
-    wchar_t sError[512] = L"";
-    swprintf(sError, 512, L"Lua interaction error: special tile in file %s has no texture path defined.", m_sObjectName);
+    char sError[512] = "";
+    snprintf(sError, 512, "Lua interaction error: special tile in file %s has no texture path defined.", m_sObjectName);
     pDebug->notifyErrorMessage(sError);
-    wsafecpy(m_sTexPath, MAX_PATH, L"");
+    wsafecpy(m_sTexPath, MAX_PATH, "");
   }
   else
-    swprintf(m_sTexPath, MAX_PATH, L"%s/%s", m_sObjectEdition, sFile);
+    snprintf(m_sTexPath, MAX_PATH, "%s/%s", m_sObjectEdition, sFile);
 
   // Does attract AI?
   double d;
-  if (getLuaVarNumber(L"attractAI", &d))
+  if (getLuaVarNumber("attractAI", &d))
     m_bAttractAI = (d > 0);
 }
 
@@ -97,8 +97,8 @@ SpecialTile::~SpecialTile()
 // -----------------------------------------------------------------
 SpecialTile * SpecialTile::deserialize(NetworkData * pData, DebugManager * pDebug)
 {
-  wchar_t sEdition[NAME_MAX_CHARS];
-  wchar_t sObjectName[NAME_MAX_CHARS];
+  char sEdition[NAME_MAX_CHARS];
+  char sObjectName[NAME_MAX_CHARS];
   u32 uId = pData->readLong();
   pData->readString(sEdition);
   pData->readString(sObjectName);
@@ -138,7 +138,7 @@ CoordsMap SpecialTile::getMapPos()
 {
   CoordsMap mapPos;
   // Description
-  if (callLuaFunction(L"getMapPos", 2, L""))
+  if (callLuaFunction("getMapPos", 2, ""))
   {
     // First y then x (got from stack)
     mapPos.y = (int) getLuaNumber();

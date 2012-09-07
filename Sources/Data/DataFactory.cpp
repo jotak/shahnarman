@@ -38,28 +38,28 @@ void DataFactory::Init(LocalClient * pLocalClient)
 {
   // Find editions
   // Open active editions file
-  pLocalClient->getClientParameters()->resetLocale(pLocalClient->getDebug());
-  wchar_t sFile[MAX_PATH];
+//  pLocalClient->getClientParameters()->resetLocale(pLocalClient->getDebug());
+  char sFile[MAX_PATH];
   FILE * pFile = NULL;
-  swprintf(sFile, MAX_PATH, L"%sactive.txt", EDITIONS_PATH);
-  if (0 != wfopen(&pFile, sFile, L"r"))
+  snprintf(sFile, MAX_PATH, "%sactive.txt", EDITIONS_PATH);
+  if (0 != fopen_s(&pFile, sFile, "r"))
   {
-    pLocalClient->getDebug()->notifyErrorMessage(L"Error: active.txt file not found.");
+    pLocalClient->getDebug()->notifyErrorMessage("Error: active.txt file not found.");
     return;
   }
 
   // First read editions from active.txt
   while (!feof(pFile))
   {
-    wchar_t sName[NAME_MAX_CHARS];
-    if (NULL == fgetws(sName, NAME_MAX_CHARS, pFile))
+    char sName[NAME_MAX_CHARS];
+    if (NULL == fgets(sName, NAME_MAX_CHARS, pFile))
       break;
-    wchop(sName);
+    chop(sName);
     // Test if edition exists
-    wchar_t sFilePath[MAX_PATH];
-    swprintf(sFilePath, MAX_PATH, L"%s%s/edition.xml", EDITIONS_PATH, sName);
+    char sFilePath[MAX_PATH];
+    snprintf(sFilePath, MAX_PATH, "%s%s/edition.xm", EDITIONS_PATH, sName);
     FILE * pTmp = NULL;
-    if (0 == wfopen(&pTmp, sFilePath, L"r"))
+    if (0 == fopen_s(&pTmp, sFilePath, "r"))
     {
       // Ok => assume edition is valid
       fclose(pTmp);
@@ -72,10 +72,10 @@ void DataFactory::Init(LocalClient * pLocalClient)
 
   // Then read other (deactivated) editions
   // Init temporary list
-  wchar_t ** sEditionsList;
-  sEditionsList = new wchar_t*[MAX_EDITIONS];
+  char ** sEditionsList;
+  sEditionsList = new char*[MAX_EDITIONS];
   for (int i = 0; i < MAX_EDITIONS; i++)
-    sEditionsList[i] = new wchar_t[NAME_MAX_CHARS];
+    sEditionsList[i] = new char[NAME_MAX_CHARS];
 
   // Start process
   int nbEditions = getEditions(sEditionsList, MAX_EDITIONS, NAME_MAX_CHARS);
@@ -93,10 +93,10 @@ void DataFactory::Init(LocalClient * pLocalClient)
   delete[] sEditionsList;
 
   // Load profiles list
-  wchar_t ** sProfilesList;
-  sProfilesList = new wchar_t*[100];
+  char ** sProfilesList;
+  sProfilesList = new char*[100];
   for (int i = 0; i < 100; i++)
-    sProfilesList[i] = new wchar_t[MAX_PATH];
+    sProfilesList[i] = new char[MAX_PATH];
 
   int nbProfiles = getProfiles(sProfilesList, 100, MAX_PATH);
   for (int i = 0; i < nbProfiles; i++)
@@ -114,13 +114,13 @@ void DataFactory::Init(LocalClient * pLocalClient)
 // -----------------------------------------------------------------
 // Name : getUnitData
 // -----------------------------------------------------------------
-UnitData * DataFactory::getUnitData(wchar_t * sEdition, wchar_t * strId)
+UnitData * DataFactory::getUnitData(const char * sEdition, const char * strId)
 {
   // Game avatar?
   AvatarData * pAvatar = (AvatarData*) m_pGameAvatarsData->getFirst(0);
   while (pAvatar != NULL)
   {
-    if (wcscmp(sEdition, pAvatar->m_sEdition) == 0 && wcscmp(strId, pAvatar->m_sObjectId) == 0)
+    if (strcmp(sEdition, pAvatar->m_sEdition) == 0 && strcmp(strId, pAvatar->m_sObjectId) == 0)
       return pAvatar;
     pAvatar = (AvatarData*) m_pGameAvatarsData->getNext(0);
   }
@@ -134,7 +134,7 @@ UnitData * DataFactory::getUnitData(wchar_t * sEdition, wchar_t * strId)
 // -----------------------------------------------------------------
 // Name : findSpell
 // -----------------------------------------------------------------
-Spell * DataFactory::findSpell(wchar_t * sEdition, wchar_t * sName)
+Spell * DataFactory::findSpell(const char * sEdition, const char * sName)
 {
   Edition * pEdition = findEdition(sEdition);
   if (pEdition != NULL)
@@ -145,13 +145,13 @@ Spell * DataFactory::findSpell(wchar_t * sEdition, wchar_t * sName)
 // -----------------------------------------------------------------
 // Name : findEdition
 // -----------------------------------------------------------------
-Edition * DataFactory::findEdition(wchar_t * sId)
+Edition * DataFactory::findEdition(const char * sId)
 {
   // Look in loaded editions
   Edition * pEdition = (Edition*) m_pEditions->getFirst(0);
   while (pEdition != NULL)
   {
-    if (wcscmp(sId, pEdition->m_sObjectId) == 0)
+    if (strcmp(sId, pEdition->m_sObjectId) == 0)
       return pEdition;
     pEdition = (Edition*) m_pEditions->getNext(0);
   }
@@ -163,12 +163,12 @@ Edition * DataFactory::findEdition(wchar_t * sId)
 // -----------------------------------------------------------------
 // Name : findProfile
 // -----------------------------------------------------------------
-Profile * DataFactory::findProfile(wchar_t * sName)
+Profile * DataFactory::findProfile(const char * sName)
 {
   Profile * pProfile = (Profile*) m_pAllProfiles->getFirst(0);
   while (pProfile != NULL)
   {
-    if (wcscmp(sName, pProfile->getName()) == 0)
+    if (strcmp(sName, pProfile->getName()) == 0)
       return pProfile;
     pProfile = (Profile*) m_pAllProfiles->getNext(0);
   }

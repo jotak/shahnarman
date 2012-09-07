@@ -47,19 +47,19 @@ CreateAvatarDlg::CreateAvatarDlg(int iWidth, int iHeight, LocalClient * pLocalCl
   m_pEditionRelativeCpnt = new ObjectList(false);
   m_pAllSkillData = new ObjectList(true);
   m_pImagesSubList = new ObjectList(false);
-  init(L"",
-    pLocalClient->getDisplay()->getTextureEngine()->findTexture(L"interface:WinBg"),
+  init("",
+    pLocalClient->getDisplay()->getTextureEngine()->findTexture("interface:WinBg"),
     0, 0, 1, 1, pLocalClient->getDisplay());
 
   // Back button
-  wchar_t sText[LABEL_MAX_CHARS] = L"";
-  guiButton * pBtn = guiButton::createDefaultNormalButton(i18n->getText(L"BACK", sText, LABEL_MAX_CHARS), L"BackButton", m_pLocalClient->getDisplay());
+  char sText[LABEL_MAX_CHARS] = "";
+  guiButton * pBtn = guiButton::createDefaultNormalButton(i18n->getText("BACK", sText, LABEL_MAX_CHARS), "BackButton", m_pLocalClient->getDisplay());
   int yPxlBottom = iHeight - SPACING - pBtn->getHeight();
   pBtn->moveTo(iWidth / 4 - pBtn->getWidth() / 2, yPxlBottom);
   addComponent(pBtn);
 
   // OK button
-  pBtn = guiButton::createDefaultNormalButton(i18n->getText(L"OK", sText, LABEL_MAX_CHARS), L"OkButton", m_pLocalClient->getDisplay());
+  pBtn = guiButton::createDefaultNormalButton(i18n->getText("OK", sText, LABEL_MAX_CHARS), "OkButton", m_pLocalClient->getDisplay());
   pBtn->moveTo(3 * iWidth / 4 - pBtn->getWidth() / 2, yPxlBottom);
   pBtn->setEnabled(false);
   addComponent(pBtn);
@@ -67,39 +67,39 @@ CreateAvatarDlg::CreateAvatarDlg(int iWidth, int iHeight, LocalClient * pLocalCl
   // Edition label
   int yPxl = SPACING;
   guiLabel * pLbl = new guiLabel();
-  pLbl->init(i18n->getText(L"EDITION", sText, LABEL_MAX_CHARS), H2_FONT, H2_COLOR, L"", 0, 0, 0, 0, m_pLocalClient->getDisplay());
+  pLbl->init(i18n->getText("EDITION", sText, LABEL_MAX_CHARS), H2_FONT, H2_COLOR, "", 0, 0, 0, 0, m_pLocalClient->getDisplay());
   addComponent(pLbl);
 
   // Edition combo
-  guiComboBox * pBox = guiComboBox::createDefaultComboBox(L"EditionCombo", m_pLocalClient->getInterface(), m_pLocalClient->getDisplay());
+  guiComboBox * pBox = guiComboBox::createDefaultComboBox("EditionCombo", m_pLocalClient->getInterface(), m_pLocalClient->getDisplay());
   pBox->moveTo(iWidth / 2 - pBox->getWidth() / 2, yPxl);
   addComponent(pBox);
   pLbl->moveTo(iWidth / 2 - (pLbl->getWidth() + pBox->getWidth() + SPACING) / 2, yPxl + 5);
   pBox->moveTo(pLbl->getXPos() + pLbl->getWidth() + 3*SPACING, yPxl);
 
   // Points label
-  wchar_t sBuf[32];
+  char sBuf[32];
   yPxl += pBox->getHeight() + WIDE_Y_SPACING;
-  i18n->getText(L"POINTS_ABREV", sBuf, 32);
-  swprintf(sText, LABEL_MAX_CHARS, L"%d %s", m_iPointsLeft, sBuf);
+  i18n->getText("POINTS_ABREV", sBuf, 32);
+  snprintf(sText, LABEL_MAX_CHARS, "%d %s", m_iPointsLeft, sBuf);
   pLbl = new guiLabel();
-  pLbl->init(sText, H2_FONT, H2_COLOR, L"PointsLabel", 0, 0, 0, 0, m_pLocalClient->getDisplay());
+  pLbl->init(sText, H2_FONT, H2_COLOR, "PointsLabe", 0, 0, 0, 0, m_pLocalClient->getDisplay());
   pLbl->moveTo(iWidth / 3 - pLbl->getWidth() / 2, yPxl);
   addComponent(pLbl);
   m_pEditionRelativeCpnt->addLast(pLbl);
 
   // Pay gold label
   pLbl = new guiLabel();
-  pLbl->init(i18n->getText(L"PAY_GOLD", sText, LABEL_MAX_CHARS), H2_FONT, H2_COLOR, L"", 0, 0, 0, 0, m_pLocalClient->getDisplay());
-  pLbl->setTooltipText(i18n->getText(L"ALLOWS_TO_INCREASE_AVAILABLE_POINTS", sText, LABEL_MAX_CHARS));
+  pLbl->init(i18n->getText("PAY_GOLD", sText, LABEL_MAX_CHARS), H2_FONT, H2_COLOR, "", 0, 0, 0, 0, m_pLocalClient->getDisplay());
+  pLbl->setTooltipText(i18n->getText("ALLOWS_TO_INCREASE_AVAILABLE_POINTS", sText, LABEL_MAX_CHARS));
   addComponent(pLbl);
   m_pEditionRelativeCpnt->addLast(pLbl);
   guiLabel * pLblGld = pLbl;
 
   // Gold paid label
   pLbl = new guiLabel();
-  swprintf(sText, LABEL_MAX_CHARS, L"%d", m_iGoldPaid);
-  pLbl->init(sText, H2_FONT, H2_COLOR, L"GoldValue", 0, 0, 0, 0, m_pLocalClient->getDisplay());
+  snprintf(sText, LABEL_MAX_CHARS, "%d", m_iGoldPaid);
+  pLbl->init(sText, H2_FONT, H2_COLOR, "GoldValue", 0, 0, 0, 0, m_pLocalClient->getDisplay());
   addComponent(pLbl);
   m_pEditionRelativeCpnt->addLast(pLbl);
   pLblGld->moveTo(2 * iWidth / 3 - (pLblGld->getWidth() + WIDE_X_SPACING + pLbl->getWidth()) / 2, yPxl);
@@ -109,12 +109,12 @@ CreateAvatarDlg::CreateAvatarDlg(int iWidth, int iHeight, LocalClient * pLocalCl
   // Ethnicity label
   yPxl += pLbl->getHeight() + WIDE_Y_SPACING + 25;
   pLbl = new guiLabel();
-  pLbl->init(i18n->getText(L"ETHNICITY", sText, LABEL_MAX_CHARS), H2_FONT, H2_COLOR, L"", 0, 0, 0, 0, m_pLocalClient->getDisplay());
+  pLbl->init(i18n->getText("ETHNICITY", sText, LABEL_MAX_CHARS), H2_FONT, H2_COLOR, "", 0, 0, 0, 0, m_pLocalClient->getDisplay());
   addComponent(pLbl);
   m_pEditionRelativeCpnt->addLast(pLbl);
 
   // Ethnicity combo
-  pBox = guiComboBox::createDefaultComboBox(L"EthnicityCombo", m_pLocalClient->getInterface(), m_pLocalClient->getDisplay());
+  pBox = guiComboBox::createDefaultComboBox("EthnicityCombo", m_pLocalClient->getInterface(), m_pLocalClient->getDisplay());
   addComponent(pBox);
   m_pEditionRelativeCpnt->addLast(pBox);
   pLbl->moveTo(iWidth / 4 - (pLbl->getWidth() + pBox->getWidth() + SPACING) / 2, yPxl + 5);
@@ -122,9 +122,9 @@ CreateAvatarDlg::CreateAvatarDlg(int iWidth, int iHeight, LocalClient * pLocalCl
 
   // Shahmah image
   yPxl += pBox->getHeight() / 2 - 50;
-  int iTex = m_pLocalClient->getDisplay()->getTextureEngine()->loadTexture(L"EmptyWhiteSquare");
+  int iTex = m_pLocalClient->getDisplay()->getTextureEngine()->loadTexture("EmptyWhiteSquare");
   guiImage * pImg = new guiImage();
-  pImg->init(iTex, L"ShahmahImage", 3 * iWidth / 4 - 50, yPxl, 100, 100, m_pLocalClient->getDisplay());
+  pImg->init(iTex, "ShahmahImage", 3 * iWidth / 4 - 50, yPxl, 100, 100, m_pLocalClient->getDisplay());
   addComponent(pImg);
   m_pEditionRelativeCpnt->addLast(pImg);
   createLeftRightArrows(pImg);
@@ -134,7 +134,7 @@ CreateAvatarDlg::CreateAvatarDlg(int iWidth, int iHeight, LocalClient * pLocalCl
   int yTop = yPxl;
   // Melee label
   pLbl = new guiLabel();
-  pLbl->init(i18n->getText1stUp(L"melee", sText, LABEL_MAX_CHARS), H2_FONT, H2_COLOR, L"", 0, 0, 0, 0, m_pLocalClient->getDisplay());
+  pLbl->init(i18n->getText1stUp("melee", sText, LABEL_MAX_CHARS), H2_FONT, H2_COLOR, "", 0, 0, 0, 0, m_pLocalClient->getDisplay());
   pLbl->moveTo(WIDE_X_SPACING, yPxl);
   addComponent(pLbl);
   m_pEditionRelativeCpnt->addLast(pLbl);
@@ -144,7 +144,7 @@ CreateAvatarDlg::CreateAvatarDlg(int iWidth, int iHeight, LocalClient * pLocalCl
   yPxl += pLbl->getHeight() + 2*SPACING;
   int y2 = yPxl;
   pLbl = new guiLabel();
-  pLbl->init(i18n->getText1stUp(L"range", sText, LABEL_MAX_CHARS), H2_FONT, H2_COLOR, L"", 0, 0, 0, 0, m_pLocalClient->getDisplay());
+  pLbl->init(i18n->getText1stUp("range", sText, LABEL_MAX_CHARS), H2_FONT, H2_COLOR, "", 0, 0, 0, 0, m_pLocalClient->getDisplay());
   pLbl->moveTo(WIDE_X_SPACING, yPxl);
   addComponent(pLbl);
   m_pEditionRelativeCpnt->addLast(pLbl);
@@ -154,7 +154,7 @@ CreateAvatarDlg::CreateAvatarDlg(int iWidth, int iHeight, LocalClient * pLocalCl
   yPxl += pLbl->getHeight() + 2*SPACING;
   int y3 = yPxl;
   pLbl = new guiLabel();
-  pLbl->init(i18n->getText1stUp(L"armor", sText, LABEL_MAX_CHARS), H2_FONT, H2_COLOR, L"", 0, 0, 0, 0, m_pLocalClient->getDisplay());
+  pLbl->init(i18n->getText1stUp("armor", sText, LABEL_MAX_CHARS), H2_FONT, H2_COLOR, "", 0, 0, 0, 0, m_pLocalClient->getDisplay());
   pLbl->moveTo(WIDE_X_SPACING, yPxl);
   addComponent(pLbl);
   m_pEditionRelativeCpnt->addLast(pLbl);
@@ -165,8 +165,8 @@ CreateAvatarDlg::CreateAvatarDlg(int iWidth, int iHeight, LocalClient * pLocalCl
   yPxl = yTop;
   int xPxl = pLbl->getXPos() + xMax + WIDE_X_SPACING;
   pLbl = new guiLabel();
-  swprintf(sText, LABEL_MAX_CHARS, L"%d", m_iCarac[MELEE]);
-  pLbl->init(sText, H2_FONT, H2_COLOR, L"MeleeValue", xPxl, yPxl, 0, 0, m_pLocalClient->getDisplay());
+  snprintf(sText, LABEL_MAX_CHARS, "%d", m_iCarac[MELEE]);
+  pLbl->init(sText, H2_FONT, H2_COLOR, "MeleeValue", xPxl, yPxl, 0, 0, m_pLocalClient->getDisplay());
   addComponent(pLbl);
   m_pEditionRelativeCpnt->addLast(pLbl);
   createLeftRightArrows(pLbl);
@@ -174,8 +174,8 @@ CreateAvatarDlg::CreateAvatarDlg(int iWidth, int iHeight, LocalClient * pLocalCl
   // Range value label
   yPxl = y2;
   pLbl = new guiLabel();
-  swprintf(sText, LABEL_MAX_CHARS, L"%d", m_iCarac[RANGE]);
-  pLbl->init(sText, H2_FONT, H2_COLOR, L"RangeValue", xPxl, yPxl, 0, 0, m_pLocalClient->getDisplay());
+  snprintf(sText, LABEL_MAX_CHARS, "%d", m_iCarac[RANGE]);
+  pLbl->init(sText, H2_FONT, H2_COLOR, "RangeValue", xPxl, yPxl, 0, 0, m_pLocalClient->getDisplay());
   addComponent(pLbl);
   m_pEditionRelativeCpnt->addLast(pLbl);
   createLeftRightArrows(pLbl);
@@ -183,15 +183,15 @@ CreateAvatarDlg::CreateAvatarDlg(int iWidth, int iHeight, LocalClient * pLocalCl
   // Armor value label
   yPxl = y3;
   pLbl = new guiLabel();
-  swprintf(sText, LABEL_MAX_CHARS, L"%d", m_iCarac[ARMOR]);
-  pLbl->init(sText, H2_FONT, H2_COLOR, L"ArmorValue", xPxl, yPxl, 0, 0, m_pLocalClient->getDisplay());
+  snprintf(sText, LABEL_MAX_CHARS, "%d", m_iCarac[ARMOR]);
+  pLbl->init(sText, H2_FONT, H2_COLOR, "ArmorValue", xPxl, yPxl, 0, 0, m_pLocalClient->getDisplay());
   addComponent(pLbl);
   m_pEditionRelativeCpnt->addLast(pLbl);
   createLeftRightArrows(pLbl);
 
   // Endurance label
   pLbl = new guiLabel();
-  pLbl->init(i18n->getText1stUp(L"endurance", sText, LABEL_MAX_CHARS), H2_FONT, H2_COLOR, L"", 0, 0, 0, 0, m_pLocalClient->getDisplay());
+  pLbl->init(i18n->getText1stUp("endurance", sText, LABEL_MAX_CHARS), H2_FONT, H2_COLOR, "", 0, 0, 0, 0, m_pLocalClient->getDisplay());
   pLbl->moveTo(iWidth / 2, yTop);
   addComponent(pLbl);
   m_pEditionRelativeCpnt->addLast(pLbl);
@@ -199,7 +199,7 @@ CreateAvatarDlg::CreateAvatarDlg(int iWidth, int iHeight, LocalClient * pLocalCl
 
   // Speed label
   pLbl = new guiLabel();
-  pLbl->init(i18n->getText1stUp(L"speed", sText, LABEL_MAX_CHARS), H2_FONT, H2_COLOR, L"", 0, 0, 0, 0, m_pLocalClient->getDisplay());
+  pLbl->init(i18n->getText1stUp("speed", sText, LABEL_MAX_CHARS), H2_FONT, H2_COLOR, "", 0, 0, 0, 0, m_pLocalClient->getDisplay());
   pLbl->moveTo(iWidth / 2, y2);
   addComponent(pLbl);
   m_pEditionRelativeCpnt->addLast(pLbl);
@@ -208,16 +208,16 @@ CreateAvatarDlg::CreateAvatarDlg(int iWidth, int iHeight, LocalClient * pLocalCl
   // Endurance value label
   xPxl = pLbl->getXPos() + xMax + WIDE_X_SPACING;
   pLbl = new guiLabel();
-  swprintf(sText, LABEL_MAX_CHARS, L"%d", m_iCarac[ENDURANCE]);
-  pLbl->init(sText, H2_FONT, H2_COLOR, L"EnduranceValue", xPxl, yTop, 0, 0, m_pLocalClient->getDisplay());
+  snprintf(sText, LABEL_MAX_CHARS, "%d", m_iCarac[ENDURANCE]);
+  pLbl->init(sText, H2_FONT, H2_COLOR, "EnduranceValue", xPxl, yTop, 0, 0, m_pLocalClient->getDisplay());
   addComponent(pLbl);
   m_pEditionRelativeCpnt->addLast(pLbl);
   createLeftRightArrows(pLbl);
 
   // Speed value label
   pLbl = new guiLabel();
-  swprintf(sText, LABEL_MAX_CHARS, L"%d", m_iCarac[SPEED]);
-  pLbl->init(sText, H2_FONT, H2_COLOR, L"SpeedValue", xPxl, y2, 0, 0, m_pLocalClient->getDisplay());
+  snprintf(sText, LABEL_MAX_CHARS, "%d", m_iCarac[SPEED]);
+  pLbl->init(sText, H2_FONT, H2_COLOR, "SpeedValue", xPxl, y2, 0, 0, m_pLocalClient->getDisplay());
   addComponent(pLbl);
   m_pEditionRelativeCpnt->addLast(pLbl);
   createLeftRightArrows(pLbl);
@@ -225,7 +225,7 @@ CreateAvatarDlg::CreateAvatarDlg(int iWidth, int iHeight, LocalClient * pLocalCl
   // Skills label
   yPxl = y4 + WIDE_Y_SPACING;
   pLbl = new guiLabel();
-  pLbl->init(i18n->getText(L"SKILLS", sText, LABEL_MAX_CHARS), H2_FONT, H2_COLOR, L"", 0, 0, 0, 0, m_pLocalClient->getDisplay());
+  pLbl->init(i18n->getText("SKILLS", sText, LABEL_MAX_CHARS), H2_FONT, H2_COLOR, "", 0, 0, 0, 0, m_pLocalClient->getDisplay());
   pLbl->moveTo(iWidth / 2 - pLbl->getWidth() / 2, yPxl);
   addComponent(pLbl);
   m_pEditionRelativeCpnt->addLast(pLbl);
@@ -233,7 +233,7 @@ CreateAvatarDlg::CreateAvatarDlg(int iWidth, int iHeight, LocalClient * pLocalCl
   // Skills panel
   yPxl += pLbl->getHeight() + SPACING;
   yPxlBottom -= WIDE_Y_SPACING;
-  m_pSkillsPanel = guiContainer::createDefaultPanel(iWidth - 2 * SPACING, yPxlBottom - yPxl, L"SkillsPanel", m_pLocalClient->getDisplay());
+  m_pSkillsPanel = guiContainer::createDefaultPanel(iWidth - 2 * SPACING, yPxlBottom - yPxl, "SkillsPane", m_pLocalClient->getDisplay());
   m_pSkillsPanel->moveTo(SPACING, yPxl);
   m_pSkillsPanel->setHeightFitBehavior(FB_FitFrameToDocumentWhenSmaller);
   addComponent(m_pSkillsPanel);
@@ -258,9 +258,9 @@ void CreateAvatarDlg::createLeftRightArrows(guiComponent * pCpnt, guiDocument * 
 {
   if (!pDoc)
     pDoc = this;
-  wchar_t sId[128] = L"";
-  swprintf(sId, 128, L"%s_left", pCpnt->getId());
-  int iTex = m_pLocalClient->getDisplay()->getTextureEngine()->findTexture(L"interface:LeftArrow");
+  char sId[128] = "";
+  snprintf(sId, 128, "%s_left", pCpnt->getId());
+  int iTex = m_pLocalClient->getDisplay()->getTextureEngine()->findTexture("interface:LeftArrow");
   guiButton * pBtn = guiButton::createDefaultImageButton(iTex, sId, m_pLocalClient->getDisplay());
   pBtn->setMultiClicks(true);
   pBtn->moveTo(pCpnt->getXPos() - 2*SPACING - pBtn->getWidth(), pCpnt->getYPos() + pCpnt->getHeight() / 2 - pBtn->getHeight() / 2);
@@ -270,8 +270,8 @@ void CreateAvatarDlg::createLeftRightArrows(guiComponent * pCpnt, guiDocument * 
   if (pDoc != this)
     pBtn->setOwner(this);
 
-  swprintf(sId, 128, L"%s_right", pCpnt->getId());
-  iTex = m_pLocalClient->getDisplay()->getTextureEngine()->findTexture(L"interface:RightArrow");
+  snprintf(sId, 128, "%s_right", pCpnt->getId());
+  iTex = m_pLocalClient->getDisplay()->getTextureEngine()->findTexture("interface:RightArrow");
   pBtn = guiButton::createDefaultImageButton(iTex, sId, m_pLocalClient->getDisplay());
   pBtn->setMultiClicks(true);
   pBtn->moveTo(pCpnt->getXPos() + pCpnt->getWidth() + 2*SPACING, pCpnt->getYPos() + pCpnt->getHeight() / 2 - pBtn->getHeight() / 2);
@@ -293,7 +293,7 @@ void CreateAvatarDlg::update(double delta)
     guiComponent * pCpnt = m_pRemainPointsPopup->getClickedComponent();
     if (pCpnt != NULL)
     {
-      if (wcscmp(pCpnt->getId(), L"YesButton") == 0)
+      if (strcmp(pCpnt->getId(), "YesButton") == 0)
       {
         // Remove frame
         m_pLocalClient->getInterface()->deleteFrame(m_pRemainPointsPopup);
@@ -301,7 +301,7 @@ void CreateAvatarDlg::update(double delta)
         setEnabled(true);
         saveAndQuit();
       }
-      else if (wcscmp(pCpnt->getId(), L"NoButton") == 0)
+      else if (strcmp(pCpnt->getId(), "NoButton") == 0)
       {
         m_pLocalClient->getInterface()->deleteFrame(m_pRemainPointsPopup);
         m_pRemainPointsPopup = NULL;
@@ -316,50 +316,50 @@ void CreateAvatarDlg::update(double delta)
 // -----------------------------------------------------------------
 bool CreateAvatarDlg::onButtonEvent(ButtonAction * pEvent, guiComponent * pCpnt)
 {
-  if (wcscmp(pCpnt->getId(), L"OkButton") == 0)
+  if (strcmp(pCpnt->getId(), "OkButton") == 0)
   {
     // Show popup when click OK and remains unused points
     if (m_iPointsLeft > 0)
     {
       setEnabled(false);
       void * p = &m_iPointsLeft;
-      wchar_t str[LABEL_MAX_CHARS];
-      m_pRemainPointsPopup = guiPopup::createYesNoPopup(i18n->getText(L"REMAINS_%$1d_UNUSED_POINTS_WISH_CONTINUE", str, LABEL_MAX_CHARS, &p), getDisplay());
+      char str[LABEL_MAX_CHARS];
+      m_pRemainPointsPopup = guiPopup::createYesNoPopup(i18n->getText("REMAINS_%$1d_UNUSED_POINTS_WISH_CONTINUE", str, LABEL_MAX_CHARS, &p), getDisplay());
       m_pLocalClient->getInterface()->registerFrame(m_pRemainPointsPopup);
       m_pRemainPointsPopup->moveTo((m_pLocalClient->getClientParameters()->screenXSize - m_pRemainPointsPopup->getWidth()) / 2, (m_pLocalClient->getClientParameters()->screenYSize - m_pRemainPointsPopup->getHeight()) / 2);
     }
     else
       saveAndQuit();
   }
-  else if (wcscmp(pCpnt->getId(), L"BackButton") == 0)
+  else if (strcmp(pCpnt->getId(), "BackButton") == 0)
   {
     m_pLocalClient->getInterface()->setUniqueDialog(m_pLocalClient->getInterface()->getStartMenuDialog());
     return false;
   }
-  else if (wcscmp(pCpnt->getId(), L"EditionButton") == 0)
+  else if (strcmp(pCpnt->getId(), "EditionButton") == 0)
   {
     onEditionChanged((Edition*) pCpnt->getAttachment());
   }
-  else if (wcscmp(pCpnt->getId(), L"EthnicityButton") == 0)
+  else if (strcmp(pCpnt->getId(), "EthnicityButton") == 0)
   {
     onEthnicityChanged((Ethnicity*) pCpnt->getAttachment());
   }
-  else if (wcscmp(pCpnt->getId(), L"ShahmahImage_left") == 0
-        || wcscmp(pCpnt->getId(), L"ShahmahImage_right") == 0
-        || wcscmp(pCpnt->getId(), L"GoldValue_left") == 0
-        || wcscmp(pCpnt->getId(), L"GoldValue_right") == 0
-        || wcscmp(pCpnt->getId(), L"MeleeValue_left") == 0
-        || wcscmp(pCpnt->getId(), L"MeleeValue_right") == 0
-        || wcscmp(pCpnt->getId(), L"RangeValue_left") == 0
-        || wcscmp(pCpnt->getId(), L"RangeValue_right") == 0
-        || wcscmp(pCpnt->getId(), L"ArmorValue_left") == 0
-        || wcscmp(pCpnt->getId(), L"ArmorValue_right") == 0
-        || wcscmp(pCpnt->getId(), L"EnduranceValue_left") == 0
-        || wcscmp(pCpnt->getId(), L"EnduranceValue_right") == 0
-        || wcscmp(pCpnt->getId(), L"SpeedValue_left") == 0
-        || wcscmp(pCpnt->getId(), L"SpeedValue_right") == 0
-        || wcscmp(pCpnt->getId(), L"SkillSelection_left") == 0
-        || wcscmp(pCpnt->getId(), L"SkillSelection_right") == 0)
+  else if (strcmp(pCpnt->getId(), "ShahmahImage_left") == 0
+        || strcmp(pCpnt->getId(), "ShahmahImage_right") == 0
+        || strcmp(pCpnt->getId(), "GoldValue_left") == 0
+        || strcmp(pCpnt->getId(), "GoldValue_right") == 0
+        || strcmp(pCpnt->getId(), "MeleeValue_left") == 0
+        || strcmp(pCpnt->getId(), "MeleeValue_right") == 0
+        || strcmp(pCpnt->getId(), "RangeValue_left") == 0
+        || strcmp(pCpnt->getId(), "RangeValue_right") == 0
+        || strcmp(pCpnt->getId(), "ArmorValue_left") == 0
+        || strcmp(pCpnt->getId(), "ArmorValue_right") == 0
+        || strcmp(pCpnt->getId(), "EnduranceValue_left") == 0
+        || strcmp(pCpnt->getId(), "EnduranceValue_right") == 0
+        || strcmp(pCpnt->getId(), "SpeedValue_left") == 0
+        || strcmp(pCpnt->getId(), "SpeedValue_right") == 0
+        || strcmp(pCpnt->getId(), "SkillSelection_left") == 0
+        || strcmp(pCpnt->getId(), "SkillSelection_right") == 0)
   {
     onArrowClick(pCpnt);
   }
@@ -373,9 +373,9 @@ void CreateAvatarDlg::onArrowClick(guiComponent * pArrow)
 {
   assert(m_pCurrentEdition != NULL);
   guiComponent * pCpnt = (guiComponent*) pArrow->getAttachment();
-  if (wcscmp(pCpnt->getId(), L"ShahmahImage") == 0)
+  if (strcmp(pCpnt->getId(), "ShahmahImage") == 0)
   {
-    if (wcscmp(pArrow->getId(), L"ShahmahImage_left") == 0)
+    if (strcmp(pArrow->getId(), "ShahmahImage_left") == 0)
     {
       assert(m_iImage > 0);
       m_iImage--;
@@ -387,24 +387,24 @@ void CreateAvatarDlg::onArrowClick(guiComponent * pArrow)
     }
     StringObject * pString = (StringObject*) m_pImagesSubList->goTo(0, m_iImage);
     assert(pString != NULL);
-    wchar_t sPath[MAX_PATH];
-    swprintf(sPath, MAX_PATH, L"%s/%s", m_pCurrentEdition->m_sObjectId, pString->m_sString);
+    char sPath[MAX_PATH];
+    snprintf(sPath, MAX_PATH, "%s/%s", m_pCurrentEdition->m_sObjectId, pString->m_sString);
     int iTex = m_pLocalClient->getDisplay()->getTextureEngine()->loadTexture(sPath);
     ((guiImage*)pCpnt)->setImageTexture(iTex);
     checkArrows(pCpnt);
-    guiComponent * pCpnt2 = getComponent(L"ShahmahImage_left");
+    guiComponent * pCpnt2 = getComponent("ShahmahImage_left");
     assert(pCpnt2 != NULL);
     pCpnt2->setEnabled(m_iImage > 0);
-    pCpnt2 = getComponent(L"ShahmahImage_right");
+    pCpnt2 = getComponent("ShahmahImage_right");
     assert(pCpnt2 != NULL);
     pCpnt2->setEnabled(m_iImage < m_pImagesSubList->size - 1);
   }
-  else if (wcscmp(pCpnt->getId(), L"GoldValue") == 0)
+  else if (strcmp(pCpnt->getId(), "GoldValue") == 0)
   {
     Profile * pPlayer = m_pLocalClient->getInterface()->getSelectPlayerDialog()->getCurrentPlayer();
     assert(pPlayer != NULL);
     int maxGold = min(10, pPlayer->getCash());
-    if (wcscmp(pArrow->getId(), L"GoldValue_left") == 0)
+    if (strcmp(pArrow->getId(), "GoldValue_left") == 0)
     {
       assert(m_iGoldPaid > 0);
       m_iGoldPaid--;
@@ -415,14 +415,14 @@ void CreateAvatarDlg::onArrowClick(guiComponent * pArrow)
       assert(m_iGoldPaid <= maxGold);
     }
     computePoints();
-    wchar_t sValue[8];
-    swprintf(sValue, 8, L"%d", m_iGoldPaid);
+    char sValue[8];
+    snprintf(sValue, 8, "%d", m_iGoldPaid);
     ((guiLabel*)pCpnt)->setText(sValue);
     checkArrows(pCpnt);
   }
-  else if (wcscmp(pCpnt->getId(), L"MeleeValue") == 0)
+  else if (strcmp(pCpnt->getId(), "MeleeValue") == 0)
   {
-    if (wcscmp(pArrow->getId(), L"MeleeValue_left") == 0)
+    if (strcmp(pArrow->getId(), "MeleeValue_left") == 0)
     {
       assert(m_iCarac[MELEE] > 0);
       m_iCarac[MELEE]--;
@@ -433,14 +433,14 @@ void CreateAvatarDlg::onArrowClick(guiComponent * pArrow)
       assert(m_iCarac[MELEE] <= 100);
     }
     computePoints();
-    wchar_t sValue[8];
-    swprintf(sValue, 8, L"%d", m_iCarac[MELEE]);
+    char sValue[8];
+    snprintf(sValue, 8, "%d", m_iCarac[MELEE]);
     ((guiLabel*)pCpnt)->setText(sValue);
     checkArrows(pCpnt);
   }
-  else if (wcscmp(pCpnt->getId(), L"RangeValue") == 0)
+  else if (strcmp(pCpnt->getId(), "RangeValue") == 0)
   {
-    if (wcscmp(pArrow->getId(), L"RangeValue_left") == 0)
+    if (strcmp(pArrow->getId(), "RangeValue_left") == 0)
     {
       assert(m_iCarac[RANGE] > 0);
       m_iCarac[RANGE]--;
@@ -451,14 +451,14 @@ void CreateAvatarDlg::onArrowClick(guiComponent * pArrow)
       assert(m_iCarac[RANGE] <= 100);
     }
     computePoints();
-    wchar_t sValue[8];
-    swprintf(sValue, 8, L"%d", m_iCarac[RANGE]);
+    char sValue[8];
+    snprintf(sValue, 8, "%d", m_iCarac[RANGE]);
     ((guiLabel*)pCpnt)->setText(sValue);
     checkArrows(pCpnt);
   }
-  else if (wcscmp(pCpnt->getId(), L"ArmorValue") == 0)
+  else if (strcmp(pCpnt->getId(), "ArmorValue") == 0)
   {
-    if (wcscmp(pArrow->getId(), L"ArmorValue_left") == 0)
+    if (strcmp(pArrow->getId(), "ArmorValue_left") == 0)
     {
       assert(m_iCarac[ARMOR] > 0);
       m_iCarac[ARMOR]--;
@@ -469,14 +469,14 @@ void CreateAvatarDlg::onArrowClick(guiComponent * pArrow)
       assert(m_iCarac[ARMOR] <= 100);
     }
     computePoints();
-    wchar_t sValue[8];
-    swprintf(sValue, 8, L"%d", m_iCarac[ARMOR]);
+    char sValue[8];
+    snprintf(sValue, 8, "%d", m_iCarac[ARMOR]);
     ((guiLabel*)pCpnt)->setText(sValue);
     checkArrows(pCpnt);
   }
-  else if (wcscmp(pCpnt->getId(), L"EnduranceValue") == 0)
+  else if (strcmp(pCpnt->getId(), "EnduranceValue") == 0)
   {
-    if (wcscmp(pArrow->getId(), L"EnduranceValue_left") == 0)
+    if (strcmp(pArrow->getId(), "EnduranceValue_left") == 0)
     {
       assert(m_iCarac[ENDURANCE] > 1);
       m_iCarac[ENDURANCE]--;
@@ -487,14 +487,14 @@ void CreateAvatarDlg::onArrowClick(guiComponent * pArrow)
       assert(m_iCarac[ENDURANCE] <= 100);
     }
     computePoints();
-    wchar_t sValue[8];
-    swprintf(sValue, 8, L"%d", m_iCarac[ENDURANCE]);
+    char sValue[8];
+    snprintf(sValue, 8, "%d", m_iCarac[ENDURANCE]);
     ((guiLabel*)pCpnt)->setText(sValue);
     checkArrows(pCpnt);
   }
-  else if (wcscmp(pCpnt->getId(), L"SpeedValue") == 0)
+  else if (strcmp(pCpnt->getId(), "SpeedValue") == 0)
   {
-    if (wcscmp(pArrow->getId(), L"SpeedValue_left") == 0)
+    if (strcmp(pArrow->getId(), "SpeedValue_left") == 0)
     {
       assert(m_iCarac[SPEED] > 1);
       m_iCarac[SPEED]--;
@@ -505,15 +505,15 @@ void CreateAvatarDlg::onArrowClick(guiComponent * pArrow)
       assert(m_iCarac[SPEED] <= 100);
     }
     computePoints();
-    wchar_t sValue[8];
-    swprintf(sValue, 8, L"%d", m_iCarac[SPEED]);
+    char sValue[8];
+    snprintf(sValue, 8, "%d", m_iCarac[SPEED]);
     ((guiLabel*)pCpnt)->setText(sValue);
     checkArrows(pCpnt);
   }
-  else if (wcscmp(pCpnt->getId(), L"SkillSelection") == 0)
+  else if (strcmp(pCpnt->getId(), "SkillSelection") == 0)
   {
     SkillData * pData = (SkillData*) pCpnt->getAttachment();
-    if (wcscmp(pArrow->getId(), L"SkillSelection_left") == 0)
+    if (strcmp(pArrow->getId(), "SkillSelection_left") == 0)
     {
       assert(pData->m_iNbSelected > 0);
       pData->m_iNbSelected--;
@@ -523,8 +523,8 @@ void CreateAvatarDlg::onArrowClick(guiComponent * pArrow)
       pData->m_iNbSelected++;
     }
     computePoints();
-    wchar_t sValue[8];
-    swprintf(sValue, 8, L"%d", pData->m_iNbSelected);
+    char sValue[8];
+    snprintf(sValue, 8, "%d", pData->m_iNbSelected);
     ((guiLabel*)pCpnt)->setText(sValue);
   }
 }
@@ -552,28 +552,28 @@ void CreateAvatarDlg::onEthnicityChanged(Ethnicity * pEthn)
 
   // Get allowed images list and set automatically first image
   m_iImage = 0;
-  guiImage * pImg = (guiImage*) getComponent(L"ShahmahImage");
+  guiImage * pImg = (guiImage*) getComponent("ShahmahImage");
   assert(pImg != NULL);
   pString = (StringObject*) m_pImagesSubList->getFirst(0);
   if (pString != NULL)
   {
-    wchar_t sPath[MAX_PATH];
-    swprintf(sPath, MAX_PATH, L"%s/%s", m_pCurrentEdition->m_sObjectId, pString->m_sString);
+    char sPath[MAX_PATH];
+    snprintf(sPath, MAX_PATH, "%s/%s", m_pCurrentEdition->m_sObjectId, pString->m_sString);
     int iTex = m_pLocalClient->getDisplay()->getTextureEngine()->loadTexture(sPath);
     pImg->setImageTexture(iTex);
     pImg->setVisible(true);
   }
   else
   {
-    int iTex = m_pLocalClient->getDisplay()->getTextureEngine()->loadTexture(L"EmptyWhiteSquare");
+    int iTex = m_pLocalClient->getDisplay()->getTextureEngine()->loadTexture("EmptyWhiteSquare");
     pImg->setImageTexture(iTex);
     pImg->setVisible(false);
   }
   checkArrows(pImg);
-  guiComponent * pCpnt2 = getComponent(L"ShahmahImage_left");
+  guiComponent * pCpnt2 = getComponent("ShahmahImage_left");
   assert(pCpnt2 != NULL);
   pCpnt2->setEnabled(m_iImage > 0);
-  pCpnt2 = getComponent(L"ShahmahImage_right");
+  pCpnt2 = getComponent("ShahmahImage_right");
   assert(pCpnt2 != NULL);
   pCpnt2->setEnabled(m_iImage < m_pImagesSubList->size - 1);
 
@@ -586,8 +586,8 @@ void CreateAvatarDlg::onEthnicityChanged(Ethnicity * pEthn)
 void CreateAvatarDlg::onShow()
 {
   // Fill combo
-  wchar_t sText[LABEL_MAX_CHARS] = L"";
-  guiComboBox * pBox = (guiComboBox*) getComponent(L"EditionCombo");
+  char sText[LABEL_MAX_CHARS] = "";
+  guiComboBox * pBox = (guiComboBox*) getComponent("EditionCombo");
   assert(pBox != NULL);
   pBox->clearList();
   Edition * pEdition = m_pLocalClient->getDataFactory()->getFirstEdition();
@@ -596,8 +596,8 @@ void CreateAvatarDlg::onShow()
     ShahmahCreation * pCreat = pEdition->getShahmahCreationData();
     if (pCreat != NULL)
     {
-      pEdition->findLocalizedElement(sText, LABEL_MAX_CHARS, i18n->getCurrentLanguageName(), L"name");
-      guiButton * pBtn = pBox->addString(sText, L"EditionButton");
+      pEdition->findLocalizedElement(sText, LABEL_MAX_CHARS, i18n->getCurrentLanguageName(), "name");
+      guiButton * pBtn = pBox->addString(sText, "EditionButton");
       pBtn->setAttachment(pEdition);
     }
     pEdition = m_pLocalClient->getDataFactory()->getNextEdition();
@@ -639,60 +639,60 @@ void CreateAvatarDlg::onEditionChanged(Edition * pEdition)
 
   // Reset paid gold
   m_iGoldPaid = 0;
-  guiLabel * pLbl = (guiLabel*) getComponent(L"GoldValue");
+  guiLabel * pLbl = (guiLabel*) getComponent("GoldValue");
   assert(pLbl != NULL);
-  wchar_t sValue[8];
-  swprintf(sValue, 8, L"%d", m_iGoldPaid);
+  char sValue[8];
+  snprintf(sValue, 8, "%d", m_iGoldPaid);
   pLbl->setText(sValue);
   checkArrows(pLbl);
 
   // Reset caracs
   m_iCarac[MELEE] = m_iCarac[RANGE] = m_iCarac[ARMOR] = 0;
   m_iCarac[ENDURANCE] = m_iCarac[SPEED] = 1;
-  pLbl = (guiLabel*) getComponent(L"MeleeValue");
+  pLbl = (guiLabel*) getComponent("MeleeValue");
   assert(pLbl != NULL);
-  swprintf(sValue, 8, L"%d", m_iCarac[MELEE]);
+  snprintf(sValue, 8, "%d", m_iCarac[MELEE]);
   pLbl->setText(sValue);
   checkArrows(pLbl);
-  pLbl = (guiLabel*) getComponent(L"RangeValue");
+  pLbl = (guiLabel*) getComponent("RangeValue");
   assert(pLbl != NULL);
-  swprintf(sValue, 8, L"%d", m_iCarac[RANGE]);
+  snprintf(sValue, 8, "%d", m_iCarac[RANGE]);
   pLbl->setText(sValue);
   checkArrows(pLbl);
-  pLbl = (guiLabel*) getComponent(L"ArmorValue");
+  pLbl = (guiLabel*) getComponent("ArmorValue");
   assert(pLbl != NULL);
-  swprintf(sValue, 8, L"%d", m_iCarac[ARMOR]);
+  snprintf(sValue, 8, "%d", m_iCarac[ARMOR]);
   pLbl->setText(sValue);
   checkArrows(pLbl);
-  pLbl = (guiLabel*) getComponent(L"EnduranceValue");
+  pLbl = (guiLabel*) getComponent("EnduranceValue");
   assert(pLbl != NULL);
-  swprintf(sValue, 8, L"%d", m_iCarac[ENDURANCE]);
+  snprintf(sValue, 8, "%d", m_iCarac[ENDURANCE]);
   pLbl->setText(sValue);
   checkArrows(pLbl);
-  pLbl = (guiLabel*) getComponent(L"SpeedValue");
+  pLbl = (guiLabel*) getComponent("SpeedValue");
   assert(pLbl != NULL);
-  swprintf(sValue, 8, L"%d", m_iCarac[SPEED]);
+  snprintf(sValue, 8, "%d", m_iCarac[SPEED]);
   pLbl->setText(sValue);
   checkArrows(pLbl);
 
   // Ethnicities
   m_pCurrentPeople = NULL;
-  wchar_t sText[LABEL_MAX_CHARS];
-  wchar_t sBuf1[LABEL_MAX_CHARS];
-  wchar_t sBuf2[32];
-  wchar_t s2P[8];
-  i18n->getText(L"COST", sBuf2, 32);
-  i18n->getText(L"2P", s2P, 8);
-  guiComboBox * pBox = (guiComboBox*) getComponent(L"EthnicityCombo");
+  char sText[LABEL_MAX_CHARS];
+  char sBuf1[LABEL_MAX_CHARS];
+  char sBuf2[32];
+  char s2P[8];
+  i18n->getText("COST", sBuf2, 32);
+  i18n->getText("2P", s2P, 8);
+  guiComboBox * pBox = (guiComboBox*) getComponent("EthnicityCombo");
   assert(pBox != NULL);
   pBox->clearList();
   Ethnicity * pEthn = (Ethnicity*) pCreat->m_pPeoples->getFirst(0);
   while (pEthn != NULL)
   {
-    pEthn->findLocalizedElement(sBuf1, LABEL_MAX_CHARS, i18n->getCurrentLanguageName(), L"name");
+    pEthn->findLocalizedElement(sBuf1, LABEL_MAX_CHARS, i18n->getCurrentLanguageName(), "name");
     int cost = pCreat->m_pPeoples->getCurrentType(0);
-    swprintf(sText, LABEL_MAX_CHARS, L"%s (%s%s%d)", sBuf1, sBuf2, s2P, cost);
-    guiButton * pBtn = pBox->addString(sText, L"EthnicityButton");
+    snprintf(sText, LABEL_MAX_CHARS, "%s (%s%s%d)", sBuf1, sBuf2, s2P, cost);
+    guiButton * pBtn = pBox->addString(sText, "EthnicityButton");
     pBtn->setAttachment(pEthn);
     pEthn = (Ethnicity*) pCreat->m_pPeoples->getNext(0);
   }
@@ -700,16 +700,16 @@ void CreateAvatarDlg::onEditionChanged(Edition * pEdition)
   // Images
   m_pImagesSubList->deleteAll();
   m_iImage = 0;
-  guiImage * pImg = (guiImage*) getComponent(L"ShahmahImage");
+  guiImage * pImg = (guiImage*) getComponent("ShahmahImage");
   assert(pImg != NULL);
-  int iTex = m_pLocalClient->getDisplay()->getTextureEngine()->loadTexture(L"EmptyWhiteSquare");
+  int iTex = m_pLocalClient->getDisplay()->getTextureEngine()->loadTexture("EmptyWhiteSquare");
   pImg->setImageTexture(iTex);
   pImg->setVisible(false);
   checkArrows(pImg);
-  guiComponent * pCpnt2 = getComponent(L"ShahmahImage_left");
+  guiComponent * pCpnt2 = getComponent("ShahmahImage_left");
   assert(pCpnt2 != NULL);
   pCpnt2->setEnabled(false);
-  pCpnt2 = getComponent(L"ShahmahImage_right");
+  pCpnt2 = getComponent("ShahmahImage_right");
   assert(pCpnt2 != NULL);
   pCpnt2->setEnabled(false);
 
@@ -723,21 +723,21 @@ void CreateAvatarDlg::onEditionChanged(Edition * pEdition)
   while (pSkill != NULL)
   {
     // Skill picture
-    swprintf(sText, LABEL_MAX_CHARS, L"%s - %s", pSkill->getLocalizedName(), pSkill->getLocalizedDescription());
+    snprintf(sText, LABEL_MAX_CHARS, "%s - %s", pSkill->getLocalizedName(), pSkill->getLocalizedDescription());
     guiImage * pImg = new guiImage();
-    pImg->init(getDisplay()->getTextureEngine()->loadTexture(pSkill->getIconPath()), L"SkillImage", x[iX], yPxl, imgSize, imgSize, getDisplay());
+    pImg->init(getDisplay()->getTextureEngine()->loadTexture(pSkill->getIconPath()), "SkillImage", x[iX], yPxl, imgSize, imgSize, getDisplay());
     pImg->setTooltipText(sText);
     m_pSkillsPanel->getDocument()->addComponent(pImg);
     // Cost label
     int cost = pCreat->m_pSkills->getCurrentType(0);
-    swprintf(sText, LABEL_MAX_CHARS, L"%s%s%d", sBuf2, s2P, cost);
+    snprintf(sText, LABEL_MAX_CHARS, "%s%s%d", sBuf2, s2P, cost);
     pLbl = new guiLabel();
-    pLbl->init(sText, H2_FONT, H2_COLOR, L"", x[iX] + imgSize + SPACING, yPxl, 0, 0, getDisplay());
+    pLbl->init(sText, H2_FONT, H2_COLOR, "", x[iX] + imgSize + SPACING, yPxl, 0, 0, getDisplay());
     m_pSkillsPanel->getDocument()->addComponent(pLbl);
     // Select skill label
     SkillData * pData = new SkillData(pSkill, cost, 0);
     pLbl = new guiLabel();
-    pLbl->init(L"0", H2_FONT, H2_COLOR, L"SkillSelection", x[iX] + imgSize + 25, yPxl + imgSize / 2, 0, 0, getDisplay());
+    pLbl->init("0", H2_FONT, H2_COLOR, "SkillSelection", x[iX] + imgSize + 25, yPxl + imgSize / 2, 0, 0, getDisplay());
     pLbl->setAttachment(pData);
     pData->setAttachment(pLbl);
     m_pSkillsPanel->getDocument()->addComponent(pLbl);
@@ -764,14 +764,14 @@ void CreateAvatarDlg::checkArrows(guiComponent * pCpnt, guiDocument * pDoc)
   if (pDoc == NULL)
     pDoc = this;
   // First check that position is still ok
-  wchar_t sId[128] = L"";
-  swprintf(sId, 128, L"%s_left", pCpnt->getId());
+  char sId[128] = "";
+  snprintf(sId, 128, "%s_left", pCpnt->getId());
   guiButton * pBtn = (guiButton*) pDoc->getComponent(sId);
   assert(pBtn != NULL);
   pBtn->moveTo(pCpnt->getXPos() - SPACING - pBtn->getWidth(), pCpnt->getYPos() + pCpnt->getHeight() / 2 - pBtn->getHeight() / 2);
   guiButton * pLeft = pBtn;
 
-  swprintf(sId, 128, L"%s_right", pCpnt->getId());
+  snprintf(sId, 128, "%s_right", pCpnt->getId());
   pBtn = (guiButton*) pDoc->getComponent(sId);
   assert(pBtn != NULL);
   pBtn->moveTo(pCpnt->getXPos() + pCpnt->getWidth() + SPACING, pCpnt->getYPos() + pCpnt->getHeight() / 2 - pBtn->getHeight() / 2);
@@ -813,64 +813,64 @@ void CreateAvatarDlg::computePoints()
   }
 
   // Change points display
-  guiLabel * pLbl = (guiLabel*) getComponent(L"PointsLabel");
+  guiLabel * pLbl = (guiLabel*) getComponent("PointsLabe");
   assert(pLbl != NULL);
-  wchar_t sText[LABEL_MAX_CHARS];
-  wchar_t sBuf[32];
-  i18n->getText(L"POINTS_ABREV", sBuf, 32);
-  swprintf(sText, LABEL_MAX_CHARS, L"%d %s", m_iPointsLeft, sBuf);
+  char sText[LABEL_MAX_CHARS];
+  char sBuf[32];
+  i18n->getText("POINTS_ABREV", sBuf, 32);
+  snprintf(sText, LABEL_MAX_CHARS, "%d %s", m_iPointsLeft, sBuf);
   pLbl->setText(sText);
 
   // Check arrows
   // Gold
-  guiComponent * pCpnt = getComponent(L"GoldValue_left");
+  guiComponent * pCpnt = getComponent("GoldValue_left");
   assert(pCpnt != NULL);
   pCpnt->setEnabled(m_iPointsLeft >= GOLD_COST && m_iGoldPaid > 0);
-  pCpnt = getComponent(L"GoldValue_right");
+  pCpnt = getComponent("GoldValue_right");
   assert(pCpnt != NULL);
   Profile * pPlayer = m_pLocalClient->getInterface()->getSelectPlayerDialog()->getCurrentPlayer();
   assert(pPlayer != NULL);
   pCpnt->setEnabled(m_iGoldPaid < min(10, pPlayer->getCash()));
 
   // Melee
-  pCpnt = getComponent(L"MeleeValue_left");
+  pCpnt = getComponent("MeleeValue_left");
   assert(pCpnt != NULL);
   pCpnt->setEnabled(m_iCarac[MELEE] > 0);
-  pCpnt = getComponent(L"MeleeValue_right");
+  pCpnt = getComponent("MeleeValue_right");
   assert(pCpnt != NULL);
   pCpnt->setEnabled(m_iPointsLeft >= MELEE_COST);
   // Range
-  pCpnt = getComponent(L"RangeValue_left");
+  pCpnt = getComponent("RangeValue_left");
   assert(pCpnt != NULL);
   pCpnt->setEnabled(m_iCarac[RANGE] > 0);
-  pCpnt = getComponent(L"RangeValue_right");
+  pCpnt = getComponent("RangeValue_right");
   assert(pCpnt != NULL);
   pCpnt->setEnabled(m_iPointsLeft >= RANGE_COST);
   // Armor
-  pCpnt = getComponent(L"ArmorValue_left");
+  pCpnt = getComponent("ArmorValue_left");
   assert(pCpnt != NULL);
   pCpnt->setEnabled(m_iCarac[ARMOR] > 0);
-  pCpnt = getComponent(L"ArmorValue_right");
+  pCpnt = getComponent("ArmorValue_right");
   assert(pCpnt != NULL);
   pCpnt->setEnabled(m_iPointsLeft >= ARMOR_COST);
   // Endurance
-  pCpnt = getComponent(L"EnduranceValue_left");
+  pCpnt = getComponent("EnduranceValue_left");
   assert(pCpnt != NULL);
   pCpnt->setEnabled(m_iCarac[ENDURANCE] > 1);
-  pCpnt = getComponent(L"EnduranceValue_right");
+  pCpnt = getComponent("EnduranceValue_right");
   assert(pCpnt != NULL);
   pCpnt->setEnabled(m_iPointsLeft >= ENDURANCE_COST);
   // Speed
-  pCpnt = getComponent(L"SpeedValue_left");
+  pCpnt = getComponent("SpeedValue_left");
   assert(pCpnt != NULL);
   pCpnt->setEnabled(m_iCarac[SPEED] > 1);
-  pCpnt = getComponent(L"SpeedValue_right");
+  pCpnt = getComponent("SpeedValue_right");
   assert(pCpnt != NULL);
   pCpnt->setEnabled(m_iPointsLeft >= SPEED_COST);
 
   // Check ethnicity
   ShahmahCreation * pCreat = m_pCurrentEdition->getShahmahCreationData();
-  guiComboBox * pBox = (guiComboBox*) getComponent(L"EthnicityCombo");
+  guiComboBox * pBox = (guiComboBox*) getComponent("EthnicityCombo");
   assert(pBox != NULL);
   u16 nbItems = pBox->getItemsCount();
   for (u16 i = 0; i < nbItems; i++)
@@ -896,13 +896,13 @@ void CreateAvatarDlg::computePoints()
   pCpnt = m_pSkillsPanel->getDocument()->getFirstComponent();
   while (pCpnt != NULL)
   {
-    if (wcscmp(pCpnt->getId(), L"SkillSelection_left") == 0)
+    if (strcmp(pCpnt->getId(), "SkillSelection_left") == 0)
     {
       // First attachment is the guiLabel linked to this button; second attachment is the corresponding SkillData structure
       SkillData * pData = (SkillData*) pCpnt->getAttachment()->getAttachment();
       pCpnt->setEnabled(pData->m_iNbSelected > 0);
     }
-    else if (wcscmp(pCpnt->getId(), L"SkillSelection_right") == 0)
+    else if (strcmp(pCpnt->getId(), "SkillSelection_right") == 0)
     {
       // First attachment is the guiLabel linked to this button; second attachment is the corresponding SkillData structure
       SkillData * pData = (SkillData*) pCpnt->getAttachment()->getAttachment();
@@ -913,7 +913,7 @@ void CreateAvatarDlg::computePoints()
 
   // Enable or disable OK button (form validation)
   // Ethnicity is the only mandatory data
-  guiComponent * pBtn = getComponent(L"OkButton");
+  guiComponent * pBtn = getComponent("OkButton");
   assert(pBtn != NULL);
   pBtn->setEnabled(m_pCurrentPeople != NULL);
 }
@@ -925,11 +925,11 @@ void CreateAvatarDlg::saveAndQuit()
 {
   // Create Avatar
   AvatarData * pAvatar = new AvatarData();
-  wsafecpy(pAvatar->m_sObjectId, NAME_MAX_CHARS, L"");
+  wsafecpy(pAvatar->m_sObjectId, NAME_MAX_CHARS, "");
   wsafecpy(pAvatar->m_sEdition, NAME_MAX_CHARS, m_pCurrentEdition->m_sObjectId);
   wsafecpy(pAvatar->m_sEthnicityId, NAME_MAX_CHARS, m_pCurrentPeople->m_sObjectId);
   StringObject * pStr = (StringObject*) m_pImagesSubList->goTo(0, m_iImage);
-  swprintf(pAvatar->m_sTextureFilename, MAX_PATH, L"%s/%s",  m_pCurrentEdition->m_sObjectId, pStr->m_sString);
+  snprintf(pAvatar->m_sTextureFilename, MAX_PATH, "%s/%s",  m_pCurrentEdition->m_sObjectId, pStr->m_sString);
   pAvatar->m_lValues.insert(long_hash::value_type(STRING_MELEE, m_iCarac[MELEE]));
   pAvatar->m_lValues.insert(long_hash::value_type(STRING_RANGE, m_iCarac[RANGE]));
   pAvatar->m_lValues.insert(long_hash::value_type(STRING_ARMOR, m_iCarac[ARMOR]));

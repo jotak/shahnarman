@@ -16,21 +16,21 @@ public:
   class SpellData : public BaseObject
   {
   public:
-    wchar_t m_sEdition[NAME_MAX_CHARS];
-    wchar_t m_sName[NAME_MAX_CHARS];
+    char m_sEdition[NAME_MAX_CHARS];
+    char m_sName[NAME_MAX_CHARS];
     AvatarData * m_pOwner;
   };
 
   Profile(LocalClient * pLocalClient);
   ~Profile();
 
-  bool create(wchar_t * sName);
-  bool load(wchar_t * sName);
+  bool create(const char * sName);
+  bool load(const char * sName);
   bool save();
   void deleteProfile();
 
   // Member access
-  wchar_t * getName() { return m_sName; };
+  char * getName() { return m_sName; };
   int getCash() { return m_iCash; };
   int getNumberOfWonGames() { return m_iWonGames; };
   int getNumberOfLostGames() { return m_iLostGames; };
@@ -39,12 +39,12 @@ public:
   ObjectList * getArtifactsList() { return m_pArtifacts; };
 
   void buyItem(ShopItem * pItem);
-  AvatarData * findAvatar(wchar_t * sEdition, wchar_t * sName);
+  AvatarData * findAvatar(const char * sEdition, const char * sName);
   bool replaceAvatar(AvatarData * pNewAvatar);
   void addCash(int cash) { m_iCash += cash; };
-  void addSpell(wchar_t * sEdition, wchar_t * sName);
-  void addArtifact(wchar_t * sEdition, wchar_t * sName);
-  void addAvatar(wchar_t * sEdition, wchar_t * sName);
+  void addSpell(const char * sEdition, const char * sName);
+  void addArtifact(const char * sEdition, const char * sName);
+  void addAvatar(const char * sEdition, const char * sName);
   void addAvatar(AvatarData * pAvatar, int iCost);
   void deleteAvatar(AvatarData * pAvatar);
   void applyAvatarProgression(AvatarData * pAvatar, u8 uTree, ProgressionElement * pElt);
@@ -53,7 +53,7 @@ public:
 protected:
   void _applyAvatarProgressionEffects(AvatarData * pAvatar, ObjectList * pEffects);
 
-  wchar_t m_sName[NAME_MAX_CHARS];
+  char m_sName[NAME_MAX_CHARS];
   int m_iCash;
   int m_iWonGames;
   int m_iLostGames;

@@ -16,7 +16,7 @@ class MapObject : public GraphicObject, public LuaTargetable
 {
 friend class MapGenerator;
 public:
-  MapObject(CoordsMap mapPos, Map * pMap, ObjectList ** pGlobalEffects, const wchar_t * sIdentifiers);
+  MapObject(CoordsMap mapPos, Map * pMap, ObjectList ** pGlobalEffects, const char * sIdentifiers);
 
   // Virtual functions
   virtual u32 getType() { return GraphicObject::getType() | GOTYPE_MAPOBJECT; };
@@ -39,7 +39,7 @@ public:
   Map * getMap() { return m_pMap; };
 
   // Other
-  virtual wchar_t * getInfo(wchar_t * sBuf, int iSize, InfoDest eDest) { return sBuf; };
+  virtual char * getInfo(char * sBuf, int iSize, InfoDest eDest) { return sBuf; };
   u8 getOwner() { return m_uOwner; };
   void setOwner(u8 uOwner);
   virtual void updateIdentifiers() = 0;

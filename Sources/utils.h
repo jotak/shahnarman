@@ -19,7 +19,7 @@ typedef long            s32;
   #include <hash_map>
   #include <queue>
 
-  #define wfopen(a,b,c) _wfopen_s(a,b,c)
+  #define fopen_s(a,b,c) _fopen_s_s(a,b,c)
 #endif
 
 #ifdef LINUX
@@ -27,7 +27,6 @@ typedef long            s32;
   #include <iostream>
   #include <cmath>
   #include <assert.h>
-  #include <wchar.h>
   #include <queue>
   #include <tr1/unordered_map>
   #include <tr1/memory>
@@ -36,35 +35,32 @@ typedef long            s32;
 
 //  #define strcat_s(a,b,c)   strcat(a,c)
 //  #define strcpy_s(a,b,c)   strcpy(a,c)
-  #define _stricmp(a,b)     strcasecmp(a,b)
-  #define _wcsicmp(a,b)     wcscasecmp(a,b)  // Just as reminder : wcscmp can also be used
+//  #define _strcasecmp(a,b)     strcasecmp(a,b)
+//  #define strcasecmp(a,b)     wcscasecmp(a,b)  // Just as reminder : strcmp can also be used
   #define errno_t int
   #define max(x,y) ((x)>=(y)?(x):(y))
   #define min(x,y) ((x)<=(y)?(x):(y))
-  extern errno_t wfopen(FILE ** pFile, const wchar_t * sFilename, const wchar_t * sMode);
   extern errno_t fopen_s(FILE ** pFile, const char * sFilename, const char * sMode);
-  extern void _wremove(const wchar_t * sFilename);
   #define GLUT_WHEEL_UP   3 // freeglut uses 3 and 4 as wheel buttons
   #define GLUT_WHEEL_DOWN 4
 #endif
 
-typedef std::tr1::unordered_map<std::wstring, long> long_hash;
-typedef std::tr1::unordered_map<std::wstring, std::wstring> wstr_hash;
-typedef std::tr1::unordered_map<wchar_t, wchar_t> wch_hash;
+typedef std::tr1::unordered_map<std::string, long> long_hash;
+typedef std::tr1::unordered_map<std::string, std::string> wstr_hash;
+typedef std::tr1::unordered_map<char, char> wch_hash;
 
 #ifndef MAX_PATH
   #define MAX_PATH    512
 #endif
-#define LDATA_PATH            L"data/"
 #define DATA_PATH             "data/"
-#define GAME_TEXTURES_PATH    L"data/textures/"
-#define GAME_MUSICS_PATH      L"data/musics/"
-#define GAME_SOUNDS_PATH      L"data/sounds/"
-#define MAPS_PATH             L"data/maps/"
+#define GAME_TEXTURES_PATH    "data/textures/"
+#define GAME_MUSICS_PATH      "data/musics/"
+#define GAME_SOUNDS_PATH      "data/sounds/"
+#define MAPS_PATH             "data/maps/"
 #define SHADERS_PATH          "data/shaders/"
-#define PROFILES_PATH         L"players/"
-#define EDITIONS_PATH         L"editions/"
-#define SAVES_PATH            L"saves/"
+#define PROFILES_PATH         "players/"
+#define EDITIONS_PATH         "editions/"
+#define SAVES_PATH            "saves/"
 #define FREE(m)               { if (m != NULL) { delete m; m = NULL; } }
 #define FREEARR(m)            { if (m != NULL) { delete[] m; m = NULL; } }
 #define EPSILON               0.000001f
@@ -188,24 +184,23 @@ extern F_RGBA                     rgb(float r, float g, float b);
 #define F_RGBA_MULTIPLY(c1, c2)   (F_RGBA_ISNULL(c1) ? c2 : (F_RGBA_ISNULL(c2) ? c1 : rgba(c1.r*c2.r, c1.g*c2.g, c1.b*c2.b, c1.a*c2.a)))
 
 extern void chop(char * str);
-extern void wchop(wchar_t * str);
-extern void add_long_to_wstr(long iVal, int precision, wchar_t * sDst, int * iDst);
-extern void add_double_to_wstr(double fVal, int precision, wchar_t * sDst, int * iDst);
-extern void wsafecpy(wchar_t * dst, unsigned int size, const wchar_t * src);
-extern void wsafecat(wchar_t * dst, unsigned int size, const wchar_t * src);
+extern void add_long_to_wstr(long iVal, int precision, char * sDst, int * iDst);
+extern void add_double_to_wstr(double fVal, int precision, char * sDst, int * iDst);
+extern void wsafecpy(char * dst, unsigned int size, const char * src);
+extern void wsafecat(char * dst, unsigned int size, const char * src);
 
 // The following is defined in platform-specific cpp files
 extern u32 getRandom(u32 max);  // retourne un nombre entre 0 et max-1
-extern size_t strtow(wchar_t * sDst, int sizemax, const char * sSrc);
-extern size_t wtostr(char * sDst, int sizemax, const wchar_t * sSrc);
-extern bool md5folder(wchar_t * sFolder, wchar_t * swDigest);
-extern bool copyStringToClipboard(wchar_t * wsource);
-extern wchar_t * getStringFromClipboard(wchar_t * sBuffer, int iBufSize);
-extern int getEditions(wchar_t ** sEditionsList, unsigned int iListSize, int iEditionNameSize);
-extern int getSkills(wchar_t ** sSkillsList, unsigned int iListSize, int iSkillNameSize, const wchar_t * sEdition);
-extern int getProfiles(wchar_t ** sProfilesList, unsigned int iListSize, int iProfileNameSize);
-extern int getSavedGames(wchar_t ** sSavesList, unsigned int iListSize, int iSavesNameSize);
-extern int getMaps(wchar_t ** sMapsList, unsigned int iListSize, int iMapNameSize);
+//extern size_t strtow(char * sDst, int sizemax, const char * sSrc);
+//extern size_t wtostr(char * sDst, int sizemax, const char * sSrc);
+extern bool md5folder(const char * sFolder, char * sDigest);
+extern bool copyStringToClipboard(const char * wsource);
+extern char * getStringFromClipboard(char * sBuffer, int iBufSize);
+extern int getEditions(char ** sEditionsList, unsigned int iListSize, int iEditionNameSize);
+extern int getSkills(char ** sSkillsList, unsigned int iListSize, int iSkillNameSize, const char * sEdition);
+extern int getProfiles(char ** sProfilesList, unsigned int iListSize, int iProfileNameSize);
+extern int getSavedGames(char ** sSavesList, unsigned int iListSize, int iSavesNameSize);
+extern int getMaps(char ** sMapsList, unsigned int iListSize, int iMapNameSize);
 extern int getAvailableDisplayModes(CoordsScreen * pResolution, int * pBpp, int iMaxEntries);
 
 #endif

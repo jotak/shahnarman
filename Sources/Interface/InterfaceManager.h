@@ -74,7 +74,7 @@ public:
 
   // Frame management
   void registerFrame(guiFrame * pFrm);
-  guiFrame * findFrame(const wchar_t * frmId);
+  guiFrame * findFrame(const char * frmId);
   guiFrame * findFrameFromDoc(guiDocument * pDoc);
   void deleteFrame(guiFrame * pFrm);
   guiFrame * deleteCurrentFrame(int iterator);
@@ -114,7 +114,7 @@ public:
   void onResize(int oldw, int oldh);
   bool onClickStart();
   void resetSharedPointers(guiObject * pObj = NULL);
-  void getRichText(guiDocument * pDest, CoordsScreen offset, wchar_t * sSource);
+  void getRichText(guiDocument * pDest, CoordsScreen offset, char * sSource);
 
   // Menu functions
   StartMenuDlg * getStartMenuDialog() { return m_pStartMenuWindow; };
@@ -132,7 +132,7 @@ public:
   void setUniqueDialog(guiDocument * pDoc);
 
   // Called from LUA
-  void askForExtraMana(wchar_t * sDescription, u16 mana, int min, int max, wchar_t * sCallback, u32 uSourceType);
+  void askForExtraMana(char * sDescription, u16 mana, int min, int max, char * sCallback, u32 uSourceType);
 
 private:
   void deleteAllFrames();

@@ -212,7 +212,7 @@ void GeometryQuads::reload()
 // Name : QuadData
 //  Constructor
 // -----------------------------------------------------------------
-QuadData::QuadData(int xstart, int xend, int ystart, int yend, const wchar_t * texture, DisplayEngine * pDisplay)
+QuadData::QuadData(int xstart, int xend, int ystart, int yend, const char * texture, DisplayEngine * pDisplay)
 {
   m_pDisplay = pDisplay;
   Coords3D d3start = pDisplay->get3DCoords(CoordsScreen(xstart, ystart), DMS_2D);
@@ -256,7 +256,7 @@ QuadData::QuadData(int xstart, int xend, int ystart, int yend, int texture, Disp
 // Name : QuadData
 //  Constructor
 // -----------------------------------------------------------------
-QuadData::QuadData(int xstart, int xend, int ystart, int yend, int ustart, int uend, int vstart, int vend, const wchar_t * texture, DisplayEngine * pDisplay)
+QuadData::QuadData(int xstart, int xend, int ystart, int yend, int ustart, int uend, int vstart, int vend, const char * texture, DisplayEngine * pDisplay)
 {
   m_pDisplay = pDisplay;
   Coords3D d3start = pDisplay->get3DCoords(CoordsScreen(xstart, ystart), DMS_2D);
@@ -278,7 +278,7 @@ QuadData::QuadData(int xstart, int xend, int ystart, int yend, int ustart, int u
 // Name : QuadData
 //  Constructor
 // -----------------------------------------------------------------
-QuadData::QuadData(float xstart, float xend, float ystart, float yend, const wchar_t * texture, DisplayEngine * pDisplay)
+QuadData::QuadData(float xstart, float xend, float ystart, float yend, const char * texture, DisplayEngine * pDisplay)
 {
   m_pDisplay = pDisplay;
   m_fXStart = xstart;
@@ -298,7 +298,7 @@ QuadData::QuadData(float xstart, float xend, float ystart, float yend, const wch
 // Name : QuadData
 //  Constructor
 // -----------------------------------------------------------------
-QuadData::QuadData(float xstart, float xend, float ystart, float yend, int ustart, int uend, int vstart, int vend, const wchar_t * texture, DisplayEngine * pDisplay)
+QuadData::QuadData(float xstart, float xend, float ystart, float yend, int ustart, int uend, int vstart, int vend, const char * texture, DisplayEngine * pDisplay)
 {
   m_pDisplay = pDisplay;
   m_fXStart = xstart;

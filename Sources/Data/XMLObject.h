@@ -12,9 +12,9 @@ public:
   ~XMLObject();
 
   void readLocalizedElementsFromXml(XMLLiteElement * pNode);
-  void addLocalizedElement(const wchar_t * sKey, const wchar_t * sValue, const wchar_t * sLanguage);
-  void findLocalizedElement(wchar_t * sValue, int iSize, const wchar_t * sLanguage, const wchar_t * sKey);
-  wchar_t m_sObjectId[NAME_MAX_CHARS];    // name, language-independant
+  void addLocalizedElement(const char * sKey, const char * sValue, const char * sLanguage);
+  void findLocalizedElement(char * sValue, int iSize, const char * sLanguage, const char * sKey);
+  char m_sObjectId[NAME_MAX_CHARS];    // name, language-independant
 
 protected:
   ObjectList * m_pLocalizedElements;
@@ -22,11 +22,11 @@ protected:
   class LocalizedElement : public BaseObject
   {
   public:
-    LocalizedElement(const wchar_t * sKey, const wchar_t * sValue, const wchar_t * sLanguage);
+    LocalizedElement(const char * sKey, const char * sValue, const char * sLanguage);
     ~LocalizedElement();
-    wchar_t * m_sValue;
-    wchar_t m_sLanguage[64];
-    wchar_t m_sKey[64];
+    char * m_sValue;
+    char m_sLanguage[64];
+    char m_sKey[64];
   };
 };
 

@@ -28,7 +28,7 @@ public:
   void dragInertness(Coords3D inertnessVector);
 
   // Messages effects
-  void showMessage(wchar_t * sText);
+  void showMessage(char * sText);
 
   // Other
   bool isGameIntroFinished();

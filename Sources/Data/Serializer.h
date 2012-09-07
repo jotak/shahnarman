@@ -10,8 +10,8 @@ public:
   virtual short readShort() = 0;
   virtual void writeChar(char c) = 0;
   virtual char readChar() = 0;
-  virtual void writeString(const wchar_t * s) = 0;
-  virtual void readString(wchar_t * s) = 0;
+  virtual void writeString(const char * s) = 0;
+  virtual void readString(char * s) = 0;
 };
 
 #endif

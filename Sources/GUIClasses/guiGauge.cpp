@@ -26,7 +26,7 @@ guiGauge::~guiGauge()
 // -----------------------------------------------------------------
 // Name : init
 // -----------------------------------------------------------------
-void guiGauge::init(int iRef, int iVal, F_RGBA color, int iFgTex, int iBgTex, const wchar_t * sCpntId, int xPxl, int yPxl, int wPxl, int hPxl, DisplayEngine * pDisplay)
+void guiGauge::init(int iRef, int iVal, F_RGBA color, int iFgTex, int iBgTex, const char * sCpntId, int xPxl, int yPxl, int wPxl, int hPxl, DisplayEngine * pDisplay)
 {
   guiComponent::init(sCpntId, xPxl, yPxl, wPxl, hPxl);
   m_iRefValue = iRef;
@@ -110,13 +110,13 @@ void guiGauge::setValue(int iVal)
 // Name : createDefaultGauge
 //  Static default constructor
 // -----------------------------------------------------------------
-guiGauge * guiGauge::createDefaultGauge(int iRef, F_RGBA color, int iWidth, int iHeight, const wchar_t * sId, DisplayEngine * pDisplay)
+guiGauge * guiGauge::createDefaultGauge(int iRef, F_RGBA color, int iWidth, int iHeight, const char * sId, DisplayEngine * pDisplay)
 {
   guiGauge * pGauge = new guiGauge();
   pGauge->init(
     iRef, 0, color,
-    pDisplay->getTextureEngine()->findTexture(L"interface:GaugeFg"),
-    pDisplay->getTextureEngine()->findTexture(L"interface:GaugeBg"),
+    pDisplay->getTextureEngine()->findTexture("interface:GaugeFg"),
+    pDisplay->getTextureEngine()->findTexture("interface:GaugeBg"),
     sId, 0, 0, iWidth, iHeight, pDisplay);
   return pGauge;
 }

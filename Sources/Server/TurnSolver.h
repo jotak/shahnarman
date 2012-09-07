@@ -37,14 +37,14 @@ public:
   void Update(double delta);
 
   // Other functions
-  Unit * addUnitToPlayer(wchar_t * sEdition, wchar_t * sUnitId, u8 uPlayerId, CoordsMap mapPos, bool bSimulate = false);
+  Unit * addUnitToPlayer(const char * sEdition, const char * sUnitId, u8 uPlayerId, CoordsMap mapPos, bool bSimulate = false);
   Player * getCurrentPlayer() { return m_pCurrentPlayer; };
   ResolveState getState() { return m_ResolveState; };
   SpellsSolver * getSpellsSolver() { return m_pSpellsSolver; };
   AISolver * getAISolver() { return m_pAISolver; };
   void checkAllUnitUpdates(bool bUnsetModified);
   void setInitialAvatar(UnitData * pData, Player * pPlayer, CoordsMap pos);
-  void addInitialPlayerSpell(Player * pPlayer, wchar_t * sEdition, wchar_t * sName);
+  void addInitialPlayerSpell(Player * pPlayer, char * sEdition, char * sName);
   void drawInitialSpells();
   void allowCastSpells(bool bPostBattle);
   Unit * getCurrentUnit() { return m_pCurrentUnit; };

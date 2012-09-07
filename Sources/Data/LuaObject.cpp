@@ -16,7 +16,7 @@ LuaObject * LuaObject::static_pCurrentLuaCaller = NULL;
 // Name : LuaObject
 //  Constructor
 // -----------------------------------------------------------------
-LuaObject::LuaObject(u32 uInstance, const wchar_t * sEdition, const wchar_t * sObjectType, const wchar_t * sObjectName, DebugManager * pDebug)
+LuaObject::LuaObject(u32 uInstance, const char * sEdition, const char * sObjectType, const char * sObjectName, DebugManager * pDebug)
 {
   m_uInstanceId = (uInstance == 0) ? ++static_uIdGenerator : uInstance;
   wsafecpy(m_sObjectName, NAME_MAX_CHARS, sObjectName);
@@ -32,33 +32,26 @@ LuaObject::LuaObject(u32 uInstance, const wchar_t * sEdition, const wchar_t * sO
   registerLuaCallbacks(m_pLuaState);
 
   // construct the file name
-  wchar_t sFilename[MAX_PATH];
-  swprintf(sFilename, MAX_PATH, L"%s%s/%s/%s.lua", EDITIONS_PATH, sEdition, sObjectType, sObjectName);
-  // we must convert unicode file name to ascii
-  char sAsciiFilename[MAX_PATH];
-  wtostr(sAsciiFilename, MAX_PATH, sFilename);
-	if (luaL_dofile(m_pLuaState, sAsciiFilename) != 0)
+  char sFilename[MAX_PATH];
+  snprintf(sFilename, MAX_PATH, "%s%s/%s/%s.lua", EDITIONS_PATH, sEdition, sObjectType, sObjectName);
+	if (luaL_dofile(m_pLuaState, sFilename) != 0)
 	{
 		// LUA error
-    wchar_t sError[512] = L"";
-    strtow(sError, 512, lua_tostring(m_pLuaState, -1));
-    m_pDebug->notifyErrorMessage(sError);
+    m_pDebug->notifyErrorMessage(lua_tostring(m_pLuaState, -1));
     m_pLuaState = NULL;
     return;
 	}
 
   // Set language
-  char sLanguage[64] = "";
-  wtostr(sLanguage, 64, i18n->getCurrentLanguageName());
   lua_settop(m_pLuaState, 0);
-  lua_pushstring(m_pLuaState, sLanguage);
+  lua_pushstring(m_pLuaState, i18n->getCurrentLanguageName());
   lua_setglobal(m_pLuaState, "language");
   lua_pop(m_pLuaState, 1);
 
   // Child effects
   m_iNbChildEffects = 0;
   double d;
-  if (getLuaVarNumber(L"childEffectsCount", &d))
+  if (getLuaVarNumber("childEffectsCount", &d))
   {
     m_iNbChildEffects = (int) d;
     if (m_iNbChildEffects > 0)
@@ -92,40 +85,40 @@ LuaObject::LuaObject(u32 uInstance, const wchar_t * sEdition, const wchar_t * sO
     }
     else
     {
-      wchar_t sError[512];
-      swprintf(sError, 512, L"Lua interaction error: can't get childEffectsCost, or is not a table - in lua file %s.", sObjectName);
+      char sError[512];
+      snprintf(sError, 512, "Lua interaction error: can't get childEffectsCost, or is not a table - in lua file %s.", sObjectName);
       pDebug->notifyErrorMessage(sError);
     }
     // Get name
-    if (callLuaFunction(L"getChildEffectsName", m_iNbChildEffects, L"s", i18n->getCurrentLanguageName()))
+    if (callLuaFunction("getChildEffectsName", m_iNbChildEffects, "s", i18n->getCurrentLanguageName()))
     {
       for (int i = 0; i < m_iNbChildEffects; i++)
       {
         m_pChildEffects[i].id = i;
         m_pChildEffects[i].setAttachment(this);
-        wsafecpy(m_pChildEffects[i].sResolveParams, LUA_FUNCTION_PARAMS_MAX_CHARS, L"");
+        wsafecpy(m_pChildEffects[i].sResolveParams, LUA_FUNCTION_PARAMS_MAX_CHARS, "");
         getLuaString(m_pChildEffects[m_iNbChildEffects - i - 1].sName, NAME_MAX_CHARS);
       }
     }
     else
     {
-      wchar_t sError[512];
-      swprintf(sError, 512, L"Lua interaction error: can't call getChildEffectsName in lua file %s.", sObjectName);
+      char sError[512];
+      snprintf(sError, 512, "Lua interaction error: can't call getChildEffectsName in lua file %s.", sObjectName);
       pDebug->notifyErrorMessage(sError);
     }
     // Get icons
-    wchar_t ** pIcons = new wchar_t*[m_iNbChildEffects];
+    char ** pIcons = new char*[m_iNbChildEffects];
     for (int i = 0; i < m_iNbChildEffects; i++)
-      pIcons[i] = new wchar_t[MAX_PATH];
-    if (getLuaVarStringArray(L"childEffectsIcon", pIcons, m_iNbChildEffects, MAX_PATH))
+      pIcons[i] = new char[MAX_PATH];
+    if (getLuaVarStringArray("childEffectsIcon", pIcons, m_iNbChildEffects, MAX_PATH))
     {
       for (int i = 0; i < m_iNbChildEffects; i++)
-        swprintf(m_pChildEffects[i].sIcon, MAX_PATH, L"%s/%s", m_sObjectEdition, pIcons[i]);
+        snprintf(m_pChildEffects[i].sIcon, MAX_PATH, "%s/%s", m_sObjectEdition, pIcons[i]);
     }
     else
     {
-      wchar_t sError[512];
-      swprintf(sError, 512, L"Lua interaction error: can't get childEffectsIcon, or is not a table - in lua file %s.", sObjectName);
+      char sError[512];
+      snprintf(sError, 512, "Lua interaction error: can't get childEffectsIcon, or is not a table - in lua file %s.", sObjectName);
       pDebug->notifyErrorMessage(sError);
     }
     for (int i = 0; i < m_iNbChildEffects; i++)
@@ -150,17 +143,13 @@ LuaObject::~LuaObject()
 // -----------------------------------------------------------------
 // Name : prepareLuaFunction
 // -----------------------------------------------------------------
-lua_State * LuaObject::prepareLuaFunction(const wchar_t * sFunc)
+lua_State * LuaObject::prepareLuaFunction(const char * sFunc)
 {
   if (m_pLuaState == NULL)
     return NULL;
 
-  // Convert wchar_t arguments to ASCII
-  char sAsciiFunc[64];
-  wtostr(sAsciiFunc, 64, sFunc);
-
   // Call lua function
-  lua_getglobal(m_pLuaState, sAsciiFunc);
+  lua_getglobal(m_pLuaState, sFunc);
   if (lua_isfunction(m_pLuaState, -1))
     return m_pLuaState;
   else
@@ -173,15 +162,15 @@ lua_State * LuaObject::prepareLuaFunction(const wchar_t * sFunc)
 // -----------------------------------------------------------------
 // Name : callPreparedLuaFunction
 // -----------------------------------------------------------------
-bool LuaObject::callPreparedLuaFunction(int iNbParams, int iNbResults, const wchar_t * sFunc, const wchar_t * sParams)
+bool LuaObject::callPreparedLuaFunction(int iNbParams, int iNbResults, const char * sFunc, const char * sParams)
 {
 #ifdef DEBUG
   extern GameRoot * g_pMainGameRoot;
   bool bLog = (g_pMainGameRoot->m_pLocalClient->getClientParameters()->iLogLevel >= 3);
   if (bLog)
   {
-    wchar_t sText[1024];
-    swprintf(sText, 1024, L"callPreparedLuaFunction: %s, %s, %s", m_sObjectName, sFunc, sParams);
+    char sText[1024];
+    snprintf(sText, 1024, "callPreparedLuaFunction: %s, %s, %s", m_sObjectName, sFunc, sParams);
     m_pDebug->log(sText);
   }
 #endif
@@ -198,24 +187,22 @@ bool LuaObject::callPreparedLuaFunction(int iNbParams, int iNbResults, const wch
   {
   case LUA_ERRRUN:
     {
-      wchar_t sError[1024] = L"";
-      wchar_t sLuaError[512] = L"";
-      strtow(sLuaError, 512, lua_tostring(m_pLuaState, -1));
-      swprintf(sError, 1024, L"LUA runtime error when calling %s::%s(%s). %s", m_sObjectName, sFunc, sParams, sLuaError);
+      char sError[1024] = "";
+      snprintf(sError, 1024, "LUA runtime error when calling %s::%s(%s). %s", m_sObjectName, sFunc, sParams, lua_tostring(m_pLuaState, -1));
       m_pDebug->notifyErrorMessage(sError);
       return false;
     }
   case LUA_ERRMEM:
     {
-      wchar_t sError[512] = L"";
-      swprintf(sError, 512, L"LUA memory allocation error when calling %s::%s(%s).", m_sObjectName, sFunc, sParams);
+      char sError[512] = "";
+      snprintf(sError, 512, "LUA memory allocation error when calling %s::%s(%s).", m_sObjectName, sFunc, sParams);
       m_pDebug->notifyErrorMessage(sError);
       return false;
     }
   case LUA_ERRERR:
     {
-      wchar_t sError[512] = L"";
-      swprintf(sError, 512, L"LUA error handling error when calling %s::%s(%s).", m_sObjectName, sFunc, sParams);
+      char sError[512] = "";
+      snprintf(sError, 512, "LUA error handling error when calling %s::%s(%s).", m_sObjectName, sFunc, sParams);
       m_pDebug->notifyErrorMessage(sError);
       return false;
     }
@@ -228,13 +215,13 @@ bool LuaObject::callPreparedLuaFunction(int iNbParams, int iNbResults, const wch
 //  This function takes a varaible number of aguments to call a lua function with them.
 //  sParamsType is a string that defines the types of these arguments.
 //    "i" stands for int
-//    "l" stands for long
+//    "" stands for long
 //    "f" stands for float
 //    "d" stands for double
-//    "s" stands for string (wchar_t*)
+//    "s" stands for string (char*)
 //  For instance, if sParamsType is "idd", the following parameters must be int, double, double.
 // -----------------------------------------------------------------
-bool LuaObject::callLuaFunction(const wchar_t * sFunc, int iNbResults, const wchar_t * sParamsType, ...)
+bool LuaObject::callLuaFunction(const char * sFunc, int iNbResults, const char * sParamsType, ...)
 {
   if (!prepareLuaFunction(sFunc))
     return false;
@@ -243,53 +230,50 @@ bool LuaObject::callLuaFunction(const wchar_t * sFunc, int iNbResults, const wch
   va_list pArgs;
   va_start(pArgs, sParamsType);
   int i = 0;
-  wchar_t sParams[512] = L"";
-  wchar_t sBuf[128];
+  char sParams[512] = "";
+  char sBuf[128];
   // Parse sParamsType to read following parameters
-  while (sParamsType[i] != L'\0')
+  while (sParamsType[i] != '\0')
   {
-    if (sParamsType[i] == L'i')
+    if (sParamsType[i] == 'i')
     {
       int val = va_arg(pArgs, int);
       lua_pushnumber(m_pLuaState, val);
-      swprintf(sBuf, 128, L"%d,", val);
+      snprintf(sBuf, 128, "%d,", val);
       wsafecat(sParams, 512, sBuf);
     }
-    else if (sParamsType[i] == L'l')
+    else if (sParamsType[i] == 'l')
     {
       long val = va_arg(pArgs, long);
       lua_pushnumber(m_pLuaState, val);
-      swprintf(sBuf, 128, L"%ld,", val);
+      snprintf(sBuf, 128, "%ld,", val);
       wsafecat(sParams, 512, sBuf);
     }
-    else if (sParamsType[i] == L'f')
+    else if (sParamsType[i] == 'f')
     {
       float val = va_arg(pArgs, float);
       lua_pushnumber(m_pLuaState, val);
-      swprintf(sBuf, 128, L"%f,", val);
+      snprintf(sBuf, 128, "%f,", val);
       wsafecat(sParams, 512, sBuf);
     }
-    else if (sParamsType[i] == L'd')
+    else if (sParamsType[i] == 'd')
     {
       double val = va_arg(pArgs, double);
       lua_pushnumber(m_pLuaState, val);
-      swprintf(sBuf, 128, L"%lf,", val);
+      snprintf(sBuf, 128, "%lf,", val);
       wsafecat(sParams, 512, sBuf);
     }
-    else if (sParamsType[i] == L's')
+    else if (sParamsType[i] == 's')
     {
-      wchar_t * val = va_arg(pArgs, wchar_t*);
-      // Convert wchar_t arguments to ASCII
-      char charval[LUA_FUNCTION_PARAMS_MAX_CHARS];
-      wtostr(charval, LUA_FUNCTION_PARAMS_MAX_CHARS, val);
-      lua_pushstring(m_pLuaState, charval);
-      swprintf(sBuf, 128, L"%s,", val);
+      char * val = va_arg(pArgs, char*);
+      lua_pushstring(m_pLuaState, val);
+      snprintf(sBuf, 128, "%s,", val);
       wsafecat(sParams, 512, sBuf);
     }
     i++;
   }
-  if (sParams[0] != L'\0')
-    sParams[wcslen(sParams) - 1] = L'\0';
+  if (sParams[0] != '\0')
+    sParams[strlen(sParams) - 1] = '\0';
 
   return callPreparedLuaFunction(i, iNbResults, sFunc, sParams);
 }
@@ -297,14 +281,10 @@ bool LuaObject::callLuaFunction(const wchar_t * sFunc, int iNbResults, const wch
 // -----------------------------------------------------------------
 // Name : getLuaVarNumber
 // -----------------------------------------------------------------
-bool LuaObject::getLuaVarNumber(const wchar_t * sVarName, double * d)
+bool LuaObject::getLuaVarNumber(const char * sVarName, double * d)
 {
-  // Convert wchar_t variable name to ASCII
-  char sAsciiVar[64];
-  wtostr(sAsciiVar, 64, sVarName);
-
   lua_settop(m_pLuaState, 0);
-  lua_getglobal(m_pLuaState, sAsciiVar);
+  lua_getglobal(m_pLuaState, sVarName);
   if (lua_isnumber(m_pLuaState, 1))
   {
     *d = lua_tonumber(m_pLuaState, 1);
@@ -319,18 +299,13 @@ bool LuaObject::getLuaVarNumber(const wchar_t * sVarName, double * d)
 // -----------------------------------------------------------------
 // Name : getLuaVarString
 // -----------------------------------------------------------------
-bool LuaObject::getLuaVarString(const wchar_t * sVarName, wchar_t * sString, int size)
+bool LuaObject::getLuaVarString(const char * sVarName, char * sString, int size)
 {
-  // Convert wchar_t variable name to ASCII
-  char sAsciiVar[64];
-  wtostr(sAsciiVar, 64, sVarName);
-
   lua_settop(m_pLuaState, 0);
-  lua_getglobal(m_pLuaState, sAsciiVar);
+  lua_getglobal(m_pLuaState, sVarName);
   if (lua_isstring(m_pLuaState, 1))
   {
-    // Convert ascii string to unicode
-    strtow(sString, size, lua_tostring(m_pLuaState, 1));
+    wsafecpy(sString, size, lua_tostring(m_pLuaState, 1));
     lua_pop(m_pLuaState, 1);
     return true;
   }
@@ -342,14 +317,10 @@ bool LuaObject::getLuaVarString(const wchar_t * sVarName, wchar_t * sString, int
 // -----------------------------------------------------------------
 // Name : getLuaVarNumberArray
 // -----------------------------------------------------------------
-bool LuaObject::getLuaVarNumberArray(const wchar_t * sVarName, double * pArray, int size)
+bool LuaObject::getLuaVarNumberArray(const char * sVarName, double * pArray, int size)
 {
-  // Convert wchar_t variable name to ASCII
-  char sAsciiVar[64];
-  wtostr(sAsciiVar, 64, sVarName);
-
   lua_settop(m_pLuaState, 0);
-  lua_getglobal(m_pLuaState, sAsciiVar);
+  lua_getglobal(m_pLuaState, sVarName);
   if (lua_istable(m_pLuaState, 1))
   {
     for (int i = 0; i < size; i++)
@@ -371,14 +342,10 @@ bool LuaObject::getLuaVarNumberArray(const wchar_t * sVarName, double * pArray, 
 // -----------------------------------------------------------------
 // Name : getLuaVarStringArray
 // -----------------------------------------------------------------
-bool LuaObject::getLuaVarStringArray(const wchar_t * sVarName, wchar_t ** pArray, int tabSize, int strSize)
+bool LuaObject::getLuaVarStringArray(const char * sVarName, char ** pArray, int tabSize, int strSize)
 {
-  // Convert wchar_t variable name to ASCII
-  char sAsciiVar[64];
-  wtostr(sAsciiVar, 64, sVarName);
-
   lua_settop(m_pLuaState, 0);
-  lua_getglobal(m_pLuaState, sAsciiVar);
+  lua_getglobal(m_pLuaState, sVarName);
   if (lua_istable(m_pLuaState, 1))
   {
     for (int i = 0; i < tabSize; i++)
@@ -386,7 +353,7 @@ bool LuaObject::getLuaVarStringArray(const wchar_t * sVarName, wchar_t ** pArray
       lua_pushnumber(m_pLuaState, i+1);
       lua_gettable(m_pLuaState, -2);
       if (lua_isstring(m_pLuaState, -1))
-        strtow(pArray[i], strSize, lua_tostring(m_pLuaState, -1));
+        wsafecpy(pArray[i], strSize, lua_tostring(m_pLuaState, -1));
       lua_pop(m_pLuaState, 1);
     }
     lua_pop(m_pLuaState, 1);
@@ -411,31 +378,31 @@ double LuaObject::getLuaNumber()
 // -----------------------------------------------------------------
 // Name : getLuaString
 // -----------------------------------------------------------------
-void LuaObject::getLuaString(wchar_t * sString, int size)
+void LuaObject::getLuaString(char * sString, int size)
 {
   assert(m_pLuaState != NULL);
   // convert ascii string to unicode
-  strtow(sString, size, lua_tostring(m_pLuaState, -1));
+  wsafecpy(sString, size, lua_tostring(m_pLuaState, -1));
   lua_pop(m_pLuaState, 1);
 }
 
 // -----------------------------------------------------------------
 // Name : getUniqueId
 // -----------------------------------------------------------------
-wchar_t * LuaObject::getUniqueId(wchar_t * sId, int iSize)
+char * LuaObject::getUniqueId(char * sId, int iSize)
 {
-  swprintf(sId, iSize, L"%s:%s:%s", m_sObjectEdition, m_sObjectType, m_sObjectName);
+  snprintf(sId, iSize, "%s:%s:%s", m_sObjectEdition, m_sObjectType, m_sObjectName);
   return sId;
 }
 
 // -----------------------------------------------------------------
 // Name : isUniqueId
 // -----------------------------------------------------------------
-bool LuaObject::isUniqueId(const wchar_t * sEdition, const wchar_t * sObjectType, const wchar_t * sObjectName)
+bool LuaObject::isUniqueId(const char * sEdition, const char * sObjectType, const char * sObjectName)
 {
-  return wcscmp(sEdition, m_sObjectEdition) == 0
-    && wcscmp(sObjectType, m_sObjectType) == 0
-    && wcscmp(sObjectName, m_sObjectName) == 0;
+  return strcmp(sEdition, m_sObjectEdition) == 0
+    && strcmp(sObjectType, m_sObjectType) == 0
+    && strcmp(sObjectName, m_sObjectName) == 0;
 }
 
 // -----------------------------------------------------------------

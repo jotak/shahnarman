@@ -159,10 +159,10 @@ void PlayerManager::setPlayerState(NetworkData * pData)
     {
       m_pPlayersList->deleteObject(pPlayer, true, true);
       m_pDeadPlayers->addLast(pPlayer);
-      wchar_t sText[256];
+      char sText[256];
       void * pArgs[1];
       pArgs[0] = pPlayer->getAvatarName();
-      m_pLocalClient->getInterface()->getLogDialog()->log(i18n->getText(L"PLAYER_(s1)_DEAD", sText, 256, pArgs), 2);
+      m_pLocalClient->getInterface()->getLogDialog()->log(i18n->getText("PLAYER_(s1)_DEAD", sText, 256, pArgs), 2);
     }
   }
   m_pLocalClient->getInterface()->getInfoDialog()->updatePlayersState();
@@ -214,10 +214,10 @@ void PlayerManager::recallSpells(NetworkData * pData)
   assert(pPlayer != NULL);
   while (pData->dataYetToRead() > 0)
   {
-    wchar_t sType[64];
+    char sType[64];
     pData->readString(sType);
     u32 uSpellId = (u32) pData->readLong();
-    if (wcscmp(sType, L"spell_in_play") == 0)
+    if (strcmp(sType, "spell_in_play") == 0)
     {
       Spell * pSpell = pPlayer->findSpell(0, uSpellId, pPlayer->m_pActiveSpells);
       assert(pSpell != NULL);
@@ -290,8 +290,8 @@ void PlayerManager::discardSpells(NetworkData * pData)
             }
             else
             {
-              wchar_t sError[128];
-              swprintf(sError, 128, L"Lua interaction error: can't detach effect %s.", pSpell->getLocalizedName());
+              char sError[128];
+              snprintf(sError, 128, "Lua interaction error: can't detach effect %s.", pSpell->getLocalizedName());
               m_pLocalClient->getDebug()->notifyErrorMessage(sError);
             }
           }
@@ -495,11 +495,11 @@ void PlayerManager::updateDeadUnits(NetworkData * pData)
     pPlayer->m_pUnits->deleteObject(pUnit, true, true);
     pPlayer->m_pDeadUnits->addLast(pUnit);
 
-    wchar_t sBuf[512] = L"";
+    char sBuf[512] = "";
     void * pPhraseArgs[2];
     pPhraseArgs[0] = pUnit->getName();
     pPhraseArgs[1] = pPlayer->getAvatarName();
-    m_pLocalClient->getInterface()->getLogDialog()->log(i18n->getText(L"(1s)_(2s)_DIED", sBuf, 512, pPhraseArgs), 1, LOG_ACTION_UNITSCREEN, pUnit);
+    m_pLocalClient->getInterface()->getLogDialog()->log(i18n->getText("(1s)_(2s)_DIED", sBuf, 512, pPhraseArgs), 1, LOG_ACTION_UNITSCREEN, pUnit);
   }
 }
 
@@ -536,17 +536,17 @@ void PlayerManager::updateCastSpellData(NetworkData * pData)
     }
 
     // Log
-    wchar_t sText[256];
+    char sText[256];
     void * pPhraseArgs[3];
     pPhraseArgs[0] = pPlayer->getAvatarName();
     pPhraseArgs[1] = pSpell->getLocalizedName();
     pPhraseArgs[2] = pSpell->getTargetInfo();
     if (dest == 2)  // Spell canceled!
-      i18n->getText(L"(s1)_CAST_(s2)_FAILED", sText, 256, pPhraseArgs);
-    else if (wcscmp(pSpell->getTargetInfo(), L"") != 0)
-      i18n->getText(L"%$1s_CAST_%$2s_ON_%$3s", sText, 256, pPhraseArgs);
+      i18n->getText("(s1)_CAST_(s2)_FAILED", sText, 256, pPhraseArgs);
+    else if (strcmp(pSpell->getTargetInfo(), "") != 0)
+      i18n->getText("%$1s_CAST_%$2s_ON_%$3s", sText, 256, pPhraseArgs);
     else
-      i18n->getText(L"%$1s_CAST_%$2s", sText, 256, pPhraseArgs);
+      i18n->getText("%$1s_CAST_%$2s", sText, 256, pPhraseArgs);
     //if (pUnit != NULL)
     //  m_pLocalClient->getInterface()->getLogDialog()->addLog(sText, 1, LOG_ACTION_UNITSCREEN, pUnit);
     //else
@@ -609,7 +609,7 @@ void PlayerManager::onChildEffectAttached(NetworkData * pData)
   if (!context.deserialize(pData, this, m_pLocalClient->getGameboard()->getMap()))
     return;
   LuaObject * pLua = context.pLua;
-  wchar_t sSourceName[2*NAME_MAX_CHARS] = L"";
+  char sSourceName[2*NAME_MAX_CHARS] = "";
   switch (pLua->getType())
   {
   case LUAOBJECT_SKILL:
@@ -619,7 +619,7 @@ void PlayerManager::onChildEffectAttached(NetworkData * pData)
       if (pUnit == pPlayer->getAvatar())
         wsafecpy(sSourceName, 2*NAME_MAX_CHARS, pUnit->getName());
       else
-        swprintf(sSourceName, 2*NAME_MAX_CHARS, L"%s (%s)", pUnit->getName(), pPlayer->getAvatarName());
+        snprintf(sSourceName, 2*NAME_MAX_CHARS, "%s (%s)", pUnit->getName(), pPlayer->getAvatarName());
       break;
     }
   case LUAOBJECT_SPELL:
@@ -635,7 +635,7 @@ void PlayerManager::onChildEffectAttached(NetworkData * pData)
   pTarget->attachChildEffect(pChild);
 
   pChild->pTargets->addLast(pTarget->convertToBaseObject(uTargetType), uTargetType);
-  wchar_t sTargetName[NAME_MAX_CHARS] = L"";
+  char sTargetName[NAME_MAX_CHARS] = "";
   u8 uLogAction = 0;
   void * pLogParam = NULL;
   switch (uTargetType)
@@ -654,22 +654,22 @@ void PlayerManager::onChildEffectAttached(NetworkData * pData)
     pLogParam = (Town*) pTarget;
     break;
   case SELECT_TYPE_TILE:
-    wsafecpy(sTargetName, NAME_MAX_CHARS, L"");
+    wsafecpy(sTargetName, NAME_MAX_CHARS, "");
     break;
   }
 
   // Log
-  wchar_t sText[256];
-  if (wcscmp(sSourceName, L"") == 0)
+  char sText[256];
+  if (strcmp(sSourceName, "") == 0)
   {
     void * p[2] = { pChild->sName, sTargetName };
-    i18n->getText(L"%$1s_WAS_ACTIVATED_ON_%$2s", sText, 256, p);
+    i18n->getText("%$1s_WAS_ACTIVATED_ON_%$2s", sText, 256, p);
     m_pLocalClient->getInterface()->getLogDialog()->log(sText, 0, uLogAction, pLogParam);
   }
   else
   {
     void * p[3] = { sSourceName, pChild->sName, sTargetName };
-    i18n->getText(L"%$1s_ACTIVATED_%$2s_ON_%$3s", sText, 256, p);
+    i18n->getText("%$1s_ACTIVATED_%$2s_ON_%$3s", sText, 256, p);
     m_pLocalClient->getInterface()->getLogDialog()->log(sText, 1, uLogAction, pLogParam);
   }
 }
@@ -690,7 +690,7 @@ void PlayerManager::onChildEffectDetached(NetworkData * pData)
   pTarget->detachChildEffect(pChild);
 
   pChild->pTargets->deleteObject(pTarget->convertToBaseObject(uTargetType), true);
-  wchar_t sTargetName[NAME_MAX_CHARS] = L"";
+  char sTargetName[NAME_MAX_CHARS] = "";
   switch (uTargetType)
   {
   case SELECT_TYPE_UNIT:
@@ -703,15 +703,15 @@ void PlayerManager::onChildEffectDetached(NetworkData * pData)
     wsafecpy(sTargetName, NAME_MAX_CHARS, ((Town*)pTarget)->getName());
     break;
   case SELECT_TYPE_TILE:
-    wsafecpy(sTargetName, NAME_MAX_CHARS, L"");
+    wsafecpy(sTargetName, NAME_MAX_CHARS, "");
     break;
   }
 
   // Log
-  wchar_t sText[256];
-  wchar_t sBuf[128];
-  i18n->getText(L"(s)_EFFECT_ON_(s)_ENDED", sBuf, 128);
-  swprintf(sText, 256, sBuf, pChild->sName, sTargetName);
+  char sText[256];
+  char sBuf[128];
+  i18n->getText("(s)_EFFECT_ON_(s)_ENDED", sBuf, 128);
+  snprintf(sText, 256, sBuf, pChild->sName, sTargetName);
   m_pLocalClient->getInterface()->getLogDialog()->log(sText);
 }
 
@@ -727,7 +727,7 @@ void PlayerManager::onCustomLuaUpdate(NetworkData * pData)
   LuaObject * pLua = context.pLua;
 
   // Get callback name
-  wchar_t sCallback[NAME_MAX_CHARS];
+  char sCallback[NAME_MAX_CHARS];
   pData->readString(sCallback);
 
   // Prepare calling function
@@ -735,8 +735,8 @@ void PlayerManager::onCustomLuaUpdate(NetworkData * pData)
 
   // Get and push params
   int iParams = 0;
-  wchar_t sParams[512] = L"";
-  wchar_t sBuf[128];
+  char sParams[512] = "";
+  char sBuf[128];
   while (pData->dataYetToRead() > 0)
   {
     long type = pData->readLong();
@@ -744,25 +744,22 @@ void PlayerManager::onCustomLuaUpdate(NetworkData * pData)
     {
       double val = pData->readDouble();
       lua_pushnumber(pState, val);
-      swprintf(sBuf, 128, L"%lf,", val);
+      snprintf(sBuf, 128, "%lf,", val);
       wsafecat(sParams, 512, sBuf);
       iParams++;
     }
     else if (type == 1) // string
     {
-      wchar_t wcharval[LUA_FUNCTION_PARAMS_MAX_CHARS];
-      pData->readString(wcharval);
-      // Convert wchar_t arguments to ASCII
       char charval[LUA_FUNCTION_PARAMS_MAX_CHARS];
-      wtostr(charval, LUA_FUNCTION_PARAMS_MAX_CHARS, wcharval);
+      pData->readString(charval);
       lua_pushstring(pState, charval);
-      swprintf(sBuf, 128, L"%s,", wcharval);
+      snprintf(sBuf, 128, "%s,", charval);
       wsafecat(sParams, 512, sBuf);
       iParams++;
     }
   }
-  if (sParams[0] != L'\0')
-    sParams[wcslen(sParams) - 1] = L'\0';
+  if (sParams[0] != '\0')
+    sParams[strlen(sParams) - 1] = '\0';
 
   // Finalize the call
   if (pLua->callPreparedLuaFunction(iParams, 1, sCallback, sParams))
@@ -818,7 +815,7 @@ void PlayerManager::enableAllEffects(NetworkData * pData)
 // -----------------------------------------------------------------
 void PlayerManager::changeSpellOwner(NetworkData * pData)
 {
-  wchar_t sType[128];
+  char sType[128];
   pData->readString(sType);
   u8 uOld = (u8) pData->readLong();
   u32 uSpell = (u32) pData->readLong();
@@ -831,17 +828,17 @@ void PlayerManager::changeSpellOwner(NetworkData * pData)
 
   ObjectList * pSrc = NULL;
   ObjectList * pDst = NULL;
-  if (wcscmp(sType, L"spell_in_hand") == 0)
+  if (strcmp(sType, "spell_in_hand") == 0)
   {
     pSrc = pOld->m_pHand;
     pDst = pNew->m_pHand;
   }
-  else if (wcscmp(sType, L"spell_in_play") == 0)
+  else if (strcmp(sType, "spell_in_play") == 0)
   {
     pSrc = pOld->m_pActiveSpells;
     pDst = pNew->m_pActiveSpells;
   }
-  else if (wcscmp(sType, L"spell_in_discard") == 0)
+  else if (strcmp(sType, "spell_in_discard") == 0)
   {
     pSrc = pOld->m_pDiscard;
     pDst = pNew->m_pDiscard;
@@ -901,9 +898,9 @@ void PlayerManager::changeTownOwner(NetworkData * pData)
 // -----------------------------------------------------------------
 void PlayerManager::addSkillToUnit(NetworkData * pData)
 {
-  wchar_t sEdition[NAME_MAX_CHARS];
-  wchar_t sSkill[NAME_MAX_CHARS];
-  wchar_t sParams[256];
+  char sEdition[NAME_MAX_CHARS];
+  char sSkill[NAME_MAX_CHARS];
+  char sParams[256];
   pData->readString(sEdition);
   pData->readString(sSkill);
   u32 uId = (u32) pData->readLong();
@@ -1031,7 +1028,7 @@ void PlayerManager::doSkillEffect(Unit * pUnit, ChildEffect * pSkillEffect)
   g_uLuaCurrentObjectType = LUAOBJECT_SKILL;
   pSkillEffect->resetResolveParameters();
   pSkill->setExtraMana(Mana());
-  pSkill->callLuaFunction(L"onActivateEffect", 0, L"i", (int) (m_pSkillBeingActivated->id + 1));
+  pSkill->callLuaFunction("onActivateEffect", 0, "i", (int) (m_pSkillBeingActivated->id + 1));
 }
 
 // -----------------------------------------------------------------
@@ -1138,7 +1135,7 @@ LuaTargetable * PlayerManager::findLuaTarget(NetworkData * pData, u32 * pType)
 void PlayerManager::buildBuilding(NetworkData * pData)
 {
   u32 uTownId = (u32) pData->readLong();
-  wchar_t sName[NAME_MAX_CHARS];
+  char sName[NAME_MAX_CHARS];
   pData->readString(sName);
   Town * pTown = m_pLocalClient->getGameboard()->getMap()->findTown(uTownId);
   assert(pTown != NULL);
@@ -1151,7 +1148,7 @@ void PlayerManager::buildBuilding(NetworkData * pData)
 void PlayerManager::teleport(NetworkData * pData)
 {
   long type = pData->readLong();
-  wchar_t sIds[16];
+  char sIds[16];
   pData->readString(sIds);
   MapObject * pMapObj = (MapObject*) findTargetFromIdentifiers(type, sIds, m_pLocalClient->getGameboard()->getMap());
   assert(pMapObj != NULL);
@@ -1165,7 +1162,7 @@ void PlayerManager::teleport(NetworkData * pData)
 // -----------------------------------------------------------------
 void PlayerManager::resurrectUnit(NetworkData * pData)
 {
-  wchar_t sIds[16];
+  char sIds[16];
   pData->readString(sIds);
   Unit * pUnit = (Unit*) findTargetFromIdentifiers(SELECT_TYPE_UNIT, sIds, m_pLocalClient->getGameboard()->getMap());
   assert(pUnit != NULL);
@@ -1182,7 +1179,7 @@ void PlayerManager::resurrectUnit(NetworkData * pData)
 // -----------------------------------------------------------------
 void PlayerManager::removeUnit(NetworkData * pData)
 {
-  wchar_t sIds[16];
+  char sIds[16];
   pData->readString(sIds);
   Unit * pUnit = (Unit*) findTargetFromIdentifiers(SELECT_TYPE_UNIT, sIds, m_pLocalClient->getGameboard()->getMap());
   assert(pUnit != NULL);
@@ -1226,7 +1223,7 @@ void PlayerManager::removeMagicCircle(NetworkData * pData)
 // -----------------------------------------------------------------
 // Name : addExtraMana
 // -----------------------------------------------------------------
-void PlayerManager::addExtraMana(u32 uType, bool bOk, const wchar_t * sCallback, Mana amount)
+void PlayerManager::addExtraMana(u32 uType, bool bOk, const char * sCallback, Mana amount)
 {
   if (bOk && m_pLocalClient->getInterface()->getSpellDialog()->takeMana(amount))
   {
@@ -1235,13 +1232,13 @@ void PlayerManager::addExtraMana(u32 uType, bool bOk, const wchar_t * sCallback,
     {
       Spell * pSpell = getSpellBeingCast();
       pSpell->setExtraMana(amount);
-      pSpell->callLuaFunction(sCallback, 0, L"i", total);
+      pSpell->callLuaFunction(sCallback, 0, "i", total);
     }
     else
     {
       Skill * pSkill = (Skill*) getSkillBeingActivated()->getAttachment();
       pSkill->setExtraMana(amount);
-      pSkill->callLuaFunction(sCallback, 0, L"i", total);
+      pSkill->callLuaFunction(sCallback, 0, "i", total);
     }
   }
   else

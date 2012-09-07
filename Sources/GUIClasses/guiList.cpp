@@ -30,7 +30,7 @@ guiList::~guiList()
 // -----------------------------------------------------------------
 // Name : init
 // -----------------------------------------------------------------
-void guiList::init(FontId fontId, F_RGBA textColor, int * iMainTexs, const wchar_t * sCpntId, int xPxl, int yPxl, int wPxl, int hPxl, DisplayEngine * pDisplay)
+void guiList::init(FontId fontId, F_RGBA textColor, int * iMainTexs, const char * sCpntId, int xPxl, int yPxl, int wPxl, int hPxl, DisplayEngine * pDisplay)
 {
   guiContainer::init(FB_FitDocumentToFrameWhenSmaller, FB_FitDocumentToFrameWhenSmaller, 0, 0, 0, 0, iMainTexs, sCpntId, xPxl, yPxl, wPxl, hPxl, pDisplay);
   m_FontId = fontId;
@@ -311,7 +311,7 @@ void guiList::updateSelectionGeometry()
   }
 
   // Get or load texture
-  int texture = (m_pSelectionGeometry == NULL) ? getDisplay()->getTextureEngine()->loadTexture(L"EmptyWhiteSquare") : m_pSelectionGeometry->getTexture();
+  int texture = (m_pSelectionGeometry == NULL) ? getDisplay()->getTextureEngine()->loadTexture("EmptyWhiteSquare") : m_pSelectionGeometry->getTexture();
   if (nSelLabels == 0)
   {
     // Exit
@@ -383,13 +383,13 @@ bool guiList::sortCompare(BaseObject * A, BaseObject * B)
 {
   guiListLabel * pLblA = (guiListLabel*) A;
   guiListLabel * pLblB = (guiListLabel*) B;
-  return (wcscmp(pLblA->getText(), pLblB->getText()) > 0);
+  return (strcmp(pLblA->getText(), pLblB->getText()) > 0);
 }
 
 // -----------------------------------------------------------------
 // Name : addItem
 // -----------------------------------------------------------------
-guiList::guiListLabel * guiList::addItem(wchar_t * sText, wchar_t * sId)
+guiList::guiListLabel * guiList::addItem(char * sText, char * sId)
 {
   guiComponent * pCpnt = getDocument()->getLastComponent();
   int yPxl = (pCpnt == NULL) ? 0 : pCpnt->getYPos() + pCpnt->getHeight();
@@ -479,17 +479,17 @@ guiObject * guiList::guiListLabel::onButtonEvent(ButtonAction * pEvent)
 // Name : createDefaultList
 //  Static default constructor
 // -----------------------------------------------------------------
-guiList * guiList::createDefaultList(int width, int height, const wchar_t * sId, KeyboardInputEngine * pInputs, DisplayEngine * pDisplay)
+guiList * guiList::createDefaultList(int width, int height, const char * sId, KeyboardInputEngine * pInputs, DisplayEngine * pDisplay)
 {
   int frmtex[8];
-  frmtex[0] = pDisplay->getTextureEngine()->findTexture(L"interface:LstTL");
-  frmtex[1] = pDisplay->getTextureEngine()->findTexture(L"interface:LstTC");
-  frmtex[2] = pDisplay->getTextureEngine()->findTexture(L"interface:LstTR");
-  frmtex[3] = pDisplay->getTextureEngine()->findTexture(L"interface:LstCL");
-  frmtex[4] = pDisplay->getTextureEngine()->findTexture(L"interface:LstCR");
-  frmtex[5] = pDisplay->getTextureEngine()->findTexture(L"interface:LstBL");
-  frmtex[6] = pDisplay->getTextureEngine()->findTexture(L"interface:LstBC");
-  frmtex[7] = pDisplay->getTextureEngine()->findTexture(L"interface:LstBR");
+  frmtex[0] = pDisplay->getTextureEngine()->findTexture("interface:LstT");
+  frmtex[1] = pDisplay->getTextureEngine()->findTexture("interface:LstTC");
+  frmtex[2] = pDisplay->getTextureEngine()->findTexture("interface:LstTR");
+  frmtex[3] = pDisplay->getTextureEngine()->findTexture("interface:LstC");
+  frmtex[4] = pDisplay->getTextureEngine()->findTexture("interface:LstCR");
+  frmtex[5] = pDisplay->getTextureEngine()->findTexture("interface:LstB");
+  frmtex[6] = pDisplay->getTextureEngine()->findTexture("interface:LstBC");
+  frmtex[7] = pDisplay->getTextureEngine()->findTexture("interface:LstBR");
   guiList * pBox = new guiList(pInputs);
   pBox->init(
     TEXT_FONT, TEXT_COLOR, frmtex,
@@ -498,8 +498,8 @@ guiList * guiList::createDefaultList(int width, int height, const wchar_t * sId,
   // Attach document
   guiDocument * pDoc = new guiListDocument(pBox);
   pDoc->init(
-    L"",
-    pDisplay->getTextureEngine()->findTexture(L"interface:ComboListBg"),
+    "",
+    pDisplay->getTextureEngine()->findTexture("interface:ComboListBg"),
     0, 0, 1, 1, pDisplay);
   pBox->setDocument(pDoc);
 

@@ -16,7 +16,7 @@ extern GameRoot * g_pMainGameRoot;
 //------------------------------------------------------------------------------
 int LUA_selectTarget(const char * sText, bool bThenResolve)
 {
-  wchar_t sType[64], sConstraints[128] = L"";
+  char sType[64], sConstraints[128] = "";
   g_bLuaSelectOnResolve = bThenResolve;
   Player * pCaster = g_pMainGameRoot->m_pLocalClient->getInterface()->getSpellDialog()->getCurrentCaster();
   assert(pCaster != NULL);
@@ -24,8 +24,8 @@ int LUA_selectTarget(const char * sText, bool bThenResolve)
   {
     if (!bThenResolve && (g_uLuaSelectTargetType == SELECT_TYPE_SPELL_IN_DECK || g_uLuaSelectTargetType == SELECT_TYPE_SPELL_IN_HAND))
     {
-      wchar_t sError[512];
-      swprintf(sError, 512, L"Lua interaction error: trying to call \"selectTarget\" for deck or hand spell outside resolve phase. Use \"selectTargetThenResolve\" during resolve phase instead!");
+      char sError[512];
+      snprintf(sError, 512, "Lua interaction error: trying to call \"selectTarget\" for deck or hand spell outside resolve phase. Use \"selectTargetThenResolve\" during resolve phase instead!");
       g_pMainGameRoot->m_pLocalClient->getDebug()->notifyErrorMessage(sError);
       return 0;
     }
@@ -40,22 +40,22 @@ int LUA_selectTarget(const char * sText, bool bThenResolve)
     }
     if (g_uLuaSelectTargetType == SELECT_TYPE_SPELL_IN_DECK)
     {
-      i18n->getText(L"(A)_SPELL_IN_DECK", sType, 64);
+      i18n->getText("(A)_SPELL_IN_DECK", sType, 64);
       g_pMainGameRoot->m_pLocalClient->getInterface()->getSpellsSelectorDialog()->showPlayersSpells(pList, 2, clbkSelectTarget_cancelSelection);
     }
     else if (g_uLuaSelectTargetType == SELECT_TYPE_SPELL_IN_HAND)
     {
-      i18n->getText(L"(A)_SPELL_IN_HAND", sType, 64);
+      i18n->getText("(A)_SPELL_IN_HAND", sType, 64);
       g_pMainGameRoot->m_pLocalClient->getInterface()->getSpellsSelectorDialog()->showPlayersSpells(pList, 1, clbkSelectTarget_cancelSelection);
     }
     else if (g_uLuaSelectTargetType == SELECT_TYPE_SPELL_IN_PLAY)
     {
-      i18n->getText(L"(A)_SPELL_IN_PLAY", sType, 64);
+      i18n->getText("(A)_SPELL_IN_PLAY", sType, 64);
       g_pMainGameRoot->m_pLocalClient->getInterface()->getSpellsSelectorDialog()->showPlayersSpells(pList, 0, clbkSelectTarget_cancelSelection);
     }
     else  // discard
     {
-      i18n->getText(L"(A)_SPELL_IN_DISCARD", sType, 64);
+      i18n->getText("(A)_SPELL_IN_DISCARD", sType, 64);
       g_pMainGameRoot->m_pLocalClient->getInterface()->getSpellsSelectorDialog()->showPlayersSpells(pList, 3, clbkSelectTarget_cancelSelection);
     }
     delete pList;
@@ -63,7 +63,7 @@ int LUA_selectTarget(const char * sText, bool bThenResolve)
   }
   else if (g_uLuaSelectTargetType == SELECT_TYPE_PLAYER)
   {
-    i18n->getText(L"(A)_PLAYER", sType, 64);
+    i18n->getText("(A)_PLAYER", sType, 64);
     ObjectList * pList = new ObjectList(false);
     Player * pPlayer = (Player*) g_pMainGameRoot->m_pLocalClient->getPlayerManager()->getPlayersList()->getFirst(0);
     while (pPlayer != NULL)
@@ -80,17 +80,17 @@ int LUA_selectTarget(const char * sText, bool bThenResolve)
   else
   {
     if (g_uLuaSelectTargetType == SELECT_TYPE_TILE)
-      i18n->getText(L"(A)_TILE", sType, 64);
+      i18n->getText("(A)_TILE", sType, 64);
     else if (g_uLuaSelectTargetType == SELECT_TYPE_UNIT)
-      i18n->getText(L"(A)_UNIT", sType, 64);
+      i18n->getText("(A)_UNIT", sType, 64);
     else if (g_uLuaSelectTargetType == SELECT_TYPE_DEAD_UNIT)
-      i18n->getText(L"(A)_DEAD_UNIT", sType, 64);
+      i18n->getText("(A)_DEAD_UNIT", sType, 64);
     else if (g_uLuaSelectTargetType == SELECT_TYPE_TOWN)
-      i18n->getText(L"(A)_TOWN", sType, 64);
+      i18n->getText("(A)_TOWN", sType, 64);
     else if (g_uLuaSelectTargetType == SELECT_TYPE_BUILDING)
-      i18n->getText(L"(A)_BUILDING", sType, 64);
+      i18n->getText("(A)_BUILDING", sType, 64);
     else if (g_uLuaSelectTargetType == SELECT_TYPE_TEMPLE)
-      i18n->getText(L"(A)_TEMPLE", sType, 64);
+      i18n->getText("(A)_TEMPLE", sType, 64);
     g_pMainGameRoot->m_pLocalClient->getGameboard()->getInputs()->setMouseMode(ModeSelectCustomTarget, clbkSelectTarget_OnMouseOverGameboard, clbkSelectTarget_OnClickGameboard);
     g_pMainGameRoot->m_pLocalClient->getInterface()->setTargetMode(clbkSelectTarget_OnMouseOverInterface, clbkSelectTarget_OnClickInterface);
     if (g_uLuaSelectConstraints & SELECT_CONSTRAINT_INRANGE)
@@ -99,50 +99,49 @@ int LUA_selectTarget(const char * sText, bool bThenResolve)
   g_pMainGameRoot->m_pLocalClient->getPlayerManager()->enableEOT(false);
 
   // Set status text
-  wchar_t sStatus[LABEL_MAX_CHARS];
-  wchar_t sBuf[LABEL_MAX_CHARS];
-  wchar_t s2P[8];
-  i18n->getText(L"2P", s2P, 8);
-  swprintf(sStatus, LABEL_MAX_CHARS, L"%s%s", pCaster->getAvatarName(), s2P);
+  char sStatus[LABEL_MAX_CHARS];
+  char sBuf[LABEL_MAX_CHARS];
+  char s2P[8];
+  i18n->getText("2P", s2P, 8);
+  snprintf(sStatus, LABEL_MAX_CHARS, "%s%s", pCaster->getAvatarName(), s2P);
   if (sText != NULL && strcmp(sText, "") != 0)
   {
-    strtow(sBuf, LABEL_MAX_CHARS, sText);
-    wsafecat(sStatus, LABEL_MAX_CHARS, sBuf);
+    wsafecat(sStatus, LABEL_MAX_CHARS, sText);
   }
   else
   {
-    wchar_t sConstr[64];
-    wchar_t sSep[4] = L"";
+    char sConstr[64];
+    char sSep[4] = "";
     if (g_uLuaSelectConstraints & SELECT_CONSTRAINT_INRANGE)
     {
-      wsafecat(sConstraints, 128, i18n->getText(L"IN_RANGE", sConstr, 64));
-      wsafecpy(sSep, 4, L", ");
+      wsafecat(sConstraints, 128, i18n->getText("IN_RANGE", sConstr, 64));
+      wsafecpy(sSep, 4, ", ");
     }
     if (g_uLuaSelectConstraints & SELECT_CONSTRAINT_OWNED)
     {
       wsafecat(sConstraints, 128, sSep);
-      wsafecat(sConstraints, 128, i18n->getText(L"FRIEND(UNIT)", sConstr, 64));
-      wsafecpy(sSep, 4, L", ");
+      wsafecat(sConstraints, 128, i18n->getText("FRIEND(UNIT)", sConstr, 64));
+      wsafecpy(sSep, 4, ", ");
     }
     if (g_uLuaSelectConstraints & SELECT_CONSTRAINT_OPPONENT)
     {
       wsafecat(sConstraints, 128, sSep);
-      wsafecat(sConstraints, 128, i18n->getText(L"ENEMY(UNIT)", sConstr, 64));
+      wsafecat(sConstraints, 128, i18n->getText("ENEMY(UNIT)", sConstr, 64));
     }
-    wchar_t sSrcType[64];
-    wchar_t sSrc[NAME_MAX_CHARS];
+    char sSrcType[64];
+    char sSrc[NAME_MAX_CHARS];
     if (g_uLuaCurrentObjectType == LUAOBJECT_SPELL)
     {
-      i18n->getText(L"(THE)_SPELL", sSrcType, 64);
+      i18n->getText("(THE)_SPEL", sSrcType, 64);
       wsafecpy(sSrc, NAME_MAX_CHARS, g_pMainGameRoot->m_pLocalClient->getPlayerManager()->getSpellBeingCast()->getLocalizedName());
     }
     else
     {
-      i18n->getText(L"(THE)_SKILL", sSrcType, 64);
+      i18n->getText("(THE)_SKIL", sSrcType, 64);
       wsafecpy(sSrc, NAME_MAX_CHARS, g_pMainGameRoot->m_pLocalClient->getPlayerManager()->getSkillBeingActivated()->sName);
     }
     void * pArgs[4] = { sSrcType, sSrc, sType, sConstraints };
-    i18n->getText(L"%$1s_%$2s_NEEDS_SELECT_TARGET_%$3s_WITH_CONSTRAINTS_%$4s", sBuf, LABEL_MAX_CHARS, pArgs);
+    i18n->getText("%$1s_%$2s_NEEDS_SELECT_TARGET_%$3s_WITH_CONSTRAINTS_%$4s", sBuf, LABEL_MAX_CHARS, pArgs);
     wsafecat(sStatus, LABEL_MAX_CHARS, sBuf);
   }
   g_pMainGameRoot->m_pLocalClient->getInterface()->getStatusDialog()->showStatus(sStatus);
@@ -152,7 +151,7 @@ int LUA_selectTarget(const char * sText, bool bThenResolve)
 
 int LUA_selectTarget(lua_State * pState)
 {
-  int nbParams = checkNumberOfParams(pState, 2, 4, L"selectTarget");
+  int nbParams = checkNumberOfParams(pState, 2, 4, "selectTarget");
   if (nbParams < 0)
     return 0;
   char sType[64];
@@ -166,7 +165,7 @@ int LUA_selectTarget(lua_State * pState)
   if (nbParams == 4)
     strncpy(sCallback, lua_tostring(pState, 4), 128);
 
-  if (!readTargetData(sType, sConstraints, sCallback, L"selectTarget"))
+  if (!readTargetData(sType, sConstraints, sCallback, "selectTarget"))
     return 0;
 
   g_pLuaStateForTarget = pState;
@@ -184,10 +183,10 @@ int LUA_selectTarget(lua_State * pState)
 
 int LUA_selectTargetThenResolve(lua_State * pState)
 {
-  Server * pServer = checkServerResolving(L"selectTargetThenResolve");
+  Server * pServer = checkServerResolving("selectTargetThenResolve");
   if (pServer == NULL)
     return 0;
-  if (!checkNumberOfParams(pState, 3, L"selectTargetThenResolve"))
+  if (!checkNumberOfParams(pState, 3, "selectTargetThenResolve"))
     return 0;
 
   char sType[64];
@@ -197,22 +196,20 @@ int LUA_selectTargetThenResolve(lua_State * pState)
   strncpy(sConstraints, lua_tostring(pState, 2), 128);
   strncpy(sCallback, lua_tostring(pState, 3), 128);
 
-  if (!readTargetData(sType, sConstraints, "", L"selectTargetThenResolve"))
+  if (!readTargetData(sType, sConstraints, "", "selectTargetThenResolve"))
     return 0;
 
   g_pLuaStateForTarget = pState;
-  wchar_t sCallbackW[128];
-  strtow(sCallbackW, 128, sCallback);
-  pServer->getSolver()->getSpellsSolver()->onSelectTargetThenResolve(g_uLuaSelectTargetType, g_uLuaSelectConstraints, sCallbackW);
+  pServer->getSolver()->getSpellsSolver()->onSelectTargetThenResolve(g_uLuaSelectTargetType, g_uLuaSelectConstraints, sCallback);
   return 0;
 }
 
 int LUA_damageUnit(lua_State * pState)
 {
-  Server * pServer = checkServerResolving(L"damageUnit");
+  Server * pServer = checkServerResolving("damageUnit");
   if (pServer == NULL)
     return 0;
-  if (!checkNumberOfParams(pState, 3, L"damageUnit"))
+  if (!checkNumberOfParams(pState, 3, "damageUnit"))
     return 0;
 
   u8 uPlayerId = (u8)lua_tonumber(pState, 1);
@@ -238,10 +235,10 @@ int LUA_damageUnit(lua_State * pState)
 
 int LUA_summon(lua_State * pState)
 {
-  Server * pServer = checkServerResolving(L"summon");
+  Server * pServer = checkServerResolving("summon");
   if (pServer == NULL)
     return 0;
-  if (!checkNumberOfParams(pState, 4, L"summon"))
+  if (!checkNumberOfParams(pState, 4, "summon"))
     return 0;
 
   u8 uPlayer = (u8) lua_tonumber(pState, 1);
@@ -268,10 +265,10 @@ int LUA_summon(lua_State * pState)
 
 int LUA_attachToUnit(lua_State * pState)
 {
-  Server * pServer = checkServerResolving(L"attachToUnit");
+  Server * pServer = checkServerResolving("attachToUnit");
   if (pServer == NULL)
     return 0;
-  if (!checkNumberOfParams(pState, 2, L"attachToUnit"))
+  if (!checkNumberOfParams(pState, 2, "attachToUnit"))
     return 0;
 
   u8 uPlayerId = (u8)lua_tonumber(pState, 1);
@@ -289,10 +286,10 @@ int LUA_attachToUnit(lua_State * pState)
 
 int LUA_attachToPlayer(lua_State * pState)
 {
-  Server * pServer = checkServerResolving(L"attachToPlayer");
+  Server * pServer = checkServerResolving("attachToPlayer");
   if (pServer == NULL)
     return 0;
-  if (!checkNumberOfParams(pState, 1, L"attachToPlayer"))
+  if (!checkNumberOfParams(pState, 1, "attachToPlayer"))
     return 0;
 
   u8 uPlayerId = (u8)lua_tonumber(pState, 1);
@@ -309,10 +306,10 @@ int LUA_attachToPlayer(lua_State * pState)
 
 int LUA_attachToTown(lua_State * pState)
 {
-  Server * pServer = checkServerResolving(L"attachToTown");
+  Server * pServer = checkServerResolving("attachToTown");
   if (pServer == NULL)
     return 0;
-  if (!checkNumberOfParams(pState, 1, L"attachToTown"))
+  if (!checkNumberOfParams(pState, 1, "attachToTown"))
     return 0;
 
   u32 uTownId = (u32)lua_tonumber(pState, 1);
@@ -329,10 +326,10 @@ int LUA_attachToTown(lua_State * pState)
 
 int LUA_attachToTemple(lua_State * pState)
 {
-  Server * pServer = checkServerResolving(L"attachToTemple");
+  Server * pServer = checkServerResolving("attachToTemple");
   if (pServer == NULL)
     return 0;
-  if (!checkNumberOfParams(pState, 1, L"attachToTemple"))
+  if (!checkNumberOfParams(pState, 1, "attachToTemple"))
     return 0;
 
   u32 uTempleId = (u32)lua_tonumber(pState, 1);
@@ -349,10 +346,10 @@ int LUA_attachToTemple(lua_State * pState)
 
 int LUA_attachToTile(lua_State * pState)
 {
-  Server * pServer = checkServerResolving(L"attachToTile");
+  Server * pServer = checkServerResolving("attachToTile");
   if (pServer == NULL)
     return 0;
-  if (!checkNumberOfParams(pState, 2, L"attachToTile"))
+  if (!checkNumberOfParams(pState, 2, "attachToTile"))
     return 0;
 
   int x = (int) lua_tonumber(pState, 1);
@@ -370,10 +367,10 @@ int LUA_attachToTile(lua_State * pState)
 
 int LUA_addChildEffectToUnit(lua_State * pState)
 {
-  Server * pServer = checkServerResolving(L"addChildEffectToUnit");
+  Server * pServer = checkServerResolving("addChildEffectToUnit");
   if (pServer == NULL)
     return 0;
-  if (!checkNumberOfParams(pState, 3, L"addChildEffectToUnit"))
+  if (!checkNumberOfParams(pState, 3, "addChildEffectToUnit"))
     return 0;
 
   int iEffectId = (int)lua_tonumber(pState, 1) - 1;
@@ -392,10 +389,10 @@ int LUA_addChildEffectToUnit(lua_State * pState)
 
 int LUA_removeChildEffectFromUnit(lua_State * pState)
 {
-  Server * pServer = checkServerResolving(L"removeChildEffectFromUnit");
+  Server * pServer = checkServerResolving("removeChildEffectFromUnit");
   if (pServer == NULL)
     return 0;
-  if (!checkNumberOfParams(pState, 3, L"removeChildEffectFromUnit"))
+  if (!checkNumberOfParams(pState, 3, "removeChildEffectFromUnit"))
     return 0;
 
   int iEffectId = (int)lua_tonumber(pState, 1) - 1;
@@ -414,10 +411,10 @@ int LUA_removeChildEffectFromUnit(lua_State * pState)
 
 int LUA_addChildEffectToTown(lua_State * pState)
 {
-  Server * pServer = checkServerResolving(L"addChildEffectToTown");
+  Server * pServer = checkServerResolving("addChildEffectToTown");
   if (pServer == NULL)
     return 0;
-  if (!checkNumberOfParams(pState, 2, L"addChildEffectToTown"))
+  if (!checkNumberOfParams(pState, 2, "addChildEffectToTown"))
     return 0;
 
   int iEffectId = (int)lua_tonumber(pState, 1) - 1;
@@ -435,10 +432,10 @@ int LUA_addChildEffectToTown(lua_State * pState)
 
 int LUA_removeChildEffectFromTown(lua_State * pState)
 {
-  Server * pServer = checkServerResolving(L"removeChildEffectFromTown");
+  Server * pServer = checkServerResolving("removeChildEffectFromTown");
   if (pServer == NULL)
     return 0;
-  if (!checkNumberOfParams(pState, 2, L"removeChildEffectFromTown"))
+  if (!checkNumberOfParams(pState, 2, "removeChildEffectFromTown"))
     return 0;
 
   int iEffectId = (int)lua_tonumber(pState, 1) - 1;
@@ -454,13 +451,13 @@ int LUA_removeChildEffectFromTown(lua_State * pState)
   return 0;
 }
 
-int getUnitDataBaseOrNot(lua_State * pState, bool bBase, const wchar_t * sFuncName)
+int getUnitDataBaseOrNot(lua_State * pState, bool bBase, const char * sFuncName)
 {
   int nbParams = lua_gettop(pState);
   if (nbParams < 3)
   {
-    wchar_t sError[512] = L"";
-    swprintf(sError, 512, L"Lua interaction error: \"%s\" should receive at least 3 arguments.", sFuncName);
+    char sError[512] = "";
+    snprintf(sError, 512, "Lua interaction error: \"%s\" should receive at least 3 arguments.", sFuncName);
     g_pMainGameRoot->m_pLocalClient->getDebug()->notifyErrorMessage(sError);
     return 0;
   }
@@ -476,16 +473,14 @@ int getUnitDataBaseOrNot(lua_State * pState, bool bBase, const wchar_t * sFuncNa
       for (int iParam = 0; iParam < nbParams - 2; iParam++)
       {
         const char * varname = lua_tostring(pState, nbParams - iParam);
-        wchar_t sName[64];
-        strtow(sName, 64, varname);
         bool bFound;
-        double val = pUnit->getValue(sName, bBase, &bFound);
+        double val = pUnit->getValue(varname, bBase, &bFound);
         if (bFound)
           lua_pushnumber(pState, val);
         else
         {
-          wchar_t sError[512] = L"";
-          swprintf(sError, 512, L"Lua interaction error in function %s: variable '%s' doesn't exist.", sFuncName, sName);
+          char sError[512] = "";
+          snprintf(sError, 512, "Lua interaction error in function %s: variable '%s' doesn't exist.", sFuncName, varname);
           g_pMainGameRoot->m_pLocalClient->getDebug()->notifyErrorMessage(sError);
           return iParam;
         }
@@ -493,14 +488,14 @@ int getUnitDataBaseOrNot(lua_State * pState, bool bBase, const wchar_t * sFuncNa
       }
     }
     else {
-      wchar_t sError[512] = L"";
-      swprintf(sError, 512, L"Lua interaction error in function %s: unit not found.", sFuncName);
+      char sError[512] = "";
+      snprintf(sError, 512, "Lua interaction error in function %s: unit not found.", sFuncName);
       g_pMainGameRoot->m_pLocalClient->getDebug()->notifyErrorMessage(sError);
     }
   }
   else {
-    wchar_t sError[512] = L"";
-    swprintf(sError, 512, L"Lua interaction error in function %s: player not found.", sFuncName);
+    char sError[512] = "";
+    snprintf(sError, 512, "Lua interaction error in function %s: player not found.", sFuncName);
     g_pMainGameRoot->m_pLocalClient->getDebug()->notifyErrorMessage(sError);
   }
   return 0;
@@ -508,20 +503,20 @@ int getUnitDataBaseOrNot(lua_State * pState, bool bBase, const wchar_t * sFuncNa
 
 int LUA_getUnitData(lua_State * pState)
 {
-  return getUnitDataBaseOrNot(pState, false, L"getUnitData");
+  return getUnitDataBaseOrNot(pState, false, "getUnitData");
 }
 
 int LUA_getUnitBaseData(lua_State * pState)
 {
-  return getUnitDataBaseOrNot(pState, true, L"getUnitBaseData");
+  return getUnitDataBaseOrNot(pState, true, "getUnitBaseData");
 }
 
 int LUA_setUnitData(lua_State * pState)
 {
-  Server * pServer = checkServerResolving(L"setUnitData");
+  Server * pServer = checkServerResolving("setUnitData");
   if (pServer == NULL)
     return 0;
-  if (!checkNumberOfParams(pState, 4, L"setUnitData"))
+  if (!checkNumberOfParams(pState, 4, "setUnitData"))
     return 0;
 
   u8 uPlayerId = (u8)lua_tonumber(pState, 1);
@@ -534,51 +529,48 @@ int LUA_setUnitData(lua_State * pState)
     Unit * pUnit = (Unit*) pPlayer->findUnit(uUnitId);
     if (pUnit != NULL)
     {
-      wchar_t sName[64];
-      strtow(sName, 64, varname);
-
       if (g_bLuaEvaluationMode) {
         Server * pServer = g_pMainGameRoot->m_pLocalClient->getServer();
         assert(pServer != NULL);
         bool bFound = true;
-        long iCurVal = pUnit->getValue(sName, true, &bFound);
+        long iCurVal = pUnit->getValue(varname, true, &bFound);
         if (!bFound)
           iCurVal = 0;
         int iSign = (uPlayerId == pServer->getSolver()->getAISolver()->getCurrentPlayer()->m_uPlayerId) ? 1 : -1;
         float fCoef = 0.0f;
-        if (_wcsicmp(STRING_MELEE, sName) == 0)
+        if (strcasecmp(STRING_MELEE, varname) == 0)
           fCoef = AI_INTEREST_MELEE;
-        else if (_wcsicmp(STRING_RANGE, sName) == 0)
+        else if (strcasecmp(STRING_RANGE, varname) == 0)
           fCoef = AI_INTEREST_RANGE;
-        else if (_wcsicmp(STRING_ARMOR, sName) == 0)
+        else if (strcasecmp(STRING_ARMOR, varname) == 0)
           fCoef = AI_INTEREST_ARMOR;
-        else if (_wcsicmp(STRING_ENDURANCE, sName) == 0)
+        else if (strcasecmp(STRING_ENDURANCE, varname) == 0)
           fCoef = AI_INTEREST_ENDURANCE;
-        else if (_wcsicmp(STRING_SPEED, sName) == 0)
+        else if (strcasecmp(STRING_SPEED, varname) == 0)
           fCoef = AI_INTEREST_SPEED;
-        else if (_wcsicmp(STRING_LIFE, sName) == 0)
+        else if (strcasecmp(STRING_LIFE, varname) == 0)
           fCoef = AI_INTEREST_LIFE;
         pServer->getSolver()->getAISolver()->addInterestForCurrentSpell(iSign * (value - (double)iCurVal) * fCoef);
         return 0;
       }
 
-      if (!pUnit->setBaseValue(sName, value))
-        pServer->getDebug()->notifyErrorMessage(L"Lua interaction error in function setUnitData: variable not found.");
+      if (!pUnit->setBaseValue(varname, value))
+        pServer->getDebug()->notifyErrorMessage("Lua interaction error in function setUnitData: variable not found.");
     }
     else
-      pServer->getDebug()->notifyErrorMessage(L"Lua interaction error in function setUnitData: unit not found.");
+      pServer->getDebug()->notifyErrorMessage("Lua interaction error in function setUnitData: unit not found.");
   }
   else
-    pServer->getDebug()->notifyErrorMessage(L"Lua interaction error in function setUnitData: player not found.");
+    pServer->getDebug()->notifyErrorMessage("Lua interaction error in function setUnitData: player not found.");
   return 0;
 }
 
 int LUA_produceMana(lua_State * pState)
 {
-  Server * pServer = checkServerResolving(L"produceMana");
+  Server * pServer = checkServerResolving("produceMana");
   if (pServer == NULL)
     return 0;
-  if (!checkNumberOfParams(pState, 7, L"produceMana"))
+  if (!checkNumberOfParams(pState, 7, "produceMana"))
     return 0;
 
   int playerId = (int) lua_tonumber(pState, 1);
@@ -604,16 +596,16 @@ int LUA_produceMana(lua_State * pState)
 
 int LUA_getAttacker(lua_State * pState)
 {
-  Server * pServer = checkServerResolving(L"getAttacker");
+  Server * pServer = checkServerResolving("getAttacker");
   if (pServer == NULL)
     return 0;
-  if (!checkNumberOfParams(pState, 0, L"getAttacker"))
+  if (!checkNumberOfParams(pState, 0, "getAttacker"))
     return 0;
 
   Unit * pUnit = pServer->getSolver()->getAttacker();
   if (pUnit == NULL)
   {
-    g_pMainGameRoot->m_pLocalClient->getDebug()->notifyErrorMessage(L"Lua interaction error in function getAttacker: Attacker is null.");
+    g_pMainGameRoot->m_pLocalClient->getDebug()->notifyErrorMessage("Lua interaction error in function getAttacker: Attacker is null.");
     return 0;
   }
   char str[16];
@@ -626,16 +618,16 @@ int LUA_getAttacker(lua_State * pState)
 
 int LUA_getDefender(lua_State * pState)
 {
-  Server * pServer = checkServerResolving(L"getDefender");
+  Server * pServer = checkServerResolving("getDefender");
   if (pServer == NULL)
     return 0;
-  if (!checkNumberOfParams(pState, 0, L"getDefender"))
+  if (!checkNumberOfParams(pState, 0, "getDefender"))
     return 0;
 
   Unit * pUnit = pServer->getSolver()->getDefender();
   if (pUnit == NULL)
   {
-    g_pMainGameRoot->m_pLocalClient->getDebug()->notifyErrorMessage(L"Lua interaction error in function getDefender: Defender is null.");
+    g_pMainGameRoot->m_pLocalClient->getDebug()->notifyErrorMessage("Lua interaction error in function getDefender: Defender is null.");
     return 0;
   }
   char str[16];
@@ -648,10 +640,10 @@ int LUA_getDefender(lua_State * pState)
 
 int LUA_getAttackerLife(lua_State * pState)
 {
-  Server * pServer = checkServerResolving(L"getAttackerLife");
+  Server * pServer = checkServerResolving("getAttackerLife");
   if (pServer == NULL)
     return 0;
-  if (!checkNumberOfParams(pState, 0, L"getAttackerLife"))
+  if (!checkNumberOfParams(pState, 0, "getAttackerLife"))
     return 0;
   lua_pushnumber(pState, (double) pServer->getSolver()->m_iAttackerLife);
   return 1;
@@ -659,10 +651,10 @@ int LUA_getAttackerLife(lua_State * pState)
 
 int LUA_setAttackerLife(lua_State * pState)
 {
-  Server * pServer = checkServerResolving(L"setAttackerLife");
+  Server * pServer = checkServerResolving("setAttackerLife");
   if (pServer == NULL)
     return 0;
-  if (!checkNumberOfParams(pState, 1, L"setAttackerLife"))
+  if (!checkNumberOfParams(pState, 1, "setAttackerLife"))
     return 0;
 
   int iNewLife = (int) lua_tonumber(pState, 1);
@@ -683,10 +675,10 @@ int LUA_setAttackerLife(lua_State * pState)
 
 int LUA_getDefenderLife(lua_State * pState)
 {
-  Server * pServer = checkServerResolving(L"getDefenderLife");
+  Server * pServer = checkServerResolving("getDefenderLife");
   if (pServer == NULL)
     return 0;
-  if (!checkNumberOfParams(pState, 0, L"getDefenderLife"))
+  if (!checkNumberOfParams(pState, 0, "getDefenderLife"))
     return 0;
   lua_pushnumber(pState, (double) pServer->getSolver()->m_iDefenderLife);
   return 1;
@@ -694,10 +686,10 @@ int LUA_getDefenderLife(lua_State * pState)
 
 int LUA_setDefenderLife(lua_State * pState)
 {
-  Server * pServer = checkServerResolving(L"setDefenderLife");
+  Server * pServer = checkServerResolving("setDefenderLife");
   if (pServer == NULL)
     return 0;
-  if (!checkNumberOfParams(pState, 1, L"setDefenderLife"))
+  if (!checkNumberOfParams(pState, 1, "setDefenderLife"))
     return 0;
 
   int iNewLife = (int) lua_tonumber(pState, 1);
@@ -718,10 +710,10 @@ int LUA_setDefenderLife(lua_State * pState)
 
 int LUA_getAttackerDamages(lua_State * pState)
 {
-  Server * pServer = checkServerResolving(L"getAttackerDamages");
+  Server * pServer = checkServerResolving("getAttackerDamages");
   if (pServer == NULL)
     return 0;
-  if (!checkNumberOfParams(pState, 0, L"getAttackerDamages"))
+  if (!checkNumberOfParams(pState, 0, "getAttackerDamages"))
     return 0;
   lua_pushnumber(pState, (double) pServer->getSolver()->m_iAttackerDamages);
   return 1;
@@ -729,10 +721,10 @@ int LUA_getAttackerDamages(lua_State * pState)
 
 int LUA_setAttackerDamages(lua_State * pState)
 {
-  Server * pServer = checkServerResolving(L"setAttackerDamages");
+  Server * pServer = checkServerResolving("setAttackerDamages");
   if (pServer == NULL)
     return 0;
-  if (!checkNumberOfParams(pState, 1, L"setAttackerDamages"))
+  if (!checkNumberOfParams(pState, 1, "setAttackerDamages"))
     return 0;
 
   int iNewDamages = (int) lua_tonumber(pState, 1);
@@ -753,10 +745,10 @@ int LUA_setAttackerDamages(lua_State * pState)
 
 int LUA_getDefenderDamages(lua_State * pState)
 {
-  Server * pServer = checkServerResolving(L"getDefenderDamages");
+  Server * pServer = checkServerResolving("getDefenderDamages");
   if (pServer == NULL)
     return 0;
-  if (!checkNumberOfParams(pState, 0, L"getDefenderDamages"))
+  if (!checkNumberOfParams(pState, 0, "getDefenderDamages"))
     return 0;
   lua_pushnumber(pState, (double) pServer->getSolver()->m_iDefenderDamages);
   return 1;
@@ -764,10 +756,10 @@ int LUA_getDefenderDamages(lua_State * pState)
 
 int LUA_setDefenderDamages(lua_State * pState)
 {
-  Server * pServer = checkServerResolving(L"setDefenderDamages");
+  Server * pServer = checkServerResolving("setDefenderDamages");
   if (pServer == NULL)
     return 0;
-  if (!checkNumberOfParams(pState, 1, L"setDefenderDamages"))
+  if (!checkNumberOfParams(pState, 1, "setDefenderDamages"))
     return 0;
 
   int iNewDamages = (int) lua_tonumber(pState, 1);
@@ -788,10 +780,10 @@ int LUA_setDefenderDamages(lua_State * pState)
 
 int LUA_getAttackerArmor(lua_State * pState)
 {
-  Server * pServer = checkServerResolving(L"getAttackerArmor");
+  Server * pServer = checkServerResolving("getAttackerArmor");
   if (pServer == NULL)
     return 0;
-  if (!checkNumberOfParams(pState, 0, L"getAttackerArmor"))
+  if (!checkNumberOfParams(pState, 0, "getAttackerArmor"))
     return 0;
   lua_pushnumber(pState, (double) pServer->getSolver()->m_iAttackerArmor);
   return 1;
@@ -799,10 +791,10 @@ int LUA_getAttackerArmor(lua_State * pState)
 
 int LUA_setAttackerArmor(lua_State * pState)
 {
-  Server * pServer = checkServerResolving(L"setAttackerArmor");
+  Server * pServer = checkServerResolving("setAttackerArmor");
   if (pServer == NULL)
     return 0;
-  if (!checkNumberOfParams(pState, 1, L"setAttackerArmor"))
+  if (!checkNumberOfParams(pState, 1, "setAttackerArmor"))
     return 0;
 
   int iNewArmor = (int) lua_tonumber(pState, 1);
@@ -823,10 +815,10 @@ int LUA_setAttackerArmor(lua_State * pState)
 
 int LUA_getDefenderArmor(lua_State * pState)
 {
-  Server * pServer = checkServerResolving(L"getDefenderArmor");
+  Server * pServer = checkServerResolving("getDefenderArmor");
   if (pServer == NULL)
     return 0;
-  if (!checkNumberOfParams(pState, 0, L"getDefenderArmor"))
+  if (!checkNumberOfParams(pState, 0, "getDefenderArmor"))
     return 0;
   lua_pushnumber(pState, (double) pServer->getSolver()->m_iDefenderArmor);
   return 1;
@@ -834,10 +826,10 @@ int LUA_getDefenderArmor(lua_State * pState)
 
 int LUA_setDefenderArmor(lua_State * pState)
 {
-  Server * pServer = checkServerResolving(L"setDefenderArmor");
+  Server * pServer = checkServerResolving("setDefenderArmor");
   if (pServer == NULL)
     return 0;
-  if (!checkNumberOfParams(pState, 1, L"setDefenderArmor"))
+  if (!checkNumberOfParams(pState, 1, "setDefenderArmor"))
     return 0;
 
   int iNewArmor = (int) lua_tonumber(pState, 1);
@@ -858,10 +850,10 @@ int LUA_setDefenderArmor(lua_State * pState)
 
 int LUA_discardActiveSpell(lua_State * pState)
 {
-  Server * pServer = checkServerResolving(L"discardActiveSpell");
+  Server * pServer = checkServerResolving("discardActiveSpel");
   if (pServer == NULL)
     return 0;
-  int nbParams = checkNumberOfParams(pState, 0, 2, L"discardActiveSpell");
+  int nbParams = checkNumberOfParams(pState, 0, 2, "discardActiveSpel");
   if (nbParams < 0)
     return 0;
   long iPlayerId = -1, iSpellId = -1;
@@ -883,10 +875,10 @@ int LUA_discardActiveSpell(lua_State * pState)
 
 int LUA_discardDeckSpell(lua_State * pState)
 {
-  Server * pServer = checkServerResolving(L"discardDeckSpell");
+  Server * pServer = checkServerResolving("discardDeckSpel");
   if (pServer == NULL)
     return 0;
-  if (!checkNumberOfParams(pState, 2, L"discardDeckSpell"))
+  if (!checkNumberOfParams(pState, 2, "discardDeckSpel"))
     return 0;
   long iPlayerId = (long) lua_tonumber(pState, 1);
   long iSpellId = (long) lua_tonumber(pState, 2);
@@ -903,10 +895,10 @@ int LUA_discardDeckSpell(lua_State * pState)
 
 int LUA_discardHandSpell(lua_State * pState)
 {
-  Server * pServer = checkServerResolving(L"discardHandSpell");
+  Server * pServer = checkServerResolving("discardHandSpel");
   if (pServer == NULL)
     return 0;
-  if (!checkNumberOfParams(pState, 2, L"discardHandSpell"))
+  if (!checkNumberOfParams(pState, 2, "discardHandSpel"))
     return 0;
   long iPlayerId = (long) lua_tonumber(pState, 1);
   long iSpellId = (long) lua_tonumber(pState, 2);
@@ -923,10 +915,10 @@ int LUA_discardHandSpell(lua_State * pState)
 
 int LUA_drawSpell(lua_State * pState)
 {
-  Server * pServer = checkServerResolving(L"drawSpell");
+  Server * pServer = checkServerResolving("drawSpel");
   if (pServer == NULL)
     return 0;
-  if (!checkNumberOfParams(pState, 2, L"drawSpell"))
+  if (!checkNumberOfParams(pState, 2, "drawSpel"))
     return 0;
   u8 uPlayerId = (u8)lua_tonumber(pState, 1);
   u32 uSpellId = (u32)lua_tonumber(pState, 2);
@@ -943,7 +935,7 @@ int LUA_drawSpell(lua_State * pState)
 
 int LUA_attachAsGlobal(lua_State * pState)
 {
-  Server * pServer = checkServerResolving(L"attachAsGlobal");
+  Server * pServer = checkServerResolving("attachAsGloba");
   if (pServer == NULL)
     return 0;
 
@@ -959,7 +951,7 @@ int LUA_attachAsGlobal(lua_State * pState)
 
 int LUA_detachFromGlobal(lua_State * pState)
 {
-  Server * pServer = checkServerResolving(L"detachFromGlobal");
+  Server * pServer = checkServerResolving("detachFromGloba");
   if (pServer == NULL)
     return 0;
 
@@ -975,7 +967,7 @@ int LUA_detachFromGlobal(lua_State * pState)
 
 int LUA_getUnitAlignment(lua_State * pState)
 {
-  if (!checkNumberOfParams(pState, 2, L"getUnitAlignment"))
+  if (!checkNumberOfParams(pState, 2, "getUnitAlignment"))
     return 0;
 
   u8 uPlayerId = (u8)lua_tonumber(pState, 1);
@@ -994,29 +986,25 @@ int LUA_getUnitAlignment(lua_State * pState)
       return 4;
     }
     else
-      g_pMainGameRoot->m_pLocalClient->getDebug()->notifyErrorMessage(L"Lua interaction error in function getUnitAlignment: unit not found.");
+      g_pMainGameRoot->m_pLocalClient->getDebug()->notifyErrorMessage("Lua interaction error in function getUnitAlignment: unit not found.");
   }
   else
-    g_pMainGameRoot->m_pLocalClient->getDebug()->notifyErrorMessage(L"Lua interaction error in function getUnitAlignment: player not found.");
+    g_pMainGameRoot->m_pLocalClient->getDebug()->notifyErrorMessage("Lua interaction error in function getUnitAlignment: player not found.");
   return 0;
 }
 
 int LUA_askForExtraMana(lua_State * pState)
 {
-  if (!checkNumberOfParams(pState, 5, L"askForExtraMana"))
+  if (!checkNumberOfParams(pState, 5, "askForExtraMana"))
     return 0;
 
   char sDesc[256];
   strncpy(sDesc, lua_tostring(pState, 1), 256);
-  wchar_t sDescW[256];
-  strtow(sDescW, 256, sDesc);
   u16 mana = (u16) lua_tonumber(pState, 2);
   int min = (int) lua_tonumber(pState, 3);
   int max = (int) lua_tonumber(pState, 4);
   char sCallback[128];
   strncpy(sCallback, lua_tostring(pState, 5), 128);
-  wchar_t sCallbackW[128];
-  strtow(sCallbackW, 128, sCallback);
 
   if (g_bLuaEvaluationMode) {
     Server * pServer = g_pMainGameRoot->m_pLocalClient->getServer();
@@ -1024,19 +1012,17 @@ int LUA_askForExtraMana(lua_State * pState)
     return 0;
   }
 
-  g_pMainGameRoot->m_pLocalClient->getInterface()->askForExtraMana(sDescW, mana, min, max, sCallbackW, g_uLuaCurrentObjectType);
+  g_pMainGameRoot->m_pLocalClient->getInterface()->askForExtraMana(sDesc, mana, min, max, sCallback, g_uLuaCurrentObjectType);
   return 0;
 }
 
 int LUA_addResolveParameter(lua_State * pState)
 {
-  if (!checkNumberOfParams(pState, 1, L"addResolveParameter"))
+  if (!checkNumberOfParams(pState, 1, "addResolveParameter"))
     return 0;
 
   char sParam[256];
   strncpy(sParam, lua_tostring(pState, 1), 256);
-  wchar_t sParamW[256];
-  strtow(sParamW, 256, sParam);
 
   if (g_bLuaEvaluationMode) {
     Server * pServer = g_pMainGameRoot->m_pLocalClient->getServer();
@@ -1045,15 +1031,15 @@ int LUA_addResolveParameter(lua_State * pState)
   }
 
   if (g_uLuaCurrentObjectType == LUAOBJECT_SPELL)
-    g_pMainGameRoot->m_pLocalClient->getPlayerManager()->getSpellBeingCast()->addResolveParameters(sParamW);
+    g_pMainGameRoot->m_pLocalClient->getPlayerManager()->getSpellBeingCast()->addResolveParameters(sParam);
   else if (g_uLuaCurrentObjectType == LUAOBJECT_SKILL)
-    g_pMainGameRoot->m_pLocalClient->getPlayerManager()->getSkillBeingActivated()->addResolveParameters(sParamW);
+    g_pMainGameRoot->m_pLocalClient->getPlayerManager()->getSkillBeingActivated()->addResolveParameters(sParam);
   return 0;
 }
 
 int LUA_dispatchToClients(lua_State * pState)
 {
-  Server * pServer = checkServerResolving(L"dispatchToClients");
+  Server * pServer = checkServerResolving("dispatchToClients");
   if (pServer == NULL)
     return 0;
 
@@ -1064,8 +1050,8 @@ int LUA_dispatchToClients(lua_State * pState)
   int nbParams = lua_gettop(pState);
   if (nbParams < 2)
   {
-    wchar_t sText[512];
-    swprintf(sText, 512, L"Lua interaction error: \"dispatchToClients\" should receive at least 2 arguments (client callback name and at least 1 data to dispatch).");
+    char sText[512];
+    snprintf(sText, 512, "Lua interaction error: \"dispatchToClients\" should receive at least 2 arguments (client callback name and at least 1 data to dispatch).");
     g_pMainGameRoot->m_pLocalClient->getDebug()->notifyErrorMessage(sText);
     return 0;
   }
@@ -1077,9 +1063,7 @@ int LUA_dispatchToClients(lua_State * pState)
   // Get callback name
   char sCallback[NAME_MAX_CHARS];
   strncpy(sCallback, lua_tostring(pState, 1), NAME_MAX_CHARS);
-  wchar_t sCallbackW[NAME_MAX_CHARS];
-  strtow(sCallbackW, NAME_MAX_CHARS, sCallback);
-  msg.addString(sCallbackW);
+  msg.addString(sCallback);
 
   for (int i = 0; i < nbParams - 1; i++)
   {
@@ -1093,9 +1077,7 @@ int LUA_dispatchToClients(lua_State * pState)
       msg.addLong(1);
       char sStr[256];
       strncpy(sStr, lua_tostring(pState, i+2), 256);
-      wchar_t sStrW[256];
-      strtow(sStrW, 256, sStr);
-      msg.addString(sStrW);
+      msg.addString(sStr);
     }
   }
   pServer->sendMessageToAllClients(&msg);
@@ -1105,14 +1087,14 @@ int LUA_dispatchToClients(lua_State * pState)
 
 int LUA_getPlayersList(lua_State * pState)
 {
-  if (!checkNumberOfParams(pState, 0, L"getPlayersList"))
+  if (!checkNumberOfParams(pState, 0, "getPlayersList"))
     return 0;
   char str[16];
   PlayerManagerAbstract * pMngr = getServerOrLocalPlayerManager();
   int count = 0;
   if (0 == lua_checkstack(pState, pMngr->getPlayersCount()+1))
   {
-    g_pMainGameRoot->m_pLocalClient->getDebug()->notifyErrorMessage(L"Error in LUA: getPlayersList, stack too small!");
+    g_pMainGameRoot->m_pLocalClient->getDebug()->notifyErrorMessage("Error in LUA: getPlayersList, stack too small!");
     return 0;
   }
   Player * pPlayer = pMngr->getFirstPlayerAndNeutral(0);
@@ -1128,21 +1110,21 @@ int LUA_getPlayersList(lua_State * pState)
 
 int LUA_getUnitsList(lua_State * pState)
 {
-  if (!checkNumberOfParams(pState, 1, L"getUnitsList"))
+  if (!checkNumberOfParams(pState, 1, "getUnitsList"))
     return 0;
 
   int player = (int) lua_tonumber(pState, 1);
   Player * pPlayer = getServerOrLocalPlayer(player);
   if (pPlayer == NULL)
   {
-    g_pMainGameRoot->m_pLocalClient->getDebug()->notifyErrorMessage(L"Error in LUA: invalid player provided to function getUnitsList");
+    g_pMainGameRoot->m_pLocalClient->getDebug()->notifyErrorMessage("Error in LUA: invalid player provided to function getUnitsList");
     return 0;
   }
   char str[16];
   int count = 0;
   if (0 == lua_checkstack(pState, pPlayer->m_pUnits->size))
   {
-    g_pMainGameRoot->m_pLocalClient->getDebug()->notifyErrorMessage(L"Error in LUA: getUnitsList, stack too small!");
+    g_pMainGameRoot->m_pLocalClient->getDebug()->notifyErrorMessage("Error in LUA: getUnitsList, stack too small!");
     return 0;
   }
   Unit * pUnit = (Unit*) pPlayer->m_pUnits->getFirst(0);
@@ -1158,14 +1140,14 @@ int LUA_getUnitsList(lua_State * pState)
 
 int LUA_getSkillsList(lua_State * pState)
 {
-  if (!checkNumberOfParams(pState, 2, L"getSkillsList"))
+  if (!checkNumberOfParams(pState, 2, "getSkillsList"))
     return 0;
 
   int player = (int) lua_tonumber(pState, 1);
   Player * pPlayer = getServerOrLocalPlayer(player);
   if (pPlayer == NULL)
   {
-    g_pMainGameRoot->m_pLocalClient->getDebug()->notifyErrorMessage(L"Error in LUA: invalid player provided to function getSkillsList");
+    g_pMainGameRoot->m_pLocalClient->getDebug()->notifyErrorMessage("Error in LUA: invalid player provided to function getSkillsList");
     return 0;
   }
 
@@ -1173,14 +1155,14 @@ int LUA_getSkillsList(lua_State * pState)
   Unit * pUnit = pPlayer->findUnit(unit);
   if (pUnit == NULL)
   {
-    g_pMainGameRoot->m_pLocalClient->getDebug()->notifyErrorMessage(L"Error in LUA: invalid unit provided to function getSkillsList");
+    g_pMainGameRoot->m_pLocalClient->getDebug()->notifyErrorMessage("Error in LUA: invalid unit provided to function getSkillsList");
     return 0;
   }
   char str[16];
   int count = 0;
   if (0 == lua_checkstack(pState, pUnit->getAllEffects()->size))
   {
-    g_pMainGameRoot->m_pLocalClient->getDebug()->notifyErrorMessage(L"Error in LUA: getSkillsList, stack too small!");
+    g_pMainGameRoot->m_pLocalClient->getDebug()->notifyErrorMessage("Error in LUA: getSkillsList, stack too small!");
     return 0;
   }
   LuaObject * pLua = pUnit->getFirstEffect(0);
@@ -1199,7 +1181,7 @@ int LUA_getSkillsList(lua_State * pState)
 
 int LUA_getTownsList(lua_State * pState)
 {
-  if (!checkNumberOfParams(pState, 0, L"getTownsList"))
+  if (!checkNumberOfParams(pState, 0, "getTownsList"))
     return 0;
 
   char str[16];
@@ -1212,7 +1194,7 @@ int LUA_getTownsList(lua_State * pState)
     snprintf(str, 16, "%ld", (long) pTown->getId());
     if (0 == lua_checkstack(pState, count))
     {
-      g_pMainGameRoot->m_pLocalClient->getDebug()->notifyErrorMessage(L"Error in LUA: getTownsList, stack too small!");
+      g_pMainGameRoot->m_pLocalClient->getDebug()->notifyErrorMessage("Error in LUA: getTownsList, stack too small!");
       return 0;
     }
     lua_pushstring(pState, str);
@@ -1223,11 +1205,11 @@ int LUA_getTownsList(lua_State * pState)
 
 int LUA_deactivateSkill(lua_State * pState)
 {
-  Server * pServer = checkServerResolving(L"deactivateSkill");
+  Server * pServer = checkServerResolving("deactivateSkil");
   if (pServer == NULL)
     return 0;
-  int nbParams = checkNumberOfParams(pState, 0, 3, L"deactivateSkill");
-  if (nbParams != 0 && !checkNumberOfParams(pState, 3, L"deactivateSkill"))
+  int nbParams = checkNumberOfParams(pState, 0, 3, "deactivateSkil");
+  if (nbParams != 0 && !checkNumberOfParams(pState, 3, "deactivateSkil"))
     return 0;
   long iPlayerId = -1, iUnitId = -1, iSkillId = -1;
   if (nbParams == 3)
@@ -1250,15 +1232,13 @@ int LUA_deactivateSkill(lua_State * pState)
 
 int LUA_changeSpellOwner(lua_State * pState)
 {
-  Server * pServer = checkServerResolving(L"changeSpellOwner");
+  Server * pServer = checkServerResolving("changeSpellOwner");
   if (pServer == NULL)
     return 0;
-  if (!checkNumberOfParams(pState, 4, L"changeSpellOwner"))
+  if (!checkNumberOfParams(pState, 4, "changeSpellOwner"))
     return 0;
 
   const char * type = lua_tostring(pState, 1);
-  wchar_t typeW[64];
-  strtow(typeW, 64, type);
   int player = (int) lua_tonumber(pState, 2);
   int spell = (int) lua_tonumber(pState, 3);
   int newowner = (int) lua_tonumber(pState, 4);
@@ -1269,17 +1249,17 @@ int LUA_changeSpellOwner(lua_State * pState)
     return 0;
   }
 
-  pServer->getSolver()->getSpellsSolver()->onChangeSpellOwner(typeW, player, spell, newowner);
+  pServer->getSolver()->getSpellsSolver()->onChangeSpellOwner(type, player, spell, newowner);
 
   return 0;
 }
 
 int LUA_changeUnitOwner(lua_State * pState)
 {
-  Server * pServer = checkServerResolving(L"changeUnitOwner");
+  Server * pServer = checkServerResolving("changeUnitOwner");
   if (pServer == NULL)
     return 0;
-  if (!checkNumberOfParams(pState, 3, L"changeUnitOwner"))
+  if (!checkNumberOfParams(pState, 3, "changeUnitOwner"))
     return 0;
 
   int player = (int) lua_tonumber(pState, 1);
@@ -1298,10 +1278,10 @@ int LUA_changeUnitOwner(lua_State * pState)
 
 int LUA_changeTownOwner(lua_State * pState)
 {
-  Server * pServer = checkServerResolving(L"changeTownOwner");
+  Server * pServer = checkServerResolving("changeTownOwner");
   if (pServer == NULL)
     return 0;
-  if (!checkNumberOfParams(pState, 2, L"changeTownOwner"))
+  if (!checkNumberOfParams(pState, 2, "changeTownOwner"))
     return 0;
 
   int town = (int) lua_tonumber(pState, 1);
@@ -1319,7 +1299,7 @@ int LUA_changeTownOwner(lua_State * pState)
 
 int LUA_getTownData(lua_State * pState)
 {
-  int nbParams = checkNumberOfParams(pState, 1, 2, L"getTownData");
+  int nbParams = checkNumberOfParams(pState, 1, 2, "getTownData");
   if (nbParams < 0)
     return 0;
 
@@ -1338,15 +1318,13 @@ int LUA_getTownData(lua_State * pState)
     {
       // Only 1 data is requested
       const char * varname = lua_tostring(pState, 2);
-      wchar_t sName[64];
-      strtow(sName, 64, varname);
       bool bFound;
-      double val = pTown->getValue(sName, false, &bFound);
+      double val = pTown->getValue(varname, false, &bFound);
       if (bFound)
         lua_pushnumber(pState, val);
       else
       {
-        g_pMainGameRoot->m_pLocalClient->getDebug()->notifyErrorMessage(L"Lua interaction error in function getTownData: variable not found.");
+        g_pMainGameRoot->m_pLocalClient->getDebug()->notifyErrorMessage("Lua interaction error in function getTownData: variable not found.");
         return 0;
       }
       return 1;
@@ -1354,23 +1332,20 @@ int LUA_getTownData(lua_State * pState)
     else
     {
       // Send basic town data
-      char str[64];
-      wtostr(str, 64, pTown->getName());
-      lua_pushstring(pState, str);
-      wtostr(str, 64, pTown->getEthnicityId());
-      lua_pushstring(pState, str);
+      lua_pushstring(pState, pTown->getName());
+      lua_pushstring(pState, pTown->getEthnicityId());
       lua_pushnumber(pState, pTown->getOwner());
       return 3;
     }
   }
   else
-    g_pMainGameRoot->m_pLocalClient->getDebug()->notifyErrorMessage(L"Lua interaction error in function getTownData: town not found.");
+    g_pMainGameRoot->m_pLocalClient->getDebug()->notifyErrorMessage("Lua interaction error in function getTownData: town not found.");
   return 0;
 }
 
 int LUA_townHasBuilding(lua_State * pState)
 {
-  if (!checkNumberOfParams(pState, 2, L"townHasBuilding"))
+  if (!checkNumberOfParams(pState, 2, "townHasBuilding"))
     return 0;
 
   u32 uTownId = (u32)lua_tonumber(pState, 1);
@@ -1385,13 +1360,11 @@ int LUA_townHasBuilding(lua_State * pState)
   if (pTown != NULL)
   {
     const char * varname = lua_tostring(pState, 2);
-    wchar_t sName[64];
-    strtow(sName, 64, varname);
     int it = pTown->getBuildingsList()->getIterator();
     Building * pBuild = pTown->getFirstBuilding(it);
     while (pBuild != NULL)
     {
-      if (wcscmp(pBuild->getObjectName(), sName) == 0 && pBuild->isBuilt())
+      if (strcmp(pBuild->getObjectName(), varname) == 0 && pBuild->isBuilt())
       {
         pTown->getBuildingsList()->releaseIterator(it);
         lua_pushnumber(pState, 1);
@@ -1404,22 +1377,20 @@ int LUA_townHasBuilding(lua_State * pState)
     return 1;
   }
   else
-    g_pMainGameRoot->m_pLocalClient->getDebug()->notifyErrorMessage(L"Lua interaction error in function townHasBuilding: town not found.");
+    g_pMainGameRoot->m_pLocalClient->getDebug()->notifyErrorMessage("Lua interaction error in function townHasBuilding: town not found.");
   return 0;
 }
 
 int LUA_buildBuilding(lua_State * pState)
 {
-  Server * pServer = checkServerResolving(L"buildBuilding");
+  Server * pServer = checkServerResolving("buildBuilding");
   if (pServer == NULL)
     return 0;
-  if (!checkNumberOfParams(pState, 2, L"buildBuilding"))
+  if (!checkNumberOfParams(pState, 2, "buildBuilding"))
     return 0;
 
   u32 uTownId = (u32)lua_tonumber(pState, 1);
   const char * varname = lua_tostring(pState, 2);
-  wchar_t sName[64];
-  strtow(sName, 64, varname);
 
   if (g_bLuaEvaluationMode) {
     Server * pServer = g_pMainGameRoot->m_pLocalClient->getServer();
@@ -1427,7 +1398,7 @@ int LUA_buildBuilding(lua_State * pState)
     return 0;
   }
 
-  pServer->getSolver()->getSpellsSolver()->onBuildBuilding(uTownId, sName);
+  pServer->getSolver()->getSpellsSolver()->onBuildBuilding(uTownId, varname);
   return 0;
 }
 
@@ -1436,7 +1407,7 @@ int LUA_getObjectPosition(lua_State * pState)
   int nbParams = lua_gettop(pState);
   if (nbParams < 2)
   {
-    g_pMainGameRoot->m_pLocalClient->getDebug()->notifyErrorMessage(L"Lua interaction error: \"getObjectPosition\" should receive at least 2 arguments.");
+    g_pMainGameRoot->m_pLocalClient->getDebug()->notifyErrorMessage("Lua interaction error: \"getObjectPosition\" should receive at least 2 arguments.");
     return 0;
   }
 
@@ -1445,7 +1416,7 @@ int LUA_getObjectPosition(lua_State * pState)
   {
     if (nbParams < 3)
     {
-      g_pMainGameRoot->m_pLocalClient->getDebug()->notifyErrorMessage(L"Lua interaction error: \"getObjectPosition\" should receive at least 3 arguments.");
+      g_pMainGameRoot->m_pLocalClient->getDebug()->notifyErrorMessage("Lua interaction error: \"getObjectPosition\" should receive at least 3 arguments.");
       return 0;
     }
     u8 uPlayerId = (u8)lua_tonumber(pState, 2);
@@ -1458,7 +1429,7 @@ int LUA_getObjectPosition(lua_State * pState)
       Player * pPlayer = pServer->getSolver()->findPlayer(uPlayerId);
       if (pPlayer == NULL)
       {
-        g_pMainGameRoot->m_pLocalClient->getDebug()->notifyErrorMessage(L"Lua interaction error: invalid player in function \"getObjectPosition\".");
+        g_pMainGameRoot->m_pLocalClient->getDebug()->notifyErrorMessage("Lua interaction error: invalid player in function \"getObjectPosition\".");
         return 0;
       }
       pUnit = pPlayer->findUnit(uUnitId);
@@ -1468,7 +1439,7 @@ int LUA_getObjectPosition(lua_State * pState)
       Player * pPlayer = g_pMainGameRoot->m_pLocalClient->getPlayerManager()->findPlayer(uPlayerId);
       if (pPlayer == NULL)
       {
-        g_pMainGameRoot->m_pLocalClient->getDebug()->notifyErrorMessage(L"Lua interaction error: invalid player in function \"getObjectPosition\".");
+        g_pMainGameRoot->m_pLocalClient->getDebug()->notifyErrorMessage("Lua interaction error: invalid player in function \"getObjectPosition\".");
         return 0;
       }
       pUnit = pPlayer->findUnit(uUnitId);
@@ -1482,7 +1453,7 @@ int LUA_getObjectPosition(lua_State * pState)
       return 2;
     }
     else
-      g_pMainGameRoot->m_pLocalClient->getDebug()->notifyErrorMessage(L"Lua interaction error in function getObjectPosition: unit not found.");
+      g_pMainGameRoot->m_pLocalClient->getDebug()->notifyErrorMessage("Lua interaction error in function getObjectPosition: unit not found.");
     return 0;
   }
   else if (strcmp(objtype, "town") == 0)
@@ -1504,13 +1475,13 @@ int LUA_getObjectPosition(lua_State * pState)
       return 2;
     }
     else
-      g_pMainGameRoot->m_pLocalClient->getDebug()->notifyErrorMessage(L"Lua interaction error in function getObjectPosition: town not found.");
+      g_pMainGameRoot->m_pLocalClient->getDebug()->notifyErrorMessage("Lua interaction error in function getObjectPosition: town not found.");
     return 0;
   }
   else
   {
-    wchar_t sText[512];
-    swprintf(sText, 512, L"Lua interaction error: object type in \"getObjectPosition\" is invalid.");
+    char sText[512];
+    snprintf(sText, 512, "Lua interaction error: object type in \"getObjectPosition\" is invalid.");
     g_pMainGameRoot->m_pLocalClient->getDebug()->notifyErrorMessage(sText);
     return 0;
   }
@@ -1518,18 +1489,14 @@ int LUA_getObjectPosition(lua_State * pState)
 
 int LUA_addSkillToUnit(lua_State * pState)
 {
-  Server * pServer = checkServerResolving(L"addSkillToUnit");
+  Server * pServer = checkServerResolving("addSkillToUnit");
   if (pServer == NULL)
     return 0;
-  if (!checkNumberOfParams(pState, 4, L"addSkillToUnit"))
+  if (!checkNumberOfParams(pState, 4, "addSkillToUnit"))
     return 0;
 
   const char * skill = lua_tostring(pState, 1);
-  wchar_t sSkill[NAME_MAX_CHARS];
-  strtow(sSkill, NAME_MAX_CHARS, skill);
   const char * params = lua_tostring(pState, 2);
-  wchar_t sParams[256];
-  strtow(sParams, 256, params);
   u8 uPlayer = (u8)lua_tonumber(pState, 3);
   u32 uUnit = (u32)lua_tonumber(pState, 4);
 
@@ -1539,16 +1506,16 @@ int LUA_addSkillToUnit(lua_State * pState)
     return 0;
   }
 
-  pServer->getSolver()->getSpellsSolver()->onAddSkillToUnit(sSkill, sParams, uPlayer, uUnit);
+  pServer->getSolver()->getSpellsSolver()->onAddSkillToUnit(skill, params, uPlayer, uUnit);
   return 0;
 }
 
 int LUA_hideSpecialTile(lua_State * pState)
 {
-  Server * pServer = checkServerResolving(L"hideSpecialTile");
+  Server * pServer = checkServerResolving("hideSpecialTile");
   if (pServer == NULL)
     return 0;
-  if (!checkNumberOfParams(pState, 1, L"hideSpecialTile"))
+  if (!checkNumberOfParams(pState, 1, "hideSpecialTile"))
     return 0;
 
   u32 uSpec = (u32)lua_tonumber(pState, 1);
@@ -1565,7 +1532,7 @@ int LUA_hideSpecialTile(lua_State * pState)
 
 int LUA_isShahmah(lua_State * pState)
 {
-  if (!checkNumberOfParams(pState, 2, L"isShahmah"))
+  if (!checkNumberOfParams(pState, 2, "isShahmah"))
     return 0;
 
   u8 uPlayerId = (u8)lua_tonumber(pState, 1);
@@ -1573,13 +1540,13 @@ int LUA_isShahmah(lua_State * pState)
   Player * pPlayer = getServerOrLocalPlayer(uPlayerId);
   if (pPlayer == NULL)
   {
-    g_pMainGameRoot->m_pLocalClient->getDebug()->notifyErrorMessage(L"Lua interaction error: invalid player in function \"isShahmah\".");
+    g_pMainGameRoot->m_pLocalClient->getDebug()->notifyErrorMessage("Lua interaction error: invalid player in function \"isShahmah\".");
     return 0;
   }
   Unit * pUnit = pPlayer->findUnit(uUnitId);
   if (pUnit == NULL)
   {
-    g_pMainGameRoot->m_pLocalClient->getDebug()->notifyErrorMessage(L"Lua interaction error in function isShahmah: unit not found.");
+    g_pMainGameRoot->m_pLocalClient->getDebug()->notifyErrorMessage("Lua interaction error in function isShahmah: unit not found.");
     return 0;
   }
   if (pUnit == pPlayer->getAvatar())
@@ -1591,29 +1558,25 @@ int LUA_isShahmah(lua_State * pState)
 
 int LUA_getUnitDescription(lua_State * pState)
 {
-  if (!checkNumberOfParams(pState, 1, L"getUnitDescription"))
+  if (!checkNumberOfParams(pState, 1, "getUnitDescription"))
     return 0;
 
   const char * sName = lua_tostring(pState, 1);
-  wchar_t sWName[NAME_MAX_CHARS];
-  strtow(sWName, NAME_MAX_CHARS, sName);
   LuaObject * pLua = LuaObject::static_pCurrentLuaCaller;
-  UnitData * pData = g_pMainGameRoot->m_pLocalClient->getDataFactory()->getUnitData(pLua->getObjectEdition(), sWName);
+  UnitData * pData = g_pMainGameRoot->m_pLocalClient->getDataFactory()->getUnitData(pLua->getObjectEdition(), sName);
   if (pData == NULL) {
-    g_pMainGameRoot->m_pLocalClient->getDebug()->notifyErrorMessage(L"Error in LUA: invalid unit provided to function getUnitDescription");
+    g_pMainGameRoot->m_pLocalClient->getDebug()->notifyErrorMessage("Error in LUA: invalid unit provided to function getUnitDescription");
     return 0;
   }
   char sDesc[DESCRIPTION_MAX_CHARS];
-  wchar_t sWDesc[DESCRIPTION_MAX_CHARS];
-  pData->getInfos(sWDesc, DESCRIPTION_MAX_CHARS, L", ", false, NULL, false, true, true, false);
-  wtostr(sDesc, DESCRIPTION_MAX_CHARS, sWDesc);
+  pData->getInfos(sDesc, DESCRIPTION_MAX_CHARS, ", ", false, NULL, false, true, true, false);
   lua_pushstring(pState, sDesc);
   return 1;
 }
 
 int LUA_getSkillData(lua_State * pState)
 {
-  if (!checkNumberOfParams(pState, 3, L"getSkillData"))
+  if (!checkNumberOfParams(pState, 3, "getSkillData"))
     return 0;
 
   u8 player = (u8) lua_tonumber(pState, 1);
@@ -1623,33 +1586,31 @@ int LUA_getSkillData(lua_State * pState)
   Player * pPlayer = getServerOrLocalPlayer(player);
   if (pPlayer == NULL)
   {
-    g_pMainGameRoot->m_pLocalClient->getDebug()->notifyErrorMessage(L"Error in LUA: invalid player provided to function getSkillData");
+    g_pMainGameRoot->m_pLocalClient->getDebug()->notifyErrorMessage("Error in LUA: invalid player provided to function getSkillData");
     return 0;
   }
 
   Unit * pUnit = pPlayer->findUnit(unit);
   if (pUnit == NULL)
   {
-    g_pMainGameRoot->m_pLocalClient->getDebug()->notifyErrorMessage(L"Error in LUA: invalid unit provided to function getSkillData");
+    g_pMainGameRoot->m_pLocalClient->getDebug()->notifyErrorMessage("Error in LUA: invalid unit provided to function getSkillData");
     return 0;
   }
 
   Skill * pSkill = pUnit->findSkill(skill);
   if (pSkill == NULL)
   {
-    g_pMainGameRoot->m_pLocalClient->getDebug()->notifyErrorMessage(L"Error in LUA: invalid skill provided to function getSkillData");
+    g_pMainGameRoot->m_pLocalClient->getDebug()->notifyErrorMessage("Error in LUA: invalid skill provided to function getSkillData");
     return 0;
   }
 
-  char sName[NAME_MAX_CHARS];
-  wtostr(sName, NAME_MAX_CHARS, pSkill->getObjectName());
-  lua_pushstring(pState, sName);
+  lua_pushstring(pState, pSkill->getObjectName());
   return 1;
 }
 
 int LUA_getTileData(lua_State * pState)
 {
-  int nbParams = checkNumberOfParams(pState, 3, 4, L"getTileData");
+  int nbParams = checkNumberOfParams(pState, 3, 4, "getTileData");
   if (nbParams < 0)
     return 0;
 
@@ -1662,7 +1623,7 @@ int LUA_getTileData(lua_State * pState)
   MapTile * pTile = pMap->getTileAt(CoordsMap(x, y));
   if (pTile == NULL)
   {
-    g_pMainGameRoot->m_pLocalClient->getDebug()->notifyErrorMessage(L"Error in LUA: invalid coords provided to function getTileData");
+    g_pMainGameRoot->m_pLocalClient->getDebug()->notifyErrorMessage("Error in LUA: invalid coords provided to function getTileData");
     return 0;
   }
 
@@ -1674,15 +1635,13 @@ int LUA_getTileData(lua_State * pState)
   }
   else
   {
-    wchar_t sName[64];
-    strtow(sName, 64, varname);
     bool bFound;
-    double val = pTile->getValue(sName, bBase, &bFound);
+    double val = pTile->getValue(varname, bBase, &bFound);
     if (bFound)
       lua_pushnumber(pState, val);
     else
     {
-      g_pMainGameRoot->m_pLocalClient->getDebug()->notifyErrorMessage(L"Lua interaction error in function getTileData: variable not found.");
+      g_pMainGameRoot->m_pLocalClient->getDebug()->notifyErrorMessage("Lua interaction error in function getTileData: variable not found.");
       return 0;
     }
   }
@@ -1691,10 +1650,10 @@ int LUA_getTileData(lua_State * pState)
 
 int LUA_setTileData(lua_State * pState)
 {
-  Server * pServer = checkServerResolving(L"setTileData");
+  Server * pServer = checkServerResolving("setTileData");
   if (pServer == NULL)
     return 0;
-  if (!checkNumberOfParams(pState, 4, L"setTileData"))
+  if (!checkNumberOfParams(pState, 4, "setTileData"))
     return 0;
 
   int x = (int) lua_tonumber(pState, 1);
@@ -1702,7 +1661,7 @@ int LUA_setTileData(lua_State * pState)
   MapTile * pTile = pServer->getMap()->getTileAt(CoordsMap(x, y));
   if (pTile == NULL)
   {
-    g_pMainGameRoot->m_pLocalClient->getDebug()->notifyErrorMessage(L"Error in LUA: invalid coords provided to function setTileData");
+    g_pMainGameRoot->m_pLocalClient->getDebug()->notifyErrorMessage("Error in LUA: invalid coords provided to function setTileData");
     return 0;
   }
 
@@ -1725,13 +1684,11 @@ int LUA_setTileData(lua_State * pState)
         return 0;
       }
     }
-    g_pMainGameRoot->m_pLocalClient->getDebug()->notifyErrorMessage(L"Error in LUA: unrecognize terrain type in setTileData");
+    g_pMainGameRoot->m_pLocalClient->getDebug()->notifyErrorMessage("Error in LUA: unrecognize terrain type in setTileData");
     return 0;
   }
   else
   {
-    wchar_t sName[64];
-    strtow(sName, 64, varname);
     double d = lua_tonumber(pState, 4);
 
     if (g_bLuaEvaluationMode) {
@@ -1740,18 +1697,18 @@ int LUA_setTileData(lua_State * pState)
       return 0;
     }
 
-    if (!pTile->setBaseValue(sName, d))
-      pServer->getDebug()->notifyErrorMessage(L"Lua interaction error in function setTileData: variable not found.");
+    if (!pTile->setBaseValue(varname, d))
+      pServer->getDebug()->notifyErrorMessage("Lua interaction error in function setTileData: variable not found.");
   }
   return 0;
 }
 
 int LUA_teleport(lua_State * pState)
 {
-  Server * pServer = checkServerResolving(L"teleport");
+  Server * pServer = checkServerResolving("teleport");
   if (pServer == NULL)
     return 0;
-  int nbParams = checkNumberOfParams(pState, 4, 5, L"teleport");
+  int nbParams = checkNumberOfParams(pState, 4, 5, "teleport");
   if (nbParams < 0)
     return 0;
 
@@ -1762,7 +1719,7 @@ int LUA_teleport(lua_State * pState)
   {
     if (nbParams != 5)
     {
-      g_pMainGameRoot->m_pLocalClient->getDebug()->notifyErrorMessage(L"Lua interaction error: \"teleport\" for unit should receive 5 arguments.");
+      g_pMainGameRoot->m_pLocalClient->getDebug()->notifyErrorMessage("Lua interaction error: \"teleport\" for unit should receive 5 arguments.");
       return 0;
     }
     u8 uPlayerId = (u8) lua_tonumber(pState, 2);
@@ -1771,7 +1728,7 @@ int LUA_teleport(lua_State * pState)
     Player * pPlayer = pServer->getSolver()->findPlayer(uPlayerId);
     if (pPlayer == NULL)
     {
-      g_pMainGameRoot->m_pLocalClient->getDebug()->notifyErrorMessage(L"Lua interaction error: invalid player in function \"teleport\".");
+      g_pMainGameRoot->m_pLocalClient->getDebug()->notifyErrorMessage("Lua interaction error: invalid player in function \"teleport\".");
       return 0;
     }
     pMapObj = pPlayer->findUnit(uUnitId);
@@ -1783,12 +1740,12 @@ int LUA_teleport(lua_State * pState)
   }
   else
   {
-    g_pMainGameRoot->m_pLocalClient->getDebug()->notifyErrorMessage(L"Lua interaction error: object type in \"teleport\" is invalid.");
+    g_pMainGameRoot->m_pLocalClient->getDebug()->notifyErrorMessage("Lua interaction error: object type in \"teleport\" is invalid.");
     return 0;
   }
   if (pMapObj == NULL)
   {
-    g_pMainGameRoot->m_pLocalClient->getDebug()->notifyErrorMessage(L"Lua interaction error: object not found in function \"teleport\".");
+    g_pMainGameRoot->m_pLocalClient->getDebug()->notifyErrorMessage("Lua interaction error: object not found in function \"teleport\".");
     return 0;
   }
   int x = (int) lua_tonumber(pState, iNextParam);
@@ -1806,10 +1763,10 @@ int LUA_teleport(lua_State * pState)
 
 int LUA_resurrect(lua_State * pState)
 {
-  Server * pServer = checkServerResolving(L"resurrect");
+  Server * pServer = checkServerResolving("resurrect");
   if (pServer == NULL)
     return 0;
-  if (!checkNumberOfParams(pState, 2, L"resurrect"))
+  if (!checkNumberOfParams(pState, 2, "resurrect"))
     return 0;
 
   u8 uPlayerId = (u8) lua_tonumber(pState, 1);
@@ -1828,10 +1785,10 @@ int LUA_resurrect(lua_State * pState)
 
 int LUA_addMagicCircle(lua_State * pState)
 {
-  Server * pServer = checkServerResolving(L"addMagicCircle");
+  Server * pServer = checkServerResolving("addMagicCircle");
   if (pServer == NULL)
     return 0;
-  if (!checkNumberOfParams(pState, 3, L"addMagicCircle"))
+  if (!checkNumberOfParams(pState, 3, "addMagicCircle"))
     return 0;
 
   u8 uPlayerId = (u8) lua_tonumber(pState, 1);
@@ -1841,7 +1798,7 @@ int LUA_addMagicCircle(lua_State * pState)
   Player * pPlayer = pServer->getSolver()->findPlayer(uPlayerId);
   if (pPlayer == NULL)
   {
-    g_pMainGameRoot->m_pLocalClient->getDebug()->notifyErrorMessage(L"Lua interaction error: invalid player in function \"addMagicCircle\".");
+    g_pMainGameRoot->m_pLocalClient->getDebug()->notifyErrorMessage("Lua interaction error: invalid player in function \"addMagicCircle\".");
     return 0;
   }
 
@@ -1858,10 +1815,10 @@ int LUA_addMagicCircle(lua_State * pState)
 
 int LUA_removeMagicCircle(lua_State * pState)
 {
-  Server * pServer = checkServerResolving(L"removeMagicCircle");
+  Server * pServer = checkServerResolving("removeMagicCircle");
   if (pServer == NULL)
     return 0;
-  if (!checkNumberOfParams(pState, 2, L"removeMagicCircle"))
+  if (!checkNumberOfParams(pState, 2, "removeMagicCircle"))
     return 0;
 
   u8 uPlayerId = (u8) lua_tonumber(pState, 1);
@@ -1870,7 +1827,7 @@ int LUA_removeMagicCircle(lua_State * pState)
   Player * pPlayer = pServer->getSolver()->findPlayer(uPlayerId);
   if (pPlayer == NULL)
   {
-    g_pMainGameRoot->m_pLocalClient->getDebug()->notifyErrorMessage(L"Lua interaction error: invalid player in function \"removeMagicCircle\".");
+    g_pMainGameRoot->m_pLocalClient->getDebug()->notifyErrorMessage("Lua interaction error: invalid player in function \"removeMagicCircle\".");
     return 0;
   }
 
@@ -1886,15 +1843,13 @@ int LUA_removeMagicCircle(lua_State * pState)
 
 int LUA_recallSpell(lua_State * pState)
 {
-  Server * pServer = checkServerResolving(L"recallSpell");
+  Server * pServer = checkServerResolving("recallSpel");
   if (pServer == NULL)
     return 0;
-  if (!checkNumberOfParams(pState, 3, L"recallSpell"))
+  if (!checkNumberOfParams(pState, 3, "recallSpel"))
     return 0;
 
-  wchar_t sType[64];
   const char * objtype = lua_tostring(pState, 1);
-  strtow(sType, 64, objtype);
   u8 uPlayerId = (u8) lua_tonumber(pState, 2);
   u32 id = (u32) lua_tonumber(pState, 3);
 
@@ -1904,16 +1859,16 @@ int LUA_recallSpell(lua_State * pState)
     return 0;
   }
 
-  pServer->getSolver()->getSpellsSolver()->onRecallSpell(sType, uPlayerId, id);
+  pServer->getSolver()->getSpellsSolver()->onRecallSpell(objtype, uPlayerId, id);
   return 0;
 }
 
 int LUA_addGoldToPlayer(lua_State * pState)
 {
-  Server * pServer = checkServerResolving(L"addGoldToPlayer");
+  Server * pServer = checkServerResolving("addGoldToPlayer");
   if (pServer == NULL)
     return 0;
-  if (!checkNumberOfParams(pState, 2, L"addGoldToPlayer"))
+  if (!checkNumberOfParams(pState, 2, "addGoldToPlayer"))
     return 0;
 
   u8 uPlayerId = (u8) lua_tonumber(pState, 1);
@@ -1931,16 +1886,14 @@ int LUA_addGoldToPlayer(lua_State * pState)
 
 int LUA_addSpellToPlayer(lua_State * pState)
 {
-  Server * pServer = checkServerResolving(L"addSpellToPlayer");
+  Server * pServer = checkServerResolving("addSpellToPlayer");
   if (pServer == NULL)
     return 0;
-  if (!checkNumberOfParams(pState, 2, L"addSpellToPlayer"))
+  if (!checkNumberOfParams(pState, 2, "addSpellToPlayer"))
     return 0;
 
   u8 uPlayerId = (u8) lua_tonumber(pState, 1);
-  wchar_t sName[64];
   const char * name = lua_tostring(pState, 2);
-  strtow(sName, 64, name);
 
   if (g_bLuaEvaluationMode) {
     Server * pServer = g_pMainGameRoot->m_pLocalClient->getServer();
@@ -1948,22 +1901,20 @@ int LUA_addSpellToPlayer(lua_State * pState)
     return 0;
   }
 
-  pServer->getSolver()->getSpellsSolver()->onAddSpellToPlayer(uPlayerId, sName);
+  pServer->getSolver()->getSpellsSolver()->onAddSpellToPlayer(uPlayerId, name);
   return 0;
 }
 
 int LUA_addArtifactToPlayer(lua_State * pState)
 {
-  Server * pServer = checkServerResolving(L"addArtifactToPlayer");
+  Server * pServer = checkServerResolving("addArtifactToPlayer");
   if (pServer == NULL)
     return 0;
-  if (!checkNumberOfParams(pState, 2, L"addArtifactToPlayer"))
+  if (!checkNumberOfParams(pState, 2, "addArtifactToPlayer"))
     return 0;
 
   u8 uPlayerId = (u8) lua_tonumber(pState, 1);
-  wchar_t sName[64];
   const char * name = lua_tostring(pState, 2);
-  strtow(sName, 64, name);
 
   if (g_bLuaEvaluationMode) {
     Server * pServer = g_pMainGameRoot->m_pLocalClient->getServer();
@@ -1971,22 +1922,20 @@ int LUA_addArtifactToPlayer(lua_State * pState)
     return 0;
   }
 
-  pServer->getSolver()->getSpellsSolver()->onAddArtifactToPlayer(uPlayerId, sName);
+  pServer->getSolver()->getSpellsSolver()->onAddArtifactToPlayer(uPlayerId, name);
   return 0;
 }
 
 int LUA_addShahmahToPlayer(lua_State * pState)
 {
-  Server * pServer = checkServerResolving(L"addShahmahToPlayer");
+  Server * pServer = checkServerResolving("addShahmahToPlayer");
   if (pServer == NULL)
     return 0;
-  if (!checkNumberOfParams(pState, 2, L"addShahmahToPlayer"))
+  if (!checkNumberOfParams(pState, 2, "addShahmahToPlayer"))
     return 0;
 
   u8 uPlayerId = (u8) lua_tonumber(pState, 1);
-  wchar_t sName[64];
   const char * name = lua_tostring(pState, 2);
-  strtow(sName, 64, name);
 
   if (g_bLuaEvaluationMode) {
     Server * pServer = g_pMainGameRoot->m_pLocalClient->getServer();
@@ -1994,12 +1943,12 @@ int LUA_addShahmahToPlayer(lua_State * pState)
     return 0;
   }
 
-  pServer->getSolver()->getSpellsSolver()->onAddAvatarToPlayer(uPlayerId, sName);
+  pServer->getSolver()->getSpellsSolver()->onAddAvatarToPlayer(uPlayerId, name);
   return 0;
 }
 
 int LUA_getUnitStatus(lua_State * pState) {
-  if (!checkNumberOfParams(pState, 2, L"getUnitStatus"))
+  if (!checkNumberOfParams(pState, 2, "getUnitStatus"))
     return 0;
 
   u8 uPlayerId = (u8)lua_tonumber(pState, 1);
@@ -2018,27 +1967,27 @@ int LUA_getUnitStatus(lua_State * pState) {
         break;
       case US_Normal:
       default:
-        lua_pushstring(pState, "normal");
+        lua_pushstring(pState, "norma");
         break;
       }
       return 1;
     }
     else {
-      wchar_t sError[512] = L"";
-      swprintf(sError, 512, L"Lua interaction error in function getUnitStatus: unit not found.");
+      char sError[512] = "";
+      snprintf(sError, 512, "Lua interaction error in function getUnitStatus: unit not found.");
       g_pMainGameRoot->m_pLocalClient->getDebug()->notifyErrorMessage(sError);
     }
   }
   else {
-    wchar_t sError[512] = L"";
-    swprintf(sError, 512, L"Lua interaction error in function getUnitStatus: player not found.");
+    char sError[512] = "";
+    snprintf(sError, 512, "Lua interaction error in function getUnitStatus: player not found.");
     g_pMainGameRoot->m_pLocalClient->getDebug()->notifyErrorMessage(sError);
   }
   return 0;
 }
 
 int LUA_getUnitNameAndEdition(lua_State * pState) {
-  if (!checkNumberOfParams(pState, 2, L"getUnitNameAndEdition"))
+  if (!checkNumberOfParams(pState, 2, "getUnitNameAndEdition"))
     return 0;
 
   u8 uPlayerId = (u8)lua_tonumber(pState, 1);
@@ -2047,33 +1996,29 @@ int LUA_getUnitNameAndEdition(lua_State * pState) {
   if (pPlayer != NULL) {
     Unit * pUnit = pPlayer->findUnit(uUnitId);
     if (pUnit != NULL) {
-      char sName[NAME_MAX_CHARS] = "";
-      char sEdition[NAME_MAX_CHARS] = "";
-      wtostr(sName, NAME_MAX_CHARS, pUnit->getUnitModelId());
-      wtostr(sEdition, NAME_MAX_CHARS, pUnit->getUnitEdition());
-      lua_pushstring(pState, sName);
-      lua_pushstring(pState, sEdition);
+      lua_pushstring(pState, pUnit->getUnitModelId());
+      lua_pushstring(pState, pUnit->getUnitEdition());
       return 2;
     }
     else {
-      wchar_t sError[512] = L"";
-      swprintf(sError, 512, L"Lua interaction error in function getUnitNameAndEdition: unit not found.");
+      char sError[512] = "";
+      snprintf(sError, 512, "Lua interaction error in function getUnitNameAndEdition: unit not found.");
       g_pMainGameRoot->m_pLocalClient->getDebug()->notifyErrorMessage(sError);
     }
   }
   else {
-    wchar_t sError[512] = L"";
-    swprintf(sError, 512, L"Lua interaction error in function getUnitNameAndEdition: player not found.");
+    char sError[512] = "";
+    snprintf(sError, 512, "Lua interaction error in function getUnitNameAndEdition: player not found.");
     g_pMainGameRoot->m_pLocalClient->getDebug()->notifyErrorMessage(sError);
   }
   return 0;
 }
 
 int LUA_removeUnit(lua_State * pState) {
-  Server * pServer = checkServerResolving(L"removeUnit");
+  Server * pServer = checkServerResolving("removeUnit");
   if (pServer == NULL)
     return 0;
-  if (!checkNumberOfParams(pState, 2, L"removeUnit"))
+  if (!checkNumberOfParams(pState, 2, "removeUnit"))
     return 0;
 
   u8 uPlayerId = (u8)lua_tonumber(pState, 1);
@@ -2090,7 +2035,7 @@ int LUA_removeUnit(lua_State * pState) {
 }
 
 int LUA_getMapDimensions(lua_State * pState) {
-  if (!checkNumberOfParams(pState, 0, L"getMapDimensions"))
+  if (!checkNumberOfParams(pState, 0, "getMapDimensions"))
     return 0;
 
   Map * pMap = getServerOrLocalMap();
@@ -2102,55 +2047,27 @@ int LUA_getMapDimensions(lua_State * pState) {
 u8 getTargetTypeFromName(const char * sType)
 {
   u8 uType = 0;
-  if (_stricmp(sType, "unit") == 0)
+  if (strcasecmp(sType, "unit") == 0)
     uType = SELECT_TYPE_UNIT;
-  else if (_stricmp(sType, "dead_unit") == 0)
+  else if (strcasecmp(sType, "dead_unit") == 0)
     uType = SELECT_TYPE_DEAD_UNIT;
-  else if (_stricmp(sType, "town") == 0)
+  else if (strcasecmp(sType, "town") == 0)
     uType = SELECT_TYPE_TOWN;
-  else if (_stricmp(sType, "temple") == 0)
+  else if (strcasecmp(sType, "temple") == 0)
     uType = SELECT_TYPE_TEMPLE;
-  else if (_stricmp(sType, "building") == 0)
+  else if (strcasecmp(sType, "building") == 0)
     uType = SELECT_TYPE_BUILDING;
-  else if (_stricmp(sType, "spell_in_play") == 0)
+  else if (strcasecmp(sType, "spell_in_play") == 0)
     uType = SELECT_TYPE_SPELL_IN_PLAY;
-  else if (_stricmp(sType, "spell_in_hand") == 0)
+  else if (strcasecmp(sType, "spell_in_hand") == 0)
     uType = SELECT_TYPE_SPELL_IN_HAND;
-  else if (_stricmp(sType, "spell_in_deck") == 0)
+  else if (strcasecmp(sType, "spell_in_deck") == 0)
     uType = SELECT_TYPE_SPELL_IN_DECK;
-  else if (_stricmp(sType, "spell_in_discard") == 0)
+  else if (strcasecmp(sType, "spell_in_discard") == 0)
     uType = SELECT_TYPE_SPELL_IN_DISCARD;
-  else if (_stricmp(sType, "tile") == 0)
+  else if (strcasecmp(sType, "tile") == 0)
     uType = SELECT_TYPE_TILE;
-  else if (_stricmp(sType, "player") == 0)
-    uType = SELECT_TYPE_PLAYER;
-  return uType;
-}
-
-u8 getTargetTypeFromName(const wchar_t * sType)
-{
-  u8 uType = 0;
-  if (_wcsicmp(sType, L"unit") == 0)
-    uType = SELECT_TYPE_UNIT;
-  else if (_wcsicmp(sType, L"dead_unit") == 0)
-    uType = SELECT_TYPE_DEAD_UNIT;
-  else if (_wcsicmp(sType, L"town") == 0)
-    uType = SELECT_TYPE_TOWN;
-  else if (_wcsicmp(sType, L"temple") == 0)
-    uType = SELECT_TYPE_TEMPLE;
-  else if (_wcsicmp(sType, L"building") == 0)
-    uType = SELECT_TYPE_BUILDING;
-  else if (_wcsicmp(sType, L"spell_in_play") == 0)
-    uType = SELECT_TYPE_SPELL_IN_PLAY;
-  else if (_wcsicmp(sType, L"spell_in_hand") == 0)
-    uType = SELECT_TYPE_SPELL_IN_HAND;
-  else if (_wcsicmp(sType, L"spell_in_deck") == 0)
-    uType = SELECT_TYPE_SPELL_IN_DECK;
-  else if (_wcsicmp(sType, L"spell_in_discard") == 0)
-    uType = SELECT_TYPE_SPELL_IN_DISCARD;
-  else if (_wcsicmp(sType, L"tile") == 0)
-    uType = SELECT_TYPE_TILE;
-  else if (_wcsicmp(sType, L"player") == 0)
+  else if (strcasecmp(sType, "player") == 0)
     uType = SELECT_TYPE_PLAYER;
   return uType;
 }
@@ -2172,8 +2089,8 @@ void registerLuaCallbacks(lua_State * pState)
 	lua_register(pState, "attachToTown", LUA_attachToTown);
 	lua_register(pState, "attachToTemple", LUA_attachToTemple);
 	lua_register(pState, "attachToTile", LUA_attachToTile);
-	lua_register(pState, "attachAsGlobal", LUA_attachAsGlobal);
-	lua_register(pState, "detachFromGlobal", LUA_detachFromGlobal);
+	lua_register(pState, "attachAsGloba", LUA_attachAsGlobal);
+	lua_register(pState, "detachFromGloba", LUA_detachFromGlobal);
 	lua_register(pState, "addChildEffectToUnit", LUA_addChildEffectToUnit);
 	lua_register(pState, "removeChildEffectFromUnit", LUA_removeChildEffectFromUnit);
 	lua_register(pState, "addChildEffectToTown", LUA_addChildEffectToTown);
@@ -2181,10 +2098,10 @@ void registerLuaCallbacks(lua_State * pState)
 	lua_register(pState, "getUnitData", LUA_getUnitData);
 	lua_register(pState, "getUnitBaseData", LUA_getUnitBaseData);
 	lua_register(pState, "setUnitData", LUA_setUnitData);
-	lua_register(pState, "drawSpell", LUA_drawSpell);
-	lua_register(pState, "discardActiveSpell", LUA_discardActiveSpell);
-	lua_register(pState, "discardDeckSpell", LUA_discardDeckSpell);
-	lua_register(pState, "discardHandSpell", LUA_discardHandSpell);
+	lua_register(pState, "drawSpel", LUA_drawSpell);
+	lua_register(pState, "discardActiveSpel", LUA_discardActiveSpell);
+	lua_register(pState, "discardDeckSpel", LUA_discardDeckSpell);
+	lua_register(pState, "discardHandSpel", LUA_discardHandSpell);
 	lua_register(pState, "produceMana", LUA_produceMana);
 	lua_register(pState, "getAttacker", LUA_getAttacker);
 	lua_register(pState, "getDefender", LUA_getDefender);
@@ -2207,7 +2124,7 @@ void registerLuaCallbacks(lua_State * pState)
 	lua_register(pState, "getUnitsList", LUA_getUnitsList);
 	lua_register(pState, "getSkillsList", LUA_getSkillsList);
 	lua_register(pState, "getTownsList", LUA_getTownsList);
-	lua_register(pState, "deactivateSkill", LUA_deactivateSkill);
+	lua_register(pState, "deactivateSkil", LUA_deactivateSkill);
 	lua_register(pState, "changeSpellOwner", LUA_changeSpellOwner);
 	lua_register(pState, "changeUnitOwner", LUA_changeUnitOwner);
 	lua_register(pState, "changeTownOwner", LUA_changeTownOwner);
@@ -2226,7 +2143,7 @@ void registerLuaCallbacks(lua_State * pState)
 	lua_register(pState, "resurrect", LUA_resurrect);
 	lua_register(pState, "addMagicCircle", LUA_addMagicCircle);
 	lua_register(pState, "removeMagicCircle", LUA_removeMagicCircle);
-	lua_register(pState, "recallSpell", LUA_recallSpell);
+	lua_register(pState, "recallSpel", LUA_recallSpell);
 	lua_register(pState, "addGoldToPlayer", LUA_addGoldToPlayer);
 	lua_register(pState, "addSpellToPlayer", LUA_addSpellToPlayer);
 	lua_register(pState, "addArtifactToPlayer", LUA_addArtifactToPlayer);

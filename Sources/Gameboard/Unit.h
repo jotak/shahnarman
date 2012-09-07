@@ -57,7 +57,7 @@ public:
   // MapObject virtual functions
   virtual short getMoveCost(unsigned char terrainType);
   virtual int getTexture();
-  virtual void updateIdentifiers() { swprintf(m_sIdentifiers, 16, L"unit %d %ld", (int) m_uOwner, (long) m_uUnitId); };
+  virtual void updateIdentifiers() { snprintf(m_sIdentifiers, 16, "unit %d %ld", (int) m_uOwner, (long) m_uUnitId); };
 
   // Move related function
   virtual void resetMoveData();
@@ -78,13 +78,13 @@ public:
   ChildEffect * getSkillOrder();
 
   // Other functions
-  virtual wchar_t * getInfo(wchar_t * sBuf, int iSize, InfoDest eDest);
+  virtual char * getInfo(char * sBuf, int iSize, InfoDest eDest);
   void addSkill(Skill * pSkill);
-  void setNameDescriptionTexture(wchar_t * sName, wchar_t * sDesc, wchar_t * sTex); // for avatar only
+  void setNameDescriptionTexture(char * sName, char * sDesc, char * sTex); // for avatar only
 
   // Member access
   u32 getId() { return m_uUnitId; };
-  wchar_t * getName() { return m_sName; };
+  char * getName() { return m_sName; };
   CoordsMap getDestination();
   CoordsMap getPathTurnPosition() { return ((AStarStep*) m_pAStarPath->getCurrent(m_iPathTurnIterator))->pos; };
   ObjectList * getPath() { return m_pAStarPath; };
@@ -94,9 +94,9 @@ public:
   MetaObjectList * getGroup() { return m_pGroup; };
   ObjectList * getSkillsRef() { return m_pSkillsRef; };
   void setPlayerColor(F_RGBA color) { m_PlayerColor = color; };
-  virtual long getValue(const wchar_t * sName, bool bBase = false, bool * bFound = NULL);
-  wchar_t * getUnitModelId() { return m_sUnitId; };
-  wchar_t * getUnitEdition() { return m_sEdition; };
+  virtual long getValue(const char * sName, bool bBase = false, bool * bFound = NULL);
+  char * getUnitModelId() { return m_sUnitId; };
+  char * getUnitEdition() { return m_sEdition; };
 
   // find data
   Skill * findSkill(u32 uSkillId, bool * isActive = NULL);
@@ -105,7 +105,7 @@ public:
 
   // Server-side functions only
   void init(u32 uUnitId, u8 uPlayerId, UnitData * pData, DebugManager * pDebug);
-  bool setBaseValue(const wchar_t * sName, long val);
+  bool setBaseValue(const char * sName, long val);
   void setMapPos(CoordsMap coords);
   void setHasAttacked(bool bHasAttacked) { m_bHasAttacked = bHasAttacked; };
   bool canAttack() { return !m_bHasAttacked && m_Status == US_Normal; };
@@ -121,11 +121,11 @@ protected:
 
   // Permanent data
   u32 m_uUnitId;                      // UnitId identify uniquely this unit on the gameboard
-  wchar_t m_sUnitId[NAME_MAX_CHARS];  // this identifies the unit's model
-  wchar_t m_sEdition[NAME_MAX_CHARS];
-  wchar_t m_sName[NAME_MAX_CHARS];
-  wchar_t m_sDescription[DESCRIPTION_MAX_CHARS];
-  wchar_t m_sTexture[MAX_PATH];
+  char m_sUnitId[NAME_MAX_CHARS];  // this identifies the unit's model
+  char m_sEdition[NAME_MAX_CHARS];
+  char m_sName[NAME_MAX_CHARS];
+  char m_sDescription[DESCRIPTION_MAX_CHARS];
+  char m_sTexture[MAX_PATH];
 
   // Less permanent data
   UnitStatus m_Status;

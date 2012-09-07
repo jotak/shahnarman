@@ -38,20 +38,20 @@ public:
   void setFontId(FontId id) { m_FontId = id; };
   void setTextColor(F_RGBA textColor) { m_TextColor = textColor; };
   F_RGBA getTextColor() { return m_TextColor; };
-  void setText(const wchar_t * sText);
-  wchar_t * getText() { return m_sText; };
+  void setText(const char * sText);
+  char * getText() { return m_sText; };
   void setNbLines(int iNbLines) { m_iNbLines = iNbLines; };
   int getNbLines() { return m_iNbLines; };
 
   // Clone / init
-  virtual void init(int iCaretTex, const wchar_t * sText, FontId fontId, F_RGBA textColor, int iNbLines, bool bMultiLines, int * iMainTexs, const wchar_t * sCpntId, int xPxl, int yPxl, int wPxl, int hPxl, DisplayEngine * pDisplay);
+  virtual void init(int iCaretTex, const char * sText, FontId fontId, F_RGBA textColor, int iNbLines, bool bMultiLines, int * iMainTexs, const char * sCpntId, int xPxl, int yPxl, int wPxl, int hPxl, DisplayEngine * pDisplay);
   virtual guiObject * clone();
 
   // Other
   void setFocus();
 
   // Static default constructors
-  static guiEditBox * createDefaultEditBox(int iNbLines, bool bMultiLines, int wPxl, const wchar_t * sId, KeyboardInputEngine * pInputs, DisplayEngine * pDisplay);
+  static guiEditBox * createDefaultEditBox(int iNbLines, bool bMultiLines, int wPxl, const char * sId, KeyboardInputEngine * pInputs, DisplayEngine * pDisplay);
 
 protected:
   void updateSelectionGeometry();
@@ -69,7 +69,7 @@ protected:
   GeometryQuads * m_pSelectionGeometry;
   int m_iNbLines;
   bool m_bMultiLines;
-  wchar_t m_sText[LABEL_MAX_CHARS];
+  char m_sText[LABEL_MAX_CHARS];
   FontId m_FontId;
   F_RGBA m_TextColor;
   int m_iCaretPos;

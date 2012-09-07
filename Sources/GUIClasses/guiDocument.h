@@ -26,8 +26,8 @@ public:
   virtual void onResize(int iOldWidth, int iOldHeight);
 
   // Creation process functions
-  void setTitle(const wchar_t * sTitle) { wsafecpy(m_sTitle, 32, sTitle); };
-  void setTitleId(const wchar_t * sTitleId);
+  void setTitle(const char * sTitle) { wsafecpy(m_sTitle, 32, sTitle); };
+  void setTitleId(const char * sTitleId);
 
   // Components management
   void addComponent(guiComponent * cpnt);
@@ -41,15 +41,15 @@ public:
   guiComponent * deleteCurrentComponent(bool bSetToNext);
   guiComponent * getComponentAt(int xPxl, int yPxl);
   ObjectList * getComponentsList() { return m_pComponentsList; };
-  guiComponent * getComponent(const wchar_t * cpntId);
+  guiComponent * getComponent(const char * cpntId);
 
   // Other member access functions
-  wchar_t * getTitle() { return m_sTitle; };
+  char * getTitle() { return m_sTitle; };
   void setFocusedComponent(guiComponent * pCpnt);
   guiComponent * getFocusedComponent() { return m_pFocusedComponent; };
   bool isEnabled() { return m_bEnabled; };
   void setEnabled(bool bEnabled) { m_bEnabled = bEnabled; };
-  void doClick(const wchar_t * sCpntId);
+  void doClick(const char * sCpntId);
 
   // Handlers
   virtual void onLoad() {};
@@ -68,11 +68,11 @@ public:
   void setOwner(guiContainer * pOwner) { m_pOwner = pOwner; };
 
   // Clone / init
-  virtual void init(const wchar_t * sTitle, int iTexId, int xPxl, int yPxl, int wPxl, int hPxl, DisplayEngine * pDisplay);
+  virtual void init(const char * sTitle, int iTexId, int xPxl, int yPxl, int wPxl, int hPxl, DisplayEngine * pDisplay);
   virtual guiObject * clone();
 
 protected:
-  wchar_t m_sTitle[32];
+  char m_sTitle[32];
   guiComponent * m_pFocusedComponent;
   bool m_bNeedDestroy;
   bool m_bContentChanged;

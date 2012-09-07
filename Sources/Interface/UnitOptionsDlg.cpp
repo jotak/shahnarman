@@ -23,33 +23,33 @@ UnitOptionsDlg::UnitOptionsDlg(LocalClient * pLocalClient) : guiDocument()
   m_pLocalClient = pLocalClient;
   setEnabled(false);
 
-  wchar_t sTitle[64];
-  i18n->getText(L"UNIT_OPTIONS", sTitle, 64);
+  char sTitle[64];
+  i18n->getText("UNIT_OPTIONS", sTitle, 64);
   init(sTitle,
-    pLocalClient->getDisplay()->getTextureEngine()->findTexture(L"interface:WinBg"),
+    pLocalClient->getDisplay()->getTextureEngine()->findTexture("interface:WinBg"),
     0, 0, 3 * BUTTON_SIZE + 2 * SPACING, BUTTON_SIZE, pLocalClient->getDisplay());
 
-  i18n->getText(L"DEFEND", sTitle, 64);
+  i18n->getText("DEFEND", sTitle, 64);
   guiToggleButton * pBtn = new guiToggleButton();
-  pBtn->init(L"", H2_FONT, H2_COLOR,
-    pLocalClient->getDisplay()->getTextureEngine()->findTexture(L"interface:Selector"),
+  pBtn->init("", H2_FONT, H2_COLOR,
+    pLocalClient->getDisplay()->getTextureEngine()->findTexture("interface:Selector"),
     BCO_AddTex, -1, BCO_Decal,
-    pLocalClient->getDisplay()->getTextureEngine()->loadTexture(L"defend_icon"),
-    L"FortifyButton", 0, 0, BUTTON_SIZE, BUTTON_SIZE, pLocalClient->getDisplay());
+    pLocalClient->getDisplay()->getTextureEngine()->loadTexture("defend_icon"),
+    "FortifyButton", 0, 0, BUTTON_SIZE, BUTTON_SIZE, pLocalClient->getDisplay());
   pBtn->setTooltipText(sTitle);
   addComponent(pBtn);
 
   pBtn = (guiToggleButton*) pBtn->clone();
-  pBtn->setTooltipText(i18n->getText(L"MOVE_TO", sTitle, 64));
-  pBtn->setNormalTexture(pLocalClient->getDisplay()->getTextureEngine()->loadTexture(L"moveto_icon"));
-  pBtn->setId(L"MoveToButton");
+  pBtn->setTooltipText(i18n->getText("MOVE_TO", sTitle, 64));
+  pBtn->setNormalTexture(pLocalClient->getDisplay()->getTextureEngine()->loadTexture("moveto_icon"));
+  pBtn->setId("MoveToButton");
   pBtn->moveBy(BUTTON_SIZE + SPACING, 0);
   addComponent(pBtn);
 
   pBtn = (guiToggleButton*) pBtn->clone();
-  pBtn->setTooltipText(i18n->getText(L"ATTACK", sTitle, 64));
-  pBtn->setNormalTexture(pLocalClient->getDisplay()->getTextureEngine()->loadTexture(L"attack_icon"));
-  pBtn->setId(L"AttackButton");
+  pBtn->setTooltipText(i18n->getText("ATTACK", sTitle, 64));
+  pBtn->setNormalTexture(pLocalClient->getDisplay()->getTextureEngine()->loadTexture("attack_icon"));
+  pBtn->setId("AttackButton");
   pBtn->moveBy(BUTTON_SIZE + SPACING, 0);
   addComponent(pBtn);
 }
@@ -74,7 +74,7 @@ UnitOptionsDlg::~UnitOptionsDlg()
 bool UnitOptionsDlg::onButtonEvent(ButtonAction * pEvent, guiComponent * pCpnt)
 {
   guiToggleButton * pBtn = (guiToggleButton*)pCpnt;
-  if (wcscmp(pBtn->getId(), L"FortifyButton") == 0)
+  if (strcmp(pBtn->getId(), "FortifyButton") == 0)
   {
     if (pBtn->getClickState())
     {
@@ -86,7 +86,7 @@ bool UnitOptionsDlg::onButtonEvent(ButtonAction * pEvent, guiComponent * pCpnt)
     else
       m_pUnit->getMap()->unsetGroupOrder(m_pUnit);
   }
-  else if (wcscmp(pBtn->getId(), L"MoveToButton") == 0)
+  else if (strcmp(pBtn->getId(), "MoveToButton") == 0)
   {
     if (pBtn->getClickState())
     {
@@ -104,7 +104,7 @@ bool UnitOptionsDlg::onButtonEvent(ButtonAction * pEvent, guiComponent * pCpnt)
       m_pLocalClient->getGameboard()->updateUnitOrder(m_pUnit);
     }
   }
-  else if (wcscmp(pBtn->getId(), L"AttackButton") == 0)
+  else if (strcmp(pBtn->getId(), "AttackButton") == 0)
   {
     if (pBtn->getClickState())
     {
@@ -122,7 +122,7 @@ bool UnitOptionsDlg::onButtonEvent(ButtonAction * pEvent, guiComponent * pCpnt)
       m_pLocalClient->getGameboard()->updateUnitOrder(m_pUnit);
     }
   }
-  else if (wcscmp(pBtn->getId(), L"SkillButton") == 0)
+  else if (strcmp(pBtn->getId(), "SkillButton") == 0)
   {
     if (pBtn->getClickState())
     {
@@ -172,13 +172,13 @@ void UnitOptionsDlg::updateOrder()
   switch (m_pUnit->getOrder())
   {
   case OrderFortify:
-    pSelBtn = (guiToggleButton*) getComponent(L"FortifyButton");
+    pSelBtn = (guiToggleButton*) getComponent("FortifyButton");
     break;
   case OrderMove:
-    pSelBtn = (guiToggleButton*) getComponent(L"MoveToButton");
+    pSelBtn = (guiToggleButton*) getComponent("MoveToButton");
     break;
   case OrderAttack:
-    pSelBtn = (guiToggleButton*) getComponent(L"AttackButton");
+    pSelBtn = (guiToggleButton*) getComponent("AttackButton");
     break;
   case OrderSkill:
     {
@@ -215,7 +215,7 @@ void UnitOptionsDlg::setUnit(Unit * unit)
   guiToggleButton * btn = (guiToggleButton*) getFirstComponent();
   while (btn != NULL)
   {
-    if (wcscmp(btn->getId(), L"SkillButton") == 0)
+    if (strcmp(btn->getId(), "SkillButton") == 0)
       btn = (guiToggleButton*) deleteCurrentComponent(true);
     else
       btn = (guiToggleButton*) getNextComponent();
@@ -238,11 +238,11 @@ void UnitOptionsDlg::setUnit(Unit * unit)
 
           // Create toggle button
           guiToggleButton * pBtn = new guiToggleButton();
-          pBtn->init(L"", H2_FONT, H2_COLOR,
-            getDisplay()->getTextureEngine()->findTexture(L"interface:Selector"),
+          pBtn->init("", H2_FONT, H2_COLOR,
+            getDisplay()->getTextureEngine()->findTexture("interface:Selector"),
             BCO_AddTex, -1, BCO_Decal,
             getDisplay()->getTextureEngine()->loadTexture(pEffect->sIcon),
-            L"SkillButton", xPxl, 0, BUTTON_SIZE, BUTTON_SIZE, getDisplay());
+            "SkillButton", xPxl, 0, BUTTON_SIZE, BUTTON_SIZE, getDisplay());
           pBtn->setAttachment(pEffect);
           pBtn->setTooltipText(pSkill->getLocalizedDescription());
           addComponent(pBtn);

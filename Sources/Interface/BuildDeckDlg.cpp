@@ -38,8 +38,8 @@ BuildDeckDlg::BuildDeckDlg(int iWidth, int iHeight, LocalClient * pLocalClient) 
   m_pEditAvatarCaller = NULL;
   m_pConfirmDelete = NULL;
 
-  init(L"Build deck",
-    pLocalClient->getDisplay()->getTextureEngine()->findTexture(L"interface:WinBg"),
+  init("Build deck",
+    pLocalClient->getDisplay()->getTextureEngine()->findTexture("interface:WinBg"),
     0, 0, iWidth, iHeight, m_pLocalClient->getDisplay());
 
   // Object popup
@@ -62,47 +62,47 @@ BuildDeckDlg::BuildDeckDlg(int iWidth, int iHeight, LocalClient * pLocalClient) 
 
   // Banner icon
   int yPxl = 0;
-  wchar_t sText[LABEL_MAX_CHARS];
-  int iTex = m_pLocalClient->getDisplay()->getTextureEngine()->loadTexture(L"blason1");
-  guiButton * pBtn1 = guiButton::createDefaultImageButton(iTex, L"Banner", getDisplay());
+  char sText[LABEL_MAX_CHARS];
+  int iTex = m_pLocalClient->getDisplay()->getTextureEngine()->loadTexture("blason1");
+  guiButton * pBtn1 = guiButton::createDefaultImageButton(iTex, "Banner", getDisplay());
   pBtn1->moveTo(0, yPxl);
-  pBtn1->setTooltipText(i18n->getText(L"CLICK_TO_CHANGE_BANNER", sText, LABEL_MAX_CHARS));
+  pBtn1->setTooltipText(i18n->getText("CLICK_TO_CHANGE_BANNER", sText, LABEL_MAX_CHARS));
   addComponent(pBtn1);
   int bannerWidth = pBtn1->getWidth();
 
   // Level up?
-  pBtn1 = guiButton::createDefaultWhiteButton(L"", 32, 32, L"LevelUp", getDisplay());
+  pBtn1 = guiButton::createDefaultWhiteButton("", 32, 32, "LevelUp", getDisplay());
   pBtn1->moveTo(iWidth - 32, yPxl);
   addComponent(pBtn1);
-  pBtn1->attachImage(getDisplay()->getTextureEngine()->loadTexture(L"levelup"));
-  i18n->getText(L"LEVEL_UP", sText, LABEL_MAX_CHARS);
+  pBtn1->attachImage(getDisplay()->getTextureEngine()->loadTexture("levelup"));
+  i18n->getText("LEVEL_UP", sText, LABEL_MAX_CHARS);
   pBtn1->setTooltipText(sText);
 
   // Create top label 2
   guiLabel * pLbl = new guiLabel();
-  pLbl->init(L"_", H2_FONT, H2_COLOR, L"TopLabel2", 0, 0, 0, 0, pLocalClient->getDisplay());
+  pLbl->init("_", H2_FONT, H2_COLOR, "TopLabel2", 0, 0, 0, 0, pLocalClient->getDisplay());
   pLbl->moveTo(0, 7);
   addComponent(pLbl);
 
   // Avatars list panel
-  m_pAvatarsPanel = guiContainer::createDefaultPanel(iWidth - 2 * (bannerWidth + SPACING), 36, L"AvatarsPanel", pLocalClient->getDisplay());
+  m_pAvatarsPanel = guiContainer::createDefaultPanel(iWidth - 2 * (bannerWidth + SPACING), 36, "AvatarsPane", pLocalClient->getDisplay());
   m_pAvatarsPanel->moveTo(bannerWidth + SPACING, yPxl);
   addComponent(m_pAvatarsPanel);
 
   // Create top label 1
   yPxl += m_pAvatarsPanel->getHeight() + 2 * SPACING;
   pLbl = new guiLabel();
-  pLbl->init(L"_", H1_FONT, H1_COLOR, L"TopLabel1", 0, 0, 0, 0, pLocalClient->getDisplay());
-  pLbl->setTooltipText(i18n->getText(L"CLICK_TO_EDIT_NAME_DESCR", sText, LABEL_MAX_CHARS));
+  pLbl->init("_", H1_FONT, H1_COLOR, "TopLabel1", 0, 0, 0, 0, pLocalClient->getDisplay());
+  pLbl->setTooltipText(i18n->getText("CLICK_TO_EDIT_NAME_DESCR", sText, LABEL_MAX_CHARS));
   pLbl->setCatchClicks(true);
   pLbl->moveTo((getWidth() - pLbl->getWidth()) / 2, yPxl);
   addComponent(pLbl);
 
   // Button delete
-  iTex = pLocalClient->getDisplay()->getTextureEngine()->loadTexture(L"delete");
-  guiButton * pBtn2 = guiButton::createDefaultImageButton(iTex, L"DeleteAvatar", pLocalClient->getDisplay());
+  iTex = pLocalClient->getDisplay()->getTextureEngine()->loadTexture("delete");
+  guiButton * pBtn2 = guiButton::createDefaultImageButton(iTex, "DeleteAvatar", pLocalClient->getDisplay());
   pBtn2->moveTo(pLbl->getXPos() + pLbl->getWidth() + 2*SPACING, yPxl + 3);
-  pBtn2->setTooltipText(i18n->getText(L"DELETE_AVATAR", sText, LABEL_MAX_CHARS));
+  pBtn2->setTooltipText(i18n->getText("DELETE_AVATAR", sText, LABEL_MAX_CHARS));
   addComponent(pBtn2);
 
   int buttonSize = 32;
@@ -110,155 +110,155 @@ BuildDeckDlg::BuildDeckDlg(int iWidth, int iHeight, LocalClient * pLocalClient) 
 
   // Create label "Filters"
   yPxl += pLbl->getHeight() + 23;
-  wchar_t str[64];
-  i18n->getText(L"FILTERS", str, 64);
+  char str[64];
+  i18n->getText("FILTERS", str, 64);
   pLbl = new guiLabel();
-  pLbl->init(str, H2_FONT, H2_COLOR, L"FiltersLabel", 0, 0, 0, 0, pLocalClient->getDisplay());
+  pLbl->init(str, H2_FONT, H2_COLOR, "FiltersLabe", 0, 0, 0, 0, pLocalClient->getDisplay());
   addComponent(pLbl);
   int xPxl = SPACING;
   pLbl->moveTo(xPxl, yPxl);
 
   // Tooltip texts for following buttons
-  wchar_t sTooltip[128];
-  wchar_t sInclude[64];
-  wchar_t sWord[64];
+  char sTooltip[128];
+  char sInclude[64];
+  char sWord[64];
   void * pPhraseArgs[2];
   pPhraseArgs[0] = sInclude;
   pPhraseArgs[1] = sWord;
-  i18n->getText(L"INCLUDE", sInclude, 64);
+  i18n->getText("INCLUDE", sInclude, 64);
   xPxl = pLbl->getWidth() + 2 * SPACING;
   yPxl -= 8;
 
   // Create life filter button
   guiToggleButton * pBtn = guiToggleButton::createDefaultTexturedToggleButton(
-    pLocalClient->getDisplay()->getTextureEngine()->loadTexture(L"mana_1000"),
-    buttonSize, L"LifeButton", pLocalClient->getDisplay());
+    pLocalClient->getDisplay()->getTextureEngine()->loadTexture("mana_1000"),
+    buttonSize, "LifeButton", pLocalClient->getDisplay());
   pBtn->moveTo(xPxl, yPxl);
   pBtn->setClickState(true);
-  i18n->getTextUp(L"LIFE", sWord, 64);
-  i18n->getText(L"_(1s)_SPELLS_TYPE_(2s)_", sTooltip, 128, pPhraseArgs);
+  i18n->getTextUp("LIFE", sWord, 64);
+  i18n->getText("_(1s)_SPELLS_TYPE_(2s)_", sTooltip, 128, pPhraseArgs);
   pBtn->setTooltipText(sTooltip);
   addComponent(pBtn);
   xPxl += buttonSize + SPACING;
 
   // Create law filter button
   pBtn = guiToggleButton::createDefaultTexturedToggleButton(
-    pLocalClient->getDisplay()->getTextureEngine()->loadTexture(L"mana_0100"),
-    buttonSize, L"LawButton", pLocalClient->getDisplay());
+    pLocalClient->getDisplay()->getTextureEngine()->loadTexture("mana_0100"),
+    buttonSize, "LawButton", pLocalClient->getDisplay());
   pBtn->moveTo(xPxl, yPxl);
   pBtn->setClickState(true);
-  i18n->getTextUp(L"LAW", sWord, 64);
-  i18n->getText(L"_(1s)_SPELLS_TYPE_(2s)_", sTooltip, 128, pPhraseArgs);
+  i18n->getTextUp("LAW", sWord, 64);
+  i18n->getText("_(1s)_SPELLS_TYPE_(2s)_", sTooltip, 128, pPhraseArgs);
   pBtn->setTooltipText(sTooltip);
   addComponent(pBtn);
   xPxl += buttonSize + SPACING;
 
   // Create death filter button
   pBtn = guiToggleButton::createDefaultTexturedToggleButton(
-    pLocalClient->getDisplay()->getTextureEngine()->loadTexture(L"mana_0010"),
-    buttonSize, L"DeathButton", pLocalClient->getDisplay());
+    pLocalClient->getDisplay()->getTextureEngine()->loadTexture("mana_0010"),
+    buttonSize, "DeathButton", pLocalClient->getDisplay());
   pBtn->moveTo(xPxl, yPxl);
   pBtn->setClickState(true);
-  i18n->getTextUp(L"DEATH", sWord, 64);
-  i18n->getText(L"_(1s)_SPELLS_TYPE_(2s)_", sTooltip, 128, pPhraseArgs);
+  i18n->getTextUp("DEATH", sWord, 64);
+  i18n->getText("_(1s)_SPELLS_TYPE_(2s)_", sTooltip, 128, pPhraseArgs);
   pBtn->setTooltipText(sTooltip);
   addComponent(pBtn);
   xPxl += buttonSize + SPACING;
 
   // Create chaos filter button
   pBtn = guiToggleButton::createDefaultTexturedToggleButton(
-    pLocalClient->getDisplay()->getTextureEngine()->loadTexture(L"mana_0001"),
-    buttonSize, L"ChaosButton", pLocalClient->getDisplay());
+    pLocalClient->getDisplay()->getTextureEngine()->loadTexture("mana_0001"),
+    buttonSize, "ChaosButton", pLocalClient->getDisplay());
   pBtn->moveTo(xPxl, yPxl);
   pBtn->setClickState(true);
-  i18n->getTextUp(L"CHAOS", sWord, 64);
-  i18n->getText(L"_(1s)_SPELLS_TYPE_(2s)_", sTooltip, 128, pPhraseArgs);
+  i18n->getTextUp("CHAOS", sWord, 64);
+  i18n->getText("_(1s)_SPELLS_TYPE_(2s)_", sTooltip, 128, pPhraseArgs);
   pBtn->setTooltipText(sTooltip);
   addComponent(pBtn);
   xPxl += buttonSize + SPACING;
 
   // Create battle filter button
   pBtn = guiToggleButton::createDefaultTexturedToggleButton(
-    pLocalClient->getDisplay()->getTextureEngine()->loadTexture(L"battle"),
-    buttonSize, L"BattleButton", pLocalClient->getDisplay());
+    pLocalClient->getDisplay()->getTextureEngine()->loadTexture("battle"),
+    buttonSize, "BattleButton", pLocalClient->getDisplay());
   pBtn->moveTo(xPxl, yPxl);
   pBtn->setClickState(true);
-  i18n->getTextUp(L"BATTLE", sWord, 64);
-  i18n->getText(L"_(1s)_SPELLS_TYPE_(2s)_", sTooltip, 128, pPhraseArgs);
+  i18n->getTextUp("BATTLE", sWord, 64);
+  i18n->getText("_(1s)_SPELLS_TYPE_(2s)_", sTooltip, 128, pPhraseArgs);
   pBtn->setTooltipText(sTooltip);
   addComponent(pBtn);
   xPxl += buttonSize + SPACING;
 
   // Create adventure filter button
   pBtn = guiToggleButton::createDefaultTexturedToggleButton(
-    pLocalClient->getDisplay()->getTextureEngine()->loadTexture(L"adventure_filter"),
-    buttonSize, L"AdventureButton", pLocalClient->getDisplay());
+    pLocalClient->getDisplay()->getTextureEngine()->loadTexture("adventure_filter"),
+    buttonSize, "AdventureButton", pLocalClient->getDisplay());
   pBtn->moveTo(xPxl, yPxl);
   pBtn->setClickState(true);
-  i18n->getTextUp(L"ADVENTURE", sWord, 64);
-  i18n->getText(L"_(1s)_SPELLS_TYPE_(2s)_", sTooltip, 128, pPhraseArgs);
+  i18n->getTextUp("ADVENTURE", sWord, 64);
+  i18n->getText("_(1s)_SPELLS_TYPE_(2s)_", sTooltip, 128, pPhraseArgs);
   pBtn->setTooltipText(sTooltip);
   addComponent(pBtn);
   xPxl += buttonSize + SPACING;
 
   // Create avatar filter button
   pBtn = guiToggleButton::createDefaultTexturedToggleButton(
-    pLocalClient->getDisplay()->getTextureEngine()->loadTexture(L"avatar_filter"),
-    buttonSize, L"AvatarButton", pLocalClient->getDisplay());
+    pLocalClient->getDisplay()->getTextureEngine()->loadTexture("avatar_filter"),
+    buttonSize, "AvatarButton", pLocalClient->getDisplay());
   pBtn->moveTo(xPxl, yPxl);
   pBtn->setClickState(true);
-  i18n->getText(L"_(s)_SPELLS_EQUIPPED_BY_ANOTHER", sTooltip, 128, pPhraseArgs);
+  i18n->getText("_(s)_SPELLS_EQUIPPED_BY_ANOTHER", sTooltip, 128, pPhraseArgs);
   pBtn->setTooltipText(sTooltip);
   addComponent(pBtn);
   xPxl += buttonSize + SPACING;
 
   // Create button "equipments"
   int w = getWidth() / 3;
-  pBtn2 = guiButton::createDefaultNormalButton(i18n->getText(L"EQUIPMENTS", str, 64), L"EquipButton", pLocalClient->getDisplay());
+  pBtn2 = guiButton::createDefaultNormalButton(i18n->getText("EQUIPMENTS", str, 64), "EquipButton", pLocalClient->getDisplay());
   int yPxl2 = getHeight() - pBtn2->getHeight() - SPACING;
   pBtn2->setWidth(w);
   pBtn2->moveTo(0, yPxl2);
   addComponent(pBtn2);
 
   // Create button "shop"
-  pBtn2 = guiButton::createDefaultNormalButton(i18n->getText(L"SHOP", str, 64), L"ShopButton", pLocalClient->getDisplay());
+  pBtn2 = guiButton::createDefaultNormalButton(i18n->getText("SHOP", str, 64), "ShopButton", pLocalClient->getDisplay());
   pBtn2->setWidth(w);
   pBtn2->moveTo(w+1, yPxl2);
   addComponent(pBtn2);
 
   // Create button "back"
-  pBtn2 = guiButton::createDefaultNormalButton(i18n->getText(L"MAIN_MENU", str, 64), L"BackButton", pLocalClient->getDisplay());
+  pBtn2 = guiButton::createDefaultNormalButton(i18n->getText("MAIN_MENU", str, 64), "BackButton", pLocalClient->getDisplay());
   pBtn2->setWidth(w);
   pBtn2->moveTo(2*w+1, yPxl2);
   addComponent(pBtn2);
 
   // Create label "Not equiped"
   yPxl += pBtn->getHeight() + 3 * SPACING;
-  i18n->getText(L"NOT_EQUIPPED", str, 64);
+  i18n->getText("NOT_EQUIPPED", str, 64);
   pLbl = new guiLabel();
-  pLbl->init(str, H2_FONT, H2_COLOR, L"NotEquippedLabel", 0, 0, 0, 0, pLocalClient->getDisplay());
+  pLbl->init(str, H2_FONT, H2_COLOR, "NotEquippedLabe", 0, 0, 0, 0, pLocalClient->getDisplay());
   pLbl->moveTo(SPACING, yPxl);
   addComponent(pLbl);
 
   // Create button "Not equiped: deploy"
-  pBtn2 = guiButton::createDefaultNormalButton(L"-", L"DeployNEqButton", pLocalClient->getDisplay());
+  pBtn2 = guiButton::createDefaultNormalButton("-", "DeployNEqButton", pLocalClient->getDisplay());
   pBtn2->setOverOption(BCO_Scale);
   pBtn2->moveTo(listWidth - pBtn2->getWidth(), yPxl-4);
-  pBtn2->setTooltipText(i18n->getText(L"SHOW_HIDE_ALL_IDENTICAL_SPELLS", sText, LABEL_MAX_CHARS));
+  pBtn2->setTooltipText(i18n->getText("SHOW_HIDE_ALL_IDENTICAL_SPELLS", sText, LABEL_MAX_CHARS));
   addComponent(pBtn2);
 
   // Create label "Equiped"
-  i18n->getText(L"EQUIPPED", str, 64);
+  i18n->getText("EQUIPPED", str, 64);
   pLbl = new guiLabel();
-  pLbl->init(str, H2_FONT, H2_COLOR, L"EquippedLabel", 0, 0, 0, 0, pLocalClient->getDisplay());
+  pLbl->init(str, H2_FONT, H2_COLOR, "EquippedLabe", 0, 0, 0, 0, pLocalClient->getDisplay());
   pLbl->moveTo(getWidth() - SPACING - listWidth, yPxl);
   addComponent(pLbl);
 
   // Create button "Equiped: deploy"
-  pBtn2 = guiButton::createDefaultNormalButton(L"-", L"DeployEqButton", pLocalClient->getDisplay());
+  pBtn2 = guiButton::createDefaultNormalButton("-", "DeployEqButton", pLocalClient->getDisplay());
   pBtn2->setOverOption(BCO_Scale);
   pBtn2->moveTo(getWidth() - pBtn2->getWidth(), yPxl-4);
-  pBtn2->setTooltipText(i18n->getText(L"SHOW_HIDE_ALL_IDENTICAL_SPELLS", sText, LABEL_MAX_CHARS));
+  pBtn2->setTooltipText(i18n->getText("SHOW_HIDE_ALL_IDENTICAL_SPELLS", sText, LABEL_MAX_CHARS));
   addComponent(pBtn2);
 
   KeyboardInputEngine * pKeyboardInput = pLocalClient->getInput()->hasKeyboard() ? (KeyboardInputEngine*) pLocalClient->getInput() : NULL;
@@ -266,17 +266,17 @@ BuildDeckDlg::BuildDeckDlg(int iWidth, int iHeight, LocalClient * pLocalClient) 
   // Create list for spells not equipped
   int bottom = yPxl2 - SPACING;
   yPxl += pLbl->getHeight() + 2 * SPACING;
-  m_pNotEquippedSpells = guiList::createDefaultList(listWidth, bottom - yPxl, L"", pKeyboardInput, pLocalClient->getDisplay());
+  m_pNotEquippedSpells = guiList::createDefaultList(listWidth, bottom - yPxl, "", pKeyboardInput, pLocalClient->getDisplay());
   m_pNotEquippedSpells->moveTo(SPACING, yPxl);
   addComponent(m_pNotEquippedSpells);
 
   // Create list for spells equipped
-  m_pEquippedSpells = guiList::createDefaultList(listWidth, bottom - yPxl, L"", pKeyboardInput, pLocalClient->getDisplay());
+  m_pEquippedSpells = guiList::createDefaultList(listWidth, bottom - yPxl, "", pKeyboardInput, pLocalClient->getDisplay());
   m_pEquippedSpells->moveTo(getWidth() - SPACING - listWidth, yPxl);
   addComponent(m_pEquippedSpells);
 
   // Create button "to right"
-  pBtn2 = guiButton::createDefaultNormalButton(L">>", L"ToRightButton", pLocalClient->getDisplay());
+  pBtn2 = guiButton::createDefaultNormalButton(">>", "ToRightButton", pLocalClient->getDisplay());
   pBtn2->setDimensions(buttonSize, buttonSize);
   yPxl = m_pEquippedSpells->getYPos() + m_pEquippedSpells->getHeight() / 2 - pBtn2->getHeight() - SPACING;
   pBtn2->moveTo((getWidth() - pBtn2->getWidth()) / 2, yPxl);
@@ -284,14 +284,14 @@ BuildDeckDlg::BuildDeckDlg(int iWidth, int iHeight, LocalClient * pLocalClient) 
 
   // Create button "to left"
   yPxl += pBtn2->getHeight() + 2 * SPACING;
-  pBtn2 = guiButton::createDefaultNormalButton(L"<<", L"ToLeftButton", pLocalClient->getDisplay());
+  pBtn2 = guiButton::createDefaultNormalButton("<<", "ToLeftButton", pLocalClient->getDisplay());
   pBtn2->setDimensions(buttonSize, buttonSize);
   pBtn2->moveTo((getWidth() - pBtn2->getWidth()) / 2, yPxl);
   addComponent(pBtn2);
 
   // Drag image
   m_pDragImage = new guiImage();
-  m_pDragImage->init(pLocalClient->getDisplay()->getTextureEngine()->loadTexture(L"spellsdrag"), L"", 0, 0, -1, -1, pLocalClient->getDisplay());
+  m_pDragImage->init(pLocalClient->getDisplay()->getTextureEngine()->loadTexture("spellsdrag"), "", 0, 0, -1, -1, pLocalClient->getDisplay());
   m_pDragImage->setVisible(false);
   addComponent(m_pDragImage);
 }
@@ -324,7 +324,7 @@ void BuildDeckDlg::update(double delta)
     guiComponent * pCpnt = m_pConfirmDelete->getClickedComponent();
     if (pCpnt != NULL)
     {
-      if (wcscmp(pCpnt->getId(), L"YesButton") == 0)
+      if (strcmp(pCpnt->getId(), "YesButton") == 0)
       {
         // Remove frame
         m_pLocalClient->getInterface()->deleteFrame(m_pConfirmDelete);
@@ -339,7 +339,7 @@ void BuildDeckDlg::update(double delta)
         else
           m_pLocalClient->getInterface()->setUniqueDialog(m_pLocalClient->getInterface()->getSelectPlayerDialog());
       }
-      else if (wcscmp(pCpnt->getId(), L"NoButton") == 0)
+      else if (strcmp(pCpnt->getId(), "NoButton") == 0)
       {
         m_pLocalClient->getInterface()->deleteFrame(m_pConfirmDelete);
         m_pConfirmDelete = NULL;
@@ -428,52 +428,52 @@ bool BuildDeckDlg::onButtonEvent(ButtonAction * pEvent, guiComponent * pCpnt)
   }
   else if (pEvent->eEvent == Event_Up)
   {
-    if (wcscmp(pCpnt->getId(), L"BackButton") == 0)
+    if (strcmp(pCpnt->getId(), "BackButton") == 0)
     {
       m_pLocalClient->getInterface()->setUniqueDialog(m_pLocalClient->getInterface()->getStartMenuDialog());
       return false;
     }
-    else if (wcscmp(pCpnt->getId(), L"EquipButton") == 0)
+    else if (strcmp(pCpnt->getId(), "EquipButton") == 0)
     {
       m_pLocalClient->getInterface()->setUniqueDialog(m_pLocalClient->getInterface()->getArtifactsEquipDialog());
       return false;
     }
-    else if (wcscmp(pCpnt->getId(), L"ShopButton") == 0)
+    else if (strcmp(pCpnt->getId(), "ShopButton") == 0)
     {
       m_pLocalClient->getInterface()->setUniqueDialog(m_pLocalClient->getInterface()->getShopDialog());
       return false;
     }
-    else if (wcscmp(pCpnt->getId(), L"LevelUp") == 0)
+    else if (strcmp(pCpnt->getId(), "LevelUp") == 0)
     {
       m_pLocalClient->getInterface()->getLevelUpDialog()->doAvatarLevelUp(m_pCurrentAvatar, this, false);
       return false;
     }
-    else if (wcscmp(pCpnt->getId(), L"Banner") == 0)
+    else if (strcmp(pCpnt->getId(), "Banner") == 0)
     {
       m_pCurrentAvatar->m_uBanner = (m_pCurrentAvatar->m_uBanner + 1) % NB_BANNERS;
       guiButton * pBtn = (guiButton*) pCpnt;
       assert(pBtn != NULL);
-      wchar_t sBanner[MAX_PATH] = L"";
+      char sBanner[MAX_PATH] = "";
       m_pCurrentAvatar->getBanner(sBanner, MAX_PATH);
       pBtn->setNormalTexture(getDisplay()->getTextureEngine()->loadTexture(sBanner));
       m_pCurrentPlayer->save();
     }
-    else if (wcscmp(pCpnt->getId(), L"LifeButton") == 0
-      || wcscmp(pCpnt->getId(), L"LawButton") == 0
-      || wcscmp(pCpnt->getId(), L"DeathButton") == 0
-      || wcscmp(pCpnt->getId(), L"ChaosButton") == 0
-      || wcscmp(pCpnt->getId(), L"BattleButton") == 0
-      || wcscmp(pCpnt->getId(), L"AdventureButton") == 0
-      || wcscmp(pCpnt->getId(), L"AvatarButton") == 0
-      || wcscmp(pCpnt->getId(), L"EditionButton") == 0)
+    else if (strcmp(pCpnt->getId(), "LifeButton") == 0
+      || strcmp(pCpnt->getId(), "LawButton") == 0
+      || strcmp(pCpnt->getId(), "DeathButton") == 0
+      || strcmp(pCpnt->getId(), "ChaosButton") == 0
+      || strcmp(pCpnt->getId(), "BattleButton") == 0
+      || strcmp(pCpnt->getId(), "AdventureButton") == 0
+      || strcmp(pCpnt->getId(), "AvatarButton") == 0
+      || strcmp(pCpnt->getId(), "EditionButton") == 0)
     {
       reloadSpells();
     }
-    else if (wcscmp(pCpnt->getId(), L"ToRightButton") == 0)
+    else if (strcmp(pCpnt->getId(), "ToRightButton") == 0)
       moveSelectedSpells(m_pNotEquippedSpells, m_pEquippedSpells);
-    else if (wcscmp(pCpnt->getId(), L"ToLeftButton") == 0)
+    else if (strcmp(pCpnt->getId(), "ToLeftButton") == 0)
       moveSelectedSpells(m_pEquippedSpells, m_pNotEquippedSpells);
-    else if (wcscmp(pCpnt->getId(), L"AvatarListButton") == 0)
+    else if (strcmp(pCpnt->getId(), "AvatarListButton") == 0)
     {
       guiComponent * pCpnt2 = m_pAvatarsPanel->getDocument()->getFirstComponent();
       while (pCpnt2 != NULL)
@@ -488,26 +488,26 @@ bool BuildDeckDlg::onButtonEvent(ButtonAction * pEvent, guiComponent * pCpnt)
       assert(m_pCurrentAvatar != NULL);
       onAvatarSelected();
     }
-    else if (wcscmp(pCpnt->getId(), L"DeployEqButton") == 0)
+    else if (strcmp(pCpnt->getId(), "DeployEqButton") == 0)
     {
       m_bEquipedDeployed = !m_bEquipedDeployed;
-      ((guiButton*)pCpnt)->setText(m_bEquipedDeployed ? L"-" : L"+");
+      ((guiButton*)pCpnt)->setText(m_bEquipedDeployed ? "-" : "+");
       reloadSpells();
       m_pEquippedSpells->checkDocumentPosition();
     }
-    else if (wcscmp(pCpnt->getId(), L"DeployNEqButton") == 0)
+    else if (strcmp(pCpnt->getId(), "DeployNEqButton") == 0)
     {
       m_bNotEquipedDeployed = !m_bNotEquipedDeployed;
-      ((guiButton*)pCpnt)->setText(m_bNotEquipedDeployed ? L"-" : L"+");
+      ((guiButton*)pCpnt)->setText(m_bNotEquipedDeployed ? "-" : "+");
       reloadSpells();
       m_pNotEquippedSpells->checkDocumentPosition();
     }
-    else if (wcscmp(pCpnt->getId(), L"DeleteAvatar") == 0)
+    else if (strcmp(pCpnt->getId(), "DeleteAvatar") == 0)
     {
       // Raise confirm popup
       setEnabled(false);
-      wchar_t str[128];
-      m_pConfirmDelete = guiPopup::createYesNoPopup(i18n->getText(L"REALLY_DELETE_AVATAR", str, 128), m_pLocalClient->getDisplay());
+      char str[128];
+      m_pConfirmDelete = guiPopup::createYesNoPopup(i18n->getText("REALLY_DELETE_AVATAR", str, 128), m_pLocalClient->getDisplay());
       m_pLocalClient->getInterface()->registerFrame(m_pConfirmDelete);
       m_pConfirmDelete->moveTo((m_pLocalClient->getClientParameters()->screenXSize - m_pConfirmDelete->getWidth()) / 2, (m_pLocalClient->getClientParameters()->screenYSize - m_pConfirmDelete->getHeight()) / 2);
     }
@@ -537,7 +537,7 @@ bool BuildDeckDlg::onButtonEvent(ButtonAction * pEvent, guiComponent * pCpnt)
   }
   else if (pEvent->eEvent == Event_Down)
   {
-    if (wcscmp(pCpnt->getId(), L"TopLabel1") == 0)
+    if (strcmp(pCpnt->getId(), "TopLabel1") == 0)
     {
       assert(m_pCurrentAvatar != NULL);
       showEditAvatarInfosPopup(m_pCurrentAvatar, this);
@@ -564,11 +564,11 @@ void BuildDeckDlg::onShow()
   while (pAvatar != NULL)
   {
     int iTex = getDisplay()->getTextureEngine()->loadTexture(pAvatar->m_sTextureFilename);
-    guiToggleButton * pBtn = guiToggleButton::createDefaultTexturedToggleButton(iTex, buttonSize, L"AvatarListButton", getDisplay());
+    guiToggleButton * pBtn = guiToggleButton::createDefaultTexturedToggleButton(iTex, buttonSize, "AvatarListButton", getDisplay());
     pBtn->moveTo(xPxl, 0);
     pBtn->setAttachment(pAvatar);
-//    wchar_t sAvName[NAME_MAX_CHARS];
-//    pAvatar->findLocalizedElement(sAvName, NAME_MAX_CHARS, i18n->getCurrentLanguageName(), L"name");
+//    char sAvName[NAME_MAX_CHARS];
+//    pAvatar->findLocalizedElement(sAvName, NAME_MAX_CHARS, i18n->getCurrentLanguageName(), "name");
     pBtn->setTooltipText(pAvatar->m_sCustomName);
     pBtn->setOwner(this);
     m_pAvatarsPanel->getDocument()->addComponent(pBtn);
@@ -605,18 +605,18 @@ void BuildDeckDlg::reloadSpells()
   if (m_pCurrentPlayer == NULL || m_pCurrentAvatar == NULL)
     return;
 
-  wchar_t sId[CPNT_ID_MAX_CHARS];
+  char sId[CPNT_ID_MAX_CHARS];
   long_hash m_lEqLoaded;
   long_hash m_lNEqLoaded;
   int nbEquiped = 0;
   bool bMana[4];
-  bMana[MANA_LIFE] = ((guiToggleButton*)getComponent(L"LifeButton"))->getClickState();
-  bMana[MANA_LAW] = ((guiToggleButton*)getComponent(L"LawButton"))->getClickState();
-  bMana[MANA_DEATH] = ((guiToggleButton*)getComponent(L"DeathButton"))->getClickState();
-  bMana[MANA_CHAOS] = ((guiToggleButton*)getComponent(L"ChaosButton"))->getClickState();
-  bool bBattle = ((guiToggleButton*)getComponent(L"BattleButton"))->getClickState();
-  bool bAdventure = ((guiToggleButton*)getComponent(L"AdventureButton"))->getClickState();
-  bool bAvatar = ((guiToggleButton*)getComponent(L"AvatarButton"))->getClickState();
+  bMana[MANA_LIFE] = ((guiToggleButton*)getComponent("LifeButton"))->getClickState();
+  bMana[MANA_LAW] = ((guiToggleButton*)getComponent("LawButton"))->getClickState();
+  bMana[MANA_DEATH] = ((guiToggleButton*)getComponent("DeathButton"))->getClickState();
+  bMana[MANA_CHAOS] = ((guiToggleButton*)getComponent("ChaosButton"))->getClickState();
+  bool bBattle = ((guiToggleButton*)getComponent("BattleButton"))->getClickState();
+  bool bAdventure = ((guiToggleButton*)getComponent("AdventureButton"))->getClickState();
+  bool bAvatar = ((guiToggleButton*)getComponent("AvatarButton"))->getClickState();
 
   // Update spells lists
   m_pEquippedSpells->clear();
@@ -643,9 +643,9 @@ void BuildDeckDlg::reloadSpells()
         guiComponent * pCpnt = getFirstComponent();
         while (pCpnt != NULL)
         {
-          if (wcscmp(pCpnt->getId(), L"EditionButton") == 0)
+          if (strcmp(pCpnt->getId(), "EditionButton") == 0)
           {
-            if (((guiToggleButton*)pCpnt)->getClickState() == false && wcscmp(pSpell->getObjectEdition(), ((Edition*)(pCpnt->getAttachment()))->m_sObjectId) == 0)
+            if (((guiToggleButton*)pCpnt)->getClickState() == false && strcmp(pSpell->getObjectEdition(), ((Edition*)(pCpnt->getAttachment()))->m_sObjectId) == 0)
             {
               bOk = false;
               break;
@@ -676,8 +676,8 @@ void BuildDeckDlg::reloadSpells()
           if (bOk)
             pLbl = m_pNotEquippedSpells->addItem(pSpell->getLocalizedName(), sId);
         }
-        else if (wcscmp(m_pCurrentAvatar->m_sEdition, pOwner->m_sEdition) == 0  // equipped by current avatar
-          && wcscmp(m_pCurrentAvatar->m_sObjectId, pOwner->m_sObjectId) == 0)
+        else if (strcmp(m_pCurrentAvatar->m_sEdition, pOwner->m_sEdition) == 0  // equipped by current avatar
+          && strcmp(m_pCurrentAvatar->m_sObjectId, pOwner->m_sObjectId) == 0)
         {
           nbEquiped++;
           if (!m_bEquipedDeployed)
@@ -709,10 +709,10 @@ void BuildDeckDlg::reloadSpells()
           }
           if (bOk)
           {
-            wchar_t sText[LABEL_MAX_CHARS];
-//            wchar_t sAvatarName[NAME_MAX_CHARS];
-//            pOwner->findLocalizedElement(sAvatarName, NAME_MAX_CHARS, i18n->getCurrentLanguageName(), L"name");
-            swprintf(sText, LABEL_MAX_CHARS, L"%s (%s)", pSpell->getLocalizedName(), pOwner->m_sCustomName);
+            char sText[LABEL_MAX_CHARS];
+//            char sAvatarName[NAME_MAX_CHARS];
+//            pOwner->findLocalizedElement(sAvatarName, NAME_MAX_CHARS, i18n->getCurrentLanguageName(), "name");
+            snprintf(sText, LABEL_MAX_CHARS, "%s (%s)", pSpell->getLocalizedName(), pOwner->m_sCustomName);
             pLbl = m_pNotEquippedSpells->addItem(sText, sId);
           }
         }
@@ -720,28 +720,28 @@ void BuildDeckDlg::reloadSpells()
         {
           pLbl->setAttachment(pObj);
           // Tooltip text
-          wchar_t sTooltip[LABEL_MAX_CHARS];
-          wchar_t sBuf[64];
-          wchar_t sSep[8] = L"";
-          i18n->getText(L"COST", sBuf, 64);
+          char sTooltip[LABEL_MAX_CHARS];
+          char sBuf[64];
+          char sSep[8] = "";
+          i18n->getText("COST", sBuf, 64);
           wsafecpy(sTooltip, LABEL_MAX_CHARS, sBuf);
-          i18n->getText(L"2P", sBuf, 64);
+          i18n->getText("2P", sBuf, 64);
           wsafecat(sTooltip, LABEL_MAX_CHARS, sBuf);
           // Mana images & numbers
           Mana mana = pSpell->getCost();
-          wchar_t signs[4] = MANA_SIGNS;
+          char signs[4] = MANA_SIGNS;
           for (int i = 0; i < 4; i++)
           {
             if (mana[i] > 0)
             {
               // Number
               wsafecat(sTooltip, LABEL_MAX_CHARS, sSep);
-              swprintf(sBuf, 64, L"%c%d", signs[i], (int)mana[i]);
+              snprintf(sBuf, 64, "%c%d", signs[i], (int)mana[i]);
               wsafecat(sTooltip, LABEL_MAX_CHARS, sBuf);
-              wsafecpy(sSep, 8, L", ");
+              wsafecpy(sSep, 8, ", ");
             }
           }
-          wsafecat(sTooltip, LABEL_MAX_CHARS, L". ");
+          wsafecat(sTooltip, LABEL_MAX_CHARS, ". ");
           wsafecat(sTooltip, LABEL_MAX_CHARS, pSpell->getLocalizedDescription());
           m_pLocalClient->getDisplay()->getFontEngine()->putStringInBox(sTooltip, 300, m_aiAllFonts[(int)TEXT_FONT]);
           pLbl->setTooltipText(sTooltip);
@@ -750,8 +750,8 @@ void BuildDeckDlg::reloadSpells()
     }
     else
     {
-      wchar_t sError[128];
-      swprintf(sError, 128, L"Error: spell %s (edition %s) not found.", pObj->m_sName, pObj->m_sEdition);
+      char sError[128];
+      snprintf(sError, 128, "Error: spell %s (edition %s) not found.", pObj->m_sName, pObj->m_sEdition);
       m_pLocalClient->getDebug()->notifyErrorMessage(sError);
     }
     pObj = (Profile::SpellData*) m_pCurrentPlayer->getSpellsList()->getNext(0);
@@ -762,35 +762,35 @@ void BuildDeckDlg::reloadSpells()
   // If lists are not deployed, write items count
   if (!m_bEquipedDeployed)
   {
-    wchar_t sText[LABEL_MAX_CHARS];
+    char sText[LABEL_MAX_CHARS];
     guiList::guiListLabel * pItem = (guiList::guiListLabel*) m_pEquippedSpells->getDocument()->getFirstComponent();
     while (pItem != NULL)
     {
-      swprintf(sText, LABEL_MAX_CHARS, L"%s (%d)", pItem->getText(), (int) m_lEqLoaded[pItem->getId()]);
+      snprintf(sText, LABEL_MAX_CHARS, "%s (%d)", pItem->getText(), (int) m_lEqLoaded[pItem->getId()]);
       pItem->setText(sText);
       pItem = (guiList::guiListLabel*) m_pEquippedSpells->getDocument()->getNextComponent();
     }
   }
   if (!m_bNotEquipedDeployed)
   {
-    wchar_t sText[LABEL_MAX_CHARS];
+    char sText[LABEL_MAX_CHARS];
     guiList::guiListLabel * pItem = (guiList::guiListLabel*) m_pNotEquippedSpells->getDocument()->getFirstComponent();
     while (pItem != NULL)
     {
-      swprintf(sText, LABEL_MAX_CHARS, L"%s (%d)", pItem->getText(), (int) m_lNEqLoaded[pItem->getId()]);
+      snprintf(sText, LABEL_MAX_CHARS, "%s (%d)", pItem->getText(), (int) m_lNEqLoaded[pItem->getId()]);
       pItem->setText(sText);
       pItem = (guiList::guiListLabel*) m_pNotEquippedSpells->getDocument()->getNextComponent();
     }
   }
 
   // Update equipped label (count spells)
-  wchar_t sText[LABEL_MAX_CHARS];
-  wchar_t sBuf1[LABEL_MAX_CHARS];
-  wchar_t sBuf2[LABEL_MAX_CHARS];
-  i18n->getText(L"EQUIPPED", sBuf1, LABEL_MAX_CHARS);
-  i18n->getTextLow(L"SPELLS", sBuf2, LABEL_MAX_CHARS);
-  swprintf(sText, LABEL_MAX_CHARS, L"%s (%d %s)", sBuf1, nbEquiped, sBuf2);
-  guiLabel * pLbl = (guiLabel*) getComponent(L"EquippedLabel");
+  char sText[LABEL_MAX_CHARS];
+  char sBuf1[LABEL_MAX_CHARS];
+  char sBuf2[LABEL_MAX_CHARS];
+  i18n->getText("EQUIPPED", sBuf1, LABEL_MAX_CHARS);
+  i18n->getTextLow("SPELLS", sBuf2, LABEL_MAX_CHARS);
+  snprintf(sText, LABEL_MAX_CHARS, "%s (%d %s)", sBuf1, nbEquiped, sBuf2);
+  guiLabel * pLbl = (guiLabel*) getComponent("EquippedLabe");
   pLbl->setText(sText);
 }
 
@@ -836,8 +836,8 @@ void BuildDeckDlg::onSpellSelected(BaseObject * pObj)
     return;
   }
 
-  if (m_pCurrentSpell != NULL && wcscmp(m_pCurrentSpell->getObjectName(), ((Profile::SpellData*)pObj)->m_sName) == 0
-    && wcscmp(m_pCurrentSpell->getObjectEdition(), ((Profile::SpellData*)pObj)->m_sEdition) == 0)  // Same spell?
+  if (m_pCurrentSpell != NULL && strcmp(m_pCurrentSpell->getObjectName(), ((Profile::SpellData*)pObj)->m_sName) == 0
+    && strcmp(m_pCurrentSpell->getObjectEdition(), ((Profile::SpellData*)pObj)->m_sEdition) == 0)  // Same spell?
     return;
 
   m_pObjectPopup->getDocument()->deleteAllComponents();
@@ -847,29 +847,29 @@ void BuildDeckDlg::onSpellSelected(BaseObject * pObj)
   int xPxl = SPACING;
   int yPxl = SPACING;
   guiLabel * pLbl = new guiLabel();
-  pLbl->init(m_pCurrentSpell->getLocalizedName(), H2_FONT, H2_COLOR, L"TitleLabel", xPxl, yPxl, m_pObjectPopup->getInnerWidth() - xPxl, 0, getDisplay());
+  pLbl->init(m_pCurrentSpell->getLocalizedName(), H2_FONT, H2_COLOR, "TitleLabe", xPxl, yPxl, m_pObjectPopup->getInnerWidth() - xPxl, 0, getDisplay());
   m_pObjectPopup->getDocument()->addComponent(pLbl);
 
   // Add image
   yPxl += pLbl->getHeight() + SPACING;
   int iTex = getDisplay()->getTextureEngine()->loadTexture(m_pCurrentSpell->getIconPath());
   guiImage * pImg = new guiImage();
-  pImg->init(iTex, L"Image", xPxl, yPxl, 64, 64, getDisplay());
+  pImg->init(iTex, "Image", xPxl, yPxl, 64, 64, getDisplay());
   m_pObjectPopup->getDocument()->addComponent(pImg);
 
   // Mana images & numbers
-  wchar_t str[8];
+  char str[8];
   xPxl += pImg->getWidth() + SPACING;
   Mana mana = m_pCurrentSpell->getCost();
-  wchar_t signs[4] = MANA_SIGNS;
+  char signs[4] = MANA_SIGNS;
   for (int i = 0; i < 4; i++)
   {
     if (mana[i] > 0)
     {
       // Number
-      swprintf(str, 8, L"%c%d", signs[i], (int)mana[i]);
+      snprintf(str, 8, "%c%d", signs[i], (int)mana[i]);
       pLbl = new guiLabel();
-      pLbl->init(str, TEXT_FONT, TEXT_COLOR, L"", xPxl, yPxl, 0, 0, getDisplay());
+      pLbl->init(str, TEXT_FONT, TEXT_COLOR, "", xPxl, yPxl, 0, 0, getDisplay());
       m_pObjectPopup->getDocument()->addComponent(pLbl);
       xPxl += pLbl->getWidth() + 2;
     }
@@ -879,7 +879,7 @@ void BuildDeckDlg::onSpellSelected(BaseObject * pObj)
   xPxl = SPACING;
   yPxl = pImg->getYPos() + pImg->getHeight() + SPACING;
   pLbl = new guiLabel();
-  pLbl->init(m_pCurrentSpell->getLocalizedDescription(), TEXT_FONT, TEXT_COLOR, L"DescLabel", xPxl, yPxl, m_pObjectPopup->getInnerWidth() - xPxl, 0, getDisplay());
+  pLbl->init(m_pCurrentSpell->getLocalizedDescription(), TEXT_FONT, TEXT_COLOR, "DescLabe", xPxl, yPxl, m_pObjectPopup->getInnerWidth() - xPxl, 0, getDisplay());
   m_pObjectPopup->getDocument()->addComponent(pLbl);
   if (m_pObjectPopup->getDocument()->getHeight() < pLbl->getYPos() + pLbl->getHeight())
     m_pObjectPopup->getDocument()->setHeight(pLbl->getYPos() + pLbl->getHeight());
@@ -890,7 +890,7 @@ void BuildDeckDlg::onSpellSelected(BaseObject * pObj)
 // -----------------------------------------------------------------
 bool BuildDeckDlg::onClickStart()
 {
-  doClick(L"BackButton");
+  doClick("BackButton");
   return true;
 }
 
@@ -903,21 +903,21 @@ void BuildDeckDlg::loadEditionButtons()
   guiComponent * pCpnt = getFirstComponent();
   while (pCpnt != NULL)
   {
-    if (wcscmp(pCpnt->getId(), L"EditionButton") == 0)
+    if (strcmp(pCpnt->getId(), "EditionButton") == 0)
       pCpnt = deleteCurrentComponent(true);
     else
       pCpnt = getNextComponent();
   }
 
-  pCpnt = getComponent(L"AvatarButton");
+  pCpnt = getComponent("AvatarButton");
   assert(pCpnt != NULL);
 
   // Tooltip texts for following buttons
-  wchar_t sTooltip[128];
-  wchar_t sInclude[64];
-  wchar_t sWord[64];
+  char sTooltip[128];
+  char sInclude[64];
+  char sWord[64];
   void * pPhraseArgs[2] = { sInclude, sWord };
-  i18n->getText(L"INCLUDE", sInclude, 64);
+  i18n->getText("INCLUDE", sInclude, 64);
   int xPxl = pCpnt->getXPos() + pCpnt->getWidth() + SPACING;
   int yPxl = pCpnt->getYPos();
   int buttonSize = pCpnt->getHeight();
@@ -925,16 +925,16 @@ void BuildDeckDlg::loadEditionButtons()
   Edition * pEd = m_pLocalClient->getDataFactory()->getFirstEdition();
   while (pEd != NULL)
   {
-    wchar_t sFile[MAX_PATH];
-    swprintf(sFile, MAX_PATH, L"%s/logo", pEd->m_sObjectId);
+    char sFile[MAX_PATH];
+    snprintf(sFile, MAX_PATH, "%s/logo", pEd->m_sObjectId);
     // Create edition filter button
     guiToggleButton * pBtn = guiToggleButton::createDefaultTexturedToggleButton(
       m_pLocalClient->getDisplay()->getTextureEngine()->loadTexture(sFile),
-      buttonSize, L"EditionButton", m_pLocalClient->getDisplay());
+      buttonSize, "EditionButton", m_pLocalClient->getDisplay());
     pBtn->moveTo(xPxl, yPxl);
     pBtn->setClickState(true);
-    pEd->findLocalizedElement(sWord, 64, i18n->getCurrentLanguageName(), L"name");
-    i18n->getText(L"%$1s_SPELLS_FROM_EDITION_%$2s", sTooltip, 128, pPhraseArgs);
+    pEd->findLocalizedElement(sWord, 64, i18n->getCurrentLanguageName(), "name");
+    i18n->getText("%$1s_SPELLS_FROM_EDITION_%$2s", sTooltip, 128, pPhraseArgs);
     pBtn->setTooltipText(sTooltip);
     pBtn->setAttachment(pEd);
     addComponent(pBtn);
@@ -948,28 +948,28 @@ void BuildDeckDlg::loadEditionButtons()
 // -----------------------------------------------------------------
 void BuildDeckDlg::onAvatarSelected()
 {
-  getComponent(L"LevelUp")->setVisible(m_pCurrentAvatar->isLevelUp());
-  guiButton * pBtn = (guiButton*) getComponent(L"Banner");
+  getComponent("LevelUp")->setVisible(m_pCurrentAvatar->isLevelUp());
+  guiButton * pBtn = (guiButton*) getComponent("Banner");
   assert(pBtn != NULL);
-  wchar_t sBanner[MAX_PATH] = L"";
+  char sBanner[MAX_PATH] = "";
   m_pCurrentAvatar->getBanner(sBanner, MAX_PATH);
   pBtn->setNormalTexture(getDisplay()->getTextureEngine()->loadTexture(sBanner));
 
   // Update top label 1
-  guiLabel * pLbl = (guiLabel*) getComponent(L"TopLabel1");
-  wchar_t str[NAME_MAX_CHARS];
+  guiLabel * pLbl = (guiLabel*) getComponent("TopLabel1");
+  char str[NAME_MAX_CHARS];
   pLbl->setText(m_pCurrentAvatar->m_sCustomName);
   pLbl->moveTo((getWidth() - pLbl->getWidth()) / 2, pLbl->getYPos());
 
   // Update delete avatar button
-  guiComponent * pCpnt = getComponent(L"DeleteAvatar");
+  guiComponent * pCpnt = getComponent("DeleteAvatar");
   pCpnt->moveTo(pLbl->getXPos() + pLbl->getWidth() + 2*SPACING, pLbl->getYPos() + 3);
 
   // Update top label 2
-  pLbl = (guiLabel*) getComponent(L"TopLabel2");
-  wchar_t sbuf[NAME_MAX_CHARS];
-  i18n->getText(L"%s_AVATARS", sbuf, NAME_MAX_CHARS);
-  swprintf(str, NAME_MAX_CHARS, sbuf, m_pCurrentPlayer->getName());
+  pLbl = (guiLabel*) getComponent("TopLabel2");
+  char sbuf[NAME_MAX_CHARS];
+  i18n->getText("%s_AVATARS", sbuf, NAME_MAX_CHARS);
+  snprintf(str, NAME_MAX_CHARS, sbuf, m_pCurrentPlayer->getName());
   pLbl->setText(str);
   pLbl->moveTo(getWidth() / 2 - pLbl->getWidth() / 2, pLbl->getYPos());
 //  m_pAvatarsPanel->moveTo(pLbl->getXPos() + pLbl->getWidth() + SPACING, m_pAvatarsPanel->getYPos());
@@ -980,12 +980,12 @@ void BuildDeckDlg::onAvatarSelected()
   // Update avatar popup
   m_pAvatarPopup->getDocument()->deleteAllComponents();
 
-//  wchar_t sName[NAME_MAX_CHARS] = L"";
-//  m_pCurrentAvatar->findLocalizedElement(sName, NAME_MAX_CHARS, i18n->getCurrentLanguageName(), L"name");
-//  wchar_t sDescription[DESCRIPTION_MAX_CHARS] = L"";
-//  m_pCurrentAvatar->findLocalizedElement(sDescription, DESCRIPTION_MAX_CHARS, i18n->getCurrentLanguageName(), L"description");
-  wchar_t sInfos[LABEL_MAX_CHARS];
-  m_pCurrentAvatar->getInfos(sInfos, LABEL_MAX_CHARS, L"\n", false, NULL, true, true, true, false);
+//  char sName[NAME_MAX_CHARS] = "";
+//  m_pCurrentAvatar->findLocalizedElement(sName, NAME_MAX_CHARS, i18n->getCurrentLanguageName(), "name");
+//  char sDescription[DESCRIPTION_MAX_CHARS] = "";
+//  m_pCurrentAvatar->findLocalizedElement(sDescription, DESCRIPTION_MAX_CHARS, i18n->getCurrentLanguageName(), "description");
+  char sInfos[LABEL_MAX_CHARS];
+  m_pCurrentAvatar->getInfos(sInfos, LABEL_MAX_CHARS, "\n", false, NULL, true, true, true, false);
 
   int iDocWidth = m_pAvatarPopup->getInnerWidth();
   int iImageSize = 64;
@@ -993,7 +993,7 @@ void BuildDeckDlg::onAvatarSelected()
   // Write title (Avatar name)
   int yPxl = 5;
   pLbl = new guiLabel();
-  pLbl->init(m_pCurrentAvatar->m_sCustomName, H2_FONT, H2_COLOR, L"TitleLabel", 0, 0, 0, 0, getDisplay());
+  pLbl->init(m_pCurrentAvatar->m_sCustomName, H2_FONT, H2_COLOR, "TitleLabe", 0, 0, 0, 0, getDisplay());
   pLbl->moveTo((iDocWidth - pLbl->getWidth()) / 2, yPxl);
   m_pAvatarPopup->getDocument()->addComponent(pLbl);
 
@@ -1001,33 +1001,33 @@ void BuildDeckDlg::onAvatarSelected()
   yPxl += pLbl->getHeight() + 5;
   int iTex = getDisplay()->getTextureEngine()->loadTexture(m_pCurrentAvatar->m_sTextureFilename);
   guiImage * pImg = new guiImage();
-  pImg->init(iTex, L"Image", 5, yPxl, iImageSize, iImageSize, getDisplay());
+  pImg->init(iTex, "Image", 5, yPxl, iImageSize, iImageSize, getDisplay());
   m_pAvatarPopup->getDocument()->addComponent(pImg);
 
   // Add label for characteristics
   pLbl = new guiLabel();
-  pLbl->init(sInfos, TEXT_FONT, TEXT_COLOR, L"CharacsLabel", 15 + iImageSize, yPxl, iDocWidth - 20 - iImageSize, 0, getDisplay());
+  pLbl->init(sInfos, TEXT_FONT, TEXT_COLOR, "CharacsLabe", 15 + iImageSize, yPxl, iDocWidth - 20 - iImageSize, 0, getDisplay());
   m_pAvatarPopup->getDocument()->addComponent(pLbl);
 
-  wchar_t sText[LABEL_MAX_CHARS];
+  char sText[LABEL_MAX_CHARS];
   // Count number of spells equipped
   int nbSpells = 0;
   Profile::SpellData * pObj2 = (Profile::SpellData*) m_pCurrentPlayer->getSpellsList()->getFirst(0);
   while (pObj2 != NULL)
   {
     AvatarData * pOwner = pObj2->m_pOwner;
-    if (pOwner != NULL && wcscmp(m_pCurrentAvatar->m_sEdition, pOwner->m_sEdition) == 0
-          && wcscmp(m_pCurrentAvatar->m_sObjectId, pOwner->m_sObjectId) == 0)
+    if (pOwner != NULL && strcmp(m_pCurrentAvatar->m_sEdition, pOwner->m_sEdition) == 0
+          && strcmp(m_pCurrentAvatar->m_sObjectId, pOwner->m_sObjectId) == 0)
       nbSpells++;
     pObj2 = (Profile::SpellData*) m_pCurrentPlayer->getSpellsList()->getNext(0);
   }
   yPxl += 5 + max(pLbl->getHeight(), iImageSize);
-  wchar_t sBuf[64];
-  wchar_t sNbSpells[128];
-  i18n->getText(L"SPELLS_(d)", sBuf, 64);
-  swprintf(sNbSpells, 128, sBuf, nbSpells);
+  char sBuf[64];
+  char sNbSpells[128];
+  i18n->getText("SPELLS_(d)", sBuf, 64);
+  snprintf(sNbSpells, 128, sBuf, nbSpells);
   pLbl = new guiLabel();
-  pLbl->init(sNbSpells, TEXT_FONT, TEXT_COLOR, L"NbSpells", 5, yPxl, iDocWidth - 10, 0, getDisplay());
+  pLbl->init(sNbSpells, TEXT_FONT, TEXT_COLOR, "NbSpells", 5, yPxl, iDocWidth - 10, 0, getDisplay());
   m_pAvatarPopup->getDocument()->addComponent(pLbl);
 
   // XP
@@ -1036,16 +1036,16 @@ void BuildDeckDlg::onAvatarSelected()
   int next = m_pCurrentAvatar->getNextLevelXP();
   pArgs[0] = &xp;
   pArgs[1] = &next;
-  i18n->getText(L"TOTAL_XP(d1)_NEXT(d2)", sText, LABEL_MAX_CHARS, pArgs);
+  i18n->getText("TOTAL_XP(d1)_NEXT(d2)", sText, LABEL_MAX_CHARS, pArgs);
   yPxl += 3 + pLbl->getHeight();
   pLbl = new guiLabel();
-  pLbl->init(sText, TEXT_FONT, TEXT_COLOR, L"", 5, yPxl, iDocWidth - 10, 0, getDisplay());
+  pLbl->init(sText, TEXT_FONT, TEXT_COLOR, "", 5, yPxl, iDocWidth - 10, 0, getDisplay());
   m_pAvatarPopup->getDocument()->addComponent(pLbl);
 
   // Add description
   yPxl += 10 + pLbl->getHeight();
   pLbl = new guiLabel();
-  pLbl->init(m_pCurrentAvatar->m_sCustomDescription, TEXT_FONT, TEXT_COLOR, L"DescLabel", 5, yPxl, iDocWidth - 10, 0, getDisplay());
+  pLbl->init(m_pCurrentAvatar->m_sCustomDescription, TEXT_FONT, TEXT_COLOR, "DescLabe", 5, yPxl, iDocWidth - 10, 0, getDisplay());
   m_pAvatarPopup->getDocument()->addComponent(pLbl);
   m_pAvatarPopup->getDocument()->setHeight(yPxl + pLbl->getHeight());
 }
@@ -1066,37 +1066,37 @@ guiPopup ** BuildDeckDlg::showEditAvatarInfosPopup(AvatarData * pAvatar, guiDocu
 
   // Avatar name label
   int yPxl = 5;
-  wchar_t sText[NAME_MAX_CHARS];
-  i18n->getText(L"ENTER_AVATAR_NAME", sText, NAME_MAX_CHARS);
+  char sText[NAME_MAX_CHARS];
+  i18n->getText("ENTER_AVATAR_NAME", sText, NAME_MAX_CHARS);
   guiLabel * pLbl = new guiLabel();
-  pLbl->init(sText, H2_FONT, H2_COLOR, L"", 4, yPxl, docwidth-8, 0, getDisplay());
+  pLbl->init(sText, H2_FONT, H2_COLOR, "", 4, yPxl, docwidth-8, 0, getDisplay());
   pDoc->addComponent(pLbl);
 
   // Avatar name edit box
   yPxl += pLbl->getHeight() + 5;
-  guiEditBox * pEdit = guiEditBox::createDefaultEditBox(1, false, docwidth-8, L"AvatarName", (KeyboardInputEngine*)m_pLocalClient->getInput(), getDisplay());
+  guiEditBox * pEdit = guiEditBox::createDefaultEditBox(1, false, docwidth-8, "AvatarName", (KeyboardInputEngine*)m_pLocalClient->getInput(), getDisplay());
   pEdit->moveTo(4, yPxl);
   pEdit->setText(pAvatar->m_sCustomName);
   pDoc->addComponent(pEdit);
 
   // Avatar description label
   yPxl += pEdit->getHeight() + 10;
-  i18n->getText(L"ENTER_AVATAR_DESCRIPTION", sText, NAME_MAX_CHARS);
+  i18n->getText("ENTER_AVATAR_DESCRIPTION", sText, NAME_MAX_CHARS);
   pLbl = new guiLabel();
-  pLbl->init(sText, H2_FONT, H2_COLOR, L"", 4, yPxl, docwidth-8, 0, getDisplay());
+  pLbl->init(sText, H2_FONT, H2_COLOR, "", 4, yPxl, docwidth-8, 0, getDisplay());
   pDoc->addComponent(pLbl);
 
   // Avatar name edit box
   yPxl += pLbl->getHeight() + 5;
-  pEdit = guiEditBox::createDefaultEditBox(16, true, docwidth-8, L"AvatarDescription", (KeyboardInputEngine*)m_pLocalClient->getInput(), getDisplay());
+  pEdit = guiEditBox::createDefaultEditBox(16, true, docwidth-8, "AvatarDescription", (KeyboardInputEngine*)m_pLocalClient->getInput(), getDisplay());
   pEdit->moveTo(4, yPxl);
   pEdit->setText(pAvatar->m_sCustomDescription);
   pDoc->addComponent(pEdit);
 
   // Back button
   yPxl += pEdit->getHeight() + 10;
-  i18n->getText(L"OK", sText, NAME_MAX_CHARS);
-  guiButton * pBtn = guiButton::createDefaultNormalButton(sText, L"OkButton", m_pLocalClient->getDisplay());
+  i18n->getText("OK", sText, NAME_MAX_CHARS);
+  guiButton * pBtn = guiButton::createDefaultNormalButton(sText, "OkButton", m_pLocalClient->getDisplay());
   pBtn->setWidth(docwidth-20);
   pBtn->moveTo(10, yPxl);
   pDoc->addComponent(pBtn);
@@ -1117,15 +1117,15 @@ void BuildDeckDlg::updateEditAvatarInfosPopup()
   guiComponent * pCpnt = m_pEditAvatarInfosPopup->getClickedComponent();
   if (pCpnt != NULL)
   {
-    if (wcscmp(pCpnt->getId(), L"OkButton") == 0)
+    if (strcmp(pCpnt->getId(), "OkButton") == 0)
     {
-      guiEditBox * pBox = (guiEditBox*) m_pEditAvatarInfosPopup->getDocument()->getComponent(L"AvatarName");
+      guiEditBox * pBox = (guiEditBox*) m_pEditAvatarInfosPopup->getDocument()->getComponent("AvatarName");
       assert(pBox != NULL);
-      if (wcscmp(pBox->getText(), L"") == 0)
-        m_pCurrentEditingAvatar->findLocalizedElement(m_pCurrentEditingAvatar->m_sCustomName, NAME_MAX_CHARS, i18n->getCurrentLanguageName(), L"name");
+      if (strcmp(pBox->getText(), "") == 0)
+        m_pCurrentEditingAvatar->findLocalizedElement(m_pCurrentEditingAvatar->m_sCustomName, NAME_MAX_CHARS, i18n->getCurrentLanguageName(), "name");
       else
         wsafecpy(m_pCurrentEditingAvatar->m_sCustomName, NAME_MAX_CHARS, pBox->getText());
-      pBox = (guiEditBox*) m_pEditAvatarInfosPopup->getDocument()->getComponent(L"AvatarDescription");
+      pBox = (guiEditBox*) m_pEditAvatarInfosPopup->getDocument()->getComponent("AvatarDescription");
       assert(pBox != NULL);
       wsafecpy(m_pCurrentEditingAvatar->m_sCustomDescription, CUSTOMDESC_MAX_CHARS, pBox->getText());
       m_pLocalClient->getInterface()->deleteFrame(m_pEditAvatarInfosPopup);

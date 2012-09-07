@@ -12,7 +12,7 @@ public:
   ~StatusDlg();
 
   // Other
-  void showStatus(wchar_t * sMessage);
+  void showStatus(char * sMessage);
   void hide();
 
 private:

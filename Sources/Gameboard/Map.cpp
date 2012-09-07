@@ -90,8 +90,8 @@ void Map::createFromServer(MapReader * pMapReader, LocalClient * pLocalClient)
       else
       {
         m_pTiles[x][y] = new MapTile(TERRAIN_SEA, pLocalClient->getServer()->getSolver()->getGlobalSpellsPtr());
-        wchar_t sError[512];
-        swprintf(sError, 512, L"Invalid terrain type at (%d,%d)", (int)x, (int)y);
+        char sError[512];
+        snprintf(sError, 512, "Invalid terrain type at (%d,%d)", (int)x, (int)y);
         pLocalClient->getDebug()->notifyErrorMessage(sError);
       }
     }
@@ -140,7 +140,7 @@ void Map::createFromServer(MapReader * pMapReader, LocalClient * pLocalClient)
   }
   // Create special tiles
   std::vector<CoordsMap> * spectiles = pMapReader->getSpecialTiles();
-  wchar_t pAllTerrains[7][64] = LTERRAIN_NAMES;
+  char pAllTerrains[7][64] = LTERRAIN_NAMES;
   for (u16 i = 0; i < spectiles->size(); i++)
   {
     MapTile * pTile = getTileAt((*spectiles)[i]);
@@ -152,7 +152,7 @@ void Map::createFromServer(MapReader * pMapReader, LocalClient * pLocalClient)
       SpecialTile * pSpec = (SpecialTile*) pEd->getSpecialTiles()->getFirst(0);
       while (pSpec != NULL)
       {
-        pSpec->callLuaFunction(L"isAllowedOn", 1, L"s", pAllTerrains[pTile->m_uTerrainType]);
+        pSpec->callLuaFunction("isAllowedOn", 1, "s", pAllTerrains[pTile->m_uTerrainType]);
         if (pSpec->getLuaNumber() > 0)
           totalFreq += pSpec->getFrequency();
         pSpec = (SpecialTile*) pEd->getSpecialTiles()->getNext(0);
@@ -169,7 +169,7 @@ void Map::createFromServer(MapReader * pMapReader, LocalClient * pLocalClient)
         SpecialTile * pSpec = (SpecialTile*) pEd->getSpecialTiles()->getFirst(0);
         while (pSpec != NULL)
         {
-          pSpec->callLuaFunction(L"isAllowedOn", 1, L"s", pAllTerrains[pTile->m_uTerrainType]);
+          pSpec->callLuaFunction("isAllowedOn", 1, "s", pAllTerrains[pTile->m_uTerrainType]);
           if (pSpec->getLuaNumber() > 0)
           {
             iRnd -= pSpec->getFrequency();
@@ -233,7 +233,7 @@ void Map::createFromNetwork(NetworkData * pData, LocalClient * pLocalClient)
 void Map::initGraphics(DisplayEngine * pDisplay)
 {
   FREE(m_pTileGeometry);
-  QuadData tilequad(0.0f, 1.0f, 0.0f, 1.0f, L"maptile init texture", pDisplay);
+  QuadData tilequad(0.0f, 1.0f, 0.0f, 1.0f, "maptile init texture", pDisplay);
   m_pTileGeometry = new GeometryQuads(&tilequad, VB_Static);
   assert(m_pTiles != NULL);
   for (u16 x = 0; x < m_iWidth; x++)
@@ -251,19 +251,19 @@ void Map::initGraphics(DisplayEngine * pDisplay)
     }
   }
   FREE(m_pEmptyMapGeometry);
-  QuadData mapquad(0.0f, (float) m_iWidth, 0.0f, (float) m_iHeight, L"map", pDisplay);
+  QuadData mapquad(0.0f, (float) m_iWidth, 0.0f, (float) m_iHeight, "map", pDisplay);
   m_pEmptyMapGeometry = new GeometryQuads(&mapquad, VB_Static);
   FREE(m_pTombGeometry);
-  QuadData quad(0.0f, 0.4f, 0.0f, 0.4f, L"skull", pDisplay);
+  QuadData quad(0.0f, 0.4f, 0.0f, 0.4f, "skul", pDisplay);
   m_pTombGeometry = new GeometryQuads(&quad, VB_Static);
   FREE(m_pFoeBannerGeometry);
-  QuadData quad2(0.0f, 0.3f, 0.0f, 0.3f, L"attack_icon", pDisplay);
+  QuadData quad2(0.0f, 0.3f, 0.0f, 0.3f, "attack_icon", pDisplay);
   m_pFoeBannerGeometry = new GeometryQuads(&quad2, VB_Static);
   FREE(m_pCountUnitsBgGeometry1L);
-  QuadData quad3(0.0f, 0.4f, 0.0f, 0.3f, L"bg-shadowed", pDisplay);
+  QuadData quad3(0.0f, 0.4f, 0.0f, 0.3f, "bg-shadowed", pDisplay);
   m_pCountUnitsBgGeometry1L = new GeometryQuads(&quad3, VB_Static);
   FREE(m_pCountUnitsBgGeometry2L);
-  QuadData quad4(0.0f, 0.4f, 0.0f, 0.6f, L"bg-shadowed", pDisplay);
+  QuadData quad4(0.0f, 0.4f, 0.0f, 0.6f, "bg-shadowed", pDisplay);
   m_pCountUnitsBgGeometry2L = new GeometryQuads(&quad4, VB_Static);
 }
 

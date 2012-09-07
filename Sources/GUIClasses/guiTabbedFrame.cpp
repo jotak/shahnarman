@@ -37,7 +37,7 @@ guiTabbedFrame::~guiTabbedFrame()
 // -----------------------------------------------------------------
 // Name : init
 // -----------------------------------------------------------------
-void guiTabbedFrame::init(int * iTabTexs, FontId fontId, int xdecal, FramePosition positionType, FrameFitBehavior widthFit, FrameFitBehavior heightFit, int iMaxWidth, int iMaxHeight, int * iMainTexs, const wchar_t * sCpntId, int xPxl, int yPxl, int wPxl, int hPxl, DisplayEngine * pDisplay)
+void guiTabbedFrame::init(int * iTabTexs, FontId fontId, int xdecal, FramePosition positionType, FrameFitBehavior widthFit, FrameFitBehavior heightFit, int iMaxWidth, int iMaxHeight, int * iMainTexs, const char * sCpntId, int xPxl, int yPxl, int wPxl, int hPxl, DisplayEngine * pDisplay)
 {
   int iSelTabHeight = pDisplay->getTextureEngine()->getTexture(iTabTexs[0])->m_iHeight;
   guiFrame::init(positionType, widthFit, heightFit, 0, iSelTabHeight, iMaxWidth, iMaxHeight, iMainTexs, sCpntId, xPxl, yPxl, wPxl, hPxl, pDisplay);
@@ -308,25 +308,25 @@ void guiTabbedFrame::moveTo(int xPxl, int yPxl)
 // Name : createDefaultTabbedFrame
 //  Static default constructor
 // -----------------------------------------------------------------
-guiTabbedFrame * guiTabbedFrame::createDefaultTabbedFrame(FrameFitBehavior widthFit, FrameFitBehavior heightFit, int width, int height, bool bAlpha, wchar_t * sId, DisplayEngine * pDisplay)
+guiTabbedFrame * guiTabbedFrame::createDefaultTabbedFrame(FrameFitBehavior widthFit, FrameFitBehavior heightFit, int width, int height, bool bAlpha, char * sId, DisplayEngine * pDisplay)
 {
   guiTabbedFrame * pFrame = new guiTabbedFrame();
   int iTabs[6];
-  iTabs[0] = pDisplay->getTextureEngine()->findTexture(L"interface:TabSelLeft");
-  iTabs[1] = pDisplay->getTextureEngine()->findTexture(L"interface:TabSelMiddle");
-  iTabs[2] = pDisplay->getTextureEngine()->findTexture(L"interface:TabSelRight");
-  iTabs[3] = pDisplay->getTextureEngine()->findTexture(L"interface:TabLeft");
-  iTabs[4] = pDisplay->getTextureEngine()->findTexture(L"interface:TabMiddle");
-  iTabs[5] = pDisplay->getTextureEngine()->findTexture(L"interface:TabRight");
+  iTabs[0] = pDisplay->getTextureEngine()->findTexture("interface:TabSelLeft");
+  iTabs[1] = pDisplay->getTextureEngine()->findTexture("interface:TabSelMiddle");
+  iTabs[2] = pDisplay->getTextureEngine()->findTexture("interface:TabSelRight");
+  iTabs[3] = pDisplay->getTextureEngine()->findTexture("interface:TabLeft");
+  iTabs[4] = pDisplay->getTextureEngine()->findTexture("interface:TabMiddle");
+  iTabs[5] = pDisplay->getTextureEngine()->findTexture("interface:TabRight");
   int iTexs[8];
-  iTexs[0] = pDisplay->getTextureEngine()->findTexture(L"interface:FrmTL");
-  iTexs[1] = pDisplay->getTextureEngine()->findTexture(L"interface:FrmTC");
-  iTexs[2] = pDisplay->getTextureEngine()->findTexture(L"interface:FrmTR");
-  iTexs[3] = pDisplay->getTextureEngine()->findTexture(L"interface:FrmCL");
-  iTexs[4] = pDisplay->getTextureEngine()->findTexture(L"interface:FrmCR");
-  iTexs[5] = pDisplay->getTextureEngine()->findTexture(L"interface:FrmBL");
-  iTexs[6] = pDisplay->getTextureEngine()->findTexture(L"interface:FrmBC");
-  iTexs[7] = pDisplay->getTextureEngine()->findTexture(L"interface:FrmBR");
+  iTexs[0] = pDisplay->getTextureEngine()->findTexture("interface:FrmT");
+  iTexs[1] = pDisplay->getTextureEngine()->findTexture("interface:FrmTC");
+  iTexs[2] = pDisplay->getTextureEngine()->findTexture("interface:FrmTR");
+  iTexs[3] = pDisplay->getTextureEngine()->findTexture("interface:FrmC");
+  iTexs[4] = pDisplay->getTextureEngine()->findTexture("interface:FrmCR");
+  iTexs[5] = pDisplay->getTextureEngine()->findTexture("interface:FrmB");
+  iTexs[6] = pDisplay->getTextureEngine()->findTexture("interface:FrmBC");
+  iTexs[7] = pDisplay->getTextureEngine()->findTexture("interface:FrmBR");
   pFrame->init(iTabs, Bookantiqua_wh_16,
     3, FP_Floating, widthFit, heightFit, 0, 0,
     iTexs, sId, 0, 0, width, height, pDisplay);
@@ -349,7 +349,7 @@ guiTabbedFrame_Document::guiTabbedFrame_Document(guiDocument * pDoc, FrameFitBeh
     m_OldWidthFit = OldWidthFit;
     m_OldHeightFit = OldHeightFit;
     m_pLabel = new guiLabel();
-    m_pLabel->init(pDoc->getTitle(), fontId, rgb(0,0,0), L"", 0, 0, 0, 0, pDisplay);
+    m_pLabel->init(pDoc->getTitle(), fontId, rgb(0,0,0), "", 0, 0, 0, 0, pDisplay);
 }
 
 // -----------------------------------------------------------------

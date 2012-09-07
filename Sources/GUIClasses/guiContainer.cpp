@@ -59,7 +59,7 @@ guiContainer::~guiContainer()
 // -----------------------------------------------------------------
 // Name : init
 // -----------------------------------------------------------------
-void guiContainer::init(FrameFitBehavior widthFit, FrameFitBehavior heightFit, int iXOffset, int iYOffset, int iMaxWidth, int iMaxHeight, int * iMainTexs, const wchar_t * sCpntId, int xPxl, int yPxl, int wPxl, int hPxl, DisplayEngine * pDisplay)
+void guiContainer::init(FrameFitBehavior widthFit, FrameFitBehavior heightFit, int iXOffset, int iYOffset, int iMaxWidth, int iMaxHeight, int * iMainTexs, const char * sCpntId, int xPxl, int yPxl, int wPxl, int hPxl, DisplayEngine * pDisplay)
 {
   guiComponent::init(sCpntId, xPxl, yPxl, wPxl, hPxl);
   m_iMaxWidth = iMaxWidth;
@@ -84,21 +84,21 @@ void guiContainer::init(FrameFitBehavior widthFit, FrameFitBehavior heightFit, i
 
   if (m_pScrollButtons[0] == NULL) {
     // Initialize static data
-    int iTex = pDisplay->getTextureEngine()->findTexture(L"interface:ScrollTop");
+    int iTex = pDisplay->getTextureEngine()->findTexture("interface:ScrollTop");
     Texture * pTex = pDisplay->getTextureEngine()->getTexture(iTex);
     QuadData quadTop(0, pTex->m_iWidth, 0, pTex->m_iHeight, iTex, pDisplay);
     m_pScrollButtons[0] = new GeometryQuads(&quadTop, VB_Static);
     m_iScrollButtonWidth = pTex->m_iWidth;
     m_iScrollButtonHeight = pTex->m_iHeight;
-    iTex = pDisplay->getTextureEngine()->findTexture(L"interface:ScrollBottom");
+    iTex = pDisplay->getTextureEngine()->findTexture("interface:ScrollBottom");
     pTex = pDisplay->getTextureEngine()->getTexture(iTex);
     QuadData quadBottom(0, pTex->m_iWidth, 0, pTex->m_iHeight, iTex, pDisplay);
     m_pScrollButtons[1] = new GeometryQuads(&quadBottom, VB_Static);
-    iTex = pDisplay->getTextureEngine()->findTexture(L"interface:ScrollLeft");
+    iTex = pDisplay->getTextureEngine()->findTexture("interface:ScrollLeft");
     pTex = pDisplay->getTextureEngine()->getTexture(iTex);
     QuadData quadLeft(0, pTex->m_iWidth, 0, pTex->m_iHeight, iTex, pDisplay);
     m_pScrollButtons[2] = new GeometryQuads(&quadLeft, VB_Static);
-    iTex = pDisplay->getTextureEngine()->findTexture(L"interface:ScrollRight");
+    iTex = pDisplay->getTextureEngine()->findTexture("interface:ScrollRight");
     pTex = pDisplay->getTextureEngine()->getTexture(iTex);
     QuadData quadRight(0, pTex->m_iWidth, 0, pTex->m_iHeight, iTex, pDisplay);
     m_pScrollButtons[3] = new GeometryQuads(&quadRight, VB_Static);
@@ -587,18 +587,18 @@ void guiContainer::stepScroll(int iDir)
 //  Static default constructor
 //  Use it to avoid passing always the same 3591218 arguments to "init"
 // -----------------------------------------------------------------
-guiContainer * guiContainer::createDefaultPanel(int width, int height, const wchar_t * sId, DisplayEngine * pDisplay)
+guiContainer * guiContainer::createDefaultPanel(int width, int height, const char * sId, DisplayEngine * pDisplay)
 {
   guiContainer * pPanel = new guiContainer();
   int frmtex[8];
-  frmtex[0] = pDisplay->getTextureEngine()->findTexture(L"interface:LstTL");
-  frmtex[1] = pDisplay->getTextureEngine()->findTexture(L"interface:LstTC");
-  frmtex[2] = pDisplay->getTextureEngine()->findTexture(L"interface:LstTR");
-  frmtex[3] = pDisplay->getTextureEngine()->findTexture(L"interface:LstCL");
-  frmtex[4] = pDisplay->getTextureEngine()->findTexture(L"interface:LstCR");
-  frmtex[5] = pDisplay->getTextureEngine()->findTexture(L"interface:LstBL");
-  frmtex[6] = pDisplay->getTextureEngine()->findTexture(L"interface:LstBC");
-  frmtex[7] = pDisplay->getTextureEngine()->findTexture(L"interface:LstBR");
+  frmtex[0] = pDisplay->getTextureEngine()->findTexture("interface:LstT");
+  frmtex[1] = pDisplay->getTextureEngine()->findTexture("interface:LstTC");
+  frmtex[2] = pDisplay->getTextureEngine()->findTexture("interface:LstTR");
+  frmtex[3] = pDisplay->getTextureEngine()->findTexture("interface:LstC");
+  frmtex[4] = pDisplay->getTextureEngine()->findTexture("interface:LstCR");
+  frmtex[5] = pDisplay->getTextureEngine()->findTexture("interface:LstB");
+  frmtex[6] = pDisplay->getTextureEngine()->findTexture("interface:LstBC");
+  frmtex[7] = pDisplay->getTextureEngine()->findTexture("interface:LstBR");
   pPanel->init(
     FB_FitDocumentToFrameWhenSmaller,
     FB_FitDocumentToFrameWhenSmaller,
@@ -607,8 +607,8 @@ guiContainer * guiContainer::createDefaultPanel(int width, int height, const wch
   // Attach document
   guiDocument * pDoc = new guiDocument();
   pDoc->init(
-    L"",
-    pDisplay->getTextureEngine()->findTexture(L"interface:WinBg"),
+    "",
+    pDisplay->getTextureEngine()->findTexture("interface:WinBg"),
     0, 0, 1, 1, pDisplay);
   pPanel->setDocument(pDoc);
 

@@ -62,18 +62,18 @@ public:
   void onRemoveChildEffectFromTown(int iEffectId, u32 uTownId);
   void onDiscardSpell(u8 uSrc, int iPlayerId, int iSpellId);
   void onDrawSpell(u8 uPlayerId, u32 uSpellId);
-  void onRecallSpell(const wchar_t * sType, u8 uPlayerId, u32 uSpellId);
+  void onRecallSpell(const char * sType, u8 uPlayerId, u32 uSpellId);
   void onAttachAsGlobal();
   void onDetachFromGlobal();
-  void onSelectTargetThenResolve(u8 uType, u32 uConstraints, wchar_t * sCallback);
+  void onSelectTargetThenResolve(u8 uType, u32 uConstraints, const char * sCallback);
   void onDeactivateSkill(long iPlayerId, long iUnitId, long iSkillId);
-  void onChangeSpellOwner(const wchar_t * sType, u8 uOldOwner, u32 uSpellId, u8 uNewOwner);
+  void onChangeSpellOwner(const char * sType, u8 uOldOwner, u32 uSpellId, u8 uNewOwner);
   void onChangeUnitOwner(u8 uOldOwner, u32 uUnitId, u8 uNewOwner);
   void onChangeTownOwner(u32 uTownId, u8 uNewOwner);
-  void onBuildBuilding(u32 uTownId, wchar_t * sName);
+  void onBuildBuilding(u32 uTownId, const char * sName);
   void onProduceMana(int playerId, CoordsMap srcPos, u8 * pMana);
   //void onUpdateMaxMana(int playerId, CoordsMap srcPos, u8 * pMana);
-  void onAddSkillToUnit(wchar_t * sSkillName, wchar_t * sSkillParams, u8 uPlayerId, u32 uUnitId);
+  void onAddSkillToUnit(const char * sSkillName, const char * sSkillParams, u8 uPlayerId, u32 uUnitId);
   void onHideSpecialTile(u32 uTileId);
   void onTeleport(MapObject * pMapObj, CoordsMap pos);
   void onResurrect(u8 uPlayerId, u32 uUnitId);
@@ -81,9 +81,9 @@ public:
   int onAddMagicCircle(Player * pPlayer, CoordsMap pos);
   void onRemoveMagicCircle(Player * pPlayer, int iCircle);
   void onAddGoldToPlayer(u8 uPlayerId, int iAmount);
-  void onAddSpellToPlayer(u8 uPlayerId, wchar_t * sName);
-  void onAddArtifactToPlayer(u8 uPlayerId, wchar_t * sName);
-  void onAddAvatarToPlayer(u8 uPlayerId, wchar_t * sName);
+  void onAddSpellToPlayer(u8 uPlayerId, const char * sName);
+  void onAddArtifactToPlayer(u8 uPlayerId, const char * sName);
+  void onAddAvatarToPlayer(u8 uPlayerId, const char * sName);
 
 private:
   // Turn management functions : resolve phase, spells

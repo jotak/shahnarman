@@ -23,7 +23,7 @@ guiImage::~guiImage()
 // -----------------------------------------------------------------
 // Name : init
 // -----------------------------------------------------------------
-void guiImage::init(int iTexId, const wchar_t * sCpntId, int xPxl, int yPxl, int wPxl, int hPxl, DisplayEngine * pDisplay)
+void guiImage::init(int iTexId, const char * sCpntId, int xPxl, int yPxl, int wPxl, int hPxl, DisplayEngine * pDisplay)
 {
   guiComponent::init(sCpntId, xPxl, yPxl, wPxl, hPxl);
   Texture * pTex = pDisplay->getTextureEngine()->getTexture(iTexId);

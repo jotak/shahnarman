@@ -36,21 +36,15 @@ Profile::Profile(LocalClient * pLocalClient)
 // -----------------------------------------------------------------
 Profile::~Profile()
 {
-#ifdef DBG_VERBOSE1
-  printf("Begin destroy Profile\n");
-#endif
   delete m_pAvatars;
   delete m_pSpells;
   delete m_pArtifacts;
-#ifdef DBG_VERBOSE1
-  printf("End destroy Profile\n");
-#endif
 }
 
 // -----------------------------------------------------------------
 // Name : create
 // -----------------------------------------------------------------
-bool Profile::create(wchar_t * sName)
+bool Profile::create(const char * sName)
 {
   wsafecpy(m_sName, NAME_MAX_CHARS, sName);
   m_pAvatars->deleteAll();
@@ -65,18 +59,18 @@ bool Profile::create(wchar_t * sName)
 // -----------------------------------------------------------------
 // Name : load
 // -----------------------------------------------------------------
-bool Profile::load(wchar_t * sName)
+bool Profile::load(const char * sName)
 {
   int iStrSize;
   wsafecpy(m_sName, NAME_MAX_CHARS, sName);
-  wchar_t sFilePath[MAX_PATH];
-  swprintf(sFilePath, MAX_PATH, L"%s%s.dat", PROFILES_PATH, m_sName);
+  char sFilePath[MAX_PATH];
+  snprintf(sFilePath, MAX_PATH, "%s%s.dat", PROFILES_PATH, m_sName);
 
   FILE * f = NULL;
-  if (0 != wfopen(&f, sFilePath, L"rb"))
+  if (0 != fopen_s(&f, sFilePath, "rb"))
   {
-    wchar_t sError[512] = L"";
-    swprintf(sError, 512, L"Error: cannot open file %s for reading. Operation cancelled.", sFilePath);
+    char sError[512] = "";
+    snprintf(sError, 512, "Error: cannot open file %s for reading. Operation cancelled.", sFilePath);
     m_pLocalClient->getDebug()->notifyErrorMessage(sError);
     return false;
   }
@@ -96,46 +90,46 @@ bool Profile::load(wchar_t * sName)
     m_pAvatars->addLast(pAvatar);
   }
   int nbSpells;
-  wchar_t sOwnerName[NAME_MAX_CHARS];
-  wchar_t sOwnerEdition[NAME_MAX_CHARS];
+  char sOwnerName[NAME_MAX_CHARS];
+  char sOwnerEdition[NAME_MAX_CHARS];
   fread(&nbSpells, sizeof(int), 1, f);
   for (int i = 0; i < nbSpells; i++)
   {
     SpellData * p = new SpellData();
     fread(&iStrSize, sizeof(int), 1, f);
-    fread(p->m_sEdition, sizeof(wchar_t), iStrSize, f);
+    fread(p->m_sEdition, sizeof(char), iStrSize, f);
     fread(&iStrSize, sizeof(int), 1, f);
-    fread(p->m_sName, sizeof(wchar_t), iStrSize, f);
+    fread(p->m_sName, sizeof(char), iStrSize, f);
     fread(&iStrSize, sizeof(int), 1, f);
-    fread(sOwnerEdition, sizeof(wchar_t), iStrSize, f);
+    fread(sOwnerEdition, sizeof(char), iStrSize, f);
     fread(&iStrSize, sizeof(int), 1, f);
-    fread(sOwnerName, sizeof(wchar_t), iStrSize, f);
+    fread(sOwnerName, sizeof(char), iStrSize, f);
     p->m_pOwner = findAvatar(sOwnerEdition, sOwnerName);
     m_pSpells->addLast(p);
   }
-  wchar_t sEdition[NAME_MAX_CHARS];
-  wchar_t sObjectId[NAME_MAX_CHARS];
+  char sEdition[NAME_MAX_CHARS];
+  char sObjectId[NAME_MAX_CHARS];
   int nbArtifacts;
   fread(&nbArtifacts, sizeof(int), 1, f);
   for (int i = 0; i < nbArtifacts; i++)
   {
     fread(&iStrSize, sizeof(int), 1, f);
-    fread(sEdition, sizeof(wchar_t), iStrSize, f);
+    fread(sEdition, sizeof(char), iStrSize, f);
     fread(&iStrSize, sizeof(int), 1, f);
-    fread(sObjectId, sizeof(wchar_t), iStrSize, f);
+    fread(sObjectId, sizeof(char), iStrSize, f);
     Artifact * pArtifact = NULL;
     Edition * pEdition = m_pLocalClient->getDataFactory()->findEdition(sEdition);
     if (pEdition != NULL)
       pArtifact = pEdition->findArtifact(sObjectId);
     // If artifact can't be loaded, we'll create a dummy one anyway, because maybe it was just not found beacause the edition was deactivated... but it should be saved anyway when calling Profile::save!
     if (pArtifact == NULL)
-      pArtifact = new Artifact(sEdition, sObjectId, L"", 0, false); // dummy one
+      pArtifact = new Artifact(sEdition, sObjectId, "", 0, false); // dummy one
     else
       pArtifact = pArtifact->clone();
     fread(&iStrSize, sizeof(int), 1, f);
-    fread(sOwnerEdition, sizeof(wchar_t), iStrSize, f);
+    fread(sOwnerEdition, sizeof(char), iStrSize, f);
     fread(&iStrSize, sizeof(int), 1, f);
-    fread(sOwnerName, sizeof(wchar_t), iStrSize, f);
+    fread(sOwnerName, sizeof(char), iStrSize, f);
     pArtifact->m_pOwner = findAvatar(sOwnerEdition, sOwnerName);
     m_pArtifacts->addLast(pArtifact);
   }
@@ -150,14 +144,14 @@ bool Profile::load(wchar_t * sName)
 bool Profile::save()
 {
   int iStrSize;
-  wchar_t sFilePath[MAX_PATH];
-  swprintf(sFilePath, MAX_PATH, L"%s%s.dat", PROFILES_PATH, m_sName);
+  char sFilePath[MAX_PATH];
+  snprintf(sFilePath, MAX_PATH, "%s%s.dat", PROFILES_PATH, m_sName);
 
   FILE * f = NULL;
-  if (0 != wfopen(&f, sFilePath, L"wb"))
+  if (0 != fopen_s(&f, sFilePath, "wb"))
   {
-    wchar_t sError[512] = L"";
-    swprintf(sError, 512, L"Error: cannot open file %s for writing. Operation cancelled.", sFilePath);
+    char sError[512] = "";
+    snprintf(sError, 512, "Error: cannot open file %s for writing. Operation cancelled.", sFilePath);
     m_pLocalClient->getDebug()->notifyErrorMessage(sError);
     return false;
   }
@@ -177,29 +171,29 @@ bool Profile::save()
   SpellData * pSpell = (SpellData*) m_pSpells->getFirst(0);
   while (pSpell != NULL)
   {
-    iStrSize = 1 + wcslen(pSpell->m_sEdition);
+    iStrSize = 1 + strlen(pSpell->m_sEdition);
     fwrite(&iStrSize, sizeof(int), 1, f);
-    fwrite(pSpell->m_sEdition, sizeof(wchar_t), iStrSize, f);
-    iStrSize = 1 + wcslen(pSpell->m_sName);
+    fwrite(pSpell->m_sEdition, sizeof(char), iStrSize, f);
+    iStrSize = 1 + strlen(pSpell->m_sName);
     fwrite(&iStrSize, sizeof(int), 1, f);
-    fwrite(pSpell->m_sName, sizeof(wchar_t), iStrSize, f);
+    fwrite(pSpell->m_sName, sizeof(char), iStrSize, f);
     if (pSpell->m_pOwner == NULL)
     {
       iStrSize = 1;
       fwrite(&iStrSize, sizeof(int), 1, f);
-      fwrite(L"", sizeof(wchar_t), iStrSize, f);
+      fwrite("", sizeof(char), iStrSize, f);
       iStrSize = 1;
       fwrite(&iStrSize, sizeof(int), 1, f);
-      fwrite(L"", sizeof(wchar_t), iStrSize, f);
+      fwrite("", sizeof(char), iStrSize, f);
     }
     else
     {
-      iStrSize = 1 + wcslen(pSpell->m_pOwner->m_sEdition);
+      iStrSize = 1 + strlen(pSpell->m_pOwner->m_sEdition);
       fwrite(&iStrSize, sizeof(int), 1, f);
-      fwrite(pSpell->m_pOwner->m_sEdition, sizeof(wchar_t), iStrSize, f);
-      iStrSize = 1 + wcslen(pSpell->m_pOwner->m_sObjectId);
+      fwrite(pSpell->m_pOwner->m_sEdition, sizeof(char), iStrSize, f);
+      iStrSize = 1 + strlen(pSpell->m_pOwner->m_sObjectId);
       fwrite(&iStrSize, sizeof(int), 1, f);
-      fwrite(pSpell->m_pOwner->m_sObjectId, sizeof(wchar_t), iStrSize, f);
+      fwrite(pSpell->m_pOwner->m_sObjectId, sizeof(char), iStrSize, f);
     }
     pSpell = (SpellData*) m_pSpells->getNext(0);
   }
@@ -207,29 +201,29 @@ bool Profile::save()
   Artifact * pArtifact = (Artifact*) m_pArtifacts->getFirst(0);
   while (pArtifact != NULL)
   {
-    iStrSize = 1 + wcslen(pArtifact->getEdition());
+    iStrSize = 1 + strlen(pArtifact->getEdition());
     fwrite(&iStrSize, sizeof(int), 1, f);
-    fwrite(pArtifact->getEdition(), sizeof(wchar_t), iStrSize, f);
-    iStrSize = 1 + wcslen(pArtifact->m_sObjectId);
+    fwrite(pArtifact->getEdition(), sizeof(char), iStrSize, f);
+    iStrSize = 1 + strlen(pArtifact->m_sObjectId);
     fwrite(&iStrSize, sizeof(int), 1, f);
-    fwrite(pArtifact->m_sObjectId, sizeof(wchar_t), iStrSize, f);
+    fwrite(pArtifact->m_sObjectId, sizeof(char), iStrSize, f);
     if (pArtifact->m_pOwner == NULL)
     {
       iStrSize = 1;
       fwrite(&iStrSize, sizeof(int), 1, f);
-      fwrite(L"", sizeof(wchar_t), iStrSize, f);
+      fwrite("", sizeof(char), iStrSize, f);
       iStrSize = 1;
       fwrite(&iStrSize, sizeof(int), 1, f);
-      fwrite(L"", sizeof(wchar_t), iStrSize, f);
+      fwrite("", sizeof(char), iStrSize, f);
     }
     else
     {
-      iStrSize = 1 + wcslen(pArtifact->m_pOwner->m_sEdition);
+      iStrSize = 1 + strlen(pArtifact->m_pOwner->m_sEdition);
       fwrite(&iStrSize, sizeof(int), 1, f);
-      fwrite(pArtifact->m_pOwner->m_sEdition, sizeof(wchar_t), iStrSize, f);
-      iStrSize = 1 + wcslen(pArtifact->m_pOwner->m_sObjectId);
+      fwrite(pArtifact->m_pOwner->m_sEdition, sizeof(char), iStrSize, f);
+      iStrSize = 1 + strlen(pArtifact->m_pOwner->m_sObjectId);
       fwrite(&iStrSize, sizeof(int), 1, f);
-      fwrite(pArtifact->m_pOwner->m_sObjectId, sizeof(wchar_t), iStrSize, f);
+      fwrite(pArtifact->m_pOwner->m_sObjectId, sizeof(char), iStrSize, f);
     }
     pArtifact = (Artifact*) m_pArtifacts->getNext(0);
   }
@@ -243,15 +237,15 @@ bool Profile::save()
 // -----------------------------------------------------------------
 void Profile::deleteProfile()
 {
-  wchar_t sFilePath[MAX_PATH];
-  swprintf(sFilePath, MAX_PATH, L"%s%s.dat", PROFILES_PATH, m_sName);
-  _wremove(sFilePath);
+  char sFilePath[MAX_PATH];
+  snprintf(sFilePath, MAX_PATH, "%s%s.dat", PROFILES_PATH, m_sName);
+  remove(sFilePath);
 }
 
 // -----------------------------------------------------------------
 // Name : addSpell
 // -----------------------------------------------------------------
-void Profile::addSpell(wchar_t * sEdition, wchar_t * sName)
+void Profile::addSpell(const char * sEdition, const char * sName)
 {
   SpellData * p = new SpellData();
   wsafecpy(p->m_sEdition, NAME_MAX_CHARS, sEdition);
@@ -263,7 +257,7 @@ void Profile::addSpell(wchar_t * sEdition, wchar_t * sName)
 // -----------------------------------------------------------------
 // Name : addArtifact
 // -----------------------------------------------------------------
-void Profile::addArtifact(wchar_t * sEdition, wchar_t * sName)
+void Profile::addArtifact(const char * sEdition, const char * sName)
 {
   Edition * pEdition = m_pLocalClient->getDataFactory()->findEdition(sEdition);
   Artifact * pArtifact = pEdition->findArtifact(sName);
@@ -273,7 +267,7 @@ void Profile::addArtifact(wchar_t * sEdition, wchar_t * sName)
 // -----------------------------------------------------------------
 // Name : addAvatar
 // -----------------------------------------------------------------
-void Profile::addAvatar(wchar_t * sEdition, wchar_t * sName)
+void Profile::addAvatar(const char * sEdition, const char * sName)
 {
   AvatarData * pAvatar = (AvatarData*) m_pLocalClient->getDataFactory()->getUnitData(sEdition, sName);
   assert(pAvatar != NULL);
@@ -285,12 +279,12 @@ void Profile::addAvatar(wchar_t * sEdition, wchar_t * sName)
 // -----------------------------------------------------------------
 void Profile::addAvatar(AvatarData * pAvatar, int iCost)
 {
-  if (wcscmp(pAvatar->m_sObjectId, L"") == 0)
+  if (strcmp(pAvatar->m_sObjectId, "") == 0)
   {
     // Generate random object id
     while (true)
     {
-      swprintf(pAvatar->m_sObjectId, NAME_MAX_CHARS, L"*gen*%ld%ld%ld", (long) getRandom(RAND_MAX), (long) getRandom(RAND_MAX), (long) getRandom(RAND_MAX));
+      snprintf(pAvatar->m_sObjectId, NAME_MAX_CHARS, "*gen*%ld%ld%ld", (long) getRandom(RAND_MAX), (long) getRandom(RAND_MAX), (long) getRandom(RAND_MAX));
       // Check that it doesn't already exist in DataFactory
       UnitData * pUnitData = m_pLocalClient->getDataFactory()->getUnitData(pAvatar->m_sEdition, pAvatar->m_sObjectId);
       if (pUnitData == NULL)
@@ -300,7 +294,7 @@ void Profile::addAvatar(AvatarData * pAvatar, int iCost)
         AvatarData * pOther = (AvatarData*) m_pAvatars->getFirst(0);
         while (pOther != NULL)
         {
-          if (wcscmp(pAvatar->m_sEdition, pOther->m_sEdition) == 0 && wcscmp(pAvatar->m_sObjectId, pOther->m_sObjectId) == 0)
+          if (strcmp(pAvatar->m_sEdition, pOther->m_sEdition) == 0 && strcmp(pAvatar->m_sObjectId, pOther->m_sObjectId) == 0)
           {
             bFound = true;
             break;
@@ -327,7 +321,7 @@ void Profile::buyItem(ShopItem * pItem)
   Edition * pEdition = m_pLocalClient->getDataFactory()->findEdition(pItem->m_sEdition);
   if (pEdition == NULL)
   {
-    m_pLocalClient->getDebug()->notifyErrorMessage(L"Error: edition is probably disabled.");
+    m_pLocalClient->getDebug()->notifyErrorMessage("Error: edition is probably disabled.");
     return;
   }
 
@@ -344,7 +338,7 @@ void Profile::buyItem(ShopItem * pItem)
         else
           pSpell = pEdition->selectRandomSpell(pContent->m_iMode);
         if (pSpell == NULL)
-          m_pLocalClient->getDebug()->notifyErrorMessage(L"NULL spell in Profile::buyItem - spell selection failed.");
+          m_pLocalClient->getDebug()->notifyErrorMessage("NULL spell in Profile::buyItem - spell selection failed.");
         else
           addSpell(pItem->m_sEdition, pSpell->getObjectName());
       }
@@ -370,13 +364,13 @@ void Profile::buyItem(ShopItem * pItem)
 // -----------------------------------------------------------------
 // Name : findAvatar
 // -----------------------------------------------------------------
-AvatarData * Profile::findAvatar(wchar_t * sEdition, wchar_t * sName)
+AvatarData * Profile::findAvatar(const char * sEdition, const char * sName)
 {
   AvatarData * pAvatar = (AvatarData*) m_pAvatars->getFirst(0);
   while (pAvatar != NULL)
   {
-    if (wcscmp(pAvatar->m_sEdition, sEdition) == 0
-        && wcscmp(pAvatar->m_sObjectId, sName) == 0)
+    if (strcmp(pAvatar->m_sEdition, sEdition) == 0
+        && strcmp(pAvatar->m_sObjectId, sName) == 0)
       return pAvatar;
     pAvatar = (AvatarData*) m_pAvatars->getNext(0);
   }
@@ -391,8 +385,8 @@ bool Profile::replaceAvatar(AvatarData * pNewAvatar)
   AvatarData * pOldAvatar = (AvatarData*) m_pAvatars->getFirst(0);
   while (pOldAvatar != NULL)
   {
-    if (wcscmp(pOldAvatar->m_sEdition, pNewAvatar->m_sEdition) == 0
-        && wcscmp(pOldAvatar->m_sObjectId, pNewAvatar->m_sObjectId) == 0)
+    if (strcmp(pOldAvatar->m_sEdition, pNewAvatar->m_sEdition) == 0
+        && strcmp(pOldAvatar->m_sObjectId, pNewAvatar->m_sObjectId) == 0)
     {
       // Replace avatar ptr in spells data
       SpellData * pSpell = (SpellData*) m_pSpells->getFirst(0);

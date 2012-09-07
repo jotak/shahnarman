@@ -101,18 +101,18 @@ void NetworkData::addDouble(double d)
 // -----------------------------------------------------------------
 // Name : addString
 // -----------------------------------------------------------------
-void NetworkData::addString(const wchar_t * str)
+void NetworkData::addString(const char * str)
 {
-  long size = (long) wcslen(str);
+  long size = (long) strlen(str);
   addLong(size);
   char * oldData = m_pData;
   long oldSize = m_iCurrentSize;
-  m_iCurrentSize += size * sizeof(wchar_t);
+  m_iCurrentSize += size * sizeof(char);
   m_pData = new char[m_iCurrentSize];
   char * ptr = m_pData;
   memcpy(ptr, oldData, oldSize);
   ptr += oldSize;
-  memcpy(ptr, str, size * sizeof(wchar_t));
+  memcpy(ptr, str, size * sizeof(char));
   delete[] oldData;
 }
 
@@ -162,12 +162,12 @@ double NetworkData::readDouble()
 // -----------------------------------------------------------------
 // Name : readString
 // -----------------------------------------------------------------
-void NetworkData::readString(wchar_t * str)
+void NetworkData::readString(char * str)
 {
   long size = readLong();
-  memcpy(str, m_pReadCursor, size * sizeof(wchar_t));
-  str[size] = L'\0';
-  m_pReadCursor += size * sizeof(wchar_t);
+  memcpy(str, m_pReadCursor, size * sizeof(char));
+  str[size] = '\0';
+  m_pReadCursor += size * sizeof(char);
 }
 
 // -----------------------------------------------------------------

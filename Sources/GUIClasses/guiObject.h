@@ -59,8 +59,8 @@ public:
   virtual void init(int xPxl, int yPxl, int wPxl, int hPxl);
 
   // Tooltip text
-  wchar_t * getTooltipText() { return m_sTooltip; };
-  void setTooltipText(const wchar_t * sTooltip) { wsafecpy(m_sTooltip, 256, sTooltip); };
+  char * getTooltipText() { return m_sTooltip; };
+  void setTooltipText(const char * sTooltip) { wsafecpy(m_sTooltip, 256, sTooltip); };
 
   // Other
   F_RGBA  getDiffuseColor() { return m_DiffuseColor; };
@@ -71,7 +71,7 @@ protected:
   int m_iYPxl;
   int m_iWidth;
   int m_iHeight;
-  wchar_t m_sTooltip[256];
+  char m_sTooltip[256];
   F_RGBA m_DiffuseColor;
 
   static int m_aiAllFonts[NB_FONTS];

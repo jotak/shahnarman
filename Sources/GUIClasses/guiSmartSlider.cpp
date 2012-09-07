@@ -34,17 +34,17 @@ guiSmartSlider::~guiSmartSlider()
 // -----------------------------------------------------------------
 // Name : init
 // -----------------------------------------------------------------
-void guiSmartSlider::init(int iItemSize, int iSpacing, FontId fontId, F_RGBA textColor, const wchar_t * sCpntId, int xPxl, int yPxl, int wPxl, int hPxl, DisplayEngine * pDisplay)
+void guiSmartSlider::init(int iItemSize, int iSpacing, FontId fontId, F_RGBA textColor, const char * sCpntId, int xPxl, int yPxl, int wPxl, int hPxl, DisplayEngine * pDisplay)
 {
   guiComponent::init(sCpntId, xPxl, yPxl, wPxl, hPxl);
-  m_pLabel->init(L"dummy", fontId, textColor, L"", 0, 0, 0, 0, pDisplay);
-  m_pDisableReasonLabel->init(L"dummy", fontId, rgb(1,0,0), L"", 0, 0, 0, 0, pDisplay);
+  m_pLabel->init("dummy", fontId, textColor, "", 0, 0, 0, 0, pDisplay);
+  m_pDisableReasonLabel->init("dummy", fontId, rgb(1,0,0), "", 0, 0, 0, 0, pDisplay);
   m_iSpacing = iSpacing;
   m_iItemSize = iItemSize;
 
-  QuadData quad1(0, m_iItemSize, 0, m_iItemSize, L"EmptyWhiteSquare", pDisplay);
+  QuadData quad1(0, m_iItemSize, 0, m_iItemSize, "EmptyWhiteSquare", pDisplay);
   m_pSelectorGeometry = new GeometryQuads(&quad1, VB_Static);
-  QuadData quad2(0, m_iItemSize, 0, m_iItemSize, L"Disabled", pDisplay);
+  QuadData quad2(0, m_iItemSize, 0, m_iItemSize, "Disabled", pDisplay);
   m_pDisabledGeometry = new GeometryQuads(&quad2, VB_Static);
 
   loadGeometry(pDisplay);
@@ -130,7 +130,7 @@ guiObject * guiSmartSlider::onCursorMoveEvent(int xPxl, int yPxl)
       if (m_pSelectedItem != pItem)
       {
         m_pSelectedItem = pItem;
-        wchar_t str[SLIDER_ITEM_MAX_CHARS];
+        char str[SLIDER_ITEM_MAX_CHARS];
         m_pLabel->setText(pItem->getInfo(str, SLIDER_ITEM_MAX_CHARS));
         int textX = (getWidth() - m_pLabel->getWidth()) / 2;
         int textY = getYPos() + getHeight() - m_pLabel->getHeight();
@@ -186,8 +186,8 @@ void guiSmartSlider::deleteItems()
   m_pItems->deleteAll();
   m_iSliderPos = 0;
   m_pSelectedItem = NULL;
-  m_pLabel->setText(L"");
-  m_pDisableReasonLabel->setText(L"");
+  m_pLabel->setText("");
+  m_pDisableReasonLabel->setText("");
 }
 
 // -----------------------------------------------------------------

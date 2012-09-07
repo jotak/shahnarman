@@ -9,7 +9,7 @@
 // Name : Texture
 //  Constructor
 // -----------------------------------------------------------------
-Texture::Texture(const wchar_t * sFilename, bool bMipMap)
+Texture::Texture(const char * sFilename, bool bMipMap)
 {
   wsafecpy(m_sFilename, MAX_PATH, sFilename);
   m_pTexels = NULL;
@@ -36,11 +36,11 @@ Texture::~Texture()
 s16 Texture::load()
 {
   unload();
-  wchar_t sFilePath[MAX_PATH] = GAME_TEXTURES_PATH;
+  char sFilePath[MAX_PATH] = GAME_TEXTURES_PATH;
   wsafecat(sFilePath, MAX_PATH, m_sFilename);
-  wsafecat(sFilePath, MAX_PATH, L".png");
+  wsafecat(sFilePath, MAX_PATH, ".png");
   FILE * f = NULL;
-  errno_t err = wfopen(&f, sFilePath, L"rb");
+  errno_t err = fopen_s(&f, sFilePath, "rb");
   if (err != 0)
   {
     switch (err)

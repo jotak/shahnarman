@@ -18,54 +18,54 @@ StartMenuDlg::StartMenuDlg(int iWidth, int iHeight, LocalClient * pLocalClient) 
 {
   m_pLocalClient = pLocalClient;
 
-  init(L"Main menu",
-    pLocalClient->getDisplay()->getTextureEngine()->findTexture(L"interface:WinBg"),
+  init("Main menu",
+    pLocalClient->getDisplay()->getTextureEngine()->findTexture("interface:WinBg"),
     0, 0, iWidth, iHeight, pLocalClient->getDisplay());
 
   int yPxl = 10;
   int butHeight = (iHeight - 2*yPxl) / 5;
 
-  wchar_t str[64] = L"";
-  i18n->getText(L"BUILD_DECK", str, 64);
+  char str[64] = "";
+  i18n->getText("BUILD_DECK", str, 64);
   guiButton * pBtn = new guiButton();
   pBtn->init(str, H1_FONT, H1_COLOR,
     -1,
     BCO_None,
     -1,
     BCO_Decal,
-    pLocalClient->getDisplay()->getTextureEngine()->findTexture(L"interface:Transparent"),
-    L"BuildDeck", 0, yPxl, iWidth, butHeight, pLocalClient->getDisplay());
+    pLocalClient->getDisplay()->getTextureEngine()->findTexture("interface:Transparent"),
+    "BuildDeck", 0, yPxl, iWidth, butHeight, pLocalClient->getDisplay());
   addComponent(pBtn);
 
   yPxl += butHeight;
-  i18n->getText(L"PLAY", str, 64);
+  i18n->getText("PLAY", str, 64);
   pBtn = (guiButton*) pBtn->clone();
   pBtn->setText(str);
-  pBtn->setId(L"PlayLAN");
+  pBtn->setId("PlayLAN");
   pBtn->moveTo(0, yPxl);
   addComponent(pBtn);
 
   yPxl += butHeight;
-  i18n->getText(L"PLAY_ONLINE", str, 64);
+  i18n->getText("PLAY_ONLINE", str, 64);
   pBtn = (guiButton*) pBtn->clone();
   pBtn->setText(str);
-  pBtn->setId(L"PlayOnline");
+  pBtn->setId("PlayOnline");
   pBtn->moveTo(0, yPxl);
   addComponent(pBtn);
 
   yPxl += butHeight;
-  i18n->getText(L"OPTIONS", str, 64);
+  i18n->getText("OPTIONS", str, 64);
   pBtn = (guiButton*) pBtn->clone();
   pBtn->setText(str);
-  pBtn->setId(L"Options");
+  pBtn->setId("Options");
   pBtn->moveTo(0, yPxl);
   addComponent(pBtn);
 
   yPxl += butHeight;
-  i18n->getText(L"QUIT", str, 64);
+  i18n->getText("QUIT", str, 64);
   pBtn = (guiButton*) pBtn->clone();
   pBtn->setText(str);
-  pBtn->setId(L"Quit");
+  pBtn->setId("Quit");
   pBtn->moveTo(0, yPxl);
   addComponent(pBtn);
 
@@ -90,24 +90,24 @@ void StartMenuDlg::update(double delta)
     guiComponent * pCpnt = m_pPlayLocalDlg->getClickedComponent();
     if (pCpnt != NULL)
     {
-      if (wcscmp(pCpnt->getId(), L"NewGame") == 0)
+      if (strcmp(pCpnt->getId(), "NewGame") == 0)
       {
         m_pLocalClient->getInterface()->deleteFrame(m_pPlayLocalDlg);
         m_pPlayLocalDlg = NULL;
         setEnabled(true);
         m_pLocalClient->getInterface()->setUniqueDialog(m_pLocalClient->getInterface()->getHostGameDialog());
       }
-      else if (wcscmp(pCpnt->getId(), L"JoinLAN") == 0)
+      else if (strcmp(pCpnt->getId(), "JoinLAN") == 0)
       {
       }
-      else if (wcscmp(pCpnt->getId(), L"LoadGame") == 0)
+      else if (strcmp(pCpnt->getId(), "LoadGame") == 0)
       {
         m_pLocalClient->getInterface()->deleteFrame(m_pPlayLocalDlg);
         m_pPlayLocalDlg = NULL;
         setEnabled(true);
         m_pLocalClient->getInterface()->setUniqueDialog(m_pLocalClient->getInterface()->getLoadGameDialog());
       }
-      else if (wcscmp(pCpnt->getId(), L"Back") == 0)
+      else if (strcmp(pCpnt->getId(), "Back") == 0)
       {
         m_pLocalClient->getInterface()->deleteFrame(m_pPlayLocalDlg);
         m_pPlayLocalDlg = NULL;
@@ -122,9 +122,9 @@ void StartMenuDlg::update(double delta)
 // -----------------------------------------------------------------
 bool StartMenuDlg::onButtonEvent(ButtonAction * pEvent, guiComponent * pCpnt)
 {
-  if (wcscmp(pCpnt->getId(), L"BuildDeck") == 0)
+  if (strcmp(pCpnt->getId(), "BuildDeck") == 0)
     m_pLocalClient->getInterface()->setUniqueDialog(m_pLocalClient->getInterface()->getSelectPlayerDialog());
-  else if (wcscmp(pCpnt->getId(), L"PlayLAN") == 0)
+  else if (strcmp(pCpnt->getId(), "PlayLAN") == 0)
   {
     // Show popup
     m_pPlayLocalDlg = guiPopup::createEmptyPopup(getDisplay());
@@ -134,33 +134,33 @@ bool StartMenuDlg::onButtonEvent(ButtonAction * pEvent, guiComponent * pCpnt)
 
     // New game button
     int yPxl = 10;
-    wchar_t sText[64];
-    i18n->getText(L"NEW_GAME", sText, 64);
-    guiButton * pBtn = guiButton::createDefaultNormalButton(sText, L"NewGame", m_pLocalClient->getDisplay());
+    char sText[64];
+    i18n->getText("NEW_GAME", sText, 64);
+    guiButton * pBtn = guiButton::createDefaultNormalButton(sText, "NewGame", m_pLocalClient->getDisplay());
     pBtn->setWidth(docwidth-20);
     pBtn->moveTo(10, yPxl);
     pDoc->addComponent(pBtn);
 
     // Join LAN button
     yPxl += pBtn->getHeight() + 10;
-    i18n->getText(L"JOIN_LAN", sText, 64);
-    pBtn = guiButton::createDefaultNormalButton(sText, L"JoinLAN", m_pLocalClient->getDisplay());
+    i18n->getText("JOIN_LAN", sText, 64);
+    pBtn = guiButton::createDefaultNormalButton(sText, "JoinLAN", m_pLocalClient->getDisplay());
     pBtn->setWidth(docwidth-20);
     pBtn->moveTo(10, yPxl);
     pDoc->addComponent(pBtn);
 
     // Load game button
     yPxl += pBtn->getHeight() + 10;
-    i18n->getText(L"LOAD_GAME", sText, 64);
-    pBtn = guiButton::createDefaultNormalButton(sText, L"LoadGame", m_pLocalClient->getDisplay());
+    i18n->getText("LOAD_GAME", sText, 64);
+    pBtn = guiButton::createDefaultNormalButton(sText, "LoadGame", m_pLocalClient->getDisplay());
     pBtn->setWidth(docwidth-20);
     pBtn->moveTo(10, yPxl);
     pDoc->addComponent(pBtn);
 
     // Back button
     yPxl += pBtn->getHeight() + 10;
-    i18n->getText(L"BACK", sText, 64);
-    pBtn = guiButton::createDefaultNormalButton(sText, L"Back", m_pLocalClient->getDisplay());
+    i18n->getText("BACK", sText, 64);
+    pBtn = guiButton::createDefaultNormalButton(sText, "Back", m_pLocalClient->getDisplay());
     pBtn->setWidth(docwidth-20);
     pBtn->moveTo(10, yPxl);
     pDoc->addComponent(pBtn);
@@ -169,12 +169,12 @@ bool StartMenuDlg::onButtonEvent(ButtonAction * pEvent, guiComponent * pCpnt)
     m_pPlayLocalDlg->moveTo(m_pLocalClient->getClientParameters()->screenXSize / 2 - docwidth / 2, m_pLocalClient->getClientParameters()->screenYSize / 2 - pDoc->getHeight() / 2);
     setEnabled(false);
   }
-  else if (wcscmp(pCpnt->getId(), L"PlayOnline") == 0)
+  else if (strcmp(pCpnt->getId(), "PlayOnline") == 0)
   {
   }
-  else if (wcscmp(pCpnt->getId(), L"Options") == 0)
+  else if (strcmp(pCpnt->getId(), "Options") == 0)
     m_pLocalClient->getInterface()->setUniqueDialog(m_pLocalClient->getInterface()->getOptionsDialog());
-  else if (wcscmp(pCpnt->getId(), L"Quit") == 0)
+  else if (strcmp(pCpnt->getId(), "Quit") == 0)
   {
     m_pLocalClient->requestExit();
     return false;

@@ -21,13 +21,13 @@ class ShopItem : public guiSliderItem
 public:
   ShopItem();
   virtual ~ShopItem();
-  virtual wchar_t * getInfo(wchar_t * str, int strsize);
+  virtual char * getInfo(char * str, int strsize);
   guiPopup * createPopup(int iCash, DisplayEngine * pDisplay);
 
   XMLObject * m_pXml;
   int m_iCost;
-  wchar_t m_sEdition[NAME_MAX_CHARS];
-//  wchar_t m_sFullText[SHOP_ITEM_FULL_DESCRIPTION_MAX_CHARS];
+  char m_sEdition[NAME_MAX_CHARS];
+//  char m_sFullText[SHOP_ITEM_FULL_DESCRIPTION_MAX_CHARS];
   int m_iType;
 };
 
@@ -35,14 +35,14 @@ class AvatarShopItem : public ShopItem
 {
 public:
   AvatarShopItem() { m_iType = 1; };
-  wchar_t m_sAvatarId[NAME_MAX_CHARS];
+  char m_sAvatarId[NAME_MAX_CHARS];
 };
 
 class ArtifactShopItem : public ShopItem
 {
 public:
   ArtifactShopItem() { m_iType = 2; };
-  wchar_t m_sArtifactId[NAME_MAX_CHARS];
+  char m_sArtifactId[NAME_MAX_CHARS];
 };
 
 class PackShopItem : public ShopItem
@@ -56,10 +56,10 @@ public:
 class SpellsPackContent : public BaseObject
 {
 public:
-  SpellsPackContent() { m_iMode = -1; m_iNbSpells = 0; wsafecpy(m_sSpellId, NAME_MAX_CHARS, L""); };
+  SpellsPackContent() { m_iMode = -1; m_iNbSpells = 0; wsafecpy(m_sSpellId, NAME_MAX_CHARS, ""); };
   int m_iMode;
   int m_iNbSpells;
-  wchar_t m_sSpellId[NAME_MAX_CHARS];
+  char m_sSpellId[NAME_MAX_CHARS];
 };
 
 #endif

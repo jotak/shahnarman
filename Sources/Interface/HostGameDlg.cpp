@@ -61,16 +61,16 @@ HostGameDlg::HostGameDlg(int iWidth, int iHeight, LocalClient * pLocalClient) : 
   m_AllColors[i++] = rgb(0.635, 0.827, 0.612);
   m_AllColors[i++] = rgb(0.4, 0.176, 0.569);
 
-  init(L"Host game",
-    pLocalClient->getDisplay()->getTextureEngine()->findTexture(L"interface:WinBg"),
+  init("Host game",
+    pLocalClient->getDisplay()->getTextureEngine()->findTexture("interface:WinBg"),
     0, 0, iWidth, iHeight, pLocalClient->getDisplay());
 
   // Create label "Game name"
   int xPxl = SPACING;
   int yPxl = SPACING;
-  wchar_t str[128];
+  char str[128];
   guiLabel * pLbl = new guiLabel();
-  pLbl->init(i18n->getText(L"GAME_NAME", str, 128), H2_FONT, H2_COLOR, L"GameNameLabel", 0, 0, 0, 0, pLocalClient->getDisplay());
+  pLbl->init(i18n->getText("GAME_NAME", str, 128), H2_FONT, H2_COLOR, "GameNameLabe", 0, 0, 0, 0, pLocalClient->getDisplay());
   pLbl->moveTo(SPACING, yPxl);
   addComponent(pLbl);
 
@@ -79,11 +79,11 @@ HostGameDlg::HostGameDlg(int iWidth, int iHeight, LocalClient * pLocalClient) : 
   yPxl += 2;
   if (m_pLocalClient->getInput()->hasKeyboard())
   {
-    guiEditBox * pEdit = guiEditBox::createDefaultEditBox(1, false, getWidth() - xPxl - SPACING, L"GameName", (KeyboardInputEngine*) m_pLocalClient->getInput(), getDisplay());
+    guiEditBox * pEdit = guiEditBox::createDefaultEditBox(1, false, getWidth() - xPxl - SPACING, "GameName", (KeyboardInputEngine*) m_pLocalClient->getInput(), getDisplay());
     pEdit->moveTo(xPxl, yPxl);
     addComponent(pEdit);
     yPxl += pEdit->getHeight() + SPACING;
-    pEdit->setText(L"No name");
+    pEdit->setText("No name");
   }
   else
   {
@@ -91,56 +91,56 @@ HostGameDlg::HostGameDlg(int iWidth, int iHeight, LocalClient * pLocalClient) : 
   }
 
   // Create players list panel
-  m_pAllPlayersPanel = guiContainer::createDefaultPanel(getWidth() - 2*SPACING, getHeight() / 3 - 2 * SPACING, L"PlayerPanel", pLocalClient->getDisplay());
+  m_pAllPlayersPanel = guiContainer::createDefaultPanel(getWidth() - 2*SPACING, getHeight() / 3 - 2 * SPACING, "PlayerPane", pLocalClient->getDisplay());
   m_pAllPlayersPanel->moveTo(SPACING, yPxl);
   addComponent(m_pAllPlayersPanel);
 
   // Create player panel
   yPxl += m_pAllPlayersPanel->getHeight() + 10;
-  m_pPlayerPanel = guiContainer::createDefaultPanel(getWidth() / 2 - SPACING - SPACING / 2, 110, L"ChatPanel", pLocalClient->getDisplay());
+  m_pPlayerPanel = guiContainer::createDefaultPanel(getWidth() / 2 - SPACING - SPACING / 2, 110, "ChatPane", pLocalClient->getDisplay());
   m_pPlayerPanel->moveTo(SPACING, yPxl);
   addComponent(m_pPlayerPanel);
 
   // Create avatar panel
   m_pAvatarPanel = (guiContainer*) m_pPlayerPanel->clone();
-  m_pAvatarPanel->setId(L"InfoPanel");
+  m_pAvatarPanel->setId("InfoPane");
   m_pAvatarPanel->moveBy(m_pAvatarPanel->getWidth() + SPACING, 0);
   m_pAvatarPanel->setDocument((guiDocument*) m_pPlayerPanel->getDocument()->clone());
   addComponent(m_pAvatarPanel);
 
   // Server & map options
-  wchar_t sText[LABEL_MAX_CHARS];
-  wchar_t sDefault[LABEL_MAX_CHARS];
-  i18n->getText(L"DEFAULT", sDefault, LABEL_MAX_CHARS);
+  char sText[LABEL_MAX_CHARS];
+  char sDefault[LABEL_MAX_CHARS];
+  i18n->getText("DEFAULT", sDefault, LABEL_MAX_CHARS);
 
   // Map type label
   yPxl += m_pAvatarPanel->getHeight() + SPACING;
-  i18n->getText(L"MAP_TYPE", sText, LABEL_MAX_CHARS);
+  i18n->getText("MAP_TYPE", sText, LABEL_MAX_CHARS);
   pLbl = new guiLabel();
-  pLbl->init(sText, H2_FONT, H2_COLOR, L"", 0, 0, -1, -1, pLocalClient->getDisplay());
+  pLbl->init(sText, H2_FONT, H2_COLOR, "", 0, 0, -1, -1, pLocalClient->getDisplay());
   xPxl = max(0, getWidth() / 2 - pLbl->getWidth() / 2);
   pLbl->moveTo(xPxl, yPxl);
   addComponent(pLbl);
 
   // Map type combo
   yPxl += pLbl->getHeight() + SPACING;
-  guiComboBox * pCombo = guiComboBox::createDefaultComboBox(L"MapTypeCombo", pLocalClient->getInterface(), pLocalClient->getDisplay());
+  guiComboBox * pCombo = guiComboBox::createDefaultComboBox("MapTypeCombo", pLocalClient->getInterface(), pLocalClient->getDisplay());
   xPxl = max(0, getWidth() / 2 - pCombo->getWidth() / 2);
   pCombo->moveTo(xPxl, yPxl);
   addComponent(pCombo);
 
   // Fill map types combo
-  wchar_t sFirstMap[MAX_PATH];
-  wchar_t ** sMapsList;
-  sMapsList = new wchar_t*[1000];
+  char sFirstMap[MAX_PATH];
+  char ** sMapsList;
+  sMapsList = new char*[1000];
   for (int i = 0; i < 1000; i++)
-    sMapsList[i] = new wchar_t[MAX_PATH];
+    sMapsList[i] = new char[MAX_PATH];
   int nbMaps = getMaps(sMapsList, 1000, MAX_PATH);
   for (int i = 0; i < nbMaps; i++)
   {
     if (m_pMapReader->init(sMapsList[i]))
     {
-      wchar_t sName[NAME_MAX_CHARS];
+      char sName[NAME_MAX_CHARS];
       if (m_pMapReader->getMapName(sName, NAME_MAX_CHARS))
         pCombo->addString(sName, sMapsList[i]);
     }
@@ -152,7 +152,7 @@ HostGameDlg::HostGameDlg(int iWidth, int iHeight, LocalClient * pLocalClient) : 
   delete[] sMapsList;
 
   // Create button "back"
-  guiButton * pBtn = guiButton::createDefaultNormalButton(i18n->getText(L"BACK", str, 128), L"BackButton", pLocalClient->getDisplay());
+  guiButton * pBtn = guiButton::createDefaultNormalButton(i18n->getText("BACK", str, 128), "BackButton", pLocalClient->getDisplay());
   pBtn->setDimensions(getWidth() / 2 - 5, 45);
   yPxl = getHeight() - pBtn->getHeight() - 4;
   pBtn->moveTo(2, yPxl);
@@ -160,17 +160,17 @@ HostGameDlg::HostGameDlg(int iWidth, int iHeight, LocalClient * pLocalClient) : 
 
   // Create button "next"
   pBtn = (guiButton*) pBtn->clone();
-  pBtn->setText(i18n->getText(L"START", str, 128));
-  pBtn->setId(L"NextButton");
+  pBtn->setText(i18n->getText("START", str, 128));
+  pBtn->setId("NextButton");
   pBtn->moveTo(getWidth() - pBtn->getWidth() - 2, yPxl);
   pBtn->setEnabled(false);
   addComponent(pBtn);
-  pBtn->setTooltipText(i18n->getText(L"NEED_TWO_PLAYERS", str, 128));
+  pBtn->setTooltipText(i18n->getText("NEED_TWO_PLAYERS", str, 128));
 
   // Create map options panel
   yPxl = pCombo->getYPos() + pCombo->getHeight() + SPACING;
   iHeight = pBtn->getYPos() - SPACING - yPxl;
-  m_pMapOptionsPanel = guiContainer::createDefaultPanel(getWidth() - 2 * SPACING, iHeight, L"MapOptionsPanel", pLocalClient->getDisplay());
+  m_pMapOptionsPanel = guiContainer::createDefaultPanel(getWidth() - 2 * SPACING, iHeight, "MapOptionsPane", pLocalClient->getDisplay());
   m_pMapOptionsPanel->moveTo(SPACING, yPxl);
   addComponent(m_pMapOptionsPanel);
 
@@ -186,19 +186,19 @@ HostGameDlg::HostGameDlg(int iWidth, int iHeight, LocalClient * pLocalClient) : 
   // Create label "Server options"
   yPxl = SPACING;
   pLbl = new guiLabel();
-  pLbl->init(i18n->getText(L"SERVER_OPTIONS", str, 128), H2_FONT, H2_COLOR, L"", 0, 0, 0, 0, pLocalClient->getDisplay());
+  pLbl->init(i18n->getText("SERVER_OPTIONS", str, 128), H2_FONT, H2_COLOR, "", 0, 0, 0, 0, pLocalClient->getDisplay());
   pLbl->moveTo(m_pServerOptionsPopup->getInnerWidth() / 2 - pLbl->getWidth() / 2, yPxl);
   pDoc->addComponent(pLbl);
 
   // Create label "Turn timer"
   yPxl += pLbl->getHeight() + 2 * SPACING;
   pLbl = new guiLabel();
-  pLbl->init(i18n->getText(L"TURN_TIMER", str, 128), H2_FONT, H2_COLOR, L"", SPACING, yPxl, 0, 0, pLocalClient->getDisplay());
+  pLbl->init(i18n->getText("TURN_TIMER", str, 128), H2_FONT, H2_COLOR, "", SPACING, yPxl, 0, 0, pLocalClient->getDisplay());
   pDoc->addComponent(pLbl);
 
   // Turn timer combo
   yPxl += pLbl->getHeight() + SPACING;
-  pCombo = guiComboBox::createDefaultComboBox(L"TurnTimerCombo", pLocalClient->getInterface(), pLocalClient->getDisplay());
+  pCombo = guiComboBox::createDefaultComboBox("TurnTimerCombo", pLocalClient->getInterface(), pLocalClient->getDisplay());
   pCombo->moveTo(SPACING, yPxl);
   pDoc->addComponent(pCombo);
 
@@ -207,36 +207,36 @@ HostGameDlg::HostGameDlg(int iWidth, int iHeight, LocalClient * pLocalClient) : 
   for (int i = 0; i < NB_TURN_TIMER_VALUES; i++)
   {
     if (iValues[i] < 0)
-      pCombo->addString(i18n->getText(L"INFINITE(TIMER)", str, 128), L"TurnTimerComboItem");
+      pCombo->addString(i18n->getText("INFINITE(TIMER)", str, 128), "TurnTimerComboItem");
     else if (iValues[i] <= 1)
     {
-      swprintf(sText, LABEL_MAX_CHARS, L"%d %s", iValues[i], i18n->getTextLow(L"SECOND", str, 128));
-      pCombo->addString(sText, L"TurnTimerComboItem");
+      snprintf(sText, LABEL_MAX_CHARS, "%d %s", iValues[i], i18n->getTextLow("SECOND", str, 128));
+      pCombo->addString(sText, "TurnTimerComboItem");
     }
     else if (iValues[i] < 60)
     {
-      swprintf(sText, LABEL_MAX_CHARS, L"%d %s", iValues[i], i18n->getTextLow(L"SECONDS", str, 128));
-      pCombo->addString(sText, L"TurnTimerComboItem");
+      snprintf(sText, LABEL_MAX_CHARS, "%d %s", iValues[i], i18n->getTextLow("SECONDS", str, 128));
+      pCombo->addString(sText, "TurnTimerComboItem");
     }
     else if (iValues[i] == 60)
     {
-      swprintf(sText, LABEL_MAX_CHARS, L"1 %s", i18n->getTextLow(L"MINUTE", str, 128));
-      pCombo->addString(sText, L"TurnTimerComboItem");
+      snprintf(sText, LABEL_MAX_CHARS, "1 %s", i18n->getTextLow("MINUTE", str, 128));
+      pCombo->addString(sText, "TurnTimerComboItem");
     }
     else if (iValues[i] < 3600)
     {
-      swprintf(sText, LABEL_MAX_CHARS, L"%d %s", iValues[i] / 60, i18n->getTextLow(L"MINUTES", str, 128));
-      pCombo->addString(sText, L"TurnTimerComboItem");
+      snprintf(sText, LABEL_MAX_CHARS, "%d %s", iValues[i] / 60, i18n->getTextLow("MINUTES", str, 128));
+      pCombo->addString(sText, "TurnTimerComboItem");
     }
     else if (iValues[i] == 3600)
     {
-      swprintf(sText, LABEL_MAX_CHARS, L"1 %s", i18n->getTextLow(L"HOUR", str, 128));
-      pCombo->addString(sText, L"TurnTimerComboItem");
+      snprintf(sText, LABEL_MAX_CHARS, "1 %s", i18n->getTextLow("HOUR", str, 128));
+      pCombo->addString(sText, "TurnTimerComboItem");
     }
     else
     {
-      swprintf(sText, LABEL_MAX_CHARS, L"%d %s", iValues[i] / 3600, i18n->getTextLow(L"HOURS", str, 128));
-      pCombo->addString(sText, L"TurnTimerComboItem");
+      snprintf(sText, LABEL_MAX_CHARS, "%d %s", iValues[i] / 3600, i18n->getTextLow("HOURS", str, 128));
+      pCombo->addString(sText, "TurnTimerComboItem");
     }
   }
   pCombo->setItem(0);
@@ -244,22 +244,22 @@ HostGameDlg::HostGameDlg(int iWidth, int iHeight, LocalClient * pLocalClient) : 
   // Create label "Deck max size"
   yPxl += pCombo->getHeight() + 2 * SPACING;
   pLbl = new guiLabel();
-  pLbl->init(i18n->getText(L"DECK_MAX_SIZE", str, 128), H2_FONT, H2_COLOR, L"", SPACING, yPxl, 0, 0, pLocalClient->getDisplay());
+  pLbl->init(i18n->getText("DECK_MAX_SIZE", str, 128), H2_FONT, H2_COLOR, "", SPACING, yPxl, 0, 0, pLocalClient->getDisplay());
   pDoc->addComponent(pLbl);
 
   // Deck size combo
   yPxl += pLbl->getHeight() + SPACING;
-  pCombo = guiComboBox::createDefaultComboBox(L"DeckSizeCombo", pLocalClient->getInterface(), pLocalClient->getDisplay());
+  pCombo = guiComboBox::createDefaultComboBox("DeckSizeCombo", pLocalClient->getInterface(), pLocalClient->getDisplay());
   pCombo->moveTo(SPACING, yPxl);
   pCombo->setOwner(this);
   pDoc->addComponent(pCombo);
 
   // Fill deck size combo
-  pCombo->addString(i18n->getText(L"UNLIMITED(DECK_SIZE)", str, 128), L"DeckSizeComboItem");
+  pCombo->addString(i18n->getText("UNLIMITED(DECK_SIZE)", str, 128), "DeckSizeComboItem");
   for (int i = 1; i <= 10; i++)
   {
-    swprintf(str, 128, L"%d", (int) i * 10);
-    pCombo->addString(str, L"DeckSizeComboItem");
+    snprintf(str, 128, "%d", (int) i * 10);
+    pCombo->addString(str, "DeckSizeComboItem");
   }
   pCombo->setItem(0);
 
@@ -308,21 +308,21 @@ void HostGameDlg::update(double delta)
     guiComponent * pCpnt = m_pGameNameWarningPopup->getClickedComponent();
     if (pCpnt != NULL)
     {
-      if (wcscmp(pCpnt->getId(), L"YesButton") == 0)
+      if (strcmp(pCpnt->getId(), "YesButton") == 0)
       {
         // Remove frame
         m_pLocalClient->getInterface()->deleteFrame(m_pGameNameWarningPopup);
         m_pGameNameWarningPopup = NULL;
         setEnabled(true);
         // Delete file
-        guiEditBox * pEdit = (guiEditBox*) getComponent(L"GameName");
-        wchar_t sFilePath[MAX_PATH];
-        swprintf(sFilePath, MAX_PATH, L"%s%s.sav", SAVES_PATH, pEdit->getText());
-        _wremove(sFilePath);
+        guiEditBox * pEdit = (guiEditBox*) getComponent("GameName");
+        char sFilePath[MAX_PATH];
+        snprintf(sFilePath, MAX_PATH, "%s%s.sav", SAVES_PATH, pEdit->getText());
+        remove(sFilePath);
         // Start game
         startGame();
       }
-      else if (wcscmp(pCpnt->getId(), L"NoButton") == 0)
+      else if (strcmp(pCpnt->getId(), "NoButton") == 0)
       {
         m_pLocalClient->getInterface()->deleteFrame(m_pGameNameWarningPopup);
         m_pGameNameWarningPopup = NULL;
@@ -366,17 +366,17 @@ void HostGameDlg::onHide()
 // -----------------------------------------------------------------
 bool HostGameDlg::onButtonEvent(ButtonAction * pEvent, guiComponent * pCpnt)
 {
-  if (wcscmp(pCpnt->getId(), L"BackButton") == 0)
+  if (strcmp(pCpnt->getId(), "BackButton") == 0)
   {
     m_pLocalClient->getInterface()->setUniqueDialog(m_pLocalClient->getInterface()->getStartMenuDialog());
     return false;
   }
-  else if (wcscmp(pCpnt->getId(), L"NextButton") == 0)
+  else if (strcmp(pCpnt->getId(), "NextButton") == 0)
   {
     checkGameNameWarning();
     return false;
   }
-  else if (wcscmp(pCpnt->getId(), L"LoadPlayer") == 0)
+  else if (strcmp(pCpnt->getId(), "LoadPlayer") == 0)
   {
     PlayerData * pData = (PlayerData*) ((guiComboBox*)(pCpnt->getOwner()))->getAttachment();
     assert(pData != NULL);
@@ -384,7 +384,7 @@ bool HostGameDlg::onButtonEvent(ButtonAction * pEvent, guiComponent * pCpnt)
     if (pData == m_pAllPlayersData->getLast(0)) // Last line
       addPlayerRow();
   }
-  else if (wcscmp(pCpnt->getId(), L"LANPlayer") == 0)
+  else if (strcmp(pCpnt->getId(), "LANPlayer") == 0)
   {
     PlayerData * pData = (PlayerData*) ((guiComboBox*)(pCpnt->getOwner()))->getAttachment();
     assert(pData != NULL);
@@ -392,7 +392,7 @@ bool HostGameDlg::onButtonEvent(ButtonAction * pEvent, guiComponent * pCpnt)
     if (pData == m_pAllPlayersData->getLast(0)) // Last line
       addPlayerRow();
   }
-  else if (wcscmp(pCpnt->getId(), L"AI") == 0)
+  else if (strcmp(pCpnt->getId(), "AI") == 0)
   {
     PlayerData * pData = (PlayerData*) ((guiComboBox*)(pCpnt->getOwner()))->getAttachment();
     assert(pData != NULL);
@@ -400,7 +400,7 @@ bool HostGameDlg::onButtonEvent(ButtonAction * pEvent, guiComponent * pCpnt)
     if (pData == m_pAllPlayersData->getLast(0)) // Last line
       addPlayerRow();
   }
-  else if (wcscmp(pCpnt->getId(), L"Closed") == 0)
+  else if (strcmp(pCpnt->getId(), "Closed") == 0)
   {
     PlayerData * pData = (PlayerData*) ((guiComboBox*)(pCpnt->getOwner()))->getAttachment();
     assert(pData != NULL);
@@ -410,13 +410,13 @@ bool HostGameDlg::onButtonEvent(ButtonAction * pEvent, guiComponent * pCpnt)
       return false;
     }
   }
-  else if (wcscmp(pCpnt->getId(), L"ViewButton") == 0)
+  else if (strcmp(pCpnt->getId(), "ViewButton") == 0)
   {
     PlayerData * pData = (PlayerData*) pCpnt->getAttachment();
     assert(pData != NULL);
     onSelectRow(pData);
   }
-  else if (wcscmp(pCpnt->getId(), L"ColorButton") == 0)
+  else if (strcmp(pCpnt->getId(), "ColorButton") == 0)
   {
     PlayerData * pData = (PlayerData*) pCpnt->getAttachment();
     assert(pData != NULL);
@@ -430,7 +430,7 @@ bool HostGameDlg::onButtonEvent(ButtonAction * pEvent, guiComponent * pCpnt)
   else
   {
     // Check if it's Map Type combo
-    guiComboBox * pCombo = (guiComboBox*) getComponent(L"MapTypeCombo");
+    guiComboBox * pCombo = (guiComboBox*) getComponent("MapTypeCombo");
     if (pCpnt->getOwner() == pCombo)
       this->onSelectMap(pCpnt->getId());
 
@@ -481,20 +481,20 @@ void HostGameDlg::addPlayerRow()
   m_pAllPlayersData->addLast(pData);
 
   // Create "view info" button
-  wchar_t sText[LABEL_MAX_CHARS];
+  char sText[LABEL_MAX_CHARS];
   int xPxl = SPACING;
-  int iTex = getDisplay()->getTextureEngine()->loadTexture(L"eye", false, 0, 25, 0, 16);
-  pData->m_pViewInfoBtn = guiButton::createDefaultImageButton(iTex, L"ViewButton", getDisplay());
+  int iTex = getDisplay()->getTextureEngine()->loadTexture("eye", false, 0, 25, 0, 16);
+  pData->m_pViewInfoBtn = guiButton::createDefaultImageButton(iTex, "ViewButton", getDisplay());
   pData->m_pViewInfoBtn->moveTo(xPxl, 0);
   pData->m_pViewInfoBtn->setEnabled(false);
   pData->m_pViewInfoBtn->setAttachment(pData);
   pData->m_pViewInfoBtn->setOwner(this);  // catch events (instead of panel)
-  pData->m_pViewInfoBtn->setTooltipText(i18n->getText(L"SHOW_INFORMATION", sText, LABEL_MAX_CHARS));
+  pData->m_pViewInfoBtn->setTooltipText(i18n->getText("SHOW_INFORMATION", sText, LABEL_MAX_CHARS));
   m_pAllPlayersPanel->getDocument()->addComponent(pData->m_pViewInfoBtn);
 
   // Create combo box for listing players
   xPxl += pData->m_pViewInfoBtn->getWidth() + 10;
-  pData->m_pPlayerCmb = guiComboBox::createDefaultComboBox(L"ChoosePlayer", m_pLocalClient->getInterface(), getDisplay());
+  pData->m_pPlayerCmb = guiComboBox::createDefaultComboBox("ChoosePlayer", m_pLocalClient->getInterface(), getDisplay());
   pData->m_pPlayerCmb->moveTo(xPxl, 0);
   pData->m_pPlayerCmb->setAttachment(pData);
   pData->m_pPlayerCmb->setOwner(this);  // catch events (instead of panel)
@@ -502,7 +502,7 @@ void HostGameDlg::addPlayerRow()
 
   // Create combo box for listing avatars
   xPxl += pData->m_pPlayerCmb->getWidth() + 10;
-  pData->m_pAvatarCmb = guiComboBox::createDefaultComboBox(L"ChooseAvatar", m_pLocalClient->getInterface(), getDisplay());
+  pData->m_pAvatarCmb = guiComboBox::createDefaultComboBox("ChooseAvatar", m_pLocalClient->getInterface(), getDisplay());
   pData->m_pAvatarCmb->moveTo(xPxl, 0);
   pData->m_pAvatarCmb->setEnabled(false);
   pData->m_pAvatarCmb->setAttachment(pData);
@@ -511,8 +511,8 @@ void HostGameDlg::addPlayerRow()
 
   // Create color button
   xPxl += pData->m_pAvatarCmb->getWidth() + 10;
-  iTex = getDisplay()->getTextureEngine()->loadTexture(L"blason1");
-  pData->m_pColorBtn = guiButton::createDefaultImageButton(iTex, L"ColorButton", getDisplay());
+  iTex = getDisplay()->getTextureEngine()->loadTexture("blason1");
+  pData->m_pColorBtn = guiButton::createDefaultImageButton(iTex, "ColorButton", getDisplay());
   pData->m_pColorBtn->setDimensions(30, 30);
   pData->m_iColor = getNextColor(-1);
   if (pData->m_iColor >= 0)
@@ -523,7 +523,7 @@ void HostGameDlg::addPlayerRow()
   pData->m_pColorBtn->setEnabled(false);
   pData->m_pColorBtn->setAttachment(pData);
   pData->m_pColorBtn->setOwner(this);  // catch events (instead of panel)
-  pData->m_pColorBtn->setTooltipText(i18n->getText(L"CHANGE_PLAYER_COLOR", sText, LABEL_MAX_CHARS));
+  pData->m_pColorBtn->setTooltipText(i18n->getText("CHANGE_PLAYER_COLOR", sText, LABEL_MAX_CHARS));
   m_pAllPlayersPanel->getDocument()->addComponent(pData->m_pColorBtn);
 
   // Find last row position
@@ -542,13 +542,13 @@ void HostGameDlg::addPlayerRow()
   while (pProfile != NULL)
   {
     nbProfiles++;
-    pData->m_pPlayerCmb->addString(pProfile->getName(), L"LoadPlayer");
+    pData->m_pPlayerCmb->addString(pProfile->getName(), "LoadPlayer");
     pProfile = m_pLocalClient->getDataFactory()->getNextProfile();
   }
-  wchar_t str[64];
-  pData->m_pPlayerCmb->addString(i18n->getText(L"AI", str, 64), L"AI");
-  pData->m_pPlayerCmb->addString(i18n->getText(L"LAN", str, 64), L"LANPlayer");
-  pData->m_pPlayerCmb->addString(i18n->getText(L"CLOSED", str, 64), L"Closed");
+  char str[64];
+  pData->m_pPlayerCmb->addString(i18n->getText("AI", str, 64), "AI");
+  pData->m_pPlayerCmb->addString(i18n->getText("LAN", str, 64), "LANPlayer");
+  pData->m_pPlayerCmb->addString(i18n->getText("CLOSED", str, 64), "Closed");
   pData->m_pPlayerCmb->setItem(nbProfiles + 2);
 }
 
@@ -593,7 +593,7 @@ void HostGameDlg::onClose(PlayerData * pData)
 // -----------------------------------------------------------------
 // Name : onOpenPlayer
 // -----------------------------------------------------------------
-void HostGameDlg::onOpenPlayer(wchar_t * sName, PlayerData * pData)
+void HostGameDlg::onOpenPlayer(char * sName, PlayerData * pData)
 {
   pData->m_pAvatarCmb->setItem(-1);
   // If avatar or AI was selected, release it for other combos
@@ -612,7 +612,7 @@ void HostGameDlg::onOpenPlayer(wchar_t * sName, PlayerData * pData)
   Profile * pProfile = m_pLocalClient->getDataFactory()->getFirstProfile();
   while (pProfile != NULL)
   {
-    if (wcscmp(sName, pProfile->getName()) == 0)
+    if (strcmp(sName, pProfile->getName()) == 0)
     {
       // Found it; now build avatars list
       pData->m_pSelectedPlayer = pProfile;
@@ -621,8 +621,8 @@ void HostGameDlg::onOpenPlayer(wchar_t * sName, PlayerData * pData)
       AvatarData * pAvatar = (AvatarData*) pProfile->getAvatarsList()->getFirst(0);
       while (pAvatar != NULL)
       {
-        wchar_t sAvId[NAME_MAX_CHARS+64];
-        swprintf(sAvId, NAME_MAX_CHARS+64, L"%s:%s", pAvatar->m_sEdition, pAvatar->m_sObjectId);
+        char sAvId[NAME_MAX_CHARS+64];
+        snprintf(sAvId, NAME_MAX_CHARS+64, "%s:%s", pAvatar->m_sEdition, pAvatar->m_sObjectId);
         guiButton * pBtn = pData->m_pAvatarCmb->addString(pAvatar->m_sCustomName, sAvId);
         pBtn->setAttachment(pAvatar);
         if (checkIfAvatarAvailable(pAvatar, pData))
@@ -653,7 +653,7 @@ void HostGameDlg::onOpenPlayer(wchar_t * sName, PlayerData * pData)
     pProfile = m_pLocalClient->getDataFactory()->getNextProfile();
   }
   // Shouldn't be here
-  m_pLocalClient->getDebug()->notifyErrorMessage(L"Error: player not found");
+  m_pLocalClient->getDebug()->notifyErrorMessage("Error: player not found");
 }
 
 // -----------------------------------------------------------------
@@ -679,10 +679,10 @@ void HostGameDlg::onOpenAI(PlayerData * pData)
   AIData * pFirstAI = NULL;
   AIData * pAI = (AIData*) m_pAvailableAIList->getFirst(0);
   while (pAI != NULL) {
-    wchar_t sId[NAME_MAX_CHARS+64];
-    wchar_t sText[LABEL_MAX_CHARS];
-    swprintf(sId, NAME_MAX_CHARS+64, L"%s:%s", pAI->m_sEdition, pAI->m_sObjectId);
-    pAI->findLocalizedElement(sText, LABEL_MAX_CHARS, i18n->getCurrentLanguageName(), L"name");
+    char sId[NAME_MAX_CHARS+64];
+    char sText[LABEL_MAX_CHARS];
+    snprintf(sId, NAME_MAX_CHARS+64, "%s:%s", pAI->m_sEdition, pAI->m_sObjectId);
+    pAI->findLocalizedElement(sText, LABEL_MAX_CHARS, i18n->getCurrentLanguageName(), "name");
     guiButton * pBtn = pData->m_pAvatarCmb->addString(sText, sId);
     pBtn->setAttachment(pAI);
     pBtn->setEnabled(true);
@@ -697,10 +697,10 @@ void HostGameDlg::onOpenAI(PlayerData * pData)
   // Also add unavailable ai, as disabled items
   pAI = (AIData*) m_pSelectedAIList->getFirst(0);
   while (pAI != NULL) {
-    wchar_t sId[NAME_MAX_CHARS+64];
-    wchar_t sText[LABEL_MAX_CHARS];
-    swprintf(sId, NAME_MAX_CHARS+64, L"%s:%s", pAI->m_sEdition, pAI->m_sObjectId);
-    pAI->findLocalizedElement(sText, LABEL_MAX_CHARS, i18n->getCurrentLanguageName(), L"name");
+    char sId[NAME_MAX_CHARS+64];
+    char sText[LABEL_MAX_CHARS];
+    snprintf(sId, NAME_MAX_CHARS+64, "%s:%s", pAI->m_sEdition, pAI->m_sObjectId);
+    pAI->findLocalizedElement(sText, LABEL_MAX_CHARS, i18n->getCurrentLanguageName(), "name");
     guiButton * pBtn = pData->m_pAvatarCmb->addString(sText, sId);
     pBtn->setAttachment(pAI);
     pBtn->setEnabled(false);
@@ -752,8 +752,8 @@ void HostGameDlg::onSelectAvatar(AvatarData * pAvatar, PlayerData * pData)
   assert(pAvatar != NULL);
   if (checkIfAvatarAvailable(pAvatar, pData))
   {
-    wchar_t sNewId[NAME_MAX_CHARS+64];
-    swprintf(sNewId, NAME_MAX_CHARS+64, L"%s:%s", pAvatar->m_sEdition, pAvatar->m_sObjectId);
+    char sNewId[NAME_MAX_CHARS+64];
+    snprintf(sNewId, NAME_MAX_CHARS+64, "%s:%s", pAvatar->m_sEdition, pAvatar->m_sObjectId);
     // Disable new avatar in other combos
     PlayerData * p2 = (PlayerData*) m_pAllPlayersData->getFirst(0);
     while (p2 != NULL)
@@ -764,13 +764,13 @@ void HostGameDlg::onSelectAvatar(AvatarData * pAvatar, PlayerData * pData)
       p2 = (PlayerData*) m_pAllPlayersData->getNext(0);
     }
     pData->m_pSelectedAvatar = pAvatar;
-    wchar_t sBuf[MAX_PATH];
+    char sBuf[MAX_PATH];
     pAvatar->getBanner(sBuf, MAX_PATH);
     pData->m_pColorBtn->setNormalTexture(getDisplay()->getTextureEngine()->loadTexture(sBuf));
     onSelectRow(pData);
 
     // Check if number of equipped spells is ok
-    guiComboBox * pCombo = (guiComboBox*) m_pServerOptionsPopup->getDocument()->getComponent(L"DeckSizeCombo");
+    guiComboBox * pCombo = (guiComboBox*) m_pServerOptionsPopup->getDocument()->getComponent("DeckSizeCombo");
     int iDeckSize = 10 * pCombo->getSelectedItemId();
     if (iDeckSize > 0)
     {
@@ -779,15 +779,15 @@ void HostGameDlg::onSelectAvatar(AvatarData * pAvatar, PlayerData * pData)
       while (pSpellDesc != NULL)
       {
         AvatarData * pOwner = pSpellDesc->m_pOwner;
-        if (pOwner != NULL && wcscmp(pAvatar->m_sEdition, pOwner->m_sEdition) == 0
-              && wcscmp(pAvatar->m_sObjectId, pOwner->m_sObjectId) == 0)
+        if (pOwner != NULL && strcmp(pAvatar->m_sEdition, pOwner->m_sEdition) == 0
+              && strcmp(pAvatar->m_sObjectId, pOwner->m_sObjectId) == 0)
           count++;
         pSpellDesc = (Profile::SpellData*) pData->m_pSelectedPlayer->getSpellsList()->getNext(0);
       }
       if (count > iDeckSize)
       {
-        wchar_t sText[LABEL_MAX_CHARS];
-        guiPopup * pPopup = guiPopup::createOkAutoclosePopup(i18n->getText(L"WARNING_AVATAR_HAS_TOO_MUCH_SPELLS", sText, LABEL_MAX_CHARS), getDisplay());
+        char sText[LABEL_MAX_CHARS];
+        guiPopup * pPopup = guiPopup::createOkAutoclosePopup(i18n->getText("WARNING_AVATAR_HAS_TOO_MUCH_SPELLS", sText, LABEL_MAX_CHARS), getDisplay());
         m_pLocalClient->getInterface()->registerFrame(pPopup);
         pPopup->moveTo((m_pLocalClient->getClientParameters()->screenXSize - pPopup->getWidth()) / 2, (m_pLocalClient->getClientParameters()->screenYSize - pPopup->getHeight()) / 2);
         pPopup->flash(1.0f);
@@ -797,8 +797,8 @@ void HostGameDlg::onSelectAvatar(AvatarData * pAvatar, PlayerData * pData)
   else
   {
     // raise message popup: this Avatar is already selected in another row
-    wchar_t sText[128];
-    i18n->getText(L"CANNOT_SELECT_AVATAR_TWICE", sText, 128);
+    char sText[128];
+    i18n->getText("CANNOT_SELECT_AVATAR_TWICE", sText, 128);
     guiPopup * popup = guiPopup::createTimedPopup(sText, 4, 200, getDisplay());
     m_pLocalClient->getInterface()->registerFrame(popup);
     popup->moveTo((m_pLocalClient->getClientParameters()->screenXSize - popup->getWidth()) / 2, (m_pLocalClient->getClientParameters()->screenYSize - popup->getHeight()) / 2);
@@ -818,8 +818,8 @@ void HostGameDlg::onSelectAI(AIData * pAI, PlayerData * pData)
   {
     m_pAvailableAIList->deleteCurrent(0, false);
     m_pSelectedAIList->addLast(pAI);
-    wchar_t sNewId[NAME_MAX_CHARS+64];
-    swprintf(sNewId, NAME_MAX_CHARS+64, L"%s:%s", pAI->m_sEdition, pAI->m_sObjectId);
+    char sNewId[NAME_MAX_CHARS+64];
+    snprintf(sNewId, NAME_MAX_CHARS+64, "%s:%s", pAI->m_sEdition, pAI->m_sObjectId);
     // Disable new AI in other combos
     PlayerData * p2 = (PlayerData*) m_pAllPlayersData->getFirst(0);
     while (p2 != NULL)
@@ -830,11 +830,11 @@ void HostGameDlg::onSelectAI(AIData * pAI, PlayerData * pData)
       p2 = (PlayerData*) m_pAllPlayersData->getNext(0);
     }
     pData->m_pSelectedAI = pAI;
-    pData->m_pColorBtn->setNormalTexture(getDisplay()->getTextureEngine()->loadTexture(L"blason1"));
+    pData->m_pColorBtn->setNormalTexture(getDisplay()->getTextureEngine()->loadTexture("blason1"));
     onSelectRow(pData);
 
     // Check if number of equipped spells is ok
-    guiComboBox * pCombo = (guiComboBox*) m_pServerOptionsPopup->getDocument()->getComponent(L"DeckSizeCombo");
+    guiComboBox * pCombo = (guiComboBox*) m_pServerOptionsPopup->getDocument()->getComponent("DeckSizeCombo");
     int iDeckSize = 10 * pCombo->getSelectedItemId();
     if (iDeckSize > 0)
     {
@@ -846,8 +846,8 @@ void HostGameDlg::onSelectAI(AIData * pAI, PlayerData * pData)
       }
       if (nbSpells > iDeckSize)
       {
-        wchar_t sText[LABEL_MAX_CHARS];
-        guiPopup * pPopup = guiPopup::createOkAutoclosePopup(i18n->getText(L"WARNING_AVATAR_HAS_TOO_MUCH_SPELLS", sText, LABEL_MAX_CHARS), getDisplay());
+        char sText[LABEL_MAX_CHARS];
+        guiPopup * pPopup = guiPopup::createOkAutoclosePopup(i18n->getText("WARNING_AVATAR_HAS_TOO_MUCH_SPELLS", sText, LABEL_MAX_CHARS), getDisplay());
         m_pLocalClient->getInterface()->registerFrame(pPopup);
         pPopup->moveTo((m_pLocalClient->getClientParameters()->screenXSize - pPopup->getWidth()) / 2, (m_pLocalClient->getClientParameters()->screenYSize - pPopup->getHeight()) / 2);
         pPopup->flash(1.0f);
@@ -857,8 +857,8 @@ void HostGameDlg::onSelectAI(AIData * pAI, PlayerData * pData)
   }
   else {
     // raise message popup: this AI is already selected in another row
-    wchar_t sText[128];
-    i18n->getText(L"CANNOT_SELECT_AVATAR_TWICE", sText, 128);
+    char sText[128];
+    i18n->getText("CANNOT_SELECT_AVATAR_TWICE", sText, 128);
     guiPopup * popup = guiPopup::createTimedPopup(sText, 4, 200, getDisplay());
     m_pLocalClient->getInterface()->registerFrame(popup);
     popup->moveTo((m_pLocalClient->getClientParameters()->screenXSize - popup->getWidth()) / 2, (m_pLocalClient->getClientParameters()->screenYSize - popup->getHeight()) / 2);
@@ -873,8 +873,8 @@ void HostGameDlg::onSelectAI(AIData * pAI, PlayerData * pData)
 void HostGameDlg::releaseAvatar(PlayerData * pData)
 {
   assert(pData != NULL && pData->m_pSelectedAvatar != NULL);
-  wchar_t sOldAvId[NAME_MAX_CHARS+64];
-  swprintf(sOldAvId, NAME_MAX_CHARS+64, L"%s:%s", pData->m_pSelectedAvatar->m_sEdition, pData->m_pSelectedAvatar->m_sObjectId);
+  char sOldAvId[NAME_MAX_CHARS+64];
+  snprintf(sOldAvId, NAME_MAX_CHARS+64, "%s:%s", pData->m_pSelectedAvatar->m_sEdition, pData->m_pSelectedAvatar->m_sObjectId);
   // Enable previous avatar in other combos
   PlayerData * p2 = (PlayerData*) m_pAllPlayersData->getFirst(0);
   while (p2 != NULL)
@@ -895,8 +895,8 @@ void HostGameDlg::releaseAI(PlayerData * pData)
   assert(pData != NULL && pData->m_pSelectedAI != NULL);
   m_pSelectedAIList->deleteObject(pData->m_pSelectedAI, false);
   m_pAvailableAIList->addLast(pData->m_pSelectedAI);
-  wchar_t sOldId[NAME_MAX_CHARS+64];
-  swprintf(sOldId, NAME_MAX_CHARS+64, L"%s:%s", pData->m_pSelectedAI->m_sEdition, pData->m_pSelectedAI->m_sObjectId);
+  char sOldId[NAME_MAX_CHARS+64];
+  snprintf(sOldId, NAME_MAX_CHARS+64, "%s:%s", pData->m_pSelectedAI->m_sEdition, pData->m_pSelectedAI->m_sObjectId);
   // Enable ai in other combos
   PlayerData * p2 = (PlayerData*) m_pAllPlayersData->getFirst(0);
   while (p2 != NULL)
@@ -912,21 +912,21 @@ void HostGameDlg::releaseAI(PlayerData * pData)
 // -----------------------------------------------------------------
 // Name : onSelectMap
 // -----------------------------------------------------------------
-void HostGameDlg::onSelectMap(wchar_t * sMapId)
+void HostGameDlg::onSelectMap(char * sMapId)
 {
   m_pMapReader->init(sMapId);
   MapReader::deleteMapParameters(m_pMapParameters);
   m_pMapReader->getMapParameters(m_pMapParameters, LABEL_MAX_CHARS);
 
   m_pMapOptionsPanel->getDocument()->deleteAllComponents();
-  wchar_t sText[LABEL_MAX_CHARS];
-  wchar_t sDefault[LABEL_MAX_CHARS];
-  i18n->getText(L"DEFAULT", sDefault, LABEL_MAX_CHARS);
+  char sText[LABEL_MAX_CHARS];
+  char sDefault[LABEL_MAX_CHARS];
+  i18n->getText("DEFAULT", sDefault, LABEL_MAX_CHARS);
   int yPxl = SPACING;
   int xPxl = SPACING;
   int combox = SPACING;
   int topy = yPxl;
-  guiComboBox * pDummyCombo = guiComboBox::createDefaultComboBox(L" ", m_pLocalClient->getInterface(), m_pLocalClient->getDisplay());
+  guiComboBox * pDummyCombo = guiComboBox::createDefaultComboBox(" ", m_pLocalClient->getInterface(), m_pLocalClient->getDisplay());
   int lineHeight = pDummyCombo->getHeight() + SPACING;
   delete pDummyCombo;
 
@@ -935,7 +935,7 @@ void HostGameDlg::onSelectMap(wchar_t * sMapId)
   while (pParam != NULL)
   {
     guiLabel * pLbl = new guiLabel();
-    pLbl->init(pParam->sLabel, H2_FONT, H2_COLOR, L"", xPxl, yPxl, -1, -1, m_pLocalClient->getDisplay());
+    pLbl->init(pParam->sLabel, H2_FONT, H2_COLOR, "", xPxl, yPxl, -1, -1, m_pLocalClient->getDisplay());
     m_pMapOptionsPanel->getDocument()->addComponent(pLbl);
     combox = max(combox, xPxl + pLbl->getWidth() + SPACING);
     yPxl += lineHeight;
@@ -954,11 +954,11 @@ void HostGameDlg::onSelectMap(wchar_t * sMapId)
     {
       if (i == pParam->defaultValueIndex)
       {
-        swprintf(sText, LABEL_MAX_CHARS, L"%s (%s)", pParam->pPossibleValueLabels[i], sDefault);
-        pCombo->addString(sText, L"");
+        snprintf(sText, LABEL_MAX_CHARS, "%s (%s)", pParam->pPossibleValueLabels[i], sDefault);
+        pCombo->addString(sText, "");
       }
       else
-        pCombo->addString(pParam->pPossibleValueLabels[i], L"");
+        pCombo->addString(pParam->pPossibleValueLabels[i], "");
     }
     pCombo->setItem(pParam->defaultValueIndex);
     m_pMapOptionsPanel->getDocument()->addComponent(pCombo);
@@ -994,48 +994,48 @@ void HostGameDlg::onSelectRow(PlayerData * pData)
   if (pData->m_Type == LocalPlayer && pData->m_pSelectedPlayer != NULL)
   {
     // Set player info
-    wchar_t sText[LABEL_MAX_CHARS] = L"";
-    wchar_t sBuf1[128];
-    wchar_t sBuf2[128];
+    char sText[LABEL_MAX_CHARS] = "";
+    char sBuf1[128];
+    char sBuf2[128];
 
     // Write title (player name)
     int yPxl = 5;
     guiLabel * pLbl = new guiLabel();
-    pLbl->init(pData->m_pSelectedPlayer->getName(), H2_FONT, H2_COLOR, L"TitleLabel", 0, 0, 0, 0, getDisplay());
+    pLbl->init(pData->m_pSelectedPlayer->getName(), H2_FONT, H2_COLOR, "TitleLabe", 0, 0, 0, 0, getDisplay());
     pLbl->moveTo((m_pPlayerPanel->getInnerWidth() - pLbl->getWidth()) / 2, yPxl);
     m_pPlayerPanel->getDocument()->addComponent(pLbl);
 
     // Write other info
     yPxl += pLbl->getHeight() + 5;
     int cash = pData->m_pSelectedPlayer->getCash();
-    i18n->getText(L"CASH_(d)", sBuf1, 128);
-    swprintf(sBuf2, 128, sBuf1, cash);
+    i18n->getText("CASH_(d)", sBuf1, 128);
+    snprintf(sBuf2, 128, sBuf1, cash);
     wsafecpy(sText, LABEL_MAX_CHARS, sBuf2);
     int won = pData->m_pSelectedPlayer->getNumberOfWonGames();
     int lost = pData->m_pSelectedPlayer->getNumberOfLostGames();
-    i18n->getText(L"DISPUTED_GAMES_(d)_WON_(d)_LOST_(d)", sBuf1, 128);
-    swprintf(sBuf2, 128, sBuf1, won+lost, won, lost);
-    wsafecat(sText, LABEL_MAX_CHARS, L"\n");
+    i18n->getText("DISPUTED_GAMES_(d)_WON_(d)_LOST_(d)", sBuf1, 128);
+    snprintf(sBuf2, 128, sBuf1, won+lost, won, lost);
+    wsafecat(sText, LABEL_MAX_CHARS, "\n");
     wsafecat(sText, LABEL_MAX_CHARS, sBuf2);
     if (won+lost > 0)
     {
-      i18n->getText(L"PCT_VICTORIES_(d)", sBuf1, 128);
-      swprintf(sBuf2, 128, sBuf1, (int) ((100*won)/(won+lost)));
-      wsafecat(sText, LABEL_MAX_CHARS, L"\n");
+      i18n->getText("PCT_VICTORIES_(d)", sBuf1, 128);
+      snprintf(sBuf2, 128, sBuf1, (int) ((100*won)/(won+lost)));
+      wsafecat(sText, LABEL_MAX_CHARS, "\n");
       wsafecat(sText, LABEL_MAX_CHARS, sBuf2);
     }
     int navatars = pData->m_pSelectedPlayer->getAvatarsList()->size;
-    i18n->getText(L"AVATARS_(d)", sBuf1, 128);
-    swprintf(sBuf2, 128, sBuf1, navatars);
-    wsafecat(sText, LABEL_MAX_CHARS, L"\n");
+    i18n->getText("AVATARS_(d)", sBuf1, 128);
+    snprintf(sBuf2, 128, sBuf1, navatars);
+    wsafecat(sText, LABEL_MAX_CHARS, "\n");
     wsafecat(sText, LABEL_MAX_CHARS, sBuf2);
     int nspells = pData->m_pSelectedPlayer->getSpellsList()->size;
-    i18n->getText(L"SPELLS_(d)", sBuf1, 128);
-    swprintf(sBuf2, 128, sBuf1, nspells);
-    wsafecat(sText, LABEL_MAX_CHARS, L"\n");
+    i18n->getText("SPELLS_(d)", sBuf1, 128);
+    snprintf(sBuf2, 128, sBuf1, nspells);
+    wsafecat(sText, LABEL_MAX_CHARS, "\n");
     wsafecat(sText, LABEL_MAX_CHARS, sBuf2);
     pLbl = new guiLabel();
-    pLbl->init(sText, TEXT_FONT, TEXT_COLOR, L"", SPACING, yPxl, m_pPlayerPanel->getInnerWidth() - 2 * SPACING, 0, getDisplay());
+    pLbl->init(sText, TEXT_FONT, TEXT_COLOR, "", SPACING, yPxl, m_pPlayerPanel->getInnerWidth() - 2 * SPACING, 0, getDisplay());
     m_pPlayerPanel->getDocument()->addComponent(pLbl);
 
     m_pPlayerPanel->getDocument()->setHeight(pLbl->getHeight() + yPxl);
@@ -1043,16 +1043,16 @@ void HostGameDlg::onSelectRow(PlayerData * pData)
     if (pData->m_pSelectedAvatar != NULL)
     {
       // Set avatar info
-      wchar_t sInfos[LABEL_MAX_CHARS];
+      char sInfos[LABEL_MAX_CHARS];
       int iDocWidth = m_pAvatarPanel->getInnerWidth();
       int iImageSize = 64;
 
-      pData->m_pSelectedAvatar->getInfos(sInfos, LABEL_MAX_CHARS, L"\n", false, NULL, true, true, true, false);
+      pData->m_pSelectedAvatar->getInfos(sInfos, LABEL_MAX_CHARS, "\n", false, NULL, true, true, true, false);
 
       // Write title (Avatar name)
       yPxl = 5;
       guiLabel * pLbl = new guiLabel();
-      pLbl->init(pData->m_pSelectedAvatar->m_sCustomName, H2_FONT, H2_COLOR, L"TitleLabel", 0, 0, 0, 0, getDisplay());
+      pLbl->init(pData->m_pSelectedAvatar->m_sCustomName, H2_FONT, H2_COLOR, "TitleLabe", 0, 0, 0, 0, getDisplay());
       pLbl->moveTo((iDocWidth - pLbl->getWidth()) / 2, yPxl);
       m_pAvatarPanel->getDocument()->addComponent(pLbl);
 
@@ -1060,12 +1060,12 @@ void HostGameDlg::onSelectRow(PlayerData * pData)
       yPxl += pLbl->getHeight() + 5;
       int iTex = getDisplay()->getTextureEngine()->loadTexture(pData->m_pSelectedAvatar->m_sTextureFilename);
       guiImage * pImg = new guiImage();
-      pImg->init(iTex, L"Image", 5, yPxl, iImageSize, iImageSize, getDisplay());
+      pImg->init(iTex, "Image", 5, yPxl, iImageSize, iImageSize, getDisplay());
       m_pAvatarPanel->getDocument()->addComponent(pImg);
 
       // Add label for characteristics
       pLbl = new guiLabel();
-      pLbl->init(sInfos, TEXT_FONT, TEXT_COLOR, L"CharacsLabel", 15 + iImageSize, yPxl, iDocWidth - 20 - iImageSize, 0, getDisplay());
+      pLbl->init(sInfos, TEXT_FONT, TEXT_COLOR, "CharacsLabe", 15 + iImageSize, yPxl, iDocWidth - 20 - iImageSize, 0, getDisplay());
       m_pAvatarPanel->getDocument()->addComponent(pLbl);
 
       // Count number of spells equipped
@@ -1074,18 +1074,18 @@ void HostGameDlg::onSelectRow(PlayerData * pData)
       while (pObj2 != NULL)
       {
         AvatarData * pOwner = pObj2->m_pOwner;
-        if (pOwner != NULL && wcscmp(pData->m_pSelectedAvatar->m_sEdition, pOwner->m_sEdition) == 0
-              && wcscmp(pData->m_pSelectedAvatar->m_sObjectId, pOwner->m_sObjectId) == 0)
+        if (pOwner != NULL && strcmp(pData->m_pSelectedAvatar->m_sEdition, pOwner->m_sEdition) == 0
+              && strcmp(pData->m_pSelectedAvatar->m_sObjectId, pOwner->m_sObjectId) == 0)
           nbSpells++;
         pObj2 = (Profile::SpellData*) pData->m_pSelectedPlayer->getSpellsList()->getNext(0);
       }
       yPxl += 10 + max(pLbl->getHeight(), iImageSize);
-      wchar_t sBuf[64];
-      wchar_t sNbSpells[128];
-      i18n->getText(L"SPELLS_(d)", sBuf, 64);
-      swprintf(sNbSpells, 128, sBuf, nbSpells);
+      char sBuf[64];
+      char sNbSpells[128];
+      i18n->getText("SPELLS_(d)", sBuf, 64);
+      snprintf(sNbSpells, 128, sBuf, nbSpells);
       pLbl = new guiLabel();
-      pLbl->init(sNbSpells, TEXT_FONT, TEXT_COLOR, L"NbSpells", 5, yPxl, iDocWidth - 10, 0, getDisplay());
+      pLbl->init(sNbSpells, TEXT_FONT, TEXT_COLOR, "NbSpells", 5, yPxl, iDocWidth - 10, 0, getDisplay());
       m_pAvatarPanel->getDocument()->addComponent(pLbl);
 
       // XP
@@ -1094,16 +1094,16 @@ void HostGameDlg::onSelectRow(PlayerData * pData)
       int next = pData->m_pSelectedAvatar->getNextLevelXP();
       pArgs[0] = &xp;
       pArgs[1] = &next;
-      i18n->getText(L"TOTAL_XP(d1)_NEXT(d2)", sText, LABEL_MAX_CHARS, pArgs);
+      i18n->getText("TOTAL_XP(d1)_NEXT(d2)", sText, LABEL_MAX_CHARS, pArgs);
       yPxl += 3 + pLbl->getHeight();
       pLbl = new guiLabel();
-      pLbl->init(sText, TEXT_FONT, TEXT_COLOR, L"", 5, yPxl, iDocWidth - 10, 0, getDisplay());
+      pLbl->init(sText, TEXT_FONT, TEXT_COLOR, "", 5, yPxl, iDocWidth - 10, 0, getDisplay());
       m_pAvatarPanel->getDocument()->addComponent(pLbl);
 
       // Add description
       yPxl += 10 + pLbl->getHeight();
       pLbl = new guiLabel();
-      pLbl->init(pData->m_pSelectedAvatar->m_sCustomDescription, TEXT_FONT, TEXT_COLOR, L"DescLabel", 5, yPxl, iDocWidth - 10, 0, getDisplay());
+      pLbl->init(pData->m_pSelectedAvatar->m_sCustomDescription, TEXT_FONT, TEXT_COLOR, "DescLabe", 5, yPxl, iDocWidth - 10, 0, getDisplay());
       m_pAvatarPanel->getDocument()->addComponent(pLbl);
 
       m_pAvatarPanel->getDocument()->setHeight(pLbl->getHeight() + yPxl);
@@ -1126,9 +1126,9 @@ void HostGameDlg::checkStartEnable()
     p = (PlayerData*) m_pAllPlayersData->getNext(0);
   }
   m_bIsLocalClient = (nblocal > 0);
-  getComponent(L"NextButton")->setEnabled(nblocal + m_iNbRemoteClients >= 2);
-  wchar_t str[128];
-  getComponent(L"NextButton")->setTooltipText(nblocal + m_iNbRemoteClients >= 2 ? L"" : i18n->getText(L"NEED_TWO_PLAYERS", str, 128));
+  getComponent("NextButton")->setEnabled(nblocal + m_iNbRemoteClients >= 2);
+  char str[128];
+  getComponent("NextButton")->setTooltipText(nblocal + m_iNbRemoteClients >= 2 ? "" : i18n->getText("NEED_TWO_PLAYERS", str, 128));
 }
 
 // -----------------------------------------------------------------
@@ -1137,8 +1137,8 @@ void HostGameDlg::checkStartEnable()
 void HostGameDlg::startGame()
 {
   m_fStartGameTimer = 0.5f;
-  wchar_t sText[LABEL_MAX_CHARS];
-  guiPopup * pPopup = guiPopup::createTimedPopup(i18n->getText(L"PLEASE_WAIT_WHILE_SERVER_STARTING", sText, LABEL_MAX_CHARS), -1, 300, getDisplay());
+  char sText[LABEL_MAX_CHARS];
+  guiPopup * pPopup = guiPopup::createTimedPopup(i18n->getText("PLEASE_WAIT_WHILE_SERVER_STARTING", sText, LABEL_MAX_CHARS), -1, 300, getDisplay());
   pPopup->moveTo(m_pLocalClient->getClientParameters()->screenXSize / 2 - pPopup->getWidth() / 2, 200);
   m_pLocalClient->getInterface()->registerFrame(pPopup);
   setEnabled(false);
@@ -1165,20 +1165,20 @@ void HostGameDlg::_reallyStartGame()
   }
 
   // Retrieve server parameters
-  wchar_t sGameName[64];
-  wchar_t sMapFile[MAX_PATH];
+  char sGameName[64];
+  char sMapFile[MAX_PATH];
 
-  guiEditBox * pEdit = (guiEditBox*) getComponent(L"GameName");
+  guiEditBox * pEdit = (guiEditBox*) getComponent("GameName");
   wsafecpy(sGameName, 64, pEdit->getText());
 
-  guiComboBox * pCombo = (guiComboBox*) m_pServerOptionsPopup->getDocument()->getComponent(L"TurnTimerCombo");
+  guiComboBox * pCombo = (guiComboBox*) m_pServerOptionsPopup->getDocument()->getComponent("TurnTimerCombo");
   int iValues[NB_TURN_TIMER_VALUES] = TURN_TIMER_VALUES;
   int iTurnTimer = iValues[pCombo->getSelectedItemId()];
 
-  pCombo = (guiComboBox*) m_pServerOptionsPopup->getDocument()->getComponent(L"DeckSizeCombo");
+  pCombo = (guiComboBox*) m_pServerOptionsPopup->getDocument()->getComponent("DeckSizeCombo");
   int iDeckSize = 10 * pCombo->getSelectedItemId();
 
-  pCombo = (guiComboBox*) getComponent(L"MapTypeCombo");
+  pCombo = (guiComboBox*) getComponent("MapTypeCombo");
   wsafecpy(sMapFile, MAX_PATH, pCombo->getSelectedItem()->getId());
 
   // Re-init map data
@@ -1209,19 +1209,19 @@ void HostGameDlg::_reallyStartGame()
   delete[] clients;
   if (pServer == NULL)
   {
-    m_pLocalClient->getDebug()->notifyErrorMessage(L"Error: server could not be initialized.");
+    m_pLocalClient->getDebug()->notifyErrorMessage("Error: server could not be initialized.");
     return;
   }
 
   // Build players data
   ObjectList * pServerPlayers = pServer->getSolver()->getPlayersList();
   // Create neutral player
-  wchar_t sName[NAME_MAX_CHARS];
-  i18n->getText(L"NEUTRAL", sName, NAME_MAX_CHARS);
+  char sName[NAME_MAX_CHARS];
+  i18n->getText("NEUTRA", sName, NAME_MAX_CHARS);
   Player * pPlayer = new Player(0, 0, pServer->getSolver()->getGlobalSpellsPtr());
   wsafecpy(pPlayer->m_sProfileName, NAME_MAX_CHARS, sName);
   pPlayer->m_Color = rgb(0.5, 0.5, 0.5);
-  wsafecpy(pPlayer->m_sBanner, 64, L"blason1");
+  wsafecpy(pPlayer->m_sBanner, 64, "blason1");
   pServer->getSolver()->setNeutralPlayer(pPlayer);
   // Human players
   int playerId = 1;
@@ -1234,8 +1234,8 @@ void HostGameDlg::_reallyStartGame()
       pPlayer = new Player(playerId, 0, pServer->getSolver()->getGlobalSpellsPtr());
       pServerPlayers->addLast(pPlayer);
       pPlayer->m_bIsAI = true;
-      p->m_pSelectedAI->findLocalizedElement(pPlayer->m_sProfileName, NAME_MAX_CHARS, i18n->getCurrentLanguageName(), L"name");
-      wsafecpy(pPlayer->m_sBanner, 64, L"blason1");
+      p->m_pSelectedAI->findLocalizedElement(pPlayer->m_sProfileName, NAME_MAX_CHARS, i18n->getCurrentLanguageName(), "name");
+      wsafecpy(pPlayer->m_sBanner, 64, "blason1");
       assert(p->m_iColor >= 0);
       pPlayer->m_Color = m_AllColors[p->m_iColor];
       // Set Avatar
@@ -1268,8 +1268,8 @@ void HostGameDlg::_reallyStartGame()
       while (pSpellDesc != NULL)
       {
         AvatarData * pOwner = pSpellDesc->m_pOwner;
-        if (pOwner != NULL && wcscmp(p->m_pSelectedAvatar->m_sEdition, pOwner->m_sEdition) == 0
-              && wcscmp(p->m_pSelectedAvatar->m_sObjectId, pOwner->m_sObjectId) == 0)
+        if (pOwner != NULL && strcmp(p->m_pSelectedAvatar->m_sEdition, pOwner->m_sEdition) == 0
+              && strcmp(p->m_pSelectedAvatar->m_sObjectId, pOwner->m_sObjectId) == 0)
           pServer->getSolver()->addInitialPlayerSpell(pPlayer, pSpellDesc->m_sEdition, pSpellDesc->m_sName);
         pSpellDesc = (Profile::SpellData*) p->m_pSelectedPlayer->getSpellsList()->getNext(0);
       }
@@ -1278,8 +1278,8 @@ void HostGameDlg::_reallyStartGame()
       while (pArtifact != NULL)
       {
         AvatarData * pOwner = pArtifact->m_pOwner;
-        if (pOwner != NULL && wcscmp(p->m_pSelectedAvatar->m_sEdition, pOwner->m_sEdition) == 0
-              && wcscmp(p->m_pSelectedAvatar->m_sObjectId, pOwner->m_sObjectId) == 0)
+        if (pOwner != NULL && strcmp(p->m_pSelectedAvatar->m_sEdition, pOwner->m_sEdition) == 0
+              && strcmp(p->m_pSelectedAvatar->m_sObjectId, pOwner->m_sObjectId) == 0)
         {
           Unit * pAvatarInGame = pPlayer->getAvatar();
           assert(pAvatarInGame != NULL);
@@ -1296,8 +1296,8 @@ void HostGameDlg::_reallyStartGame()
                   pAvatarInGame->setBaseValue(((ArtifactEffect_Charac*)pEffect)->m_sKey, max(0, val + ((ArtifactEffect_Charac*)pEffect)->m_iModifier));
                 else
                 {
-                  wchar_t sError[1024];
-                  swprintf(sError, 1024, L"Warning: artifact %s tries to modify characteristic that doesn't exist (%s)", pArtifact->m_sObjectId, ((ArtifactEffect_Charac*)pEffect)->m_sKey);
+                  char sError[1024];
+                  snprintf(sError, 1024, "Warning: artifact %s tries to modify characteristic that doesn't exist (%s)", pArtifact->m_sObjectId, ((ArtifactEffect_Charac*)pEffect)->m_sKey);
                   m_pLocalClient->getDebug()->notifyErrorMessage(sError);
                 }
                 break;
@@ -1309,8 +1309,8 @@ void HostGameDlg::_reallyStartGame()
                   pServer->getSolver()->addInitialPlayerSpell(pPlayer, ((ArtifactEffect_Spell*)pEffect)->m_sSpellEdition, ((ArtifactEffect_Spell*)pEffect)->m_sSpellName);
                 else
                 {
-                  wchar_t sError[1024];
-                  swprintf(sError, 1024, L"Warning: artifact %s tries to add spell that doesn't exist (%s)", pArtifact->m_sObjectId, ((ArtifactEffect_Spell*)pEffect)->m_sSpellName);
+                  char sError[1024];
+                  snprintf(sError, 1024, "Warning: artifact %s tries to add spell that doesn't exist (%s)", pArtifact->m_sObjectId, ((ArtifactEffect_Spell*)pEffect)->m_sSpellName);
                   m_pLocalClient->getDebug()->notifyErrorMessage(sError);
                 }
                 break;
@@ -1322,8 +1322,8 @@ void HostGameDlg::_reallyStartGame()
                   pAvatarInGame->addSkill(pSkill);
                 else
                 {
-                  wchar_t sError[1024];
-                  swprintf(sError, 1024, L"Warning: artifact %s tries to add skill that doesn't exist or that can't be loaded (%s)", pArtifact->m_sObjectId, ((ArtifactEffect_Skill*)pEffect)->m_sSkillName);
+                  char sError[1024];
+                  snprintf(sError, 1024, "Warning: artifact %s tries to add skill that doesn't exist or that can't be loaded (%s)", pArtifact->m_sObjectId, ((ArtifactEffect_Skill*)pEffect)->m_sSkillName);
                   m_pLocalClient->getDebug()->notifyErrorMessage(sError);
                 }
                 break;
@@ -1377,17 +1377,17 @@ int HostGameDlg::getNextColor(int iColor)
 void HostGameDlg::checkGameNameWarning()
 {
   // Check game name
-  guiEditBox * pEdit = (guiEditBox*) getComponent(L"GameName");
-  wchar_t sFilePath[MAX_PATH];
-  swprintf(sFilePath, MAX_PATH, L"%s%s.sav", SAVES_PATH, pEdit->getText());
+  guiEditBox * pEdit = (guiEditBox*) getComponent("GameName");
+  char sFilePath[MAX_PATH];
+  snprintf(sFilePath, MAX_PATH, "%s%s.sav", SAVES_PATH, pEdit->getText());
   // Check if file exist
   FILE * pFile = NULL;
-  if (0 == wfopen(&pFile, sFilePath, L"r"))
+  if (0 == fopen_s(&pFile, sFilePath, "r"))
   {
     // Raise confirm popup
-    wchar_t sWarning[128];
+    char sWarning[128];
     setEnabled(false);
-    m_pGameNameWarningPopup = guiPopup::createYesNoPopup(i18n->getText(L"GAME_NAME_ALREADY_EXIST", sWarning, 128), m_pLocalClient->getDisplay());
+    m_pGameNameWarningPopup = guiPopup::createYesNoPopup(i18n->getText("GAME_NAME_ALREADY_EXIST", sWarning, 128), m_pLocalClient->getDisplay());
     m_pLocalClient->getInterface()->registerFrame(m_pGameNameWarningPopup);
     m_pGameNameWarningPopup->moveTo((m_pLocalClient->getClientParameters()->screenXSize - m_pGameNameWarningPopup->getWidth()) / 2, (m_pLocalClient->getClientParameters()->screenYSize - m_pGameNameWarningPopup->getHeight()) / 2);
   }

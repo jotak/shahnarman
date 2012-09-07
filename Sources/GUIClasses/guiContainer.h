@@ -70,11 +70,11 @@ public:
   virtual void setTargetValid(bool bValid);
 
   // Clone / init
-  virtual void init(FrameFitBehavior widthFit, FrameFitBehavior heightFit, int iXOffset, int iYOffset, int iMaxWidth, int iMaxHeight, int * iMainTexs, const wchar_t * sCpntId, int xPxl, int yPxl, int wPxl, int hPxl, DisplayEngine * pDisplay);
+  virtual void init(FrameFitBehavior widthFit, FrameFitBehavior heightFit, int iXOffset, int iYOffset, int iMaxWidth, int iMaxHeight, int * iMainTexs, const char * sCpntId, int xPxl, int yPxl, int wPxl, int hPxl, DisplayEngine * pDisplay);
   virtual guiObject * clone();
 
   // Static default constructors
-  static guiContainer * createDefaultPanel(int width, int height, const wchar_t * sId, DisplayEngine * pDisplay);
+  static guiContainer * createDefaultPanel(int width, int height, const char * sId, DisplayEngine * pDisplay);
 
   // Static data
   static void initStatic();

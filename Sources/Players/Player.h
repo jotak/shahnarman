@@ -4,13 +4,13 @@
 #include "Mana.h"
 #include "../Data/LuaTargetable.h"
 
-#define STRING_NBDRAWN      L"spells_drawn"
-#define STRING_MAXSPELLS    L"max_spells"
-#define STRING_SPELLSRANGE  L"spells_range"
-#define STRING_MANA_LIFE    L"mana_life"
-#define STRING_MANA_LAW     L"mana_law"
-#define STRING_MANA_DEATH   L"mana_death"
-#define STRING_MANA_CHAOS   L"mana_chaos"
+#define STRING_NBDRAWN      "spells_drawn"
+#define STRING_MAXSPELLS    "max_spells"
+#define STRING_SPELLSRANGE  "spells_range"
+#define STRING_MANA_LIFE    "mana_life"
+#define STRING_MANA_LAW     "mana_law"
+#define STRING_MANA_DEATH   "mana_death"
+#define STRING_MANA_CHAOS   "mana_chaos"
 
 #define MAX_MAGIC_CIRCLES   100
 
@@ -48,7 +48,7 @@ public:
 
   virtual void init(DisplayEngine * pDisplay);
   virtual void update(double delta);
-  virtual wchar_t * getInfo(wchar_t * sBuf, int iSize);
+  virtual char * getInfo(char * sBuf, int iSize);
 
   PlayerState getState() { return m_State; };
   void setState(PlayerState state) { m_State = state; };
@@ -56,7 +56,7 @@ public:
 
   void setAvatar(AvatarData * pAvatarData, Unit * pUnit);
   Unit * getAvatar();
-  wchar_t * getAvatarName();
+  char * getAvatarName();
   int getAvatarTexture();
 
   // Spells
@@ -79,9 +79,9 @@ public:
 
   u8 m_uPlayerId;
   u8 m_uClientId;
-  wchar_t m_sProfileName[NAME_MAX_CHARS];
+  char m_sProfileName[NAME_MAX_CHARS];
   GeometryQuads * m_pBannerGeometry;
-  wchar_t m_sBanner[64];
+  char m_sBanner[64];
   int m_iBannerTex;
   F_RGBA m_Color;
   bool m_bIsAI;

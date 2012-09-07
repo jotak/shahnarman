@@ -4,13 +4,13 @@
 #include "MapObject.h"
 #include "../DeckData/Ethnicity.h"
 
-#define STRING_GROWTH           L"growth"
-#define STRING_PRODUCTIVITY     L"productivity"
-#define STRING_UNITPROD         L"unitprod"
-#define STRING_HAPPINESS        L"happiness"
-#define STRING_FEAR             L"fear"
-#define STRING_RADIUS           L"radius"
-#define STRING_HEROECHANCES     L"heroechances"
+#define STRING_GROWTH           "growth"
+#define STRING_PRODUCTIVITY     "productivity"
+#define STRING_UNITPROD         "unitprod"
+#define STRING_HAPPINESS        "happiness"
+#define STRING_FEAR             "fear"
+#define STRING_RADIUS           "radius"
+#define STRING_HEROECHANCES     "heroechances"
 
 class Building;
 class Player;
@@ -40,27 +40,27 @@ public:
   virtual void initServer();
   virtual int getTexture();
   virtual int getBigTexture();
-  virtual void updateIdentifiers() { swprintf(m_sIdentifiers, 16, L"town %d %ld", (int) m_uOwner, (long) m_uTownId); };
+  virtual void updateIdentifiers() { snprintf(m_sIdentifiers, 16, "town %d %ld", (int) m_uOwner, (long) m_uTownId); };
 
   // Get / set from network
   void getOrders(NetworkData * pData);
   void updateOrders(NetworkData * pData);
 
   // Other functions
-  virtual wchar_t * getInfo(wchar_t * sBuf, int iSize, InfoDest eDest);
+  virtual char * getInfo(char * sBuf, int iSize, InfoDest eDest);
   u8 getUnitProdTime();
   void newTurn(Player * pOwner, Server * pServer);
   u16 getMaxFoodStorage();
   s16 getUnitProdBonus();
-  void buildBuilding(wchar_t * sName, Server * pServer);
+  void buildBuilding(const char * sName, Server * pServer);
   long getInfluenceAt(CoordsMap mp);
   bool isBuildingAllowed(Building * pBuild);
 
   // Member access
   u32 getId() { return m_uTownId; };
-  wchar_t * getName() { return m_sName; };
-  wchar_t * getEthnicityEdition() { return m_sEthnicityEdition; };
-  wchar_t * getEthnicityId() { return m_sEthnicityId; };
+  char * getName() { return m_sName; };
+  char * getEthnicityEdition() { return m_sEthnicityEdition; };
+  char * getEthnicityId() { return m_sEthnicityId; };
   u8 getSize() { return m_uSize; };
   s16 getFoodPerTurn();
   u16 getFoodInStock() { return m_uFoodInStock; };
@@ -68,7 +68,7 @@ public:
   u16 getProdInStock() { return m_uProdInStock; };
   u8 getUnitProdInStock() { return m_uUnitProdInStock; };
   Building * getCurrentBuilding();
-  void setCurrentBuilding(const wchar_t * sName);
+  void setCurrentBuilding(const char * sName);
   Ethnicity::TownUnit * getCurrentUnit() { return m_pCurrentBuildingUnit; };
   void setCurrentUnit(Ethnicity::TownUnit * pUnit);
 
@@ -84,11 +84,11 @@ protected:
 
   // Permanent data
   u32 m_uTownId;                      // TownId identifies uniquely this unit on the gameboard
-  wchar_t m_sName[NAME_MAX_CHARS];
-  wchar_t m_sEthnicityEdition[NAME_MAX_CHARS];
-  wchar_t m_sEthnicityId[NAME_MAX_CHARS];
-  wchar_t m_sTextures[5][MAX_PATH];
-  wchar_t m_sBigPicture[MAX_PATH];
+  char m_sName[NAME_MAX_CHARS];
+  char m_sEthnicityEdition[NAME_MAX_CHARS];
+  char m_sEthnicityId[NAME_MAX_CHARS];
+  char m_sTextures[5][MAX_PATH];
+  char m_sBigPicture[MAX_PATH];
 
   // Variable data
   u8 m_uSize;
@@ -100,7 +100,7 @@ protected:
 
   // Buildings
   ObjectList * m_pBuildings;
-  wchar_t m_sCurrentBuilding[NAME_MAX_CHARS];
+  char m_sCurrentBuilding[NAME_MAX_CHARS];
 
   // Units
   ObjectList * m_pExtraBuildableUnits;

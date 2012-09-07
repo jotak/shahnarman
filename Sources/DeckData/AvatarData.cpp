@@ -13,7 +13,7 @@
 #define NB_LEVELS   15
 //      LEVELS        : 1    2    3,   4,    5,    6,    7,    8,    9,   10,    11,    12,    13,    14,    15
 #define XP_LEVELS     { 0, 100, 300, 600, 1000, 1600, 2500, 3900, 6000, 9100, 14000, 22000, 34000, 52000, 80000 }
-#define BANNERS       { L"blason1", L"blason2", L"blason3", L"blason4", L"blason5", L"blason6", L"blason7", L"blason8", L"blason9", L"blason10", L"blason11", L"blason12" }
+#define BANNERS       { "blason1", "blason2", "blason3", "blason4", "blason5", "blason6", "blason7", "blason8", "blason9", "blason10", "blason11", "blason12" }
 
 // -----------------------------------------------------------------
 // Name : AvatarData
@@ -23,16 +23,16 @@ AvatarData::AvatarData()
 {
   for (int i = 0; i < NB_PROGRESSION_TREES; i++)
   {
-    wsafecpy(m_pProgression[i].sTreeName, NAME_MAX_CHARS, L"");
+    wsafecpy(m_pProgression[i].sTreeName, NAME_MAX_CHARS, "");
     for (int j = 0; j < NB_PROGRESSION_LEVELS; j++)
-      wsafecpy(m_pProgression[i].sElements[j], NAME_MAX_CHARS, L"");
+      wsafecpy(m_pProgression[i].sElements[j], NAME_MAX_CHARS, "");
   }
   for (int i = 0; i < 5; i++)
     m_pEquippedArtifacts[i] = NULL;
   m_uXP = 0;
   m_pAllFames = new ObjectList(true);
-  wsafecpy(m_sCustomDescription, CUSTOMDESC_MAX_CHARS, L"");
-  wsafecpy(m_sCustomName, NAME_MAX_CHARS, L"");
+  wsafecpy(m_sCustomDescription, CUSTOMDESC_MAX_CHARS, "");
+  wsafecpy(m_sCustomName, NAME_MAX_CHARS, "");
   m_bLoaded = false;
   m_pOwner = NULL;
   m_uBanner = 0;
@@ -151,8 +151,8 @@ AvatarData * AvatarData::cloneStaticData(Profile * pOwner, DebugManager * pDebug
   wsafecpy(pClone->m_pProgression[0].sTreeName, NAME_MAX_CHARS, m_sEthnicityId);
   pClone->m_bLoaded = true;
   // Set custom name & description
-  pClone->findLocalizedElement(pClone->m_sCustomName, NAME_MAX_CHARS, i18n->getCurrentLanguageName(), L"name");
-  pClone->findLocalizedElement(pClone->m_sCustomDescription, CUSTOMDESC_MAX_CHARS, i18n->getCurrentLanguageName(), L"description");
+  pClone->findLocalizedElement(pClone->m_sCustomName, NAME_MAX_CHARS, i18n->getCurrentLanguageName(), "name");
+  pClone->findLocalizedElement(pClone->m_sCustomDescription, CUSTOMDESC_MAX_CHARS, i18n->getCurrentLanguageName(), "description");
 
   return pClone;
 }
@@ -175,12 +175,12 @@ u16 AvatarData::getRealLevel()
   // Find current level
   for (int i = 0; i < NB_PROGRESSION_TREES; i++)
   {
-    if (wcscmp(m_pProgression[i].sTreeName, L"") != 0)
+    if (strcmp(m_pProgression[i].sTreeName, "") != 0)
     {
       currentlevel++;
       for (int j = 0; j < NB_PROGRESSION_LEVELS; j++)
       {
-        if (wcscmp(m_pProgression[i].sElements[j], L"") != 0)
+        if (strcmp(m_pProgression[i].sElements[j], "") != 0)
           currentlevel++;
       }
     }
@@ -222,17 +222,17 @@ u16 AvatarData::getNextLevelXP()
 // Name : getBanner
 //  Static
 // -----------------------------------------------------------------
-void AvatarData::getBanner(u8 uBanner, wchar_t * sBuf, int iBufSize)
+void AvatarData::getBanner(u8 uBanner, char * sBuf, int iBufSize)
 {
-  const wchar_t * sBanners[] = BANNERS;
+  const char * sBanners[] = BANNERS;
   wsafecpy(sBuf, iBufSize, sBanners[uBanner]);
 }
 
 // -----------------------------------------------------------------
 // Name : getBanner
 // -----------------------------------------------------------------
-void AvatarData::getBanner(wchar_t * sBuf, int iBufSize)
+void AvatarData::getBanner(char * sBuf, int iBufSize)
 {
-  const wchar_t * sBanners[] = BANNERS;
+  const char * sBanners[] = BANNERS;
   wsafecpy(sBuf, iBufSize, sBanners[m_uBanner]);
 }

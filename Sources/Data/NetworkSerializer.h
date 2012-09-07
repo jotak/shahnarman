@@ -18,8 +18,8 @@ public:
   virtual short readShort();
   virtual void writeChar(char c);
   virtual char readChar();
-  virtual void writeString(const wchar_t * s);
-  virtual void readString(wchar_t * s);
+  virtual void writeString(const char * s);
+  virtual void readString(char * s);
 
 private:
 	NetworkSerializer();

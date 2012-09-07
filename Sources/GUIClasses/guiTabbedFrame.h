@@ -48,11 +48,11 @@ public:
   void setPanelXDecal(int xdecal) { m_iXPanelDecal = xdecal; };
 
   // Clone / init
-  virtual void init(int * iTabTexs, FontId fontId, int xdecal, FramePosition positionType, FrameFitBehavior widthFit, FrameFitBehavior heightFit, int iMaxWidth, int iMaxHeight, int * iMainTexs, const wchar_t * sCpntId, int xPxl, int yPxl, int wPxl, int hPxl, DisplayEngine * pDisplay);
+  virtual void init(int * iTabTexs, FontId fontId, int xdecal, FramePosition positionType, FrameFitBehavior widthFit, FrameFitBehavior heightFit, int iMaxWidth, int iMaxHeight, int * iMainTexs, const char * sCpntId, int xPxl, int yPxl, int wPxl, int hPxl, DisplayEngine * pDisplay);
   virtual guiObject * clone();
 
   // Static default constructors
-  static guiTabbedFrame * createDefaultTabbedFrame(FrameFitBehavior widthFit, FrameFitBehavior heightFit, int width, int height, bool bAlpha, wchar_t * sId, DisplayEngine * pDisplay);
+  static guiTabbedFrame * createDefaultTabbedFrame(FrameFitBehavior widthFit, FrameFitBehavior heightFit, int width, int height, bool bAlpha, char * sId, DisplayEngine * pDisplay);
 
 protected:
   ObjectList * m_pDocumentsList;

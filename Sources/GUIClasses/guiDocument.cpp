@@ -17,7 +17,7 @@ guiDocument::guiDocument()
   m_bNeedDestroy = false;
   m_bContentChanged = false;
   m_bEnabled = true;
-  wsafecpy(m_sTitle, 32, L"");
+  wsafecpy(m_sTitle, 32, "");
   m_pOwner = NULL;
 }
 
@@ -33,7 +33,7 @@ guiDocument::~guiDocument()
 // -----------------------------------------------------------------
 // Name : init
 // -----------------------------------------------------------------
-void guiDocument::init(const wchar_t * sTitle, int iTexId, int xPxl, int yPxl, int wPxl, int hPxl, DisplayEngine * pDisplay)
+void guiDocument::init(const char * sTitle, int iTexId, int xPxl, int yPxl, int wPxl, int hPxl, DisplayEngine * pDisplay)
 {
   guiObject::init(xPxl, yPxl, wPxl, hPxl);
   wsafecpy(m_sTitle, 32, sTitle);
@@ -174,7 +174,7 @@ void guiDocument::setFocusedComponent(guiComponent * pCpnt)
 // -----------------------------------------------------------------
 // Name : setTitleId
 // -----------------------------------------------------------------
-void guiDocument::setTitleId(const wchar_t * sTitleId)
+void guiDocument::setTitleId(const char * sTitleId)
 {
   i18n->getText1stUp(sTitleId, m_sTitle, 32);
 }
@@ -182,12 +182,12 @@ void guiDocument::setTitleId(const wchar_t * sTitleId)
 // -----------------------------------------------------------------
 // Name : getComponent
 // -----------------------------------------------------------------
-guiComponent * guiDocument::getComponent(const wchar_t * cpntId)
+guiComponent * guiDocument::getComponent(const char * cpntId)
 {
   guiComponent * cpnt = (guiComponent*) m_pComponentsList->getFirst(0);
   while (cpnt != NULL)
   {
-    if (wcscmp(cpntId, cpnt->getId()) == 0)
+    if (strcmp(cpntId, cpnt->getId()) == 0)
       return cpnt;
     cpnt = (guiComponent*) m_pComponentsList->getNext(0);
   }
@@ -250,7 +250,7 @@ void guiDocument::bringAbove(guiComponent * cpnt)
 // -----------------------------------------------------------------
 // Name : doClick
 // -----------------------------------------------------------------
-void guiDocument::doClick(const wchar_t * sCpntId)
+void guiDocument::doClick(const char * sCpntId)
 {
   guiComponent * pCpnt = getComponent(sCpntId);
   if (pCpnt == NULL || !pCpnt->isVisible() || !pCpnt->isEnabled())

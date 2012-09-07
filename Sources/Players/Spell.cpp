@@ -9,7 +9,7 @@
 // Name : Spell
 //  Constructor
 // -----------------------------------------------------------------
-Spell::Spell(u8 uPlayerId, wchar_t * sEdition, short iFreq, wchar_t * sObjectName, DebugManager * pDebug) : LuaObject(0, sEdition, SPELL_OBJECT_NAME, sObjectName, pDebug)
+Spell::Spell(u8 uPlayerId, char * sEdition, short iFreq, char * sObjectName, DebugManager * pDebug) : LuaObject(0, sEdition, SPELL_OBJECT_NAME, sObjectName, pDebug)
 {
   init(uPlayerId, iFreq, pDebug);
 }
@@ -18,7 +18,7 @@ Spell::Spell(u8 uPlayerId, wchar_t * sEdition, short iFreq, wchar_t * sObjectNam
 // Name : Spell
 //  Constructor with id
 // -----------------------------------------------------------------
-Spell::Spell(u32 uId, u8 uPlayerId, wchar_t * sEdition, short iFreq, wchar_t * sObjectName, DebugManager * pDebug) : LuaObject(uId, sEdition, SPELL_OBJECT_NAME, sObjectName, pDebug)
+Spell::Spell(u32 uId, u8 uPlayerId, char * sEdition, short iFreq, char * sObjectName, DebugManager * pDebug) : LuaObject(uId, sEdition, SPELL_OBJECT_NAME, sObjectName, pDebug)
 {
   init(uPlayerId, iFreq, pDebug);
 }
@@ -30,8 +30,8 @@ void Spell::init(u8 uPlayerId, short iFreq, DebugManager * pDebug)
 {
   m_uPlayerId = uPlayerId;
   m_iFrequency = iFreq;
-  wsafecpy(m_sResolveParameters, LUA_FUNCTION_PARAMS_MAX_CHARS, L"");
-  wsafecpy(m_sTargetInfo, 256, L"");
+  wsafecpy(m_sResolveParameters, LUA_FUNCTION_PARAMS_MAX_CHARS, "");
+  wsafecpy(m_sTargetInfo, 256, "");
   m_bGlobal = false;
   m_bAllowedInBattle = false;
   loadBasicData(pDebug);
@@ -42,27 +42,27 @@ void Spell::init(u8 uPlayerId, short iFreq, DebugManager * pDebug)
 // -----------------------------------------------------------------
 void Spell::loadBasicData(DebugManager * pDebug)
 {
-  wsafecpy(m_sIconPath, MAX_PATH, L"");
+  wsafecpy(m_sIconPath, MAX_PATH, "");
 
   // Get some basic parameters
   // Spell name
-  if (callLuaFunction(L"getName", 1, L""))
+  if (callLuaFunction("getName", 1, ""))
     getLuaString(m_sName, NAME_MAX_CHARS);
   else
   {
-    wchar_t sError[512];
-    swprintf(sError, 512, L"Lua interaction error: spell in file %s has no name defined.", m_sObjectName);
+    char sError[512];
+    snprintf(sError, 512, "Lua interaction error: spell in file %s has no name defined.", m_sObjectName);
     pDebug->notifyErrorMessage(sError);
-    wsafecpy(m_sName, NAME_MAX_CHARS, L"");
+    wsafecpy(m_sName, NAME_MAX_CHARS, "");
   }
 
   // Casting cost
   double dMana[4];
-  if (!getLuaVarNumberArray(L"cost", dMana, 4))
+  if (!getLuaVarNumberArray("cost", dMana, 4))
   {
 	  // error : cost not found
-    wchar_t sError[512] = L"";
-    swprintf(sError, 512, L"Lua interaction error: spell in file %s has no cost defined.", m_sObjectName);
+    char sError[512] = "";
+    snprintf(sError, 512, "Lua interaction error: spell in file %s has no cost defined.", m_sObjectName);
     pDebug->notifyErrorMessage(sError);
   }
   else
@@ -72,32 +72,32 @@ void Spell::loadBasicData(DebugManager * pDebug)
   }
 
   // Description
-  if (callLuaFunction(L"getDescription", 1, L""))
+  if (callLuaFunction("getDescription", 1, ""))
     getLuaString(m_sDescription, DESCRIPTION_MAX_CHARS);
   else
   {
-    wchar_t sError[512];
-    swprintf(sError, 512, L"Lua interaction error: spell in file %s has no description defined.", m_sObjectName);
+    char sError[512];
+    snprintf(sError, 512, "Lua interaction error: spell in file %s has no description defined.", m_sObjectName);
     pDebug->notifyErrorMessage(sError);
-    wsafecpy(m_sDescription, DESCRIPTION_MAX_CHARS, L"");
+    wsafecpy(m_sDescription, DESCRIPTION_MAX_CHARS, "");
   }
 
   // Icon texture
-  wchar_t sStr[MAX_PATH];
-  if (!getLuaVarString(L"icon", sStr, MAX_PATH))
+  char sStr[MAX_PATH];
+  if (!getLuaVarString("icon", sStr, MAX_PATH))
   {
 	  // error : icon not found
-    wchar_t sError[512] = L"";
-    swprintf(sError, 512, L"Lua interaction error: spell in file %s has no icon path defined.", m_sObjectName);
+    char sError[512] = "";
+    snprintf(sError, 512, "Lua interaction error: spell in file %s has no icon path defined.", m_sObjectName);
     pDebug->notifyErrorMessage(sError);
-    wsafecpy(m_sIconPath, MAX_PATH, L"");
+    wsafecpy(m_sIconPath, MAX_PATH, "");
   }
   else
-    swprintf(m_sIconPath, MAX_PATH, L"%s/%s", m_sObjectEdition, sStr);
+    snprintf(m_sIconPath, MAX_PATH, "%s/%s", m_sObjectEdition, sStr);
 
   double val;
   // Battle spell?
-  if (getLuaVarNumber(L"allowedInBattle", &val))
+  if (getLuaVarNumber("allowedInBattle", &val))
     m_bAllowedInBattle = (val >= 1);
 }
 
@@ -126,8 +126,8 @@ void Spell::serialize(NetworkData * pData)
 // -----------------------------------------------------------------
 Spell * Spell::deserialize(NetworkData * pData, DebugManager * pDebug)
 {
-  wchar_t sEdition[NAME_MAX_CHARS];
-  wchar_t sFilename[NAME_MAX_CHARS];
+  char sEdition[NAME_MAX_CHARS];
+  char sFilename[NAME_MAX_CHARS];
   u8 uPlayerId = (u8) pData->readLong();
   u32 uSpellId = (u32) pData->readLong();
   pData->readString(sEdition);
@@ -144,37 +144,37 @@ Spell * Spell::deserialize(NetworkData * pData, DebugManager * pDebug)
 // -----------------------------------------------------------------
 void Spell::resetResolveParameters()
 {
-  wsafecpy(m_sResolveParameters, LUA_FUNCTION_PARAMS_MAX_CHARS, L"");
+  wsafecpy(m_sResolveParameters, LUA_FUNCTION_PARAMS_MAX_CHARS, "");
 }
 
 // -----------------------------------------------------------------
 // Name : addResolveParameters
 // -----------------------------------------------------------------
-void Spell::addResolveParameters(wchar_t * sParams)
+void Spell::addResolveParameters(char * sParams)
 {
-  wsafecat(m_sResolveParameters, LUA_FUNCTION_PARAMS_MAX_CHARS, L" ");
+  wsafecat(m_sResolveParameters, LUA_FUNCTION_PARAMS_MAX_CHARS, " ");
   wsafecat(m_sResolveParameters, LUA_FUNCTION_PARAMS_MAX_CHARS, sParams);
 }
 
 // -----------------------------------------------------------------
 // Name : getInfo
 // -----------------------------------------------------------------
-wchar_t * Spell::getInfo(wchar_t * sBuf, int iSize)
+char * Spell::getInfo(char * sBuf, int iSize)
 {
-  wchar_t sMana[32] = L"";
+  char sMana[32] = "";
   getManaText(sMana, 32);
-  swprintf(sBuf, iSize, L"%s (%s)\n%s",
+  snprintf(sBuf, iSize, "%s (%s)\n%s",
         m_sName,
         sMana,
         m_sDescription
   );
-  if (wcscmp(m_sTargetInfo, L"") != 0)
+  if (strcmp(m_sTargetInfo, "") != 0)
   {
-    wchar_t sBuf1[256] = L"";
-    wchar_t sBuf2[256] = L"";
-    i18n->getText(L"CAST_ON_(s)", sBuf1, 256);
-    swprintf(sBuf2, 256, sBuf1, m_sTargetInfo);
-    wsafecat(sBuf, iSize, L"\n");
+    char sBuf1[256] = "";
+    char sBuf2[256] = "";
+    i18n->getText("CAST_ON_(s)", sBuf1, 256);
+    snprintf(sBuf2, 256, sBuf1, m_sTargetInfo);
+    wsafecat(sBuf, iSize, "\n");
     wsafecat(sBuf, iSize, sBuf2);
   }
   return sBuf;
@@ -183,19 +183,19 @@ wchar_t * Spell::getInfo(wchar_t * sBuf, int iSize)
 // -----------------------------------------------------------------
 // Name : getManaText
 // -----------------------------------------------------------------
-wchar_t * Spell::getManaText(wchar_t * sMana, int iSize)
+char * Spell::getManaText(char * sMana, int iSize)
 {
-  wchar_t signs[4] = MANA_SIGNS;
+  char signs[4] = MANA_SIGNS;
   for (int i = 0; i < 4; i++)
   {
     if (m_CastingCost[i] > 0)
     {
-      wchar_t sBuf[8];
-      swprintf(sBuf, 8, L"%c %d, ", signs[i], (int)m_CastingCost[i]);
+      char sBuf[8];
+      snprintf(sBuf, 8, "%c %d, ", signs[i], (int)m_CastingCost[i]);
       wsafecat(sMana, 32, sBuf);
     }
   }
-  if (sMana[0] != L'\0')
-    sMana[wcslen(sMana)-2] = L'\0'; // remove coma
+  if (sMana[0] != '\0')
+    sMana[strlen(sMana)-2] = '\0'; // remove coma
   return sMana;
 }

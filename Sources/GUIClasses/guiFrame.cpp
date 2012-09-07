@@ -47,7 +47,7 @@ guiFrame::~guiFrame()
 // -----------------------------------------------------------------
 // Name : init
 // -----------------------------------------------------------------
-void guiFrame::init(FramePosition positionType, FrameFitBehavior widthFit, FrameFitBehavior heightFit, int iXOffset, int iYOffset, int iMaxWidth, int iMaxHeight, int * iMainTexs, const wchar_t * sCpntId, int xPxl, int yPxl, int wPxl, int hPxl, DisplayEngine * pDisplay)
+void guiFrame::init(FramePosition positionType, FrameFitBehavior widthFit, FrameFitBehavior heightFit, int iXOffset, int iYOffset, int iMaxWidth, int iMaxHeight, int * iMainTexs, const char * sCpntId, int xPxl, int yPxl, int wPxl, int hPxl, DisplayEngine * pDisplay)
 {
   guiContainer::init(widthFit, heightFit, iXOffset, iYOffset, iMaxWidth, iMaxHeight, iMainTexs, sCpntId, xPxl, yPxl, wPxl, hPxl, pDisplay);
   m_PositionType = positionType;
@@ -382,9 +382,9 @@ void guiFrame::setRetractible(u8 uBorder)
   FREE(m_pStickedGeo);
   if (uBorder != 0)
   {
-    QuadData quad(0, 15, 0, 15, L"stick", getDisplay());
+    QuadData quad(0, 15, 0, 15, "stick", getDisplay());
     m_pStickGeo = new GeometryQuads(&quad, VB_Static);
-    QuadData quad2(0, 15, 0, 15, L"sticked", getDisplay());
+    QuadData quad2(0, 15, 0, 15, "sticked", getDisplay());
     m_pStickedGeo = new GeometryQuads(&quad2, VB_Static);
   }
 }
@@ -428,18 +428,18 @@ void guiFrame::setEnabled(bool bEnabled)
 // Name : createDefaultFrame
 //  Static default constructor
 // -----------------------------------------------------------------
-guiFrame * guiFrame::createDefaultFrame(FrameFitBehavior widthFit, FrameFitBehavior heightFit, int width, int height, bool bAlpha, const wchar_t * sId, DisplayEngine * pDisplay)
+guiFrame * guiFrame::createDefaultFrame(FrameFitBehavior widthFit, FrameFitBehavior heightFit, int width, int height, bool bAlpha, const char * sId, DisplayEngine * pDisplay)
 {
   guiFrame * pFrame = new guiFrame();
   int iTexs[8];
-  iTexs[0] = pDisplay->getTextureEngine()->findTexture(L"interface:FrmTL");
-  iTexs[1] = pDisplay->getTextureEngine()->findTexture(L"interface:FrmTC");
-  iTexs[2] = pDisplay->getTextureEngine()->findTexture(L"interface:FrmTR");
-  iTexs[3] = pDisplay->getTextureEngine()->findTexture(L"interface:FrmCL");
-  iTexs[4] = pDisplay->getTextureEngine()->findTexture(L"interface:FrmCR");
-  iTexs[5] = pDisplay->getTextureEngine()->findTexture(L"interface:FrmBL");
-  iTexs[6] = pDisplay->getTextureEngine()->findTexture(L"interface:FrmBC");
-  iTexs[7] = pDisplay->getTextureEngine()->findTexture(L"interface:FrmBR");
+  iTexs[0] = pDisplay->getTextureEngine()->findTexture("interface:FrmT");
+  iTexs[1] = pDisplay->getTextureEngine()->findTexture("interface:FrmTC");
+  iTexs[2] = pDisplay->getTextureEngine()->findTexture("interface:FrmTR");
+  iTexs[3] = pDisplay->getTextureEngine()->findTexture("interface:FrmC");
+  iTexs[4] = pDisplay->getTextureEngine()->findTexture("interface:FrmCR");
+  iTexs[5] = pDisplay->getTextureEngine()->findTexture("interface:FrmB");
+  iTexs[6] = pDisplay->getTextureEngine()->findTexture("interface:FrmBC");
+  iTexs[7] = pDisplay->getTextureEngine()->findTexture("interface:FrmBR");
   int maxw = (widthFit == FB_FitFrameToDocumentWhenSmaller) ? width : 0;
   int maxh = (heightFit == FB_FitFrameToDocumentWhenSmaller) ? height : 0;
   pFrame->init(FP_Floating, widthFit, heightFit, 0, 0, maxw, maxh, iTexs, sId, 0, 0, width, height, pDisplay);

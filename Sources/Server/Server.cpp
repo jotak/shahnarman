@@ -54,7 +54,7 @@ Server::~Server()
 // -----------------------------------------------------------------
 // Name : Init
 // -----------------------------------------------------------------
-bool Server::Init(const wchar_t * sGameName, int nbClients, ClientData * clients, MapReader * pMapReader, int iTurnTimer, int iDeckSize)
+bool Server::Init(const char * sGameName, int nbClients, ClientData * clients, MapReader * pMapReader, int iTurnTimer, int iDeckSize)
 {
   wsafecpy(m_sGameName, 64, sGameName);
   m_bGameOver = false;
@@ -79,13 +79,13 @@ bool Server::Init(const wchar_t * sGameName, int nbClients, ClientData * clients
 
 #ifdef DEBUG
   if (bLog)
-    m_pDebug->log(L"m_pSolver->Init");
+    m_pDebug->log("m_pSolver->Init");
 #endif
   m_pSolver->Init();
 
 #ifdef DEBUG
   if (bLog)
-    m_pDebug->log(L"generateMap");
+    m_pDebug->log("generateMap");
 #endif
   return generateMap(pMapReader);
 }
@@ -123,29 +123,29 @@ void Server::onInitFinished()
 
 #ifdef DEBUG
   if (bLog)
-    m_pDebug->log(L"m_pSolver->drawInitialSpells");
+    m_pDebug->log("m_pSolver->drawInitialSpells");
 #endif
   m_pSolver->drawInitialSpells();
   NetworkData data(NETWORKMSG_CREATE_DATA);
 #ifdef DEBUG
   if (bLog)
-    m_pDebug->log(L"serializeMap");
+    m_pDebug->log("serializeMap");
 #endif
   serializeMap(&data);
 #ifdef DEBUG
   if (bLog)
-    m_pDebug->log(L"serializePlayersData");
+    m_pDebug->log("serializePlayersData");
 #endif
   serializePlayersData(&data);
 #ifdef DEBUG
   if (bLog)
-    m_pDebug->log(L"serializeLuaTargets");
+    m_pDebug->log("serializeLuaTargets");
 #endif
   serializeLuaTargets(&data);
   sendMessageToAllClients(&data);
 #ifdef DEBUG
   if (bLog)
-    m_pDebug->log(L"m_pSolver->onInitFinished");
+    m_pDebug->log("m_pSolver->onInitFinished");
 #endif
   m_pSolver->onInitFinished();
 }
@@ -159,8 +159,8 @@ void Server::Update(double delta)
   bool bLog = (m_pLocalClient->getClientParameters()->iLogLevel >= 3 || (m_pLocalClient->getClientParameters()->iLogLevel >= 2 && m_pSolver->getState() != RS_NotResolving));
   if (bLog)
   {
-    m_pDebug->log(L"Server::Update");
-    m_pDebug->log(L"m_pGC->deleteAll");
+    m_pDebug->log("Server::Update");
+    m_pDebug->log("m_pGC->deleteAl");
   }
 #endif
   m_pGC->deleteAll();
@@ -168,12 +168,12 @@ void Server::Update(double delta)
   {
 #ifdef DEBUG
   if (bLog)
-    m_pDebug->log(L"processNextMessage");
+    m_pDebug->log("processNextMessage");
 #endif
     processNextMessage();
 #ifdef DEBUG
   if (bLog)
-    m_pDebug->log(L"m_pSolver->Update");
+    m_pDebug->log("m_pSolver->Update");
 #endif
     m_pSolver->Update(delta);
   }
@@ -434,8 +434,8 @@ void Server::processNextMessage()
         break;
       default:
         {
-          wchar_t sError[512];
-          swprintf(sError, 512, L"Unknown message sent to server: code %d", (int)iMessage);
+          char sError[512];
+          snprintf(sError, 512, "Unknown message sent to server: code %d", (int)iMessage);
           getDebug()->notifyErrorMessage(sError);
           break;
         }
@@ -518,7 +518,7 @@ void Server::updatePlayerUnitsOrder(NetworkData * pData)
               ChildEffect * pEffect = pSkill->getChildEffect(iEffectId);
               if (pEffect != NULL)
               {
-                wchar_t params[LUA_FUNCTION_PARAMS_MAX_CHARS];
+                char params[LUA_FUNCTION_PARAMS_MAX_CHARS];
                 pData->readString(params);
                 wsafecpy(pEffect->sResolveParams, LUA_FUNCTION_PARAMS_MAX_CHARS, params);
                 pUnit->setSkillOrder(uSkillId, iEffectId);
@@ -570,7 +570,7 @@ void Server::updateTowns(NetworkData * pData)
       pTown->updateOrders(pData);
     else
     {
-      m_pDebug->notifyErrorMessage(L"Server message error: town not found.");
+      m_pDebug->notifyErrorMessage("Server message error: town not found.");
       return; // return here, to avoid inconsistant data messing all up
     }
   }
@@ -592,65 +592,65 @@ bool Server::isResolving()
 //    For instance, 'i' for integer, 'u' for unit, 'p' for player etc.
 //  After sData, a variable list of parameters is got. They are needed to identify the custom data.
 // -----------------------------------------------------------------
-void Server::sendCustomLogToAll(const wchar_t * sMsgKey, u8 uLevel, const wchar_t * sData, ...)
+void Server::sendCustomLogToAll(const char * sMsgKey, u8 uLevel, const char * sData, ...)
 {
   NetworkData data(NETWORKMSG_CUSTOM_LOG_MESSAGE);
   data.addString(sMsgKey);
   data.addLong(uLevel);
-  data.addLong(wcslen(sData));
+  data.addLong(strlen(sData));
 
   // Initialize structure to read variable list of parameters
   va_list pArgs;
   va_start(pArgs, sData);
   int i = 0;
-  while (sData[i] != L'\0')
+  while (sData[i] != '\0')
   {
     switch (sData[i])
     {
-    case L'i':  // integer
+    case 'i':  // integer
       data.addLong(sData[i]);
       data.addLong((long) va_arg(pArgs, int));
       break;
-    case L'S':  // edition spell
+    case 'S':  // edition spell
       data.addLong(sData[i]);
-      data.addString(va_arg(pArgs, wchar_t*));  // spell edition
-      data.addString(va_arg(pArgs, wchar_t*));  // spell name
+      data.addString(va_arg(pArgs, char*));  // spell edition
+      data.addString(va_arg(pArgs, char*));  // spell name
       break;
-    case L'A':  // edition artifact
+    case 'A':  // edition artifact
       data.addLong(sData[i]);
-      data.addString(va_arg(pArgs, wchar_t*));  // art. edition
-      data.addString(va_arg(pArgs, wchar_t*));  // art. name
+      data.addString(va_arg(pArgs, char*));  // art. edition
+      data.addString(va_arg(pArgs, char*));  // art. name
       break;
-    case L'U':  // edition unit
+    case 'U':  // edition unit
       data.addLong(sData[i]);
-      data.addString(va_arg(pArgs, wchar_t*));  // unit edition
-      data.addString(va_arg(pArgs, wchar_t*));  // unit name
+      data.addString(va_arg(pArgs, char*));  // unit edition
+      data.addString(va_arg(pArgs, char*));  // unit name
       break;
-    case L'p':  // player
+    case 'p':  // player
       data.addLong(sData[i]);
       data.addLong((long) va_arg(pArgs, u8)); // player id
       break;
-    case L's':  // spell
+    case 's':  // spell
       data.addLong(sData[i]);
       data.addLong((long) va_arg(pArgs, u8));   // player id
-      data.addString(va_arg(pArgs, wchar_t*));  // spell location
+      data.addString(va_arg(pArgs, char*));  // spell location
       data.addLong((long) va_arg(pArgs, u32));  // spell id
       break;
-    case L'u':  // unit
+    case 'u':  // unit
       data.addLong(sData[i]);
       data.addLong((long) va_arg(pArgs, u8));   // player id
       data.addLong((long) va_arg(pArgs, u32));  // unit id
       break;
-    case L't':  // town
+    case 't':  // town
       data.addLong(sData[i]);
       data.addLong((long) va_arg(pArgs, u32));  // town id
       break;
-    case L'b':  // building
+    case 'b':  // building
       data.addLong(sData[i]);
       data.addLong((long) va_arg(pArgs, u32));  // town id
-      data.addString(va_arg(pArgs, wchar_t*));  // building name
+      data.addString(va_arg(pArgs, char*));  // building name
       break;
-    case L'a':  // log action onclick
+    case 'a':  // log action onclick
       data.addLong(sData[i]);
       long action = (long) va_arg(pArgs, u8);
       data.addLong(action); // action id
@@ -681,14 +681,14 @@ void Server::sendCustomLogToAll(const wchar_t * sMsgKey, u8 uLevel, const wchar_
 // -----------------------------------------------------------------
 void Server::saveGame()
 {
-  wchar_t sFilePath[MAX_PATH];
-  swprintf(sFilePath, MAX_PATH, L"%s%s.sav", SAVES_PATH, m_sGameName);
+  char sFilePath[MAX_PATH];
+  snprintf(sFilePath, MAX_PATH, "%s%s.sav", SAVES_PATH, m_sGameName);
 
   FILE * f = NULL;
-  if (0 != wfopen(&f, sFilePath, L"wb"))
+  if (0 != fopen_s(&f, sFilePath, "wb"))
   {
-    wchar_t sError[512] = L"";
-    swprintf(sError, 512, L"Error: cannot open file %s for writing. Operation cancelled.", sFilePath);
+    char sError[512] = "";
+    snprintf(sError, 512, "Error: cannot open file %s for writing. Operation cancelled.", sFilePath);
     m_pLocalClient->getDebug()->notifyErrorMessage(sError);
     return;
   }
@@ -705,23 +705,23 @@ void Server::saveGame()
   data.saveToFile(f);
   fclose(f);
 
-  sendCustomLogToAll(L"GAME_SAVED_SUCCESS");
+  sendCustomLogToAll("GAME_SAVED_SUCCESS");
 }
 
 // -----------------------------------------------------------------
 // Name : loadGame
 // -----------------------------------------------------------------
-bool Server::loadGame(const wchar_t * sGameName)
+bool Server::loadGame(const char * sGameName)
 {
-  wchar_t sFilePath[MAX_PATH];
+  char sFilePath[MAX_PATH];
   wsafecpy(m_sGameName, 64, sGameName);
-  swprintf(sFilePath, MAX_PATH, L"%s%s.sav", SAVES_PATH, m_sGameName);
+  snprintf(sFilePath, MAX_PATH, "%s%s.sav", SAVES_PATH, m_sGameName);
 
   FILE * f = NULL;
-  if (0 != wfopen(&f, sFilePath, L"rb"))
+  if (0 != fopen_s(&f, sFilePath, "rb"))
   {
-    wchar_t sError[512] = L"";
-    swprintf(sError, 512, L"Error: cannot open file %s for reading. Operation cancelled.", sFilePath);
+    char sError[512] = "";
+    snprintf(sError, 512, "Error: cannot open file %s for reading. Operation cancelled.", sFilePath);
     m_pLocalClient->getDebug()->notifyErrorMessage(sError);
     return false;
   }

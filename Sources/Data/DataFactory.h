@@ -18,12 +18,12 @@ public:
   ~DataFactory();
 
   void Init(LocalClient * pLocalClient);
-  UnitData * getUnitData(wchar_t * sEdition, wchar_t * strId);
-  Spell * findSpell(wchar_t * sEdition, wchar_t * sName);
-  Edition * findEdition(wchar_t * sId);
+  UnitData * getUnitData(const char * sEdition, const char * strId);
+  Spell * findSpell(const char * sEdition, const char * sName);
+  Edition * findEdition(const char * sId);
   Edition * getFirstEdition() { return (Edition*) m_pEditions->getFirst(0); };
   Edition * getNextEdition() { return (Edition*) m_pEditions->getNext(0); };
-  Profile * findProfile(wchar_t * sName);
+  Profile * findProfile(const char * sName);
   Profile * getFirstProfile() { return (Profile*) m_pAllProfiles->getFirst(0); };
   Profile * getNextProfile() { return (Profile*) m_pAllProfiles->getNext(0); };
   void onProfileAdded(Profile * pProfile);

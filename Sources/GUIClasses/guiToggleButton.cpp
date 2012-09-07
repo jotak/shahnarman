@@ -62,12 +62,12 @@ guiObject * guiToggleButton::onButtonEvent(ButtonAction * pEvent)
 //  Static default constructor
 //  Use it to avoid passing always the same 3591218 arguments to "init"
 // -----------------------------------------------------------------
-guiToggleButton * guiToggleButton::createDefaultTexturedToggleButton(int iTex, int iSize, const wchar_t * sId, DisplayEngine * pDisplay)
+guiToggleButton * guiToggleButton::createDefaultTexturedToggleButton(int iTex, int iSize, const char * sId, DisplayEngine * pDisplay)
 {
   guiToggleButton * pBtn = new guiToggleButton();
   pBtn->init(
-    L"", (FontId)0, rgb(0,0,0),
-    pDisplay->getTextureEngine()->findTexture(L"interface:Selector"),
+    "", (FontId)0, rgb(0,0,0),
+    pDisplay->getTextureEngine()->findTexture("interface:Selector"),
     BCO_AddTex, -1, BCO_None, iTex, sId, 0, 0, iSize, iSize, pDisplay);
   return pBtn;
 }
@@ -77,14 +77,14 @@ guiToggleButton * guiToggleButton::createDefaultTexturedToggleButton(int iTex, i
 //  Static default constructor
 //  Use it to avoid passing always the same 3591218 arguments to "init"
 // -----------------------------------------------------------------
-guiToggleButton * guiToggleButton::createDefaultCheckBox(const wchar_t * sId, DisplayEngine * pDisplay)
+guiToggleButton * guiToggleButton::createDefaultCheckBox(const char * sId, DisplayEngine * pDisplay)
 {
   guiToggleButton * pBtn = new guiToggleButton();
   pBtn->init(
-    L"", (FontId)0, rgb(0,0,0),
-    pDisplay->getTextureEngine()->findTexture(L"interface:CheckBoxTick"),
+    "", (FontId)0, rgb(0,0,0),
+    pDisplay->getTextureEngine()->findTexture("interface:CheckBoxTick"),
     BCO_AddTex, -1, BCO_None,
-    pDisplay->getTextureEngine()->findTexture(L"interface:Transparent"),
+    pDisplay->getTextureEngine()->findTexture("interface:Transparent"),
     sId, 0, 0, 23, 23, pDisplay);
 //  pBtn->m_pLabel->setCatchClicks(true);
 //  pBtn->m_pLabel->setComponentOwner(pBtn);

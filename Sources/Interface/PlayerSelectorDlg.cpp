@@ -20,8 +20,8 @@ PlayerSelectorDlg::PlayerSelectorDlg(LocalClient * pLocalClient) : guiDocument()
   m_pCancelCallback = NULL;
   m_pSelectorImg = NULL;
 
-  init(L"",
-    pLocalClient->getDisplay()->getTextureEngine()->findTexture(L"interface:WinBg"),
+  init("",
+    pLocalClient->getDisplay()->getTextureEngine()->findTexture("interface:WinBg"),
     0, 0, 1, 1, pLocalClient->getDisplay());
 }
 
@@ -44,7 +44,7 @@ PlayerSelectorDlg::~PlayerSelectorDlg()
 // -----------------------------------------------------------------
 bool PlayerSelectorDlg::onButtonEvent(ButtonAction * pEvent, guiComponent * pCpnt)
 {
-  if (wcscmp(pCpnt->getId(), L"CancelButton") == 0)
+  if (strcmp(pCpnt->getId(), "CancelButton") == 0)
   {
     if (m_pCancelCallback != NULL)
       m_pCancelCallback();
@@ -68,7 +68,7 @@ guiObject * PlayerSelectorDlg::onCursorMoveEvent(int xPxl, int yPxl)
   {
     if (cpnt->isAt(xPxlRel, yPxlRel))
     {
-      if (wcscmp(cpnt->getId(), L"PlayerButton") == 0)
+      if (strcmp(cpnt->getId(), "PlayerButton") == 0)
       {
         m_pTarget = cpnt;
         break;
@@ -107,14 +107,14 @@ void PlayerSelectorDlg::hide()
 void PlayerSelectorDlg::showPlayers(ObjectList * pPlayers, CLBK_ON_CANCEL * pCancelCallback)
 {
   m_pCancelCallback = pCancelCallback;
-  wchar_t sText[LABEL_MAX_CHARS];
+  char sText[LABEL_MAX_CHARS];
 
   m_pTarget = NULL;
   int btnSize = 96;
   deleteAllComponents();
   m_pSelectorImg = new guiImage();
-  int iTex = getDisplay()->getTextureEngine()->findTexture(L"interface:Selector");
-  m_pSelectorImg->init(iTex, L"SelectorImage", 0, 0, btnSize, btnSize, getDisplay());
+  int iTex = getDisplay()->getTextureEngine()->findTexture("interface:Selector");
+  m_pSelectorImg->init(iTex, "SelectorImage", 0, 0, btnSize, btnSize, getDisplay());
   m_pSelectorImg->setVisible(false);
   addComponent(m_pSelectorImg);
 
@@ -125,13 +125,13 @@ void PlayerSelectorDlg::showPlayers(ObjectList * pPlayers, CLBK_ON_CANCEL * pCan
   {
     // Player icon
     guiImage * pImg = new guiImage();
-    pImg->init(pPlayer->getAvatarTexture(), L"PlayerButton", xPxl, yPxl, btnSize, btnSize, getDisplay());
+    pImg->init(pPlayer->getAvatarTexture(), "PlayerButton", xPxl, yPxl, btnSize, btnSize, getDisplay());
     pImg->setTooltipText(pPlayer->getAvatarName());
     pImg->setAttachment(pPlayer);
     addComponent(pImg);
 
     pImg = new guiImage();
-    pImg->init(pPlayer->m_iBannerTex, L"PlayerButton", xPxl + btnSize - SMALL_ICON_SIZE, yPxl, SMALL_ICON_SIZE, SMALL_ICON_SIZE, getDisplay());
+    pImg->init(pPlayer->m_iBannerTex, "PlayerButton", xPxl + btnSize - SMALL_ICON_SIZE, yPxl, SMALL_ICON_SIZE, SMALL_ICON_SIZE, getDisplay());
     pImg->setDiffuseColor(pPlayer->m_Color);
     pImg->setTooltipText(pPlayer->getAvatarName());
     pImg->setAttachment(pPlayer);
@@ -148,10 +148,10 @@ void PlayerSelectorDlg::showPlayers(ObjectList * pPlayers, CLBK_ON_CANCEL * pCan
 
   // Cancel button
   if (pCancelCallback != NULL)
-    i18n->getText(L"CANCEL", sText, LABEL_MAX_CHARS);
+    i18n->getText("CANCE", sText, LABEL_MAX_CHARS);
   else
-    i18n->getText(L"CLOSE", sText, LABEL_MAX_CHARS);
-  guiButton * pBtn = guiButton::createDefaultNormalButton(sText, L"CancelButton", m_pLocalClient->getDisplay());
+    i18n->getText("CLOSE", sText, LABEL_MAX_CHARS);
+  guiButton * pBtn = guiButton::createDefaultNormalButton(sText, "CancelButton", m_pLocalClient->getDisplay());
   pBtn->moveTo(xPxl / 2 - pBtn->getWidth() / 2, yPxl + btnSize + 2 * SPACING);
   addComponent(pBtn);
 

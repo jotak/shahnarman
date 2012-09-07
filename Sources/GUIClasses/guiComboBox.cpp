@@ -31,13 +31,13 @@ guiComboBox::~guiComboBox()
 // -----------------------------------------------------------------
 // Name : init
 // -----------------------------------------------------------------
-void guiComboBox::init(int * iMainTex, int iDocTex, F_RGBA textColor, FontId fontId, FrameFitBehavior wfit, FrameFitBehavior hfit, int iMaxWidth, int iMaxHeight, int btnTex1, int btnTex2, BtnClickOptions btnClickOpt, int btnHeight, int * frameTexs, const wchar_t * sCpntId, int xPxl, int yPxl, int wPxl, int hPxl, DisplayEngine * pDisplay)
+void guiComboBox::init(int * iMainTex, int iDocTex, F_RGBA textColor, FontId fontId, FrameFitBehavior wfit, FrameFitBehavior hfit, int iMaxWidth, int iMaxHeight, int btnTex1, int btnTex2, BtnClickOptions btnClickOpt, int btnHeight, int * frameTexs, const char * sCpntId, int xPxl, int yPxl, int wPxl, int hPxl, DisplayEngine * pDisplay)
 {
   guiComponent::init(sCpntId, xPxl, yPxl, wPxl, hPxl);
-  m_pLabel->init(L"", fontId, textColor, L"", xPxl + 5, yPxl + 3, 0, 0, pDisplay);
-  m_pList->init(wfit, hfit, 0, 0, iMaxWidth, iMaxHeight, frameTexs, L"ComboContainer", xPxl, yPxl + hPxl, wPxl, iMaxHeight, pDisplay);
-  m_pList->getDocument()->init(L"ComboDoc", iDocTex, 0, 0, m_pList->getInnerWidth(), m_pList->getInnerHeight(), pDisplay);
-  m_pListButtonTemplate->init(L"", fontId, textColor, -1, BCO_None, btnTex2, btnClickOpt, btnTex1, L"TemplateComboButton", 0, 0, m_pList->getInnerWidth(), btnHeight, pDisplay);
+  m_pLabel->init("", fontId, textColor, "", xPxl + 5, yPxl + 3, 0, 0, pDisplay);
+  m_pList->init(wfit, hfit, 0, 0, iMaxWidth, iMaxHeight, frameTexs, "ComboContainer", xPxl, yPxl + hPxl, wPxl, iMaxHeight, pDisplay);
+  m_pList->getDocument()->init("ComboDoc", iDocTex, 0, 0, m_pList->getInnerWidth(), m_pList->getInnerHeight(), pDisplay);
+  m_pListButtonTemplate->init("", fontId, textColor, -1, BCO_None, btnTex2, btnClickOpt, btnTex1, "TemplateComboButton", 0, 0, m_pList->getInnerWidth(), btnHeight, pDisplay);
 
   QuadData ** pQuads;
   int nQuads = computeQuadsList(&pQuads, iMainTex, pDisplay);
@@ -197,7 +197,7 @@ bool guiComboBox::isAt(int xPxl, int yPxl)
 // -----------------------------------------------------------------
 // Name : addString
 // -----------------------------------------------------------------
-guiButton * guiComboBox::addString(const wchar_t * sText, const wchar_t * sId)
+guiButton * guiComboBox::addString(const char * sText, const char * sId)
 {
   // Create button
   guiButton * pBtn = (guiButton*) m_pListButtonTemplate->clone();
@@ -228,7 +228,7 @@ guiButton * guiComboBox::addString(const wchar_t * sText, const wchar_t * sId)
 void guiComboBox::setItem(int id)
 {
   if (id < 0)
-    m_pLabel->setText(L"");
+    m_pLabel->setText("");
   else
   {
     guiComponent * pCpnt = (guiComponent*) m_pList->getDocument()->getComponentsList()->goTo(0, id);
@@ -243,7 +243,7 @@ void guiComboBox::setItem(int id)
 // -----------------------------------------------------------------
 // Name : getItem
 // -----------------------------------------------------------------
-guiButton * guiComboBox::getItem(const wchar_t * sId)
+guiButton * guiComboBox::getItem(const char * sId)
 {
   return (guiButton*) m_pList->getDocument()->getComponent(sId);
 }
@@ -264,7 +264,7 @@ guiButton * guiComboBox::getSelectedItem()
   guiButton * pBtn = (guiButton*) m_pList->getDocument()->getFirstComponent();
   while (pBtn != NULL)
   {
-    if (wcscmp(pBtn->getText(), m_pLabel->getText()) == 0)
+    if (strcmp(pBtn->getText(), m_pLabel->getText()) == 0)
       return pBtn;
     pBtn = (guiButton*) m_pList->getDocument()->getNextComponent();
   }
@@ -280,7 +280,7 @@ int guiComboBox::getSelectedItemId()
   guiButton * pBtn = (guiButton*) m_pList->getDocument()->getFirstComponent();
   while (pBtn != NULL)
   {
-    if (wcscmp(pBtn->getText(), m_pLabel->getText()) == 0)
+    if (strcmp(pBtn->getText(), m_pLabel->getText()) == 0)
       return id;
     id++;
     pBtn = (guiButton*) m_pList->getDocument()->getNextComponent();
@@ -358,28 +358,28 @@ void guiComboBox::setDimensions(int iWidth, int iHeight)
 //  Static default constructor
 //  Use it to avoid passing always the same 3591218 arguments to "init"
 // -----------------------------------------------------------------
-guiComboBox * guiComboBox::createDefaultComboBox(const wchar_t * sId, InterfaceManager * pInterface, DisplayEngine * pDisplay)
+guiComboBox * guiComboBox::createDefaultComboBox(const char * sId, InterfaceManager * pInterface, DisplayEngine * pDisplay)
 {
   guiComboBox * pCombo = new guiComboBox(pInterface);
   int maintexs[3];
-  maintexs[0] = pDisplay->getTextureEngine()->findTexture(L"interface:ComboLeft");
-  maintexs[1] = pDisplay->getTextureEngine()->findTexture(L"interface:ComboMiddle");
-  maintexs[2] = pDisplay->getTextureEngine()->findTexture(L"interface:ComboRight");
+  maintexs[0] = pDisplay->getTextureEngine()->findTexture("interface:ComboLeft");
+  maintexs[1] = pDisplay->getTextureEngine()->findTexture("interface:ComboMiddle");
+  maintexs[2] = pDisplay->getTextureEngine()->findTexture("interface:ComboRight");
   int frmtex[8];
-  frmtex[0] = pDisplay->getTextureEngine()->findTexture(L"interface:ComboListBorder");
-  frmtex[1] = pDisplay->getTextureEngine()->findTexture(L"interface:ComboListBorder");
-  frmtex[2] = pDisplay->getTextureEngine()->findTexture(L"interface:ComboListBorder");
-  frmtex[3] = pDisplay->getTextureEngine()->findTexture(L"interface:ComboListBorder");
-  frmtex[4] = pDisplay->getTextureEngine()->findTexture(L"interface:ComboListBorder");
-  frmtex[5] = pDisplay->getTextureEngine()->findTexture(L"interface:ComboListBorder");
-  frmtex[6] = pDisplay->getTextureEngine()->findTexture(L"interface:ComboListBorder");
-  frmtex[7] = pDisplay->getTextureEngine()->findTexture(L"interface:ComboListBorder");
+  frmtex[0] = pDisplay->getTextureEngine()->findTexture("interface:ComboListBorder");
+  frmtex[1] = pDisplay->getTextureEngine()->findTexture("interface:ComboListBorder");
+  frmtex[2] = pDisplay->getTextureEngine()->findTexture("interface:ComboListBorder");
+  frmtex[3] = pDisplay->getTextureEngine()->findTexture("interface:ComboListBorder");
+  frmtex[4] = pDisplay->getTextureEngine()->findTexture("interface:ComboListBorder");
+  frmtex[5] = pDisplay->getTextureEngine()->findTexture("interface:ComboListBorder");
+  frmtex[6] = pDisplay->getTextureEngine()->findTexture("interface:ComboListBorder");
+  frmtex[7] = pDisplay->getTextureEngine()->findTexture("interface:ComboListBorder");
   pCombo->init(maintexs,
-    pDisplay->getTextureEngine()->findTexture(L"interface:ComboListBg"),
+    pDisplay->getTextureEngine()->findTexture("interface:ComboListBg"),
     TEXT_COLOR, TEXT_FONT, FB_FitDocumentToFrame, FB_FitFrameToDocumentWhenSmaller,
     0, 200,
-    pDisplay->getTextureEngine()->findTexture(L"interface:Transparent"),
-    pDisplay->getTextureEngine()->findTexture(L"interface:Transparent"),
+    pDisplay->getTextureEngine()->findTexture("interface:Transparent"),
+    pDisplay->getTextureEngine()->findTexture("interface:Transparent"),
     BCO_Enlight, 16,
     frmtex, sId, 0, 0, 200, 28, pDisplay);
   return pCombo;

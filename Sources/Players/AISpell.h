@@ -11,12 +11,12 @@ public:
 
   float getInterest() { return m_fInterest; };
   void setInterest(float fInterest) { m_fInterest = fInterest; };
-  void setBestInterestParameters(wchar_t * sParams) { wsafecpy(m_sBestInterestParameters, LUA_FUNCTION_PARAMS_MAX_CHARS, sParams); };
-  wchar_t * getBestInterestParameters() { return m_sBestInterestParameters; };
+  void setBestInterestParameters(char * sParams) { wsafecpy(m_sBestInterestParameters, LUA_FUNCTION_PARAMS_MAX_CHARS, sParams); };
+  char * getBestInterestParameters() { return m_sBestInterestParameters; };
 
 protected:
   float m_fInterest;
-  wchar_t m_sBestInterestParameters[LUA_FUNCTION_PARAMS_MAX_CHARS];
+  char m_sBestInterestParameters[LUA_FUNCTION_PARAMS_MAX_CHARS];
 };
 
 #endif
