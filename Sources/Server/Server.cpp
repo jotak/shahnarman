@@ -31,7 +31,7 @@ Server::Server(LocalClient * pLocalClient)
   m_pAllClients = NULL;
   m_bGameOver = false;
   m_pGC = new ObjectList(true);
-  m_iNbClients = NULL;
+  m_iNbClients = 0;
 }
 
 // -----------------------------------------------------------------
@@ -54,7 +54,7 @@ Server::~Server()
 // -----------------------------------------------------------------
 // Name : Init
 // -----------------------------------------------------------------
-bool Server::Init(wchar_t * sGameName, int nbClients, ClientData * clients, MapReader * pMapReader, int iTurnTimer, int iDeckSize)
+bool Server::Init(const wchar_t * sGameName, int nbClients, ClientData * clients, MapReader * pMapReader, int iTurnTimer, int iDeckSize)
 {
   wsafecpy(m_sGameName, 64, sGameName);
   m_bGameOver = false;
@@ -435,7 +435,7 @@ void Server::processNextMessage()
       default:
         {
           wchar_t sError[512];
-          swprintf_s(sError, 512, L"Unknown message sent to server: code %d", (int)iMessage);
+          swprintf(sError, 512, L"Unknown message sent to server: code %d", (int)iMessage);
           getDebug()->notifyErrorMessage(sError);
           break;
         }
@@ -592,7 +592,7 @@ bool Server::isResolving()
 //    For instance, 'i' for integer, 'u' for unit, 'p' for player etc.
 //  After sData, a variable list of parameters is got. They are needed to identify the custom data.
 // -----------------------------------------------------------------
-void Server::sendCustomLogToAll(wchar_t * sMsgKey, u8 uLevel, wchar_t * sData, ...)
+void Server::sendCustomLogToAll(const wchar_t * sMsgKey, u8 uLevel, const wchar_t * sData, ...)
 {
   NetworkData data(NETWORKMSG_CUSTOM_LOG_MESSAGE);
   data.addString(sMsgKey);
@@ -682,13 +682,13 @@ void Server::sendCustomLogToAll(wchar_t * sMsgKey, u8 uLevel, wchar_t * sData, .
 void Server::saveGame()
 {
   wchar_t sFilePath[MAX_PATH];
-  swprintf_s(sFilePath, MAX_PATH, L"%s%s.sav", SAVES_PATH, m_sGameName);
+  swprintf(sFilePath, MAX_PATH, L"%s%s.sav", SAVES_PATH, m_sGameName);
 
   FILE * f = NULL;
   if (0 != wfopen(&f, sFilePath, L"wb"))
   {
     wchar_t sError[512] = L"";
-    swprintf_s(sError, 512, L"Error: cannot open file %s for writing. Operation cancelled.", sFilePath);
+    swprintf(sError, 512, L"Error: cannot open file %s for writing. Operation cancelled.", sFilePath);
     m_pLocalClient->getDebug()->notifyErrorMessage(sError);
     return;
   }
@@ -711,17 +711,17 @@ void Server::saveGame()
 // -----------------------------------------------------------------
 // Name : loadGame
 // -----------------------------------------------------------------
-bool Server::loadGame(wchar_t * sGameName)
+bool Server::loadGame(const wchar_t * sGameName)
 {
   wchar_t sFilePath[MAX_PATH];
   wsafecpy(m_sGameName, 64, sGameName);
-  swprintf_s(sFilePath, MAX_PATH, L"%s%s.sav", SAVES_PATH, m_sGameName);
+  swprintf(sFilePath, MAX_PATH, L"%s%s.sav", SAVES_PATH, m_sGameName);
 
   FILE * f = NULL;
   if (0 != wfopen(&f, sFilePath, L"rb"))
   {
     wchar_t sError[512] = L"";
-    swprintf_s(sError, 512, L"Error: cannot open file %s for reading. Operation cancelled.", sFilePath);
+    swprintf(sError, 512, L"Error: cannot open file %s for reading. Operation cancelled.", sFilePath);
     m_pLocalClient->getDebug()->notifyErrorMessage(sError);
     return false;
   }

@@ -269,6 +269,8 @@ void TurnSolver::nextPhase(ResolveSpellsState oldstate)
           m_ResolveState = RS_ResolveMoves;
           break;
         }
+        default:
+        break;
       }
       break;
     }
@@ -883,9 +885,9 @@ void TurnSolver::callNewTurnHandlers(u8 uStep)
   if (uStep == 0)
     wsafecpy(sFuncTpl, 64, L"onNew%sTurn");
   else
-    swprintf_s(sFuncTpl, 64, L"onNew%sTurn_step%d", L"%s", (int)uStep);
+    swprintf(sFuncTpl, 64, L"onNew%sTurn_step%d", L"%s", (int)uStep);
   // Loop through global spells to trigger any effect
-  swprintf_s(sFunc, 64, sFuncTpl, L"");
+  swprintf(sFunc, 64, sFuncTpl, L"");
   int sit = m_pGlobalSpells->getIterator();
   LuaObject * pLua = (LuaObject*) m_pGlobalSpells->getFirst(sit);
   while (pLua != NULL)
@@ -896,7 +898,7 @@ void TurnSolver::callNewTurnHandlers(u8 uStep)
   m_pGlobalSpells->releaseIterator(sit);
 
   // Tiles
-  swprintf_s(sFunc, 64, sFuncTpl, L"Tile");
+  swprintf(sFunc, 64, sFuncTpl, L"Tile");
   int iWidth = m_pServer->getMap()->getWidth();
   int iHeight = m_pServer->getMap()->getHeight();
   for (int x = 0; x < iWidth; x++) {
@@ -927,10 +929,10 @@ void TurnSolver::callNewTurnHandlers(u8 uStep)
   while (m_pCurrentPlayer != NULL)
   {
     // Call new turn effects
-    swprintf_s(sFunc, 64, sFuncTpl, L"Player");
+    swprintf(sFunc, 64, sFuncTpl, L"Player");
     m_pCurrentPlayer->callEffectHandler(sFunc);
     // Loop through units attached effects to trigger any effect
-    swprintf_s(sFunc, 64, sFuncTpl, L"Unit");
+    swprintf(sFunc, 64, sFuncTpl, L"Unit");
     int uit = m_pCurrentPlayer->m_pUnits->getIterator();
     m_pCurrentUnit = (Unit*) m_pCurrentPlayer->m_pUnits->getFirst(uit);
     while (m_pCurrentUnit != NULL)

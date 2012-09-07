@@ -587,7 +587,7 @@ void guiContainer::stepScroll(int iDir)
 //  Static default constructor
 //  Use it to avoid passing always the same 3591218 arguments to "init"
 // -----------------------------------------------------------------
-guiContainer * guiContainer::createDefaultPanel(int width, int height, wchar_t * sId, DisplayEngine * pDisplay)
+guiContainer * guiContainer::createDefaultPanel(int width, int height, const wchar_t * sId, DisplayEngine * pDisplay)
 {
   guiContainer * pPanel = new guiContainer();
   int frmtex[8];

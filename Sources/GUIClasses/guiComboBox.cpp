@@ -22,16 +22,10 @@ guiComboBox::guiComboBox(InterfaceManager * pInterface) : guiComponent()
 // -----------------------------------------------------------------
 guiComboBox::~guiComboBox()
 {
-#ifdef DBG_VERBOSE1
-  printf("Begin destroy guiComboBox\n");
-#endif
   m_pInterface->cancelTopDisplay(m_pList);
   delete m_pList;
   delete m_pLabel;
   delete m_pListButtonTemplate;
-#ifdef DBG_VERBOSE1
-  printf("End destroy guiComboBox\n");
-#endif
 }
 
 // -----------------------------------------------------------------
@@ -203,7 +197,7 @@ bool guiComboBox::isAt(int xPxl, int yPxl)
 // -----------------------------------------------------------------
 // Name : addString
 // -----------------------------------------------------------------
-guiButton * guiComboBox::addString(wchar_t * sText, wchar_t * sId)
+guiButton * guiComboBox::addString(const wchar_t * sText, const wchar_t * sId)
 {
   // Create button
   guiButton * pBtn = (guiButton*) m_pListButtonTemplate->clone();
@@ -249,7 +243,7 @@ void guiComboBox::setItem(int id)
 // -----------------------------------------------------------------
 // Name : getItem
 // -----------------------------------------------------------------
-guiButton * guiComboBox::getItem(wchar_t * sId)
+guiButton * guiComboBox::getItem(const wchar_t * sId)
 {
   return (guiButton*) m_pList->getDocument()->getComponent(sId);
 }
@@ -364,7 +358,7 @@ void guiComboBox::setDimensions(int iWidth, int iHeight)
 //  Static default constructor
 //  Use it to avoid passing always the same 3591218 arguments to "init"
 // -----------------------------------------------------------------
-guiComboBox * guiComboBox::createDefaultComboBox(wchar_t * sId, InterfaceManager * pInterface, DisplayEngine * pDisplay)
+guiComboBox * guiComboBox::createDefaultComboBox(const wchar_t * sId, InterfaceManager * pInterface, DisplayEngine * pDisplay)
 {
   guiComboBox * pCombo = new guiComboBox(pInterface);
   int maintexs[3];

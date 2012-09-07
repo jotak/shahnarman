@@ -54,7 +54,7 @@ public:
   void setMovable(bool bMovable) { m_bMovable = bMovable; };
 
   // Static default constructors
-  static guiFrame * createDefaultFrame(FrameFitBehavior widthFit, FrameFitBehavior heightFit, int width, int height, bool bAlpha, wchar_t * sId, DisplayEngine * pDisplay);
+  static guiFrame * createDefaultFrame(FrameFitBehavior widthFit, FrameFitBehavior heightFit, int width, int height, bool bAlpha, const wchar_t * sId, DisplayEngine * pDisplay);
 
 protected:
   FramePosition m_PositionType;

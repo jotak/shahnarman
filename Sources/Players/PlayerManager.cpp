@@ -291,7 +291,7 @@ void PlayerManager::discardSpells(NetworkData * pData)
             else
             {
               wchar_t sError[128];
-              swprintf_s(sError, 128, L"Lua interaction error: can't detach effect %s.", pSpell->getLocalizedName());
+              swprintf(sError, 128, L"Lua interaction error: can't detach effect %s.", pSpell->getLocalizedName());
               m_pLocalClient->getDebug()->notifyErrorMessage(sError);
             }
           }
@@ -619,7 +619,7 @@ void PlayerManager::onChildEffectAttached(NetworkData * pData)
       if (pUnit == pPlayer->getAvatar())
         wsafecpy(sSourceName, 2*NAME_MAX_CHARS, pUnit->getName());
       else
-        swprintf_s(sSourceName, 2*NAME_MAX_CHARS, L"%s (%s)", pUnit->getName(), pPlayer->getAvatarName());
+        swprintf(sSourceName, 2*NAME_MAX_CHARS, L"%s (%s)", pUnit->getName(), pPlayer->getAvatarName());
       break;
     }
   case LUAOBJECT_SPELL:
@@ -711,7 +711,7 @@ void PlayerManager::onChildEffectDetached(NetworkData * pData)
   wchar_t sText[256];
   wchar_t sBuf[128];
   i18n->getText(L"(s)_EFFECT_ON_(s)_ENDED", sBuf, 128);
-  swprintf_s(sText, 256, sBuf, pChild->sName, sTargetName);
+  swprintf(sText, 256, sBuf, pChild->sName, sTargetName);
   m_pLocalClient->getInterface()->getLogDialog()->log(sText);
 }
 
@@ -744,7 +744,7 @@ void PlayerManager::onCustomLuaUpdate(NetworkData * pData)
     {
       double val = pData->readDouble();
       lua_pushnumber(pState, val);
-      swprintf_s(sBuf, 128, L"%lf,", val);
+      swprintf(sBuf, 128, L"%lf,", val);
       wsafecat(sParams, 512, sBuf);
       iParams++;
     }
@@ -756,7 +756,7 @@ void PlayerManager::onCustomLuaUpdate(NetworkData * pData)
       char charval[LUA_FUNCTION_PARAMS_MAX_CHARS];
       wtostr(charval, LUA_FUNCTION_PARAMS_MAX_CHARS, wcharval);
       lua_pushstring(pState, charval);
-      swprintf_s(sBuf, 128, L"%s,", wcharval);
+      swprintf(sBuf, 128, L"%s,", wcharval);
       wsafecat(sParams, 512, sBuf);
       iParams++;
     }
@@ -787,7 +787,7 @@ void PlayerManager::deactivateSkills(NetworkData * pData)
   Player * pPlayer = findPlayer(player);
   assert(pPlayer != NULL);
   Unit * pUnit = pPlayer->findUnit(unit);
-  assert(unit != NULL);
+  assert(pUnit != NULL);
   bool bIsActive;
   Skill * pSkill = pUnit->findSkill(skill, &bIsActive);
   assert(pSkill != NULL);
@@ -1226,7 +1226,7 @@ void PlayerManager::removeMagicCircle(NetworkData * pData)
 // -----------------------------------------------------------------
 // Name : addExtraMana
 // -----------------------------------------------------------------
-void PlayerManager::addExtraMana(u32 uType, bool bOk, wchar_t * sCallback, Mana amount)
+void PlayerManager::addExtraMana(u32 uType, bool bOk, const wchar_t * sCallback, Mana amount)
 {
   if (bOk && m_pLocalClient->getInterface()->getSpellDialog()->takeMana(amount))
   {

@@ -8,7 +8,13 @@
 #define MANA_DEATH  2
 #define MANA_CHAOS  3
 
-#define MANA_SIGNS  { L'¤', L'|', L'µ', L'§' }
+#define MANA_LIFE_CHAR  L'\u00A4'
+#define MANA_LAW_CHAR   L'\u007C'
+#define MANA_DEATH_CHAR L'\u00B5'
+#define MANA_CHAOS_CHAR L'\u00A7'
+
+//#define MANA_SIGNS  { L'¤', L'|', L'µ', L'§' }
+#define MANA_SIGNS  { L'\u00A4', L'\u007C', L'\u00B5', L'\u00A7' }
 #define MANA_TEXTS  { L"LIFE_MANA", L"LAW_MANA", L"DEATH_MANA", L"CHAOS_MANA" }
 
 class Mana : public BaseObject

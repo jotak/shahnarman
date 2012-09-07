@@ -1,8 +1,8 @@
 #ifndef _AUDIOMANAGER_H
 #define _AUDIOMANAGER_H
 
-#include <al/al.h>
-#include <al/alc.h>
+#include <AL/al.h>
+#include <AL/alc.h>
 #include <vorbis/vorbisfile.h>
 #include "../SystemHeaders.h"
 #include "../utils.h"

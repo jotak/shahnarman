@@ -628,7 +628,7 @@ void LocalClient::processNextMessage()
       default:
         {
           wchar_t sError[512];
-          swprintf_s(sError, 512, L"Unknown message sent to server: code %d", (int)iMessage);
+          swprintf(sError, 512, L"Unknown message sent to server: code %d", (int)iMessage);
           getDebug()->notifyErrorMessage(sError);
           break;
         }

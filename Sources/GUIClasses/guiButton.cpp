@@ -32,17 +32,11 @@ guiButton::guiButton() : guiImage()
 // -----------------------------------------------------------------
 guiButton::~guiButton()
 {
-#ifdef DBG_VERBOSE1
-  printf("Begin destroy guiButton\n");
-#endif
   FREE(m_pLabel);
   FREE(m_pGeometryClicked);
   FREE(m_pGeometryOver);
   FREE(m_pGeometryAttachedImage);
   m_pGeometry = m_pGeometryNormal;
-#ifdef DBG_VERBOSE1
-  printf("End destroy guiButton\n");
-#endif
 }
 
 // -----------------------------------------------------------------
@@ -129,7 +123,7 @@ void guiButton::displayAt(int iXOffset, int iYOffset, F_RGBA cpntColor, F_RGBA d
         {
           float coef = 1.2f;
           Coords3D fCenter = getDisplay()->get3DCoords(CoordsScreen(
-                iXOffset + getXPos() + getWidth() / 2, 
+                iXOffset + getXPos() + getWidth() / 2,
                 iYOffset + getYPos() + getHeight() / 2),
                 DMS_2D);
           glPushMatrix();
@@ -173,7 +167,7 @@ void guiButton::displayAt(int iXOffset, int iYOffset, F_RGBA cpntColor, F_RGBA d
         {
           float coef = 1.2f;
           Coords3D fCenter = getDisplay()->get3DCoords(CoordsScreen(
-                iXOffset + getXPos() + getWidth() / 2, 
+                iXOffset + getXPos() + getWidth() / 2,
                 iYOffset + getYPos() + getHeight() / 2),
                 DMS_2D);
           glPushMatrix();
@@ -260,6 +254,8 @@ guiObject * guiButton::onButtonEvent(ButtonAction * pEvent)
         return bClose ? NULL : this;
       }
     }
+    default:
+    break;
   }
   return NULL;
 }
@@ -387,7 +383,7 @@ void guiButton::setEnabled(bool bEnabled)
 //  Static default constructor
 //  Use it to avoid passing always the same 3591218 arguments to "init"
 // -----------------------------------------------------------------
-guiButton * guiButton::createDefaultNormalButton(wchar_t * sText, wchar_t * sId, DisplayEngine * pDisplay)
+guiButton * guiButton::createDefaultNormalButton(const wchar_t * sText, const wchar_t * sId, DisplayEngine * pDisplay)
 {
   guiButton * pBtn = new guiButton();
   pBtn->init(
@@ -406,7 +402,7 @@ guiButton * guiButton::createDefaultNormalButton(wchar_t * sText, wchar_t * sId,
 //  Static default constructor
 //  Use it to avoid passing always the same 3591218 arguments to "init"
 // -----------------------------------------------------------------
-guiButton * guiButton::createDefaultSmallButton(wchar_t * sText, int width, wchar_t * sId, DisplayEngine * pDisplay)
+guiButton * guiButton::createDefaultSmallButton(const wchar_t * sText, int width, const wchar_t * sId, DisplayEngine * pDisplay)
 {
   guiButton * pBtn = new guiButton();
   pBtn->init(
@@ -424,7 +420,7 @@ guiButton * guiButton::createDefaultSmallButton(wchar_t * sText, int width, wcha
 //  Static default constructor
 //  Use it to avoid passing always the same 3591218 arguments to "init"
 // -----------------------------------------------------------------
-guiButton * guiButton::createDefaultWhiteButton(wchar_t * sText, int width, int height, wchar_t * sId, DisplayEngine * pDisplay)
+guiButton * guiButton::createDefaultWhiteButton(const wchar_t * sText, int width, int height, const wchar_t * sId, DisplayEngine * pDisplay)
 {
   guiButton * pBtn = new guiButton();
   pBtn->init(
@@ -442,7 +438,7 @@ guiButton * guiButton::createDefaultWhiteButton(wchar_t * sText, int width, int 
 //  Static default constructor
 //  Use it to avoid passing always the same 3591218 arguments to "init"
 // -----------------------------------------------------------------
-guiButton * guiButton::createDefaultImageButton(int iTex, wchar_t * sId, DisplayEngine * pDisplay)
+guiButton * guiButton::createDefaultImageButton(int iTex, const wchar_t * sId, DisplayEngine * pDisplay)
 {
   guiButton * pBtn = new guiButton();
   pBtn->init(

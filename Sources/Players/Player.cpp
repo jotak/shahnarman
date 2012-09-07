@@ -50,7 +50,7 @@ Player::Player(u8 playerId, u8 clientId, ObjectList ** pGlobalEffects) : LuaTarg
   m_pWonArtifacts = new ObjectList(false);
   m_pWonAvatars = new ObjectList(false);
   resetState();
-  swprintf_s(m_sIdentifiers, 16, L"player %d", (int) m_uPlayerId);
+  swprintf(m_sIdentifiers, 16, L"player %d", (int) m_uPlayerId);
   for (int i = 0; i < MAX_MAGIC_CIRCLES; i++)
     m_MagicCirclePos[i].x = -1;
   m_bIsAI = false;
@@ -213,7 +213,7 @@ void Player::deserialize(NetworkData * pData, bool bShort, LocalClient * pLocalC
       assert(pAvatar != NULL);
       m_pWonAvatars->addLast(pAvatar);
     }
-    swprintf_s(m_sIdentifiers, 16, L"player %d", (int) m_uPlayerId);
+    swprintf(m_sIdentifiers, 16, L"player %d", (int) m_uPlayerId);
   }
 }
 
@@ -648,7 +648,7 @@ wchar_t * Player::getInfo(wchar_t * sBuf, int iSize)
   i18n->getText1stUp(L"AVATAR", sAvatar, 64);
   i18n->getText1stUp(L"AVAILABLE_MANA", sAvailMana, 64);
   i18n->getText(L"2P", sDeuxPoints, 4);
-  swprintf_s(sBuf, iSize, L"%s%s%s\n%s%s\n  ",
+  swprintf(sBuf, iSize, L"%s%s%s\n%s%s\n  ",
         sAvatar,
         sDeuxPoints,
         m_pAvatar->getName(),

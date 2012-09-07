@@ -20,7 +20,7 @@ BattleSpellPopup::BattleSpellPopup(Player * pPlayer, int iTimer, DisplayEngine *
   wchar_t sText[128] = L"";
   wchar_t sBuf[128] = L"";
   i18n->getText(L"(s)_CAN_CAST_BATTLE_SPELLS", sBuf, 128);
-  swprintf_s(sText, 128, sBuf, m_pPlayer->getAvatarName());
+  swprintf(sText, 128, sBuf, m_pPlayer->getAvatarName());
   guiLabel * pText = new guiLabel();
   pText->init(sText, TEXT_FONT, TEXT_COLOR, L"Text", 2, 2, 0, 0, pDisplay);
   pDoc->addComponent(pText);
@@ -29,7 +29,7 @@ BattleSpellPopup::BattleSpellPopup(Player * pPlayer, int iTimer, DisplayEngine *
   if (m_fTimer > 0)
   {
     i18n->getText(L"FINISH", sBuf, 128);
-    swprintf_s(sText, 128, L"%s (%d)", sBuf, (int)m_fTimer);
+    swprintf(sText, 128, L"%s (%d)", sBuf, (int)m_fTimer);
   }
   else
     i18n->getText(L"FINISH", sText, 128);
@@ -75,12 +75,6 @@ BattleSpellPopup::BattleSpellPopup(Player * pPlayer, int iTimer, DisplayEngine *
 // -----------------------------------------------------------------
 BattleSpellPopup::~BattleSpellPopup()
 {
-#ifdef DBG_VERBOSE1
-  printf("Begin destroy BattleSpellPopup\n");
-#endif
-#ifdef DBG_VERBOSE1
-  printf("End destroy BattleSpellPopup\n");
-#endif
 }
 
 // -----------------------------------------------------------------
@@ -101,7 +95,7 @@ void BattleSpellPopup::update(double delta)
       wchar_t sBuf[64];
       wchar_t sText[64];
       i18n->getText(L"FINISH", sBuf, 64);
-      swprintf_s(sText, 64, L"%s (%d)", sBuf, (int)m_fTimer);
+      swprintf(sText, 64, L"%s (%d)", sBuf, (int)m_fTimer);
       ((guiButton*)getDocument()->getComponent(L"NotNow"))->setText(sText);
     }
   }

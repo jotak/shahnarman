@@ -204,7 +204,7 @@ void LevelUpDlg::setCurrentAvatar(AvatarData * pAvatar)
   assert(uLevel > 1);
   wchar_t sBuf[256];
   i18n->getText(L"(s)_LEVELED_UP_AND_IS_(d)", sBuf, 256);
-  swprintf_s(sText, LABEL_MAX_CHARS, sBuf, pAvatar->m_sCustomName, (int)uLevel);
+  swprintf(sText, LABEL_MAX_CHARS, sBuf, pAvatar->m_sCustomName, (int)uLevel);
   pLbl = new guiLabel();
   pLbl->init(sText, TEXT_FONT, TEXT_COLOR, L"CenterLabel", 0, 0, iWidth - 10, 0, m_pLocalClient->getDisplay());
   pLbl->moveTo(5, yPxl);

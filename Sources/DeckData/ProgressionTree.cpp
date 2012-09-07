@@ -23,7 +23,7 @@ ProgressionTree::ProgressionTree(wchar_t * sEdition, wchar_t * sName, u8 uType, 
   // Parse file
   wchar_t sFileName[MAX_PATH];
   XMLLiteReader reader;
-  swprintf_s(sFileName, MAX_PATH, L"%s%s/progressions/%s.xml", EDITIONS_PATH, m_sEdition, m_sObjectId);
+  swprintf(sFileName, MAX_PATH, L"%s%s/progressions/%s.xml", EDITIONS_PATH, m_sEdition, m_sObjectId);
   wchar_t sError[1024] = L"";
   XMLLiteElement * pRootNode = NULL;
   try {
@@ -47,7 +47,7 @@ ProgressionTree::ProgressionTree(wchar_t * sEdition, wchar_t * sName, u8 uType, 
       XMLLiteAttribute * pAttr = pNode->getAttributeByName(L"id");
       if (pAttr == NULL)
       {
-        swprintf_s(sError, 1024, L"XML formation error in progression tree %s: missing level id", pRootNode->getName());
+        swprintf(sError, 1024, L"XML formation error in progression tree %s: missing level id", pRootNode->getName());
         pDebug->notifyErrorMessage(sError);
         pNode = pRootNode->getNextChild();
         continue;
@@ -55,7 +55,7 @@ ProgressionTree::ProgressionTree(wchar_t * sEdition, wchar_t * sName, u8 uType, 
       u8 uLevel = (u8) pAttr->getIntValue();
       if (uLevel >= NB_PROGRESSION_LEVELS)
       {
-        swprintf_s(sError, 1024, L"XML formation error in progression tree %s: invalid level id (%d)", pRootNode->getName(), (int)uLevel);
+        swprintf(sError, 1024, L"XML formation error in progression tree %s: invalid level id (%d)", pRootNode->getName(), (int)uLevel);
         pDebug->notifyErrorMessage(sError);
         pNode = pRootNode->getNextChild();
         continue;
@@ -73,7 +73,7 @@ ProgressionTree::ProgressionTree(wchar_t * sEdition, wchar_t * sName, u8 uType, 
         pAttr = pOption->getAttributeByName(L"id");
         if (pAttr == NULL)
         {
-          swprintf_s(sError, 1024, L"XML formation error in progression tree %s: missing option id", pRootNode->getName());
+          swprintf(sError, 1024, L"XML formation error in progression tree %s: missing option id", pRootNode->getName());
           pDebug->notifyErrorMessage(sError);
           pOption = pNode->getNextChild();
           continue;
@@ -82,12 +82,12 @@ ProgressionTree::ProgressionTree(wchar_t * sEdition, wchar_t * sName, u8 uType, 
         pAttr = pOption->getAttributeByName(L"texture");
         if (pAttr == NULL)
         {
-          swprintf_s(sError, 1024, L"XML formation error in progression tree %s: missing option texture", pRootNode->getName());
+          swprintf(sError, 1024, L"XML formation error in progression tree %s: missing option texture", pRootNode->getName());
           pDebug->notifyErrorMessage(sError);
           pOption = pNode->getNextChild();
           continue;
         }
-        swprintf_s(sTexture, MAX_PATH, L"%s/%s", m_sEdition, pAttr->getCharValue());
+        swprintf(sTexture, MAX_PATH, L"%s/%s", m_sEdition, pAttr->getCharValue());
         ProgressionElement * pElement = new ProgressionElement(sId, sTexture, uLevel, this);
         m_pElements[uLevel]->addLast(pElement);
         pElement->readLocalizedElementsFromXml(pOption);
@@ -132,7 +132,7 @@ ProgressionTree::ProgressionTree(wchar_t * sEdition, wchar_t * sName, u8 uType, 
         XMLLiteAttribute * pAttr = pOption->getAttributeByName(L"id");
         if (pAttr == NULL)
         {
-          swprintf_s(sError, 1024, L"XML formation error in progression tree %s: missing option id", pRootNode->getName());
+          swprintf(sError, 1024, L"XML formation error in progression tree %s: missing option id", pRootNode->getName());
           pDebug->notifyErrorMessage(sError);
           pOption = pNode->getNextChild();
           continue;
@@ -141,7 +141,7 @@ ProgressionTree::ProgressionTree(wchar_t * sEdition, wchar_t * sName, u8 uType, 
         ProgressionElement * pElement = findElement(sId);
         if (pElement == NULL)
         {
-          swprintf_s(sError, 1024, L"XML formation error in progression tree %s: undefined option id (%s)", pRootNode->getName(), sId);
+          swprintf(sError, 1024, L"XML formation error in progression tree %s: undefined option id (%s)", pRootNode->getName(), sId);
           pDebug->notifyErrorMessage(sError);
           pOption = pNode->getNextChild();
           continue;
@@ -155,14 +155,14 @@ ProgressionTree::ProgressionTree(wchar_t * sEdition, wchar_t * sName, u8 uType, 
             ProgressionElement * pChild = findElement(sChildName);
             if (pChild == NULL)
             {
-              swprintf_s(sError, 1024, L"XML formation error in progression tree %s: unknown child for option %s", pRootNode->getName(), sId);
+              swprintf(sError, 1024, L"XML formation error in progression tree %s: unknown child for option %s", pRootNode->getName(), sId);
               pDebug->notifyErrorMessage(sError);
               pOptData = pOption->getNextChild();
               continue;
             }
             if (pChild->m_uLevel != pElement->m_uLevel + 1)
             {
-              swprintf_s(sError, 1024, L"XML formation error in progression tree %s: child %s should be level 'n+1' for option %s", pRootNode->getName(), sChildName, sId);
+              swprintf(sError, 1024, L"XML formation error in progression tree %s: child %s should be level 'n+1' for option %s", pRootNode->getName(), sChildName, sId);
               pDebug->notifyErrorMessage(sError);
               pOptData = pOption->getNextChild();
               continue;
@@ -187,7 +187,7 @@ ProgressionTree::ProgressionTree(wchar_t * sEdition, wchar_t * sName, u8 uType, 
       if (pElt->m_iNbParents == 0)
       {
         wchar_t sError[1024];
-        swprintf_s(sError, 1024, L"Warning in progression tree formation: element %s has no parent in tree %s", pElt->m_sObjectId, m_sObjectId);
+        swprintf(sError, 1024, L"Warning in progression tree formation: element %s has no parent in tree %s", pElt->m_sObjectId, m_sObjectId);
         pDebug->notifyErrorMessage(sError);
       }
       pElt = (ProgressionElement*)m_pElements[i]->getNext(0);
@@ -238,7 +238,7 @@ ProgressionEffect * ProgressionTree::readXMLEffect(XMLLiteElement * pNode, XMLLi
     pAttr = pNode->getAttributeByName(L"name");
     if (pAttr == NULL)
     {
-      swprintf_s(sError, 1024, L"XML formation error: attribute \"name\" missing in element \"skill\", in tree %s definition. Check out file %s.", sId, pRootNode->getName());
+      swprintf(sError, 1024, L"XML formation error: attribute \"name\" missing in element \"skill\", in tree %s definition. Check out file %s.", sId, pRootNode->getName());
       pDebug->notifyErrorMessage(sError);
       return NULL;
     }
@@ -254,7 +254,7 @@ ProgressionEffect * ProgressionTree::readXMLEffect(XMLLiteElement * pNode, XMLLi
     pAttr = pNode->getAttributeByName(L"name");
     if (pAttr == NULL)
     {
-      swprintf_s(sError, 1024, L"XML formation error: attribute \"name\" missing in element \"spell\", in tree %s definition. Check out file %s.", sId, pRootNode->getName());
+      swprintf(sError, 1024, L"XML formation error: attribute \"name\" missing in element \"spell\", in tree %s definition. Check out file %s.", sId, pRootNode->getName());
       pDebug->notifyErrorMessage(sError);
       return NULL;
     }
@@ -268,7 +268,7 @@ ProgressionEffect * ProgressionTree::readXMLEffect(XMLLiteElement * pNode, XMLLi
     pAttr = pNode->getAttributeByName(L"key");
     if (pAttr == NULL)
     {
-      swprintf_s(sError, 1024, L"XML formation error: attribute \"key\" missing in element \"modify\", in tree %s definition. Check out file %s.", sId, pRootNode->getName());
+      swprintf(sError, 1024, L"XML formation error: attribute \"key\" missing in element \"modify\", in tree %s definition. Check out file %s.", sId, pRootNode->getName());
       pDebug->notifyErrorMessage(sError);
       return NULL;
     }
@@ -276,7 +276,7 @@ ProgressionEffect * ProgressionTree::readXMLEffect(XMLLiteElement * pNode, XMLLi
     pAttr = pNode->getAttributeByName(L"value");
     if (pAttr == NULL)
     {
-      swprintf_s(sError, 1024, L"XML formation error: attribute \"value\" missing in element \"modify\", in tree %s definition. Check out file %s.", sId, pRootNode->getName());
+      swprintf(sError, 1024, L"XML formation error: attribute \"value\" missing in element \"modify\", in tree %s definition. Check out file %s.", sId, pRootNode->getName());
       pDebug->notifyErrorMessage(sError);
       return NULL;
     }
@@ -289,7 +289,7 @@ ProgressionEffect * ProgressionTree::readXMLEffect(XMLLiteElement * pNode, XMLLi
     pAttr = pNode->getAttributeByName(L"name");
     if (pAttr == NULL)
     {
-      swprintf_s(sError, 1024, L"XML formation error: attribute \"name\" missing in element \"artefact\", in tree %s definition. Check out file %s.", sId, pRootNode->getName());
+      swprintf(sError, 1024, L"XML formation error: attribute \"name\" missing in element \"artefact\", in tree %s definition. Check out file %s.", sId, pRootNode->getName());
       pDebug->notifyErrorMessage(sError);
       return NULL;
     }
@@ -302,7 +302,7 @@ ProgressionEffect * ProgressionTree::readXMLEffect(XMLLiteElement * pNode, XMLLi
     pAttr = pNode->getAttributeByName(L"name");
     if (pAttr == NULL)
     {
-      swprintf_s(sError, 1024, L"XML formation error: attribute \"name\" missing in element \"Shahmah\", in tree %s definition. Check out file %s.", sId, pRootNode->getName());
+      swprintf(sError, 1024, L"XML formation error: attribute \"name\" missing in element \"Shahmah\", in tree %s definition. Check out file %s.", sId, pRootNode->getName());
       pDebug->notifyErrorMessage(sError);
       return NULL;
     }

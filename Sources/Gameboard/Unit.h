@@ -57,7 +57,7 @@ public:
   // MapObject virtual functions
   virtual short getMoveCost(unsigned char terrainType);
   virtual int getTexture();
-  virtual void updateIdentifiers() { swprintf_s(m_sIdentifiers, 16, L"unit %d %ld", (int) m_uOwner, (long) m_uUnitId); };
+  virtual void updateIdentifiers() { swprintf(m_sIdentifiers, 16, L"unit %d %ld", (int) m_uOwner, (long) m_uUnitId); };
 
   // Move related function
   virtual void resetMoveData();

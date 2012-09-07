@@ -81,7 +81,7 @@ CreateAvatarDlg::CreateAvatarDlg(int iWidth, int iHeight, LocalClient * pLocalCl
   wchar_t sBuf[32];
   yPxl += pBox->getHeight() + WIDE_Y_SPACING;
   i18n->getText(L"POINTS_ABREV", sBuf, 32);
-  swprintf_s(sText, LABEL_MAX_CHARS, L"%d %s", m_iPointsLeft, sBuf);
+  swprintf(sText, LABEL_MAX_CHARS, L"%d %s", m_iPointsLeft, sBuf);
   pLbl = new guiLabel();
   pLbl->init(sText, H2_FONT, H2_COLOR, L"PointsLabel", 0, 0, 0, 0, m_pLocalClient->getDisplay());
   pLbl->moveTo(iWidth / 3 - pLbl->getWidth() / 2, yPxl);
@@ -98,7 +98,7 @@ CreateAvatarDlg::CreateAvatarDlg(int iWidth, int iHeight, LocalClient * pLocalCl
 
   // Gold paid label
   pLbl = new guiLabel();
-  swprintf_s(sText, LABEL_MAX_CHARS, L"%d", m_iGoldPaid);
+  swprintf(sText, LABEL_MAX_CHARS, L"%d", m_iGoldPaid);
   pLbl->init(sText, H2_FONT, H2_COLOR, L"GoldValue", 0, 0, 0, 0, m_pLocalClient->getDisplay());
   addComponent(pLbl);
   m_pEditionRelativeCpnt->addLast(pLbl);
@@ -165,7 +165,7 @@ CreateAvatarDlg::CreateAvatarDlg(int iWidth, int iHeight, LocalClient * pLocalCl
   yPxl = yTop;
   int xPxl = pLbl->getXPos() + xMax + WIDE_X_SPACING;
   pLbl = new guiLabel();
-  swprintf_s(sText, LABEL_MAX_CHARS, L"%d", m_iCarac[MELEE]);
+  swprintf(sText, LABEL_MAX_CHARS, L"%d", m_iCarac[MELEE]);
   pLbl->init(sText, H2_FONT, H2_COLOR, L"MeleeValue", xPxl, yPxl, 0, 0, m_pLocalClient->getDisplay());
   addComponent(pLbl);
   m_pEditionRelativeCpnt->addLast(pLbl);
@@ -174,7 +174,7 @@ CreateAvatarDlg::CreateAvatarDlg(int iWidth, int iHeight, LocalClient * pLocalCl
   // Range value label
   yPxl = y2;
   pLbl = new guiLabel();
-  swprintf_s(sText, LABEL_MAX_CHARS, L"%d", m_iCarac[RANGE]);
+  swprintf(sText, LABEL_MAX_CHARS, L"%d", m_iCarac[RANGE]);
   pLbl->init(sText, H2_FONT, H2_COLOR, L"RangeValue", xPxl, yPxl, 0, 0, m_pLocalClient->getDisplay());
   addComponent(pLbl);
   m_pEditionRelativeCpnt->addLast(pLbl);
@@ -183,7 +183,7 @@ CreateAvatarDlg::CreateAvatarDlg(int iWidth, int iHeight, LocalClient * pLocalCl
   // Armor value label
   yPxl = y3;
   pLbl = new guiLabel();
-  swprintf_s(sText, LABEL_MAX_CHARS, L"%d", m_iCarac[ARMOR]);
+  swprintf(sText, LABEL_MAX_CHARS, L"%d", m_iCarac[ARMOR]);
   pLbl->init(sText, H2_FONT, H2_COLOR, L"ArmorValue", xPxl, yPxl, 0, 0, m_pLocalClient->getDisplay());
   addComponent(pLbl);
   m_pEditionRelativeCpnt->addLast(pLbl);
@@ -208,7 +208,7 @@ CreateAvatarDlg::CreateAvatarDlg(int iWidth, int iHeight, LocalClient * pLocalCl
   // Endurance value label
   xPxl = pLbl->getXPos() + xMax + WIDE_X_SPACING;
   pLbl = new guiLabel();
-  swprintf_s(sText, LABEL_MAX_CHARS, L"%d", m_iCarac[ENDURANCE]);
+  swprintf(sText, LABEL_MAX_CHARS, L"%d", m_iCarac[ENDURANCE]);
   pLbl->init(sText, H2_FONT, H2_COLOR, L"EnduranceValue", xPxl, yTop, 0, 0, m_pLocalClient->getDisplay());
   addComponent(pLbl);
   m_pEditionRelativeCpnt->addLast(pLbl);
@@ -216,7 +216,7 @@ CreateAvatarDlg::CreateAvatarDlg(int iWidth, int iHeight, LocalClient * pLocalCl
 
   // Speed value label
   pLbl = new guiLabel();
-  swprintf_s(sText, LABEL_MAX_CHARS, L"%d", m_iCarac[SPEED]);
+  swprintf(sText, LABEL_MAX_CHARS, L"%d", m_iCarac[SPEED]);
   pLbl->init(sText, H2_FONT, H2_COLOR, L"SpeedValue", xPxl, y2, 0, 0, m_pLocalClient->getDisplay());
   addComponent(pLbl);
   m_pEditionRelativeCpnt->addLast(pLbl);
@@ -259,7 +259,7 @@ void CreateAvatarDlg::createLeftRightArrows(guiComponent * pCpnt, guiDocument * 
   if (!pDoc)
     pDoc = this;
   wchar_t sId[128] = L"";
-  swprintf_s(sId, 128, L"%s_left", pCpnt->getId());
+  swprintf(sId, 128, L"%s_left", pCpnt->getId());
   int iTex = m_pLocalClient->getDisplay()->getTextureEngine()->findTexture(L"interface:LeftArrow");
   guiButton * pBtn = guiButton::createDefaultImageButton(iTex, sId, m_pLocalClient->getDisplay());
   pBtn->setMultiClicks(true);
@@ -270,7 +270,7 @@ void CreateAvatarDlg::createLeftRightArrows(guiComponent * pCpnt, guiDocument * 
   if (pDoc != this)
     pBtn->setOwner(this);
 
-  swprintf_s(sId, 128, L"%s_right", pCpnt->getId());
+  swprintf(sId, 128, L"%s_right", pCpnt->getId());
   iTex = m_pLocalClient->getDisplay()->getTextureEngine()->findTexture(L"interface:RightArrow");
   pBtn = guiButton::createDefaultImageButton(iTex, sId, m_pLocalClient->getDisplay());
   pBtn->setMultiClicks(true);
@@ -388,7 +388,7 @@ void CreateAvatarDlg::onArrowClick(guiComponent * pArrow)
     StringObject * pString = (StringObject*) m_pImagesSubList->goTo(0, m_iImage);
     assert(pString != NULL);
     wchar_t sPath[MAX_PATH];
-    swprintf_s(sPath, MAX_PATH, L"%s/%s", m_pCurrentEdition->m_sObjectId, pString->m_sString);
+    swprintf(sPath, MAX_PATH, L"%s/%s", m_pCurrentEdition->m_sObjectId, pString->m_sString);
     int iTex = m_pLocalClient->getDisplay()->getTextureEngine()->loadTexture(sPath);
     ((guiImage*)pCpnt)->setImageTexture(iTex);
     checkArrows(pCpnt);
@@ -416,7 +416,7 @@ void CreateAvatarDlg::onArrowClick(guiComponent * pArrow)
     }
     computePoints();
     wchar_t sValue[8];
-    swprintf_s(sValue, 8, L"%d", m_iGoldPaid);
+    swprintf(sValue, 8, L"%d", m_iGoldPaid);
     ((guiLabel*)pCpnt)->setText(sValue);
     checkArrows(pCpnt);
   }
@@ -434,7 +434,7 @@ void CreateAvatarDlg::onArrowClick(guiComponent * pArrow)
     }
     computePoints();
     wchar_t sValue[8];
-    swprintf_s(sValue, 8, L"%d", m_iCarac[MELEE]);
+    swprintf(sValue, 8, L"%d", m_iCarac[MELEE]);
     ((guiLabel*)pCpnt)->setText(sValue);
     checkArrows(pCpnt);
   }
@@ -452,7 +452,7 @@ void CreateAvatarDlg::onArrowClick(guiComponent * pArrow)
     }
     computePoints();
     wchar_t sValue[8];
-    swprintf_s(sValue, 8, L"%d", m_iCarac[RANGE]);
+    swprintf(sValue, 8, L"%d", m_iCarac[RANGE]);
     ((guiLabel*)pCpnt)->setText(sValue);
     checkArrows(pCpnt);
   }
@@ -470,7 +470,7 @@ void CreateAvatarDlg::onArrowClick(guiComponent * pArrow)
     }
     computePoints();
     wchar_t sValue[8];
-    swprintf_s(sValue, 8, L"%d", m_iCarac[ARMOR]);
+    swprintf(sValue, 8, L"%d", m_iCarac[ARMOR]);
     ((guiLabel*)pCpnt)->setText(sValue);
     checkArrows(pCpnt);
   }
@@ -488,7 +488,7 @@ void CreateAvatarDlg::onArrowClick(guiComponent * pArrow)
     }
     computePoints();
     wchar_t sValue[8];
-    swprintf_s(sValue, 8, L"%d", m_iCarac[ENDURANCE]);
+    swprintf(sValue, 8, L"%d", m_iCarac[ENDURANCE]);
     ((guiLabel*)pCpnt)->setText(sValue);
     checkArrows(pCpnt);
   }
@@ -506,7 +506,7 @@ void CreateAvatarDlg::onArrowClick(guiComponent * pArrow)
     }
     computePoints();
     wchar_t sValue[8];
-    swprintf_s(sValue, 8, L"%d", m_iCarac[SPEED]);
+    swprintf(sValue, 8, L"%d", m_iCarac[SPEED]);
     ((guiLabel*)pCpnt)->setText(sValue);
     checkArrows(pCpnt);
   }
@@ -524,7 +524,7 @@ void CreateAvatarDlg::onArrowClick(guiComponent * pArrow)
     }
     computePoints();
     wchar_t sValue[8];
-    swprintf_s(sValue, 8, L"%d", pData->m_iNbSelected);
+    swprintf(sValue, 8, L"%d", pData->m_iNbSelected);
     ((guiLabel*)pCpnt)->setText(sValue);
   }
 }
@@ -558,7 +558,7 @@ void CreateAvatarDlg::onEthnicityChanged(Ethnicity * pEthn)
   if (pString != NULL)
   {
     wchar_t sPath[MAX_PATH];
-    swprintf_s(sPath, MAX_PATH, L"%s/%s", m_pCurrentEdition->m_sObjectId, pString->m_sString);
+    swprintf(sPath, MAX_PATH, L"%s/%s", m_pCurrentEdition->m_sObjectId, pString->m_sString);
     int iTex = m_pLocalClient->getDisplay()->getTextureEngine()->loadTexture(sPath);
     pImg->setImageTexture(iTex);
     pImg->setVisible(true);
@@ -642,36 +642,36 @@ void CreateAvatarDlg::onEditionChanged(Edition * pEdition)
   guiLabel * pLbl = (guiLabel*) getComponent(L"GoldValue");
   assert(pLbl != NULL);
   wchar_t sValue[8];
-  swprintf_s(sValue, 8, L"%d", m_iGoldPaid);
+  swprintf(sValue, 8, L"%d", m_iGoldPaid);
   pLbl->setText(sValue);
   checkArrows(pLbl);
-  
+
   // Reset caracs
   m_iCarac[MELEE] = m_iCarac[RANGE] = m_iCarac[ARMOR] = 0;
   m_iCarac[ENDURANCE] = m_iCarac[SPEED] = 1;
   pLbl = (guiLabel*) getComponent(L"MeleeValue");
   assert(pLbl != NULL);
-  swprintf_s(sValue, 8, L"%d", m_iCarac[MELEE]);
+  swprintf(sValue, 8, L"%d", m_iCarac[MELEE]);
   pLbl->setText(sValue);
   checkArrows(pLbl);
   pLbl = (guiLabel*) getComponent(L"RangeValue");
   assert(pLbl != NULL);
-  swprintf_s(sValue, 8, L"%d", m_iCarac[RANGE]);
+  swprintf(sValue, 8, L"%d", m_iCarac[RANGE]);
   pLbl->setText(sValue);
   checkArrows(pLbl);
   pLbl = (guiLabel*) getComponent(L"ArmorValue");
   assert(pLbl != NULL);
-  swprintf_s(sValue, 8, L"%d", m_iCarac[ARMOR]);
+  swprintf(sValue, 8, L"%d", m_iCarac[ARMOR]);
   pLbl->setText(sValue);
   checkArrows(pLbl);
   pLbl = (guiLabel*) getComponent(L"EnduranceValue");
   assert(pLbl != NULL);
-  swprintf_s(sValue, 8, L"%d", m_iCarac[ENDURANCE]);
+  swprintf(sValue, 8, L"%d", m_iCarac[ENDURANCE]);
   pLbl->setText(sValue);
   checkArrows(pLbl);
   pLbl = (guiLabel*) getComponent(L"SpeedValue");
   assert(pLbl != NULL);
-  swprintf_s(sValue, 8, L"%d", m_iCarac[SPEED]);
+  swprintf(sValue, 8, L"%d", m_iCarac[SPEED]);
   pLbl->setText(sValue);
   checkArrows(pLbl);
 
@@ -691,7 +691,7 @@ void CreateAvatarDlg::onEditionChanged(Edition * pEdition)
   {
     pEthn->findLocalizedElement(sBuf1, LABEL_MAX_CHARS, i18n->getCurrentLanguageName(), L"name");
     int cost = pCreat->m_pPeoples->getCurrentType(0);
-    swprintf_s(sText, LABEL_MAX_CHARS, L"%s (%s%s%d)", sBuf1, sBuf2, s2P, cost);
+    swprintf(sText, LABEL_MAX_CHARS, L"%s (%s%s%d)", sBuf1, sBuf2, s2P, cost);
     guiButton * pBtn = pBox->addString(sText, L"EthnicityButton");
     pBtn->setAttachment(pEthn);
     pEthn = (Ethnicity*) pCreat->m_pPeoples->getNext(0);
@@ -723,14 +723,14 @@ void CreateAvatarDlg::onEditionChanged(Edition * pEdition)
   while (pSkill != NULL)
   {
     // Skill picture
-    swprintf_s(sText, LABEL_MAX_CHARS, L"%s - %s", pSkill->getLocalizedName(), pSkill->getLocalizedDescription());
+    swprintf(sText, LABEL_MAX_CHARS, L"%s - %s", pSkill->getLocalizedName(), pSkill->getLocalizedDescription());
     guiImage * pImg = new guiImage();
     pImg->init(getDisplay()->getTextureEngine()->loadTexture(pSkill->getIconPath()), L"SkillImage", x[iX], yPxl, imgSize, imgSize, getDisplay());
     pImg->setTooltipText(sText);
     m_pSkillsPanel->getDocument()->addComponent(pImg);
     // Cost label
     int cost = pCreat->m_pSkills->getCurrentType(0);
-    swprintf_s(sText, LABEL_MAX_CHARS, L"%s%s%d", sBuf2, s2P, cost);
+    swprintf(sText, LABEL_MAX_CHARS, L"%s%s%d", sBuf2, s2P, cost);
     pLbl = new guiLabel();
     pLbl->init(sText, H2_FONT, H2_COLOR, L"", x[iX] + imgSize + SPACING, yPxl, 0, 0, getDisplay());
     m_pSkillsPanel->getDocument()->addComponent(pLbl);
@@ -765,13 +765,13 @@ void CreateAvatarDlg::checkArrows(guiComponent * pCpnt, guiDocument * pDoc)
     pDoc = this;
   // First check that position is still ok
   wchar_t sId[128] = L"";
-  swprintf_s(sId, 128, L"%s_left", pCpnt->getId());
+  swprintf(sId, 128, L"%s_left", pCpnt->getId());
   guiButton * pBtn = (guiButton*) pDoc->getComponent(sId);
   assert(pBtn != NULL);
   pBtn->moveTo(pCpnt->getXPos() - SPACING - pBtn->getWidth(), pCpnt->getYPos() + pCpnt->getHeight() / 2 - pBtn->getHeight() / 2);
   guiButton * pLeft = pBtn;
 
-  swprintf_s(sId, 128, L"%s_right", pCpnt->getId());
+  swprintf(sId, 128, L"%s_right", pCpnt->getId());
   pBtn = (guiButton*) pDoc->getComponent(sId);
   assert(pBtn != NULL);
   pBtn->moveTo(pCpnt->getXPos() + pCpnt->getWidth() + SPACING, pCpnt->getYPos() + pCpnt->getHeight() / 2 - pBtn->getHeight() / 2);
@@ -818,7 +818,7 @@ void CreateAvatarDlg::computePoints()
   wchar_t sText[LABEL_MAX_CHARS];
   wchar_t sBuf[32];
   i18n->getText(L"POINTS_ABREV", sBuf, 32);
-  swprintf_s(sText, LABEL_MAX_CHARS, L"%d %s", m_iPointsLeft, sBuf);
+  swprintf(sText, LABEL_MAX_CHARS, L"%d %s", m_iPointsLeft, sBuf);
   pLbl->setText(sText);
 
   // Check arrows
@@ -929,12 +929,12 @@ void CreateAvatarDlg::saveAndQuit()
   wsafecpy(pAvatar->m_sEdition, NAME_MAX_CHARS, m_pCurrentEdition->m_sObjectId);
   wsafecpy(pAvatar->m_sEthnicityId, NAME_MAX_CHARS, m_pCurrentPeople->m_sObjectId);
   StringObject * pStr = (StringObject*) m_pImagesSubList->goTo(0, m_iImage);
-  swprintf_s(pAvatar->m_sTextureFilename, MAX_PATH, L"%s/%s",  m_pCurrentEdition->m_sObjectId, pStr->m_sString);
-  pAvatar->m_lValues.insert(long_hash_pair(STRING_MELEE, m_iCarac[MELEE]));
-  pAvatar->m_lValues.insert(long_hash_pair(STRING_RANGE, m_iCarac[RANGE]));
-  pAvatar->m_lValues.insert(long_hash_pair(STRING_ARMOR, m_iCarac[ARMOR]));
-  pAvatar->m_lValues.insert(long_hash_pair(STRING_ENDURANCE, m_iCarac[ENDURANCE]));
-  pAvatar->m_lValues.insert(long_hash_pair(STRING_SPEED, m_iCarac[SPEED]));
+  swprintf(pAvatar->m_sTextureFilename, MAX_PATH, L"%s/%s",  m_pCurrentEdition->m_sObjectId, pStr->m_sString);
+  pAvatar->m_lValues.insert(long_hash::value_type(STRING_MELEE, m_iCarac[MELEE]));
+  pAvatar->m_lValues.insert(long_hash::value_type(STRING_RANGE, m_iCarac[RANGE]));
+  pAvatar->m_lValues.insert(long_hash::value_type(STRING_ARMOR, m_iCarac[ARMOR]));
+  pAvatar->m_lValues.insert(long_hash::value_type(STRING_ENDURANCE, m_iCarac[ENDURANCE]));
+  pAvatar->m_lValues.insert(long_hash::value_type(STRING_SPEED, m_iCarac[SPEED]));
   // Skills
   SkillData * pData = (SkillData*) m_pAllSkillData->getFirst(0);
   while (pData != NULL)

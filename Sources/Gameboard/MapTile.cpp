@@ -50,7 +50,7 @@ MapTile::MapTile(u8 uTerrainType, ObjectList ** pGlobalEffects) : GraphicObject(
   registerValue(STRING_FOOD, (long) uFood);
   registerValue(STRING_PROD, (long) uProd);
   m_iMaskTexture = -1;
-  swprintf_s(m_sIdentifiers, 16, L"tile %d", (int) m_uTerrainType);
+  swprintf(m_sIdentifiers, 16, L"tile %d", (int) m_uTerrainType);
   m_uInfluence = 0;
 }
 
@@ -80,21 +80,21 @@ void MapTile::resetTexture(DisplayEngine * pDisplay)
     wsafecpy(sTex, 64, L"sea1");
     break;
   case TERRAIN_PLAIN:
-    swprintf_s(sTex, 64, L"plain1");
+    swprintf(sTex, 64, L"plain1");
     break;
   case TERRAIN_FOREST:
     rnd = getRandom(7) + 1;
-    swprintf_s(sTex, 64, L"forest%d", rnd);
+    swprintf(sTex, 64, L"forest%d", rnd);
     break;
   case TERRAIN_MOUNTAIN:
     rnd = getRandom(7) + 1;
-    swprintf_s(sTex, 64, L"mountain%d", rnd);
+    swprintf(sTex, 64, L"mountain%d", rnd);
     break;
   case TERRAIN_DESERT:
-    swprintf_s(sTex, 64, L"desert1");
+    swprintf(sTex, 64, L"desert1");
     break;
   case TERRAIN_TOUNDRA:
-    swprintf_s(sTex, 64, L"toundra1");
+    swprintf(sTex, 64, L"toundra1");
     break;
   }
   m_iTexture = pDisplay->getTextureEngine()->loadTexture(sTex, true);
@@ -279,7 +279,7 @@ void MapTile::setMask(u16 uMask)
     break;
   }
   wchar_t sPath[MAX_PATH];
-  swprintf_s(sPath, MAX_PATH, L"%s%s", sMainStr, sCornerStr);
+  swprintf(sPath, MAX_PATH, L"%s%s", sMainStr, sCornerStr);
   if (wcscmp(sPath, L"tile_mask") != 0)
     m_iMaskTexture = getDisplay()->getTextureEngine()->loadTexture(sPath, true);
 }

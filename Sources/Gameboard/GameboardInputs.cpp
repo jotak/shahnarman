@@ -361,6 +361,8 @@ bool GameboardInputs::onCatchButtonEvent(ButtonAction * pEvent)
       return onButton1Click(pEvent->xPos, pEvent->yPos);
     case Event_DoubleClick:
       return onButton1DoubleClick(pEvent->xPos, pEvent->yPos);
+    default:
+    break;
     }
   }
   else if (pEvent->eButton == ButtonStart && pEvent->eEvent == Event_Down)

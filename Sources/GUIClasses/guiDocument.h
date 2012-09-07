@@ -41,7 +41,7 @@ public:
   guiComponent * deleteCurrentComponent(bool bSetToNext);
   guiComponent * getComponentAt(int xPxl, int yPxl);
   ObjectList * getComponentsList() { return m_pComponentsList; };
-  guiComponent * getComponent(wchar_t * cpntId);
+  guiComponent * getComponent(const wchar_t * cpntId);
 
   // Other member access functions
   wchar_t * getTitle() { return m_sTitle; };
@@ -49,7 +49,7 @@ public:
   guiComponent * getFocusedComponent() { return m_pFocusedComponent; };
   bool isEnabled() { return m_bEnabled; };
   void setEnabled(bool bEnabled) { m_bEnabled = bEnabled; };
-  void doClick(wchar_t * sCpntId);
+  void doClick(const wchar_t * sCpntId);
 
   // Handlers
   virtual void onLoad() {};

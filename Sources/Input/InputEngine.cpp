@@ -115,8 +115,8 @@ void InputEngine::update(double delta)
     {
       m_AllButtons[i].clickTime += delta;
       if (m_AllButtons[i].clickTime >= DOUBLECLICK_DETECT_TIME
-        || abs(m_iCursorX - m_AllButtons[i].xPosInit) > DOUBLECLICK_MAX_MOVE
-        || abs(m_iCursorY - m_AllButtons[i].yPosInit) > DOUBLECLICK_MAX_MOVE)
+        || std::abs(m_iCursorX - m_AllButtons[i].xPosInit) > DOUBLECLICK_MAX_MOVE
+        || std::abs(m_iCursorY - m_AllButtons[i].yPosInit) > DOUBLECLICK_MAX_MOVE)
       {
         submitEvent(i);
         m_AllButtons[i].eEvent = Event_None;
@@ -248,7 +248,7 @@ void InputEngine::onAnalogicMove(int x, int y)
   {
     if (m_AllButtons[i].eEvent == Event_Drag)
     {
-      m_AllButtons[i].dragDistance += abs(m_AllButtons[i].xPos - x) + abs(m_AllButtons[i].yPos - y);
+      m_AllButtons[i].dragDistance += std::abs(m_AllButtons[i].xPos - x) + std::abs(m_AllButtons[i].yPos - y);
       m_AllButtons[i].xPosInit = m_AllButtons[i].xPos;
       m_AllButtons[i].yPosInit = m_AllButtons[i].yPos;
       m_AllButtons[i].xPos = x;

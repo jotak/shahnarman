@@ -18,7 +18,7 @@
 // Name : LuaTargetable
 //  Constructor
 // -----------------------------------------------------------------
-LuaTargetable::LuaTargetable(ObjectList ** pGlobalEffects, wchar_t * sIdentifiers)
+LuaTargetable::LuaTargetable(ObjectList ** pGlobalEffects, const wchar_t * sIdentifiers)
 {
   m_pEffects = new ObjectList(false);
   m_pDisabledEffects = new ObjectList(false);
@@ -136,7 +136,7 @@ long LuaTargetable::getValue(const wchar_t * sName, bool bBase, bool * bFound)
   if (bBase)
     return it->second;
   wchar_t sFuncName[64];
-  swprintf_s(sFuncName, 64, L"getMod_%s", sName);
+  swprintf(sFuncName, 64, L"getMod_%s", sName);
   double val = (double) it->second;
   // Look in normal effects for modifiers
   LuaObject * pEffect = (LuaObject*) m_pEffects->getFirst(0);
@@ -156,7 +156,7 @@ long LuaTargetable::getValue(const wchar_t * sName, bool bBase, bool * bFound)
     pEffect = (LuaObject*) (*m_pGlobalEffects)->getNext(0);
   }
   // Look in child effects for modifiers
-  swprintf_s(sFuncName, 64, L"child_getMod_%s", sName);
+  swprintf(sFuncName, 64, L"child_getMod_%s", sName);
   // Note: the same child effect can be attached several times on a target. So, m_uGetModInstance is used to let LUA script know if successive calls of "getMod_xxx" are of the same "instance".
   m_uGetModInstance++;
   m_uGetModInstance %= 999;
@@ -272,7 +272,7 @@ void LuaTargetable::deserializeValues(NetworkData * pData)
 // Name : _callEffectHandlerForEffect
 //  Private
 // -----------------------------------------------------------------
-bool LuaTargetable::_callEffectHandlerForEffect(LuaObject * pLua, int iChild, wchar_t * sFunc, wchar_t * sArgsType, void ** pArgs, int nbResults)
+bool LuaTargetable::_callEffectHandlerForEffect(LuaObject * pLua, int iChild, const wchar_t * sFunc, const wchar_t * sArgsType, void ** pArgs, int nbResults)
 {
   lua_State * pState = pLua->prepareLuaFunction(sFunc);
   if (pState)
@@ -288,9 +288,9 @@ bool LuaTargetable::_callEffectHandlerForEffect(LuaObject * pLua, int iChild, wc
     // Then object's identifiers
     lua_pushstring(pState, ids);
     if (iChild >= 0)
-      swprintf_s(sParams, 512, L"%d,%s", iChild, m_sIdentifiers);
+      swprintf(sParams, 512, L"%d,%s", iChild, m_sIdentifiers);
     else
-      swprintf_s(sParams, 512, L"%s,", m_sIdentifiers);
+      swprintf(sParams, 512, L"%s,", m_sIdentifiers);
     // Parse sParamsType to read following parameters
     while (sArgsType[i] != L'\0')
     {
@@ -298,28 +298,28 @@ bool LuaTargetable::_callEffectHandlerForEffect(LuaObject * pLua, int iChild, wc
       {
         int val = *(int*)(pArgs[i]);
         lua_pushnumber(pState, val);
-        swprintf_s(sBuf, 128, L"%d,", val);
+        swprintf(sBuf, 128, L"%d,", val);
         wsafecat(sParams, 512, sBuf);
       }
       else if (sArgsType[i] == L'l')
       {
         long val = *(long*)(pArgs[i]);
         lua_pushnumber(pState, val);
-        swprintf_s(sBuf, 128, L"%ld,", val);
+        swprintf(sBuf, 128, L"%ld,", val);
         wsafecat(sParams, 512, sBuf);
       }
       else if (sArgsType[i] == L'f')
       {
         float val = *(float*)(pArgs[i]);
         lua_pushnumber(pState, val);
-        swprintf_s(sBuf, 128, L"%f,", val);
+        swprintf(sBuf, 128, L"%f,", val);
         wsafecat(sParams, 512, sBuf);
       }
       else if (sArgsType[i] == L'd')
       {
         double val = *(double*)(pArgs[i]);
         lua_pushnumber(pState, val);
-        swprintf_s(sBuf, 128, L"%lf,", val);
+        swprintf(sBuf, 128, L"%lf,", val);
         wsafecat(sParams, 512, sBuf);
       }
       else if (sArgsType[i] == L's')
@@ -329,7 +329,7 @@ bool LuaTargetable::_callEffectHandlerForEffect(LuaObject * pLua, int iChild, wc
         char charval[LUA_FUNCTION_PARAMS_MAX_CHARS];
         wtostr(charval, LUA_FUNCTION_PARAMS_MAX_CHARS, val);
         lua_pushstring(pState, charval);
-        swprintf_s(sBuf, 128, L"%s,", val);
+        swprintf(sBuf, 128, L"%s,", val);
         wsafecat(sParams, 512, sBuf);
       }
       i++;
@@ -344,7 +344,7 @@ bool LuaTargetable::_callEffectHandlerForEffect(LuaObject * pLua, int iChild, wc
 // -----------------------------------------------------------------
 // Name : callEffectHandler
 // -----------------------------------------------------------------
-long LuaTargetable::callEffectHandler(wchar_t * sFunc, wchar_t * sArgsType, void ** pArgs, u8 uResultType)
+long LuaTargetable::callEffectHandler(const wchar_t * sFunc, const wchar_t * sArgsType, void ** pArgs, u8 uResultType)
 {
   long iResult = 0;
   bool bResult = true;
@@ -384,7 +384,7 @@ long LuaTargetable::callEffectHandler(wchar_t * sFunc, wchar_t * sArgsType, void
     pEffect = (LuaObject*) (*m_pGlobalEffects)->getNext(0);
   }
   wchar_t sChildFunc[128];
-  swprintf_s(sChildFunc, 128, L"child_%s", sFunc);
+  swprintf(sChildFunc, 128, L"child_%s", sFunc);
   ChildEffect * pChild = getFirstChildEffect(0);
   while (pChild != NULL)
   {
@@ -416,7 +416,7 @@ void LuaTargetable::getInfo_AddValue(wchar_t * sBuf, int iSize, const wchar_t * 
   wchar_t s2P[8];
   i18n->getText1stUp(sKey, sKeyText, 64);
   i18n->getText1stUp(L"2P", s2P, 8);
-  swprintf_s(sTemp, 128, L"%s%s%ld%s",
+  swprintf(sTemp, 128, L"%s%s%ld%s",
         sKeyText,
         s2P,
         getValue(sKey),

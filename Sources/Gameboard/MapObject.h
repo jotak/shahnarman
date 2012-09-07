@@ -16,7 +16,7 @@ class MapObject : public GraphicObject, public LuaTargetable
 {
 friend class MapGenerator;
 public:
-  MapObject(CoordsMap mapPos, Map * pMap, ObjectList ** pGlobalEffects, wchar_t * sIdentifiers);
+  MapObject(CoordsMap mapPos, Map * pMap, ObjectList ** pGlobalEffects, const wchar_t * sIdentifiers);
 
   // Virtual functions
   virtual u32 getType() { return GraphicObject::getType() | GOTYPE_MAPOBJECT; };

@@ -3,7 +3,7 @@
 
 #include "../Common/ObjectList.h"
 #include "../Players/Mana.h"
-#include <lua.hpp>
+#include <lua5.1/lua.hpp>
 
 class DebugManager;
 class NetworkData;

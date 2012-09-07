@@ -60,7 +60,7 @@ public:
 
   // Tooltip text
   wchar_t * getTooltipText() { return m_sTooltip; };
-  void setTooltipText(wchar_t * sTooltip) { wsafecpy(m_sTooltip, 256, sTooltip); };
+  void setTooltipText(const wchar_t * sTooltip) { wsafecpy(m_sTooltip, 256, sTooltip); };
 
   // Other
   F_RGBA  getDiffuseColor() { return m_DiffuseColor; };

@@ -42,13 +42,13 @@ Edition::Edition(wchar_t * sName, LocalClient * pLocalClient)
   m_pShahmahCreation = NULL;
 
   wchar_t loadingMsg[128] = L"";
-  swprintf_s(loadingMsg, 128, L"Edition: %s", sName);
+  swprintf(loadingMsg, 128, L"Edition: %s", sName);
   pLocalClient->getDebug()->notifyLoadingMessage(loadingMsg);
 
   // Read edition.xml
   XMLLiteReader reader;
   wchar_t sFileName[MAX_PATH];
-  swprintf_s(sFileName, MAX_PATH, L"%s%s/edition.xml", EDITIONS_PATH, m_sObjectId);
+  swprintf(sFileName, MAX_PATH, L"%s%s/edition.xml", EDITIONS_PATH, m_sObjectId);
   XMLLiteElement * pRootNode = loadXMLFile(&reader, sFileName, pLocalClient->getDebug());
   if (pRootNode != NULL)
   {
@@ -59,7 +59,7 @@ Edition::Edition(wchar_t * sName, LocalClient * pLocalClient)
       XMLLiteAttribute * pLocaleAttr = pNode->getAttributeByName(L"locale");
       if (pLocaleAttr == NULL)
       {
-        swprintf_s(sError, 1024, L"XML formation error: missing \"locale\" attribute in node edition. Check out file %s.", pRootNode->getName());
+        swprintf(sError, 1024, L"XML formation error: missing \"locale\" attribute in node edition. Check out file %s.", pRootNode->getName());
         pLocalClient->getDebug()->notifyErrorMessage(sError);
       }
       else
@@ -77,7 +77,7 @@ Edition::Edition(wchar_t * sName, LocalClient * pLocalClient)
             Edition * pEdition = pLocalClient->getDataFactory()->findEdition(pDataElt->getCharValue());
             if (pEdition == NULL)
             {
-              swprintf_s(sError, 1024, L"XML formation error: dependency \"%s\" not found in node edition. Check out file %s.", pDataElt->getCharValue(), pRootNode->getName());
+              swprintf(sError, 1024, L"XML formation error: dependency \"%s\" not found in node edition. Check out file %s.", pDataElt->getCharValue(), pRootNode->getName());
               pLocalClient->getDebug()->notifyErrorMessage(sError);
             }
             else
@@ -89,11 +89,11 @@ Edition::Edition(wchar_t * sName, LocalClient * pLocalClient)
     }
     else
     {
-      swprintf_s(sError, 1024, L"XML formation error: node \"edition\" was expected. Check out file %s.", pRootNode->getName());
+      swprintf(sError, 1024, L"XML formation error: node \"edition\" was expected. Check out file %s.", pRootNode->getName());
       pLocalClient->getDebug()->notifyErrorMessage(sError);
     }
   }
-  swprintf_s(loadingMsg, 128, L"%s: checksum", sName);
+  swprintf(loadingMsg, 128, L"%s: checksum", sName);
   pLocalClient->getDebug()->notifyLoadingMessage(loadingMsg);
   computeChecksum(pLocalClient->getDebug());
 }
@@ -131,7 +131,7 @@ bool Edition::activate(DebugManager * pDebug)
 
   // Load ethnicities
   XMLLiteReader reader;
-  swprintf_s(sFileName, MAX_PATH, L"%s%s/ethnicities.xml", EDITIONS_PATH, m_sObjectId);
+  swprintf(sFileName, MAX_PATH, L"%s%s/ethnicities.xml", EDITIONS_PATH, m_sObjectId);
   XMLLiteElement * pRootNode = loadXMLFile(&reader, sFileName, pDebug);
   if (pRootNode != NULL) {
     pDebug->notifyLoadingMessage(sFileName);
@@ -139,7 +139,7 @@ bool Edition::activate(DebugManager * pDebug)
   }
 
   // Load progression trees
-  swprintf_s(sFileName, MAX_PATH, L"%s%s/progressions.xml", EDITIONS_PATH, m_sObjectId);
+  swprintf(sFileName, MAX_PATH, L"%s%s/progressions.xml", EDITIONS_PATH, m_sObjectId);
   pRootNode = loadXMLFile(&reader, sFileName, pDebug);
   if (pRootNode != NULL)
   {
@@ -153,14 +153,14 @@ bool Edition::activate(DebugManager * pDebug)
       XMLLiteAttribute * pIdAttr = pNode->getAttributeByName(L"id");
       if (pIdAttr == NULL)
       {
-        swprintf_s(sError, 1024, L"XML formation error: missing \"id\" attribute in node tree. Check out file %s.", pRootNode->getName());
+        swprintf(sError, 1024, L"XML formation error: missing \"id\" attribute in node tree. Check out file %s.", pRootNode->getName());
         pDebug->notifyErrorMessage(sError);
         continue;
       }
       XMLLiteAttribute * pTypeAttr = pNode->getAttributeByName(L"type");
       if (pTypeAttr == NULL)
       {
-        swprintf_s(sError, 1024, L"XML formation error: missing \"type\" attribute in node tree. Check out file %s.", pRootNode->getName());
+        swprintf(sError, 1024, L"XML formation error: missing \"type\" attribute in node tree. Check out file %s.", pRootNode->getName());
         pDebug->notifyErrorMessage(sError);
         pNode = pRootNode->getNextChild();
         continue;
@@ -175,7 +175,7 @@ bool Edition::activate(DebugManager * pDebug)
         pTree = new ProgressionTree(m_sObjectId, pIdAttr->getCharValue(), PROGRESSION_TRAIT, pDebug);
       else
       {
-        swprintf_s(sError, 1024, L"XML formation error: unknown attribute \"type\" for tree id %s. Check out file %s.", pIdAttr->getCharValue(), pRootNode->getName());
+        swprintf(sError, 1024, L"XML formation error: unknown attribute \"type\" for tree id %s. Check out file %s.", pIdAttr->getCharValue(), pRootNode->getName());
         pDebug->notifyErrorMessage(sError);
         pNode = pRootNode->getNextChild();
         continue;
@@ -222,7 +222,7 @@ bool Edition::activate(DebugManager * pDebug)
   delete[] sList;
 
   // Load avatars
-  swprintf_s(sFileName, MAX_PATH, L"%s%s/shahmahs.xml", EDITIONS_PATH, m_sObjectId);
+  swprintf(sFileName, MAX_PATH, L"%s%s/shahmahs.xml", EDITIONS_PATH, m_sObjectId);
   pRootNode = loadXMLFile(&reader, sFileName, pDebug);
   if (pRootNode != NULL) {
     pDebug->notifyLoadingMessage(sFileName);
@@ -230,7 +230,7 @@ bool Edition::activate(DebugManager * pDebug)
   }
 
   // Load units
-  swprintf_s(sFileName, MAX_PATH, L"%s%s/units.xml", EDITIONS_PATH, m_sObjectId);
+  swprintf(sFileName, MAX_PATH, L"%s%s/units.xml", EDITIONS_PATH, m_sObjectId);
   pRootNode = loadXMLFile(&reader, sFileName, pDebug);
   if (pRootNode != NULL) {
     pDebug->notifyLoadingMessage(sFileName);
@@ -239,7 +239,7 @@ bool Edition::activate(DebugManager * pDebug)
 
   // Load spells
   m_iTotalFreq = 0;
-  swprintf_s(sFileName, MAX_PATH, L"%s%s/spells.xml", EDITIONS_PATH, m_sObjectId);
+  swprintf(sFileName, MAX_PATH, L"%s%s/spells.xml", EDITIONS_PATH, m_sObjectId);
   pRootNode = loadXMLFile(&reader, sFileName, pDebug);
   if (pRootNode != NULL)
   {
@@ -253,14 +253,14 @@ bool Edition::activate(DebugManager * pDebug)
       XMLLiteAttribute * pIdAttr = pNode->getAttributeByName(L"id");
       if (pIdAttr == NULL)
       {
-        swprintf_s(sError, 1024, L"XML formation error: missing \"id\" attribute in node spell. Check out file %s.", pRootNode->getName());
+        swprintf(sError, 1024, L"XML formation error: missing \"id\" attribute in node spell. Check out file %s.", pRootNode->getName());
         pDebug->notifyErrorMessage(sError);
         continue;
       }
       XMLLiteAttribute * pFreqAttr = pNode->getAttributeByName(L"freq");
       if (pFreqAttr == NULL)
       {
-        swprintf_s(sError, 1024, L"XML formation error: missing \"freq\" attribute (spell frequency) in node spell. Check out file %s.", pRootNode->getName());
+        swprintf(sError, 1024, L"XML formation error: missing \"freq\" attribute (spell frequency) in node spell. Check out file %s.", pRootNode->getName());
         pDebug->notifyErrorMessage(sError);
         continue;
       }
@@ -273,7 +273,7 @@ bool Edition::activate(DebugManager * pDebug)
   }
 
   // Load special tiles
-  swprintf_s(sFileName, MAX_PATH, L"%s%s/spectiles.xml", EDITIONS_PATH, m_sObjectId);
+  swprintf(sFileName, MAX_PATH, L"%s%s/spectiles.xml", EDITIONS_PATH, m_sObjectId);
   pRootNode = loadXMLFile(&reader, sFileName, pDebug);
   if (pRootNode != NULL)
   {
@@ -290,7 +290,7 @@ bool Edition::activate(DebugManager * pDebug)
       XMLLiteAttribute * pIdAttr = pNode->getAttributeByName(L"id");
       if (pIdAttr == NULL)
       {
-        swprintf_s(sError, 1024, L"XML formation error: missing \"id\" attribute in node spectile. Check out file %s.", pRootNode->getName());
+        swprintf(sError, 1024, L"XML formation error: missing \"id\" attribute in node spectile. Check out file %s.", pRootNode->getName());
         pDebug->notifyErrorMessage(sError);
         pNode = pRootNode->getNextChild();
         continue;
@@ -298,7 +298,7 @@ bool Edition::activate(DebugManager * pDebug)
       XMLLiteAttribute * pFreqAttr = pNode->getAttributeByName(L"freq");
       if (pFreqAttr == NULL)
       {
-        swprintf_s(sError, 1024, L"XML formation error: missing \"freq\" attribute (special tile frequency) in node spectile. Check out file %s.", pRootNode->getName());
+        swprintf(sError, 1024, L"XML formation error: missing \"freq\" attribute (special tile frequency) in node spectile. Check out file %s.", pRootNode->getName());
         pDebug->notifyErrorMessage(sError);
         pNode = pRootNode->getNextChild();
         continue;
@@ -311,7 +311,7 @@ bool Edition::activate(DebugManager * pDebug)
   }
 
   // Load artifacts
-  swprintf_s(sFileName, MAX_PATH, L"%s%s/artifacts.xml", EDITIONS_PATH, m_sObjectId);
+  swprintf(sFileName, MAX_PATH, L"%s%s/artifacts.xml", EDITIONS_PATH, m_sObjectId);
   pRootNode = loadXMLFile(&reader, sFileName, pDebug);
   if (pRootNode != NULL) {
     pDebug->notifyLoadingMessage(sFileName);
@@ -319,7 +319,7 @@ bool Edition::activate(DebugManager * pDebug)
   }
 
   // Load ShahmahCreation
-  swprintf_s(sFileName, MAX_PATH, L"%s%s/creation.xml", EDITIONS_PATH, m_sObjectId);
+  swprintf(sFileName, MAX_PATH, L"%s%s/creation.xml", EDITIONS_PATH, m_sObjectId);
   pRootNode = loadXMLFile(&reader, sFileName, pDebug);
   if (pRootNode != NULL)
   {
@@ -344,14 +344,14 @@ bool Edition::activate(DebugManager * pDebug)
           XMLLiteAttribute * pCostAttr = pElt->getAttributeByName(L"cost");
           if (pFileAttr == NULL)
           {
-            swprintf_s(sError, 1024, L"XML formation error: missing \"luafile\" attribute in node shahmah_creation / skill. Check out file %s.", pRootNode->getName());
+            swprintf(sError, 1024, L"XML formation error: missing \"luafile\" attribute in node shahmah_creation / skill. Check out file %s.", pRootNode->getName());
             pDebug->notifyErrorMessage(sError);
             pElt = pNode->getNextChild();
             continue;
           }
           if (pCostAttr == NULL)
           {
-            swprintf_s(sError, 1024, L"XML formation error: missing \"cost\" attribute in node shahmah_creation / skill. Check out file %s.", pRootNode->getName());
+            swprintf(sError, 1024, L"XML formation error: missing \"cost\" attribute in node shahmah_creation / skill. Check out file %s.", pRootNode->getName());
             pDebug->notifyErrorMessage(sError);
             pElt = pNode->getNextChild();
             continue;
@@ -365,7 +365,7 @@ bool Edition::activate(DebugManager * pDebug)
           }
           else
           {
-            swprintf_s(sError, 1024, L"XML error: skill \"%s\" not found in edition and dependencies. Check out file %s.", pFileAttr->getCharValue(), pRootNode->getName());
+            swprintf(sError, 1024, L"XML error: skill \"%s\" not found in edition and dependencies. Check out file %s.", pFileAttr->getCharValue(), pRootNode->getName());
             pDebug->notifyErrorMessage(sError);
             pElt = pNode->getNextChild();
             continue;
@@ -377,14 +377,14 @@ bool Edition::activate(DebugManager * pDebug)
           XMLLiteAttribute * pCostAttr = pElt->getAttributeByName(L"cost");
           if (pNameAttr == NULL)
           {
-            swprintf_s(sError, 1024, L"XML formation error: missing \"name\" attribute in node shahmah_creation / ethnicity. Check out file %s.", pRootNode->getName());
+            swprintf(sError, 1024, L"XML formation error: missing \"name\" attribute in node shahmah_creation / ethnicity. Check out file %s.", pRootNode->getName());
             pDebug->notifyErrorMessage(sError);
             pElt = pNode->getNextChild();
             continue;
           }
           if (pCostAttr == NULL)
           {
-            swprintf_s(sError, 1024, L"XML formation error: missing \"cost\" attribute in node shahmah_creation / ethnicity. Check out file %s.", pRootNode->getName());
+            swprintf(sError, 1024, L"XML formation error: missing \"cost\" attribute in node shahmah_creation / ethnicity. Check out file %s.", pRootNode->getName());
             pDebug->notifyErrorMessage(sError);
             pElt = pNode->getNextChild();
             continue;
@@ -401,7 +401,7 @@ bool Edition::activate(DebugManager * pDebug)
                 XMLLiteAttribute * pNameAttr = pSubElt->getAttributeByName(L"name");
                 if (pNameAttr == NULL)
                 {
-                  swprintf_s(sError, 1024, L"XML formation error: missing \"name\" attribute in node shahmah_creation / image. Check out file %s.", pRootNode->getName());
+                  swprintf(sError, 1024, L"XML formation error: missing \"name\" attribute in node shahmah_creation / image. Check out file %s.", pRootNode->getName());
                   pDebug->notifyErrorMessage(sError);
                   pSubElt = pNode->getNextChild();
                   continue;
@@ -415,7 +415,7 @@ bool Edition::activate(DebugManager * pDebug)
           }
           else
           {
-            swprintf_s(sError, 1024, L"XML error: ethnicity \"%s\" not found in edition and dependencies. Check out file %s.", pNameAttr->getCharValue(), pRootNode->getName());
+            swprintf(sError, 1024, L"XML error: ethnicity \"%s\" not found in edition and dependencies. Check out file %s.", pNameAttr->getCharValue(), pRootNode->getName());
             pDebug->notifyErrorMessage(sError);
             pElt = pNode->getNextChild();
             continue;
@@ -429,7 +429,7 @@ bool Edition::activate(DebugManager * pDebug)
     // Else, it's not valid; send warning message and delete object
     if (m_pShahmahCreation->m_pImages->size < 1 || m_pShahmahCreation->m_pPeoples->size < 1)
     {
-      swprintf_s(sError, 1024, L"Warning: Shahmah creation data is not valid (missing images or ethnicities). Check out file %s.", pRootNode->getName());
+      swprintf(sError, 1024, L"Warning: Shahmah creation data is not valid (missing images or ethnicities). Check out file %s.", pRootNode->getName());
       pDebug->notifyErrorMessage(sError);
       delete m_pShahmahCreation;
       m_pShahmahCreation = NULL;
@@ -437,7 +437,7 @@ bool Edition::activate(DebugManager * pDebug)
   }
 
   // Load AIs
-  swprintf_s(sFileName, MAX_PATH, L"%s%s/ais.xml", EDITIONS_PATH, m_sObjectId);
+  swprintf(sFileName, MAX_PATH, L"%s%s/ais.xml", EDITIONS_PATH, m_sObjectId);
   pRootNode = loadXMLFile(&reader, sFileName, pDebug);
   if (pRootNode != NULL) {
     pDebug->notifyLoadingMessage(sFileName);
@@ -454,7 +454,7 @@ bool Edition::activate(DebugManager * pDebug)
       XMLLiteAttribute * pShahmah = pNode->getAttributeByName(L"shahmah");
       if (pId == NULL || pShahmah == NULL)
       {
-        swprintf_s(sError, 1024, L"XML formation error: missing \"id\" and/or \"shahmah\" attributes in node item. Check out file %s.", sFileName);
+        swprintf(sError, 1024, L"XML formation error: missing \"id\" and/or \"shahmah\" attributes in node item. Check out file %s.", sFileName);
         pDebug->notifyErrorMessage(sError);
         pNode = pRootNode->getNextChild();
         continue;
@@ -551,7 +551,7 @@ void Edition::parseXMLObjectData(XMLLiteElement * pRootNode, DebugManager * pDeb
       XMLLiteElement * pElt = pNode->getChildByName(L"id");
       if (pElt == NULL)
       {
-        swprintf_s(sError, 1024, L"XML formation error: element \"id\" missing in artifact definition. Check out file %s.", pRootNode->getName());
+        swprintf(sError, 1024, L"XML formation error: element \"id\" missing in artifact definition. Check out file %s.", pRootNode->getName());
         pDebug->notifyErrorMessage(sError);
         pNode = pRootNode->getNextChild();
         continue;
@@ -561,17 +561,17 @@ void Edition::parseXMLObjectData(XMLLiteElement * pRootNode, DebugManager * pDeb
       pElt = pNode->getChildByName(L"texture");
       if (pElt == NULL)
       {
-        swprintf_s(sError, 1024, L"XML formation error: element \"texture\" missing in artifact %s definition. Check out file %s.", sId, pRootNode->getName());
+        swprintf(sError, 1024, L"XML formation error: element \"texture\" missing in artifact %s definition. Check out file %s.", sId, pRootNode->getName());
         pDebug->notifyErrorMessage(sError);
         pNode = pRootNode->getNextChild();
         continue;
       }
-      swprintf_s(sTexture, MAX_PATH, L"%s/%s", m_sObjectId, pElt->getCharValue());
+      swprintf(sTexture, MAX_PATH, L"%s/%s", m_sObjectId, pElt->getCharValue());
       // Get position
       pElt = pNode->getChildByName(L"position");
       if (pElt == NULL)
       {
-        swprintf_s(sError, 1024, L"XML formation error: element \"position\" missing in artifact %s definition. Check out file %s.", sId, pRootNode->getName());
+        swprintf(sError, 1024, L"XML formation error: element \"position\" missing in artifact %s definition. Check out file %s.", sId, pRootNode->getName());
         pDebug->notifyErrorMessage(sError);
         pNode = pRootNode->getNextChild();
         continue;
@@ -588,7 +588,7 @@ void Edition::parseXMLObjectData(XMLLiteElement * pRootNode, DebugManager * pDeb
         iPosition = ARTIFACT_POSITION_FOOT;
       else
       {
-        swprintf_s(sError, 1024, L"XML formation error: invalid value for element \"position\" in artifact %s. Check out file %s.", sId, pRootNode->getName());
+        swprintf(sError, 1024, L"XML formation error: invalid value for element \"position\" in artifact %s. Check out file %s.", sId, pRootNode->getName());
         pDebug->notifyErrorMessage(sError);
         pNode = pRootNode->getNextChild();
         continue;
@@ -612,7 +612,7 @@ void Edition::parseXMLObjectData(XMLLiteElement * pRootNode, DebugManager * pDeb
           XMLLiteAttribute * pAttr = pDataElt->getAttributeByName(L"key");
           if (pAttr == NULL)
           {
-            swprintf_s(sError, 1024, L"XML formation error: attribute \"key\" missing in element \"modify\", in artifact %s definition. Check out file %s.", sId, pRootNode->getName());
+            swprintf(sError, 1024, L"XML formation error: attribute \"key\" missing in element \"modify\", in artifact %s definition. Check out file %s.", sId, pRootNode->getName());
             pDebug->notifyErrorMessage(sError);
             pDataElt = pNode->getNextChild();
             continue;
@@ -621,7 +621,7 @@ void Edition::parseXMLObjectData(XMLLiteElement * pRootNode, DebugManager * pDeb
           pAttr = pDataElt->getAttributeByName(L"value");
           if (pAttr == NULL)
           {
-            swprintf_s(sError, 1024, L"XML formation error: attribute \"value\" missing in element \"modify\", in artifact %s definition. Check out file %s.", sId, pRootNode->getName());
+            swprintf(sError, 1024, L"XML formation error: attribute \"value\" missing in element \"modify\", in artifact %s definition. Check out file %s.", sId, pRootNode->getName());
             pDebug->notifyErrorMessage(sError);
             pDataElt = pNode->getNextChild();
             continue;
@@ -636,7 +636,7 @@ void Edition::parseXMLObjectData(XMLLiteElement * pRootNode, DebugManager * pDeb
           XMLLiteAttribute * pAttr = pDataElt->getAttributeByName(L"edition");
           if (pAttr == NULL)
           {
-            swprintf_s(sError, 1024, L"XML formation error: attribute \"edition\" missing in element \"spell\", in artifact %s definition. Check out file %s.", sId, pRootNode->getName());
+            swprintf(sError, 1024, L"XML formation error: attribute \"edition\" missing in element \"spell\", in artifact %s definition. Check out file %s.", sId, pRootNode->getName());
             pDebug->notifyErrorMessage(sError);
             pDataElt = pNode->getNextChild();
             continue;
@@ -645,7 +645,7 @@ void Edition::parseXMLObjectData(XMLLiteElement * pRootNode, DebugManager * pDeb
           pAttr = pDataElt->getAttributeByName(L"name");
           if (pAttr == NULL)
           {
-            swprintf_s(sError, 1024, L"XML formation error: attribute \"name\" missing in element \"spell\", in artifact %s definition. Check out file %s.", sId, pRootNode->getName());
+            swprintf(sError, 1024, L"XML formation error: attribute \"name\" missing in element \"spell\", in artifact %s definition. Check out file %s.", sId, pRootNode->getName());
             pDebug->notifyErrorMessage(sError);
             pDataElt = pNode->getNextChild();
             continue;
@@ -661,7 +661,7 @@ void Edition::parseXMLObjectData(XMLLiteElement * pRootNode, DebugManager * pDeb
           XMLLiteAttribute * pAttr = pDataElt->getAttributeByName(L"edition");
           if (pAttr == NULL)
           {
-            swprintf_s(sError, 1024, L"XML formation error: attribute \"edition\" missing in element \"skill\", in artifact %s definition. Check out file %s.", sId, pRootNode->getName());
+            swprintf(sError, 1024, L"XML formation error: attribute \"edition\" missing in element \"skill\", in artifact %s definition. Check out file %s.", sId, pRootNode->getName());
             pDebug->notifyErrorMessage(sError);
             pDataElt = pNode->getNextChild();
             continue;
@@ -670,7 +670,7 @@ void Edition::parseXMLObjectData(XMLLiteElement * pRootNode, DebugManager * pDeb
           pAttr = pDataElt->getAttributeByName(L"name");
           if (pAttr == NULL)
           {
-            swprintf_s(sError, 1024, L"XML formation error: attribute \"name\" missing in element \"skill\", in artifact %s definition. Check out file %s.", sId, pRootNode->getName());
+            swprintf(sError, 1024, L"XML formation error: attribute \"name\" missing in element \"skill\", in artifact %s definition. Check out file %s.", sId, pRootNode->getName());
             pDebug->notifyErrorMessage(sError);
             pDataElt = pNode->getNextChild();
             continue;
@@ -696,7 +696,7 @@ void Edition::parseXMLObjectData(XMLLiteElement * pRootNode, DebugManager * pDeb
       pData = new UnitData();
     else
     {
-      swprintf_s(sError, 1024, L"XML formation error: unexpected node \"%s\". Check out file %s.", pNode->getName(), pRootNode->getName());
+      swprintf(sError, 1024, L"XML formation error: unexpected node \"%s\". Check out file %s.", pNode->getName(), pRootNode->getName());
       pDebug->notifyErrorMessage(sError);
       pNode = pRootNode->getNextChild();
       continue;
@@ -717,7 +717,7 @@ void Edition::parseXMLObjectData(XMLLiteElement * pRootNode, DebugManager * pDeb
                0 == _wcsicmp(pName, STRING_ENDURANCE) || 0 == _wcsicmp(pName, STRING_SPEED) || 0 == _wcsicmp(pName, STRING_ALIGNMENT))
         pData->m_lValues.insert(long_hash::value_type(pName, pDataElt->getIntValue()));
       else if (0 == _wcsicmp(pName, L"texture"))
-        swprintf_s(pData->m_sTextureFilename, MAX_PATH, L"%s/%s", m_sObjectId, pDataElt->getCharValue());
+        swprintf(pData->m_sTextureFilename, MAX_PATH, L"%s/%s", m_sObjectId, pDataElt->getCharValue());
       else if (0 == _wcsicmp(pName, L"skill"))
       {
         XMLLiteAttribute * pSkillFile = pDataElt->getAttributeByName(L"luafile");
@@ -733,7 +733,7 @@ void Edition::parseXMLObjectData(XMLLiteElement * pRootNode, DebugManager * pDeb
           }
           else
           {
-            swprintf_s(sError, 1024, L"XML error: skill \"%s\" not found in edition and dependencies. Check out file %s.", pSkillFile->getCharValue(), pRootNode->getName());
+            swprintf(sError, 1024, L"XML error: skill \"%s\" not found in edition and dependencies. Check out file %s.", pSkillFile->getCharValue(), pRootNode->getName());
             pDebug->notifyErrorMessage(sError);
           }
         }
@@ -752,7 +752,7 @@ void Edition::addShopItems(Profile * pPlayer, guiSmartSlider * pShopSlider, Debu
 {
   // Read and parse shop.xml file in edition's folder
   wchar_t sFileName[MAX_PATH];
-  swprintf_s(sFileName, MAX_PATH, L"%s%s/shop.xml", EDITIONS_PATH, m_sObjectId);
+  swprintf(sFileName, MAX_PATH, L"%s%s/shop.xml", EDITIONS_PATH, m_sObjectId);
 
   XMLLiteReader reader;
   XMLLiteElement * pRootNode = loadXMLFile(&reader, sFileName, pDebug);
@@ -773,7 +773,7 @@ void Edition::addShopItems(Profile * pPlayer, guiSmartSlider * pShopSlider, Debu
     XMLLiteAttribute * pAttr = pNode->getAttributeByName(L"type");
     if (pAttr == NULL)
     {
-      swprintf_s(sError, 1024, L"XML formation error : missing \"type\" attribute in node item. Check out file %s.", sFileName);
+      swprintf(sError, 1024, L"XML formation error : missing \"type\" attribute in node item. Check out file %s.", sFileName);
       pDebug->notifyErrorMessage(sError);
       pNode = pRootNode->getNextChild();
       continue;
@@ -798,12 +798,12 @@ void Edition::addShopItems(Profile * pPlayer, guiSmartSlider * pShopSlider, Debu
       if (pChild != NULL)
       {
         wchar_t sStr[MAX_PATH];
-        swprintf_s(sStr, MAX_PATH, L"%s/%s", m_sObjectId, pChild->getCharValue());
+        swprintf(sStr, MAX_PATH, L"%s/%s", m_sObjectId, pChild->getCharValue());
         pItem->m_iTexId = pShopSlider->getDisplay()->getTextureEngine()->loadTexture(sStr);
       }
       else
       {
-        swprintf_s(sError, 1024, L"Texture tag not found in file %s.", sFileName);
+        swprintf(sError, 1024, L"Texture tag not found in file %s.", sFileName);
         pDebug->notifyErrorMessage(sError);
       }
 
@@ -827,7 +827,7 @@ void Edition::addShopItems(Profile * pPlayer, guiSmartSlider * pShopSlider, Debu
       }
       else
       {
-        swprintf_s(sError, 1024, L"Content tag not found in file %s.", sFileName);
+        swprintf(sError, 1024, L"Content tag not found in file %s.", sFileName);
         pDebug->notifyErrorMessage(sError);
       }
 
@@ -841,7 +841,7 @@ void Edition::addShopItems(Profile * pPlayer, guiSmartSlider * pShopSlider, Debu
       pAttr = pNode->getAttributeByName(L"id");
       if (pAttr == NULL)
       {
-        swprintf_s(sError, 1024, L"XML formation error : missing \"id\" attribute in node item for type avatar. Check out file %s.", sFileName);
+        swprintf(sError, 1024, L"XML formation error : missing \"id\" attribute in node item for type avatar. Check out file %s.", sFileName);
         pDebug->notifyErrorMessage(sError);
         pNode = pRootNode->getNextChild();
         continue;
@@ -850,7 +850,7 @@ void Edition::addShopItems(Profile * pPlayer, guiSmartSlider * pShopSlider, Debu
       AvatarData * pAvatar = (AvatarData*) findUnitData(sId);
       if (pAvatar == NULL)
       {
-        swprintf_s(sError, 1024, L"Unknown avatar %s, defined in file %s.", sId, sFileName);
+        swprintf(sError, 1024, L"Unknown avatar %s, defined in file %s.", sId, sFileName);
         pDebug->notifyErrorMessage(sError);
         pNode = pRootNode->getNextChild();
         continue;
@@ -868,14 +868,14 @@ void Edition::addShopItems(Profile * pPlayer, guiSmartSlider * pShopSlider, Debu
       wchar_t str[64];
       pAvatar->findLocalizedElement(sName, SLIDER_ITEM_MAX_CHARS, i18n->getCurrentLanguageName(), L"name");
       i18n->getText(L"AVATAR", str, 64);  // "Avatar"
-      swprintf_s(pItem->m_sName, SLIDER_ITEM_MAX_CHARS, L"%s (%s)", sName, str);
+      swprintf(pItem->m_sName, SLIDER_ITEM_MAX_CHARS, L"%s (%s)", sName, str);
 
       // Item full description
       wchar_t sEthnicityName[NAME_MAX_CHARS];
       Ethnicity * pEthn = findEthnicity(pAvatar->m_sEthnicityId);
       if (pEthn == NULL)
       {
-        swprintf_s(sError, 1024, L"Error: Avatar %s should have an ethnicity.", sName);
+        swprintf(sError, 1024, L"Error: Avatar %s should have an ethnicity.", sName);
         pDebug->notifyErrorMessage(sError);
       }
       else
@@ -905,7 +905,7 @@ void Edition::addShopItems(Profile * pPlayer, guiSmartSlider * pShopSlider, Debu
       pAttr = pNode->getAttributeByName(L"id");
       if (pAttr == NULL)
       {
-        swprintf_s(sError, 1024, L"XML formation error : missing \"id\" attribute in node item for type artifact. Check out file %s.", sFileName);
+        swprintf(sError, 1024, L"XML formation error : missing \"id\" attribute in node item for type artifact. Check out file %s.", sFileName);
         pDebug->notifyErrorMessage(sError);
         pNode = pRootNode->getNextChild();
         continue;
@@ -914,7 +914,7 @@ void Edition::addShopItems(Profile * pPlayer, guiSmartSlider * pShopSlider, Debu
       Artifact * pArtifact = (Artifact*) findArtifact(sId);
       if (pArtifact == NULL)
       {
-        swprintf_s(sError, 1024, L"Unknown artifact %s, defined in file %s.", sId, sFileName);
+        swprintf(sError, 1024, L"Unknown artifact %s, defined in file %s.", sId, sFileName);
         pDebug->notifyErrorMessage(sError);
         pNode = pRootNode->getNextChild();
         continue;
@@ -932,7 +932,7 @@ void Edition::addShopItems(Profile * pPlayer, guiSmartSlider * pShopSlider, Debu
       wchar_t str[64];
       pArtifact->findLocalizedElement(sName, SLIDER_ITEM_MAX_CHARS, i18n->getCurrentLanguageName(), L"name");
       i18n->getText(L"ARTIFACT", str, 64);  // "Avatar"
-      swprintf_s(pItem->m_sName, SLIDER_ITEM_MAX_CHARS, L"%s (%s)", sName, str);
+      swprintf(pItem->m_sName, SLIDER_ITEM_MAX_CHARS, L"%s (%s)", sName, str);
 
       // Item full description
       wchar_t sDesc[DESCRIPTION_MAX_CHARS] = L"";
@@ -955,7 +955,7 @@ void Edition::addShopItems(Profile * pPlayer, guiSmartSlider * pShopSlider, Debu
     }
     else
     {
-      swprintf_s(sError, 1024, L"XML formation error : \"type\" attribute has an invalid value : %s. Check out file %s.", sType, sFileName);
+      swprintf(sError, 1024, L"XML formation error : \"type\" attribute has an invalid value : %s. Check out file %s.", sType, sFileName);
       pDebug->notifyErrorMessage(sError);
       pNode = pRootNode->getNextChild();
       continue;
@@ -975,7 +975,7 @@ SpellsPackContent * Edition::readSpellsPackContent(XMLLiteElement * pSpellsNode,
   XMLLiteAttribute * pSpellId = pSpellsNode->getAttributeByName(L"id");
   if (pQuantity == NULL || pMode == NULL)
   {
-    swprintf_s(sError, 1024, L"XML formation error: missing attributes in node spells. Check out file %s.", sFileName);
+    swprintf(sError, 1024, L"XML formation error: missing attributes in node spells. Check out file %s.", sFileName);
     pDebug->notifyErrorMessage(sError);
     return NULL;
   }
@@ -988,7 +988,7 @@ SpellsPackContent * Edition::readSpellsPackContent(XMLLiteElement * pSpellsNode,
       wsafecpy(pPack->m_sSpellId, NAME_MAX_CHARS, pSpellId->getCharValue());
     }
     else {
-      swprintf_s(sError, 1024, L"XML formation error: missing attribute 'id' in node spells. Check out file %s.", sFileName);
+      swprintf(sError, 1024, L"XML formation error: missing attribute 'id' in node spells. Check out file %s.", sFileName);
       pDebug->notifyErrorMessage(sError);
     }
   }
@@ -1011,7 +1011,7 @@ SpellsPackContent * Edition::readSpellsPackContent(XMLLiteElement * pSpellsNode,
       pPack->m_iMode = mode;
     }
     else {
-      swprintf_s(sError, 1024, L"XML formation error: invalid attribute 'mode' in node spells. Check out file %s.", sFileName);
+      swprintf(sError, 1024, L"XML formation error: invalid attribute 'mode' in node spells. Check out file %s.", sFileName);
       pDebug->notifyErrorMessage(sError);
     }
   }
@@ -1344,11 +1344,11 @@ void Edition::computeChecksum(DebugManager * pDebug)
   //FILE * pFile = NULL;
   //u32 filessize = 0;
   wchar_t sPath[MAX_PATH];
-  swprintf_s(sPath, MAX_PATH, L"%s%s", EDITIONS_PATH, m_sObjectId);
+  swprintf(sPath, MAX_PATH, L"%s%s", EDITIONS_PATH, m_sObjectId);
   if (!md5folder(sPath, m_sChecksum))
   {
     wchar_t sError[256];
-    swprintf_s(sError, 256, L"Error: can't do checksum on edition %s. The edition will be deactivated. Please check that you haven't opened any file from this extension.", m_sObjectId);
+    swprintf(sError, 256, L"Error: can't do checksum on edition %s. The edition will be deactivated. Please check that you haven't opened any file from this extension.", m_sObjectId);
     pDebug->notifyErrorMessage(sError);
     deactivate();
   }
@@ -1356,10 +1356,10 @@ void Edition::computeChecksum(DebugManager * pDebug)
   //if (wcscmp(m_sChecksum, m_sObjectId) != 0)  // checksum changed
   //{
   //  wchar_t sWarning[256];
-  //  swprintf_s(sWarning, 256, L"Warning: checksum changed on edition %s. Folder will be renamed.", m_sObjectId);
+  //  swprintf(sWarning, 256, L"Warning: checksum changed on edition %s. Folder will be renamed.", m_sObjectId);
   //  pDebug->notifyErrorMessage(sWarning);
   //  wchar_t sNewPath[MAX_PATH];
-  //  swprintf_s(sNewPath, MAX_PATH, L"%s%s", EDITIONS_PATH, sChecksum);
+  //  swprintf(sNewPath, MAX_PATH, L"%s%s", EDITIONS_PATH, sChecksum);
   //  int err = _wrename(sPath, sNewPath);
   //  if (err != 0)
   //  {
@@ -1377,7 +1377,7 @@ void Edition::computeChecksum(DebugManager * pDebug)
   //      break;
   //    }
   //    wchar_t sError[256];
-  //    swprintf_s(sError, 256, L"Error: can't rename folder (code: %s). The edition will be deactivated. Please check that you haven't opened any file from this extension.", sKeyword);
+  //    swprintf(sError, 256, L"Error: can't rename folder (code: %s). The edition will be deactivated. Please check that you haven't opened any file from this extension.", sKeyword);
   //    pDebug->notifyErrorMessage(sError);
   //    desactivate();
   //  }

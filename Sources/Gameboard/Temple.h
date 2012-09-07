@@ -24,7 +24,7 @@ public:
 
   // MapObject virtual functions
   virtual int getTexture();
-  virtual void updateIdentifiers() { swprintf_s(m_sIdentifiers, 16, L"temple %d %ld", (int) m_uOwner, (long) m_uTempleId); };
+  virtual void updateIdentifiers() { swprintf(m_sIdentifiers, 16, L"temple %d %ld", (int) m_uOwner, (long) m_uTempleId); };
 
   // Other functions
   virtual wchar_t * getInfo(wchar_t * sBuf, int iSize, InfoDest eDest);

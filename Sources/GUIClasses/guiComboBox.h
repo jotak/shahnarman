@@ -34,10 +34,10 @@ public:
 
   // List elements
   void clearList() { m_pList->getDocument()->deleteAllComponents(); m_pLabel->setText(L""); };
-  guiButton * addString(wchar_t * sText, wchar_t * sId);
+  guiButton * addString(const wchar_t * sText, const wchar_t * sId);
   wchar_t * getText() { return m_pLabel->getText(); };
   void setItem(int id);
-  guiButton * getItem(wchar_t * sId);
+  guiButton * getItem(const wchar_t * sId);
   guiButton * getItem(u16 uId);
   guiButton * getSelectedItem();
   int getSelectedItemId();
@@ -48,7 +48,7 @@ public:
   virtual guiObject * clone();
 
   // Static default constructors
-  static guiComboBox * createDefaultComboBox(wchar_t * sId, InterfaceManager * pInterface, DisplayEngine * pDisplay);
+  static guiComboBox * createDefaultComboBox(const wchar_t * sId, InterfaceManager * pInterface, DisplayEngine * pDisplay);
 
 protected:
   void centerLabel();

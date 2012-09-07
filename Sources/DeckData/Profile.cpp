@@ -70,13 +70,13 @@ bool Profile::load(wchar_t * sName)
   int iStrSize;
   wsafecpy(m_sName, NAME_MAX_CHARS, sName);
   wchar_t sFilePath[MAX_PATH];
-  swprintf_s(sFilePath, MAX_PATH, L"%s%s.dat", PROFILES_PATH, m_sName);
+  swprintf(sFilePath, MAX_PATH, L"%s%s.dat", PROFILES_PATH, m_sName);
 
   FILE * f = NULL;
   if (0 != wfopen(&f, sFilePath, L"rb"))
   {
     wchar_t sError[512] = L"";
-    swprintf_s(sError, 512, L"Error: cannot open file %s for reading. Operation cancelled.", sFilePath);
+    swprintf(sError, 512, L"Error: cannot open file %s for reading. Operation cancelled.", sFilePath);
     m_pLocalClient->getDebug()->notifyErrorMessage(sError);
     return false;
   }
@@ -151,13 +151,13 @@ bool Profile::save()
 {
   int iStrSize;
   wchar_t sFilePath[MAX_PATH];
-  swprintf_s(sFilePath, MAX_PATH, L"%s%s.dat", PROFILES_PATH, m_sName);
+  swprintf(sFilePath, MAX_PATH, L"%s%s.dat", PROFILES_PATH, m_sName);
 
   FILE * f = NULL;
   if (0 != wfopen(&f, sFilePath, L"wb"))
   {
     wchar_t sError[512] = L"";
-    swprintf_s(sError, 512, L"Error: cannot open file %s for writing. Operation cancelled.", sFilePath);
+    swprintf(sError, 512, L"Error: cannot open file %s for writing. Operation cancelled.", sFilePath);
     m_pLocalClient->getDebug()->notifyErrorMessage(sError);
     return false;
   }
@@ -244,7 +244,7 @@ bool Profile::save()
 void Profile::deleteProfile()
 {
   wchar_t sFilePath[MAX_PATH];
-  swprintf_s(sFilePath, MAX_PATH, L"%s%s.dat", PROFILES_PATH, m_sName);
+  swprintf(sFilePath, MAX_PATH, L"%s%s.dat", PROFILES_PATH, m_sName);
   _wremove(sFilePath);
 }
 
@@ -290,7 +290,7 @@ void Profile::addAvatar(AvatarData * pAvatar, int iCost)
     // Generate random object id
     while (true)
     {
-      swprintf_s(pAvatar->m_sObjectId, NAME_MAX_CHARS, L"*gen*%ld%ld%ld", (long) getRandom(RAND_MAX), (long) getRandom(RAND_MAX), (long) getRandom(RAND_MAX));
+      swprintf(pAvatar->m_sObjectId, NAME_MAX_CHARS, L"*gen*%ld%ld%ld", (long) getRandom(RAND_MAX), (long) getRandom(RAND_MAX), (long) getRandom(RAND_MAX));
       // Check that it doesn't already exist in DataFactory
       UnitData * pUnitData = m_pLocalClient->getDataFactory()->getUnitData(pAvatar->m_sEdition, pAvatar->m_sObjectId);
       if (pUnitData == NULL)

@@ -373,6 +373,8 @@ void BuildDeckDlg::update(double delta)
     moveSelectedSpells(m_pNotEquippedSpells, m_pEquippedSpells);
     m_uDraggingFrom = 0;
     return;
+    default:
+    break;
   }
   switch (m_pEquippedSpells->getActionOnSelection())
   {
@@ -383,6 +385,8 @@ void BuildDeckDlg::update(double delta)
   case ButtonStart:
     moveSelectedSpells(m_pEquippedSpells, m_pNotEquippedSpells);
     return;
+    default:
+    break;
   }
   switch (m_pNotEquippedSpells->getActionOnSelection())
   {
@@ -393,6 +397,8 @@ void BuildDeckDlg::update(double delta)
   case ButtonStart:
     moveSelectedSpells(m_pNotEquippedSpells, m_pEquippedSpells);
     return;
+    default:
+    break;
   }
 }
 
@@ -648,7 +654,7 @@ void BuildDeckDlg::reloadSpells()
           pCpnt = getNextComponent();
         }
       }
-      if (bOk && (bBattle && pSpell->isAllowedInBattle() || bAdventure && !pSpell->isAllowedInBattle()))
+      if (bOk && ((bBattle && pSpell->isAllowedInBattle()) || (bAdventure && !pSpell->isAllowedInBattle())))
       {
         guiList::guiListLabel * pLbl = NULL;
         AvatarData * pOwner = pObj->m_pOwner;
@@ -706,7 +712,7 @@ void BuildDeckDlg::reloadSpells()
             wchar_t sText[LABEL_MAX_CHARS];
 //            wchar_t sAvatarName[NAME_MAX_CHARS];
 //            pOwner->findLocalizedElement(sAvatarName, NAME_MAX_CHARS, i18n->getCurrentLanguageName(), L"name");
-            swprintf_s(sText, LABEL_MAX_CHARS, L"%s (%s)", pSpell->getLocalizedName(), pOwner->m_sCustomName);
+            swprintf(sText, LABEL_MAX_CHARS, L"%s (%s)", pSpell->getLocalizedName(), pOwner->m_sCustomName);
             pLbl = m_pNotEquippedSpells->addItem(sText, sId);
           }
         }
@@ -730,7 +736,7 @@ void BuildDeckDlg::reloadSpells()
             {
               // Number
               wsafecat(sTooltip, LABEL_MAX_CHARS, sSep);
-              swprintf_s(sBuf, 64, L"%c%d", signs[i], (int)mana[i]);
+              swprintf(sBuf, 64, L"%c%d", signs[i], (int)mana[i]);
               wsafecat(sTooltip, LABEL_MAX_CHARS, sBuf);
               wsafecpy(sSep, 8, L", ");
             }
@@ -745,7 +751,7 @@ void BuildDeckDlg::reloadSpells()
     else
     {
       wchar_t sError[128];
-      swprintf_s(sError, 128, L"Error: spell %s (edition %s) not found.", pObj->m_sName, pObj->m_sEdition);
+      swprintf(sError, 128, L"Error: spell %s (edition %s) not found.", pObj->m_sName, pObj->m_sEdition);
       m_pLocalClient->getDebug()->notifyErrorMessage(sError);
     }
     pObj = (Profile::SpellData*) m_pCurrentPlayer->getSpellsList()->getNext(0);
@@ -760,7 +766,7 @@ void BuildDeckDlg::reloadSpells()
     guiList::guiListLabel * pItem = (guiList::guiListLabel*) m_pEquippedSpells->getDocument()->getFirstComponent();
     while (pItem != NULL)
     {
-      swprintf_s(sText, LABEL_MAX_CHARS, L"%s (%d)", pItem->getText(), (int) m_lEqLoaded[pItem->getId()]);
+      swprintf(sText, LABEL_MAX_CHARS, L"%s (%d)", pItem->getText(), (int) m_lEqLoaded[pItem->getId()]);
       pItem->setText(sText);
       pItem = (guiList::guiListLabel*) m_pEquippedSpells->getDocument()->getNextComponent();
     }
@@ -771,7 +777,7 @@ void BuildDeckDlg::reloadSpells()
     guiList::guiListLabel * pItem = (guiList::guiListLabel*) m_pNotEquippedSpells->getDocument()->getFirstComponent();
     while (pItem != NULL)
     {
-      swprintf_s(sText, LABEL_MAX_CHARS, L"%s (%d)", pItem->getText(), (int) m_lNEqLoaded[pItem->getId()]);
+      swprintf(sText, LABEL_MAX_CHARS, L"%s (%d)", pItem->getText(), (int) m_lNEqLoaded[pItem->getId()]);
       pItem->setText(sText);
       pItem = (guiList::guiListLabel*) m_pNotEquippedSpells->getDocument()->getNextComponent();
     }
@@ -783,7 +789,7 @@ void BuildDeckDlg::reloadSpells()
   wchar_t sBuf2[LABEL_MAX_CHARS];
   i18n->getText(L"EQUIPPED", sBuf1, LABEL_MAX_CHARS);
   i18n->getTextLow(L"SPELLS", sBuf2, LABEL_MAX_CHARS);
-  swprintf_s(sText, LABEL_MAX_CHARS, L"%s (%d %s)", sBuf1, nbEquiped, sBuf2);
+  swprintf(sText, LABEL_MAX_CHARS, L"%s (%d %s)", sBuf1, nbEquiped, sBuf2);
   guiLabel * pLbl = (guiLabel*) getComponent(L"EquippedLabel");
   pLbl->setText(sText);
 }
@@ -861,7 +867,7 @@ void BuildDeckDlg::onSpellSelected(BaseObject * pObj)
     if (mana[i] > 0)
     {
       // Number
-      swprintf_s(str, 8, L"%c%d", signs[i], (int)mana[i]);
+      swprintf(str, 8, L"%c%d", signs[i], (int)mana[i]);
       pLbl = new guiLabel();
       pLbl->init(str, TEXT_FONT, TEXT_COLOR, L"", xPxl, yPxl, 0, 0, getDisplay());
       m_pObjectPopup->getDocument()->addComponent(pLbl);
@@ -920,7 +926,7 @@ void BuildDeckDlg::loadEditionButtons()
   while (pEd != NULL)
   {
     wchar_t sFile[MAX_PATH];
-    swprintf_s(sFile, MAX_PATH, L"%s/logo", pEd->m_sObjectId);
+    swprintf(sFile, MAX_PATH, L"%s/logo", pEd->m_sObjectId);
     // Create edition filter button
     guiToggleButton * pBtn = guiToggleButton::createDefaultTexturedToggleButton(
       m_pLocalClient->getDisplay()->getTextureEngine()->loadTexture(sFile),
@@ -963,7 +969,7 @@ void BuildDeckDlg::onAvatarSelected()
   pLbl = (guiLabel*) getComponent(L"TopLabel2");
   wchar_t sbuf[NAME_MAX_CHARS];
   i18n->getText(L"%s_AVATARS", sbuf, NAME_MAX_CHARS);
-  swprintf_s(str, NAME_MAX_CHARS, sbuf, m_pCurrentPlayer->getName());
+  swprintf(str, NAME_MAX_CHARS, sbuf, m_pCurrentPlayer->getName());
   pLbl->setText(str);
   pLbl->moveTo(getWidth() / 2 - pLbl->getWidth() / 2, pLbl->getYPos());
 //  m_pAvatarsPanel->moveTo(pLbl->getXPos() + pLbl->getWidth() + SPACING, m_pAvatarsPanel->getYPos());
@@ -1019,7 +1025,7 @@ void BuildDeckDlg::onAvatarSelected()
   wchar_t sBuf[64];
   wchar_t sNbSpells[128];
   i18n->getText(L"SPELLS_(d)", sBuf, 64);
-  swprintf_s(sNbSpells, 128, sBuf, nbSpells);
+  swprintf(sNbSpells, 128, sBuf, nbSpells);
   pLbl = new guiLabel();
   pLbl->init(sNbSpells, TEXT_FONT, TEXT_COLOR, L"NbSpells", 5, yPxl, iDocWidth - 10, 0, getDisplay());
   m_pAvatarPopup->getDocument()->addComponent(pLbl);

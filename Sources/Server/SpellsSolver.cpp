@@ -94,6 +94,8 @@ void SpellsSolver::Update(double delta)
             m_State = RSS_NotResolving; // else, give hand back to turn solver
           break;
         }
+        default:
+        break;
       }
     }
   }
@@ -503,14 +505,14 @@ void SpellsSolver::onAttachToUnit(u8 uPlayerId, u32 uUnitId)
     else
     {
       wchar_t sError[128];
-      swprintf_s(sError, 128, L"Lua interaction error: lua script %s sent wrong unit id at resolve stage.", m_LuaContext.pLua->getLocalizedName(), NAME_MAX_CHARS);
+      swprintf(sError, 128, L"Lua interaction error: lua script %s sent wrong unit id at resolve stage.", m_LuaContext.pLua->getLocalizedName(), NAME_MAX_CHARS);
       m_pServer->getDebug()->notifyErrorMessage(sError);
     }
   }
   else
   {
     wchar_t sError[128];
-    swprintf_s(sError, 128, L"Lua interaction error: lua script %s sent wrong player id at resolve stage.", m_LuaContext.pLua->getLocalizedName(), NAME_MAX_CHARS);
+    swprintf(sError, 128, L"Lua interaction error: lua script %s sent wrong player id at resolve stage.", m_LuaContext.pLua->getLocalizedName(), NAME_MAX_CHARS);
     m_pServer->getDebug()->notifyErrorMessage(sError);
   }
 }
@@ -543,14 +545,14 @@ void SpellsSolver::onAddChildEffectToUnit(int iEffectId, u8 uPlayerId, u32 uUnit
     else
     {
       wchar_t sError[128];
-      swprintf_s(sError, 128, L"Lua interaction error: effect %s sent wrong unit id at resolve stage.", m_LuaContext.pLua->getLocalizedName(), NAME_MAX_CHARS);
+      swprintf(sError, 128, L"Lua interaction error: effect %s sent wrong unit id at resolve stage.", m_LuaContext.pLua->getLocalizedName(), NAME_MAX_CHARS);
       m_pServer->getDebug()->notifyErrorMessage(sError);
     }
   }
   else
   {
     wchar_t sError[128];
-    swprintf_s(sError, 128, L"Lua interaction error: effect %s sent wrong player id at resolve stage.", m_LuaContext.pLua->getLocalizedName(), NAME_MAX_CHARS);
+    swprintf(sError, 128, L"Lua interaction error: effect %s sent wrong player id at resolve stage.", m_LuaContext.pLua->getLocalizedName(), NAME_MAX_CHARS);
     m_pServer->getDebug()->notifyErrorMessage(sError);
   }
 }
@@ -589,21 +591,21 @@ void SpellsSolver::onRemoveChildEffectFromUnit(int iEffectId, u8 uPlayerId, u32 
       else
       {
         wchar_t sError[128];
-        swprintf_s(sError, 128, L"Lua interaction error: can't detach effect %s.", m_LuaContext.pLua->getLocalizedName(), NAME_MAX_CHARS);
+        swprintf(sError, 128, L"Lua interaction error: can't detach effect %s.", m_LuaContext.pLua->getLocalizedName(), NAME_MAX_CHARS);
         m_pServer->getDebug()->notifyErrorMessage(sError);
       }
     }
     else
     {
       wchar_t sError[128];
-      swprintf_s(sError, 128, L"Lua interaction error: effect %s sent wrong unit id at resolve stage.", m_LuaContext.pLua->getLocalizedName(), NAME_MAX_CHARS);
+      swprintf(sError, 128, L"Lua interaction error: effect %s sent wrong unit id at resolve stage.", m_LuaContext.pLua->getLocalizedName(), NAME_MAX_CHARS);
       m_pServer->getDebug()->notifyErrorMessage(sError);
     }
   }
   else
   {
     wchar_t sError[128];
-    swprintf_s(sError, 128, L"Lua interaction error: effect %s sent wrong player id at resolve stage.", m_LuaContext.pLua->getLocalizedName(), NAME_MAX_CHARS);
+    swprintf(sError, 128, L"Lua interaction error: effect %s sent wrong player id at resolve stage.", m_LuaContext.pLua->getLocalizedName(), NAME_MAX_CHARS);
     m_pServer->getDebug()->notifyErrorMessage(sError);
   }
 }
@@ -632,7 +634,7 @@ void SpellsSolver::onAddChildEffectToTown(int iEffectId, u32 uTownId)
   else
   {
     wchar_t sError[128];
-    swprintf_s(sError, 128, L"Lua interaction error: effect %s sent wrong town id at resolve stage.", m_LuaContext.pLua->getLocalizedName(), NAME_MAX_CHARS);
+    swprintf(sError, 128, L"Lua interaction error: effect %s sent wrong town id at resolve stage.", m_LuaContext.pLua->getLocalizedName(), NAME_MAX_CHARS);
     m_pServer->getDebug()->notifyErrorMessage(sError);
   }
 }
@@ -653,7 +655,7 @@ void SpellsSolver::onRemoveChildEffectFromTown(int iEffectId, u32 uTownId)
     m_pServer->getDebug()->notifyErrorMessage(L"Lua interaction error: child effect not found while calling SpellsSolver::onRemoveChildEffectFromTown.");
     return;
   }
-  
+
   Town * pTown = m_pServer->getMap()->findTown(uTownId);
   if (pTown != NULL)
   {
@@ -667,14 +669,14 @@ void SpellsSolver::onRemoveChildEffectFromTown(int iEffectId, u32 uTownId)
     else
     {
       wchar_t sError[128];
-      swprintf_s(sError, 128, L"Lua interaction error: can't detach effect %s.", m_LuaContext.pLua->getLocalizedName(), NAME_MAX_CHARS);
+      swprintf(sError, 128, L"Lua interaction error: can't detach effect %s.", m_LuaContext.pLua->getLocalizedName(), NAME_MAX_CHARS);
       m_pServer->getDebug()->notifyErrorMessage(sError);
     }
   }
   else
   {
     wchar_t sError[128];
-    swprintf_s(sError, 128, L"Lua interaction error: effect %s sent wrong town id at resolve stage.", m_LuaContext.pLua->getLocalizedName(), NAME_MAX_CHARS);
+    swprintf(sError, 128, L"Lua interaction error: effect %s sent wrong town id at resolve stage.", m_LuaContext.pLua->getLocalizedName(), NAME_MAX_CHARS);
     m_pServer->getDebug()->notifyErrorMessage(sError);
   }
 }
@@ -702,7 +704,7 @@ void SpellsSolver::onAttachToPlayer(u8 uPlayerId)
   else
   {
     wchar_t sError[128];
-    swprintf_s(sError, 128, L"Lua interaction error: spell %s sent wrong player id at resolve stage.", m_LuaContext.pLua->getLocalizedName(), NAME_MAX_CHARS);
+    swprintf(sError, 128, L"Lua interaction error: spell %s sent wrong player id at resolve stage.", m_LuaContext.pLua->getLocalizedName(), NAME_MAX_CHARS);
     m_pServer->getDebug()->notifyErrorMessage(sError);
   }
 }
@@ -730,7 +732,7 @@ void SpellsSolver::onAttachToTown(u32 uTownId)
   else
   {
     wchar_t sError[128];
-    swprintf_s(sError, 128, L"Lua interaction error: spell %s sent wrong town id at resolve stage.", m_LuaContext.pLua->getLocalizedName(), NAME_MAX_CHARS);
+    swprintf(sError, 128, L"Lua interaction error: spell %s sent wrong town id at resolve stage.", m_LuaContext.pLua->getLocalizedName(), NAME_MAX_CHARS);
     m_pServer->getDebug()->notifyErrorMessage(sError);
   }
 }
@@ -758,7 +760,7 @@ void SpellsSolver::onAttachToTemple(u32 uTempleId)
   else
   {
     wchar_t sError[128];
-    swprintf_s(sError, 128, L"Lua interaction error: spell %s sent wrong temple id at resolve stage.", m_LuaContext.pLua->getLocalizedName(), NAME_MAX_CHARS);
+    swprintf(sError, 128, L"Lua interaction error: spell %s sent wrong temple id at resolve stage.", m_LuaContext.pLua->getLocalizedName(), NAME_MAX_CHARS);
     m_pServer->getDebug()->notifyErrorMessage(sError);
   }
 }
@@ -787,7 +789,7 @@ void SpellsSolver::onAttachToTile(CoordsMap pos)
   else
   {
     wchar_t sError[128];
-    swprintf_s(sError, 128, L"Lua interaction error: spell %s sent wrong coords at resolve stage.", m_LuaContext.pLua->getLocalizedName(), NAME_MAX_CHARS);
+    swprintf(sError, 128, L"Lua interaction error: spell %s sent wrong coords at resolve stage.", m_LuaContext.pLua->getLocalizedName(), NAME_MAX_CHARS);
     m_pServer->getDebug()->notifyErrorMessage(sError);
   }
 }
@@ -816,7 +818,7 @@ void SpellsSolver::onDiscardSpell(u8 uSrc, int iPlayerId, int iSpellId)
   if (pPlayer == NULL)
   {
     wchar_t sError[128];
-    swprintf_s(sError, 128, L"Lua interaction error: spell %s sent wrong player id at resolve stage.", m_LuaContext.pLua->getLocalizedName(), NAME_MAX_CHARS);
+    swprintf(sError, 128, L"Lua interaction error: spell %s sent wrong player id at resolve stage.", m_LuaContext.pLua->getLocalizedName(), NAME_MAX_CHARS);
     m_pServer->getDebug()->notifyErrorMessage(sError);
     return;
   }
@@ -846,7 +848,7 @@ void SpellsSolver::onDiscardSpell(u8 uSrc, int iPlayerId, int iSpellId)
   if (pSpell == NULL && (iSpellId >= 0 || uSrc == 2))
   {
     wchar_t sError[128];
-    swprintf_s(sError, 128, L"Lua interaction error: spell %s sent wrong spell id at resolve stage.", m_LuaContext.pLua->getLocalizedName(), NAME_MAX_CHARS);
+    swprintf(sError, 128, L"Lua interaction error: spell %s sent wrong spell id at resolve stage.", m_LuaContext.pLua->getLocalizedName(), NAME_MAX_CHARS);
     m_pServer->getDebug()->notifyErrorMessage(sError);
     return;
   }
@@ -878,7 +880,7 @@ void SpellsSolver::onDiscardSpell(u8 uSrc, int iPlayerId, int iSpellId)
             else
             {
               wchar_t sError[128];
-              swprintf_s(sError, 128, L"Lua interaction error: can't detach effect %s.", pSpell->getLocalizedName());
+              swprintf(sError, 128, L"Lua interaction error: can't detach effect %s.", pSpell->getLocalizedName());
               m_pServer->getDebug()->notifyErrorMessage(sError);
             }
           }
@@ -960,14 +962,14 @@ void SpellsSolver::onDrawSpell(u8 uPlayerId, u32 uSpellId)
     else
     {
       wchar_t sError[128];
-      swprintf_s(sError, 128, L"Lua interaction error: spell %s sent wrong spell id at resolve stage.", m_LuaContext.pLua->getLocalizedName(), NAME_MAX_CHARS);
+      swprintf(sError, 128, L"Lua interaction error: spell %s sent wrong spell id at resolve stage.", m_LuaContext.pLua->getLocalizedName(), NAME_MAX_CHARS);
       m_pServer->getDebug()->notifyErrorMessage(sError);
     }
   }
   else
   {
     wchar_t sError[128];
-    swprintf_s(sError, 128, L"Lua interaction error: spell %s sent wrong player id at resolve stage.", m_LuaContext.pLua->getLocalizedName(), NAME_MAX_CHARS);
+    swprintf(sError, 128, L"Lua interaction error: spell %s sent wrong player id at resolve stage.", m_LuaContext.pLua->getLocalizedName(), NAME_MAX_CHARS);
     m_pServer->getDebug()->notifyErrorMessage(sError);
   }
 }
@@ -1018,14 +1020,14 @@ void SpellsSolver::onRecallSpell(const wchar_t * sType, u8 uPlayerId, u32 uSpell
     else
     {
       wchar_t sError[128];
-      swprintf_s(sError, 128, L"Lua interaction error: spell %s sent wrong spell id to function onRecallSpell.", m_LuaContext.pLua->getLocalizedName(), NAME_MAX_CHARS);
+      swprintf(sError, 128, L"Lua interaction error: spell %s sent wrong spell id to function onRecallSpell.", m_LuaContext.pLua->getLocalizedName(), NAME_MAX_CHARS);
       m_pServer->getDebug()->notifyErrorMessage(sError);
     }
   }
   else
   {
     wchar_t sError[128];
-    swprintf_s(sError, 128, L"Lua interaction error: spell %s sent wrong player id to function onRecallSpell.", m_LuaContext.pLua->getLocalizedName(), NAME_MAX_CHARS);
+    swprintf(sError, 128, L"Lua interaction error: spell %s sent wrong player id to function onRecallSpell.", m_LuaContext.pLua->getLocalizedName(), NAME_MAX_CHARS);
     m_pServer->getDebug()->notifyErrorMessage(sError);
   }
 }

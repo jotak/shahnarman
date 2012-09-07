@@ -159,7 +159,7 @@ void LogDlg::logNewTurn()
     wchar_t sText[64];
     wchar_t sBuf[64];
     i18n->getText(L"NEW_TURN", sBuf, 64);
-    swprintf_s(sText, 64, L"** %s **", sBuf);
+    swprintf(sText, 64, L"** %s **", sBuf);
     log(sText);
     m_bLastLogIsNewTurn = true;
   }

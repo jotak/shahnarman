@@ -83,7 +83,7 @@ public:
   void castSpellFinished(bool bCastOk, bool bOnResolve);
   void setSpellBeingCastOnResolve(Spell * pSpell);
   Spell * getSpellBeingCast() { return m_pSpellBeingCast; };
-  void addExtraMana(u32 uType, bool bOk, wchar_t * sCallback, Mana amount);
+  void addExtraMana(u32 uType, bool bOk, const wchar_t * sCallback, Mana amount);
 
 //  static LuaObject * deepFindLuaObject(u32 uId, ObjectList * pPlayers, Map * pMap); // This function searches in all game data, so don't use it when not necessary
 

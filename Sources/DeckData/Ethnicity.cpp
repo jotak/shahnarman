@@ -106,17 +106,17 @@ void Ethnicity::readFromNode(XMLLiteElement * pNode, DebugManager * pDebug)
       while (pAttr != NULL)
       {
         if (wcscmp(pAttr->getName(), L"town1") == 0)
-          swprintf_s(m_sTownTextures[0], MAX_PATH, L"%s/%s", m_sEdition, pAttr->getCharValue());
+          swprintf(m_sTownTextures[0], MAX_PATH, L"%s/%s", m_sEdition, pAttr->getCharValue());
         else if (wcscmp(pAttr->getName(), L"town2") == 0)
-          swprintf_s(m_sTownTextures[1], MAX_PATH, L"%s/%s", m_sEdition, pAttr->getCharValue());
+          swprintf(m_sTownTextures[1], MAX_PATH, L"%s/%s", m_sEdition, pAttr->getCharValue());
         else if (wcscmp(pAttr->getName(), L"town3") == 0)
-          swprintf_s(m_sTownTextures[2], MAX_PATH, L"%s/%s", m_sEdition, pAttr->getCharValue());
+          swprintf(m_sTownTextures[2], MAX_PATH, L"%s/%s", m_sEdition, pAttr->getCharValue());
         else if (wcscmp(pAttr->getName(), L"town4") == 0)
-          swprintf_s(m_sTownTextures[3], MAX_PATH, L"%s/%s", m_sEdition, pAttr->getCharValue());
+          swprintf(m_sTownTextures[3], MAX_PATH, L"%s/%s", m_sEdition, pAttr->getCharValue());
         else if (wcscmp(pAttr->getName(), L"town5") == 0)
-          swprintf_s(m_sTownTextures[4], MAX_PATH, L"%s/%s", m_sEdition, pAttr->getCharValue());
+          swprintf(m_sTownTextures[4], MAX_PATH, L"%s/%s", m_sEdition, pAttr->getCharValue());
         else if (wcscmp(pAttr->getName(), L"townbigpic") == 0)
-          swprintf_s(m_sTownBigPict, MAX_PATH, L"%s/%s", m_sEdition, pAttr->getCharValue());
+          swprintf(m_sTownBigPict, MAX_PATH, L"%s/%s", m_sEdition, pAttr->getCharValue());
         pAttr = pDataElt->getNextAttribute();
       }
     }
@@ -126,7 +126,7 @@ void Ethnicity::readFromNode(XMLLiteElement * pNode, DebugManager * pDebug)
       if (pBldId == NULL)
       {
         wchar_t sError[1024];
-        swprintf_s(sError, 1024, L"XML formation error: attribute \"id\" missing in node \"building\". Check out ethnicity %s.", m_sObjectId);
+        swprintf(sError, 1024, L"XML formation error: attribute \"id\" missing in node \"building\". Check out ethnicity %s.", m_sObjectId);
         pDebug->notifyErrorMessage(sError);
         pDataElt = pNode->getNextChild();
         continue;
@@ -136,7 +136,7 @@ void Ethnicity::readFromNode(XMLLiteElement * pNode, DebugManager * pDebug)
       if (pBldX == NULL || pBldY == NULL)
       {
         wchar_t sError[1024];
-        swprintf_s(sError, 1024, L"XML formation error: missing attributes X, Y in node \"building\". Check out ethnicity %s.", m_sObjectId);
+        swprintf(sError, 1024, L"XML formation error: missing attributes X, Y in node \"building\". Check out ethnicity %s.", m_sObjectId);
         pDebug->notifyErrorMessage(sError);
         pDataElt = pNode->getNextChild();
         continue;
@@ -150,7 +150,7 @@ void Ethnicity::readFromNode(XMLLiteElement * pNode, DebugManager * pDebug)
       if (pIdAttr == NULL)
       {
         wchar_t sError[1024];
-        swprintf_s(sError, 1024, L"XML formation error: attribute \"id\" missing in node \"base_unit\". Check out ethnicity %s.", m_sObjectId);
+        swprintf(sError, 1024, L"XML formation error: attribute \"id\" missing in node \"base_unit\". Check out ethnicity %s.", m_sObjectId);
         pDebug->notifyErrorMessage(sError);
         pDataElt = pNode->getNextChild();
         continue;
@@ -158,7 +158,7 @@ void Ethnicity::readFromNode(XMLLiteElement * pNode, DebugManager * pDebug)
       else if (pCostAttr == NULL)
       {
         wchar_t sError[1024];
-        swprintf_s(sError, 1024, L"XML formation error: attribute \"cost\" missing in node \"base_unit\". Check out ethnicity %s.", m_sObjectId);
+        swprintf(sError, 1024, L"XML formation error: attribute \"cost\" missing in node \"base_unit\". Check out ethnicity %s.", m_sObjectId);
         pDebug->notifyErrorMessage(sError);
         pDataElt = pNode->getNextChild();
         continue;
@@ -171,7 +171,7 @@ void Ethnicity::readFromNode(XMLLiteElement * pNode, DebugManager * pDebug)
       if (pAttr == NULL)
       {
         wchar_t sError[1024];
-        swprintf_s(sError, 1024, L"XML formation error: attribute \"id\" missing in node \"heroe\". Check out ethnicity %s.", m_sObjectId);
+        swprintf(sError, 1024, L"XML formation error: attribute \"id\" missing in node \"heroe\". Check out ethnicity %s.", m_sObjectId);
         pDebug->notifyErrorMessage(sError);
         pDataElt = pNode->getNextChild();
         continue;

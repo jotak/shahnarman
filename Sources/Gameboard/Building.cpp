@@ -44,7 +44,7 @@ void Building::loadBasicData(DebugManager * pDebug)
   else
   {
     wchar_t sError[512];
-    swprintf_s(sError, 512, L"Lua interaction error: building in file %s has no name defined.", m_sObjectName);
+    swprintf(sError, 512, L"Lua interaction error: building in file %s has no name defined.", m_sObjectName);
     pDebug->notifyErrorMessage(sError);
     wsafecpy(m_sName, NAME_MAX_CHARS, L"");
   }
@@ -55,7 +55,7 @@ void Building::loadBasicData(DebugManager * pDebug)
   else
   {
     wchar_t sError[512];
-    swprintf_s(sError, 512, L"Lua interaction error: building in file %s has no description defined.", m_sObjectName);
+    swprintf(sError, 512, L"Lua interaction error: building in file %s has no description defined.", m_sObjectName);
     pDebug->notifyErrorMessage(sError);
     wsafecpy(m_sDescription, DESCRIPTION_MAX_CHARS, L"");
   }
@@ -66,12 +66,12 @@ void Building::loadBasicData(DebugManager * pDebug)
   {
 	  // error : texture not found
     wchar_t sError[512] = L"";
-    swprintf_s(sError, 512, L"Lua interaction error: building in file %s has no texture path defined.", m_sObjectName);
+    swprintf(sError, 512, L"Lua interaction error: building in file %s has no texture path defined.", m_sObjectName);
     pDebug->notifyErrorMessage(sError);
     wsafecpy(m_sTexture, NAME_MAX_CHARS, L"");
   }
   else
-    swprintf_s(m_sTexture, MAX_PATH, L"%s/%s", m_sObjectEdition, sStr);
+    swprintf(m_sTexture, MAX_PATH, L"%s/%s", m_sObjectEdition, sStr);
 
   // Production cost
   double d;
@@ -81,7 +81,7 @@ void Building::loadBasicData(DebugManager * pDebug)
   {
 	  // error : cost not found
     wchar_t sError[512] = L"";
-    swprintf_s(sError, 512, L"Lua interaction error: building in file %s has no cost defined.", m_sObjectName);
+    swprintf(sError, 512, L"Lua interaction error: building in file %s has no cost defined.", m_sObjectName);
     pDebug->notifyErrorMessage(sError);
     m_uCost = 9999;
   }

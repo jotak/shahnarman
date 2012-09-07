@@ -74,7 +74,7 @@ public:
   virtual guiObject * clone();
 
   // Static default constructors
-  static guiContainer * createDefaultPanel(int width, int height, wchar_t * sId, DisplayEngine * pDisplay);
+  static guiContainer * createDefaultPanel(int width, int height, const wchar_t * sId, DisplayEngine * pDisplay);
 
   // Static data
   static void initStatic();

@@ -234,7 +234,7 @@ AILuaSolver::TargetData * AILuaSolver::findTargetForLua(Player * pCaster, Evalua
             if (!(pInfo->m_uConstraints & SELECT_CONSTRAINT_NOT_AVATAR) || !(pPlayer->getAvatar() == pUnit)) {
               // Ok, we found a unit that fits the constraints ; use it now
               pTarget->m_pTarget = pUnit;
-              swprintf_s(pTarget->params, 64, L"%d %ld", (int) pUnit->getOwner(), (long) pUnit->getId());
+              swprintf(pTarget->params, 64, L"%d %ld", (int) pUnit->getOwner(), (long) pUnit->getId());
               return pTarget;
             }
             pUnit = (Unit*) pPlayer->m_pUnits->getNext(pInfo->it2);
@@ -264,7 +264,7 @@ AILuaSolver::TargetData * AILuaSolver::findTargetForLua(Player * pCaster, Evalua
 //  The aim of this function is to fill "pList", which contains a list of possible sets of targets for the spell.
 //  Note that some spells can have multiple targets, so pList is a List of Lists.
 //  The function calls "findTargetForLua" to find 1 allowed target for the spell
-//  Then it calls itself recursively in 2 cases: 
+//  Then it calls itself recursively in 2 cases:
 //  1/ When current spell needs extra targets
 //  2/ Else, when a potential target was found, to try another one
 // -----------------------------------------------------------------

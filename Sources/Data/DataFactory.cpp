@@ -41,7 +41,7 @@ void DataFactory::Init(LocalClient * pLocalClient)
   pLocalClient->getClientParameters()->resetLocale(pLocalClient->getDebug());
   wchar_t sFile[MAX_PATH];
   FILE * pFile = NULL;
-  swprintf_s(sFile, MAX_PATH, L"%sactive.txt", EDITIONS_PATH);
+  swprintf(sFile, MAX_PATH, L"%sactive.txt", EDITIONS_PATH);
   if (0 != wfopen(&pFile, sFile, L"r"))
   {
     pLocalClient->getDebug()->notifyErrorMessage(L"Error: active.txt file not found.");
@@ -57,7 +57,7 @@ void DataFactory::Init(LocalClient * pLocalClient)
     wchop(sName);
     // Test if edition exists
     wchar_t sFilePath[MAX_PATH];
-    swprintf_s(sFilePath, MAX_PATH, L"%s%s/edition.xml", EDITIONS_PATH, sName);
+    swprintf(sFilePath, MAX_PATH, L"%s%s/edition.xml", EDITIONS_PATH, sName);
     FILE * pTmp = NULL;
     if (0 == wfopen(&pTmp, sFilePath, L"r"))
     {

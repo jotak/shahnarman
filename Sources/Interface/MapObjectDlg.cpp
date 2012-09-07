@@ -106,12 +106,12 @@ void MapObjectDlg::update(double delta)
         wchar_t sText[LABEL_MAX_CHARS];
         wchar_t sBuf1[LABEL_MAX_CHARS];
         wchar_t sBuf2[LABEL_MAX_CHARS];
-        swprintf_s(sText, LABEL_MAX_CHARS, L"%d / %d", stock, cost);
+        swprintf(sText, LABEL_MAX_CHARS, L"%d / %d", stock, cost);
         pGauge->setTooltipText(sText);
         int remainingTurns = getRemainingTurns(cost, prod, stock);
         i18n->getText(L"2P", sBuf1, LABEL_MAX_CHARS);
         i18n->getText(L"TURNS", sBuf2, LABEL_MAX_CHARS);
-        swprintf_s(sText, LABEL_MAX_CHARS, L"%s%s%d %s", pBuilding->getLocalizedName(), sBuf1, remainingTurns, sBuf2);
+        swprintf(sText, LABEL_MAX_CHARS, L"%s%s%d %s", pBuilding->getLocalizedName(), sBuf1, remainingTurns, sBuf2);
         guiLabel * pLbl = (guiLabel*) m_pContentPanel->getDocument()->getComponent(L"ProductionGaugeLbl");
         assert(pLbl != NULL);
         pLbl->setText(sText);
@@ -187,7 +187,7 @@ bool MapObjectDlg::onButtonEvent(ButtonAction * pEvent, guiComponent * pCpnt)
       assert(pGauge != NULL);
       pGauge->setMax(cost);
       pGauge->setValue(stock);
-      swprintf_s(sText, LABEL_MAX_CHARS, L"%d / %d", stock, cost);
+      swprintf(sText, LABEL_MAX_CHARS, L"%d / %d", stock, cost);
       pGauge->setTooltipText(sText);
       // Find related UnitData
       UnitData * pUnitData = m_pLocalClient->getDataFactory()->getUnitData(m_pCurrentTown->getEthnicityEdition(), pUnit->m_sId);
@@ -195,7 +195,7 @@ bool MapObjectDlg::onButtonEvent(ButtonAction * pEvent, guiComponent * pCpnt)
       pUnitData->findLocalizedElement(sUnitName, NAME_MAX_CHARS, i18n->getCurrentLanguageName(), L"name");
       i18n->getText(L"2P", sBuf1, LABEL_MAX_CHARS);
       i18n->getText(L"TURNS", sBuf2, LABEL_MAX_CHARS);
-      swprintf_s(sText, LABEL_MAX_CHARS, L"%s%s%d %s", sUnitName, sBuf1, cost - stock, sBuf2);
+      swprintf(sText, LABEL_MAX_CHARS, L"%s%s%d %s", sUnitName, sBuf1, cost - stock, sBuf2);
       guiLabel * pLbl = (guiLabel*) m_pContentPanel->getDocument()->getComponent(L"UnitProdGaugeLbl");
       assert(pLbl != NULL);
       pLbl->setText(sText);
@@ -331,7 +331,7 @@ void MapObjectDlg::loadUnit(Unit * pUnit)
   {
     wchar_t sDead[16];
     i18n->getText(L"DEAD", sDead, 16);
-    swprintf_s(sText, LABEL_MAX_CHARS, L"%s (%s)", pUnit->getName(), sDead);
+    swprintf(sText, LABEL_MAX_CHARS, L"%s (%s)", pUnit->getName(), sDead);
   }
   else
     wsafecpy(sText, LABEL_MAX_CHARS, pUnit->getName());
@@ -351,7 +351,7 @@ void MapObjectDlg::loadUnit(Unit * pUnit)
   else
   {
     i18n->getText(L"OWNED_BY_(s)", sBuf1, LABEL_MAX_CHARS);
-    swprintf_s(sText, LABEL_MAX_CHARS, sBuf1, pPlayer->getAvatarName());
+    swprintf(sText, LABEL_MAX_CHARS, sBuf1, pPlayer->getAvatarName());
   }
   pImg->setTooltipText(sText);
   m_pContentPanel->getDocument()->addComponent(pImg);
@@ -387,7 +387,7 @@ void MapObjectDlg::loadUnit(Unit * pUnit)
   LuaObject * pEffect = pUnit->getFirstEffect(0);
   while (pEffect != NULL)
   {
-    swprintf_s(sText, LABEL_MAX_CHARS, L"%s - %s", pEffect->getLocalizedName(), pEffect->getLocalizedDescription());
+    swprintf(sText, LABEL_MAX_CHARS, L"%s - %s", pEffect->getLocalizedName(), pEffect->getLocalizedDescription());
     guiImage * pImg = new guiImage();
     pImg->init(getDisplay()->getTextureEngine()->loadTexture(pEffect->getIconPath()), L"", xPxl, yPxl, ICON_SIZE, ICON_SIZE, getDisplay());
     pImg->setTooltipText(sText);
@@ -439,7 +439,7 @@ void MapObjectDlg::loadTown(Town * pTown)
   // Name and size
   int halfWidth = m_pContentPanel->getDocument()->getWidth() / 2;
   int yPxl = SPACING;
-  swprintf_s(sText, LABEL_MAX_CHARS, L"%s:%d", pTown->getName(), (int)pTown->getSize());
+  swprintf(sText, LABEL_MAX_CHARS, L"%s:%d", pTown->getName(), (int)pTown->getSize());
   guiLabel * pLbl = new guiLabel();
   pLbl->init(sText, H1_FONT, H1_COLOR, L"", 0, 0, -1, -1, getDisplay());
   pLbl->moveTo(halfWidth - pLbl->getWidth() / 2, yPxl);
@@ -459,7 +459,7 @@ void MapObjectDlg::loadTown(Town * pTown)
   else
   {
     i18n->getText(L"OWNED_BY_(s)", sBuf1, LABEL_MAX_CHARS);
-    swprintf_s(sText, LABEL_MAX_CHARS, sBuf1, pPlayer->getAvatarName());
+    swprintf(sText, LABEL_MAX_CHARS, sBuf1, pPlayer->getAvatarName());
   }
   pImg->setTooltipText(sText);
   m_pContentPanel->getDocument()->addComponent(pImg);
@@ -469,7 +469,7 @@ void MapObjectDlg::loadTown(Town * pTown)
   int xPxl = pLbl->getXPos() + pLbl->getWidth() + 2 * SPACING;
   Ethnicity * pEthn = m_pLocalClient->getDataFactory()->findEdition(pTown->getEthnicityEdition())->findEthnicity(pTown->getEthnicityId());
   pEthn->findLocalizedElement(sBuf1, LABEL_MAX_CHARS, i18n->getCurrentLanguageName(), L"name");
-  swprintf_s(sText, LABEL_MAX_CHARS, L"(%s)", sBuf1);
+  swprintf(sText, LABEL_MAX_CHARS, L"(%s)", sBuf1);
   pLbl = new guiLabel();
   pLbl->init(sText, H2_FONT, H2_COLOR, L"", 0, 0, -1, -1, getDisplay());
   pLbl->moveTo(xPxl, yPxl + 10);
@@ -509,7 +509,7 @@ void MapObjectDlg::loadTown(Town * pTown)
       int remainingTurns = getRemainingTurns(cost, prod, 0);
       i18n->getText(L"2P", sBuf1, LABEL_MAX_CHARS);
       i18n->getText(L"TURNS", sBuf2, LABEL_MAX_CHARS);
-      swprintf_s(sText, LABEL_MAX_CHARS, L"%s%s%d %s", pBuilding->getLocalizedName(), sBuf1, remainingTurns, sBuf2);
+      swprintf(sText, LABEL_MAX_CHARS, L"%s%s%d %s", pBuilding->getLocalizedName(), sBuf1, remainingTurns, sBuf2);
       pImg->setTooltipText(sText);
       pImg->setCatchClicks(true);
       pImg->setOwner(this);
@@ -529,7 +529,7 @@ void MapObjectDlg::loadTown(Town * pTown)
 
   // Food text
   xPxl += pImg->getWidth() + SPACING;
-  swprintf_s(sText, LABEL_MAX_CHARS, L"%d", pTown->getFoodPerTurn());
+  swprintf(sText, LABEL_MAX_CHARS, L"%d", pTown->getFoodPerTurn());
   pLbl = new guiLabel();
   pLbl->init(sText, TEXT_FONT, TEXT_COLOR, L"", xPxl, yPxl, -1, -1, getDisplay());
   m_pContentPanel->getDocument()->addComponent(pLbl);
@@ -548,7 +548,7 @@ void MapObjectDlg::loadTown(Town * pTown)
   // Happiness text
   int happiness = (int) pTown->getValue(STRING_HAPPINESS);
   xPxl += pImg->getWidth() + SPACING;
-  swprintf_s(sText, LABEL_MAX_CHARS, L"%d", happiness);
+  swprintf(sText, LABEL_MAX_CHARS, L"%d", happiness);
   pLbl = new guiLabel();
   pLbl->init(sText, TEXT_FONT, TEXT_COLOR, L"", xPxl, yPxl, -1, -1, getDisplay());
   m_pContentPanel->getDocument()->addComponent(pLbl);
@@ -578,7 +578,7 @@ void MapObjectDlg::loadTown(Town * pTown)
   // Fear text
   int fear = (int) pTown->getValue(STRING_FEAR);
   xPxl += pImg->getWidth() + SPACING;
-  swprintf_s(sText, LABEL_MAX_CHARS, L"%d", fear);
+  swprintf(sText, LABEL_MAX_CHARS, L"%d", fear);
   pLbl = new guiLabel();
   pLbl->init(sText, TEXT_FONT, TEXT_COLOR, L"", xPxl, yPxl, -1, -1, getDisplay());
   m_pContentPanel->getDocument()->addComponent(pLbl);
@@ -599,10 +599,10 @@ void MapObjectDlg::loadTown(Town * pTown)
   //pGauge->setValue(stock);
   //pGauge->moveTo(gaugeX, yPxl);
   //m_pContentPanel->getDocument()->addComponent(pGauge);
-  //swprintf_s(sText, LABEL_MAX_CHARS, L"%d / %d", stock, storage);
+  //swprintf(sText, LABEL_MAX_CHARS, L"%d / %d", stock, storage);
   //pGauge->setTooltipText(sText);
   //i18n->getText(L"TURNS", sBuf2, LABEL_MAX_CHARS);
-  //swprintf_s(sText, LABEL_MAX_CHARS, L"%d %s", remainingTurns, sBuf2);
+  //swprintf(sText, LABEL_MAX_CHARS, L"%d %s", remainingTurns, sBuf2);
   //pLbl = new guiLabel();
   //pLbl->init(sText, TEXT_FONT, TEXT_COLOR, L"", 0, 0, -1, -1, getDisplay());
   //pLbl->centerOnComponent(pGauge);
@@ -619,7 +619,7 @@ void MapObjectDlg::loadTown(Town * pTown)
   // Production text
   int prod = pTown->getProdPerTurn();
   xPxl += pImg->getWidth() + SPACING;
-  swprintf_s(sText, LABEL_MAX_CHARS, L"%d", prod);
+  swprintf(sText, LABEL_MAX_CHARS, L"%d", prod);
   pLbl = new guiLabel();
   pLbl->init(sText, TEXT_FONT, TEXT_COLOR, L"", xPxl, yPxl, -1, -1, getDisplay());
   m_pContentPanel->getDocument()->addComponent(pLbl);
@@ -636,12 +636,12 @@ void MapObjectDlg::loadTown(Town * pTown)
     pGauge->setValue(stock);
     pGauge->moveTo(gaugeX, yPxl);
     m_pContentPanel->getDocument()->addComponent(pGauge);
-    swprintf_s(sText, LABEL_MAX_CHARS, L"%d / %d", stock, cost);
+    swprintf(sText, LABEL_MAX_CHARS, L"%d / %d", stock, cost);
     pGauge->setTooltipText(sText);
     int remainingTurns = getRemainingTurns(cost, prod, stock);
     i18n->getText(L"2P", sBuf1, LABEL_MAX_CHARS);
     i18n->getText(L"TURNS", sBuf2, LABEL_MAX_CHARS);
-    swprintf_s(sText, LABEL_MAX_CHARS, L"%s%s%d %s", pBuilding->getLocalizedName(), sBuf1, remainingTurns, sBuf2);
+    swprintf(sText, LABEL_MAX_CHARS, L"%s%s%d %s", pBuilding->getLocalizedName(), sBuf1, remainingTurns, sBuf2);
     pLbl = new guiLabel();
     pLbl->init(sText, TEXT_FONT, TEXT_COLOR, L"ProductionGaugeLbl", 0, 0, -1, -1, getDisplay());
     pLbl->centerOnComponent(pGauge);
@@ -670,7 +670,7 @@ void MapObjectDlg::loadTown(Town * pTown)
 
   // Unit production text
   xPxl += pImg->getWidth() + SPACING;
-  swprintf_s(sText, LABEL_MAX_CHARS, L"%d%%", pTown->getUnitProdBonus());
+  swprintf(sText, LABEL_MAX_CHARS, L"%d%%", pTown->getUnitProdBonus());
   pLbl = new guiLabel();
   pLbl->init(sText, TEXT_FONT, TEXT_COLOR, L"", xPxl, yPxl, -1, -1, getDisplay());
   m_pContentPanel->getDocument()->addComponent(pLbl);
@@ -684,7 +684,7 @@ void MapObjectDlg::loadTown(Town * pTown)
     pGauge = guiGauge::createDefaultGauge(cost, rgb(1, 0.3f, 0.3f), 200, 16, L"UnitProdGauge", getDisplay());
     pGauge->moveTo(gaugeX, yPxl);
     pGauge->setValue(stock);
-    swprintf_s(sText, LABEL_MAX_CHARS, L"%d / %d", stock, cost);
+    swprintf(sText, LABEL_MAX_CHARS, L"%d / %d", stock, cost);
     pGauge->setTooltipText(sText);
     // Find related UnitData
     UnitData * pUnitData = m_pLocalClient->getDataFactory()->getUnitData(m_pCurrentTown->getEthnicityEdition(), pUnit->m_sId);
@@ -692,7 +692,7 @@ void MapObjectDlg::loadTown(Town * pTown)
     pUnitData->findLocalizedElement(sUnitName, NAME_MAX_CHARS, i18n->getCurrentLanguageName(), L"name");
     i18n->getText(L"2P", sBuf1, LABEL_MAX_CHARS);
     i18n->getText(L"TURNS", sBuf2, LABEL_MAX_CHARS);
-    swprintf_s(sText, LABEL_MAX_CHARS, L"%s%s%d %s", sUnitName, sBuf1, cost - stock, sBuf2);
+    swprintf(sText, LABEL_MAX_CHARS, L"%s%s%d %s", sUnitName, sBuf1, cost - stock, sBuf2);
     pLbl = new guiLabel();
     pLbl->init(sText, TEXT_FONT, TEXT_COLOR, L"UnitProdGaugeLbl", 0, 0, -1, -1, getDisplay());
     pLbl->centerOnComponent(pGauge);
@@ -778,7 +778,7 @@ void MapObjectDlg::loadTown(Town * pTown)
   LuaObject * pEffect = pTown->getFirstEffect(0);
   while (pEffect != NULL)
   {
-    swprintf_s(sText, LABEL_MAX_CHARS, L"%s - %s", pEffect->getLocalizedName(), pEffect->getLocalizedDescription());
+    swprintf(sText, LABEL_MAX_CHARS, L"%s - %s", pEffect->getLocalizedName(), pEffect->getLocalizedDescription());
     guiImage * pImg = new guiImage();
     pImg->init(getDisplay()->getTextureEngine()->loadTexture(pEffect->getIconPath()), L"", xPxl, yPxl, ICON_SIZE, ICON_SIZE, getDisplay());
     pImg->setTooltipText(sText);
@@ -828,7 +828,7 @@ void MapObjectDlg::loadTown(Town * pTown)
   //pGauge->moveTo(xPxl, yPxl);
   //pGauge->setValue(val);
   //m_pContentPanel->getDocument()->addComponent(pGauge);
-  //swprintf_s(sText, LABEL_MAX_CHARS, L"%d / %d", val, 1000);
+  //swprintf(sText, LABEL_MAX_CHARS, L"%d / %d", val, 1000);
   //pGauge->setTooltipText(sText);
 }
 
@@ -871,7 +871,7 @@ void MapObjectDlg::raiseBuildingPopup(Building * pBuilding)
   int remainingTurns = getRemainingTurns(cost, prod, 0);
   i18n->getText(L"COST", sBuf1, LABEL_MAX_CHARS);
   i18n->getText(L"2P", sBuf2, LABEL_MAX_CHARS);
-  swprintf_s(sText, LABEL_MAX_CHARS, L"%s%s%d ", sBuf1, sBuf2, cost);
+  swprintf(sText, LABEL_MAX_CHARS, L"%s%s%d ", sBuf1, sBuf2, cost);
   pLbl = new guiLabel();
   pLbl->init(sText, H2_FONT, H2_COLOR, L"", xPxl, yPxl, -1, -1, getDisplay());
   m_pBuildingPopup->getDocument()->addComponent(pLbl);
@@ -886,7 +886,7 @@ void MapObjectDlg::raiseBuildingPopup(Building * pBuilding)
   // Turns
   xPxl += pImg->getWidth() + SPACING;
   i18n->getText(L"TURNS", sBuf1, LABEL_MAX_CHARS);
-  swprintf_s(sText, LABEL_MAX_CHARS, L"     %d %s", remainingTurns, sBuf1);
+  swprintf(sText, LABEL_MAX_CHARS, L"     %d %s", remainingTurns, sBuf1);
   pLbl = new guiLabel();
   pLbl->init(sText, H2_FONT, H2_COLOR, L"", xPxl, yPxl, -1, -1, getDisplay());
   m_pBuildingPopup->getDocument()->addComponent(pLbl);

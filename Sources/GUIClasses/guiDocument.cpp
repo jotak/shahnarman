@@ -27,13 +27,7 @@ guiDocument::guiDocument()
 // -----------------------------------------------------------------
 guiDocument::~guiDocument()
 {
-#ifdef DBG_VERBOSE1
-  printf("Begin destroy guiDocument\n");
-#endif
   delete m_pComponentsList;
-#ifdef DBG_VERBOSE1
-  printf("End destroy guiDocument\n");
-#endif
 }
 
 // -----------------------------------------------------------------
@@ -188,7 +182,7 @@ void guiDocument::setTitleId(const wchar_t * sTitleId)
 // -----------------------------------------------------------------
 // Name : getComponent
 // -----------------------------------------------------------------
-guiComponent * guiDocument::getComponent(wchar_t * cpntId)
+guiComponent * guiDocument::getComponent(const wchar_t * cpntId)
 {
   guiComponent * cpnt = (guiComponent*) m_pComponentsList->getFirst(0);
   while (cpnt != NULL)
@@ -256,7 +250,7 @@ void guiDocument::bringAbove(guiComponent * cpnt)
 // -----------------------------------------------------------------
 // Name : doClick
 // -----------------------------------------------------------------
-void guiDocument::doClick(wchar_t * sCpntId)
+void guiDocument::doClick(const wchar_t * sCpntId)
 {
   guiComponent * pCpnt = getComponent(sCpntId);
   if (pCpnt == NULL || !pCpnt->isVisible() || !pCpnt->isEnabled())

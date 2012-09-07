@@ -41,12 +41,12 @@ void LocalisationTool::Init(Parameters * pParams, DebugManager * pDebug)
 
   // Build path
   wsafecpy(m_sLanguage, 64, pParams->sLanguages[pParams->language]);
-  swprintf_s(sPath, MAX_PATH, L"%si18n/%s.po", LDATA_PATH, m_sLanguage);
+  swprintf(sPath, MAX_PATH, L"%si18n/%s.po", LDATA_PATH, m_sLanguage);
 
   // Open file
   if (0 != wfopen(&pFile, sPath, L"r"))
   {
-    swprintf_s(sError, 1024, L"Could not open language file for %s. Check out file %s.", m_sLanguage, sPath);
+    swprintf(sError, 1024, L"Could not open language file for %s. Check out file %s.", m_sLanguage, sPath);
     pDebug->notifyErrorMessage(sError);
     return;
   }
@@ -56,12 +56,12 @@ void LocalisationTool::Init(Parameters * pParams, DebugManager * pDebug)
   {
     // Get line by line
     fgetws(sLine, 1024, pFile);
-    if (swscanf_s(sLine, L"msgid \"%s", sKey, 64))  // read sKey but don't rely on that
+    if (swscanf(sLine, L"msgid \"%s", sKey, 64))  // read sKey but don't rely on that
     {
       wsafecpy(sKey, 64, &(sLine[7]));  // Copy sLine starting from 7th character (after 'msgid "')
       sKey[wcslen(sKey) - 2] = L'\0'; // Remove last characters which should be '"' + \n
     }
-    if (wcscmp(sKey, L"") != 0 && swscanf_s(sLine, L"msgstr \"%s", sValue, 1024))
+    if (wcscmp(sKey, L"") != 0 && swscanf(sLine, L"msgstr \"%s", sValue, 1024))
     {
       wsafecpy(sValue, 1024, &(sLine[8]));  // Copy sLine starting from 8th character (after 'msgstr "')
       sValue[wcslen(sValue) - 2] = L'\0'; // Remove last characters which should be '"' + \n
@@ -103,7 +103,7 @@ wchar_t * LocalisationTool::getText(const wchar_t * sKey, wchar_t * sBuf, int iS
       if (m_pDebug != NULL)
       {
         wchar_t sErr[128];
-        swprintf_s(sErr, 128, L"L12N key not found: %s", sKey);
+        swprintf(sErr, 128, L"L12N key not found: %s", sKey);
         m_pDebug->notifyErrorMessage(sErr);
       }
       wsafecpy(sBuf, iSize, sKey);
@@ -231,7 +231,7 @@ wchar_t * LocalisationTool::getText1stUp(const wchar_t * sKey, wchar_t * sBuf, i
     if (m_pDebug != NULL)
     {
       wchar_t sErr[128];
-      swprintf_s(sErr, 128, L"L12N key not found: %s", sKey);
+      swprintf(sErr, 128, L"L12N key not found: %s", sKey);
       m_pDebug->notifyErrorMessage(sErr);
     }
     wsafecpy(sBuf, iSize, sKey);
@@ -256,7 +256,7 @@ wchar_t * LocalisationTool::getTextUp(const wchar_t * sKey, wchar_t * sBuf, int 
     if (m_pDebug != NULL)
     {
       wchar_t sErr[128];
-      swprintf_s(sErr, 128, L"L12N key not found: %s", sKey);
+      swprintf(sErr, 128, L"L12N key not found: %s", sKey);
       m_pDebug->notifyErrorMessage(sErr);
     }
     wsafecpy(sBuf, iSize, sKey);
@@ -286,7 +286,7 @@ wchar_t * LocalisationTool::getTextLow(const wchar_t * sKey, wchar_t * sBuf, int
     if (m_pDebug != NULL)
     {
       wchar_t sErr[128];
-      swprintf_s(sErr, 128, L"L12N key not found: %s", sKey);
+      swprintf(sErr, 128, L"L12N key not found: %s", sKey);
       m_pDebug->notifyErrorMessage(sErr);
     }
     wsafecpy(sBuf, iSize, sKey);
@@ -326,7 +326,7 @@ wchar_t * LocalisationTool::long_hashToString(wchar_t * sBuf, int iBufSize, cons
     if (it != hm->end())
     {
       i18n->getText1stUp(sKey, sTranslatedKey, 64);
-      swprintf_s(sLine, 80, L"%s%s%s%ld", sSep, sTranslatedKey, s2P, it->second);
+      swprintf(sLine, 80, L"%s%s%s%ld", sSep, sTranslatedKey, s2P, it->second);
       wsafecat(sBuf, iBufSize, sLine);
       wsafecpy(sSep, 8, sSeparator);
     }

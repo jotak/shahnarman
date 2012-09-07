@@ -7,12 +7,14 @@
 #include "GUIClasses/guiLabel.h"
 #include "Server/AISolver.h"
 
+extern GameRoot * g_pMainGameRoot;
+
 //------------------------------------------------------------------------------
 // Spell_selectTarget
 //  Input : target_type, constraints
 //  No output
 //------------------------------------------------------------------------------
-int LUA_selectTarget(char * sText, bool bThenResolve)
+int LUA_selectTarget(const char * sText, bool bThenResolve)
 {
   wchar_t sType[64], sConstraints[128] = L"";
   g_bLuaSelectOnResolve = bThenResolve;
@@ -23,7 +25,7 @@ int LUA_selectTarget(char * sText, bool bThenResolve)
     if (!bThenResolve && (g_uLuaSelectTargetType == SELECT_TYPE_SPELL_IN_DECK || g_uLuaSelectTargetType == SELECT_TYPE_SPELL_IN_HAND))
     {
       wchar_t sError[512];
-      swprintf_s(sError, 512, L"Lua interaction error: trying to call \"selectTarget\" for deck or hand spell outside resolve phase. Use \"selectTargetThenResolve\" during resolve phase instead!");
+      swprintf(sError, 512, L"Lua interaction error: trying to call \"selectTarget\" for deck or hand spell outside resolve phase. Use \"selectTargetThenResolve\" during resolve phase instead!");
       g_pMainGameRoot->m_pLocalClient->getDebug()->notifyErrorMessage(sError);
       return 0;
     }
@@ -101,7 +103,7 @@ int LUA_selectTarget(char * sText, bool bThenResolve)
   wchar_t sBuf[LABEL_MAX_CHARS];
   wchar_t s2P[8];
   i18n->getText(L"2P", s2P, 8);
-  swprintf_s(sStatus, LABEL_MAX_CHARS, L"%s%s", pCaster->getAvatarName(), s2P);
+  swprintf(sStatus, LABEL_MAX_CHARS, L"%s%s", pCaster->getAvatarName(), s2P);
   if (sText != NULL && strcmp(sText, "") != 0)
   {
     strtow(sBuf, LABEL_MAX_CHARS, sText);
@@ -157,12 +159,12 @@ int LUA_selectTarget(lua_State * pState)
   char sConstraints[128];
   char sText[256] = "";
   char sCallback[128] = "";
-  strcpy_s(sType, 64, lua_tostring(pState, 1));
-  strcpy_s(sConstraints, 128, lua_tostring(pState, 2));
+  strncpy(sType, lua_tostring(pState, 1), 64);
+  strncpy(sConstraints, lua_tostring(pState, 2), 128);
   if (nbParams >= 3)
-    strcpy_s(sText, 256, lua_tostring(pState, 3));
+    strncpy(sText, lua_tostring(pState, 3), 256);
   if (nbParams == 4)
-    strcpy_s(sCallback, 128, lua_tostring(pState, 4));
+    strncpy(sCallback, lua_tostring(pState, 4), 128);
 
   if (!readTargetData(sType, sConstraints, sCallback, L"selectTarget"))
     return 0;
@@ -191,9 +193,9 @@ int LUA_selectTargetThenResolve(lua_State * pState)
   char sType[64];
   char sConstraints[128];
   char sCallback[128];
-  strcpy_s(sType, 64, lua_tostring(pState, 1));
-  strcpy_s(sConstraints, 128, lua_tostring(pState, 2));
-  strcpy_s(sCallback, 128, lua_tostring(pState, 3));
+  strncpy(sType, lua_tostring(pState, 1), 64);
+  strncpy(sConstraints, lua_tostring(pState, 2), 128);
+  strncpy(sCallback, lua_tostring(pState, 3), 128);
 
   if (!readTargetData(sType, sConstraints, "", L"selectTargetThenResolve"))
     return 0;
@@ -452,13 +454,13 @@ int LUA_removeChildEffectFromTown(lua_State * pState)
   return 0;
 }
 
-int getUnitDataBaseOrNot(lua_State * pState, bool bBase, wchar_t * sFuncName)
+int getUnitDataBaseOrNot(lua_State * pState, bool bBase, const wchar_t * sFuncName)
 {
   int nbParams = lua_gettop(pState);
   if (nbParams < 3)
   {
     wchar_t sError[512] = L"";
-    swprintf_s(sError, 512, L"Lua interaction error: \"%s\" should receive at least 3 arguments.", sFuncName);
+    swprintf(sError, 512, L"Lua interaction error: \"%s\" should receive at least 3 arguments.", sFuncName);
     g_pMainGameRoot->m_pLocalClient->getDebug()->notifyErrorMessage(sError);
     return 0;
   }
@@ -483,7 +485,7 @@ int getUnitDataBaseOrNot(lua_State * pState, bool bBase, wchar_t * sFuncName)
         else
         {
           wchar_t sError[512] = L"";
-          swprintf_s(sError, 512, L"Lua interaction error in function %s: variable '%s' doesn't exist.", sFuncName, sName);
+          swprintf(sError, 512, L"Lua interaction error in function %s: variable '%s' doesn't exist.", sFuncName, sName);
           g_pMainGameRoot->m_pLocalClient->getDebug()->notifyErrorMessage(sError);
           return iParam;
         }
@@ -492,13 +494,13 @@ int getUnitDataBaseOrNot(lua_State * pState, bool bBase, wchar_t * sFuncName)
     }
     else {
       wchar_t sError[512] = L"";
-      swprintf_s(sError, 512, L"Lua interaction error in function %s: unit not found.", sFuncName);
+      swprintf(sError, 512, L"Lua interaction error in function %s: unit not found.", sFuncName);
       g_pMainGameRoot->m_pLocalClient->getDebug()->notifyErrorMessage(sError);
     }
   }
   else {
     wchar_t sError[512] = L"";
-    swprintf_s(sError, 512, L"Lua interaction error in function %s: player not found.", sFuncName);
+    swprintf(sError, 512, L"Lua interaction error in function %s: player not found.", sFuncName);
     g_pMainGameRoot->m_pLocalClient->getDebug()->notifyErrorMessage(sError);
   }
   return 0;
@@ -615,9 +617,9 @@ int LUA_getAttacker(lua_State * pState)
     return 0;
   }
   char str[16];
-  sprintf_s(str, 16, "%d", (int) pUnit->getOwner());
+  snprintf(str, 16, "%d", (int) pUnit->getOwner());
   lua_pushstring(pState, str);
-  sprintf_s(str, 16, "%ld", (long) pUnit->getId());
+  snprintf(str, 16, "%ld", (long) pUnit->getId());
   lua_pushstring(pState, str);
   return 2;
 }
@@ -637,9 +639,9 @@ int LUA_getDefender(lua_State * pState)
     return 0;
   }
   char str[16];
-  sprintf_s(str, 16, "%d", (int) pUnit->getOwner());
+  snprintf(str, 16, "%d", (int) pUnit->getOwner());
   lua_pushstring(pState, str);
-  sprintf_s(str, 16, "%ld", (long) pUnit->getId());
+  snprintf(str, 16, "%ld", (long) pUnit->getId());
   lua_pushstring(pState, str);
   return 2;
 }
@@ -697,7 +699,7 @@ int LUA_setDefenderLife(lua_State * pState)
     return 0;
   if (!checkNumberOfParams(pState, 1, L"setDefenderLife"))
     return 0;
-  
+
   int iNewLife = (int) lua_tonumber(pState, 1);
   if (g_bLuaEvaluationMode) {
     if (iNewLife != pServer->getSolver()->m_iDefenderLife) {
@@ -1005,14 +1007,14 @@ int LUA_askForExtraMana(lua_State * pState)
     return 0;
 
   char sDesc[256];
-  strcpy_s(sDesc, 256, lua_tostring(pState, 1));
+  strncpy(sDesc, lua_tostring(pState, 1), 256);
   wchar_t sDescW[256];
   strtow(sDescW, 256, sDesc);
   u16 mana = (u16) lua_tonumber(pState, 2);
   int min = (int) lua_tonumber(pState, 3);
   int max = (int) lua_tonumber(pState, 4);
   char sCallback[128];
-  strcpy_s(sCallback, 128, lua_tostring(pState, 5));
+  strncpy(sCallback, lua_tostring(pState, 5), 128);
   wchar_t sCallbackW[128];
   strtow(sCallbackW, 128, sCallback);
 
@@ -1032,7 +1034,7 @@ int LUA_addResolveParameter(lua_State * pState)
     return 0;
 
   char sParam[256];
-  strcpy_s(sParam, 256, lua_tostring(pState, 1));
+  strncpy(sParam, lua_tostring(pState, 1), 256);
   wchar_t sParamW[256];
   strtow(sParamW, 256, sParam);
 
@@ -1063,7 +1065,7 @@ int LUA_dispatchToClients(lua_State * pState)
   if (nbParams < 2)
   {
     wchar_t sText[512];
-    swprintf_s(sText, 512, L"Lua interaction error: \"dispatchToClients\" should receive at least 2 arguments (client callback name and at least 1 data to dispatch).");
+    swprintf(sText, 512, L"Lua interaction error: \"dispatchToClients\" should receive at least 2 arguments (client callback name and at least 1 data to dispatch).");
     g_pMainGameRoot->m_pLocalClient->getDebug()->notifyErrorMessage(sText);
     return 0;
   }
@@ -1074,7 +1076,7 @@ int LUA_dispatchToClients(lua_State * pState)
 
   // Get callback name
   char sCallback[NAME_MAX_CHARS];
-  strcpy_s(sCallback, NAME_MAX_CHARS, lua_tostring(pState, 1));
+  strncpy(sCallback, lua_tostring(pState, 1), NAME_MAX_CHARS);
   wchar_t sCallbackW[NAME_MAX_CHARS];
   strtow(sCallbackW, NAME_MAX_CHARS, sCallback);
   msg.addString(sCallbackW);
@@ -1090,7 +1092,7 @@ int LUA_dispatchToClients(lua_State * pState)
     {
       msg.addLong(1);
       char sStr[256];
-      strcpy_s(sStr, 256, lua_tostring(pState, i+2));
+      strncpy(sStr, lua_tostring(pState, i+2), 256);
       wchar_t sStrW[256];
       strtow(sStrW, 256, sStr);
       msg.addString(sStrW);
@@ -1117,7 +1119,7 @@ int LUA_getPlayersList(lua_State * pState)
   while (pPlayer != NULL)
   {
     count++;
-    sprintf_s(str, 16, "%d", (int) pPlayer->m_uPlayerId);
+    snprintf(str, 16, "%d", (int) pPlayer->m_uPlayerId);
     lua_pushstring(pState, str);
     pPlayer = pMngr->getNextPlayerAndNeutral(0);
   }
@@ -1147,7 +1149,7 @@ int LUA_getUnitsList(lua_State * pState)
   while (pUnit != NULL)
   {
     count++;
-    sprintf_s(str, 16, "%ld", (long) pUnit->getId());
+    snprintf(str, 16, "%ld", (long) pUnit->getId());
     lua_pushstring(pState, str);
     pUnit = (Unit*) pPlayer->m_pUnits->getNext(0);
   }
@@ -1187,7 +1189,7 @@ int LUA_getSkillsList(lua_State * pState)
     if (pLua->getType() == LUAOBJECT_SKILL)
     {
       count++;
-      sprintf_s(str, 16, "%ld", (long) pLua->getInstanceId());
+      snprintf(str, 16, "%ld", (long) pLua->getInstanceId());
       lua_pushstring(pState, str);
     }
     pLua = pUnit->getNextEffect(0);
@@ -1207,7 +1209,7 @@ int LUA_getTownsList(lua_State * pState)
   while (pTown != NULL)
   {
     count++;
-    sprintf_s(str, 16, "%ld", (long) pTown->getId());
+    snprintf(str, 16, "%ld", (long) pTown->getId());
     if (0 == lua_checkstack(pState, count))
     {
       g_pMainGameRoot->m_pLocalClient->getDebug()->notifyErrorMessage(L"Error in LUA: getTownsList, stack too small!");
@@ -1508,7 +1510,7 @@ int LUA_getObjectPosition(lua_State * pState)
   else
   {
     wchar_t sText[512];
-    swprintf_s(sText, 512, L"Lua interaction error: object type in \"getObjectPosition\" is invalid.");
+    swprintf(sText, 512, L"Lua interaction error: object type in \"getObjectPosition\" is invalid.");
     g_pMainGameRoot->m_pLocalClient->getDebug()->notifyErrorMessage(sText);
     return 0;
   }
@@ -2023,13 +2025,13 @@ int LUA_getUnitStatus(lua_State * pState) {
     }
     else {
       wchar_t sError[512] = L"";
-      swprintf_s(sError, 512, L"Lua interaction error in function getUnitStatus: unit not found.");
+      swprintf(sError, 512, L"Lua interaction error in function getUnitStatus: unit not found.");
       g_pMainGameRoot->m_pLocalClient->getDebug()->notifyErrorMessage(sError);
     }
   }
   else {
     wchar_t sError[512] = L"";
-    swprintf_s(sError, 512, L"Lua interaction error in function getUnitStatus: player not found.");
+    swprintf(sError, 512, L"Lua interaction error in function getUnitStatus: player not found.");
     g_pMainGameRoot->m_pLocalClient->getDebug()->notifyErrorMessage(sError);
   }
   return 0;
@@ -2055,13 +2057,13 @@ int LUA_getUnitNameAndEdition(lua_State * pState) {
     }
     else {
       wchar_t sError[512] = L"";
-      swprintf_s(sError, 512, L"Lua interaction error in function getUnitNameAndEdition: unit not found.");
+      swprintf(sError, 512, L"Lua interaction error in function getUnitNameAndEdition: unit not found.");
       g_pMainGameRoot->m_pLocalClient->getDebug()->notifyErrorMessage(sError);
     }
   }
   else {
     wchar_t sError[512] = L"";
-    swprintf_s(sError, 512, L"Lua interaction error in function getUnitNameAndEdition: player not found.");
+    swprintf(sError, 512, L"Lua interaction error in function getUnitNameAndEdition: player not found.");
     g_pMainGameRoot->m_pLocalClient->getDebug()->notifyErrorMessage(sError);
   }
   return 0;
@@ -2073,7 +2075,7 @@ int LUA_removeUnit(lua_State * pState) {
     return 0;
   if (!checkNumberOfParams(pState, 2, L"removeUnit"))
     return 0;
-  
+
   u8 uPlayerId = (u8)lua_tonumber(pState, 1);
   u32 uUnitId = (u32)lua_tonumber(pState, 2);
 
@@ -2097,7 +2099,7 @@ int LUA_getMapDimensions(lua_State * pState) {
   return 2;
 }
 
-u8 getTargetTypeFromName(char * sType)
+u8 getTargetTypeFromName(const char * sType)
 {
   u8 uType = 0;
   if (_stricmp(sType, "unit") == 0)
@@ -2125,7 +2127,7 @@ u8 getTargetTypeFromName(char * sType)
   return uType;
 }
 
-u8 getTargetTypeFromName(wchar_t * sType)
+u8 getTargetTypeFromName(const wchar_t * sType)
 {
   u8 uType = 0;
   if (_wcsicmp(sType, L"unit") == 0)

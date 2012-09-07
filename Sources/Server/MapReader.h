@@ -2,7 +2,7 @@
 #define _MAP_READER_H
 
 #include "../Common/BaseObject.h"
-#include <lua.hpp>
+#include <lua5.1/lua.hpp>
 
 class LocalClient;
 class ObjectList;

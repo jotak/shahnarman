@@ -91,7 +91,7 @@ void Map::createFromServer(MapReader * pMapReader, LocalClient * pLocalClient)
       {
         m_pTiles[x][y] = new MapTile(TERRAIN_SEA, pLocalClient->getServer()->getSolver()->getGlobalSpellsPtr());
         wchar_t sError[512];
-        swprintf_s(sError, 512, L"Invalid terrain type at (%d,%d)", (int)x, (int)y);
+        swprintf(sError, 512, L"Invalid terrain type at (%d,%d)", (int)x, (int)y);
         pLocalClient->getDebug()->notifyErrorMessage(sError);
       }
     }

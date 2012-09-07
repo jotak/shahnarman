@@ -134,6 +134,8 @@ void InfoboxDlg::updatePlayersState()
     case connection_error:
       i18n->getText(L"CONNECTION_PROBLEM", sStatus, 64);
       break;
+      default:
+      break;
     }
     wsafecat(sPlayersList, LABEL_MAX_CHARS, L" (");
     if (state == playing)
@@ -143,7 +145,7 @@ void InfoboxDlg::updatePlayersState()
       {
         int iTimer = (int) fTimer;
         wchar_t sTimer[64];
-        swprintf_s(sTimer, 64, L"%d:%02d ", iTimer / 60, iTimer % 60);
+        swprintf(sTimer, 64, L"%d:%02d ", iTimer / 60, iTimer % 60);
         wsafecat(sPlayersList, LABEL_MAX_CHARS, sTimer);
       }
     }
@@ -233,7 +235,7 @@ bool InfoboxDlg::onButtonEvent(ButtonAction * pEvent, guiComponent * pCpnt)
     {
       if (pCpnt->getType() & GOTYPE_BUTTON)
       {
-        if (wcscmp(pCpnt->getId(), L"StackObject") == 0 && pCpnt->getAttachment() == NULL || m_pCurrentGroup == NULL)
+        if ((wcscmp(pCpnt->getId(), L"StackObject") == 0 && pCpnt->getAttachment() == NULL) || m_pCurrentGroup == NULL)
           ((guiToggleButton*)pCpnt)->setClickState(false);
         else
           ((guiToggleButton*)pCpnt)->setClickState(m_pCurrentGroup->goTo(0, pCpnt->getAttachment()));

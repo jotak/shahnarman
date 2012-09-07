@@ -20,12 +20,6 @@ guiPopup::guiPopup() : guiFrame()
 // -----------------------------------------------------------------
 guiPopup::~guiPopup()
 {
-#ifdef DBG_VERBOSE1
-  printf("Begin destroy guiPopup\n");
-#endif
-#ifdef DBG_VERBOSE1
-  printf("End destroy guiPopup\n");
-#endif
 }
 
 // -----------------------------------------------------------------

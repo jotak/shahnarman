@@ -4,7 +4,7 @@
 // Name : MapObject
 //  Constructor
 // -----------------------------------------------------------------
-MapObject::MapObject(CoordsMap mapPos, Map * pMap, ObjectList ** pGlobalEffects, wchar_t * sIdentifiers) : GraphicObject(), LuaTargetable(pGlobalEffects, sIdentifiers)
+MapObject::MapObject(CoordsMap mapPos, Map * pMap, ObjectList ** pGlobalEffects, const wchar_t * sIdentifiers) : GraphicObject(), LuaTargetable(pGlobalEffects, sIdentifiers)
 {
   m_MapPosition = mapPos;
   m_uOwner = 0;

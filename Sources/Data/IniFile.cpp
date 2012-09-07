@@ -129,7 +129,7 @@ int IniFile::findIntValue(const wchar_t * sKey, int iDefault)
   if (res == NULL)
     return iDefault;
   int ires = 0;
-  swscanf_s(res, L"%d", &ires);
+  swscanf(res, L"%d", &ires);
   return ires;
 }
 
@@ -153,7 +153,7 @@ float IniFile::findFloatValue(const wchar_t * sKey, float fDefault)
   if (res == NULL)
     return fDefault;
   float fres = 0;
-  swscanf_s(res, L"%f", &fres);
+  swscanf(res, L"%f", &fres);
   return fres;
 }
 
@@ -193,7 +193,7 @@ void IniFile::setKeyAndBoolValue(const wchar_t * sKey, bool bValue)
 void IniFile::setKeyAndIntValue(const wchar_t * sKey, int iValue)
 {
   wchar_t sValue[INI_READER_MAX_CHARS];
-  swprintf_s(sValue, INI_READER_MAX_CHARS, L"%d", iValue);
+  swprintf(sValue, INI_READER_MAX_CHARS, L"%d", iValue);
   setKeyAndCharValue(sKey, sValue);
 }
 
@@ -203,7 +203,7 @@ void IniFile::setKeyAndIntValue(const wchar_t * sKey, int iValue)
 void IniFile::setKeyAndFloatValue(const wchar_t * sKey, float fValue)
 {
   wchar_t sValue[INI_READER_MAX_CHARS];
-  swprintf_s(sValue, INI_READER_MAX_CHARS, L"%f", fValue);
+  swprintf(sValue, INI_READER_MAX_CHARS, L"%f", fValue);
   setKeyAndCharValue(sKey, sValue);
 }
 

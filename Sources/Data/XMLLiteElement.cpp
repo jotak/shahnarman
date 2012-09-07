@@ -18,7 +18,7 @@ wchar_t * XMLLiteAttribute::getCharValue()
 long XMLLiteAttribute::getIntValue()
 {
   long value;
-  swscanf_s(m_sValue, L"%ld", &value);
+  swscanf(m_sValue, L"%ld", &value);
   return value;
 }
 
@@ -28,7 +28,7 @@ long XMLLiteAttribute::getIntValue()
 double XMLLiteAttribute::getFloatValue()
 {
   double value;
-  swscanf_s(m_sValue, L"%lf", &value);
+  swscanf(m_sValue, L"%lf", &value);
   return value;
 }
 
@@ -47,7 +47,7 @@ wchar_t * XMLLiteElement::getCharValue()
 long XMLLiteElement::getIntValue()
 {
   long value;
-  swscanf_s(m_sValue, L"%ld", &value);
+  swscanf(m_sValue, L"%ld", &value);
   return value;
 }
 
@@ -57,7 +57,7 @@ long XMLLiteElement::getIntValue()
 double XMLLiteElement::getFloatValue()
 {
   double value;
-  swscanf_s(m_sValue, L"%lf", &value);
+  swscanf(m_sValue, L"%lf", &value);
   return value;
 }
 

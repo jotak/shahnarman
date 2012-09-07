@@ -80,7 +80,7 @@ public:
   bool sortCompare(BaseObject * A, BaseObject * B);
 
   // Static default constructors
-  static guiList * createDefaultList(int width, int height, wchar_t * sId, KeyboardInputEngine * pInputs, DisplayEngine * pDisplay);
+  static guiList * createDefaultList(int width, int height, const wchar_t * sId, KeyboardInputEngine * pInputs, DisplayEngine * pDisplay);
 
 protected:
   void updateSelectionGeometry();

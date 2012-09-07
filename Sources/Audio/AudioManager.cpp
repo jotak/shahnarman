@@ -136,14 +136,14 @@ bool AudioManager::readOggSound(const wchar_t * sName, int iSound)
     case ENOENT:
       {
         wchar_t sError[1024];
-        swprintf_s(sError, 1024, L"Can't read music, file %s not found", sName);
+        swprintf(sError, 1024, L"Can't read music, file %s not found", sName);
         m_pDebug->notifyErrorMessage(sError);
         return false;
       }
     default:
       {
         wchar_t sError[1024];
-        swprintf_s(sError, 1024, L"Can't read music, error on reading (%s)", sName);
+        swprintf(sError, 1024, L"Can't read music, error on reading (%s)", sName);
         m_pDebug->notifyErrorMessage(sError);
         return false;
       }
@@ -160,7 +160,7 @@ bool AudioManager::readOggSound(const wchar_t * sName, int iSound)
   {
     fclose(f);
     wchar_t sError[1024];
-    swprintf_s(sError, 1024, L"Can't read music file %s, can't read ogg", sName);
+    swprintf(sError, 1024, L"Can't read music file %s, can't read ogg", sName);
     m_pDebug->notifyErrorMessage(sError);
     return false;
   }
@@ -223,7 +223,7 @@ bool AudioManager::readOggSound(const wchar_t * sName, int iSound)
     if (totalBuffer != NULL)
       delete[] totalBuffer;
     wchar_t sError[1024];
-    swprintf_s(sError, 1024, L"Can't read content of ogg file %s", sName);
+    swprintf(sError, 1024, L"Can't read content of ogg file %s", sName);
     m_pDebug->notifyErrorMessage(sError);
     return false;
   }
@@ -318,14 +318,14 @@ void AudioManager::playMusic(int iMusicId)
     case ENOENT:
       {
         wchar_t sError[1024];
-        swprintf_s(sError, 1024, L"Can't read music, file %s not found", m_sAllMusicFiles[iMusicId]);
+        swprintf(sError, 1024, L"Can't read music, file %s not found", m_sAllMusicFiles[iMusicId]);
         m_pDebug->notifyErrorMessage(sError);
         return;
       }
     default:
       {
         wchar_t sError[1024];
-        swprintf_s(sError, 1024, L"Can't read music, error on reading (%s)", m_sAllMusicFiles[iMusicId]);
+        swprintf(sError, 1024, L"Can't read music, error on reading (%s)", m_sAllMusicFiles[iMusicId]);
         m_pDebug->notifyErrorMessage(sError);
         return;
       }
@@ -348,7 +348,7 @@ void AudioManager::playMusic(int iMusicId)
   {
     fclose(f);
     wchar_t sError[1024];
-    swprintf_s(sError, 1024, L"Can't read music file %s, can't read ogg", m_sAllMusicFiles[iMusicId]);
+    swprintf(sError, 1024, L"Can't read music file %s, can't read ogg", m_sAllMusicFiles[iMusicId]);
     m_pDebug->notifyErrorMessage(sError);
     return;
   }

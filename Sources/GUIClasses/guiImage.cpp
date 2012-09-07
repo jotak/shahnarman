@@ -18,12 +18,6 @@ guiImage::guiImage() : guiComponent()
 // -----------------------------------------------------------------
 guiImage::~guiImage()
 {
-#ifdef DBG_VERBOSE1
-  printf("Begin destroy guiImage\n");
-#endif
-#ifdef DBG_VERBOSE1
-  printf("End destroy guiImage\n");
-#endif
 }
 
 // -----------------------------------------------------------------
@@ -105,7 +99,7 @@ int guiImage::getImageTexture()
 {
  if (m_pGeometry)
    return ((GeometryQuads*)m_pGeometry)->getTexture();
- return NULL;
+ return -1;
 }
 
 // -----------------------------------------------------------------

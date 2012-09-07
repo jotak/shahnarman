@@ -1,7 +1,7 @@
 #ifndef _LUA_CALLBACKS_H
 #define _LUA_CALLBACKS_H
 
-#include <lua.hpp>
+#include <lua5.1/lua.hpp>
 
 #define SELECT_TYPE_UNIT              1
 #define SELECT_TYPE_DEAD_UNIT         2
@@ -25,7 +25,7 @@
 
 extern void registerLuaCallbacks(lua_State * pState);
 
-extern unsigned char getTargetTypeFromName(char * sType);
-extern unsigned char getTargetTypeFromName(wchar_t * sType);
+extern unsigned char getTargetTypeFromName(const char * sType);
+extern unsigned char getTargetTypeFromName(const wchar_t * sType);
 
 #endif

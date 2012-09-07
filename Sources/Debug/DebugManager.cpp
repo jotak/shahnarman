@@ -76,7 +76,7 @@ void DebugManager::Update(double delta)
       CoordsMap cm = m_pLocalClient->getDisplay()->getMapCoords(cs);
       Coords3D cam = m_pLocalClient->getDisplay()->getCamera();
       wchar_t sInfo[512];
-      swprintf_s(sInfo, 512, L"ScreenX=%d ; ScreenY=%d\n3dX=%.1f ; 3dY=%.1f\nMapX=%d ; MapY=%d\nCamX=%.1f ; CamY=%.1f ; CamZ=%.1f\nFPS : %.0f", cs.x, cs.y, c3.x, c3.y, cm.x, cm.y, cam.x, cam.y, cam.z, fFps);
+      swprintf(sInfo, 512, L"ScreenX=%d ; ScreenY=%d\n3dX=%.1f ; 3dY=%.1f\nMapX=%d ; MapY=%d\nCamX=%.1f ; CamY=%.1f ; CamZ=%.1f\nFPS : %.0f", cs.x, cs.y, c3.x, c3.y, cm.x, cm.y, cam.x, cam.y, cam.z, fFps);
       if (m_pFPSGeometry == NULL)
         m_pFPSGeometry = new GeometryText(sInfo, m_iFontId, VB_Static, m_pLocalClient->getDisplay());
       else
@@ -245,13 +245,13 @@ void DebugManager::notifyINIErrorMessage(wchar_t * sFile, int errorCode)
   switch (errorCode)
   {
   case INIREADER_ERROR_CANT_OPEN_FILE:
-    swprintf_s(sError, 1024, L"%s: INIREADER_ERROR_CANT_OPEN_FILE.", sFile);
+    swprintf(sError, 1024, L"%s: INIREADER_ERROR_CANT_OPEN_FILE.", sFile);
     break;
   case INIREADER_ERROR_MAX_LINES_REACHED:
-    swprintf_s(sError, 1024, L"%s: INIREADER_ERROR_MAX_LINES_REACHED.", sFile);
+    swprintf(sError, 1024, L"%s: INIREADER_ERROR_MAX_LINES_REACHED.", sFile);
     break;
   default:
-    swprintf_s(sError, 1024, L"%s: Unknown error.", sFile);
+    swprintf(sError, 1024, L"%s: Unknown error.", sFile);
     break;
   }
   addCustomeLine(sError);
@@ -266,34 +266,34 @@ void DebugManager::notifyXMLErrorMessage(wchar_t * sFile, int errorCode, int lin
   switch (errorCode)
   {
   case XMLLITE_ERROR_ELEMENT_EXPECTED:
-    swprintf_s(sError, 1024, L"%s: XMLLITE_ERROR_ELEMENT_EXPECTED: line %d, col %d.", sFile, line, col);
+    swprintf(sError, 1024, L"%s: XMLLITE_ERROR_ELEMENT_EXPECTED: line %d, col %d.", sFile, line, col);
     break;
   case XMLLITE_ERROR_EOF_NOT_EXPECTED:
-    swprintf_s(sError, 1024, L"%s: XMLLITE_ERROR_EOF_NOT_EXPECTED: line %d, col %d.", sFile, line, col);
+    swprintf(sError, 1024, L"%s: XMLLITE_ERROR_EOF_NOT_EXPECTED: line %d, col %d.", sFile, line, col);
     break;
   case XMLLITE_ERROR_LINEBREAK_IN_ELEMENT:
-    swprintf_s(sError, 1024, L"%s: XMLLITE_ERROR_LINEBREAK_IN_ELEMENT: line %d, col %d.", sFile, line, col);
+    swprintf(sError, 1024, L"%s: XMLLITE_ERROR_LINEBREAK_IN_ELEMENT: line %d, col %d.", sFile, line, col);
     break;
   case XMLLITE_ERROR_ELEMENT_END_EXPECTED:
-    swprintf_s(sError, 1024, L"%s: XMLLITE_ERROR_ELEMENT_END_EXPECTED: line %d, col %d.", sFile, line, col);
+    swprintf(sError, 1024, L"%s: XMLLITE_ERROR_ELEMENT_END_EXPECTED: line %d, col %d.", sFile, line, col);
     break;
   case XMLLITE_ERROR_LINEBREAK_IN_ATTRIBUTE:
-    swprintf_s(sError, 1024, L"%s: XMLLITE_ERROR_LINEBREAK_IN_ATTRIBUTE: line %d, col %d.", sFile, line, col);
+    swprintf(sError, 1024, L"%s: XMLLITE_ERROR_LINEBREAK_IN_ATTRIBUTE: line %d, col %d.", sFile, line, col);
     break;
   case XMLLITE_ERROR_EQUAL_EXPECTED_IN_ATTRIBUTE:
-    swprintf_s(sError, 1024, L"%s: XMLLITE_ERROR_EQUAL_EXPECTED_IN_ATTRIBUTE: line %d, col %d.", sFile, line, col);
+    swprintf(sError, 1024, L"%s: XMLLITE_ERROR_EQUAL_EXPECTED_IN_ATTRIBUTE: line %d, col %d.", sFile, line, col);
     break;
   case XMLLITE_ERROR_CLOSING_TAG_DOESNT_MATCH:
-    swprintf_s(sError, 1024, L"%s: XMLLITE_ERROR_CLOSING_TAG_DOESNT_MATCH: line %d, col %d.", sFile, line, col);
+    swprintf(sError, 1024, L"%s: XMLLITE_ERROR_CLOSING_TAG_DOESNT_MATCH: line %d, col %d.", sFile, line, col);
     break;
   case XMLLITE_ERROR_CLOSING_TAG_EXPECTED:
-    swprintf_s(sError, 1024, L"%s: XMLLITE_ERROR_CLOSING_TAG_EXPECTED: line %d, col %d.", sFile, line, col);
+    swprintf(sError, 1024, L"%s: XMLLITE_ERROR_CLOSING_TAG_EXPECTED: line %d, col %d.", sFile, line, col);
     break;
   case XMLLITE_ERROR_CANT_OPEN_FILE:
-    swprintf_s(sError, 1024, L"%s: XMLLITE_ERROR_CANT_OPEN_FILE: line %d, col %d.", sFile, line, col);
+    swprintf(sError, 1024, L"%s: XMLLITE_ERROR_CANT_OPEN_FILE: line %d, col %d.", sFile, line, col);
     break;
   default:
-    swprintf_s(sError, 1024, L"%s: Unknown error: line %d, col %d.", sFile, line, col);
+    swprintf(sError, 1024, L"%s: Unknown error: line %d, col %d.", sFile, line, col);
     break;
   }
   addCustomeLine(sError);
@@ -380,7 +380,7 @@ void DebugManager::autoStartGame()
   {
     // Create player object
     pPlayer = new Player(playerId, 0, pServer->getSolver()->getGlobalSpellsPtr());
-    swprintf_s(pPlayer->m_sProfileName, NAME_MAX_CHARS, L"test%d", playerId);
+    swprintf(pPlayer->m_sProfileName, NAME_MAX_CHARS, L"test%d", playerId);
     Profile * pProfile = m_pLocalClient->getDataFactory()->findProfile(pPlayer->m_sProfileName);
     AvatarData * pAvatar = (AvatarData*) pProfile->getAvatarsList()->getFirst(0);
     pPlayer->m_Color = rgb(1, 1, 1);
@@ -423,7 +423,7 @@ void DebugManager::autoStartGame()
               else
               {
                 wchar_t sError[1024];
-                swprintf_s(sError, 1024, L"Warning: artifact %s tries to modify characteristic that doesn't exist (%s)", pArtifact->m_sObjectId, ((ArtifactEffect_Charac*)pEffect)->m_sKey);
+                swprintf(sError, 1024, L"Warning: artifact %s tries to modify characteristic that doesn't exist (%s)", pArtifact->m_sObjectId, ((ArtifactEffect_Charac*)pEffect)->m_sKey);
                 m_pLocalClient->getDebug()->notifyErrorMessage(sError);
               }
               break;
@@ -436,7 +436,7 @@ void DebugManager::autoStartGame()
               else
               {
                 wchar_t sError[1024];
-                swprintf_s(sError, 1024, L"Warning: artifact %s tries to add spell that doesn't exist (%s)", pArtifact->m_sObjectId, ((ArtifactEffect_Spell*)pEffect)->m_sSpellName);
+                swprintf(sError, 1024, L"Warning: artifact %s tries to add spell that doesn't exist (%s)", pArtifact->m_sObjectId, ((ArtifactEffect_Spell*)pEffect)->m_sSpellName);
                 m_pLocalClient->getDebug()->notifyErrorMessage(sError);
               }
               break;
@@ -449,7 +449,7 @@ void DebugManager::autoStartGame()
               else
               {
                 wchar_t sError[1024];
-                swprintf_s(sError, 1024, L"Warning: artifact %s tries to add skill that doesn't exist or that can't be loaded (%s)", pArtifact->m_sObjectId, ((ArtifactEffect_Skill*)pEffect)->m_sSkillName);
+                swprintf(sError, 1024, L"Warning: artifact %s tries to add skill that doesn't exist or that can't be loaded (%s)", pArtifact->m_sObjectId, ((ArtifactEffect_Skill*)pEffect)->m_sSkillName);
                 m_pLocalClient->getDebug()->notifyErrorMessage(sError);
               }
               break;

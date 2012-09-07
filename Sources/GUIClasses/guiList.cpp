@@ -22,15 +22,9 @@ guiList::guiList(KeyboardInputEngine * pInputs) : EventListener(0)
 // -----------------------------------------------------------------
 guiList::~guiList()
 {
-#ifdef DBG_VERBOSE1
-  printf("Begin destroy guiList\n");
-#endif
   if (m_bHasFocus)
     onFocusLost();
   FREE(m_pSelectionGeometry);
-#ifdef DBG_VERBOSE1
-  printf("End destroy guiList\n");
-#endif
 }
 
 // -----------------------------------------------------------------
@@ -485,7 +479,7 @@ guiObject * guiList::guiListLabel::onButtonEvent(ButtonAction * pEvent)
 // Name : createDefaultList
 //  Static default constructor
 // -----------------------------------------------------------------
-guiList * guiList::createDefaultList(int width, int height, wchar_t * sId, KeyboardInputEngine * pInputs, DisplayEngine * pDisplay)
+guiList * guiList::createDefaultList(int width, int height, const wchar_t * sId, KeyboardInputEngine * pInputs, DisplayEngine * pDisplay)
 {
   int frmtex[8];
   frmtex[0] = pDisplay->getTextureEngine()->findTexture(L"interface:LstTL");

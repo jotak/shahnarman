@@ -44,14 +44,14 @@ public:
   int getNbLines() { return m_iNbLines; };
 
   // Clone / init
-  virtual void init(int iCaretTex, wchar_t * sText, FontId fontId, F_RGBA textColor, int iNbLines, bool bMultiLines, int * iMainTexs, const wchar_t * sCpntId, int xPxl, int yPxl, int wPxl, int hPxl, DisplayEngine * pDisplay);
+  virtual void init(int iCaretTex, const wchar_t * sText, FontId fontId, F_RGBA textColor, int iNbLines, bool bMultiLines, int * iMainTexs, const wchar_t * sCpntId, int xPxl, int yPxl, int wPxl, int hPxl, DisplayEngine * pDisplay);
   virtual guiObject * clone();
 
   // Other
   void setFocus();
 
   // Static default constructors
-  static guiEditBox * createDefaultEditBox(int iNbLines, bool bMultiLines, int wPxl, wchar_t * sId, KeyboardInputEngine * pInputs, DisplayEngine * pDisplay);
+  static guiEditBox * createDefaultEditBox(int iNbLines, bool bMultiLines, int wPxl, const wchar_t * sId, KeyboardInputEngine * pInputs, DisplayEngine * pDisplay);
 
 protected:
   void updateSelectionGeometry();

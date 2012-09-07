@@ -23,7 +23,7 @@ public:
   virtual guiObject * clone();
 
   // Static default constructors
-  static guiGauge * createDefaultGauge(int iRef, F_RGBA color, int iWidth, int iHeight, wchar_t * sId, DisplayEngine * pDisplay);
+  static guiGauge * createDefaultGauge(int iRef, F_RGBA color, int iWidth, int iHeight, const wchar_t * sId, DisplayEngine * pDisplay);
 
   // Other
   void setMax(int iVal);

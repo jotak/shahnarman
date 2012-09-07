@@ -30,7 +30,7 @@ wchar_t * ShopItem::getInfo(wchar_t * str, int strsize)
   wchar_t sbuf2[64];
   i18n->getText1stUp(L"PRICE", sbuf1, 64);
   i18n->getText(L"2P", sbuf2, 64);
-  swprintf_s(str, strsize, L"%s. %s%s%d", m_sName, sbuf1, sbuf2, m_iCost);
+  swprintf(str, strsize, L"%s. %s%s%d", m_sName, sbuf1, sbuf2, m_iCost);
   return str;
 }
 
@@ -46,7 +46,7 @@ guiPopup * ShopItem::createPopup(int iCash, DisplayEngine * pDisplay)
   i18n->getText1stUp(L"PRICE", sbuf1, 64);
   i18n->getText(L"2P", sbuf2, 64);
   i18n->getText(L"YOUR_CASH", sbuf3, 64);
-  swprintf_s(sText, 512, L"%s\n%s%s%d (%s%d)", m_sName, sbuf1, sbuf2, m_iCost, sbuf3, iCash);
+  swprintf(sText, 512, L"%s\n%s%s%d (%s%d)", m_sName, sbuf1, sbuf2, m_iCost, sbuf3, iCash);
   int iDocWidth = 350;
   int iImageSize = 64;
   guiPopup * pPopup = guiPopup::createTextAndMultiButtonsPopup(sText, 2, iDocWidth, pDisplay);

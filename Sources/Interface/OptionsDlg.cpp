@@ -168,7 +168,7 @@ void OptionsDlg::update(double delta)
     wchar_t sText[LABEL_MAX_CHARS];
     wchar_t sBuf[LABEL_MAX_CHARS];
     i18n->getText(L"CLOSES_IN_(d)_SEC", sBuf, LABEL_MAX_CHARS);
-    swprintf_s(sText, LABEL_MAX_CHARS, sBuf, (int) m_fConfirmVideoModeTimer);
+    swprintf(sText, LABEL_MAX_CHARS, sBuf, (int) m_fConfirmVideoModeTimer);
     guiLabel * pLbl = (guiLabel*) m_pConfirmVideoModeDlg->getDocument()->getComponent(L"TimerLabel");
     assert(pLbl != NULL);
     pLbl->setText(sText);
@@ -244,7 +244,7 @@ bool OptionsDlg::onButtonEvent(ButtonAction * pEvent, guiComponent * pCpnt)
       pPanel->getDocument()->addComponent(pBtn);
       wchar_t sEditionName[NAME_MAX_CHARS];
       pEdition->findLocalizedElement(sEditionName, NAME_MAX_CHARS, i18n->getCurrentLanguageName(), L"name");
-      swprintf_s(sText, LABEL_MAX_CHARS, L"%s\n  (md5: %s)", sEditionName, pEdition->getChecksum());
+      swprintf(sText, LABEL_MAX_CHARS, L"%s\n  (md5: %s)", sEditionName, pEdition->getChecksum());
       pLbl = new guiLabel();
       pLbl->init(sText, H2_FONT, H2_COLOR, L"", 30, yPxl, 0, 0, getDisplay());
       pPanel->getDocument()->addComponent(pLbl);
@@ -331,7 +331,7 @@ bool OptionsDlg::onButtonEvent(ButtonAction * pEvent, guiComponent * pCpnt)
     for (int i = 0; i < nbResults; i++)
     {
       wchar_t sText[LABEL_MAX_CHARS];
-      swprintf_s(sText, LABEL_MAX_CHARS, L"%dx%d:%d", pRes[i].x, pRes[i].y, pBpp[i]);
+      swprintf(sText, LABEL_MAX_CHARS, L"%dx%d:%d", pRes[i].x, pRes[i].y, pBpp[i]);
       pBox->addString(sText, sText);
       if (wcscmp(sText, m_pLocalClient->getClientParameters()->sGameModeString) == 0)
         pBox->setItem(i);
@@ -370,7 +370,7 @@ bool OptionsDlg::onButtonEvent(ButtonAction * pEvent, guiComponent * pCpnt)
       if (i == 0)
         i18n->getText(L"0_MUTE", sText, LABEL_MAX_CHARS);
       else
-        swprintf_s(sText, LABEL_MAX_CHARS, L"%d", i);
+        swprintf(sText, LABEL_MAX_CHARS, L"%d", i);
       pBox->addString(sText, L"");
       if (m_pLocalClient->getClientParameters()->iSoundVolume == i)
         pBox->setItem(i);
@@ -392,12 +392,12 @@ bool OptionsDlg::onButtonEvent(ButtonAction * pEvent, guiComponent * pCpnt)
       if (i == 0)
         i18n->getText(L"0_MUTE", sText, LABEL_MAX_CHARS);
       else
-        swprintf_s(sText, LABEL_MAX_CHARS, L"%d", i);
+        swprintf(sText, LABEL_MAX_CHARS, L"%d", i);
       pBox->addString(sText, L"");
       if (m_pLocalClient->getClientParameters()->iMusicVolume == i)
         pBox->setItem(i);
     }
-    
+
     yPxl += pBox->getHeight() + 8;
     guiButton * pBtn = (guiButton*) pDoc->getComponent(L"OkButton");
     pBtn->moveTo(3 * iWidth / 4 - pBtn->getWidth() / 2, yPxl);
@@ -424,7 +424,7 @@ void OptionsDlg::onAcceptGameParameters()
   // Write active editions file
   wchar_t sFile[MAX_PATH];
   FILE * pFile = NULL;
-  swprintf_s(sFile, MAX_PATH, L"%sactive.txt", EDITIONS_PATH);
+  swprintf(sFile, MAX_PATH, L"%sactive.txt", EDITIONS_PATH);
   if (0 != wfopen(&pFile, sFile, L"w"))
   {
     m_pLocalClient->getDebug()->notifyErrorMessage(L"Error: can't open active.txt file for writing.");
@@ -497,7 +497,7 @@ void OptionsDlg::onAcceptVideoParameters()
     m_pConfirmVideoModeDlg = guiPopup::createOkCancelPopup(sText, getDisplay());
     wchar_t sBuf[LABEL_MAX_CHARS];
     i18n->getText(L"CLOSES_IN_(d)_SEC", sBuf, LABEL_MAX_CHARS);
-    swprintf_s(sText, LABEL_MAX_CHARS, sBuf, (int) m_fConfirmVideoModeTimer);
+    swprintf(sText, LABEL_MAX_CHARS, sBuf, (int) m_fConfirmVideoModeTimer);
     guiLabel * pLbl = new guiLabel();
     pLbl->init(sText, TEXT_FONT, TEXT_COLOR, L"TimerLabel", 10, 80, 200, 0, getDisplay());
     m_pConfirmVideoModeDlg->getDocument()->addComponent(pLbl);

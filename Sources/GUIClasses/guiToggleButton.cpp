@@ -15,12 +15,6 @@ guiToggleButton::guiToggleButton() : guiButton()
 // -----------------------------------------------------------------
 guiToggleButton::~guiToggleButton()
 {
-#ifdef DBG_VERBOSE1
-  printf("Begin destroy guiToggleButton\n");
-#endif
-#ifdef DBG_VERBOSE1
-  printf("End destroy guiToggleButton\n");
-#endif
 }
 
 // -----------------------------------------------------------------
@@ -68,7 +62,7 @@ guiObject * guiToggleButton::onButtonEvent(ButtonAction * pEvent)
 //  Static default constructor
 //  Use it to avoid passing always the same 3591218 arguments to "init"
 // -----------------------------------------------------------------
-guiToggleButton * guiToggleButton::createDefaultTexturedToggleButton(int iTex, int iSize, wchar_t * sId, DisplayEngine * pDisplay)
+guiToggleButton * guiToggleButton::createDefaultTexturedToggleButton(int iTex, int iSize, const wchar_t * sId, DisplayEngine * pDisplay)
 {
   guiToggleButton * pBtn = new guiToggleButton();
   pBtn->init(
@@ -83,7 +77,7 @@ guiToggleButton * guiToggleButton::createDefaultTexturedToggleButton(int iTex, i
 //  Static default constructor
 //  Use it to avoid passing always the same 3591218 arguments to "init"
 // -----------------------------------------------------------------
-guiToggleButton * guiToggleButton::createDefaultCheckBox(wchar_t * sId, DisplayEngine * pDisplay)
+guiToggleButton * guiToggleButton::createDefaultCheckBox(const wchar_t * sId, DisplayEngine * pDisplay)
 {
   guiToggleButton * pBtn = new guiToggleButton();
   pBtn->init(

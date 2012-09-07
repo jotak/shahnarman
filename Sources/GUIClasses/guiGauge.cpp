@@ -20,13 +20,7 @@ guiGauge::guiGauge() : guiComponent()
 // -----------------------------------------------------------------
 guiGauge::~guiGauge()
 {
-#ifdef DBG_VERBOSE1
-  printf("Begin destroy guiGauge\n");
-#endif
   FREE(m_pForegroundGeometry);
-#ifdef DBG_VERBOSE1
-  printf("End destroy guiGauge\n");
-#endif
 }
 
 // -----------------------------------------------------------------
@@ -116,7 +110,7 @@ void guiGauge::setValue(int iVal)
 // Name : createDefaultGauge
 //  Static default constructor
 // -----------------------------------------------------------------
-guiGauge * guiGauge::createDefaultGauge(int iRef, F_RGBA color, int iWidth, int iHeight, wchar_t * sId, DisplayEngine * pDisplay)
+guiGauge * guiGauge::createDefaultGauge(int iRef, F_RGBA color, int iWidth, int iHeight, const wchar_t * sId, DisplayEngine * pDisplay)
 {
   guiGauge * pGauge = new guiGauge();
   pGauge->init(

@@ -51,7 +51,7 @@ void Spell::loadBasicData(DebugManager * pDebug)
   else
   {
     wchar_t sError[512];
-    swprintf_s(sError, 512, L"Lua interaction error: spell in file %s has no name defined.", m_sObjectName);
+    swprintf(sError, 512, L"Lua interaction error: spell in file %s has no name defined.", m_sObjectName);
     pDebug->notifyErrorMessage(sError);
     wsafecpy(m_sName, NAME_MAX_CHARS, L"");
   }
@@ -62,7 +62,7 @@ void Spell::loadBasicData(DebugManager * pDebug)
   {
 	  // error : cost not found
     wchar_t sError[512] = L"";
-    swprintf_s(sError, 512, L"Lua interaction error: spell in file %s has no cost defined.", m_sObjectName);
+    swprintf(sError, 512, L"Lua interaction error: spell in file %s has no cost defined.", m_sObjectName);
     pDebug->notifyErrorMessage(sError);
   }
   else
@@ -77,7 +77,7 @@ void Spell::loadBasicData(DebugManager * pDebug)
   else
   {
     wchar_t sError[512];
-    swprintf_s(sError, 512, L"Lua interaction error: spell in file %s has no description defined.", m_sObjectName);
+    swprintf(sError, 512, L"Lua interaction error: spell in file %s has no description defined.", m_sObjectName);
     pDebug->notifyErrorMessage(sError);
     wsafecpy(m_sDescription, DESCRIPTION_MAX_CHARS, L"");
   }
@@ -88,12 +88,12 @@ void Spell::loadBasicData(DebugManager * pDebug)
   {
 	  // error : icon not found
     wchar_t sError[512] = L"";
-    swprintf_s(sError, 512, L"Lua interaction error: spell in file %s has no icon path defined.", m_sObjectName);
+    swprintf(sError, 512, L"Lua interaction error: spell in file %s has no icon path defined.", m_sObjectName);
     pDebug->notifyErrorMessage(sError);
     wsafecpy(m_sIconPath, MAX_PATH, L"");
   }
   else
-    swprintf_s(m_sIconPath, MAX_PATH, L"%s/%s", m_sObjectEdition, sStr);
+    swprintf(m_sIconPath, MAX_PATH, L"%s/%s", m_sObjectEdition, sStr);
 
   double val;
   // Battle spell?
@@ -163,7 +163,7 @@ wchar_t * Spell::getInfo(wchar_t * sBuf, int iSize)
 {
   wchar_t sMana[32] = L"";
   getManaText(sMana, 32);
-  swprintf_s(sBuf, iSize, L"%s (%s)\n%s",
+  swprintf(sBuf, iSize, L"%s (%s)\n%s",
         m_sName,
         sMana,
         m_sDescription
@@ -173,7 +173,7 @@ wchar_t * Spell::getInfo(wchar_t * sBuf, int iSize)
     wchar_t sBuf1[256] = L"";
     wchar_t sBuf2[256] = L"";
     i18n->getText(L"CAST_ON_(s)", sBuf1, 256);
-    swprintf_s(sBuf2, 256, sBuf1, m_sTargetInfo);
+    swprintf(sBuf2, 256, sBuf1, m_sTargetInfo);
     wsafecat(sBuf, iSize, L"\n");
     wsafecat(sBuf, iSize, sBuf2);
   }
@@ -191,7 +191,7 @@ wchar_t * Spell::getManaText(wchar_t * sMana, int iSize)
     if (m_CastingCost[i] > 0)
     {
       wchar_t sBuf[8];
-      swprintf_s(sBuf, 8, L"%c %d, ", signs[i], (int)m_CastingCost[i]);
+      swprintf(sBuf, 8, L"%c %d, ", signs[i], (int)m_CastingCost[i]);
       wsafecat(sMana, 32, sBuf);
     }
   }

@@ -1150,7 +1150,7 @@ void InterfaceManager::askForExtraMana(wchar_t * sDescription, u16 mana, int min
     i18n->getText(L"SKILL_(s)_ASK_EXTRA_MANA", sBuf, LABEL_MAX_CHARS);
   } // Note : this function should not be called by a building or a special tile, since it asks for extra mana in reaction to a spell casting or skill activation.
   assert(pLua != NULL);
-  swprintf_s(sText, LABEL_MAX_CHARS, sBuf, pLua->getLocalizedName());
+  swprintf(sText, LABEL_MAX_CHARS, sBuf, pLua->getLocalizedName());
   if (sDescription[0] != L'\0')
   {
     wsafecat(sText, LABEL_MAX_CHARS, L" - ");
@@ -1190,8 +1190,8 @@ void InterfaceManager::askForExtraMana(wchar_t * sDescription, u16 mana, int min
       wchar_t sMana[8];
       for (int i = min; i <= max2; i++)
       {
-        swprintf_s(sMana, 8, L"%d", i);
-        swprintf_s(sText, LABEL_MAX_CHARS, L"%c %d", signs[iMana], i);
+        swprintf(sMana, 8, L"%d", i);
+        swprintf(sText, LABEL_MAX_CHARS, L"%c %d", signs[iMana], i);
         pCombo->addString(sText, sMana);
       }
       pCombo->setItem(0);
@@ -1243,7 +1243,7 @@ void InterfaceManager::onClickExtraMana(guiComponent * pCpnt)
       if (pCombo)
       {
         int val;
-        swscanf_s(pCombo->getSelectedItem()->getId(), L"%d", &val);
+        swscanf(pCombo->getSelectedItem()->getId(), L"%d", &val);
         amount.mana[i] = val;
       }
     }

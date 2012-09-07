@@ -1,18 +1,18 @@
 # depslib dependency file v1.0
-1346448905 source:/media/Naymlap/dev/work/Shahnarman/Sources/Audio/AudioManager.cpp
+1346955990 source:/media/Naymlap/dev/work/Shahnarman/Sources/Audio/AudioManager.cpp
 	"AudioManager.h"
 	"../LocalClient.h"
 	"../Debug/DebugManager.h"
 	"../Data/Parameters.h"
 
-1346449039 /media/Naymlap/dev/work/Shahnarman/Sources/Audio/AudioManager.h
-	<al/al.h>
-	<al/alc.h>
+1346967812 /media/Naymlap/dev/work/Shahnarman/Sources/Audio/AudioManager.h
+	<AL/al.h>
+	<AL/alc.h>
 	<vorbis/vorbisfile.h>
 	"../SystemHeaders.h"
 	"../utils.h"
 
-1346449618 /media/Naymlap/dev/work/Shahnarman/Sources/SystemHeaders.h
+1346975617 /media/Naymlap/dev/work/Shahnarman/Sources/SystemHeaders.h
 	<stdlib.h>
 	<errno.h>
 	<windows.h>
@@ -23,11 +23,12 @@
 	<stdlib.h>
 	<errno.h>
 	<GL/glew.h>
+	<GL/glu.h>
 	<GL/glut.h>
 	<png.h>
 	<GLUT/glut.h>
 
-1346622822 /media/Naymlap/dev/work/Shahnarman/Sources/utils.h
+1346974940 /media/Naymlap/dev/work/Shahnarman/Sources/utils.h
 	<stdio.h>
 	<string.h>
 	<cmath>
@@ -153,7 +154,7 @@
 	<GL/gl.h>
 	<GL/glu.h>
 
-1346433168 source:/media/Naymlap/dev/work/Shahnarman/Sources/Data/DataFactory.cpp
+1346955990 source:/media/Naymlap/dev/work/Shahnarman/Sources/Data/DataFactory.cpp
 	"DataFactory.h"
 	"Parameters.h"
 	"../LocalClient.h"
@@ -186,12 +187,12 @@
 	"../Data/LuaObject.h"
 	"../Server/NetworkData.h"
 
-1346622214 /media/Naymlap/dev/work/Shahnarman/Sources/Data/LuaObject.h
+1346975167 /media/Naymlap/dev/work/Shahnarman/Sources/Data/LuaObject.h
 	"../Common/ObjectList.h"
 	"../Players/Mana.h"
-	<lua.hpp>
+	<lua5.1/lua.hpp>
 
-1346439135 /media/Naymlap/dev/work/Shahnarman/Sources/Players/Mana.h
+1346964563 /media/Naymlap/dev/work/Shahnarman/Sources/Players/Mana.h
 	"../Common/BaseObject.h"
 
 1222959296 /media/Naymlap/dev/sdk/Other includes/lua.hpp
@@ -244,14 +245,14 @@
 
 1346433168 /media/Naymlap/dev/work/Shahnarman/Sources/Data/Serializer.h
 
-1346622839 source:/media/Naymlap/dev/work/Shahnarman/Sources/Data/IniFile.cpp
+1346956202 source:/media/Naymlap/dev/work/Shahnarman/Sources/Data/IniFile.cpp
 	"IniFile.h"
 	<stdio.h>
 
 1346622483 /media/Naymlap/dev/work/Shahnarman/Sources/Data/IniFile.h
 	"../utils.h"
 
-1346622847 source:/media/Naymlap/dev/work/Shahnarman/Sources/Data/LocalisationTool.cpp
+1346956202 source:/media/Naymlap/dev/work/Shahnarman/Sources/Data/LocalisationTool.cpp
 	"LocalisationTool.h"
 	"XMLLiteReader.h"
 	"../Debug/DebugManager.h"
@@ -268,7 +269,7 @@
 1346622950 /media/Naymlap/dev/work/Shahnarman/Sources/Data/XMLLiteElement.h
 	"../Common/ObjectList.h"
 
-1346439135 source:/media/Naymlap/dev/work/Shahnarman/Sources/Data/LuaContext.cpp
+1346955991 source:/media/Naymlap/dev/work/Shahnarman/Sources/Data/LuaContext.cpp
 	"LuaContext.h"
 	"../Players/PlayerManagerAbstract.h"
 	"../Players/Player.h"
@@ -289,26 +290,26 @@
 	"Mana.h"
 	"../Data/LuaTargetable.h"
 
-1346439135 /media/Naymlap/dev/work/Shahnarman/Sources/Data/LuaTargetable.h
+1346963171 /media/Naymlap/dev/work/Shahnarman/Sources/Data/LuaTargetable.h
 	"../lua_callbacks.h"
 	"../Common/ObjectList.h"
 	"LuaObject.h"
 
-1346439135 /media/Naymlap/dev/work/Shahnarman/Sources/lua_callbacks.h
-	<lua.hpp>
+1346975179 /media/Naymlap/dev/work/Shahnarman/Sources/lua_callbacks.h
+	<lua5.1/lua.hpp>
 
 1346439135 /media/Naymlap/dev/work/Shahnarman/Sources/Players/Spell.h
 	"../Data/LuaObject.h"
 	"Mana.h"
 	"../Server/NetworkData.h"
 
-1346439135 /media/Naymlap/dev/work/Shahnarman/Sources/Gameboard/Unit.h
+1346955992 /media/Naymlap/dev/work/Shahnarman/Sources/Gameboard/Unit.h
 	"MapObject.h"
 	"../Physics/PhysicalObject.h"
 	"../DeckData/UnitData.h"
 	"../Players/Mana.h"
 
-1346433168 /media/Naymlap/dev/work/Shahnarman/Sources/Gameboard/MapObject.h
+1346962932 /media/Naymlap/dev/work/Shahnarman/Sources/Gameboard/MapObject.h
 	"../Common/GraphicObject.h"
 	"../Data/LuaTargetable.h"
 	"Map.h"
@@ -339,7 +340,7 @@
 1346623133 /media/Naymlap/dev/work/Shahnarman/Sources/Fonts/FontEngine.h
 	"Font.h"
 
-1346433168 /media/Naymlap/dev/work/Shahnarman/Sources/Fonts/Font.h
+1346960996 /media/Naymlap/dev/work/Shahnarman/Sources/Fonts/Font.h
 	"../utils.h"
 
 1346433168 /media/Naymlap/dev/work/Shahnarman/Sources/Geometries/GeometryModifier.h
@@ -362,7 +363,7 @@
 1346433168 /media/Naymlap/dev/work/Shahnarman/Sources/Interface/StackGroupInterface.h
 	"../Common/ObjectList.h"
 
-1346433168 /media/Naymlap/dev/work/Shahnarman/Sources/Geometries/GeometryQuads.h
+1346962626 /media/Naymlap/dev/work/Shahnarman/Sources/Geometries/GeometryQuads.h
 	"Geometry.h"
 
 1346433168 /media/Naymlap/dev/work/Shahnarman/Sources/Physics/PhysicalObject.h
@@ -372,14 +373,14 @@
 1346433168 /media/Naymlap/dev/work/Shahnarman/Sources/Physics/Movement.h
 	"../Common/BaseObject.h"
 
-1346433168 /media/Naymlap/dev/work/Shahnarman/Sources/Gameboard/Town.h
+1346963275 /media/Naymlap/dev/work/Shahnarman/Sources/Gameboard/Town.h
 	"MapObject.h"
 	"../DeckData/Ethnicity.h"
 
 1346433168 /media/Naymlap/dev/work/Shahnarman/Sources/DeckData/Ethnicity.h
 	"../Data/XMLObject.h"
 
-1346433168 /media/Naymlap/dev/work/Shahnarman/Sources/Gameboard/Temple.h
+1346955992 /media/Naymlap/dev/work/Shahnarman/Sources/Gameboard/Temple.h
 	"MapObject.h"
 
 1346433168 /media/Naymlap/dev/work/Shahnarman/Sources/Gameboard/Building.h
@@ -389,7 +390,7 @@
 1346433168 /media/Naymlap/dev/work/Shahnarman/Sources/Gameboard/SpecialTile.h
 	"../Data/LuaObject.h"
 
-1346439135 source:/media/Naymlap/dev/work/Shahnarman/Sources/Data/LuaTargetable.cpp
+1346963182 source:/media/Naymlap/dev/work/Shahnarman/Sources/Data/LuaTargetable.cpp
 	"LuaTargetable.h"
 	"../Server/NetworkData.h"
 	"../Players/PlayerManager.h"
@@ -403,7 +404,7 @@
 	"../LocalClient.h"
 	"../Data/LocalisationTool.h"
 
-1346439135 /media/Naymlap/dev/work/Shahnarman/Sources/Players/PlayerManager.h
+1346964331 /media/Naymlap/dev/work/Shahnarman/Sources/Players/PlayerManager.h
 	"PlayerManagerAbstract.h"
 
 1346433168 source:/media/Naymlap/dev/work/Shahnarman/Sources/Data/NetworkSerializer.cpp
@@ -414,7 +415,7 @@
 	"../Server/NetworkData.h"
 	"../utils.h"
 
-1346622197 source:/media/Naymlap/dev/work/Shahnarman/Sources/Data/LuaObject.cpp
+1346955991 source:/media/Naymlap/dev/work/Shahnarman/Sources/Data/LuaObject.cpp
 	"LuaObject.h"
 	"../Debug/DebugManager.h"
 	"../Data/LocalisationTool.h"
@@ -428,14 +429,14 @@
 
 1346433168 /media/Naymlap/dev/work/Shahnarman/Sources/GameRoot.h
 
-1346622971 source:/media/Naymlap/dev/work/Shahnarman/Sources/Data/XMLLiteElement.cpp
+1346956202 source:/media/Naymlap/dev/work/Shahnarman/Sources/Data/XMLLiteElement.cpp
 	"XMLLiteElement.h"
 
 1346623302 source:/media/Naymlap/dev/work/Shahnarman/Sources/Data/XMLObject.cpp
 	"XMLObject.h"
 	"XMLLiteElement.h"
 
-1346439135 source:/media/Naymlap/dev/work/Shahnarman/Sources/Debug/DebugManager.cpp
+1346955991 source:/media/Naymlap/dev/work/Shahnarman/Sources/Debug/DebugManager.cpp
 	"DebugManager.h"
 	"../LocalClient.h"
 	"../errorcodes.h"
@@ -467,12 +468,12 @@
 1346433168 /media/Naymlap/dev/work/Shahnarman/Sources/Input/EventListener.h
 	"../utils.h"
 
-1346439135 /media/Naymlap/dev/work/Shahnarman/Sources/Server/Server.h
+1346963023 /media/Naymlap/dev/work/Shahnarman/Sources/Server/Server.h
 	"../Gameboard/Map.h"
 
-1346623078 /media/Naymlap/dev/work/Shahnarman/Sources/Server/MapReader.h
+1346975195 /media/Naymlap/dev/work/Shahnarman/Sources/Server/MapReader.h
 	"../Common/BaseObject.h"
-	<lua.hpp>
+	<lua5.1/lua.hpp>
 
 1346439135 /media/Naymlap/dev/work/Shahnarman/Sources/Server/TurnSolver.h
 	"SpellsSolver.h"
@@ -487,7 +488,7 @@
 1346433168 /media/Naymlap/dev/work/Shahnarman/Sources/GUIClasses/guiComponent.h
 	"guiObject.h"
 
-1346433168 /media/Naymlap/dev/work/Shahnarman/Sources/GUIClasses/guiObject.h
+1346964068 /media/Naymlap/dev/work/Shahnarman/Sources/GUIClasses/guiObject.h
 	"../Common/GraphicObject.h"
 	"../Input/InputEngine.h"
 
@@ -515,7 +516,7 @@
 	"guiLabel.h"
 	"../Geometries/GeometryQuads.h"
 
-1346622863 source:/media/Naymlap/dev/work/Shahnarman/Sources/Data/Parameters.cpp
+1346956319 source:/media/Naymlap/dev/work/Shahnarman/Sources/Data/Parameters.cpp
 	"Parameters.h"
 	"../Debug/DebugManager.h"
 	"IniFile.h"
@@ -536,7 +537,7 @@
 	"../Data/LocalisationTool.h"
 	"../Data/NetworkSerializer.h"
 
-1346623566 source:/media/Naymlap/dev/work/Shahnarman/Sources/DeckData/Edition.cpp
+1346955991 source:/media/Naymlap/dev/work/Shahnarman/Sources/DeckData/Edition.cpp
 	"Edition.h"
 	"../Debug/DebugManager.h"
 	"../Data/LocalisationTool.h"
@@ -561,8 +562,2986 @@
 1346433168 /media/Naymlap/dev/work/Shahnarman/Sources/DeckData/ShahmahCreation.h
 	"../Common/ObjectList.h"
 
-1346439135 source:/media/Naymlap/dev/work/Shahnarman/Sources/DeckData/Ethnicity.cpp
+1346955991 source:/media/Naymlap/dev/work/Shahnarman/Sources/DeckData/Ethnicity.cpp
 	"Ethnicity.h"
 	"../Debug/DebugManager.h"
 	"../Data/XMLLiteReader.h"
+
+1346955991 source:/media/Naymlap/dev/work/Shahnarman/Sources/DeckData/Profile.cpp
+	"Profile.h"
+	"../LocalClient.h"
+	"../Debug/DebugManager.h"
+	"Edition.h"
+	"ShopItem.h"
+	"AvatarData.h"
+	"../Data/DataFactory.h"
+	"../Data/FileSerializer.h"
+	"../Players/Spell.h"
+	"../Players/Artifact.h"
+	"../Interface/InterfaceManager.h"
+	"../Interface/LevelUpDlg.h"
+	"../Interface/BuildDeckDlg.h"
+	"../Interface/StartMenuDlg.h"
+	"../Interface/ShopDlg.h"
+	<stdio.h>
+
+1346433168 /media/Naymlap/dev/work/Shahnarman/Sources/Interface/InterfaceManager.h
+	"../Common/BaseObject.h"
+	"../Input/EventListener.h"
+
+1346433168 /media/Naymlap/dev/work/Shahnarman/Sources/Interface/LevelUpDlg.h
+	"../GUIClasses/guiDocument.h"
+
+1346963454 /media/Naymlap/dev/work/Shahnarman/Sources/GUIClasses/guiDocument.h
+	"ComponentOwnerInterface.h"
+	"guiComponent.h"
+
+1346433168 /media/Naymlap/dev/work/Shahnarman/Sources/GUIClasses/ComponentOwnerInterface.h
+
+1346433168 /media/Naymlap/dev/work/Shahnarman/Sources/Interface/BuildDeckDlg.h
+	"../GUIClasses/guiList.h"
+
+1346963551 /media/Naymlap/dev/work/Shahnarman/Sources/GUIClasses/guiList.h
+	"guiContainer.h"
+	"guiLabel.h"
+	"../Input/EventListener.h"
+	"../Input/KeyboardListener.h"
+	"../Common/SortInterface.h"
+
+1346963359 /media/Naymlap/dev/work/Shahnarman/Sources/GUIClasses/guiContainer.h
+	"guiComponent.h"
+	"guiDocument.h"
+	"../Geometries/GeometryQuads.h"
+	"../Geometries/StencilGeometry.h"
+
+1346433168 /media/Naymlap/dev/work/Shahnarman/Sources/Geometries/StencilGeometry.h
+	"Geometry.h"
+
+1346433168 /media/Naymlap/dev/work/Shahnarman/Sources/Input/KeyboardListener.h
+
+1346433168 /media/Naymlap/dev/work/Shahnarman/Sources/Interface/StartMenuDlg.h
+	"../GUIClasses/guiDocument.h"
+
+1346433168 /media/Naymlap/dev/work/Shahnarman/Sources/Interface/ShopDlg.h
+	"../GUIClasses/guiDocument.h"
+
+1346955991 source:/media/Naymlap/dev/work/Shahnarman/Sources/DeckData/ProgressionElement.cpp
+	"ProgressionElement.h"
+	"../Gameboard/Skill.h"
+	"../Players/Spell.h"
+	"../Players/Artifact.h"
+	"../DeckData/Edition.h"
+	"../DeckData/UnitData.h"
+	"../Data/LocalisationTool.h"
+	"../Data/DataFactory.h"
+	"../LocalClient.h"
+
+1346955991 source:/media/Naymlap/dev/work/Shahnarman/Sources/DeckData/ProgressionTree.cpp
+	"ProgressionTree.h"
+	"ProgressionElement.h"
+	"../Debug/DebugManager.h"
+	"../Data/XMLLiteReader.h"
+	"Edition.h"
+
+1346433168 source:/media/Naymlap/dev/work/Shahnarman/Sources/DeckData/ShahmahCreation.cpp
+	"ShahmahCreation.h"
+
+1346955991 source:/media/Naymlap/dev/work/Shahnarman/Sources/DeckData/ShopItem.cpp
+	"ShopItem.h"
+	"../Data/XMLObject.h"
+	"../Data/LocalisationTool.h"
+	"../GUIClasses/guiPopup.h"
+
+1346433168 /media/Naymlap/dev/work/Shahnarman/Sources/GUIClasses/guiPopup.h
+	"guiFrame.h"
+	"guiDocument.h"
+	"guiButton.h"
+	"guiEditBox.h"
+
+1346964274 /media/Naymlap/dev/work/Shahnarman/Sources/GUIClasses/guiFrame.h
+	"guiContainer.h"
+
+1346962566 /media/Naymlap/dev/work/Shahnarman/Sources/GUIClasses/guiButton.h
+	"guiImage.h"
+	"guiLabel.h"
+	"../Geometries/GeometryQuads.h"
+
+1346433168 /media/Naymlap/dev/work/Shahnarman/Sources/GUIClasses/guiImage.h
+	"guiComponent.h"
+
+1346962673 /media/Naymlap/dev/work/Shahnarman/Sources/GUIClasses/guiEditBox.h
+	"../Input/KeyboardListener.h"
+	"guiLabel.h"
+
+1346955187 source:/media/Naymlap/dev/work/Shahnarman/Sources/DeckData/UnitData.cpp
+	"UnitData.h"
+	"../Data/LocalisationTool.h"
+	"../Debug/DebugManager.h"
+	"../Data/Serializer.h"
+
+1346956452 source:/media/Naymlap/dev/work/Shahnarman/Sources/Display/DisplayEngine.cpp
+	"DisplayEngine.h"
+	"../SystemHeaders.h"
+	"../Geometries/Geometry.h"
+	"../Debug/DebugManager.h"
+
+1346433168 source:/media/Naymlap/dev/work/Shahnarman/Sources/Display/Texture.cpp
+	"Texture.h"
+	"../errorcodes.h"
+
+1346955991 source:/media/Naymlap/dev/work/Shahnarman/Sources/Display/TextureEngine.cpp
+	"TextureEngine.h"
+	"../Debug/DebugManager.h"
+	"../errorcodes.h"
+	"../Data/XMLLiteReader.h"
+
+1346623133 source:/media/Naymlap/dev/work/Shahnarman/Sources/Fonts/FontEngine.cpp
+	"FontEngine.h"
+	"../Display/DisplayEngine.h"
+	"../Display/TextureEngine.h"
+	"../Debug/DebugManager.h"
+	"../errorcodes.h"
+
+1346439135 source:/media/Naymlap/dev/work/Shahnarman/Sources/Fx/FxManager.cpp
+	"FxManager.h"
+	"../LocalClient.h"
+	"../Data/LocalisationTool.h"
+	"../Physics/FasloMove.h"
+	"../Physics/PhysicalObject.h"
+	"../Display/DisplayEngine.h"
+	"../Geometries/GeometryText.h"
+	"../Geometries/GeometryQuads.h"
+	"../Geometries/ModProgressiveScaling.h"
+	"../Common/TimeController.h"
+	"../Input/InputEngine.h"
+	"../Interface/InterfaceManager.h"
+
+1346433168 /media/Naymlap/dev/work/Shahnarman/Sources/Fx/FxManager.h
+	"../Common/ObjectList.h"
+
+1346433168 /media/Naymlap/dev/work/Shahnarman/Sources/Physics/FasloMove.h
+	"Movement.h"
+
+1346433168 /media/Naymlap/dev/work/Shahnarman/Sources/Geometries/ModProgressiveScaling.h
+	"GeometryModifier.h"
+
+1346433168 source:/media/Naymlap/dev/work/Shahnarman/Sources/GUIClasses/FrameEffects/EffectComeIn.cpp
+	"EffectComeIn.h"
+	"../guiFrame.h"
+	"../../SystemHeaders.h"
+
+1346433168 /media/Naymlap/dev/work/Shahnarman/Sources/GUIClasses/FrameEffects/EffectComeIn.h
+	"guiFrameEffect.h"
+
+1346433168 /media/Naymlap/dev/work/Shahnarman/Sources/GUIClasses/FrameEffects/guiFrameEffect.h
+	"../../Common/BaseObject.h"
+
+1346433168 source:/media/Naymlap/dev/work/Shahnarman/Sources/GUIClasses/FrameEffects/EffectExtract.cpp
+
+1346433168 source:/media/Naymlap/dev/work/Shahnarman/Sources/GUIClasses/FrameEffects/guiFrameEffect.cpp
+	"guiFrameEffect.h"
+	"../guiFrame.h"
+
+1346433168 source:/media/Naymlap/dev/work/Shahnarman/Sources/GUIClasses/FrameEffects/guiFrameFlash.cpp
+	"guiFrameFlash.h"
+	"../guiFrame.h"
+	"../../SystemHeaders.h"
+
+1346433168 /media/Naymlap/dev/work/Shahnarman/Sources/GUIClasses/FrameEffects/guiFrameFlash.h
+	"guiFrameEffect.h"
+
+1346433168 source:/media/Naymlap/dev/work/Shahnarman/Sources/GUIClasses/FrameEffects/guiFrameIntro.cpp
+	"guiFrameIntro.h"
+	"../guiFrame.h"
+	"../../SystemHeaders.h"
+
+1346433168 /media/Naymlap/dev/work/Shahnarman/Sources/GUIClasses/FrameEffects/guiFrameIntro.h
+	"guiFrameEffect.h"
+
+1346433168 source:/media/Naymlap/dev/work/Shahnarman/Sources/GUIClasses/FrameEffects/guiFrameMouseFocus.cpp
+	"guiFrameMouseFocus.h"
+	"../guiFrame.h"
+	"../../SystemHeaders.h"
+
+1346433168 /media/Naymlap/dev/work/Shahnarman/Sources/GUIClasses/FrameEffects/guiFrameMouseFocus.h
+	"guiFrameEffect.h"
+
+1346433168 source:/media/Naymlap/dev/work/Shahnarman/Sources/GUIClasses/FrameEffects/guiFrameOutro.cpp
+	"guiFrameOutro.h"
+	"../guiFrame.h"
+	"../../SystemHeaders.h"
+
+1346433168 /media/Naymlap/dev/work/Shahnarman/Sources/GUIClasses/FrameEffects/guiFrameOutro.h
+	"guiFrameEffect.h"
+
+1346962593 source:/media/Naymlap/dev/work/Shahnarman/Sources/GUIClasses/guiButton.cpp
+	"guiButton.h"
+	"ComponentOwnerInterface.h"
+	"../Audio/AudioManager.h"
+
+1346963810 source:/media/Naymlap/dev/work/Shahnarman/Sources/GUIClasses/guiComboBox.cpp
+	"guiComboBox.h"
+	"../Interface/InterfaceManager.h"
+
+1346963782 /media/Naymlap/dev/work/Shahnarman/Sources/GUIClasses/guiComboBox.h
+	"guiContainer.h"
+	"guiButton.h"
+
+1346961962 source:/media/Naymlap/dev/work/Shahnarman/Sources/GUIClasses/guiComponent.cpp
+	"guiComponent.h"
+
+1346963375 source:/media/Naymlap/dev/work/Shahnarman/Sources/GUIClasses/guiContainer.cpp
+	"guiContainer.h"
+
+1346963507 source:/media/Naymlap/dev/work/Shahnarman/Sources/GUIClasses/guiDocument.cpp
+	"guiDocument.h"
+	"guiToggleButton.h"
+	"guiContainer.h"
+	"../Geometries/GeometryQuads.h"
+	"../Data/LocalisationTool.h"
+
+1346963408 /media/Naymlap/dev/work/Shahnarman/Sources/GUIClasses/guiToggleButton.h
+	"guiButton.h"
+
+1346975899 source:/media/Naymlap/dev/work/Shahnarman/Sources/Fonts/Font.cpp
+	"Font.h"
+	"../Display/TextureEngine.h"
+	"../SystemHeaders.h"
+	"../errorcodes.h"
+
+1346962682 source:/media/Naymlap/dev/work/Shahnarman/Sources/GUIClasses/guiEditBox.cpp
+	"guiEditBox.h"
+	"../Geometries/GeometryText.h"
+	"../Geometries/GeometryQuads.h"
+	"../Geometries/StencilGeometry.h"
+	"../Input/KeyboardInputEngine.h"
+
+1346433168 /media/Naymlap/dev/work/Shahnarman/Sources/Input/KeyboardInputEngine.h
+	"InputEngine.h"
+
+1346964288 source:/media/Naymlap/dev/work/Shahnarman/Sources/GUIClasses/guiFrame.cpp
+	"guiFrame.h"
+	"FrameEffects/guiFrameIntro.h"
+	"FrameEffects/guiFrameOutro.h"
+	"FrameEffects/guiFrameMouseFocus.h"
+	"FrameEffects/guiFrameFlash.h"
+
+1346964387 source:/media/Naymlap/dev/work/Shahnarman/Sources/GUIClasses/guiGauge.cpp
+	"guiGauge.h"
+	"../Geometries/GeometryQuads.h"
+
+1346964376 /media/Naymlap/dev/work/Shahnarman/Sources/GUIClasses/guiGauge.h
+	"guiComponent.h"
+
+1346962058 source:/media/Naymlap/dev/work/Shahnarman/Sources/GUIClasses/guiLabel.cpp
+	"guiLabel.h"
+	"../Geometries/GeometryText.h"
+	"ComponentOwnerInterface.h"
+
+1346963551 source:/media/Naymlap/dev/work/Shahnarman/Sources/GUIClasses/guiList.cpp
+	"guiList.h"
+	"../Input/KeyboardInputEngine.h"
+
+1346439135 source:/media/Naymlap/dev/work/Shahnarman/Sources/GUIClasses/guiObject.cpp
+	"guiObject.h"
+	"../GameRoot.h"
+	"../LocalClient.h"
+	"../Interface/InterfaceManager.h"
+
+1346962058 source:/media/Naymlap/dev/work/Shahnarman/Sources/GUIClasses/guiPopup.cpp
+	"guiPopup.h"
+	"../Data/LocalisationTool.h"
+	"FrameEffects/EffectComeIn.h"
+	"FrameEffects/guiFrameOutro.h"
+	"FrameEffects/guiFrameMouseFocus.h"
+
+1346962058 source:/media/Naymlap/dev/work/Shahnarman/Sources/GUIClasses/guiSmartSlider.cpp
+	"guiSmartSlider.h"
+	"ComponentOwnerInterface.h"
+
+1346962058 source:/media/Naymlap/dev/work/Shahnarman/Sources/GUIClasses/guiTabbedFrame.cpp
+	"guiTabbedFrame.h"
+	"guiLabel.h"
+
+1346433168 /media/Naymlap/dev/work/Shahnarman/Sources/GUIClasses/guiTabbedFrame.h
+	"guiFrame.h"
+	"guiLabel.h"
+	"../Geometries/GeometryQuads.h"
+
+1346963423 source:/media/Naymlap/dev/work/Shahnarman/Sources/GUIClasses/guiToggleButton.cpp
+	"guiToggleButton.h"
+	"ComponentOwnerInterface.h"
+
+1346433168 source:/media/Naymlap/dev/work/Shahnarman/Sources/GameRoot.cpp
+	"GameRoot.h"
+	"Server/Server.h"
+	"LocalClient.h"
+
+1346955991 source:/media/Naymlap/dev/work/Shahnarman/Sources/Gameboard/Building.cpp
+	"Building.h"
+	"../Debug/DebugManager.h"
+	"../lua_callbacks.h"
+	"../Data/LocalisationTool.h"
+
+1346955991 source:/media/Naymlap/dev/work/Shahnarman/Sources/Gameboard/GameboardManager.cpp
+	"GameboardManager.h"
+	"../LocalClient.h"
+	"../Geometries/ModProgressiveScaling.h"
+	"../Geometries/ModProgressiveBlending.h"
+	"Unit.h"
+	"Town.h"
+	"GameboardInputs.h"
+	"../Geometries/GeometryQuads.h"
+	"../Geometries/GeometryText.h"
+	"../Interface/InterfaceManager.h"
+	"../Interface/ResolveDlg.h"
+	"../Debug/DebugManager.h"
+	"../Players/PlayerManager.h"
+	"../Players/Player.h"
+	"../Audio/AudioManager.h"
+
+1346433168 /media/Naymlap/dev/work/Shahnarman/Sources/Gameboard/GameboardManager.h
+	"Map.h"
+	"MapCursor.h"
+
+1346433168 /media/Naymlap/dev/work/Shahnarman/Sources/Gameboard/MapCursor.h
+	"../Physics/PhysicalObject.h"
+	"../Geometries/GeometryQuads.h"
+
+1346433168 /media/Naymlap/dev/work/Shahnarman/Sources/Geometries/ModProgressiveBlending.h
+	"GeometryModifier.h"
+
+1346433168 /media/Naymlap/dev/work/Shahnarman/Sources/Gameboard/GameboardInputs.h
+	"../Input/EventListener.h"
+
+1346433168 /media/Naymlap/dev/work/Shahnarman/Sources/Interface/ResolveDlg.h
+	"../GUIClasses/guiDocument.h"
+
+1346955991 source:/media/Naymlap/dev/work/Shahnarman/Sources/Gameboard/Map.cpp
+	"Map.h"
+	"Unit.h"
+	"Town.h"
+	"Temple.h"
+	"SpecialTile.h"
+	"../Players/PlayerManager.h"
+	"../Players/Player.h"
+	"../Data/DataFactory.h"
+	"../DeckData/Edition.h"
+	"../DeckData/Ethnicity.h"
+	"../LocalClient.h"
+	"../Server/Server.h"
+	"../Server/MapReader.h"
+	"../Server/TurnSolver.h"
+	"../Server/MapReader.h"
+	"../Debug/DebugManager.h"
+	"../Geometries/GeometryText.h"
+
+1346433168 source:/media/Naymlap/dev/work/Shahnarman/Sources/Gameboard/MapCursor.cpp
+	"MapCursor.h"
+	"../Geometries/ModProgressiveRotate.h"
+
+1346433168 /media/Naymlap/dev/work/Shahnarman/Sources/Geometries/ModProgressiveRotate.h
+	"GeometryModifier.h"
+
+1346962972 source:/media/Naymlap/dev/work/Shahnarman/Sources/Gameboard/MapObject.cpp
+	"MapObject.h"
+
+1346955991 source:/media/Naymlap/dev/work/Shahnarman/Sources/Gameboard/MapTile.cpp
+	"MapTile.h"
+	"../Geometries/GeometryQuads.h"
+	"../Geometries/GeometryText.h"
+	"../Data/LocalisationTool.h"
+	"MapObject.h"
+	"SpecialTile.h"
+
+1346439135 source:/media/Naymlap/dev/work/Shahnarman/Sources/Gameboard/Pathfinder.cpp
+	"Pathfinder.h"
+	"MapObject.h"
+
+1346955991 source:/media/Naymlap/dev/work/Shahnarman/Sources/Gameboard/Skill.cpp
+	"Skill.h"
+	"../Debug/DebugManager.h"
+	"../lua_callbacks.h"
+	"../Data/LocalisationTool.h"
+	"../DeckData/UnitData.h"
+
+1346955991 source:/media/Naymlap/dev/work/Shahnarman/Sources/Gameboard/SpecialTile.cpp
+	"SpecialTile.h"
+	"../Debug/DebugManager.h"
+	"../lua_callbacks.h"
+	"../Data/LocalisationTool.h"
+	"../Server/NetworkData.h"
+
+1346962507 source:/media/Naymlap/dev/work/Shahnarman/Sources/GUIClasses/guiImage.cpp
+	"guiImage.h"
+	"../Geometries/GeometryQuads.h"
+	"ComponentOwnerInterface.h"
+
+1346962482 source:/media/Naymlap/dev/work/Shahnarman/Sources/Gameboard/GameboardInputs.cpp
+	"GameboardInputs.h"
+	"GameboardManager.h"
+	"Unit.h"
+	"../LocalClient.h"
+	"../Data/LocalisationTool.h"
+	"../Fx/FxManager.h"
+	"../Input/InputEngine.h"
+	"../Interface/InterfaceManager.h"
+	"../Players/PlayerManager.h"
+	"../Players/Player.h"
+	"../Interface/InfoboxDlg.h"
+	"../GUIClasses/guiFrame.h"
+	"../GUIClasses/guiLabel.h"
+	"../Audio/AudioManager.h"
+
+1346433168 /media/Naymlap/dev/work/Shahnarman/Sources/Interface/InfoboxDlg.h
+	"../GUIClasses/guiDocument.h"
+	"../Input/KeyboardListener.h"
+
+1346955992 source:/media/Naymlap/dev/work/Shahnarman/Sources/Gameboard/Temple.cpp
+	"Temple.h"
+	"../Data/LocalisationTool.h"
+
+1346963260 source:/media/Naymlap/dev/work/Shahnarman/Sources/Gameboard/Town.cpp
+	"Town.h"
+	"../DeckData/Edition.h"
+	"../DeckData/Ethnicity.h"
+	"../Data/LocalisationTool.h"
+	"../Data/DataFactory.h"
+	"../Server/TurnSolver.h"
+	"../Server/Server.h"
+	"../Players/Player.h"
+	"../Players/PlayerManager.h"
+	"../Interface/LogDlg.h"
+	"../GUIClasses/guiLabel.h"
+	"../LocalClient.h"
+	"Building.h"
+	"Unit.h"
+
+1346433168 /media/Naymlap/dev/work/Shahnarman/Sources/Interface/LogDlg.h
+	"../GUIClasses/guiDocument.h"
+
+1346955992 source:/media/Naymlap/dev/work/Shahnarman/Sources/Gameboard/Unit.cpp
+	"Unit.h"
+	"GameboardManager.h"
+	"../Data/LocalisationTool.h"
+	"../Data/DataFactory.h"
+	"../LocalClient.h"
+	"Skill.h"
+	"../DeckData/UnitData.h"
+	"../Players/PlayerManager.h"
+	"../Players/Player.h"
+	"../Players/Spell.h"
+	"../Interface/UnitOptionsDlg.h"
+	"../Geometries/GeometryCylinder.h"
+	"../GameRoot.h"
+	"../LocalClient.h"
+	"../Debug/DebugManager.h"
+
+1346433168 /media/Naymlap/dev/work/Shahnarman/Sources/Interface/UnitOptionsDlg.h
+	"../GUIClasses/guiDocument.h"
+
+1346433168 /media/Naymlap/dev/work/Shahnarman/Sources/Geometries/GeometryCylinder.h
+	"Geometry.h"
+
+1346433168 source:/media/Naymlap/dev/work/Shahnarman/Sources/Geometries/Geometry.cpp
+	"Geometry.h"
+
+1346433168 source:/media/Naymlap/dev/work/Shahnarman/Sources/Geometries/GeometryCylinder.cpp
+	"GeometryCylinder.h"
+
+1346433168 source:/media/Naymlap/dev/work/Shahnarman/Sources/Geometries/GeometryModifier.cpp
+	"GeometryModifier.h"
+
+1346962482 source:/media/Naymlap/dev/work/Shahnarman/Sources/Geometries/GeometryQuads.cpp
+	"GeometryQuads.h"
+
+1346433168 source:/media/Naymlap/dev/work/Shahnarman/Sources/Geometries/GeometryText.cpp
+	"GeometryText.h"
+
+1346433168 source:/media/Naymlap/dev/work/Shahnarman/Sources/Geometries/ModProgressiveBlending.cpp
+	"ModProgressiveBlending.h"
+	"../SystemHeaders.h"
+
+1346433168 source:/media/Naymlap/dev/work/Shahnarman/Sources/Geometries/ModProgressiveRotate.cpp
+	"ModProgressiveRotate.h"
+	"../SystemHeaders.h"
+
+1346433168 source:/media/Naymlap/dev/work/Shahnarman/Sources/Geometries/ModProgressiveScaling.cpp
+	"ModProgressiveScaling.h"
+	"../SystemHeaders.h"
+
+1346433168 source:/media/Naymlap/dev/work/Shahnarman/Sources/Geometries/StencilGeometry.cpp
+	"StencilGeometry.h"
+
+1346963335 source:/media/Naymlap/dev/work/Shahnarman/Sources/Input/InputEngine.cpp
+	"InputEngine.h"
+	"../Debug/DebugManager.h"
+
+1346433168 source:/media/Naymlap/dev/work/Shahnarman/Sources/Input/PCInputEngine.cpp
+	"PCInputEngine.h"
+	"KeyboardListener.h"
+	"../SystemHeaders.h"
+
+1346433168 /media/Naymlap/dev/work/Shahnarman/Sources/Input/PCInputEngine.h
+	"KeyboardInputEngine.h"
+
+1346955992 source:/media/Naymlap/dev/work/Shahnarman/Sources/Interface/ArtifactsEquipDlg.cpp
+	"ArtifactsEquipDlg.h"
+	"BuildDeckDlg.h"
+	"ShopDlg.h"
+	"SelectPlayerAvatarDlg.h"
+	"StartMenuDlg.h"
+	"InterfaceManager.h"
+	"LevelUpDlg.h"
+	"../LocalClient.h"
+	"../Data/LocalisationTool.h"
+	"../Data/DataFactory.h"
+	"../DeckData/AvatarData.h"
+	"../DeckData/Profile.h"
+	"../DeckData/Edition.h"
+	"../GUIClasses/guiToggleButton.h"
+	"../GUIClasses/guiComboBox.h"
+	"../GUIClasses/guiPopup.h"
+	"../Players/Artifact.h"
+	"../Debug/DebugManager.h"
+
+1346433168 /media/Naymlap/dev/work/Shahnarman/Sources/Interface/ArtifactsEquipDlg.h
+	"../GUIClasses/guiDocument.h"
+
+1346433168 /media/Naymlap/dev/work/Shahnarman/Sources/Interface/SelectPlayerAvatarDlg.h
+	"../GUIClasses/guiDocument.h"
+
+1346956064 source:/media/Naymlap/dev/work/Shahnarman/Sources/Interface/BattleSpellPopup.cpp
+	"BattleSpellPopup.h"
+	"../Data/LocalisationTool.h"
+	"../Gameboard/Unit.h"
+
+1346433168 /media/Naymlap/dev/work/Shahnarman/Sources/Interface/BattleSpellPopup.h
+	"../GUIClasses/guiPopup.h"
+	"../Players/Player.h"
+
+1346963680 source:/media/Naymlap/dev/work/Shahnarman/Sources/Interface/BuildDeckDlg.cpp
+	"BuildDeckDlg.h"
+	"ArtifactsEquipDlg.h"
+	"ShopDlg.h"
+	"SelectPlayerAvatarDlg.h"
+	"StartMenuDlg.h"
+	"InterfaceManager.h"
+	"LevelUpDlg.h"
+	"../LocalClient.h"
+	"../Data/LocalisationTool.h"
+	"../Data/DataFactory.h"
+	"../DeckData/AvatarData.h"
+	"../DeckData/Profile.h"
+	"../DeckData/Edition.h"
+	"../GUIClasses/guiToggleButton.h"
+	"../GUIClasses/guiComboBox.h"
+	"../GUIClasses/guiPopup.h"
+	"../Players/Spell.h"
+	"../Geometries/GeometryQuads.h"
+	"../Debug/DebugManager.h"
+
+1346963881 source:/media/Naymlap/dev/work/Shahnarman/Sources/Interface/CreateAvatarDlg.cpp
+	"CreateAvatarDlg.h"
+	"InterfaceManager.h"
+	"StartMenuDlg.h"
+	"SelectPlayerAvatarDlg.h"
+	"../GUIClasses/guiContainer.h"
+	"../GUIClasses/guiButton.h"
+	"../GUIClasses/guiComboBox.h"
+	"../GUIClasses/guiPopup.h"
+	"../LocalClient.h"
+	"../Data/LocalisationTool.h"
+	"../Data/DataFactory.h"
+	"../DeckData/Edition.h"
+	"../DeckData/Profile.h"
+	"../DeckData/ShahmahCreation.h"
+	"../DeckData/Ethnicity.h"
+	"../DeckData/AvatarData.h"
+	"../Gameboard/Skill.h"
+
+1346433168 /media/Naymlap/dev/work/Shahnarman/Sources/Interface/CreateAvatarDlg.h
+	"../GUIClasses/guiDocument.h"
+
+1346433168 source:/media/Naymlap/dev/work/Shahnarman/Sources/Interface/GameOverDlg.cpp
+	"GameOverDlg.h"
+	"InterfaceManager.h"
+	"../GUIClasses/guiContainer.h"
+	"../GUIClasses/guiButton.h"
+	"../LocalClient.h"
+	"../Data/LocalisationTool.h"
+	"../Players/PlayerManager.h"
+	"../Players/Player.h"
+	"../Gameboard/Unit.h"
+	"../DeckData/AvatarData.h"
+
+1346433168 /media/Naymlap/dev/work/Shahnarman/Sources/Interface/GameOverDlg.h
+	"../GUIClasses/guiDocument.h"
+
+1346963956 source:/media/Naymlap/dev/work/Shahnarman/Sources/Interface/HostGameDlg.cpp
+	"HostGameDlg.h"
+	"../GUIClasses/guiComboBox.h"
+	"../GUIClasses/guiPopup.h"
+	"../GUIClasses/guiEditBox.h"
+	"../LocalClient.h"
+	"../Data/LocalisationTool.h"
+	"../DeckData/Profile.h"
+	"../DeckData/AvatarData.h"
+	"../DeckData/Edition.h"
+	"../DeckData/AIData.h"
+	"../DeckData/ShopItem.h"
+	"InterfaceManager.h"
+	"StartMenuDlg.h"
+	"../Debug/DebugManager.h"
+	"../Data/DataFactory.h"
+	"../Players/Player.h"
+	"../Players/Spell.h"
+	"../Players/Artifact.h"
+	"../Server/Server.h"
+	"../Server/TurnSolver.h"
+	"../Server/MapReader.h"
+	"../Gameboard/Unit.h"
+
+1346439135 /media/Naymlap/dev/work/Shahnarman/Sources/Interface/HostGameDlg.h
+	"../GUIClasses/guiDocument.h"
+
+1346956202 source:/media/Naymlap/dev/work/Shahnarman/Sources/Interface/InterfaceManager.cpp
+	"InterfaceManager.h"
+	"../LocalClient.h"
+	"../GUIClasses/guiTabbedFrame.h"
+	"../Data/LocalisationTool.h"
+	"../GUIClasses/guiPopup.h"
+	"../GUIClasses/guiComboBox.h"
+	"StartMenuDlg.h"
+	"SelectPlayerAvatarDlg.h"
+	"BuildDeckDlg.h"
+	"ArtifactsEquipDlg.h"
+	"ShopDlg.h"
+	"LoadGameDlg.h"
+	"HostGameDlg.h"
+	"LevelUpDlg.h"
+	"OptionsDlg.h"
+	"SpellDlg.h"
+	"LogDlg.h"
+	"InfoboxDlg.h"
+	"UnitOptionsDlg.h"
+	"ResolveDlg.h"
+	"MapObjectDlg.h"
+	"GameOverDlg.h"
+	"SpellsSelectorDlg.h"
+	"PlayerSelectorDlg.h"
+	"StatusDlg.h"
+	"CreateAvatarDlg.h"
+	"Tooltip.h"
+	"MoveOrAttackDlg.h"
+	"../Players/PlayerManager.h"
+	"../Players/Spell.h"
+	"../Input/InputEngine.h"
+	"../Players/Player.h"
+	"../Gameboard/Unit.h"
+	"../Gameboard/GameboardInputs.h"
+	"../Gameboard/GameboardManager.h"
+	"../Audio/AudioManager.h"
+	"../Debug/DebugManager.h"
+	"../Server/Server.h"
+
+1346433168 /media/Naymlap/dev/work/Shahnarman/Sources/Interface/LoadGameDlg.h
+	"../GUIClasses/guiDocument.h"
+
+1346433168 /media/Naymlap/dev/work/Shahnarman/Sources/Interface/OptionsDlg.h
+	"../GUIClasses/guiDocument.h"
+
+1346433168 /media/Naymlap/dev/work/Shahnarman/Sources/Interface/SpellDlg.h
+	"../GUIClasses/guiDocument.h"
+	"../Players/Mana.h"
+
+1346433168 /media/Naymlap/dev/work/Shahnarman/Sources/Interface/MapObjectDlg.h
+	"../GUIClasses/guiDocument.h"
+
+1346433168 /media/Naymlap/dev/work/Shahnarman/Sources/Interface/SpellsSelectorDlg.h
+	"../GUIClasses/guiDocument.h"
+
+1346433168 /media/Naymlap/dev/work/Shahnarman/Sources/Interface/PlayerSelectorDlg.h
+	"../GUIClasses/guiDocument.h"
+
+1346433168 /media/Naymlap/dev/work/Shahnarman/Sources/Interface/StatusDlg.h
+	"../GUIClasses/guiDocument.h"
+
+1346433168 /media/Naymlap/dev/work/Shahnarman/Sources/Interface/Tooltip.h
+	"../GUIClasses/guiFrame.h"
+	"../GUIClasses/guiLabel.h"
+
+1346433168 /media/Naymlap/dev/work/Shahnarman/Sources/Interface/MoveOrAttackDlg.h
+	"../GUIClasses/guiDocument.h"
+
+1346955992 source:/media/Naymlap/dev/work/Shahnarman/Sources/Interface/LevelUpDlg.cpp
+	"LevelUpDlg.h"
+	"InterfaceManager.h"
+	"BuildDeckDlg.h"
+	"../LocalClient.h"
+	"../GUIClasses/guiFrame.h"
+	"../GUIClasses/guiToggleButton.h"
+	"../GUIClasses/guiComboBox.h"
+	"../Data/LocalisationTool.h"
+	"../Data/DataFactory.h"
+	"../DeckData/AvatarData.h"
+	"../DeckData/Edition.h"
+	"../DeckData/Ethnicity.h"
+	"../DeckData/Profile.h"
+
+1346955992 source:/media/Naymlap/dev/work/Shahnarman/Sources/Interface/LoadGameDlg.cpp
+	"LoadGameDlg.h"
+	"InterfaceManager.h"
+	"StartMenuDlg.h"
+	"../GUIClasses/guiButton.h"
+	"../GUIClasses/guiContainer.h"
+	"../LocalClient.h"
+	"../Data/LocalisationTool.h"
+
+1346955992 source:/media/Naymlap/dev/work/Shahnarman/Sources/Interface/LogDlg.cpp
+	"LogDlg.h"
+	"../LocalClient.h"
+	"../Data/LocalisationTool.h"
+	"../GUIClasses/guiButton.h"
+	"../GUIClasses/guiFrame.h"
+	"../Gameboard/Unit.h"
+	"../Gameboard/Town.h"
+	"../Gameboard/GameboardManager.h"
+	"../Interface/InterfaceManager.h"
+	"../Interface/MapObjectDlg.h"
+	"../Fx/FxManager.h"
+
+1346955992 source:/media/Naymlap/dev/work/Shahnarman/Sources/Interface/MapObjectDlg.cpp
+	"MapObjectDlg.h"
+	"../LocalClient.h"
+	"../Data/LocalisationTool.h"
+	"../Gameboard/MapTile.h"
+	"../Gameboard/MapObject.h"
+	"../Gameboard/Unit.h"
+	"../Gameboard/Town.h"
+	"../Gameboard/Building.h"
+	"../Gameboard/Skill.h"
+	"../GUIClasses/guiToggleButton.h"
+	"../GUIClasses/guiContainer.h"
+	"../GUIClasses/guiGauge.h"
+	"../GUIClasses/guiComboBox.h"
+	"../GUIClasses/guiPopup.h"
+	"InterfaceManager.h"
+	"../Players/PlayerManager.h"
+	"../Players/Player.h"
+	"../Data/DataFactory.h"
+	"../DeckData/Edition.h"
+	"../DeckData/Ethnicity.h"
+	"../DeckData/UnitData.h"
+
+1346955992 source:/media/Naymlap/dev/work/Shahnarman/Sources/Interface/MoveOrAttackDlg.cpp
+	"MoveOrAttackDlg.h"
+	"../Data/LocalisationTool.h"
+	"../Gameboard/Unit.h"
+	"../Gameboard/GameboardManager.h"
+	"../LocalClient.h"
+	"../GUIClasses/guiToggleButton.h"
+	"InterfaceManager.h"
+	"InfoboxDlg.h"
+
+1346955992 source:/media/Naymlap/dev/work/Shahnarman/Sources/Interface/OptionsDlg.cpp
+	"OptionsDlg.h"
+	"../GUIClasses/guiComboBox.h"
+	"../GUIClasses/guiToggleButton.h"
+	"../GUIClasses/guiPopup.h"
+	"../GUIClasses/guiEditBox.h"
+	"../LocalClient.h"
+	"../Data/LocalisationTool.h"
+	"../Data/DataFactory.h"
+	"../Debug/DebugManager.h"
+	"InterfaceManager.h"
+	"StartMenuDlg.h"
+	"../DeckData/Edition.h"
+	"../Audio/AudioManager.h"
+
+1346433168 source:/media/Naymlap/dev/work/Shahnarman/Sources/Interface/PlayerSelectorDlg.cpp
+	"PlayerSelectorDlg.h"
+	"InterfaceManager.h"
+	"../GUIClasses/guiFrame.h"
+	"../GUIClasses/guiToggleButton.h"
+	"../GUIClasses/guiContainer.h"
+	"../LocalClient.h"
+	"../Data/LocalisationTool.h"
+	"../Players/Player.h"
+
+1346964758 source:/media/Naymlap/dev/work/Shahnarman/Sources/Interface/ResolveDlg.cpp
+	"ResolveDlg.h"
+	"../GUIClasses/guiToggleButton.h"
+	"../Data/LocalisationTool.h"
+	"../Data/LuaContext.h"
+	"../LocalClient.h"
+	"../Gameboard/Unit.h"
+	"../GUIClasses/guiContainer.h"
+	"../GUIClasses/guiImage.h"
+	"BattleSpellPopup.h"
+	"../Players/PlayerManager.h"
+	"../Players/Spell.h"
+	"InterfaceManager.h"
+	"SpellDlg.h"
+	"InfoboxDlg.h"
+	"LogDlg.h"
+	"../Server/Server.h"
+	"../Fx/FxManager.h"
+	"../Gameboard/GameboardManager.h"
+	"../Debug/DebugManager.h"
+
+1346433168 source:/media/Naymlap/dev/work/Shahnarman/Sources/Interface/SelectPlayerAvatarDlg.cpp
+	"SelectPlayerAvatarDlg.h"
+	"InterfaceManager.h"
+	"StartMenuDlg.h"
+	"BuildDeckDlg.h"
+	"ArtifactsEquipDlg.h"
+	"CreateAvatarDlg.h"
+	"ShopDlg.h"
+	"../GUIClasses/guiComboBox.h"
+	"../GUIClasses/guiPopup.h"
+	"../LocalClient.h"
+	"../Data/LocalisationTool.h"
+	"../Data/DataFactory.h"
+	"../DeckData/Profile.h"
+
+1346955993 source:/media/Naymlap/dev/work/Shahnarman/Sources/Interface/ShopDlg.cpp
+	"ShopDlg.h"
+	"InterfaceManager.h"
+	"StartMenuDlg.h"
+	"SelectPlayerAvatarDlg.h"
+	"BuildDeckDlg.h"
+	"ArtifactsEquipDlg.h"
+	"../GUIClasses/guiPopup.h"
+	"../GUIClasses/guiSmartSlider.h"
+	"../LocalClient.h"
+	"../Data/LocalisationTool.h"
+	"../DeckData/ShopItem.h"
+	"../Data/DataFactory.h"
+	"../DeckData/Profile.h"
+	"../DeckData/Edition.h"
+	"../Players/Spell.h"
+
+1346964230 source:/media/Naymlap/dev/work/Shahnarman/Sources/Interface/InfoboxDlg.cpp
+	"InfoboxDlg.h"
+	"InterfaceManager.h"
+	"SpellDlg.h"
+	"../LocalClient.h"
+	"../Data/LocalisationTool.h"
+	"../GUIClasses/guiImage.h"
+	"../GUIClasses/guiLabel.h"
+	"../GUIClasses/guiFrame.h"
+	"../Players/PlayerManager.h"
+	"../Players/Player.h"
+	"../Gameboard/Unit.h"
+	"../Input/KeyboardInputEngine.h"
+	"../GUIClasses/guiToggleButton.h"
+	"../Gameboard/GameboardManager.h"
+
+1346964821 source:/media/Naymlap/dev/work/Shahnarman/Sources/Interface/SpellDlg.cpp
+	"SpellDlg.h"
+	"SpellsSelectorDlg.h"
+	"../GUIClasses/guiToggleButton.h"
+	"../LocalClient.h"
+	"../Data/LocalisationTool.h"
+	"../Players/Player.h"
+	"../Geometries/GeometryQuads.h"
+	"../GUIClasses/guiImage.h"
+	"../Players/PlayerManager.h"
+	"../Interface/InterfaceManager.h"
+	"../Interface/InfoboxDlg.h"
+	"../Players/Spell.h"
+	"../Gameboard/GameboardManager.h"
+
+1346433168 source:/media/Naymlap/dev/work/Shahnarman/Sources/Interface/SpellsSelectorDlg.cpp
+	"SpellsSelectorDlg.h"
+	"InterfaceManager.h"
+	"../GUIClasses/guiFrame.h"
+	"../GUIClasses/guiToggleButton.h"
+	"../GUIClasses/guiContainer.h"
+	"../LocalClient.h"
+	"../Data/LocalisationTool.h"
+	"../Gameboard/MapObject.h"
+	"../Players/Spell.h"
+	"../Players/Player.h"
+	"../Gameboard/Unit.h"
+
+1346433168 source:/media/Naymlap/dev/work/Shahnarman/Sources/Interface/StartMenuDlg.cpp
+	"StartMenuDlg.h"
+	"../GUIClasses/guiButton.h"
+	"../GUIClasses/guiPopup.h"
+	"../LocalClient.h"
+	"../Data/LocalisationTool.h"
+	"../Debug/DebugManager.h"
+	"InterfaceManager.h"
+	"SelectPlayerAvatarDlg.h"
+	"LoadGameDlg.h"
+	"HostGameDlg.h"
+	"OptionsDlg.h"
+
+1346433168 source:/media/Naymlap/dev/work/Shahnarman/Sources/Interface/StatusDlg.cpp
+	"StatusDlg.h"
+	"../LocalClient.h"
+	"../GUIClasses/guiLabel.h"
+	"../GUIClasses/guiFrame.h"
+	"../Interface/InterfaceManager.h"
+
+1346433168 source:/media/Naymlap/dev/work/Shahnarman/Sources/Interface/Tooltip.cpp
+	"Tooltip.h"
+
+1346433168 source:/media/Naymlap/dev/work/Shahnarman/Sources/Interface/UnitOptionsDlg.cpp
+	"UnitOptionsDlg.h"
+	"InterfaceManager.h"
+	"SpellDlg.h"
+	"../LocalClient.h"
+	"../Data/LocalisationTool.h"
+	"../GUIClasses/guiToggleButton.h"
+	"../GUIClasses/guiFrame.h"
+	"../Gameboard/Unit.h"
+	"../Gameboard/GameboardManager.h"
+	"../Gameboard/GameboardInputs.h"
+	"../Players/PlayerManager.h"
+
+1346955993 source:/media/Naymlap/dev/work/Shahnarman/Sources/LocalClient.cpp
+	"LocalClient.h"
+	"Data/LocalisationTool.h"
+	"Display/DisplayEngine.h"
+	"Input/PCInputEngine.h"
+	"Gameboard/GameboardManager.h"
+	"Interface/InterfaceManager.h"
+	"Fx/FxManager.h"
+	"Audio/AudioManager.h"
+	"Debug/DebugManager.h"
+	"Players/PlayerManager.h"
+	"Data/Parameters.h"
+	"Data/DataFactory.h"
+	"Server/Server.h"
+	"Server/MapReader.h"
+	"Server/TurnSolver.h"
+	"Players/Player.h"
+	"Players/Spell.h"
+	"Players/Artifact.h"
+	"Gameboard/Unit.h"
+	"Gameboard/Town.h"
+	"Gameboard/Building.h"
+	"DeckData/AvatarData.h"
+	"DeckData/Profile.h"
+	"DeckData/Edition.h"
+	"Interface/ResolveDlg.h"
+	"Interface/LogDlg.h"
+	"Interface/InfoboxDlg.h"
+
+1346433168 source:/media/Naymlap/dev/work/Shahnarman/Sources/Physics/ConstantMovement3D.cpp
+	"ConstantMovement3D.h"
+
+1346433168 /media/Naymlap/dev/work/Shahnarman/Sources/Physics/ConstantMovement3D.h
+	"Movement.h"
+
+1346433168 source:/media/Naymlap/dev/work/Shahnarman/Sources/Physics/FasloMove.cpp
+	"FasloMove.h"
+
+1346433168 source:/media/Naymlap/dev/work/Shahnarman/Sources/Physics/Movement.cpp
+	"Movement.h"
+
+1346433168 source:/media/Naymlap/dev/work/Shahnarman/Sources/Physics/PhysicalObject.cpp
+	"PhysicalObject.h"
+
+1346433168 source:/media/Naymlap/dev/work/Shahnarman/Sources/Physics/SlofasloMove.cpp
+	"SlofasloMove.h"
+
+1346433168 /media/Naymlap/dev/work/Shahnarman/Sources/Physics/SlofasloMove.h
+	"Movement.h"
+
+1346439135 source:/media/Naymlap/dev/work/Shahnarman/Sources/Players/AISpell.cpp
+	"AISpell.h"
+
+1346439135 /media/Naymlap/dev/work/Shahnarman/Sources/Players/AISpell.h
+	"Spell.h"
+
+1346623722 source:/media/Naymlap/dev/work/Shahnarman/Sources/Players/Artifact.cpp
+	"Artifact.h"
+
+1346439135 source:/media/Naymlap/dev/work/Shahnarman/Sources/Players/Mana.cpp
+	"Mana.h"
+
+1346955993 source:/media/Naymlap/dev/work/Shahnarman/Sources/Players/Player.cpp
+	"Player.h"
+	"Spell.h"
+	"Artifact.h"
+	"../Gameboard/GameboardManager.h"
+	"../Data/LocalisationTool.h"
+	"../Gameboard/Unit.h"
+	"../Display/DisplayEngine.h"
+	"../Geometries/GeometryQuads.h"
+	"../DeckData/AvatarData.h"
+	"../DeckData/Edition.h"
+	"../Data/DataFactory.h"
+	"../Data/NetworkSerializer.h"
+	"../LocalClient.h"
+
+1346964870 source:/media/Naymlap/dev/work/Shahnarman/Sources/Players/PlayerManager.cpp
+	"PlayerManager.h"
+	"Player.h"
+	"Spell.h"
+	"../LocalClient.h"
+	"../Data/LocalisationTool.h"
+	"../Data/DataFactory.h"
+	"../Data/LuaContext.h"
+	"../DeckData/UnitData.h"
+	"../Common/ObjectList.h"
+	"../Gameboard/GameboardManager.h"
+	"../Gameboard/Unit.h"
+	"../Gameboard/Town.h"
+	"../Gameboard/Building.h"
+	"../Gameboard/Temple.h"
+	"../Gameboard/SpecialTile.h"
+	"../Server/Server.h"
+	"../Interface/InterfaceManager.h"
+	"../Interface/SpellDlg.h"
+	"../Interface/LogDlg.h"
+	"../Interface/ResolveDlg.h"
+	"../Interface/UnitOptionsDlg.h"
+	"../Interface/InfoboxDlg.h"
+	"../Fx/FxManager.h"
+	"../Debug/DebugManager.h"
+	"../Audio/AudioManager.h"
+
+1346955993 source:/media/Naymlap/dev/work/Shahnarman/Sources/Players/Spell.cpp
+	"Spell.h"
+	"../Common/ObjectList.h"
+	"../Data/LuaTargetable.h"
+	"../Debug/DebugManager.h"
+	"../lua_callbacks.h"
+	"../Data/LocalisationTool.h"
+
+1346433168 source:/media/Naymlap/dev/work/Shahnarman/Sources/Players/SummonSpell.cpp
+
+1346955993 source:/media/Naymlap/dev/work/Shahnarman/Sources/Server/AILuaSolver.cpp
+	"AILuaSolver.h"
+	"Server.h"
+	"AISolver.h"
+	"TurnSolver.h"
+	"SpellsSolver.h"
+	"../Data/DataFactory.h"
+	"../Players/Player.h"
+	"../Players/AISpell.h"
+	"../Gameboard/Unit.h"
+	"../Gameboard/Town.h"
+	"../Gameboard/MapTile.h"
+	"../Gameboard/SpecialTile.h"
+
+1346439135 /media/Naymlap/dev/work/Shahnarman/Sources/Server/AILuaSolver.h
+	"../Common/ObjectList.h"
+	"../lua_callbacks.h"
+
+1346439135 /media/Naymlap/dev/work/Shahnarman/Sources/Server/AISolver.h
+	"AILuaSolver.h"
+
+1346439135 source:/media/Naymlap/dev/work/Shahnarman/Sources/Server/AISolver.cpp
+	"AISolver.h"
+	"Server.h"
+	"TurnSolver.h"
+	"SpellsSolver.h"
+	"../Data/DataFactory.h"
+	"../Players/Player.h"
+	"../Players/AISpell.h"
+	"../Gameboard/Unit.h"
+	"../Gameboard/Town.h"
+	"../Gameboard/MapTile.h"
+	"../Gameboard/SpecialTile.h"
+
+1346955993 source:/media/Naymlap/dev/work/Shahnarman/Sources/Server/MapReader.cpp
+	"MapReader.h"
+	"../LocalClient.h"
+	"../Debug/DebugManager.h"
+	"../Data/LocalisationTool.h"
+	"../Data/DataFactory.h"
+	"../DeckData/Edition.h"
+	"../DeckData/Ethnicity.h"
+	"../Gameboard/Town.h"
+
+1346965069 source:/media/Naymlap/dev/work/Shahnarman/Sources/Players/PlayerManagerAbstract.cpp
+	"PlayerManagerAbstract.h"
+	"Player.h"
+	"Spell.h"
+	"../LocalClient.h"
+	"../Data/DataFactory.h"
+	"../Common/ObjectList.h"
+	"../Gameboard/Unit.h"
+	"../Gameboard/Temple.h"
+	"../Gameboard/Town.h"
+	"../Data/LuaContext.h"
+	"../lua_callbacks_utils.h"
+
+1346975269 /media/Naymlap/dev/work/Shahnarman/Sources/lua_callbacks_utils.h
+	<lua5.1/lua.hpp>
+	"GameRoot.h"
+	"LocalClient.h"
+	"Data/LocalisationTool.h"
+	"Gameboard/Unit.h"
+	"Gameboard/Town.h"
+	"Gameboard/Building.h"
+	"Gameboard/Temple.h"
+	"Gameboard/GameboardManager.h"
+	"Gameboard/GameboardInputs.h"
+	"Players/PlayerManager.h"
+	"Players/Player.h"
+	"Players/Spell.h"
+	"Interface/InterfaceManager.h"
+	"Interface/SpellDlg.h"
+	"Interface/InfoboxDlg.h"
+	"Interface/SpellsSelectorDlg.h"
+	"Interface/PlayerSelectorDlg.h"
+	"Interface/UnitOptionsDlg.h"
+	"Interface/StatusDlg.h"
+	"GUIClasses/guiFrame.h"
+	"Debug/DebugManager.h"
+	"Server/Server.h"
+	"Server/TurnSolver.h"
+
+1346965123 source:/media/Naymlap/dev/work/Shahnarman/Sources/Server/NetworkData.cpp
+	"NetworkData.h"
+	"../utils.h"
+	<stdio.h>
+
+1346439135 source:/media/Naymlap/dev/work/Shahnarman/Sources/Server/ServerUnit.cpp
+	"../Gameboard/Unit.h"
+	"../Data/LocalisationTool.h"
+	"../Data/DataFactory.h"
+	"../Debug/DebugManager.h"
+	"../Players/Spell.h"
+	"../Server/Server.h"
+	"../Physics/ConstantMovement3D.h"
+
+1346974853 source:/media/Naymlap/dev/work/Shahnarman/Sources/_System/DirectoryChecker.cpp
+	"../utils.h"
+	<stdio.h>
+	<vector>
+	<string.h>
+	"../Common/md5.h"
+
+1346433168 source:/media/Naymlap/dev/work/Shahnarman/Sources/_System/TheAvatars.cpp
+	"stdafx.h"
+	"../GameRoot.h"
+	"../LocalClient.h"
+	"../SystemHeaders.h"
+	"../Data/Parameters.h"
+	"../Display/DisplayEngine.h"
+	"../Input/PCInputEngine.h"
+	"../Interface/InterfaceManager.h"
+	"../Debug/DebugManager.h"
+
+1346433168 /media/Naymlap/dev/work/Shahnarman/Sources/_System/stdafx.h
+	<stdio.h>
+	<tchar.h>
+
+1346965141 source:/media/Naymlap/dev/work/Shahnarman/Sources/Server/Server.cpp
+	"Server.h"
+	"MapReader.h"
+	"TurnSolver.h"
+	"../Players/PlayerManager.h"
+	"../Players/Player.h"
+	"../Players/Spell.h"
+	"../Players/Artifact.h"
+	"../LocalClient.h"
+	"../Gameboard/Unit.h"
+	"../Gameboard/Town.h"
+	"../Gameboard/Building.h"
+	"../Gameboard/Temple.h"
+	"../Gameboard/SpecialTile.h"
+	"../Debug/DebugManager.h"
+	"../Data/LocalisationTool.h"
+	"../DeckData/AvatarData.h"
+	"../Interface/LogDlg.h"
+
+1346965198 source:/media/Naymlap/dev/work/Shahnarman/Sources/Server/SpellsSolver.cpp
+	"SpellsSolver.h"
+	"Server.h"
+	"TurnSolver.h"
+	"../Players/Player.h"
+	"../Players/Spell.h"
+	"../Players/Artifact.h"
+	"../Debug/DebugManager.h"
+	"../Gameboard/Unit.h"
+	"../Gameboard/Town.h"
+	"../Gameboard/Temple.h"
+	"../Gameboard/Building.h"
+	"../Gameboard/SpecialTile.h"
+	"../Data/DataFactory.h"
+	"../DeckData/Edition.h"
+	"../DeckData/AvatarData.h"
+
+1346965242 source:/media/Naymlap/dev/work/Shahnarman/Sources/Server/TurnSolver.cpp
+	"TurnSolver.h"
+	"Server.h"
+	"NetworkData.h"
+	"../Debug/DebugManager.h"
+	"../Players/Player.h"
+	"SpellsSolver.h"
+	"AISolver.h"
+	"../Data/DataFactory.h"
+	"../Players/Spell.h"
+	"../Gameboard/Unit.h"
+	"../Gameboard/Town.h"
+	"../Gameboard/Temple.h"
+	"../Gameboard/SpecialTile.h"
+
+1346977217 source:/media/Naymlap/dev/work/Shahnarman/Sources/_System/linux_utils.cpp
+	"../utils.h"
+	<stdio.h>
+	<stdlib.h>
+	<stdarg.h>
+	<dirent.h>
+
+1346965961 source:/media/Naymlap/dev/work/Shahnarman/Sources/_System/main.cpp
+	"../GameRoot.h"
+	"../LocalClient.h"
+	"../SystemHeaders.h"
+	"../Data/Parameters.h"
+	"../Display/DisplayEngine.h"
+	"../Input/PCInputEngine.h"
+	"../Interface/InterfaceManager.h"
+	"../Debug/DebugManager.h"
+
+1346433168 source:/media/Naymlap/dev/work/Shahnarman/Sources/_System/stdafx.cpp
+	"stdafx.h"
+
+1346973929 source:/media/Naymlap/dev/work/Shahnarman/Sources/_System/utils_win32.cpp
+	"../utils.h"
+	<io.h>
+
+1346977267 source:/media/Naymlap/dev/work/Shahnarman/Sources/lua_callbacks.cpp
+	"lua_callbacks.h"
+	"lua_callbacks_utils.h"
+	"Data/DataFactory.h"
+	"GUIClasses/guiLabel.h"
+	"Server/AISolver.h"
+
+1346966241 source:/media/Naymlap/dev/work/Shahnarman/Sources/utils.cpp
+	"utils.h"
+
+1346966859 source:/media/Naymlap/dev/work/Shahnarman/Sources/lua_callbacks_utils.cpp
+	"lua_callbacks_utils.h"
+
+1346980049 source:/home/jotak/dev/Shahnarman/Sources/Audio/AudioManager.cpp
+	"AudioManager.h"
+	"../LocalClient.h"
+	"../Debug/DebugManager.h"
+	"../Data/Parameters.h"
+
+1346980049 /home/jotak/dev/Shahnarman/Sources/Audio/AudioManager.h
+	<AL/al.h>
+	<AL/alc.h>
+	<vorbis/vorbisfile.h>
+	"../SystemHeaders.h"
+	"../utils.h"
+
+1346980049 /home/jotak/dev/Shahnarman/Sources/SystemHeaders.h
+	<stdlib.h>
+	<errno.h>
+	<windows.h>
+	<mmsystem.h>
+	"GL\glew.h"
+	"GL\glut.h"
+	<png.h>
+	<stdlib.h>
+	<errno.h>
+	<GL/glew.h>
+	<GL/glu.h>
+	<GL/glut.h>
+	<png.h>
+	<GLUT/glut.h>
+
+1346980049 /home/jotak/dev/Shahnarman/Sources/utils.h
+	<stdio.h>
+	<string.h>
+	<cmath>
+	<assert.h>
+	<windows.h>
+	<string>
+	<hash_map>
+	<queue>
+	<cstring>
+	<iostream>
+	<cmath>
+	<assert.h>
+	<wchar.h>
+	<queue>
+	<tr1/unordered_map>
+	<tr1/memory>
+
+1346980049 /home/jotak/dev/Shahnarman/Sources/LocalClient.h
+	"utils.h"
+
+1346980049 /home/jotak/dev/Shahnarman/Sources/Debug/DebugManager.h
+	"../Common/TimeController.h"
+
+1346980049 /home/jotak/dev/Shahnarman/Sources/Common/TimeController.h
+	"BaseObject.h"
+
+1346980049 /home/jotak/dev/Shahnarman/Sources/Common/BaseObject.h
+	"../utils.h"
+
+1346980049 /home/jotak/dev/Shahnarman/Sources/Data/Parameters.h
+	"../utils.h"
+
+1346980049 source:/home/jotak/dev/Shahnarman/Sources/Common/ObjectList.cpp
+	"ObjectList.h"
+
+1346980049 /home/jotak/dev/Shahnarman/Sources/Common/ObjectList.h
+	"BaseObject.h"
+
+1346980049 source:/home/jotak/dev/Shahnarman/Sources/Common/SortInterface.cpp
+	"SortInterface.h"
+
+1346980049 /home/jotak/dev/Shahnarman/Sources/Common/SortInterface.h
+	"ObjectList.h"
+
+1346980049 source:/home/jotak/dev/Shahnarman/Sources/Common/TimeController.cpp
+	"TimeController.h"
+
+1346980049 source:/home/jotak/dev/Shahnarman/Sources/Common/md5.cpp
+	"md5.h"
+
+1346980049 /home/jotak/dev/Shahnarman/Sources/Common/md5.h
+	<assert.h>
+	<stdlib.h>
+
+1346980049 source:/home/jotak/dev/Shahnarman/Sources/Data/DataFactory.cpp
+	"DataFactory.h"
+	"Parameters.h"
+	"../LocalClient.h"
+	"../Debug/DebugManager.h"
+	"../DeckData/Edition.h"
+	"../DeckData/Profile.h"
+	"../DeckData/AvatarData.h"
+
+1346980049 /home/jotak/dev/Shahnarman/Sources/Data/DataFactory.h
+	"../Common/ObjectList.h"
+
+1346980049 /home/jotak/dev/Shahnarman/Sources/DeckData/Edition.h
+	"../Data/XMLObject.h"
+
+1346980049 /home/jotak/dev/Shahnarman/Sources/Data/XMLObject.h
+	"../Common/ObjectList.h"
+
+1346980049 /home/jotak/dev/Shahnarman/Sources/DeckData/Profile.h
+	"../Common/BaseObject.h"
+
+1346980049 /home/jotak/dev/Shahnarman/Sources/DeckData/AvatarData.h
+	"UnitData.h"
+	"ProgressionTree.h"
+
+1346980049 /home/jotak/dev/Shahnarman/Sources/DeckData/UnitData.h
+	"../Data/XMLObject.h"
+	"../Gameboard/Skill.h"
+
+1346980049 /home/jotak/dev/Shahnarman/Sources/Gameboard/Skill.h
+	"../Data/LuaObject.h"
+	"../Server/NetworkData.h"
+
+1346980049 /home/jotak/dev/Shahnarman/Sources/Data/LuaObject.h
+	"../Common/ObjectList.h"
+	"../Players/Mana.h"
+	<lua5.1/lua.hpp>
+
+1346980049 /home/jotak/dev/Shahnarman/Sources/Players/Mana.h
+	"../Common/BaseObject.h"
+
+1346980049 /home/jotak/dev/Shahnarman/Sources/Server/NetworkData.h
+
+1346980049 /home/jotak/dev/Shahnarman/Sources/DeckData/ProgressionTree.h
+	"ProgressionElement.h"
+
+1346980049 /home/jotak/dev/Shahnarman/Sources/DeckData/ProgressionElement.h
+	"../Data/XMLObject.h"
+	"../Data/LuaObject.h"
+
+1346980049 source:/home/jotak/dev/Shahnarman/Sources/Data/FileSerializer.cpp
+	"FileSerializer.h"
+	<stdio.h>
+
+1346980049 /home/jotak/dev/Shahnarman/Sources/Data/FileSerializer.h
+	"Serializer.h"
+	"../utils.h"
+
+1346980049 /home/jotak/dev/Shahnarman/Sources/Data/Serializer.h
+
+1346980049 source:/home/jotak/dev/Shahnarman/Sources/Data/IniFile.cpp
+	"IniFile.h"
+	<stdio.h>
+
+1346980049 /home/jotak/dev/Shahnarman/Sources/Data/IniFile.h
+	"../utils.h"
+
+1346980049 source:/home/jotak/dev/Shahnarman/Sources/Data/LocalisationTool.cpp
+	"LocalisationTool.h"
+	"XMLLiteReader.h"
+	"../Debug/DebugManager.h"
+	"Parameters.h"
+	<stdarg.h>
+	<stdio.h>
+
+1346980049 /home/jotak/dev/Shahnarman/Sources/Data/LocalisationTool.h
+	"../utils.h"
+
+1346980049 /home/jotak/dev/Shahnarman/Sources/Data/XMLLiteReader.h
+	"XMLLiteElement.h"
+
+1346980049 /home/jotak/dev/Shahnarman/Sources/Data/XMLLiteElement.h
+	"../Common/ObjectList.h"
+
+1346980049 source:/home/jotak/dev/Shahnarman/Sources/Data/LuaContext.cpp
+	"LuaContext.h"
+	"../Players/PlayerManagerAbstract.h"
+	"../Players/Player.h"
+	"../Players/Spell.h"
+	"../Gameboard/Unit.h"
+	"../Gameboard/Town.h"
+	"../Gameboard/Temple.h"
+	"../Gameboard/Building.h"
+	"../Gameboard/SpecialTile.h"
+
+1346980049 /home/jotak/dev/Shahnarman/Sources/Data/LuaContext.h
+	"../utils.h"
+
+1346980049 /home/jotak/dev/Shahnarman/Sources/Players/PlayerManagerAbstract.h
+	"../utils.h"
+
+1346980049 /home/jotak/dev/Shahnarman/Sources/Players/Player.h
+	"Mana.h"
+	"../Data/LuaTargetable.h"
+
+1346980049 /home/jotak/dev/Shahnarman/Sources/Data/LuaTargetable.h
+	"../lua_callbacks.h"
+	"../Common/ObjectList.h"
+	"LuaObject.h"
+
+1346980049 /home/jotak/dev/Shahnarman/Sources/lua_callbacks.h
+	<lua5.1/lua.hpp>
+
+1346980049 /home/jotak/dev/Shahnarman/Sources/Players/Spell.h
+	"../Data/LuaObject.h"
+	"Mana.h"
+	"../Server/NetworkData.h"
+
+1346980049 /home/jotak/dev/Shahnarman/Sources/Gameboard/Unit.h
+	"MapObject.h"
+	"../Physics/PhysicalObject.h"
+	"../DeckData/UnitData.h"
+	"../Players/Mana.h"
+
+1346980049 /home/jotak/dev/Shahnarman/Sources/Gameboard/MapObject.h
+	"../Common/GraphicObject.h"
+	"../Data/LuaTargetable.h"
+	"Map.h"
+
+1346980049 /home/jotak/dev/Shahnarman/Sources/Common/GraphicObject.h
+	"BaseObject.h"
+	"../Geometries/Geometry.h"
+
+1346980049 /home/jotak/dev/Shahnarman/Sources/Geometries/Geometry.h
+	"../Display/Texture.h"
+	"../Display/DisplayEngine.h"
+	"GeometryModifier.h"
+
+1346980049 /home/jotak/dev/Shahnarman/Sources/Display/Texture.h
+	"../utils.h"
+	"../SystemHeaders.h"
+
+1346980049 /home/jotak/dev/Shahnarman/Sources/Display/DisplayEngine.h
+	"../Data/Parameters.h"
+	"TextureEngine.h"
+	"../Fonts/FontEngine.h"
+	"../Common/ObjectList.h"
+
+1346980049 /home/jotak/dev/Shahnarman/Sources/Display/TextureEngine.h
+	"Texture.h"
+	"../Common/BaseObject.h"
+
+1346980049 /home/jotak/dev/Shahnarman/Sources/Fonts/FontEngine.h
+	"Font.h"
+
+1346980049 /home/jotak/dev/Shahnarman/Sources/Fonts/Font.h
+	"../utils.h"
+
+1346980049 /home/jotak/dev/Shahnarman/Sources/Geometries/GeometryModifier.h
+	"../Common/BaseObject.h"
+
+1346980049 /home/jotak/dev/Shahnarman/Sources/Gameboard/Map.h
+	"MapTile.h"
+	"Pathfinder.h"
+	"../Server/NetworkData.h"
+	"../Interface/StackGroupInterface.h"
+	"../Geometries/GeometryQuads.h"
+
+1346980049 /home/jotak/dev/Shahnarman/Sources/Gameboard/MapTile.h
+	"../Common/GraphicObject.h"
+	"../Data/LuaTargetable.h"
+
+1346980049 /home/jotak/dev/Shahnarman/Sources/Gameboard/Pathfinder.h
+	"MapTile.h"
+
+1346980049 /home/jotak/dev/Shahnarman/Sources/Interface/StackGroupInterface.h
+	"../Common/ObjectList.h"
+
+1346980049 /home/jotak/dev/Shahnarman/Sources/Geometries/GeometryQuads.h
+	"Geometry.h"
+
+1346980049 /home/jotak/dev/Shahnarman/Sources/Physics/PhysicalObject.h
+	"../Common/ObjectList.h"
+	"Movement.h"
+
+1346980049 /home/jotak/dev/Shahnarman/Sources/Physics/Movement.h
+	"../Common/BaseObject.h"
+
+1346980049 /home/jotak/dev/Shahnarman/Sources/Gameboard/Town.h
+	"MapObject.h"
+	"../DeckData/Ethnicity.h"
+
+1346980049 /home/jotak/dev/Shahnarman/Sources/DeckData/Ethnicity.h
+	"../Data/XMLObject.h"
+
+1346980049 /home/jotak/dev/Shahnarman/Sources/Gameboard/Temple.h
+	"MapObject.h"
+
+1346980049 /home/jotak/dev/Shahnarman/Sources/Gameboard/Building.h
+	"../Data/LuaObject.h"
+	"../Server/NetworkData.h"
+
+1346980049 /home/jotak/dev/Shahnarman/Sources/Gameboard/SpecialTile.h
+	"../Data/LuaObject.h"
+
+1346980049 source:/home/jotak/dev/Shahnarman/Sources/Data/LuaObject.cpp
+	"LuaObject.h"
+	"../Debug/DebugManager.h"
+	"../Data/LocalisationTool.h"
+	"../lua_callbacks.h"
+	"../Gameboard/Town.h"
+	"../Gameboard/Unit.h"
+	"../Players/Player.h"
+	"../GameRoot.h"
+	"../LocalClient.h"
+	"../Data/Parameters.h"
+
+1346980049 /home/jotak/dev/Shahnarman/Sources/GameRoot.h
+
+1346980049 source:/home/jotak/dev/Shahnarman/Sources/Data/LuaTargetable.cpp
+	"LuaTargetable.h"
+	"../Server/NetworkData.h"
+	"../Players/PlayerManager.h"
+	"../Players/Spell.h"
+	"../Players/Player.h"
+	"../Gameboard/Skill.h"
+	"../Gameboard/Building.h"
+	"../Gameboard/Temple.h"
+	"../Gameboard/Town.h"
+	"../Gameboard/Unit.h"
+	"../LocalClient.h"
+	"../Data/LocalisationTool.h"
+
+1346980049 /home/jotak/dev/Shahnarman/Sources/Players/PlayerManager.h
+	"PlayerManagerAbstract.h"
+
+1346980049 source:/home/jotak/dev/Shahnarman/Sources/Data/NetworkSerializer.cpp
+	"NetworkSerializer.h"
+
+1346980049 /home/jotak/dev/Shahnarman/Sources/Data/NetworkSerializer.h
+	"Serializer.h"
+	"../Server/NetworkData.h"
+	"../utils.h"
+
+1346980049 source:/home/jotak/dev/Shahnarman/Sources/Data/XMLLiteElement.cpp
+	"XMLLiteElement.h"
+
+1346980049 source:/home/jotak/dev/Shahnarman/Sources/Data/XMLLiteReader.cpp
+	"XMLLiteReader.h"
+	<stdio.h>
+
+1346980049 source:/home/jotak/dev/Shahnarman/Sources/Data/XMLObject.cpp
+	"XMLObject.h"
+	"XMLLiteElement.h"
+
+1346980049 source:/home/jotak/dev/Shahnarman/Sources/Debug/DebugManager.cpp
+	"DebugManager.h"
+	"../LocalClient.h"
+	"../errorcodes.h"
+	"../Data/IniFile.h"
+	"../Geometries/GeometryText.h"
+	"../Input/InputEngine.h"
+	"../Data/XMLLiteReader.h"
+	"../Data/LocalisationTool.h"
+	"../Data/DataFactory.h"
+	"../DeckData/Profile.h"
+	"../DeckData/AvatarData.h"
+	"../Server/Server.h"
+	"../Server/MapReader.h"
+	"../Server/TurnSolver.h"
+	"../GUIClasses/guiLabel.h"
+	"../Players/Player.h"
+	"../Players/Artifact.h"
+	"../Gameboard/Unit.h"
+
+1346980049 /home/jotak/dev/Shahnarman/Sources/errorcodes.h
+
+1346980049 /home/jotak/dev/Shahnarman/Sources/Geometries/GeometryText.h
+	"Geometry.h"
+
+1346980049 /home/jotak/dev/Shahnarman/Sources/Input/InputEngine.h
+	"EventListener.h"
+	<stack>
+
+1346980049 /home/jotak/dev/Shahnarman/Sources/Input/EventListener.h
+	"../utils.h"
+
+1346980049 /home/jotak/dev/Shahnarman/Sources/Server/Server.h
+	"../Gameboard/Map.h"
+
+1346980049 /home/jotak/dev/Shahnarman/Sources/Server/MapReader.h
+	"../Common/BaseObject.h"
+	<lua5.1/lua.hpp>
+
+1346980049 /home/jotak/dev/Shahnarman/Sources/Server/TurnSolver.h
+	"SpellsSolver.h"
+	"../Players/PlayerManagerAbstract.h"
+
+1346980049 /home/jotak/dev/Shahnarman/Sources/Server/SpellsSolver.h
+	"../Data/LuaContext.h"
+
+1346980049 /home/jotak/dev/Shahnarman/Sources/GUIClasses/guiLabel.h
+	"guiComponent.h"
+
+1346980049 /home/jotak/dev/Shahnarman/Sources/GUIClasses/guiComponent.h
+	"guiObject.h"
+
+1346980049 /home/jotak/dev/Shahnarman/Sources/GUIClasses/guiObject.h
+	"../Common/GraphicObject.h"
+	"../Input/InputEngine.h"
+
+1346980049 /home/jotak/dev/Shahnarman/Sources/Players/Artifact.h
+	"../Data/XMLObject.h"
+	"../Data/LuaObject.h"
+
+1346980049 source:/home/jotak/dev/Shahnarman/Sources/DeckData/AIData.cpp
+	"AIData.h"
+	"../LocalClient.h"
+	"../Debug/DebugManager.h"
+	"../Data/DataFactory.h"
+	"../Players/Spell.h"
+	"ShopItem.h"
+	"Edition.h"
+	"AvatarData.h"
+
+1346980049 /home/jotak/dev/Shahnarman/Sources/DeckData/AIData.h
+	"../Data/XMLObject.h"
+
+1346980049 /home/jotak/dev/Shahnarman/Sources/DeckData/ShopItem.h
+	"../GUIClasses/guiSmartSlider.h"
+
+1346980049 /home/jotak/dev/Shahnarman/Sources/GUIClasses/guiSmartSlider.h
+	"guiLabel.h"
+	"../Geometries/GeometryQuads.h"
+
+1346980049 source:/home/jotak/dev/Shahnarman/Sources/DeckData/AvatarData.cpp
+	"AvatarData.h"
+	"Edition.h"
+	"../LocalClient.h"
+	"../Debug/DebugManager.h"
+	"../Display/TextureEngine.h"
+	"../Data/DataFactory.h"
+	"../Data/LocalisationTool.h"
+	"../Data/NetworkSerializer.h"
+
+1346980049 source:/home/jotak/dev/Shahnarman/Sources/DeckData/Edition.cpp
+	"Edition.h"
+	"../Debug/DebugManager.h"
+	"../Data/LocalisationTool.h"
+	"../Data/DataFactory.h"
+	"ShopItem.h"
+	"../Data/XMLLiteReader.h"
+	"../GUIClasses/guiSmartSlider.h"
+	"AvatarData.h"
+	"Ethnicity.h"
+	"ProgressionTree.h"
+	"ProgressionElement.h"
+	"Profile.h"
+	"ShahmahCreation.h"
+	"AIData.h"
+	"../Players/Spell.h"
+	"../Players/Artifact.h"
+	"../Gameboard/SpecialTile.h"
+	"../Common/ObjectList.h"
+	"../LocalClient.h"
+	<locale.h>
+
+1346980049 /home/jotak/dev/Shahnarman/Sources/DeckData/ShahmahCreation.h
+	"../Common/ObjectList.h"
+
+1346980049 source:/home/jotak/dev/Shahnarman/Sources/DeckData/Ethnicity.cpp
+	"Ethnicity.h"
+	"../Debug/DebugManager.h"
+	"../Data/XMLLiteReader.h"
+
+1346980049 source:/home/jotak/dev/Shahnarman/Sources/DeckData/Profile.cpp
+	"Profile.h"
+	"../LocalClient.h"
+	"../Debug/DebugManager.h"
+	"Edition.h"
+	"ShopItem.h"
+	"AvatarData.h"
+	"../Data/DataFactory.h"
+	"../Data/FileSerializer.h"
+	"../Players/Spell.h"
+	"../Players/Artifact.h"
+	"../Interface/InterfaceManager.h"
+	"../Interface/LevelUpDlg.h"
+	"../Interface/BuildDeckDlg.h"
+	"../Interface/StartMenuDlg.h"
+	"../Interface/ShopDlg.h"
+	<stdio.h>
+
+1346980049 /home/jotak/dev/Shahnarman/Sources/Interface/InterfaceManager.h
+	"../Common/BaseObject.h"
+	"../Input/EventListener.h"
+
+1346980049 /home/jotak/dev/Shahnarman/Sources/Interface/LevelUpDlg.h
+	"../GUIClasses/guiDocument.h"
+
+1346980049 /home/jotak/dev/Shahnarman/Sources/GUIClasses/guiDocument.h
+	"ComponentOwnerInterface.h"
+	"guiComponent.h"
+
+1346980049 /home/jotak/dev/Shahnarman/Sources/GUIClasses/ComponentOwnerInterface.h
+
+1346980049 /home/jotak/dev/Shahnarman/Sources/Interface/BuildDeckDlg.h
+	"../GUIClasses/guiList.h"
+
+1346980049 /home/jotak/dev/Shahnarman/Sources/GUIClasses/guiList.h
+	"guiContainer.h"
+	"guiLabel.h"
+	"../Input/EventListener.h"
+	"../Input/KeyboardListener.h"
+	"../Common/SortInterface.h"
+
+1346980049 /home/jotak/dev/Shahnarman/Sources/GUIClasses/guiContainer.h
+	"guiComponent.h"
+	"guiDocument.h"
+	"../Geometries/GeometryQuads.h"
+	"../Geometries/StencilGeometry.h"
+
+1346980049 /home/jotak/dev/Shahnarman/Sources/Geometries/StencilGeometry.h
+	"Geometry.h"
+
+1346980049 /home/jotak/dev/Shahnarman/Sources/Input/KeyboardListener.h
+
+1346980049 /home/jotak/dev/Shahnarman/Sources/Interface/StartMenuDlg.h
+	"../GUIClasses/guiDocument.h"
+
+1346980049 /home/jotak/dev/Shahnarman/Sources/Interface/ShopDlg.h
+	"../GUIClasses/guiDocument.h"
+
+1346980049 source:/home/jotak/dev/Shahnarman/Sources/DeckData/ProgressionElement.cpp
+	"ProgressionElement.h"
+	"../Gameboard/Skill.h"
+	"../Players/Spell.h"
+	"../Players/Artifact.h"
+	"../DeckData/Edition.h"
+	"../DeckData/UnitData.h"
+	"../Data/LocalisationTool.h"
+	"../Data/DataFactory.h"
+	"../LocalClient.h"
+
+1346980049 source:/home/jotak/dev/Shahnarman/Sources/DeckData/ProgressionTree.cpp
+	"ProgressionTree.h"
+	"ProgressionElement.h"
+	"../Debug/DebugManager.h"
+	"../Data/XMLLiteReader.h"
+	"Edition.h"
+
+1346980049 source:/home/jotak/dev/Shahnarman/Sources/DeckData/ShahmahCreation.cpp
+	"ShahmahCreation.h"
+
+1346980049 source:/home/jotak/dev/Shahnarman/Sources/DeckData/ShopItem.cpp
+	"ShopItem.h"
+	"../Data/XMLObject.h"
+	"../Data/LocalisationTool.h"
+	"../GUIClasses/guiPopup.h"
+
+1346980049 /home/jotak/dev/Shahnarman/Sources/GUIClasses/guiPopup.h
+	"guiFrame.h"
+	"guiDocument.h"
+	"guiButton.h"
+	"guiEditBox.h"
+
+1346980049 /home/jotak/dev/Shahnarman/Sources/GUIClasses/guiFrame.h
+	"guiContainer.h"
+
+1346980049 /home/jotak/dev/Shahnarman/Sources/GUIClasses/guiButton.h
+	"guiImage.h"
+	"guiLabel.h"
+	"../Geometries/GeometryQuads.h"
+
+1346980049 /home/jotak/dev/Shahnarman/Sources/GUIClasses/guiImage.h
+	"guiComponent.h"
+
+1346980049 /home/jotak/dev/Shahnarman/Sources/GUIClasses/guiEditBox.h
+	"../Input/KeyboardListener.h"
+	"guiLabel.h"
+
+1346980049 source:/home/jotak/dev/Shahnarman/Sources/DeckData/UnitData.cpp
+	"UnitData.h"
+	"../Data/LocalisationTool.h"
+	"../Debug/DebugManager.h"
+	"../Data/Serializer.h"
+
+1346980049 source:/home/jotak/dev/Shahnarman/Sources/Display/DisplayEngine.cpp
+	"DisplayEngine.h"
+	"../SystemHeaders.h"
+	"../Geometries/Geometry.h"
+	"../Debug/DebugManager.h"
+
+1346980049 source:/home/jotak/dev/Shahnarman/Sources/Display/Texture.cpp
+	"Texture.h"
+	"../errorcodes.h"
+
+1346980049 source:/home/jotak/dev/Shahnarman/Sources/Display/TextureEngine.cpp
+	"TextureEngine.h"
+	"../Debug/DebugManager.h"
+	"../errorcodes.h"
+	"../Data/XMLLiteReader.h"
+
+1346980049 source:/home/jotak/dev/Shahnarman/Sources/Fonts/Font.cpp
+	"Font.h"
+	"../Display/TextureEngine.h"
+	"../SystemHeaders.h"
+	"../errorcodes.h"
+
+1346980049 source:/home/jotak/dev/Shahnarman/Sources/Fonts/FontEngine.cpp
+	"FontEngine.h"
+	"../Display/DisplayEngine.h"
+	"../Display/TextureEngine.h"
+	"../Debug/DebugManager.h"
+	"../errorcodes.h"
+
+1346980049 source:/home/jotak/dev/Shahnarman/Sources/Fx/FxManager.cpp
+	"FxManager.h"
+	"../LocalClient.h"
+	"../Data/LocalisationTool.h"
+	"../Physics/FasloMove.h"
+	"../Physics/PhysicalObject.h"
+	"../Display/DisplayEngine.h"
+	"../Geometries/GeometryText.h"
+	"../Geometries/GeometryQuads.h"
+	"../Geometries/ModProgressiveScaling.h"
+	"../Common/TimeController.h"
+	"../Input/InputEngine.h"
+	"../Interface/InterfaceManager.h"
+
+1346980049 /home/jotak/dev/Shahnarman/Sources/Fx/FxManager.h
+	"../Common/ObjectList.h"
+
+1346980049 /home/jotak/dev/Shahnarman/Sources/Physics/FasloMove.h
+	"Movement.h"
+
+1346980049 /home/jotak/dev/Shahnarman/Sources/Geometries/ModProgressiveScaling.h
+	"GeometryModifier.h"
+
+1346980049 source:/home/jotak/dev/Shahnarman/Sources/GUIClasses/FrameEffects/EffectComeIn.cpp
+	"EffectComeIn.h"
+	"../guiFrame.h"
+	"../../SystemHeaders.h"
+
+1346980049 /home/jotak/dev/Shahnarman/Sources/GUIClasses/FrameEffects/EffectComeIn.h
+	"guiFrameEffect.h"
+
+1346980049 /home/jotak/dev/Shahnarman/Sources/GUIClasses/FrameEffects/guiFrameEffect.h
+	"../../Common/BaseObject.h"
+
+1346980049 source:/home/jotak/dev/Shahnarman/Sources/GUIClasses/FrameEffects/EffectExtract.cpp
+
+1346980049 source:/home/jotak/dev/Shahnarman/Sources/GUIClasses/FrameEffects/guiFrameEffect.cpp
+	"guiFrameEffect.h"
+	"../guiFrame.h"
+
+1346980049 source:/home/jotak/dev/Shahnarman/Sources/GUIClasses/FrameEffects/guiFrameFlash.cpp
+	"guiFrameFlash.h"
+	"../guiFrame.h"
+	"../../SystemHeaders.h"
+
+1346980049 /home/jotak/dev/Shahnarman/Sources/GUIClasses/FrameEffects/guiFrameFlash.h
+	"guiFrameEffect.h"
+
+1346980049 source:/home/jotak/dev/Shahnarman/Sources/GUIClasses/FrameEffects/guiFrameIntro.cpp
+	"guiFrameIntro.h"
+	"../guiFrame.h"
+	"../../SystemHeaders.h"
+
+1346980049 /home/jotak/dev/Shahnarman/Sources/GUIClasses/FrameEffects/guiFrameIntro.h
+	"guiFrameEffect.h"
+
+1346980049 source:/home/jotak/dev/Shahnarman/Sources/GUIClasses/FrameEffects/guiFrameMouseFocus.cpp
+	"guiFrameMouseFocus.h"
+	"../guiFrame.h"
+	"../../SystemHeaders.h"
+
+1346980049 /home/jotak/dev/Shahnarman/Sources/GUIClasses/FrameEffects/guiFrameMouseFocus.h
+	"guiFrameEffect.h"
+
+1346980049 source:/home/jotak/dev/Shahnarman/Sources/GUIClasses/FrameEffects/guiFrameOutro.cpp
+	"guiFrameOutro.h"
+	"../guiFrame.h"
+	"../../SystemHeaders.h"
+
+1346980049 /home/jotak/dev/Shahnarman/Sources/GUIClasses/FrameEffects/guiFrameOutro.h
+	"guiFrameEffect.h"
+
+1346980049 source:/home/jotak/dev/Shahnarman/Sources/GUIClasses/guiButton.cpp
+	"guiButton.h"
+	"ComponentOwnerInterface.h"
+	"../Audio/AudioManager.h"
+
+1346980049 source:/home/jotak/dev/Shahnarman/Sources/GUIClasses/guiComboBox.cpp
+	"guiComboBox.h"
+	"../Interface/InterfaceManager.h"
+
+1346980049 /home/jotak/dev/Shahnarman/Sources/GUIClasses/guiComboBox.h
+	"guiContainer.h"
+	"guiButton.h"
+
+1346980049 source:/home/jotak/dev/Shahnarman/Sources/GUIClasses/guiComponent.cpp
+	"guiComponent.h"
+
+1346980049 source:/home/jotak/dev/Shahnarman/Sources/GUIClasses/guiContainer.cpp
+	"guiContainer.h"
+
+1346980049 source:/home/jotak/dev/Shahnarman/Sources/GUIClasses/guiDocument.cpp
+	"guiDocument.h"
+	"guiToggleButton.h"
+	"guiContainer.h"
+	"../Geometries/GeometryQuads.h"
+	"../Data/LocalisationTool.h"
+
+1346980049 /home/jotak/dev/Shahnarman/Sources/GUIClasses/guiToggleButton.h
+	"guiButton.h"
+
+1346980049 source:/home/jotak/dev/Shahnarman/Sources/GUIClasses/guiEditBox.cpp
+	"guiEditBox.h"
+	"../Geometries/GeometryText.h"
+	"../Geometries/GeometryQuads.h"
+	"../Geometries/StencilGeometry.h"
+	"../Input/KeyboardInputEngine.h"
+
+1346980049 /home/jotak/dev/Shahnarman/Sources/Input/KeyboardInputEngine.h
+	"InputEngine.h"
+
+1346980049 source:/home/jotak/dev/Shahnarman/Sources/GUIClasses/guiFrame.cpp
+	"guiFrame.h"
+	"FrameEffects/guiFrameIntro.h"
+	"FrameEffects/guiFrameOutro.h"
+	"FrameEffects/guiFrameMouseFocus.h"
+	"FrameEffects/guiFrameFlash.h"
+
+1346980049 source:/home/jotak/dev/Shahnarman/Sources/GUIClasses/guiGauge.cpp
+	"guiGauge.h"
+	"../Geometries/GeometryQuads.h"
+
+1346980049 /home/jotak/dev/Shahnarman/Sources/GUIClasses/guiGauge.h
+	"guiComponent.h"
+
+1346980049 source:/home/jotak/dev/Shahnarman/Sources/GUIClasses/guiImage.cpp
+	"guiImage.h"
+	"../Geometries/GeometryQuads.h"
+	"ComponentOwnerInterface.h"
+
+1346980049 source:/home/jotak/dev/Shahnarman/Sources/GUIClasses/guiLabel.cpp
+	"guiLabel.h"
+	"../Geometries/GeometryText.h"
+	"ComponentOwnerInterface.h"
+
+1346980049 source:/home/jotak/dev/Shahnarman/Sources/GUIClasses/guiList.cpp
+	"guiList.h"
+	"../Input/KeyboardInputEngine.h"
+
+1346980049 source:/home/jotak/dev/Shahnarman/Sources/GUIClasses/guiObject.cpp
+	"guiObject.h"
+	"../GameRoot.h"
+	"../LocalClient.h"
+	"../Interface/InterfaceManager.h"
+
+1346980049 source:/home/jotak/dev/Shahnarman/Sources/GUIClasses/guiPopup.cpp
+	"guiPopup.h"
+	"../Data/LocalisationTool.h"
+	"FrameEffects/EffectComeIn.h"
+	"FrameEffects/guiFrameOutro.h"
+	"FrameEffects/guiFrameMouseFocus.h"
+
+1346980049 source:/home/jotak/dev/Shahnarman/Sources/GUIClasses/guiSmartSlider.cpp
+	"guiSmartSlider.h"
+	"ComponentOwnerInterface.h"
+
+1346980049 source:/home/jotak/dev/Shahnarman/Sources/GUIClasses/guiTabbedFrame.cpp
+	"guiTabbedFrame.h"
+	"guiLabel.h"
+
+1346980049 /home/jotak/dev/Shahnarman/Sources/GUIClasses/guiTabbedFrame.h
+	"guiFrame.h"
+	"guiLabel.h"
+	"../Geometries/GeometryQuads.h"
+
+1346980049 source:/home/jotak/dev/Shahnarman/Sources/GUIClasses/guiToggleButton.cpp
+	"guiToggleButton.h"
+	"ComponentOwnerInterface.h"
+
+1346980049 source:/home/jotak/dev/Shahnarman/Sources/GameRoot.cpp
+	"GameRoot.h"
+	"Server/Server.h"
+	"LocalClient.h"
+
+1346980049 source:/home/jotak/dev/Shahnarman/Sources/Gameboard/Building.cpp
+	"Building.h"
+	"../Debug/DebugManager.h"
+	"../lua_callbacks.h"
+	"../Data/LocalisationTool.h"
+
+1346980049 source:/home/jotak/dev/Shahnarman/Sources/Gameboard/GameboardInputs.cpp
+	"GameboardInputs.h"
+	"GameboardManager.h"
+	"Unit.h"
+	"../LocalClient.h"
+	"../Data/LocalisationTool.h"
+	"../Fx/FxManager.h"
+	"../Input/InputEngine.h"
+	"../Interface/InterfaceManager.h"
+	"../Players/PlayerManager.h"
+	"../Players/Player.h"
+	"../Interface/InfoboxDlg.h"
+	"../GUIClasses/guiFrame.h"
+	"../GUIClasses/guiLabel.h"
+	"../Audio/AudioManager.h"
+
+1346980049 /home/jotak/dev/Shahnarman/Sources/Gameboard/GameboardInputs.h
+	"../Input/EventListener.h"
+
+1346980049 /home/jotak/dev/Shahnarman/Sources/Gameboard/GameboardManager.h
+	"Map.h"
+	"MapCursor.h"
+
+1346980049 /home/jotak/dev/Shahnarman/Sources/Gameboard/MapCursor.h
+	"../Physics/PhysicalObject.h"
+	"../Geometries/GeometryQuads.h"
+
+1346980049 /home/jotak/dev/Shahnarman/Sources/Interface/InfoboxDlg.h
+	"../GUIClasses/guiDocument.h"
+	"../Input/KeyboardListener.h"
+
+1346980049 source:/home/jotak/dev/Shahnarman/Sources/Gameboard/GameboardManager.cpp
+	"GameboardManager.h"
+	"../LocalClient.h"
+	"../Geometries/ModProgressiveScaling.h"
+	"../Geometries/ModProgressiveBlending.h"
+	"Unit.h"
+	"Town.h"
+	"GameboardInputs.h"
+	"../Geometries/GeometryQuads.h"
+	"../Geometries/GeometryText.h"
+	"../Interface/InterfaceManager.h"
+	"../Interface/ResolveDlg.h"
+	"../Debug/DebugManager.h"
+	"../Players/PlayerManager.h"
+	"../Players/Player.h"
+	"../Audio/AudioManager.h"
+
+1346980049 /home/jotak/dev/Shahnarman/Sources/Geometries/ModProgressiveBlending.h
+	"GeometryModifier.h"
+
+1346980049 /home/jotak/dev/Shahnarman/Sources/Interface/ResolveDlg.h
+	"../GUIClasses/guiDocument.h"
+
+1346980049 source:/home/jotak/dev/Shahnarman/Sources/Gameboard/Map.cpp
+	"Map.h"
+	"Unit.h"
+	"Town.h"
+	"Temple.h"
+	"SpecialTile.h"
+	"../Players/PlayerManager.h"
+	"../Players/Player.h"
+	"../Data/DataFactory.h"
+	"../DeckData/Edition.h"
+	"../DeckData/Ethnicity.h"
+	"../LocalClient.h"
+	"../Server/Server.h"
+	"../Server/MapReader.h"
+	"../Server/TurnSolver.h"
+	"../Server/MapReader.h"
+	"../Debug/DebugManager.h"
+	"../Geometries/GeometryText.h"
+
+1346980049 source:/home/jotak/dev/Shahnarman/Sources/Gameboard/MapCursor.cpp
+	"MapCursor.h"
+	"../Geometries/ModProgressiveRotate.h"
+
+1346980049 /home/jotak/dev/Shahnarman/Sources/Geometries/ModProgressiveRotate.h
+	"GeometryModifier.h"
+
+1346980049 source:/home/jotak/dev/Shahnarman/Sources/Gameboard/MapObject.cpp
+	"MapObject.h"
+
+1346980049 source:/home/jotak/dev/Shahnarman/Sources/Gameboard/MapTile.cpp
+	"MapTile.h"
+	"../Geometries/GeometryQuads.h"
+	"../Geometries/GeometryText.h"
+	"../Data/LocalisationTool.h"
+	"MapObject.h"
+	"SpecialTile.h"
+
+1346980049 source:/home/jotak/dev/Shahnarman/Sources/Gameboard/Pathfinder.cpp
+	"Pathfinder.h"
+	"MapObject.h"
+
+1346980049 source:/home/jotak/dev/Shahnarman/Sources/Gameboard/Skill.cpp
+	"Skill.h"
+	"../Debug/DebugManager.h"
+	"../lua_callbacks.h"
+	"../Data/LocalisationTool.h"
+	"../DeckData/UnitData.h"
+
+1346980049 source:/home/jotak/dev/Shahnarman/Sources/Gameboard/SpecialTile.cpp
+	"SpecialTile.h"
+	"../Debug/DebugManager.h"
+	"../lua_callbacks.h"
+	"../Data/LocalisationTool.h"
+	"../Server/NetworkData.h"
+
+1346980049 source:/home/jotak/dev/Shahnarman/Sources/Gameboard/Temple.cpp
+	"Temple.h"
+	"../Data/LocalisationTool.h"
+
+1346980049 source:/home/jotak/dev/Shahnarman/Sources/Gameboard/Town.cpp
+	"Town.h"
+	"../DeckData/Edition.h"
+	"../DeckData/Ethnicity.h"
+	"../Data/LocalisationTool.h"
+	"../Data/DataFactory.h"
+	"../Server/TurnSolver.h"
+	"../Server/Server.h"
+	"../Players/Player.h"
+	"../Players/PlayerManager.h"
+	"../Interface/LogDlg.h"
+	"../GUIClasses/guiLabel.h"
+	"../LocalClient.h"
+	"Building.h"
+	"Unit.h"
+
+1346980049 /home/jotak/dev/Shahnarman/Sources/Interface/LogDlg.h
+	"../GUIClasses/guiDocument.h"
+
+1346980049 source:/home/jotak/dev/Shahnarman/Sources/Gameboard/Unit.cpp
+	"Unit.h"
+	"GameboardManager.h"
+	"../Data/LocalisationTool.h"
+	"../Data/DataFactory.h"
+	"../LocalClient.h"
+	"Skill.h"
+	"../DeckData/UnitData.h"
+	"../Players/PlayerManager.h"
+	"../Players/Player.h"
+	"../Players/Spell.h"
+	"../Interface/UnitOptionsDlg.h"
+	"../Geometries/GeometryCylinder.h"
+	"../GameRoot.h"
+	"../LocalClient.h"
+	"../Debug/DebugManager.h"
+
+1346980049 /home/jotak/dev/Shahnarman/Sources/Interface/UnitOptionsDlg.h
+	"../GUIClasses/guiDocument.h"
+
+1346980049 /home/jotak/dev/Shahnarman/Sources/Geometries/GeometryCylinder.h
+	"Geometry.h"
+
+1346980049 source:/home/jotak/dev/Shahnarman/Sources/Geometries/Geometry.cpp
+	"Geometry.h"
+
+1346980049 source:/home/jotak/dev/Shahnarman/Sources/Geometries/GeometryCylinder.cpp
+	"GeometryCylinder.h"
+
+1346980049 source:/home/jotak/dev/Shahnarman/Sources/Geometries/GeometryModifier.cpp
+	"GeometryModifier.h"
+
+1346980049 source:/home/jotak/dev/Shahnarman/Sources/Geometries/GeometryQuads.cpp
+	"GeometryQuads.h"
+
+1346980049 source:/home/jotak/dev/Shahnarman/Sources/Geometries/GeometryText.cpp
+	"GeometryText.h"
+
+1346980049 source:/home/jotak/dev/Shahnarman/Sources/Geometries/ModProgressiveBlending.cpp
+	"ModProgressiveBlending.h"
+	"../SystemHeaders.h"
+
+1346980049 source:/home/jotak/dev/Shahnarman/Sources/Geometries/ModProgressiveRotate.cpp
+	"ModProgressiveRotate.h"
+	"../SystemHeaders.h"
+
+1346980049 source:/home/jotak/dev/Shahnarman/Sources/Geometries/ModProgressiveScaling.cpp
+	"ModProgressiveScaling.h"
+	"../SystemHeaders.h"
+
+1346980049 source:/home/jotak/dev/Shahnarman/Sources/Geometries/StencilGeometry.cpp
+	"StencilGeometry.h"
+
+1346980049 source:/home/jotak/dev/Shahnarman/Sources/Input/InputEngine.cpp
+	"InputEngine.h"
+	"../Debug/DebugManager.h"
+
+1346980049 source:/home/jotak/dev/Shahnarman/Sources/Input/PCInputEngine.cpp
+	"PCInputEngine.h"
+	"KeyboardListener.h"
+	"../SystemHeaders.h"
+
+1346980049 /home/jotak/dev/Shahnarman/Sources/Input/PCInputEngine.h
+	"KeyboardInputEngine.h"
+
+1346980049 source:/home/jotak/dev/Shahnarman/Sources/Interface/ArtifactsEquipDlg.cpp
+	"ArtifactsEquipDlg.h"
+	"BuildDeckDlg.h"
+	"ShopDlg.h"
+	"SelectPlayerAvatarDlg.h"
+	"StartMenuDlg.h"
+	"InterfaceManager.h"
+	"LevelUpDlg.h"
+	"../LocalClient.h"
+	"../Data/LocalisationTool.h"
+	"../Data/DataFactory.h"
+	"../DeckData/AvatarData.h"
+	"../DeckData/Profile.h"
+	"../DeckData/Edition.h"
+	"../GUIClasses/guiToggleButton.h"
+	"../GUIClasses/guiComboBox.h"
+	"../GUIClasses/guiPopup.h"
+	"../Players/Artifact.h"
+	"../Debug/DebugManager.h"
+
+1346980049 /home/jotak/dev/Shahnarman/Sources/Interface/ArtifactsEquipDlg.h
+	"../GUIClasses/guiDocument.h"
+
+1346980049 /home/jotak/dev/Shahnarman/Sources/Interface/SelectPlayerAvatarDlg.h
+	"../GUIClasses/guiDocument.h"
+
+1346980049 source:/home/jotak/dev/Shahnarman/Sources/Interface/BattleSpellPopup.cpp
+	"BattleSpellPopup.h"
+	"../Data/LocalisationTool.h"
+	"../Gameboard/Unit.h"
+
+1346980049 /home/jotak/dev/Shahnarman/Sources/Interface/BattleSpellPopup.h
+	"../GUIClasses/guiPopup.h"
+	"../Players/Player.h"
+
+1346980049 source:/home/jotak/dev/Shahnarman/Sources/Interface/BuildDeckDlg.cpp
+	"BuildDeckDlg.h"
+	"ArtifactsEquipDlg.h"
+	"ShopDlg.h"
+	"SelectPlayerAvatarDlg.h"
+	"StartMenuDlg.h"
+	"InterfaceManager.h"
+	"LevelUpDlg.h"
+	"../LocalClient.h"
+	"../Data/LocalisationTool.h"
+	"../Data/DataFactory.h"
+	"../DeckData/AvatarData.h"
+	"../DeckData/Profile.h"
+	"../DeckData/Edition.h"
+	"../GUIClasses/guiToggleButton.h"
+	"../GUIClasses/guiComboBox.h"
+	"../GUIClasses/guiPopup.h"
+	"../Players/Spell.h"
+	"../Geometries/GeometryQuads.h"
+	"../Debug/DebugManager.h"
+
+1346980049 source:/home/jotak/dev/Shahnarman/Sources/Interface/CreateAvatarDlg.cpp
+	"CreateAvatarDlg.h"
+	"InterfaceManager.h"
+	"StartMenuDlg.h"
+	"SelectPlayerAvatarDlg.h"
+	"../GUIClasses/guiContainer.h"
+	"../GUIClasses/guiButton.h"
+	"../GUIClasses/guiComboBox.h"
+	"../GUIClasses/guiPopup.h"
+	"../LocalClient.h"
+	"../Data/LocalisationTool.h"
+	"../Data/DataFactory.h"
+	"../DeckData/Edition.h"
+	"../DeckData/Profile.h"
+	"../DeckData/ShahmahCreation.h"
+	"../DeckData/Ethnicity.h"
+	"../DeckData/AvatarData.h"
+	"../Gameboard/Skill.h"
+
+1346980049 /home/jotak/dev/Shahnarman/Sources/Interface/CreateAvatarDlg.h
+	"../GUIClasses/guiDocument.h"
+
+1346980049 source:/home/jotak/dev/Shahnarman/Sources/Interface/GameOverDlg.cpp
+	"GameOverDlg.h"
+	"InterfaceManager.h"
+	"../GUIClasses/guiContainer.h"
+	"../GUIClasses/guiButton.h"
+	"../LocalClient.h"
+	"../Data/LocalisationTool.h"
+	"../Players/PlayerManager.h"
+	"../Players/Player.h"
+	"../Gameboard/Unit.h"
+	"../DeckData/AvatarData.h"
+
+1346980049 /home/jotak/dev/Shahnarman/Sources/Interface/GameOverDlg.h
+	"../GUIClasses/guiDocument.h"
+
+1346980049 source:/home/jotak/dev/Shahnarman/Sources/Interface/HostGameDlg.cpp
+	"HostGameDlg.h"
+	"../GUIClasses/guiComboBox.h"
+	"../GUIClasses/guiPopup.h"
+	"../GUIClasses/guiEditBox.h"
+	"../LocalClient.h"
+	"../Data/LocalisationTool.h"
+	"../DeckData/Profile.h"
+	"../DeckData/AvatarData.h"
+	"../DeckData/Edition.h"
+	"../DeckData/AIData.h"
+	"../DeckData/ShopItem.h"
+	"InterfaceManager.h"
+	"StartMenuDlg.h"
+	"../Debug/DebugManager.h"
+	"../Data/DataFactory.h"
+	"../Players/Player.h"
+	"../Players/Spell.h"
+	"../Players/Artifact.h"
+	"../Server/Server.h"
+	"../Server/TurnSolver.h"
+	"../Server/MapReader.h"
+	"../Gameboard/Unit.h"
+
+1346980049 /home/jotak/dev/Shahnarman/Sources/Interface/HostGameDlg.h
+	"../GUIClasses/guiDocument.h"
+
+1346980049 source:/home/jotak/dev/Shahnarman/Sources/Interface/InfoboxDlg.cpp
+	"InfoboxDlg.h"
+	"InterfaceManager.h"
+	"SpellDlg.h"
+	"../LocalClient.h"
+	"../Data/LocalisationTool.h"
+	"../GUIClasses/guiImage.h"
+	"../GUIClasses/guiLabel.h"
+	"../GUIClasses/guiFrame.h"
+	"../Players/PlayerManager.h"
+	"../Players/Player.h"
+	"../Gameboard/Unit.h"
+	"../Input/KeyboardInputEngine.h"
+	"../GUIClasses/guiToggleButton.h"
+	"../Gameboard/GameboardManager.h"
+
+1346980049 /home/jotak/dev/Shahnarman/Sources/Interface/SpellDlg.h
+	"../GUIClasses/guiDocument.h"
+	"../Players/Mana.h"
+
+1346980049 source:/home/jotak/dev/Shahnarman/Sources/Interface/InterfaceManager.cpp
+	"InterfaceManager.h"
+	"../LocalClient.h"
+	"../GUIClasses/guiTabbedFrame.h"
+	"../Data/LocalisationTool.h"
+	"../GUIClasses/guiPopup.h"
+	"../GUIClasses/guiComboBox.h"
+	"StartMenuDlg.h"
+	"SelectPlayerAvatarDlg.h"
+	"BuildDeckDlg.h"
+	"ArtifactsEquipDlg.h"
+	"ShopDlg.h"
+	"LoadGameDlg.h"
+	"HostGameDlg.h"
+	"LevelUpDlg.h"
+	"OptionsDlg.h"
+	"SpellDlg.h"
+	"LogDlg.h"
+	"InfoboxDlg.h"
+	"UnitOptionsDlg.h"
+	"ResolveDlg.h"
+	"MapObjectDlg.h"
+	"GameOverDlg.h"
+	"SpellsSelectorDlg.h"
+	"PlayerSelectorDlg.h"
+	"StatusDlg.h"
+	"CreateAvatarDlg.h"
+	"Tooltip.h"
+	"MoveOrAttackDlg.h"
+	"../Players/PlayerManager.h"
+	"../Players/Spell.h"
+	"../Input/InputEngine.h"
+	"../Players/Player.h"
+	"../Gameboard/Unit.h"
+	"../Gameboard/GameboardInputs.h"
+	"../Gameboard/GameboardManager.h"
+	"../Audio/AudioManager.h"
+	"../Debug/DebugManager.h"
+	"../Server/Server.h"
+
+1346980049 /home/jotak/dev/Shahnarman/Sources/Interface/LoadGameDlg.h
+	"../GUIClasses/guiDocument.h"
+
+1346980049 /home/jotak/dev/Shahnarman/Sources/Interface/OptionsDlg.h
+	"../GUIClasses/guiDocument.h"
+
+1346980049 /home/jotak/dev/Shahnarman/Sources/Interface/MapObjectDlg.h
+	"../GUIClasses/guiDocument.h"
+
+1346980049 /home/jotak/dev/Shahnarman/Sources/Interface/SpellsSelectorDlg.h
+	"../GUIClasses/guiDocument.h"
+
+1346980049 /home/jotak/dev/Shahnarman/Sources/Interface/PlayerSelectorDlg.h
+	"../GUIClasses/guiDocument.h"
+
+1346980049 /home/jotak/dev/Shahnarman/Sources/Interface/StatusDlg.h
+	"../GUIClasses/guiDocument.h"
+
+1346980049 /home/jotak/dev/Shahnarman/Sources/Interface/Tooltip.h
+	"../GUIClasses/guiFrame.h"
+	"../GUIClasses/guiLabel.h"
+
+1346980049 /home/jotak/dev/Shahnarman/Sources/Interface/MoveOrAttackDlg.h
+	"../GUIClasses/guiDocument.h"
+
+1346980049 source:/home/jotak/dev/Shahnarman/Sources/Interface/LevelUpDlg.cpp
+	"LevelUpDlg.h"
+	"InterfaceManager.h"
+	"BuildDeckDlg.h"
+	"../LocalClient.h"
+	"../GUIClasses/guiFrame.h"
+	"../GUIClasses/guiToggleButton.h"
+	"../GUIClasses/guiComboBox.h"
+	"../Data/LocalisationTool.h"
+	"../Data/DataFactory.h"
+	"../DeckData/AvatarData.h"
+	"../DeckData/Edition.h"
+	"../DeckData/Ethnicity.h"
+	"../DeckData/Profile.h"
+
+1346980049 source:/home/jotak/dev/Shahnarman/Sources/Interface/LoadGameDlg.cpp
+	"LoadGameDlg.h"
+	"InterfaceManager.h"
+	"StartMenuDlg.h"
+	"../GUIClasses/guiButton.h"
+	"../GUIClasses/guiContainer.h"
+	"../LocalClient.h"
+	"../Data/LocalisationTool.h"
+
+1346980049 source:/home/jotak/dev/Shahnarman/Sources/Interface/LogDlg.cpp
+	"LogDlg.h"
+	"../LocalClient.h"
+	"../Data/LocalisationTool.h"
+	"../GUIClasses/guiButton.h"
+	"../GUIClasses/guiFrame.h"
+	"../Gameboard/Unit.h"
+	"../Gameboard/Town.h"
+	"../Gameboard/GameboardManager.h"
+	"../Interface/InterfaceManager.h"
+	"../Interface/MapObjectDlg.h"
+	"../Fx/FxManager.h"
+
+1346980049 source:/home/jotak/dev/Shahnarman/Sources/Interface/MapObjectDlg.cpp
+	"MapObjectDlg.h"
+	"../LocalClient.h"
+	"../Data/LocalisationTool.h"
+	"../Gameboard/MapTile.h"
+	"../Gameboard/MapObject.h"
+	"../Gameboard/Unit.h"
+	"../Gameboard/Town.h"
+	"../Gameboard/Building.h"
+	"../Gameboard/Skill.h"
+	"../GUIClasses/guiToggleButton.h"
+	"../GUIClasses/guiContainer.h"
+	"../GUIClasses/guiGauge.h"
+	"../GUIClasses/guiComboBox.h"
+	"../GUIClasses/guiPopup.h"
+	"InterfaceManager.h"
+	"../Players/PlayerManager.h"
+	"../Players/Player.h"
+	"../Data/DataFactory.h"
+	"../DeckData/Edition.h"
+	"../DeckData/Ethnicity.h"
+	"../DeckData/UnitData.h"
+
+1346980049 source:/home/jotak/dev/Shahnarman/Sources/Interface/MoveOrAttackDlg.cpp
+	"MoveOrAttackDlg.h"
+	"../Data/LocalisationTool.h"
+	"../Gameboard/Unit.h"
+	"../Gameboard/GameboardManager.h"
+	"../LocalClient.h"
+	"../GUIClasses/guiToggleButton.h"
+	"InterfaceManager.h"
+	"InfoboxDlg.h"
+
+1346980049 source:/home/jotak/dev/Shahnarman/Sources/Interface/OptionsDlg.cpp
+	"OptionsDlg.h"
+	"../GUIClasses/guiComboBox.h"
+	"../GUIClasses/guiToggleButton.h"
+	"../GUIClasses/guiPopup.h"
+	"../GUIClasses/guiEditBox.h"
+	"../LocalClient.h"
+	"../Data/LocalisationTool.h"
+	"../Data/DataFactory.h"
+	"../Debug/DebugManager.h"
+	"InterfaceManager.h"
+	"StartMenuDlg.h"
+	"../DeckData/Edition.h"
+	"../Audio/AudioManager.h"
+
+1346980049 source:/home/jotak/dev/Shahnarman/Sources/Interface/PlayerSelectorDlg.cpp
+	"PlayerSelectorDlg.h"
+	"InterfaceManager.h"
+	"../GUIClasses/guiFrame.h"
+	"../GUIClasses/guiToggleButton.h"
+	"../GUIClasses/guiContainer.h"
+	"../LocalClient.h"
+	"../Data/LocalisationTool.h"
+	"../Players/Player.h"
+
+1346980049 source:/home/jotak/dev/Shahnarman/Sources/Interface/ResolveDlg.cpp
+	"ResolveDlg.h"
+	"../GUIClasses/guiToggleButton.h"
+	"../Data/LocalisationTool.h"
+	"../Data/LuaContext.h"
+	"../LocalClient.h"
+	"../Gameboard/Unit.h"
+	"../GUIClasses/guiContainer.h"
+	"../GUIClasses/guiImage.h"
+	"BattleSpellPopup.h"
+	"../Players/PlayerManager.h"
+	"../Players/Spell.h"
+	"InterfaceManager.h"
+	"SpellDlg.h"
+	"InfoboxDlg.h"
+	"LogDlg.h"
+	"../Server/Server.h"
+	"../Fx/FxManager.h"
+	"../Gameboard/GameboardManager.h"
+	"../Debug/DebugManager.h"
+
+1346980049 source:/home/jotak/dev/Shahnarman/Sources/Interface/SelectPlayerAvatarDlg.cpp
+	"SelectPlayerAvatarDlg.h"
+	"InterfaceManager.h"
+	"StartMenuDlg.h"
+	"BuildDeckDlg.h"
+	"ArtifactsEquipDlg.h"
+	"CreateAvatarDlg.h"
+	"ShopDlg.h"
+	"../GUIClasses/guiComboBox.h"
+	"../GUIClasses/guiPopup.h"
+	"../LocalClient.h"
+	"../Data/LocalisationTool.h"
+	"../Data/DataFactory.h"
+	"../DeckData/Profile.h"
+
+1346980049 source:/home/jotak/dev/Shahnarman/Sources/Interface/ShopDlg.cpp
+	"ShopDlg.h"
+	"InterfaceManager.h"
+	"StartMenuDlg.h"
+	"SelectPlayerAvatarDlg.h"
+	"BuildDeckDlg.h"
+	"ArtifactsEquipDlg.h"
+	"../GUIClasses/guiPopup.h"
+	"../GUIClasses/guiSmartSlider.h"
+	"../LocalClient.h"
+	"../Data/LocalisationTool.h"
+	"../DeckData/ShopItem.h"
+	"../Data/DataFactory.h"
+	"../DeckData/Profile.h"
+	"../DeckData/Edition.h"
+	"../Players/Spell.h"
+
+1346980049 source:/home/jotak/dev/Shahnarman/Sources/Interface/SpellDlg.cpp
+	"SpellDlg.h"
+	"SpellsSelectorDlg.h"
+	"../GUIClasses/guiToggleButton.h"
+	"../LocalClient.h"
+	"../Data/LocalisationTool.h"
+	"../Players/Player.h"
+	"../Geometries/GeometryQuads.h"
+	"../GUIClasses/guiImage.h"
+	"../Players/PlayerManager.h"
+	"../Interface/InterfaceManager.h"
+	"../Interface/InfoboxDlg.h"
+	"../Players/Spell.h"
+	"../Gameboard/GameboardManager.h"
+
+1346980049 source:/home/jotak/dev/Shahnarman/Sources/Interface/SpellsSelectorDlg.cpp
+	"SpellsSelectorDlg.h"
+	"InterfaceManager.h"
+	"../GUIClasses/guiFrame.h"
+	"../GUIClasses/guiToggleButton.h"
+	"../GUIClasses/guiContainer.h"
+	"../LocalClient.h"
+	"../Data/LocalisationTool.h"
+	"../Gameboard/MapObject.h"
+	"../Players/Spell.h"
+	"../Players/Player.h"
+	"../Gameboard/Unit.h"
+
+1346980049 source:/home/jotak/dev/Shahnarman/Sources/Interface/StartMenuDlg.cpp
+	"StartMenuDlg.h"
+	"../GUIClasses/guiButton.h"
+	"../GUIClasses/guiPopup.h"
+	"../LocalClient.h"
+	"../Data/LocalisationTool.h"
+	"../Debug/DebugManager.h"
+	"InterfaceManager.h"
+	"SelectPlayerAvatarDlg.h"
+	"LoadGameDlg.h"
+	"HostGameDlg.h"
+	"OptionsDlg.h"
+
+1346980049 source:/home/jotak/dev/Shahnarman/Sources/Interface/StatusDlg.cpp
+	"StatusDlg.h"
+	"../LocalClient.h"
+	"../GUIClasses/guiLabel.h"
+	"../GUIClasses/guiFrame.h"
+	"../Interface/InterfaceManager.h"
+
+1346980049 source:/home/jotak/dev/Shahnarman/Sources/Interface/Tooltip.cpp
+	"Tooltip.h"
+
+1346980049 source:/home/jotak/dev/Shahnarman/Sources/Interface/UnitOptionsDlg.cpp
+	"UnitOptionsDlg.h"
+	"InterfaceManager.h"
+	"SpellDlg.h"
+	"../LocalClient.h"
+	"../Data/LocalisationTool.h"
+	"../GUIClasses/guiToggleButton.h"
+	"../GUIClasses/guiFrame.h"
+	"../Gameboard/Unit.h"
+	"../Gameboard/GameboardManager.h"
+	"../Gameboard/GameboardInputs.h"
+	"../Players/PlayerManager.h"
+
+1346980049 source:/home/jotak/dev/Shahnarman/Sources/LocalClient.cpp
+	"LocalClient.h"
+	"Data/LocalisationTool.h"
+	"Display/DisplayEngine.h"
+	"Input/PCInputEngine.h"
+	"Gameboard/GameboardManager.h"
+	"Interface/InterfaceManager.h"
+	"Fx/FxManager.h"
+	"Audio/AudioManager.h"
+	"Debug/DebugManager.h"
+	"Players/PlayerManager.h"
+	"Data/Parameters.h"
+	"Data/DataFactory.h"
+	"Server/Server.h"
+	"Server/MapReader.h"
+	"Server/TurnSolver.h"
+	"Players/Player.h"
+	"Players/Spell.h"
+	"Players/Artifact.h"
+	"Gameboard/Unit.h"
+	"Gameboard/Town.h"
+	"Gameboard/Building.h"
+	"DeckData/AvatarData.h"
+	"DeckData/Profile.h"
+	"DeckData/Edition.h"
+	"Interface/ResolveDlg.h"
+	"Interface/LogDlg.h"
+	"Interface/InfoboxDlg.h"
+
+1346980049 source:/home/jotak/dev/Shahnarman/Sources/Physics/ConstantMovement3D.cpp
+	"ConstantMovement3D.h"
+
+1346980049 /home/jotak/dev/Shahnarman/Sources/Physics/ConstantMovement3D.h
+	"Movement.h"
+
+1346980049 source:/home/jotak/dev/Shahnarman/Sources/Physics/FasloMove.cpp
+	"FasloMove.h"
+
+1346980049 source:/home/jotak/dev/Shahnarman/Sources/Physics/Movement.cpp
+	"Movement.h"
+
+1346980049 source:/home/jotak/dev/Shahnarman/Sources/Physics/PhysicalObject.cpp
+	"PhysicalObject.h"
+
+1346980049 source:/home/jotak/dev/Shahnarman/Sources/Physics/SlofasloMove.cpp
+	"SlofasloMove.h"
+
+1346980049 /home/jotak/dev/Shahnarman/Sources/Physics/SlofasloMove.h
+	"Movement.h"
+
+1346980049 source:/home/jotak/dev/Shahnarman/Sources/Players/AISpell.cpp
+	"AISpell.h"
+
+1346980049 /home/jotak/dev/Shahnarman/Sources/Players/AISpell.h
+	"Spell.h"
+
+1346980049 source:/home/jotak/dev/Shahnarman/Sources/Players/Artifact.cpp
+	"Artifact.h"
+
+1346980049 source:/home/jotak/dev/Shahnarman/Sources/Players/Mana.cpp
+	"Mana.h"
+
+1346980049 source:/home/jotak/dev/Shahnarman/Sources/Players/Player.cpp
+	"Player.h"
+	"Spell.h"
+	"Artifact.h"
+	"../Gameboard/GameboardManager.h"
+	"../Data/LocalisationTool.h"
+	"../Gameboard/Unit.h"
+	"../Display/DisplayEngine.h"
+	"../Geometries/GeometryQuads.h"
+	"../DeckData/AvatarData.h"
+	"../DeckData/Edition.h"
+	"../Data/DataFactory.h"
+	"../Data/NetworkSerializer.h"
+	"../LocalClient.h"
+
+1346980049 source:/home/jotak/dev/Shahnarman/Sources/Players/PlayerManager.cpp
+	"PlayerManager.h"
+	"Player.h"
+	"Spell.h"
+	"../LocalClient.h"
+	"../Data/LocalisationTool.h"
+	"../Data/DataFactory.h"
+	"../Data/LuaContext.h"
+	"../DeckData/UnitData.h"
+	"../Common/ObjectList.h"
+	"../Gameboard/GameboardManager.h"
+	"../Gameboard/Unit.h"
+	"../Gameboard/Town.h"
+	"../Gameboard/Building.h"
+	"../Gameboard/Temple.h"
+	"../Gameboard/SpecialTile.h"
+	"../Server/Server.h"
+	"../Interface/InterfaceManager.h"
+	"../Interface/SpellDlg.h"
+	"../Interface/LogDlg.h"
+	"../Interface/ResolveDlg.h"
+	"../Interface/UnitOptionsDlg.h"
+	"../Interface/InfoboxDlg.h"
+	"../Fx/FxManager.h"
+	"../Debug/DebugManager.h"
+	"../Audio/AudioManager.h"
+
+1346980049 source:/home/jotak/dev/Shahnarman/Sources/Players/PlayerManagerAbstract.cpp
+	"PlayerManagerAbstract.h"
+	"Player.h"
+	"Spell.h"
+	"../LocalClient.h"
+	"../Data/DataFactory.h"
+	"../Common/ObjectList.h"
+	"../Gameboard/Unit.h"
+	"../Gameboard/Temple.h"
+	"../Gameboard/Town.h"
+	"../Data/LuaContext.h"
+	"../lua_callbacks_utils.h"
+
+1346980049 /home/jotak/dev/Shahnarman/Sources/lua_callbacks_utils.h
+	<lua5.1/lua.hpp>
+	"GameRoot.h"
+	"LocalClient.h"
+	"Data/LocalisationTool.h"
+	"Gameboard/Unit.h"
+	"Gameboard/Town.h"
+	"Gameboard/Building.h"
+	"Gameboard/Temple.h"
+	"Gameboard/GameboardManager.h"
+	"Gameboard/GameboardInputs.h"
+	"Players/PlayerManager.h"
+	"Players/Player.h"
+	"Players/Spell.h"
+	"Interface/InterfaceManager.h"
+	"Interface/SpellDlg.h"
+	"Interface/InfoboxDlg.h"
+	"Interface/SpellsSelectorDlg.h"
+	"Interface/PlayerSelectorDlg.h"
+	"Interface/UnitOptionsDlg.h"
+	"Interface/StatusDlg.h"
+	"GUIClasses/guiFrame.h"
+	"Debug/DebugManager.h"
+	"Server/Server.h"
+	"Server/TurnSolver.h"
+
+1346980049 source:/home/jotak/dev/Shahnarman/Sources/Players/Spell.cpp
+	"Spell.h"
+	"../Common/ObjectList.h"
+	"../Data/LuaTargetable.h"
+	"../Debug/DebugManager.h"
+	"../lua_callbacks.h"
+	"../Data/LocalisationTool.h"
+
+1346980049 source:/home/jotak/dev/Shahnarman/Sources/Players/SummonSpell.cpp
+
+1346980049 source:/home/jotak/dev/Shahnarman/Sources/Server/AILuaSolver.cpp
+	"AILuaSolver.h"
+	"Server.h"
+	"AISolver.h"
+	"TurnSolver.h"
+	"SpellsSolver.h"
+	"../Data/DataFactory.h"
+	"../Players/Player.h"
+	"../Players/AISpell.h"
+	"../Gameboard/Unit.h"
+	"../Gameboard/Town.h"
+	"../Gameboard/MapTile.h"
+	"../Gameboard/SpecialTile.h"
+
+1346980049 /home/jotak/dev/Shahnarman/Sources/Server/AILuaSolver.h
+	"../Common/ObjectList.h"
+	"../lua_callbacks.h"
+
+1346980049 /home/jotak/dev/Shahnarman/Sources/Server/AISolver.h
+	"AILuaSolver.h"
+
+1346980049 source:/home/jotak/dev/Shahnarman/Sources/Server/AISolver.cpp
+	"AISolver.h"
+	"Server.h"
+	"TurnSolver.h"
+	"SpellsSolver.h"
+	"../Data/DataFactory.h"
+	"../Players/Player.h"
+	"../Players/AISpell.h"
+	"../Gameboard/Unit.h"
+	"../Gameboard/Town.h"
+	"../Gameboard/MapTile.h"
+	"../Gameboard/SpecialTile.h"
+
+1346980049 source:/home/jotak/dev/Shahnarman/Sources/Server/MapReader.cpp
+	"MapReader.h"
+	"../LocalClient.h"
+	"../Debug/DebugManager.h"
+	"../Data/LocalisationTool.h"
+	"../Data/DataFactory.h"
+	"../DeckData/Edition.h"
+	"../DeckData/Ethnicity.h"
+	"../Gameboard/Town.h"
+
+1346980049 source:/home/jotak/dev/Shahnarman/Sources/Server/NetworkData.cpp
+	"NetworkData.h"
+	"../utils.h"
+	<stdio.h>
+
+1346980049 source:/home/jotak/dev/Shahnarman/Sources/Server/Server.cpp
+	"Server.h"
+	"MapReader.h"
+	"TurnSolver.h"
+	"../Players/PlayerManager.h"
+	"../Players/Player.h"
+	"../Players/Spell.h"
+	"../Players/Artifact.h"
+	"../LocalClient.h"
+	"../Gameboard/Unit.h"
+	"../Gameboard/Town.h"
+	"../Gameboard/Building.h"
+	"../Gameboard/Temple.h"
+	"../Gameboard/SpecialTile.h"
+	"../Debug/DebugManager.h"
+	"../Data/LocalisationTool.h"
+	"../DeckData/AvatarData.h"
+	"../Interface/LogDlg.h"
+
+1346980049 source:/home/jotak/dev/Shahnarman/Sources/Server/ServerUnit.cpp
+	"../Gameboard/Unit.h"
+	"../Data/LocalisationTool.h"
+	"../Data/DataFactory.h"
+	"../Debug/DebugManager.h"
+	"../Players/Spell.h"
+	"../Server/Server.h"
+	"../Physics/ConstantMovement3D.h"
+
+1346980049 source:/home/jotak/dev/Shahnarman/Sources/Server/SpellsSolver.cpp
+	"SpellsSolver.h"
+	"Server.h"
+	"TurnSolver.h"
+	"../Players/Player.h"
+	"../Players/Spell.h"
+	"../Players/Artifact.h"
+	"../Debug/DebugManager.h"
+	"../Gameboard/Unit.h"
+	"../Gameboard/Town.h"
+	"../Gameboard/Temple.h"
+	"../Gameboard/Building.h"
+	"../Gameboard/SpecialTile.h"
+	"../Data/DataFactory.h"
+	"../DeckData/Edition.h"
+	"../DeckData/AvatarData.h"
+
+1346980049 source:/home/jotak/dev/Shahnarman/Sources/Server/TurnSolver.cpp
+	"TurnSolver.h"
+	"Server.h"
+	"NetworkData.h"
+	"../Debug/DebugManager.h"
+	"../Players/Player.h"
+	"SpellsSolver.h"
+	"AISolver.h"
+	"../Data/DataFactory.h"
+	"../Players/Spell.h"
+	"../Gameboard/Unit.h"
+	"../Gameboard/Town.h"
+	"../Gameboard/Temple.h"
+	"../Gameboard/SpecialTile.h"
+
+1346980049 source:/home/jotak/dev/Shahnarman/Sources/_System/DirectoryChecker.cpp
+	"../utils.h"
+	<stdio.h>
+	<vector>
+	<string.h>
+	"../Common/md5.h"
+
+1346980049 source:/home/jotak/dev/Shahnarman/Sources/_System/TheAvatars.cpp
+	"stdafx.h"
+	"../GameRoot.h"
+	"../LocalClient.h"
+	"../SystemHeaders.h"
+	"../Data/Parameters.h"
+	"../Display/DisplayEngine.h"
+	"../Input/PCInputEngine.h"
+	"../Interface/InterfaceManager.h"
+	"../Debug/DebugManager.h"
+
+1346980049 /home/jotak/dev/Shahnarman/Sources/_System/stdafx.h
+	<stdio.h>
+	<tchar.h>
+
+1346980049 source:/home/jotak/dev/Shahnarman/Sources/_System/linux_utils.cpp
+	"../utils.h"
+	<stdio.h>
+	<stdlib.h>
+	<stdarg.h>
+	<dirent.h>
+
+1346980049 source:/home/jotak/dev/Shahnarman/Sources/_System/main.cpp
+	"../GameRoot.h"
+	"../LocalClient.h"
+	"../SystemHeaders.h"
+	"../Data/Parameters.h"
+	"../Display/DisplayEngine.h"
+	"../Input/PCInputEngine.h"
+	"../Interface/InterfaceManager.h"
+	"../Debug/DebugManager.h"
+
+1346980049 source:/home/jotak/dev/Shahnarman/Sources/_System/stdafx.cpp
+	"stdafx.h"
+
+1346980049 source:/home/jotak/dev/Shahnarman/Sources/_System/utils_win32.cpp
+	"../utils.h"
+	<io.h>
+
+1346980049 source:/home/jotak/dev/Shahnarman/Sources/lua_callbacks.cpp
+	"lua_callbacks.h"
+	"lua_callbacks_utils.h"
+	"Data/DataFactory.h"
+	"GUIClasses/guiLabel.h"
+	"Server/AISolver.h"
+
+1346980049 source:/home/jotak/dev/Shahnarman/Sources/lua_callbacks_utils.cpp
+	"lua_callbacks_utils.h"
+
+1346980049 source:/home/jotak/dev/Shahnarman/Sources/utils.cpp
+	"utils.h"
+
+1346981572 source:/home/jotak/dev/Shahnarman/Sources/Data/Parameters.cpp
+	"Parameters.h"
+	"../Debug/DebugManager.h"
+	"IniFile.h"
+	<locale.h>
+	<stdio.h>
 

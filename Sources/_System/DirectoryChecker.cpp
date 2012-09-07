@@ -1,156 +1,218 @@
-#ifdef WIN32
 #include "../utils.h"
-#include "../SystemHeaders.h"
-#include <wchar.h>
-#include <io.h>
+#include <stdio.h>
+#include <vector>
+#include <string.h>
+#include "../Common/md5.h"
+
+using namespace std;
+
+// type: 0=any, 0x4=folder, 0x8=file
+extern int getDirectoryContent(string dir, vector<string> &files, unsigned char type);
 
 // -----------------------------------------------------------------
 // Name : getEditions
 // -----------------------------------------------------------------
-int getEditions(wchar_t ** sEditionsList, int iListSize, int iEditionNameSize)
+int getEditions(wchar_t ** sEditionsList, unsigned int iListSize, int iEditionNameSize)
 {
-  _wfinddata_t finddata;
-  int count = 0;
-  int result = 0;
-  wchar_t sFileSearch[MAX_PATH] = EDITIONS_PATH;
-  wsafecat(sFileSearch, MAX_PATH, L"*");
+    unsigned int count = 0;
+    char dir[MAX_PATH];
+    wtostr(dir, MAX_PATH, EDITIONS_PATH);
+    vector<string> files = vector<string>();
+    getDirectoryContent(string(dir), files, 0x4);
 
-  intptr_t hfile = _wfindfirst(sFileSearch, &finddata);
-  if (hfile == -1)
-    return 0;
-  while (result == 0)
-  {
-    if (count >= iListSize)
-      break;
-    if ((finddata.attrib & _A_SUBDIR) && finddata.name[0] != L'.')  // skip . and .. folders
+    for (unsigned int i = 0; i < files.size(); i++)
     {
-      wsafecpy(sEditionsList[count], iEditionNameSize, finddata.name);
-      count++;
+        if (count >= iListSize)
+            break;
+        if (files[i][0] != L'.')  // skip . and .. folders
+        {
+            strtow(sEditionsList[count], iEditionNameSize, files[i].c_str());
+            count++;
+        }
     }
-    result = _wfindnext(hfile, &finddata);
-  }
-  _findclose(hfile);
-  return count;
+    return count;
 }
 
 // -----------------------------------------------------------------
 // Name : getSkills
 // -----------------------------------------------------------------
-int getSkills(wchar_t ** sSkillsList, int iListSize, int iSkillNameSize, const wchar_t * sEdition)
+int getSkills(wchar_t ** sSkillsList, unsigned int iListSize, int iSkillNameSize, const wchar_t * sEdition)
 {
-  _wfinddata_t finddata;
-  int count = 0;
-  int result = 0;
-  wchar_t sFileSearch[MAX_PATH];;
-  swprintf_s(sFileSearch, MAX_PATH, L"%s%s/skills/*.lua", EDITIONS_PATH, sEdition);
+    unsigned int count = 0;
+    char dir[MAX_PATH];
+    wchar_t wdir[MAX_PATH];
+    swprintf(wdir, MAX_PATH, L"%s%s/skills/", EDITIONS_PATH, sEdition);
+    wtostr(dir, MAX_PATH, wdir);
+    vector<string> files = vector<string>();
+    getDirectoryContent(string(dir), files, 0x8);
 
-  intptr_t hfile = _wfindfirst(sFileSearch, &finddata);
-  if (hfile == -1)
-    return 0;
-  while (result == 0)
-  {
-    if (count >= iListSize)
-      break;
-    wsafecpy(sSkillsList[count], iSkillNameSize, finddata.name);
-    // Remove ".lua"
-    sSkillsList[count][wcslen(sSkillsList[count])-4] = L'\0';
-    count++;
-    result = _wfindnext(hfile, &finddata);
-  }
-  _findclose(hfile);
-  return count;
+    for (unsigned int i = 0; i < files.size(); i++)
+    {
+        if (count >= iListSize)
+            break;
+        unsigned int length = files[i].size();
+        if (length > 4
+                && files[i][length-4] == '.'
+                && files[i][length-3] == 'l'
+                && files[i][length-2] == 'u'
+                && files[i][length-1] == 'a')
+        {
+            strtow(sSkillsList[count], iSkillNameSize, files[i].c_str());
+            // Remove ".lua"
+            sSkillsList[count][length-4] = L'\0';
+            count++;
+        }
+    }
+    return count;
 }
 
 // -----------------------------------------------------------------
 // Name : getProfiles
 // -----------------------------------------------------------------
-int getProfiles(wchar_t ** sProfilesList, int iListSize, int iProfileNameSize)
+int getProfiles(wchar_t ** sProfilesList, unsigned int iListSize, int iProfileNameSize)
 {
-  _wfinddata_t finddata;
-  int count = 0;
-  int result = 0;
-  wchar_t sFileSearch[MAX_PATH] = PROFILES_PATH;
-  wsafecat(sFileSearch, MAX_PATH, L"*.dat");
+    unsigned int count = 0;
+    char dir[MAX_PATH];
+    wtostr(dir, MAX_PATH, PROFILES_PATH);
+    vector<string> files = vector<string>();
+    getDirectoryContent(string(dir), files, 0x8);
 
-  intptr_t hfile = _wfindfirst(sFileSearch, &finddata);
-  if (hfile == -1)
-  {
-    if (errno == ENOENT)
-      _wmkdir(PROFILES_PATH);
-    return 0;
-  }
-  while (result == 0)
-  {
-    if (count >= iListSize)
-      break;
-    wsafecpy(sProfilesList[count], iProfileNameSize, finddata.name);
-    // Remove ".dat"
-    sProfilesList[count][wcslen(sProfilesList[count])-4] = L'\0';
-    count++;
-    result = _wfindnext(hfile, &finddata);
-  }
-  _findclose(hfile);
-  return count;
+    for (unsigned int i = 0; i < files.size(); i++)
+    {
+        if (count >= iListSize)
+            break;
+        unsigned int length = files[i].size();
+        if (length > 4
+                && files[i][length-4] == '.'
+                && files[i][length-3] == 'd'
+                && files[i][length-2] == 'a'
+                && files[i][length-1] == 't')
+        {
+            strtow(sProfilesList[count], iProfileNameSize, files[i].c_str());
+            // Remove ".dat"
+            sProfilesList[count][length-4] = L'\0';
+            count++;
+        }
+    }
+    return count;
 }
 
 // -----------------------------------------------------------------
 // Name : getSavedGames
 // -----------------------------------------------------------------
-int getSavedGames(wchar_t ** sSavesList, int iListSize, int iSavesNameSize)
+int getSavedGames(wchar_t ** sSavesList, unsigned int iListSize, int iSavesNameSize)
 {
-  _wfinddata_t finddata;
-  int count = 0;
-  int result = 0;
-  wchar_t sFileSearch[MAX_PATH] = SAVES_PATH;
-  wsafecat(sFileSearch, MAX_PATH, L"*.sav");
+    unsigned int count = 0;
+    char dir[MAX_PATH];
+    wtostr(dir, MAX_PATH, SAVES_PATH);
+    vector<string> files = vector<string>();
+    getDirectoryContent(string(dir), files, 0x8);
 
-  intptr_t hfile = _wfindfirst(sFileSearch, &finddata);
-  if (hfile == -1)
-  {
-    if (errno == ENOENT)
-      _wmkdir(SAVES_PATH);
-    return 0;
-  }
-  while (result == 0)
-  {
-    if (count >= iListSize)
-      break;
-    wsafecpy(sSavesList[count], iSavesNameSize, finddata.name);
-    count++;
-    result = _wfindnext(hfile, &finddata);
-  }
-  _findclose(hfile);
-  return count;
+    for (unsigned int i = 0; i < files.size(); i++)
+    {
+        if (count >= iListSize)
+            break;
+        unsigned int length = files[i].size();
+        if (length > 4
+                && files[i][length-4] == '.'
+                && files[i][length-3] == 's'
+                && files[i][length-2] == 'a'
+                && files[i][length-1] == 'v')
+        {
+            strtow(sSavesList[count], iSavesNameSize, files[i].c_str());
+            // Remove ".sav"
+            sSavesList[count][length-4] = L'\0';
+            count++;
+        }
+    }
+    return count;
 }
 
 // -----------------------------------------------------------------
 // Name : getMaps
 // -----------------------------------------------------------------
-int getMaps(wchar_t ** sMapsList, int iListSize, int iMapNameSize)
+int getMaps(wchar_t ** sMapsList, unsigned int iListSize, int iMapNameSize)
 {
-  _wfinddata_t finddata;
-  int count = 0;
-  int result = 0;
-  wchar_t sFileSearch[MAX_PATH] = MAPS_PATH;
-  wsafecat(sFileSearch, MAX_PATH, L"*.lua");
+    unsigned int count = 0;
+    char dir[MAX_PATH];
+    wtostr(dir, MAX_PATH, MAPS_PATH);
+    vector<string> files = vector<string>();
+    getDirectoryContent(string(dir), files, 0x8);
 
-  intptr_t hfile = _wfindfirst(sFileSearch, &finddata);
-  if (hfile == -1)
-  {
-    if (errno == ENOENT)
-      _wmkdir(MAPS_PATH);
-    return 0;
-  }
-  while (result == 0)
-  {
-    if (count >= iListSize)
-      break;
-    wsafecpy(sMapsList[count], iMapNameSize, finddata.name);
-    count++;
-    result = _wfindnext(hfile, &finddata);
-  }
-  _findclose(hfile);
-  return count;
+    for (unsigned int i = 0; i < files.size(); i++)
+    {
+        if (count >= iListSize)
+            break;
+        unsigned int length = files[i].size();
+        if (length > 4
+                && files[i][length-4] == '.'
+                && files[i][length-3] == 'l'
+                && files[i][length-2] == 'u'
+                && files[i][length-1] == 'a')
+        {
+            strtow(sMapsList[count], iMapNameSize, files[i].c_str());
+            count++;
+        }
+    }
+    return count;
 }
 
-#endif
+bool _md5folder_rec(wchar_t * sFolder, struct md5_ctx * ctx)
+{
+    // Loop recursively into folders, and do checksum on files
+    wchar_t wdir[MAX_PATH];
+    swprintf(wdir, MAX_PATH, L"%s/", sFolder);
+    char dir[MAX_PATH];
+    wtostr(dir, MAX_PATH, wdir);
+
+    // Get files
+    vector<string> files = vector<string>();
+    getDirectoryContent(string(dir), files, 0x8);
+    for (unsigned int i = 0; i < files.size(); i++)
+    {
+        char sFile[MAX_PATH];
+        snprintf(sFile, MAX_PATH, "%s%s", dir, files[i].c_str());
+        FILE * pFile = NULL;
+        if (0 != fopen_s(&pFile, sFile, "r"))
+            return false; // error
+        while (!feof(pFile))
+        {
+            ctx->size += fread(ctx->buf + ctx->size, 1, MD5_BUFFER - ctx->size, pFile);
+            md5_update(ctx);
+        }
+        fclose(pFile);
+    }
+
+    // Get dirs
+    vector<string> dirs = vector<string>();
+    getDirectoryContent(string(dir), dirs, 0x4);
+    for (unsigned int i = 0; i < files.size(); i++)
+    {
+        if (strcmp(files[i].c_str(), ".") == 0 || strcmp(files[i].c_str(), "..") == 0)  // skip . and .. folders
+            continue;
+
+        char sNewFolder[MAX_PATH];
+        snprintf(sNewFolder, MAX_PATH, "%s%s", dir, files[i].c_str());
+        wchar_t swNewFolder[MAX_PATH];
+        strtow(swNewFolder, MAX_PATH, sNewFolder);
+        if (!_md5folder_rec(swNewFolder, ctx))
+            return false;
+    }
+    return true;
+}
+
+bool md5folder(wchar_t * sFolder, wchar_t * swDigest)
+{
+    struct md5_ctx ctx;
+    unsigned char digest[16];
+    md5_init(&ctx);
+    bool bResult = _md5folder_rec(sFolder, &ctx);
+    md5_final(digest, &ctx);
+    char result[64];
+    for (int i = 0; i < 16; i++)
+        snprintf(&(result[2*i]), 16, "%02x", digest[i]);
+    strtow(swDigest, 32, result);
+    if (ctx.buf)
+        free(ctx.buf);
+    return bResult;
+}

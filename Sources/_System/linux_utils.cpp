@@ -1,7 +1,9 @@
 #ifdef LINUX
 #include "../utils.h"
+#include <stdio.h>
 #include <stdlib.h>
 #include <stdarg.h>
+#include <dirent.h>
 
 void add_long_to_wstr(long iVal, int precision, wchar_t * sDst, int * iDst);
 void add_double_to_wstr(double fVal, int precision, wchar_t * sDst, int * iDst);
@@ -11,97 +13,6 @@ u32 getRandom(u32 max)
 {
   return ((u32)rand()) % max;
 }
-
-// Not all standard "printf" specifiers are managed here. Improve this function if needed.
-void swprintf_s(wchar_t * sDst, int iSize, const wchar_t * sModel, ...)
-{
-  va_list pArgs;
-  int iDst = 0;
-  int iSrc = 0;
-  va_start(pArgs, sModel);
-  while (sModel[iSrc] != '\0')
-  {
-    if (sModel[iSrc] == L'%')
-    {
-      iSrc++;
-      // is '%' character?
-      if (sModel[iSrc] == L'%')
-        sDst[iDst++] = sModel[iSrc++];
-      else
-      {
-        int precision = -1;
- //       u8 length = 1;
-        // precision?
-        if (sModel[iSrc] == L'.')
-        {
-          precision = (int) (sModel[++iSrc] - L'0');
-          iSrc++;
-        }
-        // length?
-        if (sModel[iSrc] == L'h')
-        {
- //         length = 0; // short
-          iSrc++;
-        }
-        else if (sModel[iSrc] == L'l' || sModel[iSrc] == L'L')
-        {
- //         length = 2; // long
-          iSrc++;
-        }
-        // specifier
-        switch (sModel[iSrc])
-        {
-        case L'u':
-          {
-            unsigned uVal = va_arg(pArgs, unsigned);
-            add_long_to_wstr((long)uVal, precision, sDst, &iDst);
-            iSrc++;
-            break;
-          }
-        case L'd':
-          {
-            long iVal = va_arg(pArgs, int);
-            add_long_to_wstr(iVal, precision, sDst, &iDst);
-            iSrc++;
-            break;
-          }
-        case L'f':
-          {
-            double fVal = va_arg(pArgs, double);
-            add_double_to_wstr(fVal, precision, sDst, &iDst);
-            iSrc++;
-            break;
-          }
-        case L'c':
-          {
-            int cVal = va_arg(pArgs, int);
-            sDst[iDst++] = (wchar_t) cVal;
-            iSrc++;
-            break;
-          }
-        case L's':
-          {
-            wchar_t * sVal = va_arg(pArgs, wchar_t*);
-            sDst[iDst] = L'\0';
-            wsafecat(sDst, iSize, sVal);
-            iDst = wcslen(sDst);
-            iSrc++;
-            break;
-          }
-        }
-      }
-    }
-    else
-      sDst[iDst++] = sModel[iSrc++];
-  }
-  sDst[iDst] = L'\0';
-  va_end(pArgs);
-}
-
-//int swscanf_s(const wchar_t * sSrc, const wchar_t * sModel, ...)
-//{
-//  return 0;
-//}
 
 errno_t wfopen(FILE ** pFile, const wchar_t * sFilename, const wchar_t * sMode)
 {
@@ -131,6 +42,131 @@ size_t strtow(wchar_t * sDst, int sizemax, const char * sSrc)
 size_t wtostr(char * sDst, int sizemax, const wchar_t * sSrc)
 {
   return wcstombs(sDst, sSrc, sizemax);
+}
+
+void _wremove(const wchar_t * sFilename)
+{
+  char sLFilename[MAX_PATH];
+  wcsrtombs(sLFilename, &sFilename, MAX_PATH, NULL);
+  remove(sLFilename);
+}
+
+// type: 0=any, 0x4=folder, 0x8=file
+int getDirectoryContent(std::string dir, std::vector<std::string> &files, unsigned char type)
+{
+    DIR * dp;
+    struct dirent * dirp;
+    if ((dp  = opendir(dir.c_str())) == NULL) {
+        return -1;
+    }
+
+    while ((dirp = readdir(dp)) != NULL) {
+        if (type == 0 || type == dirp->d_type) {
+            files.push_back(std::string(dirp->d_name));
+        }
+    }
+    closedir(dp);
+    return 0;
+}
+
+wchar_t swClipboard[1024];
+
+bool copyStringToClipboard(wchar_t * wsource)
+{
+    // TODO: real clipboard on linux??
+    wsafecpy(swClipboard, 1024, wsource);
+    return true;
+}
+
+wchar_t * getStringFromClipboard(wchar_t * sBuffer, int iBufSize)
+{
+    // TODO: real clipboard on linux??
+    wsafecpy(sBuffer, iBufSize, swClipboard);
+    return sBuffer;
+}
+
+int getAvailableDisplayModes(CoordsScreen * pResolution, int * pBpp, int iMaxEntries)
+{
+    int i = 0;
+    if (i <= iMaxEntries)
+    {
+        pResolution[i].x = 800;
+        pResolution[i].y = 600;
+        pBpp[i] = 16;
+        i++;
+    }
+    else
+        return i;
+
+    if (i <= iMaxEntries)
+    {
+        pResolution[i].x = 800;
+        pResolution[i].y = 600;
+        pBpp[i] = 32;
+        i++;
+    }
+    else
+        return i;
+
+    if (i <= iMaxEntries)
+    {
+        pResolution[i].x = 1024;
+        pResolution[i].y = 768;
+        pBpp[i] = 16;
+        i++;
+    }
+    else
+        return i;
+
+    if (i <= iMaxEntries)
+    {
+        pResolution[i].x = 1024;
+        pResolution[i].y = 768;
+        pBpp[i] = 32;
+        i++;
+    }
+    else
+        return i;
+
+    if (i <= iMaxEntries)
+    {
+        pResolution[i].x = 1152;
+        pResolution[i].y = 864;
+        pBpp[i] = 32;
+        i++;
+    }
+    else
+        return i;
+
+    if (i <= iMaxEntries)
+    {
+        pResolution[i].x = 1280;
+        pResolution[i].y = 768;
+        pBpp[i] = 32;
+        i++;
+    }
+    else
+        return i;
+
+    if (i <= iMaxEntries)
+    {
+        pResolution[i].x = 1280;
+        pResolution[i].y = 960;
+        pBpp[i] = 32;
+        i++;
+    }
+    else
+        return i;
+
+    if (i <= iMaxEntries)
+    {
+        pResolution[i].x = 1280;
+        pResolution[i].y = 1024;
+        pBpp[i] = 32;
+        i++;
+    }
+
+    return i;
 }
 
 #endif

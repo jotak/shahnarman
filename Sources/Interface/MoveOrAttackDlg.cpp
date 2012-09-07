@@ -52,7 +52,7 @@ MoveOrAttackDlg::MoveOrAttackDlg(LocalClient * pLocalClient, Unit * pUnit, Coord
       pBtn->setAttachment(pOther);
       addComponent(pBtn);
       i18n->getText(L"ATTACK_(s)", sBuf, LABEL_MAX_CHARS);
-      swprintf_s(sText, LABEL_MAX_CHARS, sBuf, pOther->getName());
+      swprintf(sText, LABEL_MAX_CHARS, sBuf, pOther->getName());
       pBtn->setTooltipText(sText);
       iButton++;
     }

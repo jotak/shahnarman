@@ -401,12 +401,12 @@ void GameboardManager::enableNextPlayer(Player * pPlayer)
       int iFont = m_pLocalClient->getDisplay()->getFontEngine()->registerFont(L"Arabolical_32", m_pLocalClient->getDisplay()->getTextureEngine());
       if (allies > 1)
       {
-        swprintf_s(sNb, 8, L"%d", allies);
+        swprintf(sNb, 8, L"%d", allies);
         pTile->m_pNbAlliesGeo = new GeometryText(sNb, iFont, 0.3f, VB_Static, m_pLocalClient->getDisplay());
       }
       if (foes > 0 && allies + foes > 1)
       {
-        swprintf_s(sNb, 8, L"%d", foes);
+        swprintf(sNb, 8, L"%d", foes);
         pTile->m_pNbFoesGeo = new GeometryText(sNb, iFont, 0.3f, VB_Static, m_pLocalClient->getDisplay());
       }
       // Again, loop into map objects to put owned units first

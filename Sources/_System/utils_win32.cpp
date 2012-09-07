@@ -1,6 +1,5 @@
 #ifdef WIN32
 #include "../utils.h"
-#include "../Common/md5.h"
 #include <io.h>
 
 // Random selon Windows
@@ -21,65 +20,6 @@ size_t wtostr(char * sDst, int sizemax, const wchar_t * sSrc)
   size_t nbConvertedChars = 0;
   wcstombs_s(&nbConvertedChars, sDst, sizemax, sSrc, _TRUNCATE);
   return nbConvertedChars;
-}
-
-bool _md5folder_rec(wchar_t * sFolder, struct md5_ctx * ctx)
-{
-  // Loop recursively into folders, and do checksum on files
-  _wfinddata_t finddata;
-  wchar_t sFileSearch[MAX_PATH];
-  swprintf_s(sFileSearch, MAX_PATH, L"%s/*", sFolder);
-
-  int result = 0;
-  intptr_t hfile = _wfindfirst(sFileSearch, &finddata);
-  if (hfile == -1)
-    return true;  // no file may not be an error
-  while (result == 0)
-  {
-    if (wcscmp(finddata.name, L".") != 0 && wcscmp(finddata.name, L"..") != 0)  // skip . and .. folders
-    {
-      if (finddata.attrib & _A_SUBDIR)  // subdir: loop into it
-      {
-        wchar_t sNewFolder[MAX_PATH];
-        swprintf_s(sNewFolder, MAX_PATH, L"%s/%s", sFolder, finddata.name);
-        if (!_md5folder_rec(sNewFolder, ctx))
-          return false;
-      }
-      else  // normal file: do checksum
-      {
-        wchar_t sFile[MAX_PATH];
-        swprintf_s(sFile, MAX_PATH, L"%s/%s", sFolder, finddata.name);
-        FILE * pFile = NULL;
-        if (0 != wfopen(&pFile, sFile, L"r"))
-          return false; // error
-        while (!feof(pFile))
-        {
-          ctx->size += fread(ctx->buf + ctx->size, 1, MD5_BUFFER - ctx->size, pFile);
-          md5_update(ctx);
-        }
-        fclose(pFile);
-      }
-    }
-    result = _wfindnext(hfile, &finddata);
-  }
-  _findclose(hfile);
-  return true;
-}
-
-bool md5folder(wchar_t * sFolder, wchar_t * swDigest)
-{
-	struct md5_ctx ctx;
-  unsigned char digest[16];
-  md5_init(&ctx);
-  bool bResult = _md5folder_rec(sFolder, &ctx);
-  md5_final(digest, &ctx);
-  char result[64];
-	for (int i = 0; i < 16; i++)
-		sprintf_s(&(result[2*i]), 16, "%02x", digest[i]);
-  strtow(swDigest, 32, result);
-  if (ctx.buf)
-    free(ctx.buf);
-  return bResult;
 }
 
 bool copyStringToClipboard(wchar_t * wsource)
@@ -137,6 +77,31 @@ int getAvailableDisplayModes(CoordsScreen * pResolution, int * pBpp, int iMaxEnt
       break;
   }
   return iGoodMode;
+}
+
+// type: 0=any, 0x4=folder, 0x8=file
+int getDirectoryContent(string dir, vector<string> &files, unsigned char type)
+{
+  _wfinddata_t finddata;
+  int result = 0;
+  char sFileSearch[MAX_PATH] = dir;
+  strncat(sFileSearch, "*", MAX_PATH);
+
+  intptr_t hfile = _wfindfirst(sFileSearch, &finddata);
+  if (hfile == -1)
+    return -1;
+
+  while (result == 0)
+  {
+    if ((type == 0x4 && (finddata.attrib & _A_SUBDIR))
+        || (type == 0x8 && !(finddata.attrib & _A_SUBDIR))
+        || type == 0)
+    {
+        files.push_back(string(finddata.name));
+    }
+    result = _wfindnext(hfile, &finddata);
+  }
+  _findclose(hfile);
 }
 
 #endif

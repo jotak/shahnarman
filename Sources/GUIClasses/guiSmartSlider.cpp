@@ -24,17 +24,11 @@ guiSmartSlider::guiSmartSlider() : guiComponent()
 // -----------------------------------------------------------------
 guiSmartSlider::~guiSmartSlider()
 {
-#ifdef DBG_VERBOSE1
-  printf("Begin destroy guiSmartSlider\n");
-#endif
   delete m_pItems;
   FREE(m_pDisabledGeometry);
   FREE(m_pSelectorGeometry);
   delete m_pLabel;
   delete m_pDisableReasonLabel;
-#ifdef DBG_VERBOSE1
-  printf("End destroy guiSmartSlider\n");
-#endif
 }
 
 // -----------------------------------------------------------------

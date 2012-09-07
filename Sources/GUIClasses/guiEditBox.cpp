@@ -45,7 +45,7 @@ guiEditBox::~guiEditBox()
 // -----------------------------------------------------------------
 // Name : init
 // -----------------------------------------------------------------
-void guiEditBox::init(int iCaretTex, wchar_t * sText, FontId fontId, F_RGBA textColor, int iNbLines, bool bMultiLines, int * iMainTexs, const wchar_t * sCpntId, int xPxl, int yPxl, int wPxl, int hPxl, DisplayEngine * pDisplay)
+void guiEditBox::init(int iCaretTex, const wchar_t * sText, FontId fontId, F_RGBA textColor, int iNbLines, bool bMultiLines, int * iMainTexs, const wchar_t * sCpntId, int xPxl, int yPxl, int wPxl, int hPxl, DisplayEngine * pDisplay)
 {
   guiComponent::init(sCpntId, xPxl, yPxl, wPxl, hPxl);
   m_FontId = fontId;
@@ -189,6 +189,8 @@ guiObject * guiEditBox::onButtonEvent(ButtonAction * pEvent)
       case Event_DoubleClick:
         onButton1DoubleClick(pEvent->xPos - pEvent->xOffset, pEvent->yPos - pEvent->yOffset);
         break;
+        default:
+        break;
       }
       return this;
     }
@@ -202,6 +204,8 @@ guiObject * guiEditBox::onButtonEvent(ButtonAction * pEvent)
       // TODO
       return this;
     }
+        default:
+        break;
   }
   return NULL;
 }
@@ -826,7 +830,7 @@ void guiEditBox::setFocus()
 // Name : createDefaultEditBox
 //  Static default constructor
 // -----------------------------------------------------------------
-guiEditBox * guiEditBox::createDefaultEditBox(int iNbLines, bool bMultiLines, int wPxl, wchar_t * sId, KeyboardInputEngine * pInputs, DisplayEngine * pDisplay)
+guiEditBox * guiEditBox::createDefaultEditBox(int iNbLines, bool bMultiLines, int wPxl, const wchar_t * sId, KeyboardInputEngine * pInputs, DisplayEngine * pDisplay)
 {
   int iTexs[9];
   iTexs[0] = pDisplay->getTextureEngine()->findTexture(L"interface:LstTL");

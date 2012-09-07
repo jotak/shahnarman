@@ -73,7 +73,7 @@ void UnitData::deserialize(Serializer * pSerializer, DebugManager * pDebug)
     long val = 0;
     pSerializer->readString(str);
     val = pSerializer->readLong();
-    m_lValues.insert(long_hash_pair(str, val));
+    m_lValues.insert(long_hash::value_type(str, val));
   }
   // skills ref
   len = pSerializer->readLong();

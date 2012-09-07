@@ -21,12 +21,6 @@ guiLabel::guiLabel() : guiComponent()
 // -----------------------------------------------------------------
 guiLabel::~guiLabel()
 {
-#ifdef DBG_VERBOSE1
-  printf("Begin destroy guiLabel\n");
-#endif
-#ifdef DBG_VERBOSE1
-  printf("End destroy guiLabel\n");
-#endif
 }
 
 // -----------------------------------------------------------------

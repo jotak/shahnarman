@@ -52,7 +52,7 @@ void Skill::loadBasicData(DebugManager * pDebug)
   else
   {
     wchar_t sError[512];
-    swprintf_s(sError, 512, L"Lua interaction error: skill in file %s has no name defined.", m_sObjectName);
+    swprintf(sError, 512, L"Lua interaction error: skill in file %s has no name defined.", m_sObjectName);
     pDebug->notifyErrorMessage(sError);
     wsafecpy(m_sName, NAME_MAX_CHARS, L"");
   }
@@ -63,7 +63,7 @@ void Skill::loadBasicData(DebugManager * pDebug)
   else
   {
     wchar_t sError[512];
-    swprintf_s(sError, 512, L"Lua interaction error: skill in file %s has no description defined.", m_sObjectName);
+    swprintf(sError, 512, L"Lua interaction error: skill in file %s has no description defined.", m_sObjectName);
     pDebug->notifyErrorMessage(sError);
     wsafecpy(m_sDescription, DESCRIPTION_MAX_CHARS, L"");
   }
@@ -74,12 +74,12 @@ void Skill::loadBasicData(DebugManager * pDebug)
   {
 	  // error : icon not found
     wchar_t sError[512] = L"";
-    swprintf_s(sError, 512, L"Lua interaction error: skill in file %s has no icon path defined.", m_sObjectName);
+    swprintf(sError, 512, L"Lua interaction error: skill in file %s has no icon path defined.", m_sObjectName);
     pDebug->notifyErrorMessage(sError);
     wsafecpy(m_sIconPath, MAX_PATH, L"");
   }
   else
-    swprintf_s(m_sIconPath, MAX_PATH, L"%s/%s", m_sObjectEdition, sStr);
+    swprintf(m_sIconPath, MAX_PATH, L"%s/%s", m_sObjectEdition, sStr);
 
   // is mergeable?
   double d;
@@ -155,7 +155,7 @@ void Skill::merge(Skill * pOther)
   // Icon texture
   wchar_t sStr[MAX_PATH];
   if (getLuaVarString(L"icon", sStr, MAX_PATH))
-    swprintf_s(m_sIconPath, MAX_PATH, L"%s/%s", m_sObjectEdition, sStr);
+    swprintf(m_sIconPath, MAX_PATH, L"%s/%s", m_sObjectEdition, sStr);
 
   // is mergeable?
   double d;

@@ -204,18 +204,18 @@ void ShopDlg::reloadContent()
   // Label col 1
   int cash = pPlayer->getCash();
   i18n->getText(L"CASH_(d)", sBuf1, LABEL_MAX_CHARS);
-  swprintf_s(sBuf2, LABEL_MAX_CHARS, sBuf1, cash);
+  swprintf(sBuf2, LABEL_MAX_CHARS, sBuf1, cash);
   wsafecpy(sText, LABEL_MAX_CHARS, sBuf2);
   int won = pPlayer->getNumberOfWonGames();
   int lost = pPlayer->getNumberOfLostGames();
   i18n->getText(L"DISPUTED_GAMES_(d)_WON_(d)_LOST_(d)", sBuf1, LABEL_MAX_CHARS);
-  swprintf_s(sBuf2, LABEL_MAX_CHARS, sBuf1, won+lost, won, lost);
+  swprintf(sBuf2, LABEL_MAX_CHARS, sBuf1, won+lost, won, lost);
   wsafecat(sText, LABEL_MAX_CHARS, L"\n");
   wsafecat(sText, LABEL_MAX_CHARS, sBuf2);
   if (won+lost > 0)
   {
     i18n->getText(L"PCT_VICTORIES_(d)", sBuf1, LABEL_MAX_CHARS);
-    swprintf_s(sBuf2, LABEL_MAX_CHARS, sBuf1, (int) ((100*won)/(won+lost)));
+    swprintf(sBuf2, LABEL_MAX_CHARS, sBuf1, (int) ((100*won)/(won+lost)));
     wsafecat(sText, LABEL_MAX_CHARS, L"\n");
     wsafecat(sText, LABEL_MAX_CHARS, sBuf2);
   }
@@ -224,7 +224,7 @@ void ShopDlg::reloadContent()
   // Label col 2
   int navatars = pPlayer->getAvatarsList()->size;
   i18n->getText(L"AVATARS_(d)", sBuf1, LABEL_MAX_CHARS);
-  swprintf_s(sBuf2, LABEL_MAX_CHARS, sBuf1, navatars);
+  swprintf(sBuf2, LABEL_MAX_CHARS, sBuf1, navatars);
   wsafecpy(sText, LABEL_MAX_CHARS, sBuf2);
   ((guiLabel*)(m_pPlayerPanel->getDocument()->getComponent(L"LabelCol2")))->setText(sText);
 
@@ -254,23 +254,23 @@ void ShopDlg::reloadContent()
     pSpellDesc = (Profile::SpellData*) pPlayer->getSpellsList()->getNext(0);
   }
   i18n->getText(L"SPELLS_(d)", sBuf1, LABEL_MAX_CHARS);
-  swprintf_s(sBuf2, LABEL_MAX_CHARS, sBuf1, nActiveSpells);
+  swprintf(sBuf2, LABEL_MAX_CHARS, sBuf1, nActiveSpells);
   wsafecpy(sText, LABEL_MAX_CHARS, sBuf2);
   i18n->getText(L"2P", sBuf2, LABEL_MAX_CHARS); // ":"
   i18n->getText1stUp(L"LIFE", sBuf3, LABEL_MAX_CHARS);
-  swprintf_s(sBuf1, LABEL_MAX_CHARS, L"\n- %s%s%d", sBuf3, sBuf2, nLife);
+  swprintf(sBuf1, LABEL_MAX_CHARS, L"\n- %s%s%d", sBuf3, sBuf2, nLife);
   wsafecat(sText, LABEL_MAX_CHARS, sBuf1);
   i18n->getText1stUp(L"LAW", sBuf3, LABEL_MAX_CHARS);
-  swprintf_s(sBuf1, LABEL_MAX_CHARS, L"\n- %s%s%d", sBuf3, sBuf2, nLaw);
+  swprintf(sBuf1, LABEL_MAX_CHARS, L"\n- %s%s%d", sBuf3, sBuf2, nLaw);
   wsafecat(sText, LABEL_MAX_CHARS, sBuf1);
   i18n->getText1stUp(L"DEATH", sBuf3, LABEL_MAX_CHARS);
-  swprintf_s(sBuf1, LABEL_MAX_CHARS, L"\n- %s%s%d", sBuf3, sBuf2, nDeath);
+  swprintf(sBuf1, LABEL_MAX_CHARS, L"\n- %s%s%d", sBuf3, sBuf2, nDeath);
   wsafecat(sText, LABEL_MAX_CHARS, sBuf1);
   i18n->getText1stUp(L"CHAOS", sBuf3, LABEL_MAX_CHARS);
-  swprintf_s(sBuf1, LABEL_MAX_CHARS, L"\n- %s%s%d\n", sBuf3, sBuf2, nChaos);
+  swprintf(sBuf1, LABEL_MAX_CHARS, L"\n- %s%s%d\n", sBuf3, sBuf2, nChaos);
   wsafecat(sText, LABEL_MAX_CHARS, sBuf1);
   i18n->getText(L"TOTAL_SPELLS_(d)", sBuf1, LABEL_MAX_CHARS);
-  swprintf_s(sBuf2, LABEL_MAX_CHARS, sBuf1, pPlayer->getSpellsList()->size);
+  swprintf(sBuf2, LABEL_MAX_CHARS, sBuf1, pPlayer->getSpellsList()->size);
   wsafecat(sText, LABEL_MAX_CHARS, sBuf2);
   ((guiLabel*)(m_pPlayerPanel->getDocument()->getComponent(L"LabelCol3")))->setText(sText);
 

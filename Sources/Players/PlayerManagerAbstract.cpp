@@ -185,31 +185,31 @@ LuaTargetable * PlayerManagerAbstract::findTargetFromIdentifiers(long iType, wch
   if (iType == SELECT_TYPE_PLAYER)
   {
     int id;
-    swscanf_s(sIds, L"%s %d", sType, 64, &id);
+    swscanf(sIds, L"%s %d", sType, 64, &id);
     return findPlayer(id);
   }
   else if (iType == SELECT_TYPE_TEMPLE)
   {
     long id, owner;
-    swscanf_s(sIds, L"%s %ld %ld", sType, 64, &owner, &id);
+    swscanf(sIds, L"%s %ld %ld", sType, 64, &owner, &id);
     return pMap->findTemple(id);
   }
   else if (iType == SELECT_TYPE_TOWN)
   {
     long id, owner;
-    swscanf_s(sIds, L"%s %ld %ld", sType, 64, &owner, &id);
+    swscanf(sIds, L"%s %ld %ld", sType, 64, &owner, &id);
     return pMap->findTown(id);
   }
   else if (iType == SELECT_TYPE_TILE)
   {
     long x, y;
-    swscanf_s(sIds, L"%s %ld %ld", sType, 64, &x, &y);
+    swscanf(sIds, L"%s %ld %ld", sType, 64, &x, &y);
     return pMap->getTileAt(CoordsMap(x, y));
   }
   else if (iType == SELECT_TYPE_UNIT)
   {
     long id, owner;
-    swscanf_s(sIds, L"%s %ld %ld", sType, 64, &owner, &id);
+    swscanf(sIds, L"%s %ld %ld", sType, 64, &owner, &id);
     Player * pPlayer = findPlayer(owner);
     assert(pPlayer != NULL);
     return pPlayer->findUnit(id);
@@ -227,9 +227,11 @@ wchar_t * PlayerManagerAbstract::retrieveTargetsNames(wchar_t * sBuf, int iSize,
   // The first element in sIds is object type
   wchar_t sType[64];
   int id;
-  swscanf_s(sIds, L"%s %d", sType, 64, &id);
+  swscanf(sIds, L"%s %d", sType, 64, &id);
   u8 uType = getTargetTypeFromName(sType);
   LuaTargetable * pTarget = findTargetFromIdentifiers((long) uType, sIds, pMap);
   if (pTarget != NULL) {
   }
+  return NULL;
+  // TODO
 }

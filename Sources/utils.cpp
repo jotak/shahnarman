@@ -115,7 +115,7 @@ void wsafecpy(wchar_t * dst, unsigned int size, const wchar_t * src)
     dst[i] = L'\0';
   }
   else
-    wcscpy_s(dst, size, src);
+    wcsncpy(dst, src, size);
 }
 
 void wsafecat(wchar_t * dst, unsigned int size, const wchar_t * src)
@@ -131,5 +131,5 @@ void wsafecat(wchar_t * dst, unsigned int size, const wchar_t * src)
     dst[idest] = L'\0';
   }
   else
-    wcscat_s(dst, size, src);
+    wcsncat(dst, src, size);
 }

@@ -65,9 +65,9 @@ wchar_t * ProgressionElement::getDescription(XMLObject * pObj, ObjectList * pEff
         i18n->getText1stUp(((ProgressionEffect_Charac*)pEffect)->m_sKey, sType, NAME_MAX_CHARS);
         i18n->getText(L"2P", sDeuxPoints, 8);
         if (((ProgressionEffect_Charac*)pEffect)->m_iModifier >= 0)
-          swprintf_s(sBuf2, DESCRIPTION_MAX_CHARS, L"%s%s+%d\n", sType, sDeuxPoints, ((ProgressionEffect_Charac*)pEffect)->m_iModifier);
+          swprintf(sBuf2, DESCRIPTION_MAX_CHARS, L"%s%s+%d\n", sType, sDeuxPoints, ((ProgressionEffect_Charac*)pEffect)->m_iModifier);
         else
-          swprintf_s(sBuf2, DESCRIPTION_MAX_CHARS, L"%s%s%d\n", sType, sDeuxPoints, ((ProgressionEffect_Charac*)pEffect)->m_iModifier);
+          swprintf(sBuf2, DESCRIPTION_MAX_CHARS, L"%s%s%d\n", sType, sDeuxPoints, ((ProgressionEffect_Charac*)pEffect)->m_iModifier);
         wsafecat(sBuf, iBufSize, sBuf2);
         break;
       }
@@ -79,7 +79,7 @@ wchar_t * ProgressionElement::getDescription(XMLObject * pObj, ObjectList * pEff
         Spell * pSpell = pLocalClient->getDataFactory()->findSpell(((ProgressionEffect_Spell*)pEffect)->m_sSpellEdition, ((ProgressionEffect_Spell*)pEffect)->m_sSpellName);
         i18n->getText(L"SPELL", sType, NAME_MAX_CHARS);
         i18n->getText(L"2P", sDeuxPoints, 8);
-        swprintf_s(sBuf2, DESCRIPTION_MAX_CHARS, L"%s %s%s%s\n", sType, pSpell->getLocalizedName(), sDeuxPoints, pSpell->getLocalizedDescription());
+        swprintf(sBuf2, DESCRIPTION_MAX_CHARS, L"%s %s%s%s\n", sType, pSpell->getLocalizedName(), sDeuxPoints, pSpell->getLocalizedDescription());
         wsafecat(sBuf, iBufSize, sBuf2);
         break;
       }
@@ -91,7 +91,7 @@ wchar_t * ProgressionElement::getDescription(XMLObject * pObj, ObjectList * pEff
         Skill * pSkill = new Skill(((ProgressionEffect_Skill*)pEffect)->m_sSkillEdition, ((ProgressionEffect_Skill*)pEffect)->m_sSkillName, ((ProgressionEffect_Skill*)pEffect)->m_sSkillParameters, pLocalClient->getDebug());
         i18n->getText(L"SKILL", sType, NAME_MAX_CHARS);
         i18n->getText(L"2P", sDeuxPoints, 8);
-        swprintf_s(sBuf2, DESCRIPTION_MAX_CHARS, L"%s %s%s%s\n", sType, pSkill->getLocalizedName(), sDeuxPoints, pSkill->getLocalizedDescription());
+        swprintf(sBuf2, DESCRIPTION_MAX_CHARS, L"%s %s%s%s\n", sType, pSkill->getLocalizedName(), sDeuxPoints, pSkill->getLocalizedDescription());
         wsafecat(sBuf, iBufSize, sBuf2);
         delete pSkill;
         break;
@@ -110,7 +110,7 @@ wchar_t * ProgressionElement::getDescription(XMLObject * pObj, ObjectList * pEff
         i18n->getText(L"2P", sDeuxPoints, 8);
         pArtifact->findLocalizedElement(sName, NAME_MAX_CHARS, i18n->getCurrentLanguageName(), L"name");
         pArtifact->findLocalizedElement(sDesc, NAME_MAX_CHARS, i18n->getCurrentLanguageName(), L"description");
-        swprintf_s(sBuf2, DESCRIPTION_MAX_CHARS, L"%s %s%s%s\n", sType, sName, sDeuxPoints, sDesc);
+        swprintf(sBuf2, DESCRIPTION_MAX_CHARS, L"%s %s%s%s\n", sType, sName, sDeuxPoints, sDesc);
         wsafecat(sBuf, iBufSize, sBuf2);
         break;
       }
@@ -126,7 +126,7 @@ wchar_t * ProgressionElement::getDescription(XMLObject * pObj, ObjectList * pEff
         i18n->getText(L"2P", sDeuxPoints, 8);
         pAvatar->findLocalizedElement(sName, NAME_MAX_CHARS, i18n->getCurrentLanguageName(), L"name");
         pAvatar->findLocalizedElement(sDesc, NAME_MAX_CHARS, i18n->getCurrentLanguageName(), L"description");
-        swprintf_s(sBuf2, DESCRIPTION_MAX_CHARS, L"%s %s%s%s\n", sType, sName, sDeuxPoints, sDesc);
+        swprintf(sBuf2, DESCRIPTION_MAX_CHARS, L"%s %s%s%s\n", sType, sName, sDeuxPoints, sDesc);
         wsafecat(sBuf, iBufSize, sBuf2);
         break;
       }

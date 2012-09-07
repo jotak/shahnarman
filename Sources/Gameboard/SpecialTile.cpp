@@ -48,7 +48,7 @@ void SpecialTile::loadBasicData(DebugManager * pDebug)
   else
   {
     wchar_t sError[512];
-    swprintf_s(sError, 512, L"Lua interaction error: special tile in file %s has no name defined.", m_sObjectName);
+    swprintf(sError, 512, L"Lua interaction error: special tile in file %s has no name defined.", m_sObjectName);
     pDebug->notifyErrorMessage(sError);
     wsafecpy(m_sName, NAME_MAX_CHARS, L"");
   }
@@ -59,7 +59,7 @@ void SpecialTile::loadBasicData(DebugManager * pDebug)
   else
   {
     wchar_t sError[512];
-    swprintf_s(sError, 512, L"Lua interaction error: special tile in file %s has no description defined.", m_sObjectName);
+    swprintf(sError, 512, L"Lua interaction error: special tile in file %s has no description defined.", m_sObjectName);
     pDebug->notifyErrorMessage(sError);
     wsafecpy(m_sDescription, DESCRIPTION_MAX_CHARS, L"");
   }
@@ -70,12 +70,12 @@ void SpecialTile::loadBasicData(DebugManager * pDebug)
   {
 	  // error : texture not found
     wchar_t sError[512] = L"";
-    swprintf_s(sError, 512, L"Lua interaction error: special tile in file %s has no texture path defined.", m_sObjectName);
+    swprintf(sError, 512, L"Lua interaction error: special tile in file %s has no texture path defined.", m_sObjectName);
     pDebug->notifyErrorMessage(sError);
     wsafecpy(m_sTexPath, MAX_PATH, L"");
   }
   else
-    swprintf_s(m_sTexPath, MAX_PATH, L"%s/%s", m_sObjectEdition, sFile);
+    swprintf(m_sTexPath, MAX_PATH, L"%s/%s", m_sObjectEdition, sFile);
 
   // Does attract AI?
   double d;

@@ -67,10 +67,10 @@ public:
   void attachImage(int iTex);
 
   // Static default constructors
-  static guiButton * createDefaultNormalButton(wchar_t * sText, wchar_t * sId, DisplayEngine * pDisplay);
-  static guiButton * createDefaultSmallButton(wchar_t * sText, int width, wchar_t * sId, DisplayEngine * pDisplay);
-  static guiButton * createDefaultWhiteButton(wchar_t * sText, int width, int height, wchar_t * sId, DisplayEngine * pDisplay);
-  static guiButton * createDefaultImageButton(int iTex, wchar_t * sId, DisplayEngine * pDisplay);
+  static guiButton * createDefaultNormalButton(const wchar_t * sText, const wchar_t * sId, DisplayEngine * pDisplay);
+  static guiButton * createDefaultSmallButton(const wchar_t * sText, int width, const wchar_t * sId, DisplayEngine * pDisplay);
+  static guiButton * createDefaultWhiteButton(const wchar_t * sText, int width, int height, const wchar_t * sId, DisplayEngine * pDisplay);
+  static guiButton * createDefaultImageButton(int iTex, const wchar_t * sId, DisplayEngine * pDisplay);
 
 protected:
   bool m_bMouseDown;

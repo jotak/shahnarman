@@ -160,7 +160,7 @@ wchar_t * Temple::getInfo(wchar_t * sBuf, int iSize, InfoDest eDest)
     i18n->getText(L"CHAOS", sType, 32);
     break;
   }
-  swprintf_s(sAmount, 32, L"%c %d", sSigns[uType], (int) uAmount);
+  swprintf(sAmount, 32, L"%c %d", sSigns[uType], (int) uAmount);
   void * pPhraseArgs[2] = { sType, sAmount };
   i18n->getText(L"TEMPLE_OF_%$1s_(%$2s)", sText, 128, pPhraseArgs);
 

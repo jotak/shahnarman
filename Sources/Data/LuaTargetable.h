@@ -15,7 +15,7 @@ class LocalClient;
 class LuaTargetable
 {
 public:
-  LuaTargetable(ObjectList ** pGlobalEffects, wchar_t * sIdentifiers);
+  LuaTargetable(ObjectList ** pGlobalEffects, const wchar_t * sIdentifiers);
   ~LuaTargetable();
 
   // General
@@ -45,7 +45,7 @@ public:
   virtual bool setBaseValue(const wchar_t * sName, long val);
 
   // Other
-  long callEffectHandler(wchar_t * sFunc, wchar_t * sArgsType = L"", void ** pArgs = NULL, u8 uResultType = HANDLER_RESULT_TYPE_NONE);
+  long callEffectHandler(const wchar_t * sFunc, const wchar_t * sArgsType = L"", void ** pArgs = NULL, u8 uResultType = HANDLER_RESULT_TYPE_NONE);
   void getInfo_AddValue(wchar_t * sBuf, int iSize, const wchar_t * sKey, const wchar_t * sSeparator);
   static LuaTargetable * convertFromBaseObject(BaseObject * pObj, u8 uType);
   BaseObject * convertToBaseObject(u8 uType);
@@ -59,7 +59,7 @@ protected:
   wchar_t m_sIdentifiers[16];
 
 private:
-  bool _callEffectHandlerForEffect(LuaObject * pLua, int iChild, wchar_t * sFunc, wchar_t * sArgsType, void ** pArgs, int nbResults);
+  bool _callEffectHandlerForEffect(LuaObject * pLua, int iChild, const wchar_t * sFunc, const wchar_t * sArgsType, void ** pArgs, int nbResults);
 
   ObjectList * m_pEffects;
   ObjectList * m_pDisabledEffects;

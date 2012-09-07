@@ -25,45 +25,32 @@ typedef long            s32;
 #ifdef LINUX
   #include <cstring>
   #include <iostream>
-//  #include <string>
   #include <cmath>
   #include <assert.h>
   #include <wchar.h>
-//  #include <hash_map>
   #include <queue>
-//  #include <stdext.h>
-//  #include <ext/hash_map>
   #include <tr1/unordered_map>
   #include <tr1/memory>
 
   namespace std { using namespace __gnu_cxx; }
 
-  #define strcat_s(a,b,c)   strcat(a,c)
-  #define strcpy_s(a,b,c)   strcpy(a,c)
+//  #define strcat_s(a,b,c)   strcat(a,c)
+//  #define strcpy_s(a,b,c)   strcpy(a,c)
   #define _stricmp(a,b)     strcasecmp(a,b)
-//  #define wsafecpy(a,b,c)   wcscpy(a,c)
-//  #define wsafecat(a,b,c)   wcscat(a,c)
   #define _wcsicmp(a,b)     wcscasecmp(a,b)  // Just as reminder : wcscmp can also be used
-//  #define swprintf_s        swprintf
-  #define swscanf_s         swscanf
   #define errno_t int
-  #define max(x,y) (x>=y?x:y)
-  extern void swprintf_s(wchar_t * sDst, int iSize, const wchar_t * sModel, ...);
-//  extern int swscanf_s(const wchar_t * sSrc, const wchar_t * sModel, ...);
+  #define max(x,y) ((x)>=(y)?(x):(y))
+  #define min(x,y) ((x)<=(y)?(x):(y))
   extern errno_t wfopen(FILE ** pFile, const wchar_t * sFilename, const wchar_t * sMode);
   extern errno_t fopen_s(FILE ** pFile, const char * sFilename, const char * sMode);
+  extern void _wremove(const wchar_t * sFilename);
   #define GLUT_WHEEL_UP   3 // freeglut uses 3 and 4 as wheel buttons
   #define GLUT_WHEEL_DOWN 4
 #endif
 
 typedef std::tr1::unordered_map<std::wstring, long> long_hash;
 typedef std::tr1::unordered_map<std::wstring, std::wstring> wstr_hash;
-
-//struct less_str { bool operator()(const std::wstring& s1, const std::wstring& s2) const { return s1<s2; }};
-//typedef std::hash_map<std::wstring, long, std::tr1::hash<std::wstring, less_str > > long_hash;
-//typedef std::hash_map<std::wstring, long, std::hash_compare<std::wstring, less_str> >::value_type long_hash_pair;
-//typedef std::hash_map<std::wstring, std::wstring, std::hash_compare<std::wstring, less_str> > wstr_hash;
-//typedef std::hash_map<std::wstring, std::wstring, std::hash_compare<std::wstring, less_str> >::value_type wstr_hash_pair;
+typedef std::tr1::unordered_map<wchar_t, wchar_t> wch_hash;
 
 #ifndef MAX_PATH
   #define MAX_PATH    512
@@ -214,11 +201,11 @@ extern size_t wtostr(char * sDst, int sizemax, const wchar_t * sSrc);
 extern bool md5folder(wchar_t * sFolder, wchar_t * swDigest);
 extern bool copyStringToClipboard(wchar_t * wsource);
 extern wchar_t * getStringFromClipboard(wchar_t * sBuffer, int iBufSize);
-extern int getEditions(wchar_t ** sEditionsList, int iListSize, int iEditionNameSize);
-extern int getSkills(wchar_t ** sSkillsList, int iListSize, int iSkillNameSize, const wchar_t * sEdition);
-extern int getProfiles(wchar_t ** sProfilesList, int iListSize, int iProfileNameSize);
-extern int getSavedGames(wchar_t ** sSavesList, int iListSize, int iSavesNameSize);
-extern int getMaps(wchar_t ** sMapsList, int iListSize, int iMapNameSize);
+extern int getEditions(wchar_t ** sEditionsList, unsigned int iListSize, int iEditionNameSize);
+extern int getSkills(wchar_t ** sSkillsList, unsigned int iListSize, int iSkillNameSize, const wchar_t * sEdition);
+extern int getProfiles(wchar_t ** sProfilesList, unsigned int iListSize, int iProfileNameSize);
+extern int getSavedGames(wchar_t ** sSavesList, unsigned int iListSize, int iSavesNameSize);
+extern int getMaps(wchar_t ** sMapsList, unsigned int iListSize, int iMapNameSize);
 extern int getAvailableDisplayModes(CoordsScreen * pResolution, int * pBpp, int iMaxEntries);
 
 #endif

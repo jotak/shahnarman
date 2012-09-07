@@ -41,7 +41,7 @@ Parameters::~Parameters()
 void Parameters::Init(DebugManager * pDebug)
 {
   char sPath[MAX_PATH] = DATA_PATH;
-  strcat_s(sPath, MAX_PATH, "locale.ini");
+  strncat(sPath, "locale.ini", MAX_PATH);
   FILE * pFile = NULL;
   if (0 != fopen_s(&pFile, sPath, "r"))
     pDebug->notifyErrorMessage(L"Error: can't open locale.ini file.");
@@ -58,7 +58,13 @@ void Parameters::Init(DebugManager * pDebug)
 void Parameters::resetLocale(DebugManager * pDebug)
 {
   if (setlocale(LC_ALL, sLocale) == NULL)
-    pDebug->notifyErrorMessage(L"Error: main locale not recognized.");
+  {
+      wchar_t sError[512];
+      wchar_t swLocale[16];
+      strtow(swLocale, 16, sLocale);
+        swprintf(sError, 512, L"Error: main locale not recognized: %s.", swLocale);
+      pDebug->notifyErrorMessage(sError);
+  }
 }
 
 // -----------------------------------------------------------------
@@ -84,7 +90,7 @@ void Parameters::loadParameters()
   iNbLanguages = 0;
   do
   {
-    swprintf_s(sKey, NAME_MAX_CHARS, L"Language%d", (int)iNbLanguages);
+    swprintf(sKey, NAME_MAX_CHARS, L"Language%d", (int)iNbLanguages);
     iNbLanguages++;
   } while (reader.findValue(sKey) != NULL);
   iNbLanguages--;
@@ -93,7 +99,7 @@ void Parameters::loadParameters()
   for (int i = 0; i < iNbLanguages; i++)
   {
     sLanguages[i] = new wchar_t[NAME_MAX_CHARS];
-    swprintf_s(sKey, NAME_MAX_CHARS, L"Language%d", i);
+    swprintf(sKey, NAME_MAX_CHARS, L"Language%d", i);
     wsafecpy(sLanguages[i], NAME_MAX_CHARS, reader.findCharValue(sKey));
   }
 }

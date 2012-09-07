@@ -303,7 +303,7 @@ bool Unit::computePath(CoordsMap mapPos)
   m_pAStarPath->deleteAll();
   if (!m_pMap->isInBounds(mapPos))
     return false;
-  
+
   int iSpeed = getValue(STRING_SPEED);
   if (iSpeed <= 0)
     return false;
@@ -729,7 +729,7 @@ wchar_t * Unit::getInfo(wchar_t * sBuf, int iSize, InfoDest eDest)
   {
     wchar_t sDead[16];
     i18n->getText(L"DEAD", sDead, 16);
-    swprintf_s(sName, NAME_MAX_CHARS + 16, L"%s (%s)", m_sName, sDead);
+    swprintf(sName, NAME_MAX_CHARS + 16, L"%s (%s)", m_sName, sDead);
   }
   else
     wsafecpy(sName, NAME_MAX_CHARS, m_sName);
@@ -748,7 +748,7 @@ wchar_t * Unit::getInfo(wchar_t * sBuf, int iSize, InfoDest eDest)
   wchar_t sTemp1[64];
   wchar_t sTemp2[64];
   int alignment = getValue(STRING_ALIGNMENT);
-  swprintf_s(sAlignment, 128, L"%s%s%s", i18n->getText1stUp(STRING_ALIGNMENT, sTemp1, 64), s2P, UnitData::getAlignmentInfos(alignment, sTemp2, 64));
+  swprintf(sAlignment, 128, L"%s%s%s", i18n->getText1stUp(STRING_ALIGNMENT, sTemp1, 64), s2P, UnitData::getAlignmentInfos(alignment, sTemp2, 64));
 
   // Skills
   wchar_t sSkills[512] = L"";
@@ -766,7 +766,7 @@ wchar_t * Unit::getInfo(wchar_t * sBuf, int iSize, InfoDest eDest)
 
   if (eDest == Dest_InfoDialog)
   {
-    swprintf_s(sBuf, iSize, L"%s\n", sName);
+    swprintf(sBuf, iSize, L"%s\n", sName);
     getInfo_AddValue(sBuf, iSize, STRING_MELEE, L"\n");
     getInfo_AddValue(sBuf, iSize, STRING_RANGE, L"\n");
     getInfo_AddValue(sBuf, iSize, STRING_ARMOR, L"\n");

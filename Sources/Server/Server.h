@@ -99,7 +99,7 @@ public:
   Server(LocalClient * pLocalClient);
   ~Server();
 
-  bool Init(wchar_t * sGameName, int nbClients, ClientData * clients, MapReader * pMapReader, int iTurnTimer, int iDeckSize);
+  bool Init(const wchar_t * sGameName, int nbClients, ClientData * clients, MapReader * pMapReader, int iTurnTimer, int iDeckSize);
   void Update(double delta);
 
   DataFactory * getFactory();
@@ -114,8 +114,8 @@ public:
   bool isResolving();
   void onInitFinished();
   void saveGame();
-  bool loadGame(wchar_t * sGameName);
-  void sendCustomLogToAll(wchar_t * sMsgKey, u8 uLevel = 0, wchar_t * sData = L"", ...);
+  bool loadGame(const wchar_t * sGameName);
+  void sendCustomLogToAll(const wchar_t * sMsgKey, u8 uLevel = 0, const wchar_t * sData = L"", ...);
   void gameOver(ObjectList * pTieList);
   bool isGameOver() { return m_bGameOver; };
   void addGarbage(BaseObject * pObj) { m_pGC->addLast(pObj); };

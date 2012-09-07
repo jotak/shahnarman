@@ -142,7 +142,7 @@ void LoadGameDlg::loadGameInfo(wchar_t * sGameName)
   m_pGameInfoPanel->getDocument()->deleteAllComponents();
 
   wchar_t sFileName[MAX_PATH];
-  swprintf_s(sFileName, MAX_PATH, L"%s.sav", sGameName);
+  swprintf(sFileName, MAX_PATH, L"%s.sav", sGameName);
 
   int iDocWidth = m_pGameInfoPanel->getInnerWidth();
 

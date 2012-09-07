@@ -18,12 +18,6 @@ guiComponent::guiComponent() : guiObject()
 // -----------------------------------------------------------------
 guiComponent::~guiComponent()
 {
-#ifdef DBG_VERBOSE1
-  printf("Begin destroy guiComponent\n");
-#endif
-#ifdef DBG_VERBOSE1
-  printf("End destroy guiComponent\n");
-#endif
 }
 
 // -----------------------------------------------------------------

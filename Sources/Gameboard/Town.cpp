@@ -320,7 +320,7 @@ void Town::updateOrders(NetworkData * pData)
   wchar_t sName[NAME_MAX_CHARS];
   pData->readString(sName);
   setCurrentBuilding(sName);
-  
+
   // Unit being produced
   if (pData->readLong() == 1)
   {
@@ -552,7 +552,6 @@ void Town::calculateUsedTiles()
       int iBestTile = -1;
       int iBestFood = 0;
       int iBestProd = 0;
-      MapTile * pBestTile = NULL;
       for (int iTile = 0; iTile < 9; iTile++)
       {
         if (!bUsedTiles[iTile])
@@ -568,7 +567,6 @@ void Town::calculateUsedTiles()
               iFood > iBestFood))
             {
               iBestTile = iTile;
-              pBestTile = pTile;
               iBestFood = iFood;
               iBestProd = iProd;
             }
@@ -709,7 +707,7 @@ void Town::updateHeroes(Server * pServer)
 // -----------------------------------------------------------------
 // Name : setCurrentBuilding
 // -----------------------------------------------------------------
-void Town::setCurrentBuilding(wchar_t * sName)
+void Town::setCurrentBuilding(const wchar_t * sName)
 {
   if (wcscmp(m_sCurrentBuilding, sName) != 0)
   {

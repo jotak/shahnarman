@@ -23,6 +23,7 @@
   #include <errno.h>
 
   #include <GL/glew.h>
+  #include <GL/glu.h>
   #include <GL/glut.h>
   #include <png.h>
 #endif

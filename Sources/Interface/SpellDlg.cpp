@@ -124,14 +124,14 @@ void SpellDlg::updateContent(Player * pPlayer, bool bOnlyInstants, bool bCantCas
   int yPxl = pBtn1->getHeight() + 2 * SPACING;
   wchar_t str[8];
   guiLabel * pLbl = new guiLabel();
-  swprintf_s(str, 8, L"¤ %d", (int) m_RemainingMana[MANA_LIFE]);
+  swprintf(str, 8, L"%c %d", MANA_LIFE_CHAR, (int) m_RemainingMana[MANA_LIFE]);
   pLbl->init(str, TEXT_FONT, TEXT_COLOR, L"LifeLabel", 0, 0, 0, 0, getDisplay());
   pLbl->moveTo(xPxl - pLbl->getWidth() / 2, yPxl);
   pLbl->setTooltipText(i18n->getText(L"LIFE", sText, LABEL_MAX_CHARS));
   addComponent(pLbl);
 
   pLbl = new guiLabel();
-  swprintf_s(str, 8, L"| %d", (int) m_RemainingMana[MANA_LAW]);
+  swprintf(str, 8, L"%c %d", MANA_LAW_CHAR, (int) m_RemainingMana[MANA_LAW]);
   pLbl->init(str, TEXT_FONT, TEXT_COLOR, L"LawLabel", 0, 0, 0, 0, getDisplay());
   pLbl->moveTo(3 * xPxl - pLbl->getWidth() / 2, yPxl);
   pLbl->setTooltipText(i18n->getText(L"LAW", sText, LABEL_MAX_CHARS));
@@ -139,14 +139,14 @@ void SpellDlg::updateContent(Player * pPlayer, bool bOnlyInstants, bool bCantCas
 
   yPxl += pLbl->getHeight() + SPACING;
   pLbl = new guiLabel();
-  swprintf_s(str, 8, L"µ %d", (int) m_RemainingMana[MANA_DEATH]);
+  swprintf(str, 8, L"%c %d", MANA_DEATH_CHAR, (int) m_RemainingMana[MANA_DEATH]);
   pLbl->init(str, TEXT_FONT, TEXT_COLOR, L"DeathLabel", 0, 0, 0, 0, getDisplay());
   pLbl->moveTo(xPxl - pLbl->getWidth() / 2, yPxl);
   pLbl->setTooltipText(i18n->getText(L"DEATH", sText, LABEL_MAX_CHARS));
   addComponent(pLbl);
 
   pLbl = new guiLabel();
-  swprintf_s(str, 8, L"§ %d", (int) m_RemainingMana[MANA_CHAOS]);
+  swprintf(str, 8, L"%c %d", MANA_CHAOS_CHAR, (int) m_RemainingMana[MANA_CHAOS]);
   pLbl->init(str, TEXT_FONT, TEXT_COLOR, L"ChaosLabel", 0, 0, 0, 0, getDisplay());
   pLbl->moveTo(3 * xPxl - pLbl->getWidth() / 2, yPxl);
   pLbl->setTooltipText(i18n->getText(L"CHAOS", sText, LABEL_MAX_CHARS));
@@ -164,7 +164,7 @@ void SpellDlg::updateContent(Player * pPlayer, bool bOnlyInstants, bool bCantCas
     pBtn->setAttachment(pSpell);
     pSpell->setAttachment(pBtn);
     wchar_t sMana[32] = L"";
-    swprintf_s(sText, LABEL_MAX_CHARS, L"#fH2#%s  #fTEXT#%s#n#i%s##n%s",
+    swprintf(sText, LABEL_MAX_CHARS, L"#fH2#%s  #fTEXT#%s#n#i%s##n%s",
             pSpell->getLocalizedName(),
             pSpell->getManaText(sMana, 32),
             pSpell->getIconPath(),
@@ -174,7 +174,7 @@ void SpellDlg::updateContent(Player * pPlayer, bool bOnlyInstants, bool bCantCas
       wchar_t sBuf1[256] = L"";
       wchar_t sBuf2[256] = L"";
       i18n->getText(L"CAST_ON_(s)", sBuf1, 256);
-      swprintf_s(sBuf2, 256, sBuf1, pSpell->getTargetInfo());
+      swprintf(sBuf2, 256, sBuf1, pSpell->getTargetInfo());
       wsafecat(sText, LABEL_MAX_CHARS, L"\n");
       wsafecat(sText, LABEL_MAX_CHARS, sBuf2);
     }
@@ -203,19 +203,19 @@ void SpellDlg::updateManaLabels()
 {
   int xPxl = getWidth() / 4;
   wchar_t str[4];
-  swprintf_s(str, 4, L"¤ %d", (int) m_RemainingMana[MANA_LIFE]);
+  swprintf(str, 4, L"%c %d", MANA_LIFE_CHAR, (int) m_RemainingMana[MANA_LIFE]);
   guiLabel * pLbl = (guiLabel*) getComponent(L"LifeLabel");
   pLbl->setText(str);
   pLbl->moveTo(xPxl - pLbl->getWidth() / 2, pLbl->getYPos());
-  swprintf_s(str, 4, L"| %d", (int) m_RemainingMana[MANA_LAW]);
+  swprintf(str, 4, L"%c %d", MANA_LAW_CHAR, (int) m_RemainingMana[MANA_LAW]);
   pLbl = (guiLabel*) getComponent(L"LawLabel");
   pLbl->setText(str);
   pLbl->moveTo(3 * xPxl - pLbl->getWidth() / 2, pLbl->getYPos());
-  swprintf_s(str, 4, L"µ %d", (int) m_RemainingMana[MANA_DEATH]);
+  swprintf(str, 4, L"%c %d", MANA_DEATH_CHAR, (int) m_RemainingMana[MANA_DEATH]);
   pLbl = (guiLabel*) getComponent(L"DeathLabel");
   pLbl->setText(str);
   pLbl->moveTo(xPxl - pLbl->getWidth() / 2, pLbl->getYPos());
-  swprintf_s(str, 4, L"§ %d", (int) m_RemainingMana[MANA_CHAOS]);
+  swprintf(str, 4, L"%c %d", MANA_CHAOS_CHAR, (int) m_RemainingMana[MANA_CHAOS]);
   pLbl = (guiLabel*) getComponent(L"ChaosLabel");
   pLbl->setText(str);
   pLbl->moveTo(3 * xPxl - pLbl->getWidth() / 2, pLbl->getYPos());

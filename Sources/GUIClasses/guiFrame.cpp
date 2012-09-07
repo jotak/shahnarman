@@ -39,15 +39,9 @@ guiFrame::guiFrame() : guiContainer()
 // -----------------------------------------------------------------
 guiFrame::~guiFrame()
 {
-#ifdef DBG_VERBOSE1
-  printf("Begin destroy guiFrame\n");
-#endif
   delete m_pEffects;
   FREE(m_pStickGeo);
   FREE(m_pStickedGeo);
-#ifdef DBG_VERBOSE1
-  printf("End destroy guiFrame\n");
-#endif
 }
 
 // -----------------------------------------------------------------
@@ -434,7 +428,7 @@ void guiFrame::setEnabled(bool bEnabled)
 // Name : createDefaultFrame
 //  Static default constructor
 // -----------------------------------------------------------------
-guiFrame * guiFrame::createDefaultFrame(FrameFitBehavior widthFit, FrameFitBehavior heightFit, int width, int height, bool bAlpha, wchar_t * sId, DisplayEngine * pDisplay)
+guiFrame * guiFrame::createDefaultFrame(FrameFitBehavior widthFit, FrameFitBehavior heightFit, int width, int height, bool bAlpha, const wchar_t * sId, DisplayEngine * pDisplay)
 {
   guiFrame * pFrame = new guiFrame();
   int iTexs[8];

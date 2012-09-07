@@ -33,7 +33,7 @@ LuaObject::LuaObject(u32 uInstance, const wchar_t * sEdition, const wchar_t * sO
 
   // construct the file name
   wchar_t sFilename[MAX_PATH];
-  swprintf_s(sFilename, MAX_PATH, L"%s%s/%s/%s.lua", EDITIONS_PATH, sEdition, sObjectType, sObjectName);
+  swprintf(sFilename, MAX_PATH, L"%s%s/%s/%s.lua", EDITIONS_PATH, sEdition, sObjectType, sObjectName);
   // we must convert unicode file name to ascii
   char sAsciiFilename[MAX_PATH];
   wtostr(sAsciiFilename, MAX_PATH, sFilename);
@@ -93,7 +93,7 @@ LuaObject::LuaObject(u32 uInstance, const wchar_t * sEdition, const wchar_t * sO
     else
     {
       wchar_t sError[512];
-      swprintf_s(sError, 512, L"Lua interaction error: can't get childEffectsCost, or is not a table - in lua file %s.", sObjectName);
+      swprintf(sError, 512, L"Lua interaction error: can't get childEffectsCost, or is not a table - in lua file %s.", sObjectName);
       pDebug->notifyErrorMessage(sError);
     }
     // Get name
@@ -110,7 +110,7 @@ LuaObject::LuaObject(u32 uInstance, const wchar_t * sEdition, const wchar_t * sO
     else
     {
       wchar_t sError[512];
-      swprintf_s(sError, 512, L"Lua interaction error: can't call getChildEffectsName in lua file %s.", sObjectName);
+      swprintf(sError, 512, L"Lua interaction error: can't call getChildEffectsName in lua file %s.", sObjectName);
       pDebug->notifyErrorMessage(sError);
     }
     // Get icons
@@ -120,12 +120,12 @@ LuaObject::LuaObject(u32 uInstance, const wchar_t * sEdition, const wchar_t * sO
     if (getLuaVarStringArray(L"childEffectsIcon", pIcons, m_iNbChildEffects, MAX_PATH))
     {
       for (int i = 0; i < m_iNbChildEffects; i++)
-        swprintf_s(m_pChildEffects[i].sIcon, MAX_PATH, L"%s/%s", m_sObjectEdition, pIcons[i]);
+        swprintf(m_pChildEffects[i].sIcon, MAX_PATH, L"%s/%s", m_sObjectEdition, pIcons[i]);
     }
     else
     {
       wchar_t sError[512];
-      swprintf_s(sError, 512, L"Lua interaction error: can't get childEffectsIcon, or is not a table - in lua file %s.", sObjectName);
+      swprintf(sError, 512, L"Lua interaction error: can't get childEffectsIcon, or is not a table - in lua file %s.", sObjectName);
       pDebug->notifyErrorMessage(sError);
     }
     for (int i = 0; i < m_iNbChildEffects; i++)
@@ -181,7 +181,7 @@ bool LuaObject::callPreparedLuaFunction(int iNbParams, int iNbResults, const wch
   if (bLog)
   {
     wchar_t sText[1024];
-    swprintf_s(sText, 1024, L"callPreparedLuaFunction: %s, %s, %s", m_sObjectName, sFunc, sParams);
+    swprintf(sText, 1024, L"callPreparedLuaFunction: %s, %s, %s", m_sObjectName, sFunc, sParams);
     m_pDebug->log(sText);
   }
 #endif
@@ -201,21 +201,21 @@ bool LuaObject::callPreparedLuaFunction(int iNbParams, int iNbResults, const wch
       wchar_t sError[1024] = L"";
       wchar_t sLuaError[512] = L"";
       strtow(sLuaError, 512, lua_tostring(m_pLuaState, -1));
-      swprintf_s(sError, 1024, L"LUA runtime error when calling %s::%s(%s). %s", m_sObjectName, sFunc, sParams, sLuaError);
+      swprintf(sError, 1024, L"LUA runtime error when calling %s::%s(%s). %s", m_sObjectName, sFunc, sParams, sLuaError);
       m_pDebug->notifyErrorMessage(sError);
       return false;
     }
   case LUA_ERRMEM:
     {
       wchar_t sError[512] = L"";
-      swprintf_s(sError, 512, L"LUA memory allocation error when calling %s::%s(%s).", m_sObjectName, sFunc, sParams);
+      swprintf(sError, 512, L"LUA memory allocation error when calling %s::%s(%s).", m_sObjectName, sFunc, sParams);
       m_pDebug->notifyErrorMessage(sError);
       return false;
     }
   case LUA_ERRERR:
     {
       wchar_t sError[512] = L"";
-      swprintf_s(sError, 512, L"LUA error handling error when calling %s::%s(%s).", m_sObjectName, sFunc, sParams);
+      swprintf(sError, 512, L"LUA error handling error when calling %s::%s(%s).", m_sObjectName, sFunc, sParams);
       m_pDebug->notifyErrorMessage(sError);
       return false;
     }
@@ -252,28 +252,28 @@ bool LuaObject::callLuaFunction(const wchar_t * sFunc, int iNbResults, const wch
     {
       int val = va_arg(pArgs, int);
       lua_pushnumber(m_pLuaState, val);
-      swprintf_s(sBuf, 128, L"%d,", val);
+      swprintf(sBuf, 128, L"%d,", val);
       wsafecat(sParams, 512, sBuf);
     }
     else if (sParamsType[i] == L'l')
     {
       long val = va_arg(pArgs, long);
       lua_pushnumber(m_pLuaState, val);
-      swprintf_s(sBuf, 128, L"%ld,", val);
+      swprintf(sBuf, 128, L"%ld,", val);
       wsafecat(sParams, 512, sBuf);
     }
     else if (sParamsType[i] == L'f')
     {
       float val = va_arg(pArgs, float);
       lua_pushnumber(m_pLuaState, val);
-      swprintf_s(sBuf, 128, L"%f,", val);
+      swprintf(sBuf, 128, L"%f,", val);
       wsafecat(sParams, 512, sBuf);
     }
     else if (sParamsType[i] == L'd')
     {
       double val = va_arg(pArgs, double);
       lua_pushnumber(m_pLuaState, val);
-      swprintf_s(sBuf, 128, L"%lf,", val);
+      swprintf(sBuf, 128, L"%lf,", val);
       wsafecat(sParams, 512, sBuf);
     }
     else if (sParamsType[i] == L's')
@@ -283,7 +283,7 @@ bool LuaObject::callLuaFunction(const wchar_t * sFunc, int iNbResults, const wch
       char charval[LUA_FUNCTION_PARAMS_MAX_CHARS];
       wtostr(charval, LUA_FUNCTION_PARAMS_MAX_CHARS, val);
       lua_pushstring(m_pLuaState, charval);
-      swprintf_s(sBuf, 128, L"%s,", val);
+      swprintf(sBuf, 128, L"%s,", val);
       wsafecat(sParams, 512, sBuf);
     }
     i++;
@@ -424,7 +424,7 @@ void LuaObject::getLuaString(wchar_t * sString, int size)
 // -----------------------------------------------------------------
 wchar_t * LuaObject::getUniqueId(wchar_t * sId, int iSize)
 {
-  swprintf_s(sId, iSize, L"%s:%s:%s", m_sObjectEdition, m_sObjectType, m_sObjectName);
+  swprintf(sId, iSize, L"%s:%s:%s", m_sObjectEdition, m_sObjectType, m_sObjectName);
   return sId;
 }
 

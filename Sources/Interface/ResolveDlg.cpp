@@ -411,7 +411,7 @@ void ResolveDlg::updateChooseBattlePanel(NetworkData * pData)
 
     guiImage * pMainImg = new guiImage();
     wchar_t sId[8] = L"0";
-    swprintf_s(sId, 8, L"%d", i);
+    swprintf(sId, 8, L"%d", i);
     pMainImg->init(m_pLocalClient->getGameboard()->getBattleTexture(), sId, 0, yPxl, 2 * SMALL_ICON_SIZE + SPACING, 2 * SMALL_ICON_SIZE + SPACING, getDisplay());
     m_pBattlesListPanel->getDocument()->addComponent(pMainImg);
 
@@ -842,7 +842,7 @@ bool ResolveDlg::onButtonEvent(ButtonAction * pEvent, guiComponent * pCpnt)
         wchar_t sBuf2[512] = L"";
         i18n->getText(L"(s)_CHOOSE_BATTLE", sBuf1, 512);
         assert(m_pAttacker != NULL);
-        swprintf_s(sBuf2, 512, sBuf1, m_pAttacker->getAvatarName());
+        swprintf(sBuf2, 512, sBuf1, m_pAttacker->getAvatarName());
         setStatus(sBuf2);
         setChooseBattleScreen();
         m_BattleStep = RBS_ChooseBattle;
@@ -887,7 +887,7 @@ void ResolveDlg::onMessage(int iMessage, NetworkData * pData)
       i18n->getText(L"RESOLVING_SPELLS_(s)", sBuf1, 512);
       Player * pPlayer = m_pLocalClient->getPlayerManager()->findPlayer((u8)pData->readLong());
       assert(pPlayer != NULL);
-      swprintf_s(sBuf2, 512, sBuf1, pPlayer->getAvatarName());
+      swprintf(sBuf2, 512, sBuf1, pPlayer->getAvatarName());
       setStatus(sBuf2);
       setSimpleStatusScreen();
       m_BattleStep = RBS_Passive;
@@ -900,7 +900,7 @@ void ResolveDlg::onMessage(int iMessage, NetworkData * pData)
       i18n->getText(L"RESOLVING_MOVES_(s)", sBuf1, 512);
       Player * pPlayer = m_pLocalClient->getPlayerManager()->findPlayer((u8)pData->readLong());
       assert(pPlayer != NULL);
-      swprintf_s(sBuf2, 512, sBuf1, pPlayer->getAvatarName());
+      swprintf(sBuf2, 512, sBuf1, pPlayer->getAvatarName());
       setStatus(sBuf2);
       setSimpleStatusScreen();
       m_BattleStep = RBS_Passive;
@@ -916,7 +916,7 @@ void ResolveDlg::onMessage(int iMessage, NetworkData * pData)
       i18n->getText(L"(s)_CHOOSE_BATTLE", sBuf1, 512);
       m_pAttacker = m_pLocalClient->getPlayerManager()->findPlayer((u8)pData->readLong());
       assert(m_pAttacker != NULL);
-      swprintf_s(sBuf2, 512, sBuf1, m_pAttacker->getAvatarName());
+      swprintf(sBuf2, 512, sBuf1, m_pAttacker->getAvatarName());
       setStatus(sBuf2);
       updateChooseBattlePanel(pData);
       setChooseBattleScreen();
@@ -933,7 +933,7 @@ void ResolveDlg::onMessage(int iMessage, NetworkData * pData)
       i18n->getText(L"WAIT_(s)_CHOOSING_BATTLES", sBuf1, 512);
       m_pAttacker = m_pLocalClient->getPlayerManager()->findPlayer((u8)pData->readLong());
       assert(m_pAttacker != NULL);
-      swprintf_s(sBuf2, 512, sBuf1, m_pAttacker->getAvatarName());
+      swprintf(sBuf2, 512, sBuf1, m_pAttacker->getAvatarName());
       setStatus(sBuf2);
       setSimpleStatusScreen();
       m_BattleStep = RBS_Passive;
@@ -945,7 +945,7 @@ void ResolveDlg::onMessage(int iMessage, NetworkData * pData)
       wchar_t sBuf2[512] = L"";
       i18n->getText(L"(s)_SELECT_ATTACKER_AND_TARGET", sBuf1, 512);
       assert(m_pAttacker != NULL);
-      swprintf_s(sBuf2, 512, sBuf1, m_pAttacker->getAvatarName());
+      swprintf(sBuf2, 512, sBuf1, m_pAttacker->getAvatarName());
       setStatus(sBuf2);
       updateChooseUnitsPanel(pData);
       m_BattleStep = RBS_ChooseUnits;
@@ -1060,7 +1060,7 @@ void ResolveDlg::onMessage(int iMessage, NetworkData * pData)
       setStatus(sStatus);
       setSimpleStatusScreen();
       m_BattleStep = RBS_SelectSpellTarget;
-      extern int LUA_selectTarget(char*, bool);
+      extern int LUA_selectTarget(const char*, bool);
       LUA_selectTarget("", true);
       break;
     }

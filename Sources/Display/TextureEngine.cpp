@@ -164,7 +164,7 @@ s32 TextureEngine::loadComposedTexture(const wchar_t * sFilename)
     XMLLiteAttribute * pAttr = pChild->getAttributeByName(L"name");
     if (pAttr == NULL)
     {
-      swprintf_s(sError, 1024, L"XML formation error : missing \"name\" attribute in node item. Check out file %s.", pRootNode->getName());
+      swprintf(sError, 1024, L"XML formation error : missing \"name\" attribute in node item. Check out file %s.", pRootNode->getName());
       m_pDebug->notifyErrorMessage(sError);
       pChild = pRootNode->getNextChild();
       continue;
@@ -172,7 +172,7 @@ s32 TextureEngine::loadComposedTexture(const wchar_t * sFilename)
     XMLLiteElement * pUStartElt = pChild->getChildByName(L"ustart");
     if (pUStartElt == NULL)
     {
-      swprintf_s(sError, 1024, L"XML formation error : missing \"ustart\" node in node item. Check out file %s.", pRootNode->getName());
+      swprintf(sError, 1024, L"XML formation error : missing \"ustart\" node in node item. Check out file %s.", pRootNode->getName());
       m_pDebug->notifyErrorMessage(sError);
       pChild = pRootNode->getNextChild();
       continue;
@@ -180,7 +180,7 @@ s32 TextureEngine::loadComposedTexture(const wchar_t * sFilename)
     XMLLiteElement * pUEndElt = pChild->getChildByName(L"uend");
     if (pUEndElt == NULL)
     {
-      swprintf_s(sError, 1024, L"XML formation error : missing \"uend\" node in node item. Check out file %s.", pRootNode->getName());
+      swprintf(sError, 1024, L"XML formation error : missing \"uend\" node in node item. Check out file %s.", pRootNode->getName());
       m_pDebug->notifyErrorMessage(sError);
       pChild = pRootNode->getNextChild();
       continue;
@@ -188,7 +188,7 @@ s32 TextureEngine::loadComposedTexture(const wchar_t * sFilename)
     XMLLiteElement * pVStartElt = pChild->getChildByName(L"vstart");
     if (pVStartElt == NULL)
     {
-      swprintf_s(sError, 1024, L"XML formation error : missing \"vstart\" node in node item. Check out file %s.", pRootNode->getName());
+      swprintf(sError, 1024, L"XML formation error : missing \"vstart\" node in node item. Check out file %s.", pRootNode->getName());
       m_pDebug->notifyErrorMessage(sError);
       pChild = pRootNode->getNextChild();
       continue;
@@ -196,7 +196,7 @@ s32 TextureEngine::loadComposedTexture(const wchar_t * sFilename)
     XMLLiteElement * pVEndElt = pChild->getChildByName(L"vend");
     if (pVEndElt == NULL)
     {
-      swprintf_s(sError, 1024, L"XML formation error : missing \"vend\" node in node item. Check out file %s.", pRootNode->getName());
+      swprintf(sError, 1024, L"XML formation error : missing \"vend\" node in node item. Check out file %s.", pRootNode->getName());
       m_pDebug->notifyErrorMessage(sError);
       pChild = pRootNode->getNextChild();
       continue;
@@ -204,7 +204,7 @@ s32 TextureEngine::loadComposedTexture(const wchar_t * sFilename)
 
     // Create kind of virtual texture
     wchar_t sTexPath[MAX_PATH];
-    swprintf_s(sTexPath, MAX_PATH, L"%s:%s", sFilename, pAttr->getCharValue());
+    swprintf(sTexPath, MAX_PATH, L"%s:%s", sFilename, pAttr->getCharValue());
     Texture * pTex = new Texture(sTexPath, false);
     int ustart = (int) pUStartElt->getIntValue();
     int uend = (int) pUEndElt->getIntValue();

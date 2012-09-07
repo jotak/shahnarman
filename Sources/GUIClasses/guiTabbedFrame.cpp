@@ -21,9 +21,6 @@ guiTabbedFrame::guiTabbedFrame() : guiFrame()
 // -----------------------------------------------------------------
 guiTabbedFrame::~guiTabbedFrame()
 {
-#ifdef DBG_VERBOSE1
-  printf("Begin destroy guiTabbedFrame\n");
-#endif
   m_pDoc = NULL;   // it's going to be deleted below
   // We need to explicitly delete all guiDocuments as they won't be deleted from guiTabbedFrame_Document destructor
   guiTabbedFrame_Document * pDoc = (guiTabbedFrame_Document*) m_pDocumentsList->getFirst(0);
@@ -35,9 +32,6 @@ guiTabbedFrame::~guiTabbedFrame()
   // Now we can delete the list
   delete m_pDocumentsList;
   FREE(m_pTabsGeometry);
-#ifdef DBG_VERBOSE1
-  printf("End destroy guiTabbedFrame\n");
-#endif
 }
 
 // -----------------------------------------------------------------

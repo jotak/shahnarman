@@ -114,7 +114,7 @@ void DisplayEngine::initGlutWindow()
   if (err != GLEW_OK)
   {
     char sLog[1024] = "";
-    sprintf_s(sLog, 1024, "Error in glewInit: %s.\n", glewGetErrorString(err));
+    snprintf(sLog, 1024, "Error in glewInit: %s.\n", glewGetErrorString(err));
     wchar_t sWLog[1024];
     strtow(sWLog, 1024, sLog);
     m_pDebug->notifyErrorMessage(sWLog);
@@ -558,14 +558,14 @@ bool DisplayEngine::loadShader(GLuint * uShader, GLenum type, const char * sShad
 
   // Open source file and read it
   char sFilePath[MAX_PATH] = SHADERS_PATH;
-  strcat_s(sFilePath, MAX_PATH, sShader);
+  strncat(sFilePath, sShader, MAX_PATH);
   FILE * f = NULL;
   errno_t err = fopen_s(&f, sFilePath, "r");
   if (err == ENOENT)
   {
     glDeleteShader(*uShader);
     *uShader = 0;
-    swprintf_s(sError, 1024, L"Error in loadShader: can't find source file %s.", sWShader);
+    swprintf(sError, 1024, L"Error in loadShader: can't find source file %s.", sWShader);
     m_pDebug->notifyErrorMessage(sError);
     return false;
   }
@@ -573,7 +573,7 @@ bool DisplayEngine::loadShader(GLuint * uShader, GLenum type, const char * sShad
   {
     glDeleteShader(*uShader);
     *uShader = 0;
-    swprintf_s(sError, 1024, L"Error in loadShader: can't read source file %s.", sWShader);
+    swprintf(sError, 1024, L"Error in loadShader: can't read source file %s.", sWShader);
     m_pDebug->notifyErrorMessage(sError);
     return false;
   }
@@ -596,7 +596,7 @@ bool DisplayEngine::loadShader(GLuint * uShader, GLenum type, const char * sShad
     char sLog[1024] = "";
     GLint size = 1024;  // wtf?
     glGetShaderInfoLog(*uShader, size, &size, sLog);
-    swprintf_s(sError, 1024, L"Error in loadShader: can't compile %s.\n", sWShader);
+    swprintf(sError, 1024, L"Error in loadShader: can't compile %s.\n", sWShader);
     wchar_t sWLog[1024];
     strtow(sWLog, 1024, sLog);
     wsafecat(sError, 1024, sWLog);
@@ -616,7 +616,7 @@ bool DisplayEngine::linkShaders(GLuint * uProgram, GLuint uVxShader, GLuint uPxS
   wchar_t sError[1024];
   if (uVxShader == 0 && uPxShader == 0)
   {
-    swprintf_s(sError, 1024, L"Error in linkShaders: invalid shaders.");
+    swprintf(sError, 1024, L"Error in linkShaders: invalid shaders.");
     m_pDebug->notifyErrorMessage(sError);
     return false;
   }
@@ -634,7 +634,7 @@ bool DisplayEngine::linkShaders(GLuint * uProgram, GLuint uVxShader, GLuint uPxS
     char sLog[1024] = "";
     GLint size = 1024;  // wtf?
     glGetProgramInfoLog(*uProgram, size, &size, sLog);
-    swprintf_s(sError, 1024, L"Error in linkShaders: can't link program.\n");
+    swprintf(sError, 1024, L"Error in linkShaders: can't link program.\n");
     wchar_t sWLog[1024];
     strtow(sWLog, 1024, sLog);
     wsafecat(sError, 1024, sWLog);

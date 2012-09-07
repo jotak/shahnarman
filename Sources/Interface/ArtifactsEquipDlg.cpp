@@ -645,7 +645,7 @@ void ArtifactsEquipDlg::reloadArtifacts()
         else if (bAvatar)   // equipped by another avatar (and we want to see it)
         {
           wchar_t sText2[LABEL_MAX_CHARS];
-          swprintf_s(sText2, LABEL_MAX_CHARS, L"%s (%s)", sText, pOwner->m_sCustomName);
+          swprintf(sText2, LABEL_MAX_CHARS, L"%s (%s)", sText, pOwner->m_sCustomName);
           wsafecpy(sText, LABEL_MAX_CHARS, sText2);
           pImg = new guiImage();
           pImg->setDiffuseColor(rgba(0.7f, 0.7f, 0.7f, 1));
@@ -761,7 +761,7 @@ void ArtifactsEquipDlg::loadEditionButtons()
   while (pEd != NULL)
   {
     wchar_t sFile[MAX_PATH];
-    swprintf_s(sFile, MAX_PATH, L"%s/logo", pEd->m_sObjectId);
+    swprintf(sFile, MAX_PATH, L"%s/logo", pEd->m_sObjectId);
     // Create edition filter button
     guiToggleButton * pBtn = guiToggleButton::createDefaultTexturedToggleButton(
       m_pLocalClient->getDisplay()->getTextureEngine()->loadTexture(sFile),
@@ -804,7 +804,7 @@ void ArtifactsEquipDlg::onAvatarSelected()
   pLbl = (guiLabel*) getComponent(L"TopLabel2");
   wchar_t sbuf[NAME_MAX_CHARS];
   i18n->getText(L"%s_AVATARS", sbuf, NAME_MAX_CHARS);
-  swprintf_s(str, NAME_MAX_CHARS, sbuf, m_pCurrentPlayer->getName());
+  swprintf(str, NAME_MAX_CHARS, sbuf, m_pCurrentPlayer->getName());
   pLbl->setText(str);
   pLbl->moveTo(getWidth() / 2 - pLbl->getWidth() / 2, pLbl->getYPos());
 
@@ -854,7 +854,7 @@ void ArtifactsEquipDlg::onAvatarSelected()
   wchar_t sBuf[64];
   wchar_t sNbSpells[128];
   i18n->getText(L"SPELLS_(d)", sBuf, 64);
-  swprintf_s(sNbSpells, 128, sBuf, nbSpells);
+  swprintf(sNbSpells, 128, sBuf, nbSpells);
   pLbl = new guiLabel();
   pLbl->init(sNbSpells, TEXT_FONT, TEXT_COLOR, L"NbSpells", 5, yPxl, iDocWidth - 10, 0, getDisplay());
   m_pAvatarPopup->getDocument()->addComponent(pLbl);

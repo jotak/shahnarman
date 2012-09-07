@@ -40,7 +40,7 @@ public:
   virtual void initServer();
   virtual int getTexture();
   virtual int getBigTexture();
-  virtual void updateIdentifiers() { swprintf_s(m_sIdentifiers, 16, L"town %d %ld", (int) m_uOwner, (long) m_uTownId); };
+  virtual void updateIdentifiers() { swprintf(m_sIdentifiers, 16, L"town %d %ld", (int) m_uOwner, (long) m_uTownId); };
 
   // Get / set from network
   void getOrders(NetworkData * pData);
@@ -68,7 +68,7 @@ public:
   u16 getProdInStock() { return m_uProdInStock; };
   u8 getUnitProdInStock() { return m_uUnitProdInStock; };
   Building * getCurrentBuilding();
-  void setCurrentBuilding(wchar_t * sName);
+  void setCurrentBuilding(const wchar_t * sName);
   Ethnicity::TownUnit * getCurrentUnit() { return m_pCurrentBuildingUnit; };
   void setCurrentUnit(Ethnicity::TownUnit * pUnit);
 

@@ -18,8 +18,8 @@ public:
   virtual guiObject * clone();
 
   // Static default constructors
-  static guiToggleButton * createDefaultTexturedToggleButton(int iTex, int iSize, wchar_t * sId, DisplayEngine * pDisplay);
-  static guiToggleButton * createDefaultCheckBox(wchar_t * sId, DisplayEngine * pDisplay);
+  static guiToggleButton * createDefaultTexturedToggleButton(int iTex, int iSize, const wchar_t * sId, DisplayEngine * pDisplay);
+  static guiToggleButton * createDefaultCheckBox(const wchar_t * sId, DisplayEngine * pDisplay);
 };
 
 #endif

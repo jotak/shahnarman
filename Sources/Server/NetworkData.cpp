@@ -3,6 +3,7 @@
 // -----------------------------------------------------------------
 #include "NetworkData.h"
 #include "../utils.h"
+#include <stdio.h>
 
 // -----------------------------------------------------------------
 // Name : NetworkData
@@ -29,14 +30,8 @@ NetworkData::NetworkData(void * file)
 // -----------------------------------------------------------------
 NetworkData::~NetworkData()
 {
-#ifdef DBG_VERBOSE1
-  printf("Begin destroy NetworkData\n");
-#endif
   if (m_pData != NULL)
     delete[] m_pData;
-#ifdef DBG_VERBOSE1
-  printf("End destroy NetworkData\n");
-#endif
 }
 
 // -----------------------------------------------------------------
