@@ -7,7 +7,7 @@ NetworkSerializer * NetworkSerializer::mInst = NULL;
 // -----------------------------------------------------------------
 NetworkSerializer::NetworkSerializer()
 {
-  m_pData = NULL;
+    m_pData = NULL;
 }
 
 // -----------------------------------------------------------------
@@ -22,7 +22,7 @@ NetworkSerializer::~NetworkSerializer()
 // -----------------------------------------------------------------
 void NetworkSerializer::writeLong(long l)
 {
-  m_pData->addLong(l);
+    m_pData->addLong(l);
 }
 
 // -----------------------------------------------------------------
@@ -30,7 +30,7 @@ void NetworkSerializer::writeLong(long l)
 // -----------------------------------------------------------------
 long NetworkSerializer::readLong()
 {
-  return m_pData->readLong();
+    return m_pData->readLong();
 }
 
 // -----------------------------------------------------------------
@@ -38,7 +38,7 @@ long NetworkSerializer::readLong()
 // -----------------------------------------------------------------
 void NetworkSerializer::writeShort(short i)
 {
-  m_pData->addLong((long) i);
+    m_pData->addLong((long) i);
 }
 
 // -----------------------------------------------------------------
@@ -46,7 +46,7 @@ void NetworkSerializer::writeShort(short i)
 // -----------------------------------------------------------------
 short NetworkSerializer::readShort()
 {
-  return (short) m_pData->readLong();
+    return (short) m_pData->readLong();
 }
 
 // -----------------------------------------------------------------
@@ -54,7 +54,7 @@ short NetworkSerializer::readShort()
 // -----------------------------------------------------------------
 void NetworkSerializer::writeChar(char c)
 {
-  m_pData->addLong((long) c);
+    m_pData->addLong((long) c);
 }
 
 // -----------------------------------------------------------------
@@ -62,7 +62,7 @@ void NetworkSerializer::writeChar(char c)
 // -----------------------------------------------------------------
 char NetworkSerializer::readChar()
 {
-  return (char) m_pData->readLong();
+    return (char) m_pData->readLong();
 }
 
 // -----------------------------------------------------------------
@@ -70,7 +70,7 @@ char NetworkSerializer::readChar()
 // -----------------------------------------------------------------
 void NetworkSerializer::writeString(const char * s)
 {
-  m_pData->addString(s);
+    m_pData->addString(s);
 }
 
 // -----------------------------------------------------------------
@@ -78,5 +78,5 @@ void NetworkSerializer::writeString(const char * s)
 // -----------------------------------------------------------------
 void NetworkSerializer::readString(char * s)
 {
-  m_pData->readString(s);
+    m_pData->readString(s);
 }

@@ -9,14 +9,24 @@ class ButtonAction;
 // Abstract class EventListener
 class EventListener
 {
-friend class InputEngine;
+    friend class InputEngine;
 public:
-  EventListener(int iPriority) { assert(iPriority >= 0 && iPriority <= LISTENER_MAX_PRIORITY); m_iEventListenerPriority = iPriority; }; // higher is better
-  virtual bool onCatchButtonEvent(ButtonAction * pEvent) { return false; };
-  virtual bool onCursorMoveEvent(int xPxl, int yPxl) { return false; };
+    EventListener(int iPriority)
+    {
+        assert(iPriority >= 0 && iPriority <= LISTENER_MAX_PRIORITY);
+        m_iEventListenerPriority = iPriority;
+    }; // higher is better
+    virtual bool onCatchButtonEvent(ButtonAction * pEvent)
+    {
+        return false;
+    };
+    virtual bool onCursorMoveEvent(int xPxl, int yPxl)
+    {
+        return false;
+    };
 
 protected:
-  int m_iEventListenerPriority;
+    int m_iEventListenerPriority;
 };
 
 #endif

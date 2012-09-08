@@ -14,17 +14,17 @@ class XMLLiteElement;
 class ProgressionTree : public XMLObject
 {
 public:
-  ProgressionTree(char * sEdition, char * sName, u8 uType, DebugManager * pDebug);
-  ~ProgressionTree();
+    ProgressionTree(char * sEdition, char * sName, u8 uType, DebugManager * pDebug);
+    ~ProgressionTree();
 
-  ProgressionElement * findElement(char * sId);
-  ProgressionEffect * readXMLEffect(XMLLiteElement * pNode, XMLLiteElement * pRootNode, char * sId, DebugManager * pDebug);
-  char * getDescription(char * sBuf, int iBufSize, LocalClient * pLocalClient);
+    ProgressionElement * findElement(char * sId);
+    ProgressionEffect * readXMLEffect(XMLLiteElement * pNode, XMLLiteElement * pRootNode, char * sId, DebugManager * pDebug);
+    char * getDescription(char * sBuf, int iBufSize, LocalClient * pLocalClient);
 
-  u8 m_uType;
-  ObjectList * m_pElements[NB_PROGRESSION_LEVELS];
-  ObjectList * m_pBaseEffects;
-  char m_sEdition[NAME_MAX_CHARS];
+    u8 m_uType;
+    ObjectList * m_pElements[NB_PROGRESSION_LEVELS];
+    ObjectList * m_pBaseEffects;
+    char m_sEdition[NAME_MAX_CHARS];
 };
 
 #endif

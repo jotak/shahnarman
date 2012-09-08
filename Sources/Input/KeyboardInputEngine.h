@@ -15,19 +15,28 @@ class KeyboardListener;
 class KeyboardInputEngine : public InputEngine
 {
 public:
-  // Constructor / destructor
-  KeyboardInputEngine() : InputEngine(true) { m_pKeyboardListener = NULL; };
+    // Constructor / destructor
+    KeyboardInputEngine() : InputEngine(true)
+    {
+        m_pKeyboardListener = NULL;
+    };
 
-  // Data providing functions
-  virtual bool isShiftPressed() = 0;
-  virtual bool isCtrlPressed() = 0;
+    // Data providing functions
+    virtual bool isShiftPressed() = 0;
+    virtual bool isCtrlPressed() = 0;
 
-  // Listeners
-  void setKeyboardListener(KeyboardListener * pKeyboardListener) { m_pKeyboardListener = pKeyboardListener; };
-  void unsetKeyboardListener(KeyboardListener * pKeyboardListener) { if (m_pKeyboardListener == pKeyboardListener) m_pKeyboardListener = NULL; };
+    // Listeners
+    void setKeyboardListener(KeyboardListener * pKeyboardListener)
+    {
+        m_pKeyboardListener = pKeyboardListener;
+    };
+    void unsetKeyboardListener(KeyboardListener * pKeyboardListener)
+    {
+        if (m_pKeyboardListener == pKeyboardListener) m_pKeyboardListener = NULL;
+    };
 
 protected:
-  KeyboardListener * m_pKeyboardListener;
+    KeyboardListener * m_pKeyboardListener;
 };
 
 #endif

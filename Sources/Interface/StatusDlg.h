@@ -8,15 +8,15 @@ class LocalClient;
 class StatusDlg : public guiDocument
 {
 public:
-  StatusDlg(LocalClient * pLocalClient);
-  ~StatusDlg();
+    StatusDlg(LocalClient * pLocalClient);
+    ~StatusDlg();
 
-  // Other
-  void showStatus(char * sMessage);
-  void hide();
+    // Other
+    void showStatus(char * sMessage);
+    void hide();
 
 private:
-  LocalClient * m_pLocalClient;
+    LocalClient * m_pLocalClient;
 };
 
 #endif

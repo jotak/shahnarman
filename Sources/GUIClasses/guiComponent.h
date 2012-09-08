@@ -13,43 +13,70 @@ class ComponentOwnerInterface;
 class guiComponent : public guiObject
 {
 public:
-  // Constructor / destructor
-  guiComponent();
-  ~guiComponent();
+    // Constructor / destructor
+    guiComponent();
+    ~guiComponent();
 
-  // GraphicObject functions
-  virtual u32 getType() { return GraphicObject::getType() | GOTYPE_COMPONENT; };
+    // GraphicObject functions
+    virtual u32 getType()
+    {
+        return GraphicObject::getType() | GOTYPE_COMPONENT;
+    };
 
-  // Events
-  virtual void onFocusLost() {};
+    // Events
+    virtual void onFocusLost() {};
 
-  // Status
-  bool isVisible() { return m_bVisible; };
-  virtual void setVisible(bool bVisible);
-  bool isEnabled() { return m_bEnabled; };
-  virtual void setEnabled(bool bEnabled) { m_bEnabled = bEnabled; };
+    // Status
+    bool isVisible()
+    {
+        return m_bVisible;
+    };
+    virtual void setVisible(bool bVisible);
+    bool isEnabled()
+    {
+        return m_bEnabled;
+    };
+    virtual void setEnabled(bool bEnabled)
+    {
+        m_bEnabled = bEnabled;
+    };
 
-  // Member access
-  void setId(const char * id) { wsafecpy(m_sCpntId, 32, id); };
-  char * getId() { return m_sCpntId; };
-  void setOwner(ComponentOwnerInterface * pDoc) { m_pOwner = pDoc; };
-  ComponentOwnerInterface * getOwner() { return m_pOwner; };
+    // Member access
+    void setId(const char * id)
+    {
+        wsafecpy(m_sCpntId, 32, id);
+    };
+    char * getId()
+    {
+        return m_sCpntId;
+    };
+    void setOwner(ComponentOwnerInterface * pDoc)
+    {
+        m_pOwner = pDoc;
+    };
+    ComponentOwnerInterface * getOwner()
+    {
+        return m_pOwner;
+    };
 
-  // Other
-  virtual bool isAt(int xPxl, int yPxl) { return m_bVisible && guiObject::isAt(xPxl, yPxl); };
-  void highlight(u8 type);
-  void centerOnComponent(guiComponent * pOther);
+    // Other
+    virtual bool isAt(int xPxl, int yPxl)
+    {
+        return m_bVisible && guiObject::isAt(xPxl, yPxl);
+    };
+    void highlight(u8 type);
+    void centerOnComponent(guiComponent * pOther);
 
-  // Clone / init
-  virtual void init(const char * sCpntId, int xPxl, int yPxl, int wPxl, int hPxl);
+    // Clone / init
+    virtual void init(const char * sCpntId, int xPxl, int yPxl, int wPxl, int hPxl);
 //  virtual guiObject * clone();
 
 protected:
-  bool m_bVisible;
-  bool m_bEnabled;
-  u8 m_uHighlight;
-  char m_sCpntId[CPNT_ID_MAX_CHARS];
-  ComponentOwnerInterface * m_pOwner;
+    bool m_bVisible;
+    bool m_bEnabled;
+    u8 m_uHighlight;
+    char m_sCpntId[CPNT_ID_MAX_CHARS];
+    ComponentOwnerInterface * m_pOwner;
 };
 
 #endif

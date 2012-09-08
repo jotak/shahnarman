@@ -12,25 +12,25 @@ class guiPopup;
 class ShopDlg : public guiDocument
 {
 public:
-  ShopDlg(int iWidth, int iHeight, LocalClient * pLocalClient);
-  ~ShopDlg();
+    ShopDlg(int iWidth, int iHeight, LocalClient * pLocalClient);
+    ~ShopDlg();
 
-  virtual void update(double delta);
+    virtual void update(double delta);
 
-  // Handlers
-  bool onButtonEvent(ButtonAction * pEvent, guiComponent * pCpnt);
-  void onShow();
-  bool onClickStart();
+    // Handlers
+    bool onButtonEvent(ButtonAction * pEvent, guiComponent * pCpnt);
+    void onShow();
+    bool onClickStart();
 
 protected:
-  void showShopDialog(ShopItem * pItem);
-  void reloadContent();
+    void showShopDialog(ShopItem * pItem);
+    void reloadContent();
 
-  LocalClient * m_pLocalClient;
-  guiPopup * m_pShopItemDlg;
-  guiContainer * m_pPlayerPanel;
-  guiContainer * m_pShopPanel;
-  ShopItem * m_pBuyingShopItem;
+    LocalClient * m_pLocalClient;
+    guiPopup * m_pShopItemDlg;
+    guiContainer * m_pPlayerPanel;
+    guiContainer * m_pShopPanel;
+    ShopItem * m_pBuyingShopItem;
 };
 
 #endif

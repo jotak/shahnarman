@@ -9,22 +9,22 @@ class Player;
 class GameOverDlg : public guiDocument
 {
 public:
-  GameOverDlg(LocalClient * pLocalClient, int iWidth, int iHeight);
-  ~GameOverDlg();
+    GameOverDlg(LocalClient * pLocalClient, int iWidth, int iHeight);
+    ~GameOverDlg();
 
-  void onShow();
-  void setWinners(ObjectList * pWinners);
+    void onShow();
+    void setWinners(ObjectList * pWinners);
 
-  // Handlers
-  bool onButtonEvent(ButtonAction * pEvent, guiComponent * pCpnt);
+    // Handlers
+    bool onButtonEvent(ButtonAction * pEvent, guiComponent * pCpnt);
 
 protected:
-  int addPlayerGains(Player * pPlayer, int yPxl);
+    int addPlayerGains(Player * pPlayer, int yPxl);
 
-  LocalClient * m_pLocalClient;
-  guiContainer * m_pGainsPanel;
-  guiContainer * m_pStatsPanel;
-  ObjectList * m_pWinners;
+    LocalClient * m_pLocalClient;
+    guiContainer * m_pGainsPanel;
+    guiContainer * m_pStatsPanel;
+    ObjectList * m_pWinners;
 };
 
 #endif

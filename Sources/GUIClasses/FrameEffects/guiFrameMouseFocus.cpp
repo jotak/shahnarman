@@ -8,7 +8,7 @@
 // -----------------------------------------------------------------
 guiFrameMouseFocus::guiFrameMouseFocus(u16 uEffectId, float fFadeOutTime) : guiFrameEffect(uEffectId)
 {
-  m_fTimer = m_fTotalTime = fFadeOutTime;
+    m_fTimer = m_fTotalTime = fFadeOutTime;
 }
 
 // -----------------------------------------------------------------
@@ -18,10 +18,10 @@ guiFrameMouseFocus::guiFrameMouseFocus(u16 uEffectId, float fFadeOutTime) : guiF
 guiFrameMouseFocus::~guiFrameMouseFocus()
 {
 #ifdef DBG_VERBOSE1
-  printf("Begin destroy guiFrameMouseFocus\n");
+    printf("Begin destroy guiFrameMouseFocus\n");
 #endif
 #ifdef DBG_VERBOSE1
-  printf("End destroy guiFrameMouseFocus\n");
+    printf("End destroy guiFrameMouseFocus\n");
 #endif
 }
 
@@ -30,12 +30,12 @@ guiFrameMouseFocus::~guiFrameMouseFocus()
 // -----------------------------------------------------------------
 void guiFrameMouseFocus::onBeginDisplay(int iXOffset, int iYOffset, F_RGBA * cpntColor, F_RGBA * docColor)
 {
-  if (!m_pFrame->isEnabled())
-    return;
-  // Fading
-  F_RGBA color = rgba(1, 1, 1, 0.4f + 0.6f * m_fTimer / m_fTotalTime);
+    if (!m_pFrame->isEnabled())
+        return;
+    // Fading
+    F_RGBA color = rgba(1, 1, 1, 0.4f + 0.6f * m_fTimer / m_fTotalTime);
 //  *cpntColor = F_RGBA_MULTIPLY((*cpntColor), color);
-  *docColor = F_RGBA_MULTIPLY((*docColor), color);
+    *docColor = F_RGBA_MULTIPLY((*docColor), color);
 }
 
 // -----------------------------------------------------------------
@@ -54,15 +54,15 @@ void guiFrameMouseFocus::onUpdate(double delta)
 //  {
     if (m_pFrame->isPointed())
     {
-      m_fTimer += delta;
-      if (m_fTimer > m_fTotalTime)
-        m_fTimer = m_fTotalTime;
+        m_fTimer += delta;
+        if (m_fTimer > m_fTotalTime)
+            m_fTimer = m_fTotalTime;
     }
     else
     {
-      m_fTimer -= delta;
-      if (m_fTimer < 0)
-        m_fTimer = 0;
+        m_fTimer -= delta;
+        if (m_fTimer < 0)
+            m_fTimer = 0;
     }
 //  }
 }
@@ -72,8 +72,8 @@ void guiFrameMouseFocus::onUpdate(double delta)
 // -----------------------------------------------------------------
 guiFrameMouseFocus * guiFrameMouseFocus::clone()
 {
-  guiFrameMouseFocus * pClone = new guiFrameMouseFocus(m_uEffectId, m_fTotalTime);
-  return pClone;
+    guiFrameMouseFocus * pClone = new guiFrameMouseFocus(m_uEffectId, m_fTotalTime);
+    return pClone;
 }
 
 // -----------------------------------------------------------------
@@ -81,6 +81,6 @@ guiFrameMouseFocus * guiFrameMouseFocus::clone()
 // -----------------------------------------------------------------
 void guiFrameMouseFocus::reset()
 {
-  guiFrameEffect::reset();
-  m_fTimer = m_fTotalTime;
+    guiFrameEffect::reset();
+    m_fTimer = m_fTotalTime;
 }

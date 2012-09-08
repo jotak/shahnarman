@@ -6,17 +6,17 @@
 class guiFrameFlash : public guiFrameEffect
 {
 public:
-  guiFrameFlash(u16 uEffectId, float fFlashTime);
-  ~guiFrameFlash();
+    guiFrameFlash(u16 uEffectId, float fFlashTime);
+    ~guiFrameFlash();
 
-  virtual void onBeginDisplay(int iXOffset, int iYOffset, F_RGBA * cpntColor, F_RGBA * docColor);
-  virtual void onEndDisplay();
-  virtual void onUpdate(double delta);
-  virtual void reset();
-  virtual guiFrameFlash * clone();
+    virtual void onBeginDisplay(int iXOffset, int iYOffset, F_RGBA * cpntColor, F_RGBA * docColor);
+    virtual void onEndDisplay();
+    virtual void onUpdate(double delta);
+    virtual void reset();
+    virtual guiFrameFlash * clone();
 
 protected:
-  float m_fTimer, m_fTotalTime;
+    float m_fTimer, m_fTotalTime;
 };
 
 #endif

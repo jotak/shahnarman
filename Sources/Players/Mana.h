@@ -20,24 +20,34 @@
 class Mana : public BaseObject
 {
 public:
-  Mana(u8 life = 0, u8 law = 0, u8 death = 0, u8 chaos = 0);
+    Mana(u8 life = 0, u8 law = 0, u8 death = 0, u8 chaos = 0);
 
-  void reset();
-  u8 operator[](int idx) { return mana[idx]; };
-  Mana operator+(Mana addMana);
-  Mana operator+(Mana* addMana);
-  Mana operator-(Mana addMana);
-  Mana operator-(Mana* addMana);
-  void operator+=(Mana addMana);
-  void operator+=(Mana* addMana);
-  void operator-=(Mana remMana);
-  bool operator<=(Mana cmpMana);
-  bool operator<(Mana cmpMana);
-  int amount() { return mana[0] + mana[1] + mana[2] + mana[3]; };
+    void reset();
+    u8 operator[](int idx)
+    {
+        return mana[idx];
+    };
+    Mana operator+(Mana addMana);
+    Mana operator+(Mana* addMana);
+    Mana operator-(Mana addMana);
+    Mana operator-(Mana* addMana);
+    void operator+=(Mana addMana);
+    void operator+=(Mana* addMana);
+    void operator-=(Mana remMana);
+    bool operator<=(Mana cmpMana);
+    bool operator<(Mana cmpMana);
+    int amount()
+    {
+        return mana[0] + mana[1] + mana[2] + mana[3];
+    };
 
-  u8 mana[4];
+    u8 mana[4];
 
-  Mana * clone() { Mana * pClone = new Mana(mana[0], mana[1], mana[2], mana[3]); return pClone; }
+    Mana * clone()
+    {
+        Mana * pClone = new Mana(mana[0], mana[1], mana[2], mana[3]);
+        return pClone;
+    }
 };
 
 #endif

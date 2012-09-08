@@ -29,20 +29,20 @@ class Serializer;
 class UnitData : public XMLObject
 {
 public:
-  UnitData();
-  ~UnitData();
+    UnitData();
+    ~UnitData();
 
-  char * getInfos(char * sBuf, int iSize, const char * sSeparator, bool bName = true, const char * sEthn = NULL, bool bAlign = true, bool bCharacs = true, bool bSkills = true, bool bDesc = true);
-  static char * getAlignmentInfos(int iValue, char * sBuf, int iSize);
-  void serialize(Serializer * pSerializer);
-  void deserialize(Serializer * pSerializer, DebugManager * pDebug);
+    char * getInfos(char * sBuf, int iSize, const char * sSeparator, bool bName = true, const char * sEthn = NULL, bool bAlign = true, bool bCharacs = true, bool bSkills = true, bool bDesc = true);
+    static char * getAlignmentInfos(int iValue, char * sBuf, int iSize);
+    void serialize(Serializer * pSerializer);
+    void deserialize(Serializer * pSerializer, DebugManager * pDebug);
 
-  // WARNING: WHEN ADDING DATA HERE, DON'T FORGET TO UPDATE AvatarData::cloneStaticData()
-  char m_sEdition[NAME_MAX_CHARS];
-  char m_sEthnicityId[NAME_MAX_CHARS];
-  long_hash m_lValues;
-  char m_sTextureFilename[MAX_PATH];
-  ObjectList * m_pSkills;
+    // WARNING: WHEN ADDING DATA HERE, DON'T FORGET TO UPDATE AvatarData::cloneStaticData()
+    char m_sEdition[NAME_MAX_CHARS];
+    char m_sEthnicityId[NAME_MAX_CHARS];
+    long_hash m_lValues;
+    char m_sTextureFilename[MAX_PATH];
+    ObjectList * m_pSkills;
 };
 
 #endif

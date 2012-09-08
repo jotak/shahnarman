@@ -34,15 +34,31 @@
 class GraphicObject : public BaseObject // Includes both map objects and GUI objects
 {
 public:
-  GraphicObject() { m_pGeometry = NULL; };
-  ~GraphicObject() { if (m_pGeometry != NULL) delete m_pGeometry; };
+    GraphicObject()
+    {
+        m_pGeometry = NULL;
+    };
+    ~GraphicObject()
+    {
+        if (m_pGeometry != NULL) delete m_pGeometry;
+    };
 
-  virtual u32 getType() { return GOTYPE_BASE; };
-  virtual DisplayEngine * getDisplay() { if (m_pGeometry != NULL) return m_pGeometry->getDisplay(); else return NULL; };
-  virtual Geometry * getGeometry() { return m_pGeometry; };
+    virtual u32 getType()
+    {
+        return GOTYPE_BASE;
+    };
+    virtual DisplayEngine * getDisplay()
+    {
+        if (m_pGeometry != NULL) return m_pGeometry->getDisplay();
+        else return NULL;
+    };
+    virtual Geometry * getGeometry()
+    {
+        return m_pGeometry;
+    };
 
 protected:
-  Geometry * m_pGeometry;
+    Geometry * m_pGeometry;
 };
 
 #endif

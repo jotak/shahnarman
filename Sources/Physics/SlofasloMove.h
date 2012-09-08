@@ -6,17 +6,17 @@
 class SlofasloMove : public Movement
 {
 public:
-  SlofasloMove(u16 uMoveId, Coords3D vector, float speedInit, float speedMod = 1.0f);
-  ~SlofasloMove();
+    SlofasloMove(u16 uMoveId, Coords3D vector, float speedInit, float speedMod = 1.0f);
+    ~SlofasloMove();
 
-  virtual void applyMovement(double delta, Coords * pCoords);
-  virtual Movement * clone(u16 uMoveId);
+    virtual void applyMovement(double delta, Coords * pCoords);
+    virtual Movement * clone(u16 uMoveId);
 
 protected:
-  Coords3D m_Vector;
-  float m_fSpeedInit;
-  float m_fSpeedMod;
-  float m_fPositionOnVector;
+    Coords3D m_Vector;
+    float m_fSpeedInit;
+    float m_fSpeedMod;
+    float m_fPositionOnVector;
 };
 
 #endif

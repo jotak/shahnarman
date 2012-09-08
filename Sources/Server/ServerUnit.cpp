@@ -14,29 +14,29 @@
 // -----------------------------------------------------------------
 void Unit::init(u32 uUnitId, u8 uPlayerId, UnitData * pData, DebugManager * pDebug)
 {
-  m_uUnitId = uUnitId;
-  m_uOwner = uPlayerId;
-  updateIdentifiers();
+    m_uUnitId = uUnitId;
+    m_uOwner = uPlayerId;
+    updateIdentifiers();
 
-  // Set data
-  wsafecpy(m_sUnitId, NAME_MAX_CHARS, pData->m_sObjectId);
-  wsafecpy(m_sEdition, NAME_MAX_CHARS, pData->m_sEdition);
-  long_hash::iterator it;
-  for (it = pData->m_lValues.begin(); it != pData->m_lValues.end(); ++it)
-    setBaseValue(it->first.c_str(), it->second);
-  Skill * pSkill = (Skill*) pData->m_pSkills->getFirst(0);
-  while (pSkill != NULL)
-  {
-    Skill * pClone = pSkill->clone(false, pDebug);
-    addSkill(pClone);
-    pSkill = (Skill*) pData->m_pSkills->getNext(0);
-  }
+    // Set data
+    wsafecpy(m_sUnitId, NAME_MAX_CHARS, pData->m_sObjectId);
+    wsafecpy(m_sEdition, NAME_MAX_CHARS, pData->m_sEdition);
+    long_hash::iterator it;
+    for (it = pData->m_lValues.begin(); it != pData->m_lValues.end(); ++it)
+        setBaseValue(it->first.c_str(), it->second);
+    Skill * pSkill = (Skill*) pData->m_pSkills->getFirst(0);
+    while (pSkill != NULL)
+    {
+        Skill * pClone = pSkill->clone(false, pDebug);
+        addSkill(pClone);
+        pSkill = (Skill*) pData->m_pSkills->getNext(0);
+    }
 
-  m_Order = m_PreviousOrder = OrderNone;
-  m_pAttackTarget = m_pPreviousAttackTarget = NULL;
-  m_Status = US_Normal;
-  m_bModified = false;
-  setBaseValue(STRING_LIFE, getValue(STRING_ENDURANCE, true));
+    m_Order = m_PreviousOrder = OrderNone;
+    m_pAttackTarget = m_pPreviousAttackTarget = NULL;
+    m_Status = US_Normal;
+    m_bModified = false;
+    setBaseValue(STRING_LIFE, getValue(STRING_ENDURANCE, true));
 }
 
 // -----------------------------------------------------------------
@@ -44,14 +44,15 @@ void Unit::init(u32 uUnitId, u8 uPlayerId, UnitData * pData, DebugManager * pDeb
 // -----------------------------------------------------------------
 void Unit::setMapPos(CoordsMap coords)
 {
-  CoordsMap oldPos = getMapPos();
-  MapObject::setMapPos(coords);
-  m_bModified = true;
-  if (getDisplay() != NULL) {
-    // Translate move
-    ConstantMovement3D * pMove = new ConstantMovement3D(0, 1.0f, getDisplay()->get3DCoords(getMapPos()) - getDisplay()->get3DCoords(oldPos));
-    bindMovement(pMove);
-  }
+    CoordsMap oldPos = getMapPos();
+    MapObject::setMapPos(coords);
+    m_bModified = true;
+    if (getDisplay() != NULL)
+    {
+        // Translate move
+        ConstantMovement3D * pMove = new ConstantMovement3D(0, 1.0f, getDisplay()->get3DCoords(getMapPos()) - getDisplay()->get3DCoords(oldPos));
+        bindMovement(pMove);
+    }
 }
 
 // -----------------------------------------------------------------
@@ -59,21 +60,22 @@ void Unit::setMapPos(CoordsMap coords)
 // -----------------------------------------------------------------
 void Unit::onNewTurn()
 {
-  // Heal
-  int life = getValue(STRING_LIFE);
-  int endurance = getValue(STRING_ENDURANCE);
-  // Note: les unités ne régénèrent plus automatiquement
+    // Heal
+    int life = getValue(STRING_LIFE);
+    int endurance = getValue(STRING_ENDURANCE);
+    // Note: les unités ne régénèrent plus automatiquement
 //  if (life > 0 && life < endurance)
 //    setBaseValue(STRING_LIFE, life + 1);
-/*  else*/ if (life > endurance)
-    setBaseValue(STRING_LIFE, endurance);
-  // If target is dead, remove attack order
-  if (m_Order == OrderAttack)
-  {
-    if (m_pAttackTarget->getStatus() != US_Normal)
-      unsetOrder();
-  }
-  m_bNewTurnDone = true;
+    /*  else*/
+    if (life > endurance)
+        setBaseValue(STRING_LIFE, endurance);
+    // If target is dead, remove attack order
+    if (m_Order == OrderAttack)
+    {
+        if (m_pAttackTarget->getStatus() != US_Normal)
+            unsetOrder();
+    }
+    m_bNewTurnDone = true;
 }
 
 // -----------------------------------------------------------------
@@ -81,8 +83,8 @@ void Unit::onNewTurn()
 // -----------------------------------------------------------------
 bool Unit::setBaseValue(const char * sName, long val)
 {
-  m_bModified = true;
-  return LuaTargetable::setBaseValue(sName, val);
+    m_bModified = true;
+    return LuaTargetable::setBaseValue(sName, val);
 }
 
 // -----------------------------------------------------------------
@@ -90,5 +92,5 @@ bool Unit::setBaseValue(const char * sName, long val)
 // -----------------------------------------------------------------
 UnitData * Unit::getUnitData(Server * pServer)
 {
-  return pServer->getFactory()->getUnitData(m_sEdition, m_sUnitId);
+    return pServer->getFactory()->getUnitData(m_sEdition, m_sUnitId);
 }

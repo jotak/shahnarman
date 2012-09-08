@@ -8,11 +8,11 @@
 // -----------------------------------------------------------------
 guiLabel::guiLabel() : guiComponent()
 {
-  wsafecpy(m_sText, LABEL_MAX_CHARS, "");
-  m_FontId = (FontId)0;
-  m_iBoxWidth = 0;
-  m_bCatchClicks = false;
-  m_pComponentOwner = NULL;
+    wsafecpy(m_sText, LABEL_MAX_CHARS, "");
+    m_FontId = (FontId)0;
+    m_iBoxWidth = 0;
+    m_bCatchClicks = false;
+    m_pComponentOwner = NULL;
 }
 
 // -----------------------------------------------------------------
@@ -28,12 +28,12 @@ guiLabel::~guiLabel()
 // -----------------------------------------------------------------
 void guiLabel::init(const char * sText, FontId fontId, F_RGBA textColor, const char * sCpntId, int xPxl, int yPxl, int wPxl, int hPxl, DisplayEngine * pDisplay)
 {
-  guiComponent::init(sCpntId, xPxl, yPxl, wPxl, hPxl);
-  m_FontId = fontId;
-  setDiffuseColor(textColor);
-  m_iBoxWidth = wPxl;
-  wsafecpy(m_sText, LABEL_MAX_CHARS, sText);
-  computeGeometry(pDisplay);
+    guiComponent::init(sCpntId, xPxl, yPxl, wPxl, hPxl);
+    m_FontId = fontId;
+    setDiffuseColor(textColor);
+    m_iBoxWidth = wPxl;
+    wsafecpy(m_sText, LABEL_MAX_CHARS, sText);
+    computeGeometry(pDisplay);
 }
 
 // -----------------------------------------------------------------
@@ -41,9 +41,9 @@ void guiLabel::init(const char * sText, FontId fontId, F_RGBA textColor, const c
 // -----------------------------------------------------------------
 guiObject * guiLabel::clone()
 {
-  guiLabel * pObj = new guiLabel();
-  pObj->init(m_sText, m_FontId, getDiffuseColor(), m_sCpntId, m_iXPxl, m_iYPxl, m_iBoxWidth, m_iHeight, getDisplay());
-  return pObj;
+    guiLabel * pObj = new guiLabel();
+    pObj->init(m_sText, m_FontId, getDiffuseColor(), m_sCpntId, m_iXPxl, m_iYPxl, m_iBoxWidth, m_iHeight, getDisplay());
+    return pObj;
 }
 
 // -----------------------------------------------------------------
@@ -51,11 +51,11 @@ guiObject * guiLabel::clone()
 // -----------------------------------------------------------------
 void guiLabel::displayAt(int iXOffset, int iYOffset, F_RGBA cpntColor, F_RGBA docColor)
 {
-  if (!m_bVisible)
-    return;
-  cpntColor = F_RGBA_MULTIPLY(cpntColor, m_DiffuseColor);
-  CoordsScreen coords = CoordsScreen(m_iXPxl + iXOffset, m_iYPxl + iYOffset, GUIPLANE);
-  m_pGeometry->display(coords, cpntColor);
+    if (!m_bVisible)
+        return;
+    cpntColor = F_RGBA_MULTIPLY(cpntColor, m_DiffuseColor);
+    CoordsScreen coords = CoordsScreen(m_iXPxl + iXOffset, m_iYPxl + iYOffset, GUIPLANE);
+    m_pGeometry->display(coords, cpntColor);
 }
 
 // -----------------------------------------------------------------
@@ -63,10 +63,10 @@ void guiLabel::displayAt(int iXOffset, int iYOffset, F_RGBA cpntColor, F_RGBA do
 // -----------------------------------------------------------------
 void guiLabel::setText(const char * sText)
 {
-  if (strcmp(sText, m_sText) == 0)
-    return;
-  wsafecpy(m_sText, LABEL_MAX_CHARS, sText);
-  computeGeometry(getDisplay());
+    if (strcmp(sText, m_sText) == 0)
+        return;
+    wsafecpy(m_sText, LABEL_MAX_CHARS, sText);
+    computeGeometry(getDisplay());
 }
 
 // -----------------------------------------------------------------
@@ -74,8 +74,8 @@ void guiLabel::setText(const char * sText)
 // -----------------------------------------------------------------
 void guiLabel::setBoxWidth(int iWidth)
 {
-  m_iBoxWidth = iWidth;
-  computeGeometry(getDisplay());
+    m_iBoxWidth = iWidth;
+    computeGeometry(getDisplay());
 }
 
 // -----------------------------------------------------------------
@@ -83,22 +83,22 @@ void guiLabel::setBoxWidth(int iWidth)
 // -----------------------------------------------------------------
 void guiLabel::computeGeometry(DisplayEngine * pDisplay)
 {
-  if (pDisplay == NULL)
-    return;
-  if (m_iBoxWidth > 0)
-  {
-    setHeight(pDisplay->getFontEngine()->putStringInBox(m_sText, m_iBoxWidth, m_aiAllFonts[(int)m_FontId]));
-    setWidth(pDisplay->getFontEngine()->getStringLength(m_sText, m_aiAllFonts[(int)m_FontId]));
-  }
-  else
-  {
-    setWidth(pDisplay->getFontEngine()->getStringLength(m_sText, m_aiAllFonts[(int)m_FontId]));
-    setHeight(pDisplay->getFontEngine()->getStringHeight(m_sText, m_aiAllFonts[(int)m_FontId]));
-  }
-  if (m_pGeometry != NULL)
-    ((GeometryText*)m_pGeometry)->setText(m_sText, m_aiAllFonts[(int)m_FontId]);
-  else
-    m_pGeometry = new GeometryText(m_sText, m_aiAllFonts[(int)m_FontId], VB_Static, pDisplay);
+    if (pDisplay == NULL)
+        return;
+    if (m_iBoxWidth > 0)
+    {
+        setHeight(pDisplay->getFontEngine()->putStringInBox(m_sText, m_iBoxWidth, m_aiAllFonts[(int)m_FontId]));
+        setWidth(pDisplay->getFontEngine()->getStringLength(m_sText, m_aiAllFonts[(int)m_FontId]));
+    }
+    else
+    {
+        setWidth(pDisplay->getFontEngine()->getStringLength(m_sText, m_aiAllFonts[(int)m_FontId]));
+        setHeight(pDisplay->getFontEngine()->getStringHeight(m_sText, m_aiAllFonts[(int)m_FontId]));
+    }
+    if (m_pGeometry != NULL)
+        ((GeometryText*)m_pGeometry)->setText(m_sText, m_aiAllFonts[(int)m_FontId]);
+    else
+        m_pGeometry = new GeometryText(m_sText, m_aiAllFonts[(int)m_FontId], VB_Static, pDisplay);
 }
 
 // -----------------------------------------------------------------
@@ -106,15 +106,15 @@ void guiLabel::computeGeometry(DisplayEngine * pDisplay)
 // -----------------------------------------------------------------
 guiObject * guiLabel::onButtonEvent(ButtonAction * pEvent)
 {
-  if (!m_bEnabled || !m_bVisible || !m_bCatchClicks)
-    return NULL;
-  if (m_pComponentOwner != NULL)
-  {
-    m_pComponentOwner->onButtonEvent(pEvent);
+    if (!m_bEnabled || !m_bVisible || !m_bCatchClicks)
+        return NULL;
+    if (m_pComponentOwner != NULL)
+    {
+        m_pComponentOwner->onButtonEvent(pEvent);
+        return this;
+    }
+    if (pEvent->eButton != Button1 || pEvent->eEvent != Event_Down || !m_bEnabled || !m_bVisible || !m_bCatchClicks)
+        return NULL;
+    m_pOwner->onButtonEvent(pEvent, this);
     return this;
-  }
-  if (pEvent->eButton != Button1 || pEvent->eEvent != Event_Down || !m_bEnabled || !m_bVisible || !m_bCatchClicks)
-    return NULL;
-  m_pOwner->onButtonEvent(pEvent, this);
-  return this;
 }

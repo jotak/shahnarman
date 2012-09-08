@@ -4,35 +4,41 @@
 class NetworkData
 {
 public:
-  // Constructor / destructor
-  NetworkData(long iMessage);
-  NetworkData(void * file);
-  ~NetworkData();
+    // Constructor / destructor
+    NetworkData(long iMessage);
+    NetworkData(void * file);
+    ~NetworkData();
 
-  NetworkData * clone();
+    NetworkData * clone();
 
-  void addLong(long l);
-  void addString(const char * str);
-  void addDouble(double d);
-  void addCustom(void * p, long size);
+    void addLong(long l);
+    void addString(const char * str);
+    void addDouble(double d);
+    void addCustom(void * p, long size);
 
-  long readLong();
-  void readString(char * str);
-  double readDouble();
-  long readCustom(void * p);
+    long readLong();
+    void readString(char * str);
+    double readDouble();
+    long readCustom(void * p);
 
-  long dataYetToRead();
-  void rewindCursor() { m_pReadCursor = m_pData; };
-  long getSize() { return m_iCurrentSize; };
-  void concat(NetworkData * pOther);
+    long dataYetToRead();
+    void rewindCursor()
+    {
+        m_pReadCursor = m_pData;
+    };
+    long getSize()
+    {
+        return m_iCurrentSize;
+    };
+    void concat(NetworkData * pOther);
 
-  void saveToFile(void * file);
-  void loadFromFile(void * file);
+    void saveToFile(void * file);
+    void loadFromFile(void * file);
 
 protected:
-  char * m_pData;
-  long m_iCurrentSize;
-  char * m_pReadCursor;
+    char * m_pData;
+    long m_iCurrentSize;
+    char * m_pReadCursor;
 };
 
 #endif

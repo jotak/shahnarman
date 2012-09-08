@@ -83,73 +83,94 @@ class MapReader;
 class ClientData
 {
 public:
-  bool bLocal;
+    bool bLocal;
 };
 
 struct ClientNetworkData
 {
-  NetworkData * pData;
-  int iClient;
+    NetworkData * pData;
+    int iClient;
 };
 
 class Server
 {
 public:
-  // Constructor / destructor
-  Server(LocalClient * pLocalClient);
-  ~Server();
+    // Constructor / destructor
+    Server(LocalClient * pLocalClient);
+    ~Server();
 
-  bool Init(const char * sGameName, int nbClients, ClientData * clients, MapReader * pMapReader, int iTurnTimer, int iDeckSize);
-  void Update(double delta);
+    bool Init(const char * sGameName, int nbClients, ClientData * clients, MapReader * pMapReader, int iTurnTimer, int iDeckSize);
+    void Update(double delta);
 
-  DataFactory * getFactory();
-  TurnSolver * getSolver() { return m_pSolver; };
-  void sendMessageToAllClients(NetworkData * pData);
-  void sendMessageToAllExcept(int iClient, NetworkData * pData);
-  void sendMessageTo(int iClient, NetworkData * pData);
-  void receiveMessage(int iClient, NetworkData * pData);
-  Map * getMap() { return &m_Map; };
-  int getNbClients() { return m_iNbClients; };
-  DebugManager * getDebug() { return m_pDebug; };
-  bool isResolving();
-  void onInitFinished();
-  void saveGame();
-  bool loadGame(const char * sGameName);
-  void sendCustomLogToAll(const char * sMsgKey, u8 uLevel = 0, const char * sData = "", ...);
-  void gameOver(ObjectList * pTieList);
-  bool isGameOver() { return m_bGameOver; };
-  void addGarbage(BaseObject * pObj) { m_pGC->addLast(pObj); };
-  int getMaxDeckSize() { return m_iMaxDeckSize; };
+    DataFactory * getFactory();
+    TurnSolver * getSolver()
+    {
+        return m_pSolver;
+    };
+    void sendMessageToAllClients(NetworkData * pData);
+    void sendMessageToAllExcept(int iClient, NetworkData * pData);
+    void sendMessageTo(int iClient, NetworkData * pData);
+    void receiveMessage(int iClient, NetworkData * pData);
+    Map * getMap()
+    {
+        return &m_Map;
+    };
+    int getNbClients()
+    {
+        return m_iNbClients;
+    };
+    DebugManager * getDebug()
+    {
+        return m_pDebug;
+    };
+    bool isResolving();
+    void onInitFinished();
+    void saveGame();
+    bool loadGame(const char * sGameName);
+    void sendCustomLogToAll(const char * sMsgKey, u8 uLevel = 0, const char * sData = "", ...);
+    void gameOver(ObjectList * pTieList);
+    bool isGameOver()
+    {
+        return m_bGameOver;
+    };
+    void addGarbage(BaseObject * pObj)
+    {
+        m_pGC->addLast(pObj);
+    };
+    int getMaxDeckSize()
+    {
+        return m_iMaxDeckSize;
+    };
 
 protected:
-  void serializeMap(NetworkData * pData);
-  void deserializeMap(NetworkData * pData);
-  void serializePlayersData(NetworkData * pData);
-  void serializeLuaTargets(NetworkData * pData);
-  bool generateMap(MapReader * pMapReader);
+    void serializeMap(NetworkData * pData);
+    void deserializeMap(NetworkData * pData);
+    void serializePlayersData(NetworkData * pData);
+    void serializeLuaTargets(NetworkData * pData);
+    bool generateMap(MapReader * pMapReader);
 
-  // Message processing
-  void processNextMessage();
-  void updatePlayerStatus(int iFromClient, NetworkData * pData);
-  void updatePlayerUnitsOrder(NetworkData * pData);
-  void updatePlayerUnitsGroups(NetworkData * pData);
-  void updateTowns(NetworkData * pData);
+    // Message processing
+    void processNextMessage();
+    void updatePlayerStatus(int iFromClient, NetworkData * pData);
+    void updatePlayerUnitsOrder(NetworkData * pData);
+    void updatePlayerUnitsGroups(NetworkData * pData);
+    void updateTowns(NetworkData * pData);
 
-  std::queue<ClientNetworkData> m_Queue;
-  TurnSolver * m_pSolver;
-  ClientData * m_pAllClients;
-  LocalClient * m_pLocalClient;
-  int m_iNbClients;
-  DebugManager * m_pDebug;
-  bool m_bGameOver;
+    std::queue<ClientNetworkData> m_Queue;
+    TurnSolver * m_pSolver;
+    ClientData * m_pAllClients;
+    LocalClient * m_pLocalClient;
+    int m_iNbClients;
+    DebugManager * m_pDebug;
+    bool m_bGameOver;
 
-  // Server parameters
-  char m_sGameName[64];
-  int m_iMaxDeckSize;
+    // Server parameters
+    char m_sGameName[64];
+    int m_iMaxDeckSize;
 
-  // Permanent map data
-  Map m_Map;
-  ObjectList * m_pGC;
+    // Permanent map data
+    Map m_Map;
+    ObjectList * m_pGC;
 };
 
 #endif

@@ -1823,20 +1823,20 @@
 1346966859 source:/media/Naymlap/dev/work/Shahnarman/Sources/lua_callbacks_utils.cpp
 	"lua_callbacks_utils.h"
 
-1347055485 source:/home/jotak/dev/Shahnarman/Sources/Audio/AudioManager.cpp
+1347131917 source:/home/jotak/dev/Shahnarman/Sources/Audio/AudioManager.cpp
 	"AudioManager.h"
 	"../LocalClient.h"
 	"../Debug/DebugManager.h"
 	"../Data/Parameters.h"
 
-1347040778 /home/jotak/dev/Shahnarman/Sources/Audio/AudioManager.h
+1347131917 /home/jotak/dev/Shahnarman/Sources/Audio/AudioManager.h
 	<AL/al.h>
 	<AL/alc.h>
 	<vorbis/vorbisfile.h>
 	"../SystemHeaders.h"
 	"../utils.h"
 
-1346980049 /home/jotak/dev/Shahnarman/Sources/SystemHeaders.h
+1347131932 /home/jotak/dev/Shahnarman/Sources/SystemHeaders.h
 	<stdlib.h>
 	<errno.h>
 	<windows.h>
@@ -1852,7 +1852,7 @@
 	<png.h>
 	<GLUT/glut.h>
 
-1347121703 /home/jotak/dev/Shahnarman/Sources/utils.h
+1347131933 /home/jotak/dev/Shahnarman/Sources/utils.h
 	<stdio.h>
 	<string.h>
 	<cmath>
@@ -1869,44 +1869,44 @@
 	<tr1/unordered_map>
 	<tr1/memory>
 
-1347040788 /home/jotak/dev/Shahnarman/Sources/LocalClient.h
+1347131930 /home/jotak/dev/Shahnarman/Sources/LocalClient.h
 	"utils.h"
 
-1347052365 /home/jotak/dev/Shahnarman/Sources/Debug/DebugManager.h
+1347131919 /home/jotak/dev/Shahnarman/Sources/Debug/DebugManager.h
 	"../Common/TimeController.h"
 
-1346980049 /home/jotak/dev/Shahnarman/Sources/Common/TimeController.h
+1347131918 /home/jotak/dev/Shahnarman/Sources/Common/TimeController.h
 	"BaseObject.h"
 
-1347054565 /home/jotak/dev/Shahnarman/Sources/Common/BaseObject.h
+1347131918 /home/jotak/dev/Shahnarman/Sources/Common/BaseObject.h
 	"../utils.h"
 
-1347124987 /home/jotak/dev/Shahnarman/Sources/Data/Parameters.h
+1347131919 /home/jotak/dev/Shahnarman/Sources/Data/Parameters.h
 	"../utils.h"
 
-1346980049 source:/home/jotak/dev/Shahnarman/Sources/Common/ObjectList.cpp
+1347131918 source:/home/jotak/dev/Shahnarman/Sources/Common/ObjectList.cpp
 	"ObjectList.h"
 
-1346980049 /home/jotak/dev/Shahnarman/Sources/Common/ObjectList.h
+1347131918 /home/jotak/dev/Shahnarman/Sources/Common/ObjectList.h
 	"BaseObject.h"
 
-1346980049 source:/home/jotak/dev/Shahnarman/Sources/Common/SortInterface.cpp
+1347131918 source:/home/jotak/dev/Shahnarman/Sources/Common/SortInterface.cpp
 	"SortInterface.h"
 
-1346980049 /home/jotak/dev/Shahnarman/Sources/Common/SortInterface.h
+1347131918 /home/jotak/dev/Shahnarman/Sources/Common/SortInterface.h
 	"ObjectList.h"
 
-1346980049 source:/home/jotak/dev/Shahnarman/Sources/Common/TimeController.cpp
+1347131918 source:/home/jotak/dev/Shahnarman/Sources/Common/TimeController.cpp
 	"TimeController.h"
 
-1346980049 source:/home/jotak/dev/Shahnarman/Sources/Common/md5.cpp
+1347131918 source:/home/jotak/dev/Shahnarman/Sources/Common/md5.cpp
 	"md5.h"
 
-1346980049 /home/jotak/dev/Shahnarman/Sources/Common/md5.h
+1347131918 /home/jotak/dev/Shahnarman/Sources/Common/md5.h
 	<assert.h>
 	<stdlib.h>
 
-1347108959 source:/home/jotak/dev/Shahnarman/Sources/Data/DataFactory.cpp
+1347131918 source:/home/jotak/dev/Shahnarman/Sources/Data/DataFactory.cpp
 	"DataFactory.h"
 	"Parameters.h"
 	"../LocalClient.h"
@@ -1915,66 +1915,66 @@
 	"../DeckData/Profile.h"
 	"../DeckData/AvatarData.h"
 
-1347051958 /home/jotak/dev/Shahnarman/Sources/Data/DataFactory.h
+1347131918 /home/jotak/dev/Shahnarman/Sources/Data/DataFactory.h
 	"../Common/ObjectList.h"
 
-1347052263 /home/jotak/dev/Shahnarman/Sources/DeckData/Edition.h
+1347131920 /home/jotak/dev/Shahnarman/Sources/DeckData/Edition.h
 	"../Data/XMLObject.h"
 
-1347040780 /home/jotak/dev/Shahnarman/Sources/Data/XMLObject.h
+1347131919 /home/jotak/dev/Shahnarman/Sources/Data/XMLObject.h
 	"../Common/ObjectList.h"
 
-1347052567 /home/jotak/dev/Shahnarman/Sources/DeckData/Profile.h
+1347131920 /home/jotak/dev/Shahnarman/Sources/DeckData/Profile.h
 	"../Common/BaseObject.h"
 
-1347040780 /home/jotak/dev/Shahnarman/Sources/DeckData/AvatarData.h
+1347131920 /home/jotak/dev/Shahnarman/Sources/DeckData/AvatarData.h
 	"UnitData.h"
 	"ProgressionTree.h"
 
-1347040955 /home/jotak/dev/Shahnarman/Sources/DeckData/UnitData.h
+1347131921 /home/jotak/dev/Shahnarman/Sources/DeckData/UnitData.h
 	"../Data/XMLObject.h"
 	"../Gameboard/Skill.h"
 
-1347053579 /home/jotak/dev/Shahnarman/Sources/Gameboard/Skill.h
+1347131926 /home/jotak/dev/Shahnarman/Sources/Gameboard/Skill.h
 	"../Data/LuaObject.h"
 	"../Server/NetworkData.h"
 
-1347040954 /home/jotak/dev/Shahnarman/Sources/Data/LuaObject.h
+1347131919 /home/jotak/dev/Shahnarman/Sources/Data/LuaObject.h
 	"../Common/ObjectList.h"
 	"../Players/Mana.h"
 	<lua5.1/lua.hpp>
 
-1347124828 /home/jotak/dev/Shahnarman/Sources/Players/Mana.h
+1347131931 /home/jotak/dev/Shahnarman/Sources/Players/Mana.h
 	"../Common/BaseObject.h"
 
-1347040790 /home/jotak/dev/Shahnarman/Sources/Server/NetworkData.h
+1347131932 /home/jotak/dev/Shahnarman/Sources/Server/NetworkData.h
 
-1347040781 /home/jotak/dev/Shahnarman/Sources/DeckData/ProgressionTree.h
+1347131920 /home/jotak/dev/Shahnarman/Sources/DeckData/ProgressionTree.h
 	"ProgressionElement.h"
 
-1347040781 /home/jotak/dev/Shahnarman/Sources/DeckData/ProgressionElement.h
+1347131920 /home/jotak/dev/Shahnarman/Sources/DeckData/ProgressionElement.h
 	"../Data/XMLObject.h"
 	"../Data/LuaObject.h"
 
-1347041222 source:/home/jotak/dev/Shahnarman/Sources/Data/FileSerializer.cpp
+1347131918 source:/home/jotak/dev/Shahnarman/Sources/Data/FileSerializer.cpp
 	"FileSerializer.h"
 	<stdio.h>
 
-1347040778 /home/jotak/dev/Shahnarman/Sources/Data/FileSerializer.h
+1347131918 /home/jotak/dev/Shahnarman/Sources/Data/FileSerializer.h
 	"Serializer.h"
 	"../utils.h"
 
-1347040779 /home/jotak/dev/Shahnarman/Sources/Data/Serializer.h
+1347131919 /home/jotak/dev/Shahnarman/Sources/Data/Serializer.h
 
-1347124887 source:/home/jotak/dev/Shahnarman/Sources/Data/IniFile.cpp
+1347131918 source:/home/jotak/dev/Shahnarman/Sources/Data/IniFile.cpp
 	"IniFile.h"
 	<stdio.h>
 	<stdlib.h>
 
-1347124861 /home/jotak/dev/Shahnarman/Sources/Data/IniFile.h
+1347131918 /home/jotak/dev/Shahnarman/Sources/Data/IniFile.h
 	"../utils.h"
 
-1347121704 source:/home/jotak/dev/Shahnarman/Sources/Data/LocalisationTool.cpp
+1347131918 source:/home/jotak/dev/Shahnarman/Sources/Data/LocalisationTool.cpp
 	"LocalisationTool.h"
 	"XMLLiteReader.h"
 	"../Debug/DebugManager.h"
@@ -1982,16 +1982,16 @@
 	<stdarg.h>
 	<stdio.h>
 
-1347121704 /home/jotak/dev/Shahnarman/Sources/Data/LocalisationTool.h
+1347131918 /home/jotak/dev/Shahnarman/Sources/Data/LocalisationTool.h
 	"../utils.h"
 
-1347125392 /home/jotak/dev/Shahnarman/Sources/Data/XMLLiteReader.h
+1347131919 /home/jotak/dev/Shahnarman/Sources/Data/XMLLiteReader.h
 	"XMLLiteElement.h"
 
-1347040954 /home/jotak/dev/Shahnarman/Sources/Data/XMLLiteElement.h
+1347131919 /home/jotak/dev/Shahnarman/Sources/Data/XMLLiteElement.h
 	"../Common/ObjectList.h"
 
-1347042420 source:/home/jotak/dev/Shahnarman/Sources/Data/LuaContext.cpp
+1347131919 source:/home/jotak/dev/Shahnarman/Sources/Data/LuaContext.cpp
 	"LuaContext.h"
 	"../Players/PlayerManagerAbstract.h"
 	"../Players/Player.h"
@@ -2002,117 +2002,117 @@
 	"../Gameboard/Building.h"
 	"../Gameboard/SpecialTile.h"
 
-1347040779 /home/jotak/dev/Shahnarman/Sources/Data/LuaContext.h
+1347131919 /home/jotak/dev/Shahnarman/Sources/Data/LuaContext.h
 	"../utils.h"
 
-1347040789 /home/jotak/dev/Shahnarman/Sources/Players/PlayerManagerAbstract.h
+1347131931 /home/jotak/dev/Shahnarman/Sources/Players/PlayerManagerAbstract.h
 	"../utils.h"
 
-1347040958 /home/jotak/dev/Shahnarman/Sources/Players/Player.h
+1347131931 /home/jotak/dev/Shahnarman/Sources/Players/Player.h
 	"Mana.h"
 	"../Data/LuaTargetable.h"
 
-1347040954 /home/jotak/dev/Shahnarman/Sources/Data/LuaTargetable.h
+1347131919 /home/jotak/dev/Shahnarman/Sources/Data/LuaTargetable.h
 	"../lua_callbacks.h"
 	"../Common/ObjectList.h"
 	"LuaObject.h"
 
-1347040790 /home/jotak/dev/Shahnarman/Sources/lua_callbacks.h
+1347131933 /home/jotak/dev/Shahnarman/Sources/lua_callbacks.h
 	<lua5.1/lua.hpp>
 
-1347040959 /home/jotak/dev/Shahnarman/Sources/Players/Spell.h
+1347131932 /home/jotak/dev/Shahnarman/Sources/Players/Spell.h
 	"../Data/LuaObject.h"
 	"Mana.h"
 	"../Server/NetworkData.h"
 
-1347041071 /home/jotak/dev/Shahnarman/Sources/Gameboard/Unit.h
+1347131927 /home/jotak/dev/Shahnarman/Sources/Gameboard/Unit.h
 	"MapObject.h"
 	"../Physics/PhysicalObject.h"
 	"../DeckData/UnitData.h"
 	"../Players/Mana.h"
 
-1347040785 /home/jotak/dev/Shahnarman/Sources/Gameboard/MapObject.h
+1347131926 /home/jotak/dev/Shahnarman/Sources/Gameboard/MapObject.h
 	"../Common/GraphicObject.h"
 	"../Data/LuaTargetable.h"
 	"Map.h"
 
-1346980049 /home/jotak/dev/Shahnarman/Sources/Common/GraphicObject.h
+1347131918 /home/jotak/dev/Shahnarman/Sources/Common/GraphicObject.h
 	"BaseObject.h"
 	"../Geometries/Geometry.h"
 
-1346980049 /home/jotak/dev/Shahnarman/Sources/Geometries/Geometry.h
+1347131927 /home/jotak/dev/Shahnarman/Sources/Geometries/Geometry.h
 	"../Display/Texture.h"
 	"../Display/DisplayEngine.h"
 	"GeometryModifier.h"
 
-1347040781 /home/jotak/dev/Shahnarman/Sources/Display/Texture.h
+1347131921 /home/jotak/dev/Shahnarman/Sources/Display/Texture.h
 	"../utils.h"
 	"../SystemHeaders.h"
 
-1346980049 /home/jotak/dev/Shahnarman/Sources/Display/DisplayEngine.h
+1347131921 /home/jotak/dev/Shahnarman/Sources/Display/DisplayEngine.h
 	"../Data/Parameters.h"
 	"TextureEngine.h"
 	"../Fonts/FontEngine.h"
 	"../Common/ObjectList.h"
 
-1347040781 /home/jotak/dev/Shahnarman/Sources/Display/TextureEngine.h
+1347131921 /home/jotak/dev/Shahnarman/Sources/Display/TextureEngine.h
 	"Texture.h"
 	"../Common/BaseObject.h"
 
-1347040782 /home/jotak/dev/Shahnarman/Sources/Fonts/FontEngine.h
+1347131921 /home/jotak/dev/Shahnarman/Sources/Fonts/FontEngine.h
 	"Font.h"
 
-1347121704 /home/jotak/dev/Shahnarman/Sources/Fonts/Font.h
+1347131921 /home/jotak/dev/Shahnarman/Sources/Fonts/Font.h
 	"../utils.h"
 
-1346980049 /home/jotak/dev/Shahnarman/Sources/Geometries/GeometryModifier.h
+1347131927 /home/jotak/dev/Shahnarman/Sources/Geometries/GeometryModifier.h
 	"../Common/BaseObject.h"
 
-1346980049 /home/jotak/dev/Shahnarman/Sources/Gameboard/Map.h
+1347131925 /home/jotak/dev/Shahnarman/Sources/Gameboard/Map.h
 	"MapTile.h"
 	"Pathfinder.h"
 	"../Server/NetworkData.h"
 	"../Interface/StackGroupInterface.h"
 	"../Geometries/GeometryQuads.h"
 
-1347040956 /home/jotak/dev/Shahnarman/Sources/Gameboard/MapTile.h
+1347131926 /home/jotak/dev/Shahnarman/Sources/Gameboard/MapTile.h
 	"../Common/GraphicObject.h"
 	"../Data/LuaTargetable.h"
 
-1346980049 /home/jotak/dev/Shahnarman/Sources/Gameboard/Pathfinder.h
+1347131926 /home/jotak/dev/Shahnarman/Sources/Gameboard/Pathfinder.h
 	"MapTile.h"
 
-1346980049 /home/jotak/dev/Shahnarman/Sources/Interface/StackGroupInterface.h
+1347131930 /home/jotak/dev/Shahnarman/Sources/Interface/StackGroupInterface.h
 	"../Common/ObjectList.h"
 
-1347040786 /home/jotak/dev/Shahnarman/Sources/Geometries/GeometryQuads.h
+1347131927 /home/jotak/dev/Shahnarman/Sources/Geometries/GeometryQuads.h
 	"Geometry.h"
 
-1346980049 /home/jotak/dev/Shahnarman/Sources/Physics/PhysicalObject.h
+1347131931 /home/jotak/dev/Shahnarman/Sources/Physics/PhysicalObject.h
 	"../Common/ObjectList.h"
 	"Movement.h"
 
-1346980049 /home/jotak/dev/Shahnarman/Sources/Physics/Movement.h
+1347131931 /home/jotak/dev/Shahnarman/Sources/Physics/Movement.h
 	"../Common/BaseObject.h"
 
-1347053494 /home/jotak/dev/Shahnarman/Sources/Gameboard/Town.h
+1347131926 /home/jotak/dev/Shahnarman/Sources/Gameboard/Town.h
 	"MapObject.h"
 	"../DeckData/Ethnicity.h"
 
-1347052436 /home/jotak/dev/Shahnarman/Sources/DeckData/Ethnicity.h
+1347131920 /home/jotak/dev/Shahnarman/Sources/DeckData/Ethnicity.h
 	"../Data/XMLObject.h"
 
-1347041071 /home/jotak/dev/Shahnarman/Sources/Gameboard/Temple.h
+1347131926 /home/jotak/dev/Shahnarman/Sources/Gameboard/Temple.h
 	"MapObject.h"
 
-1347040956 /home/jotak/dev/Shahnarman/Sources/Gameboard/Building.h
+1347131925 /home/jotak/dev/Shahnarman/Sources/Gameboard/Building.h
 	"../Data/LuaObject.h"
 	"../Server/NetworkData.h"
 
-1347040957 /home/jotak/dev/Shahnarman/Sources/Gameboard/SpecialTile.h
+1347131926 /home/jotak/dev/Shahnarman/Sources/Gameboard/SpecialTile.h
 	"../Data/LuaObject.h"
 
-1347055220 source:/home/jotak/dev/Shahnarman/Sources/Data/LuaObject.cpp
+1347131919 source:/home/jotak/dev/Shahnarman/Sources/Data/LuaObject.cpp
 	"LuaObject.h"
 	"../Debug/DebugManager.h"
 	"../Data/LocalisationTool.h"
@@ -2124,9 +2124,9 @@
 	"../LocalClient.h"
 	"../Data/Parameters.h"
 
-1346980049 /home/jotak/dev/Shahnarman/Sources/GameRoot.h
+1347131925 /home/jotak/dev/Shahnarman/Sources/GameRoot.h
 
-1347055231 source:/home/jotak/dev/Shahnarman/Sources/Data/LuaTargetable.cpp
+1347131919 source:/home/jotak/dev/Shahnarman/Sources/Data/LuaTargetable.cpp
 	"LuaTargetable.h"
 	"../Server/NetworkData.h"
 	"../Players/PlayerManager.h"
@@ -2140,18 +2140,18 @@
 	"../LocalClient.h"
 	"../Data/LocalisationTool.h"
 
-1347040789 /home/jotak/dev/Shahnarman/Sources/Players/PlayerManager.h
+1347131931 /home/jotak/dev/Shahnarman/Sources/Players/PlayerManager.h
 	"PlayerManagerAbstract.h"
 
-1347040779 source:/home/jotak/dev/Shahnarman/Sources/Data/NetworkSerializer.cpp
+1347131919 source:/home/jotak/dev/Shahnarman/Sources/Data/NetworkSerializer.cpp
 	"NetworkSerializer.h"
 
-1347040779 /home/jotak/dev/Shahnarman/Sources/Data/NetworkSerializer.h
+1347131919 /home/jotak/dev/Shahnarman/Sources/Data/NetworkSerializer.h
 	"Serializer.h"
 	"../Server/NetworkData.h"
 	"../utils.h"
 
-1347042434 source:/home/jotak/dev/Shahnarman/Sources/Data/XMLLiteElement.cpp
+1347131919 source:/home/jotak/dev/Shahnarman/Sources/Data/XMLLiteElement.cpp
 	"XMLLiteElement.h"
 	<stdlib.h>
 
@@ -2159,11 +2159,11 @@
 	"XMLLiteReader.h"
 	<stdio.h>
 
-1347042665 source:/home/jotak/dev/Shahnarman/Sources/Data/XMLObject.cpp
+1347131919 source:/home/jotak/dev/Shahnarman/Sources/Data/XMLObject.cpp
 	"XMLObject.h"
 	"XMLLiteElement.h"
 
-1347124677 source:/home/jotak/dev/Shahnarman/Sources/Debug/DebugManager.cpp
+1347131919 source:/home/jotak/dev/Shahnarman/Sources/Debug/DebugManager.cpp
 	"DebugManager.h"
 	"../LocalClient.h"
 	"../errorcodes.h"
@@ -2183,47 +2183,47 @@
 	"../Players/Artifact.h"
 	"../Gameboard/Unit.h"
 
-1346980049 /home/jotak/dev/Shahnarman/Sources/errorcodes.h
+1347131933 /home/jotak/dev/Shahnarman/Sources/errorcodes.h
 
-1347040786 /home/jotak/dev/Shahnarman/Sources/Geometries/GeometryText.h
+1347131927 /home/jotak/dev/Shahnarman/Sources/Geometries/GeometryText.h
 	"Geometry.h"
 
-1346980049 /home/jotak/dev/Shahnarman/Sources/Input/InputEngine.h
+1347131928 /home/jotak/dev/Shahnarman/Sources/Input/InputEngine.h
 	"EventListener.h"
 	<stack>
 
-1346980049 /home/jotak/dev/Shahnarman/Sources/Input/EventListener.h
+1347131927 /home/jotak/dev/Shahnarman/Sources/Input/EventListener.h
 	"../utils.h"
 
-1347040959 /home/jotak/dev/Shahnarman/Sources/Server/Server.h
+1347131932 /home/jotak/dev/Shahnarman/Sources/Server/Server.h
 	"../Gameboard/Map.h"
 
-1347040789 /home/jotak/dev/Shahnarman/Sources/Server/MapReader.h
+1347131932 /home/jotak/dev/Shahnarman/Sources/Server/MapReader.h
 	"../Common/BaseObject.h"
 	<lua5.1/lua.hpp>
 
-1347044500 /home/jotak/dev/Shahnarman/Sources/Server/TurnSolver.h
+1347131932 /home/jotak/dev/Shahnarman/Sources/Server/TurnSolver.h
 	"SpellsSolver.h"
 	"../Players/PlayerManagerAbstract.h"
 
-1347053403 /home/jotak/dev/Shahnarman/Sources/Server/SpellsSolver.h
+1347131932 /home/jotak/dev/Shahnarman/Sources/Server/SpellsSolver.h
 	"../Data/LuaContext.h"
 
-1347040783 /home/jotak/dev/Shahnarman/Sources/GUIClasses/guiLabel.h
+1347131924 /home/jotak/dev/Shahnarman/Sources/GUIClasses/guiLabel.h
 	"guiComponent.h"
 
-1347040782 /home/jotak/dev/Shahnarman/Sources/GUIClasses/guiComponent.h
+1347131923 /home/jotak/dev/Shahnarman/Sources/GUIClasses/guiComponent.h
 	"guiObject.h"
 
-1347040783 /home/jotak/dev/Shahnarman/Sources/GUIClasses/guiObject.h
+1347131924 /home/jotak/dev/Shahnarman/Sources/GUIClasses/guiObject.h
 	"../Common/GraphicObject.h"
 	"../Input/InputEngine.h"
 
-1347040788 /home/jotak/dev/Shahnarman/Sources/Players/Artifact.h
+1347131931 /home/jotak/dev/Shahnarman/Sources/Players/Artifact.h
 	"../Data/XMLObject.h"
 	"../Data/LuaObject.h"
 
-1347040955 source:/home/jotak/dev/Shahnarman/Sources/DeckData/AIData.cpp
+1347131919 source:/home/jotak/dev/Shahnarman/Sources/DeckData/AIData.cpp
 	"AIData.h"
 	"../LocalClient.h"
 	"../Debug/DebugManager.h"
@@ -2233,17 +2233,17 @@
 	"Edition.h"
 	"AvatarData.h"
 
-1347040780 /home/jotak/dev/Shahnarman/Sources/DeckData/AIData.h
+1347131919 /home/jotak/dev/Shahnarman/Sources/DeckData/AIData.h
 	"../Data/XMLObject.h"
 
-1347040955 /home/jotak/dev/Shahnarman/Sources/DeckData/ShopItem.h
+1347131921 /home/jotak/dev/Shahnarman/Sources/DeckData/ShopItem.h
 	"../GUIClasses/guiSmartSlider.h"
 
-1347040784 /home/jotak/dev/Shahnarman/Sources/GUIClasses/guiSmartSlider.h
+1347131924 /home/jotak/dev/Shahnarman/Sources/GUIClasses/guiSmartSlider.h
 	"guiLabel.h"
 	"../Geometries/GeometryQuads.h"
 
-1347041176 source:/home/jotak/dev/Shahnarman/Sources/DeckData/AvatarData.cpp
+1347131920 source:/home/jotak/dev/Shahnarman/Sources/DeckData/AvatarData.cpp
 	"AvatarData.h"
 	"Edition.h"
 	"../LocalClient.h"
@@ -2253,7 +2253,7 @@
 	"../Data/LocalisationTool.h"
 	"../Data/NetworkSerializer.h"
 
-1347127333 source:/home/jotak/dev/Shahnarman/Sources/DeckData/Edition.cpp
+1347131920 source:/home/jotak/dev/Shahnarman/Sources/DeckData/Edition.cpp
 	"Edition.h"
 	"../Debug/DebugManager.h"
 	"../Data/LocalisationTool.h"
@@ -2275,16 +2275,16 @@
 	"../LocalClient.h"
 	<locale.h>
 
-1346980049 /home/jotak/dev/Shahnarman/Sources/DeckData/ShahmahCreation.h
+1347131920 /home/jotak/dev/Shahnarman/Sources/DeckData/ShahmahCreation.h
 	"../Common/ObjectList.h"
 
-1347052123 source:/home/jotak/dev/Shahnarman/Sources/DeckData/Ethnicity.cpp
+1347131920 source:/home/jotak/dev/Shahnarman/Sources/DeckData/Ethnicity.cpp
 	"Ethnicity.h"
 	"../Debug/DebugManager.h"
 	"../Data/XMLLiteReader.h"
 	<stdio.h>
 
-1347052178 source:/home/jotak/dev/Shahnarman/Sources/DeckData/Profile.cpp
+1347131920 source:/home/jotak/dev/Shahnarman/Sources/DeckData/Profile.cpp
 	"Profile.h"
 	"../LocalClient.h"
 	"../Debug/DebugManager.h"
@@ -2302,47 +2302,47 @@
 	"../Interface/ShopDlg.h"
 	<stdio.h>
 
-1347040786 /home/jotak/dev/Shahnarman/Sources/Interface/InterfaceManager.h
+1347131929 /home/jotak/dev/Shahnarman/Sources/Interface/InterfaceManager.h
 	"../Common/BaseObject.h"
 	"../Input/EventListener.h"
 
-1346980049 /home/jotak/dev/Shahnarman/Sources/Interface/LevelUpDlg.h
+1347131929 /home/jotak/dev/Shahnarman/Sources/Interface/LevelUpDlg.h
 	"../GUIClasses/guiDocument.h"
 
-1347040783 /home/jotak/dev/Shahnarman/Sources/GUIClasses/guiDocument.h
+1347131923 /home/jotak/dev/Shahnarman/Sources/GUIClasses/guiDocument.h
 	"ComponentOwnerInterface.h"
 	"guiComponent.h"
 
-1346980049 /home/jotak/dev/Shahnarman/Sources/GUIClasses/ComponentOwnerInterface.h
+1347131922 /home/jotak/dev/Shahnarman/Sources/GUIClasses/ComponentOwnerInterface.h
 
-1346980049 /home/jotak/dev/Shahnarman/Sources/Interface/BuildDeckDlg.h
+1347131928 /home/jotak/dev/Shahnarman/Sources/Interface/BuildDeckDlg.h
 	"../GUIClasses/guiList.h"
 
-1347040783 /home/jotak/dev/Shahnarman/Sources/GUIClasses/guiList.h
+1347131924 /home/jotak/dev/Shahnarman/Sources/GUIClasses/guiList.h
 	"guiContainer.h"
 	"guiLabel.h"
 	"../Input/EventListener.h"
 	"../Input/KeyboardListener.h"
 	"../Common/SortInterface.h"
 
-1347040782 /home/jotak/dev/Shahnarman/Sources/GUIClasses/guiContainer.h
+1347131923 /home/jotak/dev/Shahnarman/Sources/GUIClasses/guiContainer.h
 	"guiComponent.h"
 	"guiDocument.h"
 	"../Geometries/GeometryQuads.h"
 	"../Geometries/StencilGeometry.h"
 
-1346980049 /home/jotak/dev/Shahnarman/Sources/Geometries/StencilGeometry.h
+1347131927 /home/jotak/dev/Shahnarman/Sources/Geometries/StencilGeometry.h
 	"Geometry.h"
 
-1346980049 /home/jotak/dev/Shahnarman/Sources/Input/KeyboardListener.h
+1347131928 /home/jotak/dev/Shahnarman/Sources/Input/KeyboardListener.h
 
-1346980049 /home/jotak/dev/Shahnarman/Sources/Interface/StartMenuDlg.h
+1347131930 /home/jotak/dev/Shahnarman/Sources/Interface/StartMenuDlg.h
 	"../GUIClasses/guiDocument.h"
 
-1346980049 /home/jotak/dev/Shahnarman/Sources/Interface/ShopDlg.h
+1347131930 /home/jotak/dev/Shahnarman/Sources/Interface/ShopDlg.h
 	"../GUIClasses/guiDocument.h"
 
-1347112117 source:/home/jotak/dev/Shahnarman/Sources/DeckData/ProgressionElement.cpp
+1347131920 source:/home/jotak/dev/Shahnarman/Sources/DeckData/ProgressionElement.cpp
 	"ProgressionElement.h"
 	"../Gameboard/Skill.h"
 	"../Players/Spell.h"
@@ -2353,60 +2353,60 @@
 	"../Data/DataFactory.h"
 	"../LocalClient.h"
 
-1347127383 source:/home/jotak/dev/Shahnarman/Sources/DeckData/ProgressionTree.cpp
+1347131920 source:/home/jotak/dev/Shahnarman/Sources/DeckData/ProgressionTree.cpp
 	"ProgressionTree.h"
 	"ProgressionElement.h"
 	"../Debug/DebugManager.h"
 	"../Data/XMLLiteReader.h"
 	"Edition.h"
 
-1346980049 source:/home/jotak/dev/Shahnarman/Sources/DeckData/ShahmahCreation.cpp
+1347131920 source:/home/jotak/dev/Shahnarman/Sources/DeckData/ShahmahCreation.cpp
 	"ShahmahCreation.h"
 
-1347131387 source:/home/jotak/dev/Shahnarman/Sources/DeckData/ShopItem.cpp
+1347131920 source:/home/jotak/dev/Shahnarman/Sources/DeckData/ShopItem.cpp
 	"ShopItem.h"
 	"../Data/XMLObject.h"
 	"../Data/LocalisationTool.h"
 	"../GUIClasses/guiPopup.h"
 
-1347040956 /home/jotak/dev/Shahnarman/Sources/GUIClasses/guiPopup.h
+1347131924 /home/jotak/dev/Shahnarman/Sources/GUIClasses/guiPopup.h
 	"guiFrame.h"
 	"guiDocument.h"
 	"guiButton.h"
 	"guiEditBox.h"
 
-1347040783 /home/jotak/dev/Shahnarman/Sources/GUIClasses/guiFrame.h
+1347131923 /home/jotak/dev/Shahnarman/Sources/GUIClasses/guiFrame.h
 	"guiContainer.h"
 
-1347040782 /home/jotak/dev/Shahnarman/Sources/GUIClasses/guiButton.h
+1347131923 /home/jotak/dev/Shahnarman/Sources/GUIClasses/guiButton.h
 	"guiImage.h"
 	"guiLabel.h"
 	"../Geometries/GeometryQuads.h"
 
-1347040783 /home/jotak/dev/Shahnarman/Sources/GUIClasses/guiImage.h
+1347131924 /home/jotak/dev/Shahnarman/Sources/GUIClasses/guiImage.h
 	"guiComponent.h"
 
-1347040783 /home/jotak/dev/Shahnarman/Sources/GUIClasses/guiEditBox.h
+1347131923 /home/jotak/dev/Shahnarman/Sources/GUIClasses/guiEditBox.h
 	"../Input/KeyboardListener.h"
 	"guiLabel.h"
 
-1347040955 source:/home/jotak/dev/Shahnarman/Sources/DeckData/UnitData.cpp
+1347131921 source:/home/jotak/dev/Shahnarman/Sources/DeckData/UnitData.cpp
 	"UnitData.h"
 	"../Data/LocalisationTool.h"
 	"../Debug/DebugManager.h"
 	"../Data/Serializer.h"
 
-1347130282 source:/home/jotak/dev/Shahnarman/Sources/Display/DisplayEngine.cpp
+1347131921 source:/home/jotak/dev/Shahnarman/Sources/Display/DisplayEngine.cpp
 	"DisplayEngine.h"
 	"../SystemHeaders.h"
 	"../Geometries/Geometry.h"
 	"../Debug/DebugManager.h"
 
-1347043512 source:/home/jotak/dev/Shahnarman/Sources/Display/Texture.cpp
+1347131921 source:/home/jotak/dev/Shahnarman/Sources/Display/Texture.cpp
 	"Texture.h"
 	"../errorcodes.h"
 
-1347127414 source:/home/jotak/dev/Shahnarman/Sources/Display/TextureEngine.cpp
+1347131921 source:/home/jotak/dev/Shahnarman/Sources/Display/TextureEngine.cpp
 	"TextureEngine.h"
 	"../Debug/DebugManager.h"
 	"../errorcodes.h"
@@ -2418,14 +2418,14 @@
 	"../SystemHeaders.h"
 	"../errorcodes.h"
 
-1347041176 source:/home/jotak/dev/Shahnarman/Sources/Fonts/FontEngine.cpp
+1347131921 source:/home/jotak/dev/Shahnarman/Sources/Fonts/FontEngine.cpp
 	"FontEngine.h"
 	"../Display/DisplayEngine.h"
 	"../Display/TextureEngine.h"
 	"../Debug/DebugManager.h"
 	"../errorcodes.h"
 
-1347040956 source:/home/jotak/dev/Shahnarman/Sources/Fx/FxManager.cpp
+1347131921 source:/home/jotak/dev/Shahnarman/Sources/Fx/FxManager.cpp
 	"FxManager.h"
 	"../LocalClient.h"
 	"../Data/LocalisationTool.h"
@@ -2439,173 +2439,173 @@
 	"../Input/InputEngine.h"
 	"../Interface/InterfaceManager.h"
 
-1347040782 /home/jotak/dev/Shahnarman/Sources/Fx/FxManager.h
+1347131921 /home/jotak/dev/Shahnarman/Sources/Fx/FxManager.h
 	"../Common/ObjectList.h"
 
-1346980049 /home/jotak/dev/Shahnarman/Sources/Physics/FasloMove.h
+1347131931 /home/jotak/dev/Shahnarman/Sources/Physics/FasloMove.h
 	"Movement.h"
 
-1346980049 /home/jotak/dev/Shahnarman/Sources/Geometries/ModProgressiveScaling.h
+1347131927 /home/jotak/dev/Shahnarman/Sources/Geometries/ModProgressiveScaling.h
 	"GeometryModifier.h"
 
-1346980049 source:/home/jotak/dev/Shahnarman/Sources/GUIClasses/FrameEffects/EffectComeIn.cpp
+1347131922 source:/home/jotak/dev/Shahnarman/Sources/GUIClasses/FrameEffects/EffectComeIn.cpp
 	"EffectComeIn.h"
 	"../guiFrame.h"
 	"../../SystemHeaders.h"
 
-1346980049 /home/jotak/dev/Shahnarman/Sources/GUIClasses/FrameEffects/EffectComeIn.h
+1347131922 /home/jotak/dev/Shahnarman/Sources/GUIClasses/FrameEffects/EffectComeIn.h
 	"guiFrameEffect.h"
 
-1346980049 /home/jotak/dev/Shahnarman/Sources/GUIClasses/FrameEffects/guiFrameEffect.h
+1347131922 /home/jotak/dev/Shahnarman/Sources/GUIClasses/FrameEffects/guiFrameEffect.h
 	"../../Common/BaseObject.h"
 
-1346980049 source:/home/jotak/dev/Shahnarman/Sources/GUIClasses/FrameEffects/EffectExtract.cpp
+1347131922 source:/home/jotak/dev/Shahnarman/Sources/GUIClasses/FrameEffects/EffectExtract.cpp
 
-1346980049 source:/home/jotak/dev/Shahnarman/Sources/GUIClasses/FrameEffects/guiFrameEffect.cpp
+1347131922 source:/home/jotak/dev/Shahnarman/Sources/GUIClasses/FrameEffects/guiFrameEffect.cpp
 	"guiFrameEffect.h"
 	"../guiFrame.h"
 
-1346980049 source:/home/jotak/dev/Shahnarman/Sources/GUIClasses/FrameEffects/guiFrameFlash.cpp
+1347131922 source:/home/jotak/dev/Shahnarman/Sources/GUIClasses/FrameEffects/guiFrameFlash.cpp
 	"guiFrameFlash.h"
 	"../guiFrame.h"
 	"../../SystemHeaders.h"
 
-1346980049 /home/jotak/dev/Shahnarman/Sources/GUIClasses/FrameEffects/guiFrameFlash.h
+1347131922 /home/jotak/dev/Shahnarman/Sources/GUIClasses/FrameEffects/guiFrameFlash.h
 	"guiFrameEffect.h"
 
-1346980049 source:/home/jotak/dev/Shahnarman/Sources/GUIClasses/FrameEffects/guiFrameIntro.cpp
+1347131922 source:/home/jotak/dev/Shahnarman/Sources/GUIClasses/FrameEffects/guiFrameIntro.cpp
 	"guiFrameIntro.h"
 	"../guiFrame.h"
 	"../../SystemHeaders.h"
 
-1346980049 /home/jotak/dev/Shahnarman/Sources/GUIClasses/FrameEffects/guiFrameIntro.h
+1347131922 /home/jotak/dev/Shahnarman/Sources/GUIClasses/FrameEffects/guiFrameIntro.h
 	"guiFrameEffect.h"
 
-1346980049 source:/home/jotak/dev/Shahnarman/Sources/GUIClasses/FrameEffects/guiFrameMouseFocus.cpp
+1347131922 source:/home/jotak/dev/Shahnarman/Sources/GUIClasses/FrameEffects/guiFrameMouseFocus.cpp
 	"guiFrameMouseFocus.h"
 	"../guiFrame.h"
 	"../../SystemHeaders.h"
 
-1346980049 /home/jotak/dev/Shahnarman/Sources/GUIClasses/FrameEffects/guiFrameMouseFocus.h
+1347131922 /home/jotak/dev/Shahnarman/Sources/GUIClasses/FrameEffects/guiFrameMouseFocus.h
 	"guiFrameEffect.h"
 
-1346980049 source:/home/jotak/dev/Shahnarman/Sources/GUIClasses/FrameEffects/guiFrameOutro.cpp
+1347131922 source:/home/jotak/dev/Shahnarman/Sources/GUIClasses/FrameEffects/guiFrameOutro.cpp
 	"guiFrameOutro.h"
 	"../guiFrame.h"
 	"../../SystemHeaders.h"
 
-1346980049 /home/jotak/dev/Shahnarman/Sources/GUIClasses/FrameEffects/guiFrameOutro.h
+1347131922 /home/jotak/dev/Shahnarman/Sources/GUIClasses/FrameEffects/guiFrameOutro.h
 	"guiFrameEffect.h"
 
-1347131157 source:/home/jotak/dev/Shahnarman/Sources/GUIClasses/guiButton.cpp
+1347131923 source:/home/jotak/dev/Shahnarman/Sources/GUIClasses/guiButton.cpp
 	"guiButton.h"
 	"ComponentOwnerInterface.h"
 	"../Audio/AudioManager.h"
 
-1347041176 source:/home/jotak/dev/Shahnarman/Sources/GUIClasses/guiComboBox.cpp
+1347131923 source:/home/jotak/dev/Shahnarman/Sources/GUIClasses/guiComboBox.cpp
 	"guiComboBox.h"
 	"../Interface/InterfaceManager.h"
 
-1347040956 /home/jotak/dev/Shahnarman/Sources/GUIClasses/guiComboBox.h
+1347131923 /home/jotak/dev/Shahnarman/Sources/GUIClasses/guiComboBox.h
 	"guiContainer.h"
 	"guiButton.h"
 
-1347040956 source:/home/jotak/dev/Shahnarman/Sources/GUIClasses/guiComponent.cpp
+1347131923 source:/home/jotak/dev/Shahnarman/Sources/GUIClasses/guiComponent.cpp
 	"guiComponent.h"
 
-1347131113 source:/home/jotak/dev/Shahnarman/Sources/GUIClasses/guiContainer.cpp
+1347131923 source:/home/jotak/dev/Shahnarman/Sources/GUIClasses/guiContainer.cpp
 	"guiContainer.h"
 
-1347041176 source:/home/jotak/dev/Shahnarman/Sources/GUIClasses/guiDocument.cpp
+1347131923 source:/home/jotak/dev/Shahnarman/Sources/GUIClasses/guiDocument.cpp
 	"guiDocument.h"
 	"guiToggleButton.h"
 	"guiContainer.h"
 	"../Geometries/GeometryQuads.h"
 	"../Data/LocalisationTool.h"
 
-1347040784 /home/jotak/dev/Shahnarman/Sources/GUIClasses/guiToggleButton.h
+1347131925 /home/jotak/dev/Shahnarman/Sources/GUIClasses/guiToggleButton.h
 	"guiButton.h"
 
-1347131113 source:/home/jotak/dev/Shahnarman/Sources/GUIClasses/guiEditBox.cpp
+1347131923 source:/home/jotak/dev/Shahnarman/Sources/GUIClasses/guiEditBox.cpp
 	"guiEditBox.h"
 	"../Geometries/GeometryText.h"
 	"../Geometries/GeometryQuads.h"
 	"../Geometries/StencilGeometry.h"
 	"../Input/KeyboardInputEngine.h"
 
-1346980049 /home/jotak/dev/Shahnarman/Sources/Input/KeyboardInputEngine.h
+1347131928 /home/jotak/dev/Shahnarman/Sources/Input/KeyboardInputEngine.h
 	"InputEngine.h"
 
-1347131113 source:/home/jotak/dev/Shahnarman/Sources/GUIClasses/guiFrame.cpp
+1347131923 source:/home/jotak/dev/Shahnarman/Sources/GUIClasses/guiFrame.cpp
 	"guiFrame.h"
 	"FrameEffects/guiFrameIntro.h"
 	"FrameEffects/guiFrameOutro.h"
 	"FrameEffects/guiFrameMouseFocus.h"
 	"FrameEffects/guiFrameFlash.h"
 
-1347040956 source:/home/jotak/dev/Shahnarman/Sources/GUIClasses/guiGauge.cpp
+1347131924 source:/home/jotak/dev/Shahnarman/Sources/GUIClasses/guiGauge.cpp
 	"guiGauge.h"
 	"../Geometries/GeometryQuads.h"
 
-1347040783 /home/jotak/dev/Shahnarman/Sources/GUIClasses/guiGauge.h
+1347131924 /home/jotak/dev/Shahnarman/Sources/GUIClasses/guiGauge.h
 	"guiComponent.h"
 
-1347040783 source:/home/jotak/dev/Shahnarman/Sources/GUIClasses/guiImage.cpp
+1347131924 source:/home/jotak/dev/Shahnarman/Sources/GUIClasses/guiImage.cpp
 	"guiImage.h"
 	"../Geometries/GeometryQuads.h"
 	"ComponentOwnerInterface.h"
 
-1347041176 source:/home/jotak/dev/Shahnarman/Sources/GUIClasses/guiLabel.cpp
+1347131924 source:/home/jotak/dev/Shahnarman/Sources/GUIClasses/guiLabel.cpp
 	"guiLabel.h"
 	"../Geometries/GeometryText.h"
 	"ComponentOwnerInterface.h"
 
-1347131113 source:/home/jotak/dev/Shahnarman/Sources/GUIClasses/guiList.cpp
+1347131924 source:/home/jotak/dev/Shahnarman/Sources/GUIClasses/guiList.cpp
 	"guiList.h"
 	"../Input/KeyboardInputEngine.h"
 
-1347040956 source:/home/jotak/dev/Shahnarman/Sources/GUIClasses/guiObject.cpp
+1347131924 source:/home/jotak/dev/Shahnarman/Sources/GUIClasses/guiObject.cpp
 	"guiObject.h"
 	"../GameRoot.h"
 	"../LocalClient.h"
 	"../Interface/InterfaceManager.h"
 
-1347131387 source:/home/jotak/dev/Shahnarman/Sources/GUIClasses/guiPopup.cpp
+1347131924 source:/home/jotak/dev/Shahnarman/Sources/GUIClasses/guiPopup.cpp
 	"guiPopup.h"
 	"../Data/LocalisationTool.h"
 	"FrameEffects/EffectComeIn.h"
 	"FrameEffects/guiFrameOutro.h"
 	"FrameEffects/guiFrameMouseFocus.h"
 
-1347040956 source:/home/jotak/dev/Shahnarman/Sources/GUIClasses/guiSmartSlider.cpp
+1347131924 source:/home/jotak/dev/Shahnarman/Sources/GUIClasses/guiSmartSlider.cpp
 	"guiSmartSlider.h"
 	"ComponentOwnerInterface.h"
 
-1347131113 source:/home/jotak/dev/Shahnarman/Sources/GUIClasses/guiTabbedFrame.cpp
+1347131925 source:/home/jotak/dev/Shahnarman/Sources/GUIClasses/guiTabbedFrame.cpp
 	"guiTabbedFrame.h"
 	"guiLabel.h"
 
-1347040784 /home/jotak/dev/Shahnarman/Sources/GUIClasses/guiTabbedFrame.h
+1347131925 /home/jotak/dev/Shahnarman/Sources/GUIClasses/guiTabbedFrame.h
 	"guiFrame.h"
 	"guiLabel.h"
 	"../Geometries/GeometryQuads.h"
 
-1347040956 source:/home/jotak/dev/Shahnarman/Sources/GUIClasses/guiToggleButton.cpp
+1347131925 source:/home/jotak/dev/Shahnarman/Sources/GUIClasses/guiToggleButton.cpp
 	"guiToggleButton.h"
 	"ComponentOwnerInterface.h"
 
-1347107467 source:/home/jotak/dev/Shahnarman/Sources/GameRoot.cpp
+1347131925 source:/home/jotak/dev/Shahnarman/Sources/GameRoot.cpp
 	"GameRoot.h"
 	"Server/Server.h"
 	"LocalClient.h"
 
-1347041070 source:/home/jotak/dev/Shahnarman/Sources/Gameboard/Building.cpp
+1347131925 source:/home/jotak/dev/Shahnarman/Sources/Gameboard/Building.cpp
 	"Building.h"
 	"../Debug/DebugManager.h"
 	"../lua_callbacks.h"
 	"../Data/LocalisationTool.h"
 
-1347040956 source:/home/jotak/dev/Shahnarman/Sources/Gameboard/GameboardInputs.cpp
+1347131925 source:/home/jotak/dev/Shahnarman/Sources/Gameboard/GameboardInputs.cpp
 	"GameboardInputs.h"
 	"GameboardManager.h"
 	"Unit.h"
@@ -2621,22 +2621,22 @@
 	"../GUIClasses/guiLabel.h"
 	"../Audio/AudioManager.h"
 
-1346980049 /home/jotak/dev/Shahnarman/Sources/Gameboard/GameboardInputs.h
+1347131925 /home/jotak/dev/Shahnarman/Sources/Gameboard/GameboardInputs.h
 	"../Input/EventListener.h"
 
-1346980049 /home/jotak/dev/Shahnarman/Sources/Gameboard/GameboardManager.h
+1347131925 /home/jotak/dev/Shahnarman/Sources/Gameboard/GameboardManager.h
 	"Map.h"
 	"MapCursor.h"
 
-1346980049 /home/jotak/dev/Shahnarman/Sources/Gameboard/MapCursor.h
+1347131926 /home/jotak/dev/Shahnarman/Sources/Gameboard/MapCursor.h
 	"../Physics/PhysicalObject.h"
 	"../Geometries/GeometryQuads.h"
 
-1347040786 /home/jotak/dev/Shahnarman/Sources/Interface/InfoboxDlg.h
+1347131929 /home/jotak/dev/Shahnarman/Sources/Interface/InfoboxDlg.h
 	"../GUIClasses/guiDocument.h"
 	"../Input/KeyboardListener.h"
 
-1347041071 source:/home/jotak/dev/Shahnarman/Sources/Gameboard/GameboardManager.cpp
+1347131925 source:/home/jotak/dev/Shahnarman/Sources/Gameboard/GameboardManager.cpp
 	"GameboardManager.h"
 	"../LocalClient.h"
 	"../Geometries/ModProgressiveScaling.h"
@@ -2653,13 +2653,13 @@
 	"../Players/Player.h"
 	"../Audio/AudioManager.h"
 
-1346980049 /home/jotak/dev/Shahnarman/Sources/Geometries/ModProgressiveBlending.h
+1347131927 /home/jotak/dev/Shahnarman/Sources/Geometries/ModProgressiveBlending.h
 	"GeometryModifier.h"
 
-1347040787 /home/jotak/dev/Shahnarman/Sources/Interface/ResolveDlg.h
+1347131929 /home/jotak/dev/Shahnarman/Sources/Interface/ResolveDlg.h
 	"../GUIClasses/guiDocument.h"
 
-1347112117 source:/home/jotak/dev/Shahnarman/Sources/Gameboard/Map.cpp
+1347131925 source:/home/jotak/dev/Shahnarman/Sources/Gameboard/Map.cpp
 	"Map.h"
 	"Unit.h"
 	"Town.h"
@@ -2678,17 +2678,17 @@
 	"../Debug/DebugManager.h"
 	"../Geometries/GeometryText.h"
 
-1347040956 source:/home/jotak/dev/Shahnarman/Sources/Gameboard/MapCursor.cpp
+1347131926 source:/home/jotak/dev/Shahnarman/Sources/Gameboard/MapCursor.cpp
 	"MapCursor.h"
 	"../Geometries/ModProgressiveRotate.h"
 
-1346980049 /home/jotak/dev/Shahnarman/Sources/Geometries/ModProgressiveRotate.h
+1347131927 /home/jotak/dev/Shahnarman/Sources/Geometries/ModProgressiveRotate.h
 	"GeometryModifier.h"
 
-1347040784 source:/home/jotak/dev/Shahnarman/Sources/Gameboard/MapObject.cpp
+1347131926 source:/home/jotak/dev/Shahnarman/Sources/Gameboard/MapObject.cpp
 	"MapObject.h"
 
-1347112117 source:/home/jotak/dev/Shahnarman/Sources/Gameboard/MapTile.cpp
+1347131926 source:/home/jotak/dev/Shahnarman/Sources/Gameboard/MapTile.cpp
 	"MapTile.h"
 	"../Geometries/GeometryQuads.h"
 	"../Geometries/GeometryText.h"
@@ -2696,29 +2696,29 @@
 	"MapObject.h"
 	"SpecialTile.h"
 
-1346980049 source:/home/jotak/dev/Shahnarman/Sources/Gameboard/Pathfinder.cpp
+1347131926 source:/home/jotak/dev/Shahnarman/Sources/Gameboard/Pathfinder.cpp
 	"Pathfinder.h"
 	"MapObject.h"
 
-1347053612 source:/home/jotak/dev/Shahnarman/Sources/Gameboard/Skill.cpp
+1347131926 source:/home/jotak/dev/Shahnarman/Sources/Gameboard/Skill.cpp
 	"Skill.h"
 	"../Debug/DebugManager.h"
 	"../lua_callbacks.h"
 	"../Data/LocalisationTool.h"
 	"../DeckData/UnitData.h"
 
-1347041071 source:/home/jotak/dev/Shahnarman/Sources/Gameboard/SpecialTile.cpp
+1347131926 source:/home/jotak/dev/Shahnarman/Sources/Gameboard/SpecialTile.cpp
 	"SpecialTile.h"
 	"../Debug/DebugManager.h"
 	"../lua_callbacks.h"
 	"../Data/LocalisationTool.h"
 	"../Server/NetworkData.h"
 
-1347041071 source:/home/jotak/dev/Shahnarman/Sources/Gameboard/Temple.cpp
+1347131926 source:/home/jotak/dev/Shahnarman/Sources/Gameboard/Temple.cpp
 	"Temple.h"
 	"../Data/LocalisationTool.h"
 
-1347131212 source:/home/jotak/dev/Shahnarman/Sources/Gameboard/Town.cpp
+1347131926 source:/home/jotak/dev/Shahnarman/Sources/Gameboard/Town.cpp
 	"Town.h"
 	"../DeckData/Edition.h"
 	"../DeckData/Ethnicity.h"
@@ -2734,10 +2734,10 @@
 	"Building.h"
 	"Unit.h"
 
-1347040787 /home/jotak/dev/Shahnarman/Sources/Interface/LogDlg.h
+1347131929 /home/jotak/dev/Shahnarman/Sources/Interface/LogDlg.h
 	"../GUIClasses/guiDocument.h"
 
-1347041175 source:/home/jotak/dev/Shahnarman/Sources/Gameboard/Unit.cpp
+1347131927 source:/home/jotak/dev/Shahnarman/Sources/Gameboard/Unit.cpp
 	"Unit.h"
 	"GameboardManager.h"
 	"../Data/LocalisationTool.h"
@@ -2754,55 +2754,55 @@
 	"../LocalClient.h"
 	"../Debug/DebugManager.h"
 
-1346980049 /home/jotak/dev/Shahnarman/Sources/Interface/UnitOptionsDlg.h
+1347131930 /home/jotak/dev/Shahnarman/Sources/Interface/UnitOptionsDlg.h
 	"../GUIClasses/guiDocument.h"
 
-1346980049 /home/jotak/dev/Shahnarman/Sources/Geometries/GeometryCylinder.h
+1347131927 /home/jotak/dev/Shahnarman/Sources/Geometries/GeometryCylinder.h
 	"Geometry.h"
 
-1346980049 source:/home/jotak/dev/Shahnarman/Sources/Geometries/Geometry.cpp
+1347131927 source:/home/jotak/dev/Shahnarman/Sources/Geometries/Geometry.cpp
 	"Geometry.h"
 
-1347040957 source:/home/jotak/dev/Shahnarman/Sources/Geometries/GeometryCylinder.cpp
+1347131927 source:/home/jotak/dev/Shahnarman/Sources/Geometries/GeometryCylinder.cpp
 	"GeometryCylinder.h"
 
-1346980049 source:/home/jotak/dev/Shahnarman/Sources/Geometries/GeometryModifier.cpp
+1347131927 source:/home/jotak/dev/Shahnarman/Sources/Geometries/GeometryModifier.cpp
 	"GeometryModifier.h"
 
-1347040785 source:/home/jotak/dev/Shahnarman/Sources/Geometries/GeometryQuads.cpp
+1347131927 source:/home/jotak/dev/Shahnarman/Sources/Geometries/GeometryQuads.cpp
 	"GeometryQuads.h"
 
-1347041222 source:/home/jotak/dev/Shahnarman/Sources/Geometries/GeometryText.cpp
+1347131927 source:/home/jotak/dev/Shahnarman/Sources/Geometries/GeometryText.cpp
 	"GeometryText.h"
 
-1346980049 source:/home/jotak/dev/Shahnarman/Sources/Geometries/ModProgressiveBlending.cpp
+1347131927 source:/home/jotak/dev/Shahnarman/Sources/Geometries/ModProgressiveBlending.cpp
 	"ModProgressiveBlending.h"
 	"../SystemHeaders.h"
 
-1346980049 source:/home/jotak/dev/Shahnarman/Sources/Geometries/ModProgressiveRotate.cpp
+1347131927 source:/home/jotak/dev/Shahnarman/Sources/Geometries/ModProgressiveRotate.cpp
 	"ModProgressiveRotate.h"
 	"../SystemHeaders.h"
 
-1346980049 source:/home/jotak/dev/Shahnarman/Sources/Geometries/ModProgressiveScaling.cpp
+1347131927 source:/home/jotak/dev/Shahnarman/Sources/Geometries/ModProgressiveScaling.cpp
 	"ModProgressiveScaling.h"
 	"../SystemHeaders.h"
 
-1346980049 source:/home/jotak/dev/Shahnarman/Sources/Geometries/StencilGeometry.cpp
+1347131927 source:/home/jotak/dev/Shahnarman/Sources/Geometries/StencilGeometry.cpp
 	"StencilGeometry.h"
 
-1347040957 source:/home/jotak/dev/Shahnarman/Sources/Input/InputEngine.cpp
+1347131928 source:/home/jotak/dev/Shahnarman/Sources/Input/InputEngine.cpp
 	"InputEngine.h"
 	"../Debug/DebugManager.h"
 
-1346980049 source:/home/jotak/dev/Shahnarman/Sources/Input/PCInputEngine.cpp
+1347131928 source:/home/jotak/dev/Shahnarman/Sources/Input/PCInputEngine.cpp
 	"PCInputEngine.h"
 	"KeyboardListener.h"
 	"../SystemHeaders.h"
 
-1346980049 /home/jotak/dev/Shahnarman/Sources/Input/PCInputEngine.h
+1347131928 /home/jotak/dev/Shahnarman/Sources/Input/PCInputEngine.h
 	"KeyboardInputEngine.h"
 
-1347041175 source:/home/jotak/dev/Shahnarman/Sources/Interface/ArtifactsEquipDlg.cpp
+1347131928 source:/home/jotak/dev/Shahnarman/Sources/Interface/ArtifactsEquipDlg.cpp
 	"ArtifactsEquipDlg.h"
 	"BuildDeckDlg.h"
 	"ShopDlg.h"
@@ -2822,22 +2822,22 @@
 	"../Players/Artifact.h"
 	"../Debug/DebugManager.h"
 
-1346980049 /home/jotak/dev/Shahnarman/Sources/Interface/ArtifactsEquipDlg.h
+1347131928 /home/jotak/dev/Shahnarman/Sources/Interface/ArtifactsEquipDlg.h
 	"../GUIClasses/guiDocument.h"
 
-1347040787 /home/jotak/dev/Shahnarman/Sources/Interface/SelectPlayerAvatarDlg.h
+1347131930 /home/jotak/dev/Shahnarman/Sources/Interface/SelectPlayerAvatarDlg.h
 	"../GUIClasses/guiDocument.h"
 
-1347130998 source:/home/jotak/dev/Shahnarman/Sources/Interface/BattleSpellPopup.cpp
+1347131928 source:/home/jotak/dev/Shahnarman/Sources/Interface/BattleSpellPopup.cpp
 	"BattleSpellPopup.h"
 	"../Data/LocalisationTool.h"
 	"../Gameboard/Unit.h"
 
-1346980049 /home/jotak/dev/Shahnarman/Sources/Interface/BattleSpellPopup.h
+1347131928 /home/jotak/dev/Shahnarman/Sources/Interface/BattleSpellPopup.h
 	"../GUIClasses/guiPopup.h"
 	"../Players/Player.h"
 
-1347041175 source:/home/jotak/dev/Shahnarman/Sources/Interface/BuildDeckDlg.cpp
+1347131928 source:/home/jotak/dev/Shahnarman/Sources/Interface/BuildDeckDlg.cpp
 	"BuildDeckDlg.h"
 	"ArtifactsEquipDlg.h"
 	"ShopDlg.h"
@@ -2858,7 +2858,7 @@
 	"../Geometries/GeometryQuads.h"
 	"../Debug/DebugManager.h"
 
-1347041175 source:/home/jotak/dev/Shahnarman/Sources/Interface/CreateAvatarDlg.cpp
+1347131928 source:/home/jotak/dev/Shahnarman/Sources/Interface/CreateAvatarDlg.cpp
 	"CreateAvatarDlg.h"
 	"InterfaceManager.h"
 	"StartMenuDlg.h"
@@ -2877,10 +2877,10 @@
 	"../DeckData/AvatarData.h"
 	"../Gameboard/Skill.h"
 
-1346980049 /home/jotak/dev/Shahnarman/Sources/Interface/CreateAvatarDlg.h
+1347131928 /home/jotak/dev/Shahnarman/Sources/Interface/CreateAvatarDlg.h
 	"../GUIClasses/guiDocument.h"
 
-1347041177 source:/home/jotak/dev/Shahnarman/Sources/Interface/GameOverDlg.cpp
+1347131928 source:/home/jotak/dev/Shahnarman/Sources/Interface/GameOverDlg.cpp
 	"GameOverDlg.h"
 	"InterfaceManager.h"
 	"../GUIClasses/guiContainer.h"
@@ -2892,10 +2892,10 @@
 	"../Gameboard/Unit.h"
 	"../DeckData/AvatarData.h"
 
-1346980049 /home/jotak/dev/Shahnarman/Sources/Interface/GameOverDlg.h
+1347131928 /home/jotak/dev/Shahnarman/Sources/Interface/GameOverDlg.h
 	"../GUIClasses/guiDocument.h"
 
-1347044221 source:/home/jotak/dev/Shahnarman/Sources/Interface/HostGameDlg.cpp
+1347131928 source:/home/jotak/dev/Shahnarman/Sources/Interface/HostGameDlg.cpp
 	"HostGameDlg.h"
 	"../GUIClasses/guiComboBox.h"
 	"../GUIClasses/guiPopup.h"
@@ -2919,10 +2919,10 @@
 	"../Server/MapReader.h"
 	"../Gameboard/Unit.h"
 
-1347040786 /home/jotak/dev/Shahnarman/Sources/Interface/HostGameDlg.h
+1347131928 /home/jotak/dev/Shahnarman/Sources/Interface/HostGameDlg.h
 	"../GUIClasses/guiDocument.h"
 
-1347041175 source:/home/jotak/dev/Shahnarman/Sources/Interface/InfoboxDlg.cpp
+1347131928 source:/home/jotak/dev/Shahnarman/Sources/Interface/InfoboxDlg.cpp
 	"InfoboxDlg.h"
 	"InterfaceManager.h"
 	"SpellDlg.h"
@@ -2938,11 +2938,11 @@
 	"../GUIClasses/guiToggleButton.h"
 	"../Gameboard/GameboardManager.h"
 
-1347040788 /home/jotak/dev/Shahnarman/Sources/Interface/SpellDlg.h
+1347131930 /home/jotak/dev/Shahnarman/Sources/Interface/SpellDlg.h
 	"../GUIClasses/guiDocument.h"
 	"../Players/Mana.h"
 
-1347131387 source:/home/jotak/dev/Shahnarman/Sources/Interface/InterfaceManager.cpp
+1347131929 source:/home/jotak/dev/Shahnarman/Sources/Interface/InterfaceManager.cpp
 	"InterfaceManager.h"
 	"../LocalClient.h"
 	"../GUIClasses/guiTabbedFrame.h"
@@ -2982,32 +2982,32 @@
 	"../Debug/DebugManager.h"
 	"../Server/Server.h"
 
-1347040787 /home/jotak/dev/Shahnarman/Sources/Interface/LoadGameDlg.h
+1347131929 /home/jotak/dev/Shahnarman/Sources/Interface/LoadGameDlg.h
 	"../GUIClasses/guiDocument.h"
 
-1346980049 /home/jotak/dev/Shahnarman/Sources/Interface/OptionsDlg.h
+1347131929 /home/jotak/dev/Shahnarman/Sources/Interface/OptionsDlg.h
 	"../GUIClasses/guiDocument.h"
 
-1346980049 /home/jotak/dev/Shahnarman/Sources/Interface/MapObjectDlg.h
+1347131929 /home/jotak/dev/Shahnarman/Sources/Interface/MapObjectDlg.h
 	"../GUIClasses/guiDocument.h"
 
-1346980049 /home/jotak/dev/Shahnarman/Sources/Interface/SpellsSelectorDlg.h
+1347131930 /home/jotak/dev/Shahnarman/Sources/Interface/SpellsSelectorDlg.h
 	"../GUIClasses/guiDocument.h"
 
-1346980049 /home/jotak/dev/Shahnarman/Sources/Interface/PlayerSelectorDlg.h
+1347131929 /home/jotak/dev/Shahnarman/Sources/Interface/PlayerSelectorDlg.h
 	"../GUIClasses/guiDocument.h"
 
-1347040788 /home/jotak/dev/Shahnarman/Sources/Interface/StatusDlg.h
+1347131930 /home/jotak/dev/Shahnarman/Sources/Interface/StatusDlg.h
 	"../GUIClasses/guiDocument.h"
 
-1347040788 /home/jotak/dev/Shahnarman/Sources/Interface/Tooltip.h
+1347131930 /home/jotak/dev/Shahnarman/Sources/Interface/Tooltip.h
 	"../GUIClasses/guiFrame.h"
 	"../GUIClasses/guiLabel.h"
 
-1346980049 /home/jotak/dev/Shahnarman/Sources/Interface/MoveOrAttackDlg.h
+1347131929 /home/jotak/dev/Shahnarman/Sources/Interface/MoveOrAttackDlg.h
 	"../GUIClasses/guiDocument.h"
 
-1347041175 source:/home/jotak/dev/Shahnarman/Sources/Interface/LevelUpDlg.cpp
+1347131929 source:/home/jotak/dev/Shahnarman/Sources/Interface/LevelUpDlg.cpp
 	"LevelUpDlg.h"
 	"InterfaceManager.h"
 	"BuildDeckDlg.h"
@@ -3022,7 +3022,7 @@
 	"../DeckData/Ethnicity.h"
 	"../DeckData/Profile.h"
 
-1347131388 source:/home/jotak/dev/Shahnarman/Sources/Interface/LoadGameDlg.cpp
+1347131929 source:/home/jotak/dev/Shahnarman/Sources/Interface/LoadGameDlg.cpp
 	"LoadGameDlg.h"
 	"InterfaceManager.h"
 	"StartMenuDlg.h"
@@ -3031,7 +3031,7 @@
 	"../LocalClient.h"
 	"../Data/LocalisationTool.h"
 
-1347041175 source:/home/jotak/dev/Shahnarman/Sources/Interface/LogDlg.cpp
+1347131929 source:/home/jotak/dev/Shahnarman/Sources/Interface/LogDlg.cpp
 	"LogDlg.h"
 	"../LocalClient.h"
 	"../Data/LocalisationTool.h"
@@ -3044,7 +3044,7 @@
 	"../Interface/MapObjectDlg.h"
 	"../Fx/FxManager.h"
 
-1347112117 source:/home/jotak/dev/Shahnarman/Sources/Interface/MapObjectDlg.cpp
+1347131929 source:/home/jotak/dev/Shahnarman/Sources/Interface/MapObjectDlg.cpp
 	"MapObjectDlg.h"
 	"../LocalClient.h"
 	"../Data/LocalisationTool.h"
@@ -3067,7 +3067,7 @@
 	"../DeckData/Ethnicity.h"
 	"../DeckData/UnitData.h"
 
-1347041175 source:/home/jotak/dev/Shahnarman/Sources/Interface/MoveOrAttackDlg.cpp
+1347131929 source:/home/jotak/dev/Shahnarman/Sources/Interface/MoveOrAttackDlg.cpp
 	"MoveOrAttackDlg.h"
 	"../Data/LocalisationTool.h"
 	"../Gameboard/Unit.h"
@@ -3077,7 +3077,7 @@
 	"InterfaceManager.h"
 	"InfoboxDlg.h"
 
-1347125219 source:/home/jotak/dev/Shahnarman/Sources/Interface/OptionsDlg.cpp
+1347131929 source:/home/jotak/dev/Shahnarman/Sources/Interface/OptionsDlg.cpp
 	"OptionsDlg.h"
 	"../GUIClasses/guiComboBox.h"
 	"../GUIClasses/guiToggleButton.h"
@@ -3092,7 +3092,7 @@
 	"../DeckData/Edition.h"
 	"../Audio/AudioManager.h"
 
-1347131388 source:/home/jotak/dev/Shahnarman/Sources/Interface/PlayerSelectorDlg.cpp
+1347131929 source:/home/jotak/dev/Shahnarman/Sources/Interface/PlayerSelectorDlg.cpp
 	"PlayerSelectorDlg.h"
 	"InterfaceManager.h"
 	"../GUIClasses/guiFrame.h"
@@ -3102,7 +3102,7 @@
 	"../Data/LocalisationTool.h"
 	"../Players/Player.h"
 
-1347131388 source:/home/jotak/dev/Shahnarman/Sources/Interface/ResolveDlg.cpp
+1347131929 source:/home/jotak/dev/Shahnarman/Sources/Interface/ResolveDlg.cpp
 	"ResolveDlg.h"
 	"../GUIClasses/guiToggleButton.h"
 	"../Data/LocalisationTool.h"
@@ -3123,7 +3123,7 @@
 	"../Gameboard/GameboardManager.h"
 	"../Debug/DebugManager.h"
 
-1347041177 source:/home/jotak/dev/Shahnarman/Sources/Interface/SelectPlayerAvatarDlg.cpp
+1347131929 source:/home/jotak/dev/Shahnarman/Sources/Interface/SelectPlayerAvatarDlg.cpp
 	"SelectPlayerAvatarDlg.h"
 	"InterfaceManager.h"
 	"StartMenuDlg.h"
@@ -3138,7 +3138,7 @@
 	"../Data/DataFactory.h"
 	"../DeckData/Profile.h"
 
-1347041176 source:/home/jotak/dev/Shahnarman/Sources/Interface/ShopDlg.cpp
+1347131930 source:/home/jotak/dev/Shahnarman/Sources/Interface/ShopDlg.cpp
 	"ShopDlg.h"
 	"InterfaceManager.h"
 	"StartMenuDlg.h"
@@ -3155,7 +3155,7 @@
 	"../DeckData/Edition.h"
 	"../Players/Spell.h"
 
-1347041176 source:/home/jotak/dev/Shahnarman/Sources/Interface/SpellDlg.cpp
+1347131930 source:/home/jotak/dev/Shahnarman/Sources/Interface/SpellDlg.cpp
 	"SpellDlg.h"
 	"SpellsSelectorDlg.h"
 	"../GUIClasses/guiToggleButton.h"
@@ -3170,7 +3170,7 @@
 	"../Players/Spell.h"
 	"../Gameboard/GameboardManager.h"
 
-1347131388 source:/home/jotak/dev/Shahnarman/Sources/Interface/SpellsSelectorDlg.cpp
+1347131930 source:/home/jotak/dev/Shahnarman/Sources/Interface/SpellsSelectorDlg.cpp
 	"SpellsSelectorDlg.h"
 	"InterfaceManager.h"
 	"../GUIClasses/guiFrame.h"
@@ -3183,7 +3183,7 @@
 	"../Players/Player.h"
 	"../Gameboard/Unit.h"
 
-1347041177 source:/home/jotak/dev/Shahnarman/Sources/Interface/StartMenuDlg.cpp
+1347131930 source:/home/jotak/dev/Shahnarman/Sources/Interface/StartMenuDlg.cpp
 	"StartMenuDlg.h"
 	"../GUIClasses/guiButton.h"
 	"../GUIClasses/guiPopup.h"
@@ -3196,17 +3196,17 @@
 	"HostGameDlg.h"
 	"OptionsDlg.h"
 
-1347040958 source:/home/jotak/dev/Shahnarman/Sources/Interface/StatusDlg.cpp
+1347131930 source:/home/jotak/dev/Shahnarman/Sources/Interface/StatusDlg.cpp
 	"StatusDlg.h"
 	"../LocalClient.h"
 	"../GUIClasses/guiLabel.h"
 	"../GUIClasses/guiFrame.h"
 	"../Interface/InterfaceManager.h"
 
-1347040958 source:/home/jotak/dev/Shahnarman/Sources/Interface/Tooltip.cpp
+1347131930 source:/home/jotak/dev/Shahnarman/Sources/Interface/Tooltip.cpp
 	"Tooltip.h"
 
-1347041177 source:/home/jotak/dev/Shahnarman/Sources/Interface/UnitOptionsDlg.cpp
+1347131930 source:/home/jotak/dev/Shahnarman/Sources/Interface/UnitOptionsDlg.cpp
 	"UnitOptionsDlg.h"
 	"InterfaceManager.h"
 	"SpellDlg.h"
@@ -3219,7 +3219,7 @@
 	"../Gameboard/GameboardInputs.h"
 	"../Players/PlayerManager.h"
 
-1347131420 source:/home/jotak/dev/Shahnarman/Sources/LocalClient.cpp
+1347131930 source:/home/jotak/dev/Shahnarman/Sources/LocalClient.cpp
 	"LocalClient.h"
 	"Data/LocalisationTool.h"
 	"Display/DisplayEngine.h"
@@ -3248,40 +3248,40 @@
 	"Interface/LogDlg.h"
 	"Interface/InfoboxDlg.h"
 
-1346980049 source:/home/jotak/dev/Shahnarman/Sources/Physics/ConstantMovement3D.cpp
+1347131930 source:/home/jotak/dev/Shahnarman/Sources/Physics/ConstantMovement3D.cpp
 	"ConstantMovement3D.h"
 
-1346980049 /home/jotak/dev/Shahnarman/Sources/Physics/ConstantMovement3D.h
+1347131930 /home/jotak/dev/Shahnarman/Sources/Physics/ConstantMovement3D.h
 	"Movement.h"
 
-1346980049 source:/home/jotak/dev/Shahnarman/Sources/Physics/FasloMove.cpp
+1347131930 source:/home/jotak/dev/Shahnarman/Sources/Physics/FasloMove.cpp
 	"FasloMove.h"
 
-1346980049 source:/home/jotak/dev/Shahnarman/Sources/Physics/Movement.cpp
+1347131931 source:/home/jotak/dev/Shahnarman/Sources/Physics/Movement.cpp
 	"Movement.h"
 
-1346980049 source:/home/jotak/dev/Shahnarman/Sources/Physics/PhysicalObject.cpp
+1347131931 source:/home/jotak/dev/Shahnarman/Sources/Physics/PhysicalObject.cpp
 	"PhysicalObject.h"
 
-1346980049 source:/home/jotak/dev/Shahnarman/Sources/Physics/SlofasloMove.cpp
+1347131931 source:/home/jotak/dev/Shahnarman/Sources/Physics/SlofasloMove.cpp
 	"SlofasloMove.h"
 
-1346980049 /home/jotak/dev/Shahnarman/Sources/Physics/SlofasloMove.h
+1347131931 /home/jotak/dev/Shahnarman/Sources/Physics/SlofasloMove.h
 	"Movement.h"
 
-1347040958 source:/home/jotak/dev/Shahnarman/Sources/Players/AISpell.cpp
+1347131931 source:/home/jotak/dev/Shahnarman/Sources/Players/AISpell.cpp
 	"AISpell.h"
 
-1347040788 /home/jotak/dev/Shahnarman/Sources/Players/AISpell.h
+1347131931 /home/jotak/dev/Shahnarman/Sources/Players/AISpell.h
 	"Spell.h"
 
-1347040788 source:/home/jotak/dev/Shahnarman/Sources/Players/Artifact.cpp
+1347131931 source:/home/jotak/dev/Shahnarman/Sources/Players/Artifact.cpp
 	"Artifact.h"
 
-1346980049 source:/home/jotak/dev/Shahnarman/Sources/Players/Mana.cpp
+1347131931 source:/home/jotak/dev/Shahnarman/Sources/Players/Mana.cpp
 	"Mana.h"
 
-1347041072 source:/home/jotak/dev/Shahnarman/Sources/Players/Player.cpp
+1347131931 source:/home/jotak/dev/Shahnarman/Sources/Players/Player.cpp
 	"Player.h"
 	"Spell.h"
 	"Artifact.h"
@@ -3296,7 +3296,7 @@
 	"../Data/NetworkSerializer.h"
 	"../LocalClient.h"
 
-1347055091 source:/home/jotak/dev/Shahnarman/Sources/Players/PlayerManager.cpp
+1347131931 source:/home/jotak/dev/Shahnarman/Sources/Players/PlayerManager.cpp
 	"PlayerManager.h"
 	"Player.h"
 	"Spell.h"
@@ -3323,7 +3323,7 @@
 	"../Debug/DebugManager.h"
 	"../Audio/AudioManager.h"
 
-1347042216 source:/home/jotak/dev/Shahnarman/Sources/Players/PlayerManagerAbstract.cpp
+1347131931 source:/home/jotak/dev/Shahnarman/Sources/Players/PlayerManagerAbstract.cpp
 	"PlayerManagerAbstract.h"
 	"Player.h"
 	"Spell.h"
@@ -3336,7 +3336,7 @@
 	"../Data/LuaContext.h"
 	"../lua_callbacks_utils.h"
 
-1347040790 /home/jotak/dev/Shahnarman/Sources/lua_callbacks_utils.h
+1347131933 /home/jotak/dev/Shahnarman/Sources/lua_callbacks_utils.h
 	<lua5.1/lua.hpp>
 	"GameRoot.h"
 	"LocalClient.h"
@@ -3362,7 +3362,7 @@
 	"Server/Server.h"
 	"Server/TurnSolver.h"
 
-1347055091 source:/home/jotak/dev/Shahnarman/Sources/Players/Spell.cpp
+1347131931 source:/home/jotak/dev/Shahnarman/Sources/Players/Spell.cpp
 	"Spell.h"
 	"../Common/ObjectList.h"
 	"../Data/LuaTargetable.h"
@@ -3370,9 +3370,9 @@
 	"../lua_callbacks.h"
 	"../Data/LocalisationTool.h"
 
-1346980049 source:/home/jotak/dev/Shahnarman/Sources/Players/SummonSpell.cpp
+1347131932 source:/home/jotak/dev/Shahnarman/Sources/Players/SummonSpell.cpp
 
-1347131241 source:/home/jotak/dev/Shahnarman/Sources/Server/AILuaSolver.cpp
+1347131932 source:/home/jotak/dev/Shahnarman/Sources/Server/AILuaSolver.cpp
 	"AILuaSolver.h"
 	"Server.h"
 	"AISolver.h"
@@ -3386,14 +3386,14 @@
 	"../Gameboard/MapTile.h"
 	"../Gameboard/SpecialTile.h"
 
-1347040959 /home/jotak/dev/Shahnarman/Sources/Server/AILuaSolver.h
+1347131932 /home/jotak/dev/Shahnarman/Sources/Server/AILuaSolver.h
 	"../Common/ObjectList.h"
 	"../lua_callbacks.h"
 
-1346980049 /home/jotak/dev/Shahnarman/Sources/Server/AISolver.h
+1347131932 /home/jotak/dev/Shahnarman/Sources/Server/AISolver.h
 	"AILuaSolver.h"
 
-1347041177 source:/home/jotak/dev/Shahnarman/Sources/Server/AISolver.cpp
+1347131932 source:/home/jotak/dev/Shahnarman/Sources/Server/AISolver.cpp
 	"AISolver.h"
 	"Server.h"
 	"TurnSolver.h"
@@ -3406,7 +3406,7 @@
 	"../Gameboard/MapTile.h"
 	"../Gameboard/SpecialTile.h"
 
-1347044447 source:/home/jotak/dev/Shahnarman/Sources/Server/MapReader.cpp
+1347131932 source:/home/jotak/dev/Shahnarman/Sources/Server/MapReader.cpp
 	"MapReader.h"
 	"../LocalClient.h"
 	"../Debug/DebugManager.h"
@@ -3416,12 +3416,12 @@
 	"../DeckData/Ethnicity.h"
 	"../Gameboard/Town.h"
 
-1347055091 source:/home/jotak/dev/Shahnarman/Sources/Server/NetworkData.cpp
+1347131932 source:/home/jotak/dev/Shahnarman/Sources/Server/NetworkData.cpp
 	"NetworkData.h"
 	"../utils.h"
 	<stdio.h>
 
-1347112118 source:/home/jotak/dev/Shahnarman/Sources/Server/Server.cpp
+1347131932 source:/home/jotak/dev/Shahnarman/Sources/Server/Server.cpp
 	"Server.h"
 	"MapReader.h"
 	"TurnSolver.h"
@@ -3440,7 +3440,7 @@
 	"../DeckData/AvatarData.h"
 	"../Interface/LogDlg.h"
 
-1347040790 source:/home/jotak/dev/Shahnarman/Sources/Server/ServerUnit.cpp
+1347131932 source:/home/jotak/dev/Shahnarman/Sources/Server/ServerUnit.cpp
 	"../Gameboard/Unit.h"
 	"../Data/LocalisationTool.h"
 	"../Data/DataFactory.h"
@@ -3449,7 +3449,7 @@
 	"../Server/Server.h"
 	"../Physics/ConstantMovement3D.h"
 
-1347131252 source:/home/jotak/dev/Shahnarman/Sources/Server/SpellsSolver.cpp
+1347131932 source:/home/jotak/dev/Shahnarman/Sources/Server/SpellsSolver.cpp
 	"SpellsSolver.h"
 	"Server.h"
 	"TurnSolver.h"
@@ -3466,7 +3466,7 @@
 	"../DeckData/Edition.h"
 	"../DeckData/AvatarData.h"
 
-1347131275 source:/home/jotak/dev/Shahnarman/Sources/Server/TurnSolver.cpp
+1347131932 source:/home/jotak/dev/Shahnarman/Sources/Server/TurnSolver.cpp
 	"TurnSolver.h"
 	"Server.h"
 	"NetworkData.h"
@@ -3488,7 +3488,7 @@
 	<string.h>
 	"../Common/md5.h"
 
-1346980049 source:/home/jotak/dev/Shahnarman/Sources/_System/TheAvatars.cpp
+1347131932 source:/home/jotak/dev/Shahnarman/Sources/_System/TheAvatars.cpp
 	"stdafx.h"
 	"../GameRoot.h"
 	"../LocalClient.h"
@@ -3499,11 +3499,11 @@
 	"../Interface/InterfaceManager.h"
 	"../Debug/DebugManager.h"
 
-1346980049 /home/jotak/dev/Shahnarman/Sources/_System/stdafx.h
+1347131933 /home/jotak/dev/Shahnarman/Sources/_System/stdafx.h
 	<stdio.h>
 	<tchar.h>
 
-1347054215 source:/home/jotak/dev/Shahnarman/Sources/_System/linux_utils.cpp
+1347131933 source:/home/jotak/dev/Shahnarman/Sources/_System/linux_utils.cpp
 	"../utils.h"
 	<stdio.h>
 	<stdlib.h>
@@ -3520,27 +3520,27 @@
 	"../Interface/InterfaceManager.h"
 	"../Debug/DebugManager.h"
 
-1346980049 source:/home/jotak/dev/Shahnarman/Sources/_System/stdafx.cpp
+1347131933 source:/home/jotak/dev/Shahnarman/Sources/_System/stdafx.cpp
 	"stdafx.h"
 
-1347041222 source:/home/jotak/dev/Shahnarman/Sources/_System/utils_win32.cpp
+1347131933 source:/home/jotak/dev/Shahnarman/Sources/_System/utils_win32.cpp
 	"../utils.h"
 	<io.h>
 
-1347112118 source:/home/jotak/dev/Shahnarman/Sources/lua_callbacks.cpp
+1347131933 source:/home/jotak/dev/Shahnarman/Sources/lua_callbacks.cpp
 	"lua_callbacks.h"
 	"lua_callbacks_utils.h"
 	"Data/DataFactory.h"
 	"GUIClasses/guiLabel.h"
 	"Server/AISolver.h"
 
-1347055091 source:/home/jotak/dev/Shahnarman/Sources/lua_callbacks_utils.cpp
+1347131933 source:/home/jotak/dev/Shahnarman/Sources/lua_callbacks_utils.cpp
 	"lua_callbacks_utils.h"
 
-1347055092 source:/home/jotak/dev/Shahnarman/Sources/utils.cpp
+1347131933 source:/home/jotak/dev/Shahnarman/Sources/utils.cpp
 	"utils.h"
 
-1347125113 source:/home/jotak/dev/Shahnarman/Sources/Data/Parameters.cpp
+1347131919 source:/home/jotak/dev/Shahnarman/Sources/Data/Parameters.cpp
 	"Parameters.h"
 	"../Debug/DebugManager.h"
 	"IniFile.h"

@@ -6,12 +6,12 @@
 class ShahmahCreation : public BaseObject
 {
 public:
-  ShahmahCreation();
-  ~ShahmahCreation();
+    ShahmahCreation();
+    ~ShahmahCreation();
 
-  ObjectList * m_pSkills;
-  ObjectList * m_pPeoples;
-  ObjectList * m_pImages;
+    ObjectList * m_pSkills;
+    ObjectList * m_pPeoples;
+    ObjectList * m_pImages;
 };
 
 #endif

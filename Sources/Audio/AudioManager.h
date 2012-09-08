@@ -21,54 +21,59 @@
 class LocalClient;
 class DebugManager;
 
-enum MusicState {
-  Unset = 0,
-  Stopped,
-  Playing
+enum MusicState
+{
+    Unset = 0,
+    Stopped,
+    Playing
 };
 
 class AudioManager
 {
 public:
-  // Constructor / destructor
-  ~AudioManager();
-  static AudioManager * getInstance() { if (mInst == NULL) mInst = new AudioManager(); return mInst; };
+    // Constructor / destructor
+    ~AudioManager();
+    static AudioManager * getInstance()
+    {
+        if (mInst == NULL) mInst = new AudioManager();
+        return mInst;
+    };
 
-  // Manager functions
-  void Init(LocalClient * m_pLocalClient);
-  void Update(double delta);
+    // Manager functions
+    void Init(LocalClient * m_pLocalClient);
+    void Update(double delta);
 
-  // Specific functions
-  void playMusic(int iMusicId);
-  void stopMusic();
-  void playSound(int iSoundId);
-  void updateVolume();
+    // Specific functions
+    void playMusic(int iMusicId);
+    void stopMusic();
+    void playSound(int iSoundId);
+    void updateVolume();
 
 private:
-	AudioManager();
-  static AudioManager * mInst;
+    AudioManager();
+    static AudioManager * mInst;
 
-  void initMusicFiles();
-  void initSoundData();
-  bool readOggSound(const char * sName, int iSound);
-  bool stream(ALuint buffer);
-  void empty();
+    void initMusicFiles();
+    void initSoundData();
+    bool readOggSound(const char * sName, int iSound);
+    bool stream(ALuint buffer);
+    void empty();
 
-  LocalClient * m_pLocalClient;
-  DebugManager * m_pDebug;
-  ALCcontext * m_pContext;
-  ALCdevice * m_pDevice;
-  ALuint m_iAllSoundBuffers[NB_SOUNDS];
-  ALuint m_iAllSoundSources[NB_SOUNDS];
-  char m_sAllMusicFiles[NB_MUSICS][MAX_PATH];
-  int m_iChainedMusics[NB_MUSICS];
-  int m_iCurrentMusic;
-  ALuint m_uBuffersID[2];  // Front & back buffers
-  ALuint m_uSourceID;
-  MusicState m_State;
-  OggVorbis_File * m_pOggStream;
-  ALuint m_iFrequency;
-  ALenum m_Format;
+    LocalClient * m_pLocalClient;
+    DebugManager * m_pDebug;
+    ALCcontext * m_pContext;
+    ALCdevice * m_pDevice;
+    ALuint m_iAllSoundBuffers[NB_SOUNDS];
+    ALuint m_iAllSoundSources[NB_SOUNDS];
+    char m_sAllMusicFiles[NB_MUSICS][MAX_PATH];
+    int m_iChainedMusics[NB_MUSICS];
+    int m_iCurrentMusic;
+    ALuint m_uBuffersID[2];  // Front & back buffers
+    ALuint m_uSourceID;
+    MusicState m_State;
+    OggVorbis_File * m_pOggStream;
+    ALuint m_iFrequency;
+    ALenum m_Format;
 };
 
 #endif

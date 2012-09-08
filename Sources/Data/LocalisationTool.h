@@ -11,24 +11,31 @@ class Parameters;
 class LocalisationTool
 {
 public:
-  ~LocalisationTool();
-  static LocalisationTool * getInstance() { if (mInst == NULL) mInst = new LocalisationTool(); return mInst; };
+    ~LocalisationTool();
+    static LocalisationTool * getInstance()
+    {
+        if (mInst == NULL) mInst = new LocalisationTool();
+        return mInst;
+    };
 
-  void Init(Parameters * pParams, DebugManager * pDebug);
-  char * getCurrentLanguageName() { return m_sLanguage; };
-  char * getText(const char * sKey, char * sBuf, int iSize, void ** pArgs = NULL);
-  char * getText1stUp(const char * sKey, char * sBuf, int iSize);
-  char * getTextUp(const char * sKey, char * sBuf, int iSize);
-  char * getTextLow(const char * sKey, char * sBuf, int iSize);
-  char * readLocalizedXMLNode(XMLLiteElement * pNode, char * sBuf, int iBufSize);
-  char * long_hashToString(char * sBuf, int iBufSize, const char * sSeparator, long_hash * hm, int nArgs, ...);
+    void Init(Parameters * pParams, DebugManager * pDebug);
+    char * getCurrentLanguageName()
+    {
+        return m_sLanguage;
+    };
+    char * getText(const char * sKey, char * sBuf, int iSize, void ** pArgs = NULL);
+    char * getText1stUp(const char * sKey, char * sBuf, int iSize);
+    char * getTextUp(const char * sKey, char * sBuf, int iSize);
+    char * getTextLow(const char * sKey, char * sBuf, int iSize);
+    char * readLocalizedXMLNode(XMLLiteElement * pNode, char * sBuf, int iBufSize);
+    char * long_hashToString(char * sBuf, int iBufSize, const char * sSeparator, long_hash * hm, int nArgs, ...);
 
 private:
-	LocalisationTool();
-  static LocalisationTool * mInst;
-  char m_sLanguage[64];
-  str_hash m_sAllTexts;
-  DebugManager * m_pDebug;
+    LocalisationTool();
+    static LocalisationTool * mInst;
+    char m_sLanguage[64];
+    str_hash m_sAllTexts;
+    DebugManager * m_pDebug;
 };
 
 // Helper alias

@@ -9,8 +9,8 @@
 // -----------------------------------------------------------------
 char * XMLLiteAttribute::getCharValue()
 {
-  // return copy of value instead?
-  return m_sValue;
+    // return copy of value instead?
+    return m_sValue;
 }
 
 // -----------------------------------------------------------------
@@ -18,7 +18,7 @@ char * XMLLiteAttribute::getCharValue()
 // -----------------------------------------------------------------
 long XMLLiteAttribute::getIntValue()
 {
-  return atol(m_sValue);
+    return atol(m_sValue);
 }
 
 // -----------------------------------------------------------------
@@ -34,8 +34,8 @@ double XMLLiteAttribute::getFloatValue()
 // -----------------------------------------------------------------
 char * XMLLiteElement::getCharValue()
 {
-  // return copy of value instead?
-  return m_sValue;
+    // return copy of value instead?
+    return m_sValue;
 }
 
 // -----------------------------------------------------------------
@@ -43,7 +43,7 @@ char * XMLLiteElement::getCharValue()
 // -----------------------------------------------------------------
 long XMLLiteElement::getIntValue()
 {
-  return atol(m_sValue);
+    return atol(m_sValue);
 }
 
 // -----------------------------------------------------------------
@@ -59,14 +59,14 @@ double XMLLiteElement::getFloatValue()
 // -----------------------------------------------------------------
 XMLLiteElement * XMLLiteElement::getChildByName(const char * sName)
 {
-  XMLLiteElement * pChild = getFirstChild();
-  while (pChild != NULL)
-  {
-    if (strcmp(sName, pChild->getName()) == 0)
-      return pChild;
-    pChild = getNextChild();
-  }
-  return NULL;
+    XMLLiteElement * pChild = getFirstChild();
+    while (pChild != NULL)
+    {
+        if (strcmp(sName, pChild->getName()) == 0)
+            return pChild;
+        pChild = getNextChild();
+    }
+    return NULL;
 }
 
 // -----------------------------------------------------------------
@@ -74,12 +74,12 @@ XMLLiteElement * XMLLiteElement::getChildByName(const char * sName)
 // -----------------------------------------------------------------
 XMLLiteAttribute * XMLLiteElement::getAttributeByName(const char * sName)
 {
-  XMLLiteAttribute * pAttr = getFirstAttribute();
-  while (pAttr != NULL)
-  {
-    if (strcmp(sName, pAttr->getName()) == 0)
-      return pAttr;
-    pAttr = getNextAttribute();
-  }
-  return NULL;
+    XMLLiteAttribute * pAttr = getFirstAttribute();
+    while (pAttr != NULL)
+    {
+        if (strcmp(sName, pAttr->getName()) == 0)
+            return pAttr;
+        pAttr = getNextAttribute();
+    }
+    return NULL;
 }

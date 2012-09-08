@@ -19,12 +19,12 @@ F_RGBA TEXT_COLOR_DARK = rgb(0,0,0);
 // -----------------------------------------------------------------
 guiObject::guiObject() : GraphicObject()
 {
-  m_iXPxl = 0;
-  m_iYPxl = 0;
-  m_iWidth = 0;
-  m_iHeight = 0;
-  m_DiffuseColor = F_RGBA_NULL;
-  wsafecpy(m_sTooltip, 128, "");
+    m_iXPxl = 0;
+    m_iYPxl = 0;
+    m_iWidth = 0;
+    m_iHeight = 0;
+    m_DiffuseColor = F_RGBA_NULL;
+    wsafecpy(m_sTooltip, 128, "");
 }
 
 // -----------------------------------------------------------------
@@ -33,8 +33,8 @@ guiObject::guiObject() : GraphicObject()
 // -----------------------------------------------------------------
 guiObject::~guiObject()
 {
-  extern GameRoot * g_pMainGameRoot;
-  g_pMainGameRoot->m_pLocalClient->getInterface()->resetSharedPointers(this);
+    extern GameRoot * g_pMainGameRoot;
+    g_pMainGameRoot->m_pLocalClient->getInterface()->resetSharedPointers(this);
 }
 
 // -----------------------------------------------------------------
@@ -42,7 +42,7 @@ guiObject::~guiObject()
 // -----------------------------------------------------------------
 bool guiObject::isAt(int xPxl, int yPxl)
 {
-  return (xPxl >= m_iXPxl && yPxl >= m_iYPxl && xPxl <= m_iXPxl + m_iWidth && yPxl <= m_iYPxl + m_iHeight);
+    return (xPxl >= m_iXPxl && yPxl >= m_iYPxl && xPxl <= m_iXPxl + m_iWidth && yPxl <= m_iYPxl + m_iHeight);
 }
 
 // -----------------------------------------------------------------
@@ -50,8 +50,8 @@ bool guiObject::isAt(int xPxl, int yPxl)
 // -----------------------------------------------------------------
 void guiObject::moveTo(int xPxl, int yPxl)
 {
-  m_iXPxl = xPxl;
-  m_iYPxl = yPxl;
+    m_iXPxl = xPxl;
+    m_iYPxl = yPxl;
 }
 
 // -----------------------------------------------------------------
@@ -59,8 +59,8 @@ void guiObject::moveTo(int xPxl, int yPxl)
 // -----------------------------------------------------------------
 void guiObject::moveBy(int xPxl, int yPxl)
 {
-  m_iXPxl += xPxl;
-  m_iYPxl += yPxl;
+    m_iXPxl += xPxl;
+    m_iYPxl += yPxl;
 }
 
 // -----------------------------------------------------------------
@@ -68,9 +68,9 @@ void guiObject::moveBy(int xPxl, int yPxl)
 // -----------------------------------------------------------------
 void guiObject::setWidth(int iWidth)
 {
-  int oldw = m_iWidth;
-  m_iWidth = iWidth;
-  onResize(oldw, m_iHeight);
+    int oldw = m_iWidth;
+    m_iWidth = iWidth;
+    onResize(oldw, m_iHeight);
 }
 
 // -----------------------------------------------------------------
@@ -78,9 +78,9 @@ void guiObject::setWidth(int iWidth)
 // -----------------------------------------------------------------
 void guiObject::setHeight(int iHeight)
 {
-  int oldh = m_iHeight;
-  m_iHeight = iHeight;
-  onResize(m_iWidth, oldh);
+    int oldh = m_iHeight;
+    m_iHeight = iHeight;
+    onResize(m_iWidth, oldh);
 }
 
 // -----------------------------------------------------------------
@@ -88,11 +88,11 @@ void guiObject::setHeight(int iHeight)
 // -----------------------------------------------------------------
 void guiObject::setDimensions(int iWidth, int iHeight)
 {
-  int oldw = m_iWidth;
-  m_iWidth = iWidth;
-  int oldh = m_iHeight;
-  m_iHeight = iHeight;
-  onResize(oldw, oldh);
+    int oldw = m_iWidth;
+    m_iWidth = iWidth;
+    int oldh = m_iHeight;
+    m_iHeight = iHeight;
+    onResize(oldw, oldh);
 }
 
 // -----------------------------------------------------------------
@@ -100,10 +100,10 @@ void guiObject::setDimensions(int iWidth, int iHeight)
 // -----------------------------------------------------------------
 void guiObject::init(int xPxl, int yPxl, int wPxl, int hPxl)
 {
-  m_iXPxl = xPxl;
-  m_iYPxl = yPxl;
-  m_iWidth = wPxl;
-  m_iHeight = hPxl;
+    m_iXPxl = xPxl;
+    m_iYPxl = yPxl;
+    m_iWidth = wPxl;
+    m_iHeight = hPxl;
 }
 
 // -----------------------------------------------------------------
@@ -112,9 +112,9 @@ void guiObject::init(int xPxl, int yPxl, int wPxl, int hPxl)
 // -----------------------------------------------------------------
 void guiObject::registerTextures(TextureEngine * pTexEngine, FontEngine * pFontEngine)
 {
-  m_aiAllFonts[(int)Arabolical_wh_16] = pFontEngine->registerFont("Arabolical_16", pTexEngine);
-  m_aiAllFonts[(int)Arabolical_wh_32] = pFontEngine->registerFont("Arabolical_32", pTexEngine);
-  m_aiAllFonts[(int)Argos_wh_16] = pFontEngine->registerFont("Argos_16", pTexEngine);
-  m_aiAllFonts[(int)Blackchancery_wh_16] = pFontEngine->registerFont("BlackChancery_16", pTexEngine);
-  m_aiAllFonts[(int)Bookantiqua_wh_16] = pFontEngine->registerFont("BookAntiqua_16", pTexEngine);
+    m_aiAllFonts[(int)Arabolical_wh_16] = pFontEngine->registerFont("Arabolical_16", pTexEngine);
+    m_aiAllFonts[(int)Arabolical_wh_32] = pFontEngine->registerFont("Arabolical_32", pTexEngine);
+    m_aiAllFonts[(int)Argos_wh_16] = pFontEngine->registerFont("Argos_16", pTexEngine);
+    m_aiAllFonts[(int)Blackchancery_wh_16] = pFontEngine->registerFont("BlackChancery_16", pTexEngine);
+    m_aiAllFonts[(int)Bookantiqua_wh_16] = pFontEngine->registerFont("BookAntiqua_16", pTexEngine);
 }

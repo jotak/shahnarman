@@ -9,40 +9,43 @@ typedef short           s16;
 typedef long            s32;
 
 #ifdef WIN32
-  #define _USE_MATH_DEFINES
-  #include <stdio.h>
-  #include <string.h>
-  #include <cmath>
-  #include <assert.h>
-  #include <windows.h>
-  #include <string>
-  #include <hash_map>
-  #include <queue>
+#define _USE_MATH_DEFINES
+#include <stdio.h>
+#include <string.h>
+#include <cmath>
+#include <assert.h>
+#include <windows.h>
+#include <string>
+#include <hash_map>
+#include <queue>
 
-  #define fopen_s(a,b,c) _fopen_s_s(a,b,c)
+#define fopen_s(a,b,c) _fopen_s_s(a,b,c)
 #endif
 
 #ifdef LINUX
-  #include <cstring>
-  #include <iostream>
-  #include <cmath>
-  #include <assert.h>
-  #include <queue>
-  #include <tr1/unordered_map>
-  #include <tr1/memory>
+#include <cstring>
+#include <iostream>
+#include <cmath>
+#include <assert.h>
+#include <queue>
+#include <tr1/unordered_map>
+#include <tr1/memory>
 
-  namespace std { using namespace __gnu_cxx; }
+namespace std
+{
+using namespace __gnu_cxx;
+}
 
 //  #define strcat_s(a,b,c)   strcat(a,c)
 //  #define strcpy_s(a,b,c)   strcpy(a,c)
 //  #define _strcasecmp(a,b)     strcasecmp(a,b)
 //  #define strcasecmp(a,b)     wcscasecmp(a,b)  // Just as reminder : strcmp can also be used
-  #define errno_t int
-  #define max(x,y) ((x)>=(y)?(x):(y))
-  #define min(x,y) ((x)<=(y)?(x):(y))
-  extern errno_t fopen_s(FILE ** pFile, const char * sFilename, const char * sMode);
-  #define GLUT_WHEEL_UP   3 // freeglut uses 3 and 4 as wheel buttons
-  #define GLUT_WHEEL_DOWN 4
+#define errno_t int
+#define max(x,y) ((x)>=(y)?(x):(y))
+#define min(x,y) ((x)<=(y)?(x):(y))
+extern errno_t fopen_s(FILE ** pFile, const char * sFilename, const char * sMode);
+#define GLUT_WHEEL_UP   3 // freeglut uses 3 and 4 as wheel buttons
+#define GLUT_WHEEL_DOWN 4
 #endif
 
 typedef std::tr1::unordered_map<std::string, long> long_hash;
@@ -50,7 +53,7 @@ typedef std::tr1::unordered_map<std::string, std::string> str_hash;
 typedef std::tr1::unordered_map<char, char> ch_hash;
 
 #ifndef MAX_PATH
-  #define MAX_PATH    512
+#define MAX_PATH    512
 #endif
 #define DATA_PATH             "data/"
 #define GAME_TEXTURES_PATH    "data/textures/"
@@ -68,15 +71,15 @@ typedef std::tr1::unordered_map<char, char> ch_hash;
 
 enum Cardinal9
 {
-  c9_NW = 1,
-  c9_N,
-  c9_NE,
-  c9_W,
-  c9_C,
-  c9_E,
-  c9_SW,
-  c9_S,
-  c9_SE
+    c9_NW = 1,
+    c9_N,
+    c9_NE,
+    c9_W,
+    c9_C,
+    c9_E,
+    c9_SW,
+    c9_S,
+    c9_SE
 };
 
 #define XYZ_EMPTY_CONSTRUCTOR(T)  T() { x = 0; y = 0; z = 0; };
@@ -107,74 +110,122 @@ class Coords {};
 class CoordsScreen : public Coords
 {
 public:
-  XYZ_EMPTY_CONSTRUCTOR(CoordsScreen)
-  XYZ_CONSTRUCTOR(CoordsScreen, int)
-  XYZ_OPDIF(CoordsScreen)
-  XYZ_OPEQ(CoordsScreen)
-  XYZ_OPPLUS(CoordsScreen)
-  XYZ_OPPLUSEQ(CoordsScreen)
-  XYZ_OPMINUS(CoordsScreen)
-  XYZ_OPMINUSEQ(CoordsScreen)
-  XYZ_OPMULT(CoordsScreen, int)
-  XYZ_OPDIV(CoordsScreen, int)
-  XYZ_DECLAREVAR(int)
+    XYZ_EMPTY_CONSTRUCTOR(CoordsScreen)
+    XYZ_CONSTRUCTOR(CoordsScreen, int)
+    XYZ_OPDIF(CoordsScreen)
+    XYZ_OPEQ(CoordsScreen)
+    XYZ_OPPLUS(CoordsScreen)
+    XYZ_OPPLUSEQ(CoordsScreen)
+    XYZ_OPMINUS(CoordsScreen)
+    XYZ_OPMINUSEQ(CoordsScreen)
+    XYZ_OPMULT(CoordsScreen, int)
+    XYZ_OPDIV(CoordsScreen, int)
+    XYZ_DECLAREVAR(int)
 };
 class CoordsMap : public Coords
 {
 public:
-  XY_EMPTY_CONSTRUCTOR(CoordsMap)
-  XY_CONSTRUCTOR(CoordsMap, int)
-  XY_OPDIF(CoordsMap)
-  XY_OPEQ(CoordsMap)
-  XY_OPPLUS(CoordsMap)
-  XY_OPPLUSEQ(CoordsMap)
-  XY_OPMINUS(CoordsMap)
-  XY_OPMINUSEQ(CoordsMap)
-  XY_OPMULT(CoordsMap, int)
-  XY_OPDIV(CoordsMap, int)
-  XY_DECLAREVAR(int)
+    XY_EMPTY_CONSTRUCTOR(CoordsMap)
+    XY_CONSTRUCTOR(CoordsMap, int)
+    XY_OPDIF(CoordsMap)
+    XY_OPEQ(CoordsMap)
+    XY_OPPLUS(CoordsMap)
+    XY_OPPLUSEQ(CoordsMap)
+    XY_OPMINUS(CoordsMap)
+    XY_OPMINUSEQ(CoordsMap)
+    XY_OPMULT(CoordsMap, int)
+    XY_OPDIV(CoordsMap, int)
+    XY_DECLAREVAR(int)
 };
 class Coords3D : public Coords
 {
 public:
-  XYZ_EMPTY_CONSTRUCTOR(Coords3D)
-  XYZ_CONSTRUCTOR(Coords3D, double)
-  XYZ_OPDIF(Coords3D)
-  XYZ_OPEQ(Coords3D)
-  XYZ_OPPLUS(Coords3D)
-  XYZ_OPPLUSEQ(Coords3D)
-  XYZ_OPMINUS(Coords3D)
-  XYZ_OPMINUSEQ(Coords3D)
-  XYZ_OPMULT(Coords3D, double)
-  XYZ_OPDIV(Coords3D, double)
-  double getsize() {return sqrt(x*x+y*y+z*z); };
-  double dot(Coords3D op2) { return ( x * op2.x + y * op2.y + z * op2.z); }; // Dot product
-  void cross(Coords3D op1, Coords3D op2) {x=(op1.y*op2.z)-(op1.z*op2.y);y=(op1.z*op2.x)-(op1.x*op2.z);z=(op1.x*op2.y)-(op1.y*op2.x);}; // Cross product
-  Coords3D getUnitVector() { double size=getsize(); if (size!=0) return (*this/size); else return Coords3D(); };
-  XYZ_DECLAREVAR(double)
+    XYZ_EMPTY_CONSTRUCTOR(Coords3D)
+    XYZ_CONSTRUCTOR(Coords3D, double)
+    XYZ_OPDIF(Coords3D)
+    XYZ_OPEQ(Coords3D)
+    XYZ_OPPLUS(Coords3D)
+    XYZ_OPPLUSEQ(Coords3D)
+    XYZ_OPMINUS(Coords3D)
+    XYZ_OPMINUSEQ(Coords3D)
+    XYZ_OPMULT(Coords3D, double)
+    XYZ_OPDIV(Coords3D, double)
+    double getsize()
+    {
+        return sqrt(x*x+y*y+z*z);
+    };
+    double dot(Coords3D op2)
+    {
+        return ( x * op2.x + y * op2.y + z * op2.z);
+    }; // Dot product
+    void cross(Coords3D op1, Coords3D op2)
+    {
+        x=(op1.y*op2.z)-(op1.z*op2.y);
+        y=(op1.z*op2.x)-(op1.x*op2.z);
+        z=(op1.x*op2.y)-(op1.y*op2.x);
+    }; // Cross product
+    Coords3D getUnitVector()
+    {
+        double size=getsize();
+        if (size!=0) return (*this/size);
+        else return Coords3D();
+    };
+    XYZ_DECLAREVAR(double)
 };
 
 #define f3d   Coords3D
 
 typedef struct struct_F_RGBA
 {
-  float r;
-  float g;
-  float b;
-  float a;
-  struct struct_F_RGBA operator+(struct struct_F_RGBA color) { struct struct_F_RGBA ret; ret.r = color.r + r; ret.g = color.g + g; ret.b = color.b + b; ret.a = color.a + a; return ret; }
-  struct struct_F_RGBA operator-(struct struct_F_RGBA color) { struct struct_F_RGBA ret; ret.r = r - color.r; ret.g = g - color.g; ret.b = b - color.b; ret.a = a - color.a; return ret; }
-  struct struct_F_RGBA operator*(float f) { struct struct_F_RGBA ret; ret.r = f * r; ret.g = f * g; ret.b = f * b; ret.a = f * a; return ret; }
-  struct struct_F_RGBA operator/(float f) { struct struct_F_RGBA ret; ret.r = r / f; ret.g = g / f; ret.b = b / f; ret.a = a / f; return ret; }
+    float r;
+    float g;
+    float b;
+    float a;
+    struct struct_F_RGBA operator+(struct struct_F_RGBA color)
+    {
+        struct struct_F_RGBA ret;
+        ret.r = color.r + r;
+        ret.g = color.g + g;
+        ret.b = color.b + b;
+        ret.a = color.a + a;
+        return ret;
+    }
+    struct struct_F_RGBA operator-(struct struct_F_RGBA color)
+    {
+        struct struct_F_RGBA ret;
+        ret.r = r - color.r;
+        ret.g = g - color.g;
+        ret.b = b - color.b;
+        ret.a = a - color.a;
+        return ret;
+    }
+    struct struct_F_RGBA operator*(float f)
+    {
+        struct struct_F_RGBA ret;
+        ret.r = f * r;
+        ret.g = f * g;
+        ret.b = f * b;
+        ret.a = f * a;
+        return ret;
+    }
+    struct struct_F_RGBA operator/(float f)
+    {
+        struct struct_F_RGBA ret;
+        ret.r = r / f;
+        ret.g = g / f;
+        ret.b = b / f;
+        ret.a = a / f;
+        return ret;
+    }
 } F_RGBA;
 
 typedef struct struct_RELINK_PTR_DATA
 {
-  u8 type;
-  u32 data1;
-  u32 data2;
-  u32 data3;
-  u32 data4;
+    u8 type;
+    u32 data1;
+    u32 data2;
+    u32 data3;
+    u32 data4;
 } RELINK_PTR_DATA;
 
 extern F_RGBA                     rgba(float r, float g, float b, float a);

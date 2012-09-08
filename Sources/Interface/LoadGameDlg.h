@@ -10,20 +10,20 @@ class guiContainer;
 class LoadGameDlg : public guiDocument
 {
 public:
-  LoadGameDlg(int iWidth, int iHeight, LocalClient * pLocalClient);
-  ~LoadGameDlg();
+    LoadGameDlg(int iWidth, int iHeight, LocalClient * pLocalClient);
+    ~LoadGameDlg();
 
-  // Handlers
-  bool onButtonEvent(ButtonAction * pEvent, guiComponent * pCpnt);
+    // Handlers
+    bool onButtonEvent(ButtonAction * pEvent, guiComponent * pCpnt);
 
 protected:
-  void loadGamesList();
-  void loadGameInfo(char * sGameName);
+    void loadGamesList();
+    void loadGameInfo(char * sGameName);
 
-  LocalClient * m_pLocalClient;
-  guiContainer * m_pGamesPanel;
-  guiContainer * m_pGameInfoPanel;
-  char m_sSelectedGameName[MAX_PATH];
+    LocalClient * m_pLocalClient;
+    guiContainer * m_pGamesPanel;
+    guiContainer * m_pGameInfoPanel;
+    char m_sSelectedGameName[MAX_PATH];
 };
 
 #endif

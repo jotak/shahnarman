@@ -13,10 +13,10 @@
 // -----------------------------------------------------------------
 FontEngine::FontEngine(DisplayEngine * pDisplay, DebugManager * pDebug)
 {
-  m_pDisplay = pDisplay;
-  m_pDebug = pDebug;
-  for (int i = 0; i < MAX_FONTS; i++)
-    m_pAllFonts[i] = NULL;
+    m_pDisplay = pDisplay;
+    m_pDebug = pDebug;
+    for (int i = 0; i < MAX_FONTS; i++)
+        m_pAllFonts[i] = NULL;
 }
 
 // -----------------------------------------------------------------
@@ -25,11 +25,11 @@ FontEngine::FontEngine(DisplayEngine * pDisplay, DebugManager * pDebug)
 // -----------------------------------------------------------------
 FontEngine::~FontEngine()
 {
-  for (int i = 0; i < MAX_FONTS; i++)
-  {
-    if (m_pAllFonts[i] != NULL)
-      delete m_pAllFonts[i];
-  }
+    for (int i = 0; i < MAX_FONTS; i++)
+    {
+        if (m_pAllFonts[i] != NULL)
+            delete m_pAllFonts[i];
+    }
 }
 
 // -----------------------------------------------------------------
@@ -37,14 +37,14 @@ FontEngine::~FontEngine()
 // -----------------------------------------------------------------
 void FontEngine::resetAllFonts()
 {
-  for (int i = 0; i < MAX_FONTS; i++)
-  {
-    if (m_pAllFonts[i] != NULL)
+    for (int i = 0; i < MAX_FONTS; i++)
     {
-      delete m_pAllFonts[i];
-      m_pAllFonts[i] = NULL;
+        if (m_pAllFonts[i] != NULL)
+        {
+            delete m_pAllFonts[i];
+            m_pAllFonts[i] = NULL;
+        }
     }
-  }
 }
 
 // -----------------------------------------------------------------
@@ -53,26 +53,26 @@ void FontEngine::resetAllFonts()
 // -----------------------------------------------------------------
 int FontEngine::registerFont(const char * sFontName, TextureEngine * pTexEngine)
 {
-  int iFont = 0;
-  while (m_pAllFonts[iFont] != NULL)
-  {
-    if (strcmp(m_pAllFonts[iFont]->getFontName(), sFontName) == 0)
-      return -iFont;
-    iFont++;
-    if (iFont == MAX_FONTS)
-      return 1;
-  }
-  m_pAllFonts[iFont] = new Font();
-  s16 err = m_pAllFonts[iFont]->load(sFontName, pTexEngine);
-  if (err != FNT_OK)
-  {
-    m_pDebug->notifyErrorMessage(err, sFontName);
-    delete m_pAllFonts[iFont];
-    m_pAllFonts[iFont] = NULL;
-    return 1;
-  }
-  else
-    return -iFont;
+    int iFont = 0;
+    while (m_pAllFonts[iFont] != NULL)
+    {
+        if (strcmp(m_pAllFonts[iFont]->getFontName(), sFontName) == 0)
+            return -iFont;
+        iFont++;
+        if (iFont == MAX_FONTS)
+            return 1;
+    }
+    m_pAllFonts[iFont] = new Font();
+    s16 err = m_pAllFonts[iFont]->load(sFontName, pTexEngine);
+    if (err != FNT_OK)
+    {
+        m_pDebug->notifyErrorMessage(err, sFontName);
+        delete m_pAllFonts[iFont];
+        m_pAllFonts[iFont] = NULL;
+        return 1;
+    }
+    else
+        return -iFont;
 }
 
 // -----------------------------------------------------------------
@@ -80,8 +80,8 @@ int FontEngine::registerFont(const char * sFontName, TextureEngine * pTexEngine)
 // -----------------------------------------------------------------
 Font * FontEngine::getFont(int iIndex)
 {
-  assert(IS_VALID_FONTID(iIndex));
-  return m_pAllFonts[-iIndex];
+    assert(IS_VALID_FONTID(iIndex));
+    return m_pAllFonts[-iIndex];
 }
 
 // ------------------------------------------------------------------
@@ -89,9 +89,9 @@ Font * FontEngine::getFont(int iIndex)
 // ------------------------------------------------------------------
 int FontEngine::getStringLength(const char * sText, int iIndex)
 {
-  assert(IS_VALID_FONTID(iIndex));
-  assert(m_pAllFonts[-iIndex] != NULL);
-  return m_pAllFonts[-iIndex]->getStringLength(sText);
+    assert(IS_VALID_FONTID(iIndex));
+    assert(m_pAllFonts[-iIndex] != NULL);
+    return m_pAllFonts[-iIndex]->getStringLength(sText);
 }
 
 // ------------------------------------------------------------------
@@ -99,16 +99,16 @@ int FontEngine::getStringLength(const char * sText, int iIndex)
 // ------------------------------------------------------------------
 int FontEngine::getStringHeight(const char * sText, int iIndex)
 {
-  assert(IS_VALID_FONTID(iIndex));
-  assert(m_pAllFonts[-iIndex] != NULL);
-  int nbLines = 1;
-  int i = 0;
-  while (sText[i] != '\0')
-  {
-    if (sText[i++] == '\n')
-      nbLines++;
-  }
-  return m_pAllFonts[-iIndex]->getFontHeight() * nbLines;
+    assert(IS_VALID_FONTID(iIndex));
+    assert(m_pAllFonts[-iIndex] != NULL);
+    int nbLines = 1;
+    int i = 0;
+    while (sText[i] != '\0')
+    {
+        if (sText[i++] == '\n')
+            nbLines++;
+    }
+    return m_pAllFonts[-iIndex]->getFontHeight() * nbLines;
 }
 
 // ------------------------------------------------------------------
@@ -116,9 +116,9 @@ int FontEngine::getStringHeight(const char * sText, int iIndex)
 // ------------------------------------------------------------------
 int FontEngine::putStringInBox(char * sText, int iBoxWidth, int iIndex)
 {
-  assert(IS_VALID_FONTID(iIndex));
-  assert(m_pAllFonts[-iIndex] != NULL);
-  return m_pAllFonts[-iIndex]->putStringInBox(sText, iBoxWidth);
+    assert(IS_VALID_FONTID(iIndex));
+    assert(m_pAllFonts[-iIndex] != NULL);
+    return m_pAllFonts[-iIndex]->putStringInBox(sText, iBoxWidth);
 }
 
 // ------------------------------------------------------------------
@@ -126,9 +126,9 @@ int FontEngine::putStringInBox(char * sText, int iBoxWidth, int iIndex)
 // ------------------------------------------------------------------
 int FontEngine::getFontHeight(int iIndex)
 {
-  assert(IS_VALID_FONTID(iIndex));
-  assert(m_pAllFonts[-iIndex] != NULL);
-  return m_pAllFonts[-iIndex]->getFontHeight();
+    assert(IS_VALID_FONTID(iIndex));
+    assert(m_pAllFonts[-iIndex] != NULL);
+    return m_pAllFonts[-iIndex]->getFontHeight();
 }
 
 // ------------------------------------------------------------------
@@ -136,9 +136,9 @@ int FontEngine::getFontHeight(int iIndex)
 // ------------------------------------------------------------------
 CoordsScreen FontEngine::getCharacterPosition(int iPos, const char * sText, int iIndex)
 {
-  assert(IS_VALID_FONTID(iIndex));
-  assert(m_pAllFonts[-iIndex] != NULL);
-  return m_pAllFonts[-iIndex]->getCharacterPosition(iPos, sText);
+    assert(IS_VALID_FONTID(iIndex));
+    assert(m_pAllFonts[-iIndex] != NULL);
+    return m_pAllFonts[-iIndex]->getCharacterPosition(iPos, sText);
 }
 
 // ------------------------------------------------------------------
@@ -146,7 +146,7 @@ CoordsScreen FontEngine::getCharacterPosition(int iPos, const char * sText, int 
 // ------------------------------------------------------------------
 int FontEngine::getCharacterPosition(CoordsScreen cs, const char * sText, int iIndex)
 {
-  assert(IS_VALID_FONTID(iIndex));
-  assert(m_pAllFonts[-iIndex] != NULL);
-  return m_pAllFonts[-iIndex]->getCharacterPosition(cs, sText);
+    assert(IS_VALID_FONTID(iIndex));
+    assert(m_pAllFonts[-iIndex] != NULL);
+    return m_pAllFonts[-iIndex]->getCharacterPosition(cs, sText);
 }

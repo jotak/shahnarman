@@ -17,28 +17,40 @@ class MapTile;
 class AISolver
 {
 public:
-  // Constructor / destructor
-  AISolver(Server * pServer);
-  ~AISolver();
+    // Constructor / destructor
+    AISolver(Server * pServer);
+    ~AISolver();
 
-  void resolveNeutralAI(Unit * pUnit);
-  void resolveAI(Player * pPlayer);
+    void resolveNeutralAI(Unit * pUnit);
+    void resolveAI(Player * pPlayer);
 
-  // Simulation functions
-  int getOpponentInterest(Unit * pUnit, Unit * pOpponent, bool * bRange = NULL);
-  void addEvaluationTarget(AILuaSolver::EvaluationTargetInfo * pEval) { m_pLuaSolver->m_pEvaluationTargets->addLast(pEval); };
-  void addInterestForCurrentSpell(float fInterest) { m_pLuaSolver->m_fCurrentInterest += fInterest; };
-  void addCurrentSpellInterestForDamages(Player * pPlayer, Unit * pUnit, u8 damages) { m_pLuaSolver->addCurrentSpellInterestForDamages(pPlayer, pUnit, damages); };
-  Player * getCurrentPlayer() { return m_pLuaSolver->m_pCurrentPlayer; };
-  float evaluateBattleModifications(int * pNewAttackLife, int * pNewDefendLife, int * pNewAttackArmor, int * pNewDefendArmor, int * pNewAttackDamages, int * pNewDefendDamages);
-  float evaluateUnit(Unit * pUnit);
-  float evaluateUnit(CoordsMap mapPos, const char * sName, u8 uPlayer);
+    // Simulation functions
+    int getOpponentInterest(Unit * pUnit, Unit * pOpponent, bool * bRange = NULL);
+    void addEvaluationTarget(AILuaSolver::EvaluationTargetInfo * pEval)
+    {
+        m_pLuaSolver->m_pEvaluationTargets->addLast(pEval);
+    };
+    void addInterestForCurrentSpell(float fInterest)
+    {
+        m_pLuaSolver->m_fCurrentInterest += fInterest;
+    };
+    void addCurrentSpellInterestForDamages(Player * pPlayer, Unit * pUnit, u8 damages)
+    {
+        m_pLuaSolver->addCurrentSpellInterestForDamages(pPlayer, pUnit, damages);
+    };
+    Player * getCurrentPlayer()
+    {
+        return m_pLuaSolver->m_pCurrentPlayer;
+    };
+    float evaluateBattleModifications(int * pNewAttackLife, int * pNewDefendLife, int * pNewAttackArmor, int * pNewDefendArmor, int * pNewAttackDamages, int * pNewDefendDamages);
+    float evaluateUnit(Unit * pUnit);
+    float evaluateUnit(CoordsMap mapPos, const char * sName, u8 uPlayer);
 
 protected:
-  bool isInterestedByTile(Unit * pUnit, MapTile * pTile, Unit ** pOpponent);
+    bool isInterestedByTile(Unit * pUnit, MapTile * pTile, Unit ** pOpponent);
 
-  Server * m_pServer;
-  AILuaSolver * m_pLuaSolver;
+    Server * m_pServer;
+    AILuaSolver * m_pLuaSolver;
 };
 
 #endif

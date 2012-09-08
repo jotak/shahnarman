@@ -4,8 +4,14 @@
 class KeyboardListener
 {
 public:
-  virtual bool onKeyDown(unsigned char c) { return false; };
-  virtual bool onSpecialKeyDown(int key) { return false; };
+    virtual bool onKeyDown(unsigned char c)
+    {
+        return false;
+    };
+    virtual bool onSpecialKeyDown(int key)
+    {
+        return false;
+    };
 };
 
 #endif

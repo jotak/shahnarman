@@ -10,17 +10,23 @@
 class BattleSpellPopup : public guiPopup
 {
 public:
-  BattleSpellPopup(Player * pPlayer, int iTimer, DisplayEngine * pDisplay);
-  ~BattleSpellPopup();
+    BattleSpellPopup(Player * pPlayer, int iTimer, DisplayEngine * pDisplay);
+    ~BattleSpellPopup();
 
-  void update(double delta);
-  int getResponse() { return m_iResponse; };
-  void setReponse(int resp) { m_iResponse = resp; };
+    void update(double delta);
+    int getResponse()
+    {
+        return m_iResponse;
+    };
+    void setReponse(int resp)
+    {
+        m_iResponse = resp;
+    };
 
 protected:
-  Player * m_pPlayer;
-  double m_fTimer;
-  int m_iResponse;
+    Player * m_pPlayer;
+    double m_fTimer;
+    int m_iResponse;
 };
 
 #endif

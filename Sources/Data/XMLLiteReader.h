@@ -16,26 +16,32 @@
 class XMLLiteReader
 {
 public:
-  // Constructor / destructor
-  XMLLiteReader();
-  ~XMLLiteReader();
+    // Constructor / destructor
+    XMLLiteReader();
+    ~XMLLiteReader();
 
-  XMLLiteElement * parseFile(const char * sFileName, int * pError);
-  int getCurrentLine() { return m_iCurrentLine; };
-  int getCurrentCol() { return m_iCurrentCol; };
+    XMLLiteElement * parseFile(const char * sFileName, int * pError);
+    int getCurrentLine()
+    {
+        return m_iCurrentLine;
+    };
+    int getCurrentCol()
+    {
+        return m_iCurrentCol;
+    };
 
 private:
-  bool skipSpaces(FILE * pFile, int * c);
-  void skipComments(FILE * pFile);
-  void readElement(FILE * pFile, char cFirstChar, XMLLiteElement * pParent, int * pError);
-  bool readAttribute(FILE * pFile, char cFirstChar, int * cfinal, XMLLiteElement * pParent, int * pError);
-  void readClosingTag(FILE * pFile, char * sName, int * pError);
-  void readWordUntil(FILE * pFile, char cUntil, char * sWord, int iSize, int * pError);
-  bool readChar(FILE * pFile, int * c);
+    bool skipSpaces(FILE * pFile, int * c);
+    void skipComments(FILE * pFile);
+    void readElement(FILE * pFile, char cFirstChar, XMLLiteElement * pParent, int * pError);
+    bool readAttribute(FILE * pFile, char cFirstChar, int * cfinal, XMLLiteElement * pParent, int * pError);
+    void readClosingTag(FILE * pFile, char * sName, int * pError);
+    void readWordUntil(FILE * pFile, char cUntil, char * sWord, int iSize, int * pError);
+    bool readChar(FILE * pFile, int * c);
 
-  XMLLiteElement * m_pRootNode;
-  int m_iCurrentLine;
-  int m_iCurrentCol;
+    XMLLiteElement * m_pRootNode;
+    int m_iCurrentLine;
+    int m_iCurrentCol;
 };
 
 #endif

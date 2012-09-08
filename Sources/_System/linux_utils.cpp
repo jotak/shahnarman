@@ -11,15 +11,15 @@
 // Random selon Linux
 u32 getRandom(u32 max)
 {
-  return ((u32)rand()) % max;
+    return ((u32)rand()) % max;
 }
 
 errno_t fopen_s(FILE ** pFile, const char * sFilename, const char * sMode)
 {
-  *pFile = fopen(sFilename, sMode);
-  if (*pFile == NULL)
-    return -1;
-  return 0;
+    *pFile = fopen(sFilename, sMode);
+    if (*pFile == NULL)
+        return -1;
+    return 0;
 }
 
 // type: 0=any, 0x4=folder, 0x8=file
@@ -27,12 +27,15 @@ int getDirectoryContent(std::string dir, std::vector<std::string> &files, unsign
 {
     DIR * dp;
     struct dirent * dirp;
-    if ((dp  = opendir(dir.c_str())) == NULL) {
+    if ((dp  = opendir(dir.c_str())) == NULL)
+    {
         return -1;
     }
 
-    while ((dirp = readdir(dp)) != NULL) {
-        if (type == 0 || type == dirp->d_type) {
+    while ((dirp = readdir(dp)) != NULL)
+    {
+        if (type == 0 || type == dirp->d_type)
+        {
             files.push_back(std::string(dirp->d_name));
         }
     }

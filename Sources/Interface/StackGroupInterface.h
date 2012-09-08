@@ -6,8 +6,8 @@
 class StackGroupInterface
 {
 public:
-  virtual MetaObjectList * resetCurrentGroup(BaseObject * pItem, MetaObjectList * pCurrentGroup) = 0;
-  virtual MetaObjectList * onClickOnGroupItem(BaseObject * pItem, bool bClickState, MetaObjectList * pCurrentGroup) = 0;
+    virtual MetaObjectList * resetCurrentGroup(BaseObject * pItem, MetaObjectList * pCurrentGroup) = 0;
+    virtual MetaObjectList * onClickOnGroupItem(BaseObject * pItem, bool bClickState, MetaObjectList * pCurrentGroup) = 0;
 };
 
 #endif

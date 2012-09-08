@@ -15,14 +15,14 @@
 // -----------------------------------------------------------------
 PlayerSelectorDlg::PlayerSelectorDlg(LocalClient * pLocalClient) : guiDocument()
 {
-  m_pLocalClient = pLocalClient;
-  m_pTarget = NULL;
-  m_pCancelCallback = NULL;
-  m_pSelectorImg = NULL;
+    m_pLocalClient = pLocalClient;
+    m_pTarget = NULL;
+    m_pCancelCallback = NULL;
+    m_pSelectorImg = NULL;
 
-  init("",
-    pLocalClient->getDisplay()->getTextureEngine()->findTexture("interface:WinBg"),
-    0, 0, 1, 1, pLocalClient->getDisplay());
+    init("",
+         pLocalClient->getDisplay()->getTextureEngine()->findTexture("interface:WinBg"),
+         0, 0, 1, 1, pLocalClient->getDisplay());
 }
 
 // -----------------------------------------------------------------
@@ -32,10 +32,10 @@ PlayerSelectorDlg::PlayerSelectorDlg(LocalClient * pLocalClient) : guiDocument()
 PlayerSelectorDlg::~PlayerSelectorDlg()
 {
 #ifdef DBG_VERBOSE1
-  printf("Begin destroy PlayerSelectorDlg\n");
+    printf("Begin destroy PlayerSelectorDlg\n");
 #endif
 #ifdef DBG_VERBOSE1
-  printf("End destroy PlayerSelectorDlg\n");
+    printf("End destroy PlayerSelectorDlg\n");
 #endif
 }
 
@@ -44,15 +44,15 @@ PlayerSelectorDlg::~PlayerSelectorDlg()
 // -----------------------------------------------------------------
 bool PlayerSelectorDlg::onButtonEvent(ButtonAction * pEvent, guiComponent * pCpnt)
 {
-  if (strcmp(pCpnt->getId(), "CancelButton") == 0)
-  {
-    if (m_pCancelCallback != NULL)
-      m_pCancelCallback();
-    guiFrame * pFrm = m_pLocalClient->getInterface()->findFrameFromDoc(this);
-    pFrm->setVisible(false);
-    return false;
-  }
-  return true;
+    if (strcmp(pCpnt->getId(), "CancelButton") == 0)
+    {
+        if (m_pCancelCallback != NULL)
+            m_pCancelCallback();
+        guiFrame * pFrm = m_pLocalClient->getInterface()->findFrameFromDoc(this);
+        pFrm->setVisible(false);
+        return false;
+    }
+    return true;
 }
 
 // -----------------------------------------------------------------
@@ -60,23 +60,23 @@ bool PlayerSelectorDlg::onButtonEvent(ButtonAction * pEvent, guiComponent * pCpn
 // -----------------------------------------------------------------
 guiObject * PlayerSelectorDlg::onCursorMoveEvent(int xPxl, int yPxl)
 {
-  m_pTarget = NULL;
-  int xPxlRel = xPxl;
-  int yPxlRel = yPxl;
-  guiComponent * cpnt = getFirstComponent();
-  while (cpnt != NULL)
-  {
-    if (cpnt->isAt(xPxlRel, yPxlRel))
+    m_pTarget = NULL;
+    int xPxlRel = xPxl;
+    int yPxlRel = yPxl;
+    guiComponent * cpnt = getFirstComponent();
+    while (cpnt != NULL)
     {
-      if (strcmp(cpnt->getId(), "PlayerButton") == 0)
-      {
-        m_pTarget = cpnt;
-        break;
-      }
+        if (cpnt->isAt(xPxlRel, yPxlRel))
+        {
+            if (strcmp(cpnt->getId(), "PlayerButton") == 0)
+            {
+                m_pTarget = cpnt;
+                break;
+            }
+        }
+        cpnt = getNextComponent();
     }
-    cpnt = getNextComponent();
-  }
-  return guiDocument::onCursorMoveEvent(xPxl, yPxl);
+    return guiDocument::onCursorMoveEvent(xPxl, yPxl);
 }
 
 // -----------------------------------------------------------------
@@ -84,12 +84,12 @@ guiObject * PlayerSelectorDlg::onCursorMoveEvent(int xPxl, int yPxl)
 // -----------------------------------------------------------------
 void PlayerSelectorDlg::setTargetValid(bool bValid)
 {
-  m_pSelectorImg->setVisible(false);
-  if (m_pTarget != NULL && bValid)
-  {
-    m_pSelectorImg->moveTo(m_pTarget->getXPos(), m_pTarget->getYPos());
-    m_pSelectorImg->setVisible(true);
-  }
+    m_pSelectorImg->setVisible(false);
+    if (m_pTarget != NULL && bValid)
+    {
+        m_pSelectorImg->moveTo(m_pTarget->getXPos(), m_pTarget->getYPos());
+        m_pSelectorImg->setVisible(true);
+    }
 }
 
 // -----------------------------------------------------------------
@@ -97,8 +97,8 @@ void PlayerSelectorDlg::setTargetValid(bool bValid)
 // -----------------------------------------------------------------
 void PlayerSelectorDlg::hide()
 {
-  guiFrame * pFrm = m_pLocalClient->getInterface()->findFrameFromDoc(this);
-  pFrm->setVisible(false);
+    guiFrame * pFrm = m_pLocalClient->getInterface()->findFrameFromDoc(this);
+    pFrm->setVisible(false);
 }
 
 // -----------------------------------------------------------------
@@ -106,60 +106,60 @@ void PlayerSelectorDlg::hide()
 // -----------------------------------------------------------------
 void PlayerSelectorDlg::showPlayers(ObjectList * pPlayers, CLBK_ON_CANCEL * pCancelCallback)
 {
-  m_pCancelCallback = pCancelCallback;
-  char sText[LABEL_MAX_CHARS];
+    m_pCancelCallback = pCancelCallback;
+    char sText[LABEL_MAX_CHARS];
 
-  m_pTarget = NULL;
-  int btnSize = 96;
-  deleteAllComponents();
-  m_pSelectorImg = new guiImage();
-  int iTex = getDisplay()->getTextureEngine()->findTexture("interface:Selector");
-  m_pSelectorImg->init(iTex, "SelectorImage", 0, 0, btnSize, btnSize, getDisplay());
-  m_pSelectorImg->setVisible(false);
-  addComponent(m_pSelectorImg);
+    m_pTarget = NULL;
+    int btnSize = 96;
+    deleteAllComponents();
+    m_pSelectorImg = new guiImage();
+    int iTex = getDisplay()->getTextureEngine()->findTexture("interface:Selector");
+    m_pSelectorImg->init(iTex, "SelectorImage", 0, 0, btnSize, btnSize, getDisplay());
+    m_pSelectorImg->setVisible(false);
+    addComponent(m_pSelectorImg);
 
-  int xPxl = 0;
-  int yPxl = 0;
-  Player * pPlayer = (Player*) pPlayers->getFirst(0);
-  while (pPlayer != NULL)
-  {
-    // Player icon
-    guiImage * pImg = new guiImage();
-    pImg->init(pPlayer->getAvatarTexture(), "PlayerButton", xPxl, yPxl, btnSize, btnSize, getDisplay());
-    pImg->setTooltipText(pPlayer->getAvatarName());
-    pImg->setAttachment(pPlayer);
-    addComponent(pImg);
-
-    pImg = new guiImage();
-    pImg->init(pPlayer->m_iBannerTex, "PlayerButton", xPxl + btnSize - SMALL_ICON_SIZE, yPxl, SMALL_ICON_SIZE, SMALL_ICON_SIZE, getDisplay());
-    pImg->setDiffuseColor(pPlayer->m_Color);
-    pImg->setTooltipText(pPlayer->getAvatarName());
-    pImg->setAttachment(pPlayer);
-    addComponent(pImg);
-
-    xPxl += btnSize + SPACING;
-    if (xPxl + btnSize >= m_pLocalClient->getClientParameters()->screenXSize)
+    int xPxl = 0;
+    int yPxl = 0;
+    Player * pPlayer = (Player*) pPlayers->getFirst(0);
+    while (pPlayer != NULL)
     {
-      xPxl = 0;
-      yPxl += btnSize + SPACING;
+        // Player icon
+        guiImage * pImg = new guiImage();
+        pImg->init(pPlayer->getAvatarTexture(), "PlayerButton", xPxl, yPxl, btnSize, btnSize, getDisplay());
+        pImg->setTooltipText(pPlayer->getAvatarName());
+        pImg->setAttachment(pPlayer);
+        addComponent(pImg);
+
+        pImg = new guiImage();
+        pImg->init(pPlayer->m_iBannerTex, "PlayerButton", xPxl + btnSize - SMALL_ICON_SIZE, yPxl, SMALL_ICON_SIZE, SMALL_ICON_SIZE, getDisplay());
+        pImg->setDiffuseColor(pPlayer->m_Color);
+        pImg->setTooltipText(pPlayer->getAvatarName());
+        pImg->setAttachment(pPlayer);
+        addComponent(pImg);
+
+        xPxl += btnSize + SPACING;
+        if (xPxl + btnSize >= m_pLocalClient->getClientParameters()->screenXSize)
+        {
+            xPxl = 0;
+            yPxl += btnSize + SPACING;
+        }
+        pPlayer = (Player*) pPlayers->getNext(0);
     }
-    pPlayer = (Player*) pPlayers->getNext(0);
-  }
 
-  // Cancel button
-  if (pCancelCallback != NULL)
-    i18n->getText("CANCEL", sText, LABEL_MAX_CHARS);
-  else
-    i18n->getText("CLOSE", sText, LABEL_MAX_CHARS);
-  guiButton * pBtn = guiButton::createDefaultNormalButton(sText, "CancelButton", m_pLocalClient->getDisplay());
-  pBtn->moveTo(xPxl / 2 - pBtn->getWidth() / 2, yPxl + btnSize + 2 * SPACING);
-  addComponent(pBtn);
+    // Cancel button
+    if (pCancelCallback != NULL)
+        i18n->getText("CANCEL", sText, LABEL_MAX_CHARS);
+    else
+        i18n->getText("CLOSE", sText, LABEL_MAX_CHARS);
+    guiButton * pBtn = guiButton::createDefaultNormalButton(sText, "CancelButton", m_pLocalClient->getDisplay());
+    pBtn->moveTo(xPxl / 2 - pBtn->getWidth() / 2, yPxl + btnSize + 2 * SPACING);
+    addComponent(pBtn);
 
-  setDimensions(xPxl, pBtn->getYPos() + pBtn->getHeight() + SPACING);
+    setDimensions(xPxl, pBtn->getYPos() + pBtn->getHeight() + SPACING);
 
-  guiFrame * pFrm = m_pLocalClient->getInterface()->findFrameFromDoc(this);
-  m_pLocalClient->getInterface()->bringFrameAbove(pFrm);
-  pFrm->setVisible(true);
-  pFrm->updateSizeFit();
-  pFrm->moveTo(m_pLocalClient->getClientParameters()->screenXSize / 2 - pFrm->getWidth() / 2, m_pLocalClient->getClientParameters()->screenYSize / 2 - pFrm->getHeight() / 2);
+    guiFrame * pFrm = m_pLocalClient->getInterface()->findFrameFromDoc(this);
+    m_pLocalClient->getInterface()->bringFrameAbove(pFrm);
+    pFrm->setVisible(true);
+    pFrm->updateSizeFit();
+    pFrm->moveTo(m_pLocalClient->getClientParameters()->screenXSize / 2 - pFrm->getWidth() / 2, m_pLocalClient->getClientParameters()->screenYSize / 2 - pFrm->getHeight() / 2);
 }

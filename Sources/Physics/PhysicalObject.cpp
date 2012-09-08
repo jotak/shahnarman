@@ -6,7 +6,7 @@
 // -----------------------------------------------------------------
 PhysicalObject::PhysicalObject()
 {
-  m_pMovementsList = new ObjectList(true);
+    m_pMovementsList = new ObjectList(true);
 }
 
 // -----------------------------------------------------------------
@@ -15,7 +15,7 @@ PhysicalObject::PhysicalObject()
 // -----------------------------------------------------------------
 PhysicalObject::~PhysicalObject()
 {
-  delete m_pMovementsList;
+    delete m_pMovementsList;
 }
 
 // -----------------------------------------------------------------
@@ -23,13 +23,13 @@ PhysicalObject::~PhysicalObject()
 // -----------------------------------------------------------------
 void PhysicalObject::update(double delta)
 {
-  Movement * pMvt = (Movement*) m_pMovementsList->getFirst(0);
-  while (pMvt != NULL)
-  {
-    if (pMvt->isActive())
-      pMvt->applyMovement(delta, &m_3DPosition);
-    pMvt = (Movement*) m_pMovementsList->getNext(0);
-  }
+    Movement * pMvt = (Movement*) m_pMovementsList->getFirst(0);
+    while (pMvt != NULL)
+    {
+        if (pMvt->isActive())
+            pMvt->applyMovement(delta, &m_3DPosition);
+        pMvt = (Movement*) m_pMovementsList->getNext(0);
+    }
 }
 
 // -----------------------------------------------------------------
@@ -37,14 +37,14 @@ void PhysicalObject::update(double delta)
 // -----------------------------------------------------------------
 Movement * PhysicalObject::findMovement(u16 uMoveId)
 {
-  Movement * pMvt = (Movement*) m_pMovementsList->getFirst(0);
-  while (pMvt != NULL)
-  {
-    if (pMvt->getId() == uMoveId)
-      return pMvt;
-    pMvt = (Movement*) m_pMovementsList->getNext(0);
-  }
-  return NULL;
+    Movement * pMvt = (Movement*) m_pMovementsList->getFirst(0);
+    while (pMvt != NULL)
+    {
+        if (pMvt->getId() == uMoveId)
+            return pMvt;
+        pMvt = (Movement*) m_pMovementsList->getNext(0);
+    }
+    return NULL;
 }
 
 // -----------------------------------------------------------------
@@ -52,7 +52,7 @@ Movement * PhysicalObject::findMovement(u16 uMoveId)
 // -----------------------------------------------------------------
 void PhysicalObject::bindMovement(Movement * pMvt)
 {
-  m_pMovementsList->addFirst(pMvt);
+    m_pMovementsList->addFirst(pMvt);
 }
 
 // -----------------------------------------------------------------
@@ -60,17 +60,17 @@ void PhysicalObject::bindMovement(Movement * pMvt)
 // -----------------------------------------------------------------
 void PhysicalObject::unbindMovement(u16 uMoveId, bool bAll, bool bDelete)
 {
-  Movement * pMvt = (Movement*) m_pMovementsList->getFirst(0);
-  while (pMvt != NULL)
-  {
-    if (pMvt->getId() == uMoveId)
+    Movement * pMvt = (Movement*) m_pMovementsList->getFirst(0);
+    while (pMvt != NULL)
     {
-      m_pMovementsList->deleteCurrent(0, false, !bDelete);
-      if (!bAll)
-        return;
+        if (pMvt->getId() == uMoveId)
+        {
+            m_pMovementsList->deleteCurrent(0, false, !bDelete);
+            if (!bAll)
+                return;
+        }
+        pMvt = (Movement*) m_pMovementsList->getNext(0);
     }
-    pMvt = (Movement*) m_pMovementsList->getNext(0);
-  }
 }
 
 // -----------------------------------------------------------------
@@ -78,13 +78,13 @@ void PhysicalObject::unbindMovement(u16 uMoveId, bool bAll, bool bDelete)
 // -----------------------------------------------------------------
 void PhysicalObject::unbindInactiveMovements(bool bDelete)
 {
-  Movement * pMvt = (Movement*) m_pMovementsList->getFirst(0);
-  while (pMvt != NULL)
-  {
-    if (!pMvt->isActive())
-      m_pMovementsList->deleteCurrent(0, false, !bDelete);
-    pMvt = (Movement*) m_pMovementsList->getNext(0);
-  }
+    Movement * pMvt = (Movement*) m_pMovementsList->getFirst(0);
+    while (pMvt != NULL)
+    {
+        if (!pMvt->isActive())
+            m_pMovementsList->deleteCurrent(0, false, !bDelete);
+        pMvt = (Movement*) m_pMovementsList->getNext(0);
+    }
 }
 
 // -----------------------------------------------------------------
@@ -92,7 +92,7 @@ void PhysicalObject::unbindInactiveMovements(bool bDelete)
 // -----------------------------------------------------------------
 void PhysicalObject::unbindAllMovements(bool bDelete)
 {
-  m_pMovementsList->deleteAll(!bDelete);
+    m_pMovementsList->deleteAll(!bDelete);
 }
 
 // -----------------------------------------------------------------
@@ -100,7 +100,7 @@ void PhysicalObject::unbindAllMovements(bool bDelete)
 // -----------------------------------------------------------------
 void PhysicalObject::moveBy(Coords3D coords)
 {
-  m_3DPosition += coords;
+    m_3DPosition += coords;
 }
 
 // -----------------------------------------------------------------
@@ -108,5 +108,5 @@ void PhysicalObject::moveBy(Coords3D coords)
 // -----------------------------------------------------------------
 void PhysicalObject::moveTo(Coords3D coords)
 {
-  m_3DPosition = coords;
+    m_3DPosition = coords;
 }

@@ -16,9 +16,9 @@
 // -----------------------------------------------------------------
 AIData::AIData()
 {
-  wsafecpy(m_sEdition, NAME_MAX_CHARS, "");
-  wsafecpy(m_sAvatarId, NAME_MAX_CHARS, "");
-  m_pSpellsPacks = new ObjectList(true);
+    wsafecpy(m_sEdition, NAME_MAX_CHARS, "");
+    wsafecpy(m_sAvatarId, NAME_MAX_CHARS, "");
+    m_pSpellsPacks = new ObjectList(true);
 }
 
 // -----------------------------------------------------------------
@@ -27,7 +27,7 @@ AIData::AIData()
 // -----------------------------------------------------------------
 AIData::~AIData()
 {
-  delete m_pSpellsPacks;
+    delete m_pSpellsPacks;
 }
 
 // -----------------------------------------------------------------
@@ -35,14 +35,15 @@ AIData::~AIData()
 // -----------------------------------------------------------------
 AvatarData * AIData::createAvatar(LocalClient * pLocalClient)
 {
-  Edition * pEdition = pLocalClient->getDataFactory()->findEdition(m_sEdition);
-  if (pEdition == NULL) {
-    pLocalClient->getDebug()->notifyErrorMessage("Error: edition not found for AIData::createAvatar.");
-    return NULL;
-  }
-  AvatarData * pAvatar = (AvatarData*) pEdition->findUnitData(m_sAvatarId);
-  pAvatar = pAvatar->cloneStaticData(NULL, pLocalClient->getDebug());
-  return pAvatar;
+    Edition * pEdition = pLocalClient->getDataFactory()->findEdition(m_sEdition);
+    if (pEdition == NULL)
+    {
+        pLocalClient->getDebug()->notifyErrorMessage("Error: edition not found for AIData::createAvatar.");
+        return NULL;
+    }
+    AvatarData * pAvatar = (AvatarData*) pEdition->findUnitData(m_sAvatarId);
+    pAvatar = pAvatar->cloneStaticData(NULL, pLocalClient->getDebug());
+    return pAvatar;
 }
 
 // -----------------------------------------------------------------
@@ -50,26 +51,28 @@ AvatarData * AIData::createAvatar(LocalClient * pLocalClient)
 // -----------------------------------------------------------------
 void AIData::fillSpellsList(ObjectList * pList, LocalClient * pLocalClient)
 {
-  Edition * pEdition = pLocalClient->getDataFactory()->findEdition(m_sEdition);
-  if (pEdition == NULL) {
-    pLocalClient->getDebug()->notifyErrorMessage("Error: edition not found for AIData::fillSpellsList.");
-    return;
-  }
-
-  SpellsPackContent * pPack = (SpellsPackContent*) m_pSpellsPacks->getFirst(0);
-  while (pPack != NULL) {
-    for (int i = 0; i < pPack->m_iNbSpells; i++)
+    Edition * pEdition = pLocalClient->getDataFactory()->findEdition(m_sEdition);
+    if (pEdition == NULL)
     {
-      Spell * pSpell = NULL;
-      if (pPack->m_iMode == PACK_MODE_FIXED)
-        pSpell = pEdition->findSpell(pPack->m_sSpellId);
-      else
-        pSpell = pEdition->selectRandomSpell(pPack->m_iMode);
-      if (pSpell == NULL)
-        pLocalClient->getDebug()->notifyErrorMessage("NULL spell in AIData::fillSpellsList - spell selection failed.");
-      else
-        pList->addLast(pSpell);
+        pLocalClient->getDebug()->notifyErrorMessage("Error: edition not found for AIData::fillSpellsList.");
+        return;
     }
-    pPack = (SpellsPackContent*) m_pSpellsPacks->getNext(0);
-  }
+
+    SpellsPackContent * pPack = (SpellsPackContent*) m_pSpellsPacks->getFirst(0);
+    while (pPack != NULL)
+    {
+        for (int i = 0; i < pPack->m_iNbSpells; i++)
+        {
+            Spell * pSpell = NULL;
+            if (pPack->m_iMode == PACK_MODE_FIXED)
+                pSpell = pEdition->findSpell(pPack->m_sSpellId);
+            else
+                pSpell = pEdition->selectRandomSpell(pPack->m_iMode);
+            if (pSpell == NULL)
+                pLocalClient->getDebug()->notifyErrorMessage("NULL spell in AIData::fillSpellsList - spell selection failed.");
+            else
+                pList->addLast(pSpell);
+        }
+        pPack = (SpellsPackContent*) m_pSpellsPacks->getNext(0);
+    }
 }

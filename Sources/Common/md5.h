@@ -3,7 +3,7 @@
 /*
  * Implementation of the md5 algorithm described in RFC1321
  * Copyright (C) 2005 Quentin Carbonneaux <crazyjoke@free.fr>
- * 
+ *
  * This file is part of md5sum.
  *
  * md5sum is a free software; you can redistribute it and/or modify
@@ -33,13 +33,15 @@
 typedef unsigned int md5_size;
 
 /* MD5 context */
-struct md5_ctx {
-	struct {
-		unsigned int A, B, C, D; /* registers */
-	} regs;
-	unsigned char *buf;
-	md5_size size;
-	md5_size bits;
+struct md5_ctx
+{
+    struct
+    {
+        unsigned int A, B, C, D; /* registers */
+    } regs;
+    unsigned char *buf;
+    md5_size size;
+    md5_size bits;
 };
 
 /* Size of the MD5 buffer */

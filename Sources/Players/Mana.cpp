@@ -6,10 +6,10 @@
 // -----------------------------------------------------------------
 Mana::Mana(u8 life, u8 law, u8 death, u8 chaos)
 {
-  mana[0] = life;
-  mana[1] = law;
-  mana[2] = death;
-  mana[3] = chaos;
+    mana[0] = life;
+    mana[1] = law;
+    mana[2] = death;
+    mana[3] = chaos;
 }
 
 // -----------------------------------------------------------------
@@ -17,7 +17,7 @@ Mana::Mana(u8 life, u8 law, u8 death, u8 chaos)
 // -----------------------------------------------------------------
 void Mana::reset()
 {
-  mana[0] = mana[1] = mana[2] = mana[3] = 0;
+    mana[0] = mana[1] = mana[2] = mana[3] = 0;
 }
 
 // -----------------------------------------------------------------
@@ -25,10 +25,10 @@ void Mana::reset()
 // -----------------------------------------------------------------
 Mana Mana::operator+(Mana addMana)
 {
-  Mana result;
-  for (int i = 0; i < 4; i++)
-    result.mana[i] = mana[i] + addMana.mana[i];
-  return result;
+    Mana result;
+    for (int i = 0; i < 4; i++)
+        result.mana[i] = mana[i] + addMana.mana[i];
+    return result;
 }
 
 // -----------------------------------------------------------------
@@ -36,10 +36,10 @@ Mana Mana::operator+(Mana addMana)
 // -----------------------------------------------------------------
 Mana Mana::operator+(Mana * addMana)
 {
-  Mana result;
-  for (int i = 0; i < 4; i++)
-    result.mana[i] = mana[i] + addMana->mana[i];
-  return result;
+    Mana result;
+    for (int i = 0; i < 4; i++)
+        result.mana[i] = mana[i] + addMana->mana[i];
+    return result;
 }
 
 // -----------------------------------------------------------------
@@ -47,10 +47,10 @@ Mana Mana::operator+(Mana * addMana)
 // -----------------------------------------------------------------
 Mana Mana::operator-(Mana remMana)
 {
-  Mana result;
-  for (int i = 0; i < 4; i++)
-    result.mana[i] = mana[i] - min(remMana.mana[i], mana[i]);
-  return result;
+    Mana result;
+    for (int i = 0; i < 4; i++)
+        result.mana[i] = mana[i] - min(remMana.mana[i], mana[i]);
+    return result;
 }
 
 // -----------------------------------------------------------------
@@ -58,10 +58,10 @@ Mana Mana::operator-(Mana remMana)
 // -----------------------------------------------------------------
 Mana Mana::operator-(Mana * remMana)
 {
-  Mana result;
-  for (int i = 0; i < 4; i++)
-    result.mana[i] = mana[i] - min(remMana->mana[i], mana[i]);
-  return result;
+    Mana result;
+    for (int i = 0; i < 4; i++)
+        result.mana[i] = mana[i] - min(remMana->mana[i], mana[i]);
+    return result;
 }
 
 // -----------------------------------------------------------------
@@ -69,8 +69,8 @@ Mana Mana::operator-(Mana * remMana)
 // -----------------------------------------------------------------
 void Mana::operator+=(Mana addMana)
 {
-  for (int i = 0; i < 4; i++)
-    mana[i] += addMana.mana[i];
+    for (int i = 0; i < 4; i++)
+        mana[i] += addMana.mana[i];
 }
 
 // -----------------------------------------------------------------
@@ -78,8 +78,8 @@ void Mana::operator+=(Mana addMana)
 // -----------------------------------------------------------------
 void Mana::operator+=(Mana * addMana)
 {
-  for (int i = 0; i < 4; i++)
-    mana[i] += addMana->mana[i];
+    for (int i = 0; i < 4; i++)
+        mana[i] += addMana->mana[i];
 }
 
 // -----------------------------------------------------------------
@@ -87,8 +87,8 @@ void Mana::operator+=(Mana * addMana)
 // -----------------------------------------------------------------
 void Mana::operator-=(Mana remMana)
 {
-  for (int i = 0; i < 4; i++)
-    mana[i] -= min(remMana.mana[i], mana[i]);
+    for (int i = 0; i < 4; i++)
+        mana[i] -= min(remMana.mana[i], mana[i]);
 }
 
 // -----------------------------------------------------------------
@@ -96,12 +96,12 @@ void Mana::operator-=(Mana remMana)
 // -----------------------------------------------------------------
 bool Mana::operator<=(Mana cmpMana)
 {
-  for (int i = 0; i < 4; i++)
-  {
-    if (mana[i] > cmpMana.mana[i])
-      return false;
-  }
-  return true;
+    for (int i = 0; i < 4; i++)
+    {
+        if (mana[i] > cmpMana.mana[i])
+            return false;
+    }
+    return true;
 }
 
 // -----------------------------------------------------------------
@@ -109,10 +109,10 @@ bool Mana::operator<=(Mana cmpMana)
 // -----------------------------------------------------------------
 bool Mana::operator<(Mana cmpMana)
 {
-  for (int i = 0; i < 4; i++)
-  {
-    if (mana[i] >= cmpMana.mana[i])
-      return false;
-  }
-  return true;
+    for (int i = 0; i < 4; i++)
+    {
+        if (mana[i] >= cmpMana.mana[i])
+            return false;
+    }
+    return true;
 }

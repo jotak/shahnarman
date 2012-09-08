@@ -6,10 +6,10 @@
 // -----------------------------------------------------------------
 guiComponent::guiComponent() : guiObject()
 {
-  wsafecpy(m_sCpntId, 32, "");
-  m_bEnabled = m_bVisible = true;
-  m_uHighlight = HIGHLIGHT_TYPE_NONE;
-  m_pOwner = NULL;
+    wsafecpy(m_sCpntId, 32, "");
+    m_bEnabled = m_bVisible = true;
+    m_uHighlight = HIGHLIGHT_TYPE_NONE;
+    m_pOwner = NULL;
 }
 
 // -----------------------------------------------------------------
@@ -25,8 +25,8 @@ guiComponent::~guiComponent()
 // -----------------------------------------------------------------
 void guiComponent::init(const char * sCpntId, int xPxl, int yPxl, int wPxl, int hPxl)
 {
-  guiObject::init(xPxl, yPxl, wPxl, hPxl);
-  wsafecpy(m_sCpntId, CPNT_ID_MAX_CHARS, sCpntId);
+    guiObject::init(xPxl, yPxl, wPxl, hPxl);
+    wsafecpy(m_sCpntId, CPNT_ID_MAX_CHARS, sCpntId);
 }
 
 //// -----------------------------------------------------------------
@@ -44,7 +44,7 @@ void guiComponent::init(const char * sCpntId, int xPxl, int yPxl, int wPxl, int 
 // -----------------------------------------------------------------
 void guiComponent::highlight(u8 type)
 {
-  m_uHighlight = type;
+    m_uHighlight = type;
 }
 
 // -----------------------------------------------------------------
@@ -52,7 +52,7 @@ void guiComponent::highlight(u8 type)
 // -----------------------------------------------------------------
 void guiComponent::centerOnComponent(guiComponent * pOther)
 {
-  moveTo(pOther->getXPos() + (pOther->getWidth() - getWidth()) / 2, pOther->getYPos() + (pOther->getHeight() - getHeight()) / 2);
+    moveTo(pOther->getXPos() + (pOther->getWidth() - getWidth()) / 2, pOther->getYPos() + (pOther->getHeight() - getHeight()) / 2);
 }
 
 // -----------------------------------------------------------------
@@ -60,5 +60,5 @@ void guiComponent::centerOnComponent(guiComponent * pOther)
 // -----------------------------------------------------------------
 void guiComponent::setVisible(bool bVisible)
 {
-  m_bVisible = bVisible;
+    m_bVisible = bVisible;
 }

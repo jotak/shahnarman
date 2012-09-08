@@ -6,17 +6,17 @@
 class guiFrameMouseFocus : public guiFrameEffect
 {
 public:
-  guiFrameMouseFocus(u16 uEffectId, float fFadeOutTime);
-  ~guiFrameMouseFocus();
+    guiFrameMouseFocus(u16 uEffectId, float fFadeOutTime);
+    ~guiFrameMouseFocus();
 
-  virtual void onBeginDisplay(int iXOffset, int iYOffset, F_RGBA * cpntColor, F_RGBA * docColor);
-  virtual void onEndDisplay();
-  virtual void onUpdate(double delta);
-  virtual void reset();
-  virtual guiFrameMouseFocus * clone();
+    virtual void onBeginDisplay(int iXOffset, int iYOffset, F_RGBA * cpntColor, F_RGBA * docColor);
+    virtual void onEndDisplay();
+    virtual void onUpdate(double delta);
+    virtual void reset();
+    virtual guiFrameMouseFocus * clone();
 
 protected:
-  float m_fTimer, m_fTotalTime;
+    float m_fTimer, m_fTotalTime;
 };
 
 #endif

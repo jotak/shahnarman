@@ -6,8 +6,8 @@
 // -----------------------------------------------------------------
 GeometryModifier::GeometryModifier(u16 uModId)
 {
-  m_uModId = uModId;
-  m_bActive = m_bRunning = true;
+    m_uModId = uModId;
+    m_bActive = m_bRunning = true;
 }
 
 // -----------------------------------------------------------------
@@ -17,9 +17,9 @@ GeometryModifier::GeometryModifier(u16 uModId)
 GeometryModifier::~GeometryModifier()
 {
 #ifdef DBG_VERBOSE1
-  printf("Begin destroy GeometryModifier\n");
+    printf("Begin destroy GeometryModifier\n");
 #endif
 #ifdef DBG_VERBOSE1
-  printf("End destroy GeometryModifier\n");
+    printf("End destroy GeometryModifier\n");
 #endif
 }

@@ -10,15 +10,15 @@
 // -----------------------------------------------------------------
 guiDocument::guiDocument()
 {
-  m_pComponentsList = new ObjectList(true);
-  m_iCpntIt1 = m_pComponentsList->getIterator();
-  m_iCpntIt2 = m_pComponentsList->getIterator();
-  m_pFocusedComponent = NULL;
-  m_bNeedDestroy = false;
-  m_bContentChanged = false;
-  m_bEnabled = true;
-  wsafecpy(m_sTitle, 32, "");
-  m_pOwner = NULL;
+    m_pComponentsList = new ObjectList(true);
+    m_iCpntIt1 = m_pComponentsList->getIterator();
+    m_iCpntIt2 = m_pComponentsList->getIterator();
+    m_pFocusedComponent = NULL;
+    m_bNeedDestroy = false;
+    m_bContentChanged = false;
+    m_bEnabled = true;
+    wsafecpy(m_sTitle, 32, "");
+    m_pOwner = NULL;
 }
 
 // -----------------------------------------------------------------
@@ -27,7 +27,7 @@ guiDocument::guiDocument()
 // -----------------------------------------------------------------
 guiDocument::~guiDocument()
 {
-  delete m_pComponentsList;
+    delete m_pComponentsList;
 }
 
 // -----------------------------------------------------------------
@@ -35,12 +35,12 @@ guiDocument::~guiDocument()
 // -----------------------------------------------------------------
 void guiDocument::init(const char * sTitle, int iTexId, int xPxl, int yPxl, int wPxl, int hPxl, DisplayEngine * pDisplay)
 {
-  guiObject::init(xPxl, yPxl, wPxl, hPxl);
-  wsafecpy(m_sTitle, 32, sTitle);
+    guiObject::init(xPxl, yPxl, wPxl, hPxl);
+    wsafecpy(m_sTitle, 32, sTitle);
 
-  QuadData quad(0, m_iWidth, 0, m_iHeight, iTexId, pDisplay);
-  m_pGeometry = new GeometryQuads(&quad, VB_Static);
-  onLoad();
+    QuadData quad(0, m_iWidth, 0, m_iHeight, iTexId, pDisplay);
+    m_pGeometry = new GeometryQuads(&quad, VB_Static);
+    onLoad();
 }
 
 // -----------------------------------------------------------------
@@ -48,9 +48,9 @@ void guiDocument::init(const char * sTitle, int iTexId, int xPxl, int yPxl, int 
 // -----------------------------------------------------------------
 guiObject * guiDocument::clone()
 {
-  guiDocument * pDoc = new guiDocument();
-  pDoc->init(m_sTitle, ((GeometryQuads*)m_pGeometry)->getTexture(), m_iXPxl, m_iYPxl, m_iWidth, m_iHeight, getDisplay());
-  return pDoc;
+    guiDocument * pDoc = new guiDocument();
+    pDoc->init(m_sTitle, ((GeometryQuads*)m_pGeometry)->getTexture(), m_iXPxl, m_iYPxl, m_iWidth, m_iHeight, getDisplay());
+    return pDoc;
 }
 
 // -----------------------------------------------------------------
@@ -58,14 +58,14 @@ guiObject * guiDocument::clone()
 // -----------------------------------------------------------------
 void guiDocument::update(double delta)
 {
-  if (!m_bEnabled)
-    return;
-  guiComponent * cpnt = (guiComponent*) m_pComponentsList->getFirst(m_iCpntIt1);
-  while (cpnt != NULL)
-  {
-    cpnt->update(delta);
-    cpnt = (guiComponent*) m_pComponentsList->getNext(m_iCpntIt1);
-  }
+    if (!m_bEnabled)
+        return;
+    guiComponent * cpnt = (guiComponent*) m_pComponentsList->getFirst(m_iCpntIt1);
+    while (cpnt != NULL)
+    {
+        cpnt->update(delta);
+        cpnt = (guiComponent*) m_pComponentsList->getNext(m_iCpntIt1);
+    }
 }
 
 // -----------------------------------------------------------------
@@ -73,18 +73,18 @@ void guiDocument::update(double delta)
 // -----------------------------------------------------------------
 void guiDocument::displayAt(int iXOffset, int iYOffset, F_RGBA cpntColor, F_RGBA docColor)
 {
-  // Display document background
-  CoordsScreen coords = CoordsScreen(m_iXPxl + iXOffset, m_iYPxl + iYOffset, GUIPLANE);
-  m_pGeometry->display(coords, docColor);
+    // Display document background
+    CoordsScreen coords = CoordsScreen(m_iXPxl + iXOffset, m_iYPxl + iYOffset, GUIPLANE);
+    m_pGeometry->display(coords, docColor);
 
-  // Display components
-  guiComponent * cpnt = (guiComponent*) m_pComponentsList->getFirst(m_iCpntIt1);
-  while (cpnt != NULL)
-  {
-    cpnt->displayAt(m_iXPxl + iXOffset, m_iYPxl + iYOffset, cpntColor, docColor);
-    cpnt = (guiComponent*) m_pComponentsList->getNext(m_iCpntIt1);
-  }
-  m_bContentChanged = false;
+    // Display components
+    guiComponent * cpnt = (guiComponent*) m_pComponentsList->getFirst(m_iCpntIt1);
+    while (cpnt != NULL)
+    {
+        cpnt->displayAt(m_iXPxl + iXOffset, m_iYPxl + iYOffset, cpntColor, docColor);
+        cpnt = (guiComponent*) m_pComponentsList->getNext(m_iCpntIt1);
+    }
+    m_bContentChanged = false;
 }
 
 // -----------------------------------------------------------------
@@ -92,14 +92,14 @@ void guiDocument::displayAt(int iXOffset, int iYOffset, F_RGBA cpntColor, F_RGBA
 // -----------------------------------------------------------------
 guiComponent * guiDocument::getComponentAt(int xPxl, int yPxl)
 {
-  guiComponent * cpnt = (guiComponent*) m_pComponentsList->getLast(m_iCpntIt1);
-  while (cpnt != NULL)
-  {
-    if (cpnt->isAt(xPxl, yPxl))
-      return cpnt;
-    cpnt = (guiComponent*) m_pComponentsList->getPrev(m_iCpntIt1);
-  }
-  return NULL;
+    guiComponent * cpnt = (guiComponent*) m_pComponentsList->getLast(m_iCpntIt1);
+    while (cpnt != NULL)
+    {
+        if (cpnt->isAt(xPxl, yPxl))
+            return cpnt;
+        cpnt = (guiComponent*) m_pComponentsList->getPrev(m_iCpntIt1);
+    }
+    return NULL;
 }
 
 // -----------------------------------------------------------------
@@ -107,31 +107,31 @@ guiComponent * guiDocument::getComponentAt(int xPxl, int yPxl)
 // -----------------------------------------------------------------
 guiObject * guiDocument::onButtonEvent(ButtonAction * pEvent)
 {
-  if (!m_bEnabled)
-    return NULL;
+    if (!m_bEnabled)
+        return NULL;
 
-  if (pEvent->eEvent == Event_Down)
-  {
-    guiComponent * cpnt = getComponentAt(pEvent->xPos - pEvent->xOffset, pEvent->yPos - pEvent->yOffset);
-    if (cpnt != m_pFocusedComponent && pEvent->eButton == Button1)
-      setFocusedComponent(cpnt);
-    if (cpnt != NULL)
+    if (pEvent->eEvent == Event_Down)
     {
-      guiObject * pObj = cpnt->onButtonEvent(pEvent);
-      if (pObj != NULL)
-        return pObj;
+        guiComponent * cpnt = getComponentAt(pEvent->xPos - pEvent->xOffset, pEvent->yPos - pEvent->yOffset);
+        if (cpnt != m_pFocusedComponent && pEvent->eButton == Button1)
+            setFocusedComponent(cpnt);
+        if (cpnt != NULL)
+        {
+            guiObject * pObj = cpnt->onButtonEvent(pEvent);
+            if (pObj != NULL)
+                return pObj;
+        }
+        if (pEvent->eButton == Button2)
+            return this;  // Drag (=scroll) document
     }
-    if (pEvent->eButton == Button2)
-      return this;  // Drag (=scroll) document
-  }
-  else if (pEvent->eEvent == Event_Drag)
-  {
-    moveBy(pEvent->xPos - pEvent->xPosInit, pEvent->yPos - pEvent->yPosInit);
-    m_pOwner->checkDocumentPosition();
-    return this;
-  }
+    else if (pEvent->eEvent == Event_Drag)
+    {
+        moveBy(pEvent->xPos - pEvent->xPosInit, pEvent->yPos - pEvent->yPosInit);
+        m_pOwner->checkDocumentPosition();
+        return this;
+    }
 
-  return NULL;
+    return NULL;
 }
 
 // -----------------------------------------------------------------
@@ -139,11 +139,11 @@ guiObject * guiDocument::onButtonEvent(ButtonAction * pEvent)
 // -----------------------------------------------------------------
 guiObject * guiDocument::onCursorMoveEvent(int xPxl, int yPxl)
 {
-  guiComponent * cpnt = getComponentAt(xPxl, yPxl);
-  if (cpnt != NULL)
-    return cpnt->onCursorMoveEvent(xPxl, yPxl);
-  else
-    return this;
+    guiComponent * cpnt = getComponentAt(xPxl, yPxl);
+    if (cpnt != NULL)
+        return cpnt->onCursorMoveEvent(xPxl, yPxl);
+    else
+        return this;
 }
 
 // -----------------------------------------------------------------
@@ -151,14 +151,14 @@ guiObject * guiDocument::onCursorMoveEvent(int xPxl, int yPxl)
 // -----------------------------------------------------------------
 void guiDocument::onResize(int iOldWidth, int iOldHeight)
 {
-  guiObject::onResize(iOldWidth, iOldHeight);
-  if (m_iWidth == iOldWidth && m_iHeight == iOldHeight)
-    return;
-  if (m_pGeometry != NULL)
-  {
-    QuadData quad(0, m_iWidth, 0, m_iHeight, ((GeometryQuads*)m_pGeometry)->getTexture(), getDisplay());
-    ((GeometryQuads*)m_pGeometry)->modify(&quad);
-  }
+    guiObject::onResize(iOldWidth, iOldHeight);
+    if (m_iWidth == iOldWidth && m_iHeight == iOldHeight)
+        return;
+    if (m_pGeometry != NULL)
+    {
+        QuadData quad(0, m_iWidth, 0, m_iHeight, ((GeometryQuads*)m_pGeometry)->getTexture(), getDisplay());
+        ((GeometryQuads*)m_pGeometry)->modify(&quad);
+    }
 }
 
 // -----------------------------------------------------------------
@@ -166,9 +166,9 @@ void guiDocument::onResize(int iOldWidth, int iOldHeight)
 // -----------------------------------------------------------------
 void guiDocument::setFocusedComponent(guiComponent * pCpnt)
 {
-  if (m_pFocusedComponent != NULL)
-    m_pFocusedComponent->onFocusLost();
-  m_pFocusedComponent = pCpnt;
+    if (m_pFocusedComponent != NULL)
+        m_pFocusedComponent->onFocusLost();
+    m_pFocusedComponent = pCpnt;
 }
 
 // -----------------------------------------------------------------
@@ -176,7 +176,7 @@ void guiDocument::setFocusedComponent(guiComponent * pCpnt)
 // -----------------------------------------------------------------
 void guiDocument::setTitleId(const char * sTitleId)
 {
-  i18n->getText1stUp(sTitleId, m_sTitle, 32);
+    i18n->getText1stUp(sTitleId, m_sTitle, 32);
 }
 
 // -----------------------------------------------------------------
@@ -184,14 +184,14 @@ void guiDocument::setTitleId(const char * sTitleId)
 // -----------------------------------------------------------------
 guiComponent * guiDocument::getComponent(const char * cpntId)
 {
-  guiComponent * cpnt = (guiComponent*) m_pComponentsList->getFirst(0);
-  while (cpnt != NULL)
-  {
-    if (strcmp(cpntId, cpnt->getId()) == 0)
-      return cpnt;
-    cpnt = (guiComponent*) m_pComponentsList->getNext(0);
-  }
-  return NULL;
+    guiComponent * cpnt = (guiComponent*) m_pComponentsList->getFirst(0);
+    while (cpnt != NULL)
+    {
+        if (strcmp(cpntId, cpnt->getId()) == 0)
+            return cpnt;
+        cpnt = (guiComponent*) m_pComponentsList->getNext(0);
+    }
+    return NULL;
 }
 
 // -----------------------------------------------------------------
@@ -199,9 +199,9 @@ guiComponent * guiDocument::getComponent(const char * cpntId)
 // -----------------------------------------------------------------
 void guiDocument::deleteAllComponents()
 {
-  m_pComponentsList->deleteAll();
-  m_pFocusedComponent = NULL;
-  m_bContentChanged = true;
+    m_pComponentsList->deleteAll();
+    m_pFocusedComponent = NULL;
+    m_bContentChanged = true;
 }
 
 // -----------------------------------------------------------------
@@ -209,12 +209,13 @@ void guiDocument::deleteAllComponents()
 // -----------------------------------------------------------------
 bool guiDocument::deleteComponent(guiComponent * pCpnt)
 {
-  if (m_pComponentsList->deleteObject(pCpnt, true) > 0) {
-    m_pFocusedComponent = NULL;
-    m_bContentChanged = true;
-    return true;
-  }
-  return false;
+    if (m_pComponentsList->deleteObject(pCpnt, true) > 0)
+    {
+        m_pFocusedComponent = NULL;
+        m_bContentChanged = true;
+        return true;
+    }
+    return false;
 }
 
 // -----------------------------------------------------------------
@@ -222,10 +223,10 @@ bool guiDocument::deleteComponent(guiComponent * pCpnt)
 // -----------------------------------------------------------------
 guiComponent * guiDocument::deleteCurrentComponent(bool bSetToNext)
 {
-  if (m_pFocusedComponent == m_pComponentsList->getCurrent(m_iCpntIt2))
-    m_pFocusedComponent = NULL;
-  m_bContentChanged = true;
-  return (guiComponent*) m_pComponentsList->deleteCurrent(m_iCpntIt2, bSetToNext, false);
+    if (m_pFocusedComponent == m_pComponentsList->getCurrent(m_iCpntIt2))
+        m_pFocusedComponent = NULL;
+    m_bContentChanged = true;
+    return (guiComponent*) m_pComponentsList->deleteCurrent(m_iCpntIt2, bSetToNext, false);
 }
 
 // -----------------------------------------------------------------
@@ -233,9 +234,9 @@ guiComponent * guiDocument::deleteCurrentComponent(bool bSetToNext)
 // -----------------------------------------------------------------
 void guiDocument::addComponent(guiComponent * cpnt)
 {
-  m_pComponentsList->addLast(cpnt);
-  if (cpnt->getOwner() == NULL)
-    cpnt->setOwner(this);
+    m_pComponentsList->addLast(cpnt);
+    if (cpnt->getOwner() == NULL)
+        cpnt->setOwner(this);
 }
 
 // -----------------------------------------------------------------
@@ -243,8 +244,8 @@ void guiDocument::addComponent(guiComponent * cpnt)
 // -----------------------------------------------------------------
 void guiDocument::bringAbove(guiComponent * cpnt)
 {
-  if (m_pComponentsList->goTo(0, cpnt))
-    m_pComponentsList->moveCurrentToEnd(0);
+    if (m_pComponentsList->goTo(0, cpnt))
+        m_pComponentsList->moveCurrentToEnd(0);
 }
 
 // -----------------------------------------------------------------
@@ -252,16 +253,16 @@ void guiDocument::bringAbove(guiComponent * cpnt)
 // -----------------------------------------------------------------
 void guiDocument::doClick(const char * sCpntId)
 {
-  guiComponent * pCpnt = getComponent(sCpntId);
-  if (pCpnt == NULL || !pCpnt->isVisible() || !pCpnt->isEnabled())
-    return;
-  ButtonAction action;
-  action.eButton = Button1;
-  action.eEvent = Event_Down;
-  action.xOffset = action.yOffset = 0;
-  action.xPos = action.xPosInit = pCpnt->getXPos() + 1;
-  action.yPos = action.yPosInit = pCpnt->getYPos() + 1;
-  pCpnt->onButtonEvent(&action);
-  action.eEvent = Event_Up;
-  pCpnt->onButtonEvent(&action);
+    guiComponent * pCpnt = getComponent(sCpntId);
+    if (pCpnt == NULL || !pCpnt->isVisible() || !pCpnt->isEnabled())
+        return;
+    ButtonAction action;
+    action.eButton = Button1;
+    action.eEvent = Event_Down;
+    action.xOffset = action.yOffset = 0;
+    action.xPos = action.xPosInit = pCpnt->getXPos() + 1;
+    action.yPos = action.yPosInit = pCpnt->getYPos() + 1;
+    pCpnt->onButtonEvent(&action);
+    action.eEvent = Event_Up;
+    pCpnt->onButtonEvent(&action);
 }

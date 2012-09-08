@@ -6,12 +6,12 @@
 //  Constructor
 // -----------------------------------------------------------------
 ModProgressiveRotate::ModProgressiveRotate(u16 uModId, float fSpeed, float fCenterX, float fCenterY)
-      : GeometryModifier(uModId)
+    : GeometryModifier(uModId)
 {
-  m_fAngle = 0;
-  m_fSpeed = fSpeed;
-  m_fRotateCenterX = fCenterX;
-  m_fRotateCenterY = fCenterY;
+    m_fAngle = 0;
+    m_fSpeed = fSpeed;
+    m_fRotateCenterX = fCenterX;
+    m_fRotateCenterY = fCenterY;
 }
 
 // -----------------------------------------------------------------
@@ -21,10 +21,10 @@ ModProgressiveRotate::ModProgressiveRotate(u16 uModId, float fSpeed, float fCent
 ModProgressiveRotate::~ModProgressiveRotate()
 {
 #ifdef DBG_VERBOSE1
-  printf("Begin destroy ModProgressiveRotate\n");
+    printf("Begin destroy ModProgressiveRotate\n");
 #endif
 #ifdef DBG_VERBOSE1
-  printf("End destroy ModProgressiveRotate\n");
+    printf("End destroy ModProgressiveRotate\n");
 #endif
 }
 
@@ -33,9 +33,9 @@ ModProgressiveRotate::~ModProgressiveRotate()
 // -----------------------------------------------------------------
 void ModProgressiveRotate::doTransforms(F_RGBA * pColor)
 {
-  glTranslatef(m_fRotateCenterX, m_fRotateCenterY, 0);
-  glRotatef(m_fAngle, 0, 0, 1);
-  glTranslatef(-m_fRotateCenterX, -m_fRotateCenterY, 0);
+    glTranslatef(m_fRotateCenterX, m_fRotateCenterY, 0);
+    glRotatef(m_fAngle, 0, 0, 1);
+    glTranslatef(-m_fRotateCenterX, -m_fRotateCenterY, 0);
 }
 
 // -----------------------------------------------------------------
@@ -43,9 +43,9 @@ void ModProgressiveRotate::doTransforms(F_RGBA * pColor)
 // -----------------------------------------------------------------
 void ModProgressiveRotate::update(double delta)
 {
-  m_fAngle += m_fSpeed * delta;
-  while (m_fAngle >= 360)
-    m_fAngle -= 360;
+    m_fAngle += m_fSpeed * delta;
+    while (m_fAngle >= 360)
+        m_fAngle -= 360;
 }
 
 // -----------------------------------------------------------------
@@ -53,6 +53,6 @@ void ModProgressiveRotate::update(double delta)
 // -----------------------------------------------------------------
 GeometryModifier * ModProgressiveRotate::clone(u16 uMoveId)
 {
-  ModProgressiveRotate * pClone = new ModProgressiveRotate(uMoveId, m_fSpeed, m_fRotateCenterX, m_fRotateCenterY);
-  return pClone;
+    ModProgressiveRotate * pClone = new ModProgressiveRotate(uMoveId, m_fSpeed, m_fRotateCenterX, m_fRotateCenterY);
+    return pClone;
 }

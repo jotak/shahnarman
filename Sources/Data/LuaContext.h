@@ -14,18 +14,24 @@ class Map;
 class LuaContext
 {
 public:
-  LuaContext() { pLua = NULL; pPlayer = NULL; pUnit = NULL; pTown = NULL; };
-  bool retrieve(PlayerManagerAbstract * pMngr);
-  void serialize(NetworkData * pData);
-  bool deserialize(NetworkData * pData, PlayerManagerAbstract * pMngr, Map * pMap);
-  void serializeTargets(NetworkData * pData);
-  bool deserializeTargets(NetworkData * pData, PlayerManagerAbstract * pMngr, Map * pMap);
+    LuaContext()
+    {
+        pLua = NULL;
+        pPlayer = NULL;
+        pUnit = NULL;
+        pTown = NULL;
+    };
+    bool retrieve(PlayerManagerAbstract * pMngr);
+    void serialize(NetworkData * pData);
+    bool deserialize(NetworkData * pData, PlayerManagerAbstract * pMngr, Map * pMap);
+    void serializeTargets(NetworkData * pData);
+    bool deserializeTargets(NetworkData * pData, PlayerManagerAbstract * pMngr, Map * pMap);
 
-  LuaObject * pLua;
-  Player * pPlayer;
-  Unit * pUnit;
-  Town * pTown;
-  char sError[256];
+    LuaObject * pLua;
+    Player * pPlayer;
+    Unit * pUnit;
+    Town * pTown;
+    char sError[256];
 };
 
 #endif

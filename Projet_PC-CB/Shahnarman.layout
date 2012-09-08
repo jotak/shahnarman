@@ -1,458 +1,461 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
 <CodeBlocks_layout_file>
 	<ActiveTarget name="Debug" />
-	<File name="../Sources/Audio/AudioManager.cpp" open="1" top="1" tabpos="22">
-		<Cursor position="3416" topLine="85" />
+	<File name="../Sources/Audio/AudioManager.cpp" open="0" top="0" tabpos="22">
+		<Cursor position="3222" topLine="58" />
 	</File>
-	<File name="../Sources/Audio/AudioManager.h" open="1" top="0" tabpos="23">
-		<Cursor position="1411" topLine="20" />
+	<File name="../Sources/Audio/AudioManager.h" open="0" top="0" tabpos="23">
+		<Cursor position="1400" topLine="22" />
 	</File>
 	<File name="../Sources/Common/BaseObject.h" open="0" top="0" tabpos="0">
-		<Cursor position="73" topLine="0" />
+		<Cursor position="71" topLine="0" />
 	</File>
 	<File name="../Sources/Common/md5.cpp" open="0" top="0" tabpos="0">
-		<Cursor position="9777" topLine="257" />
+		<Cursor position="9745" topLine="235" />
 	</File>
 	<File name="../Sources/Data/DataFactory.cpp" open="0" top="0" tabpos="0">
-		<Cursor position="4169" topLine="107" />
+		<Cursor position="3640" topLine="66" />
 	</File>
 	<File name="../Sources/Data/DataFactory.h" open="0" top="0" tabpos="0">
-		<Cursor position="703" topLine="0" />
+		<Cursor position="699" topLine="0" />
 	</File>
 	<File name="../Sources/Data/FileSerializer.cpp" open="0" top="0" tabpos="5">
-		<Cursor position="2337" topLine="48" />
+		<Cursor position="2327" topLine="36" />
 	</File>
 	<File name="../Sources/Data/FileSerializer.h" open="0" top="0" tabpos="0">
-		<Cursor position="615" topLine="0" />
+		<Cursor position="612" topLine="0" />
 	</File>
-	<File name="../Sources/Data/IniFile.cpp" open="1" top="0" tabpos="4">
-		<Cursor position="1843" topLine="39" />
+	<File name="../Sources/Data/IniFile.cpp" open="0" top="0" tabpos="4">
+		<Cursor position="5008" topLine="117" />
 	</File>
 	<File name="../Sources/Data/IniFile.h" open="0" top="0" tabpos="0">
-		<Cursor position="569" topLine="0" />
+		<Cursor position="596" topLine="0" />
 	</File>
-	<File name="../Sources/Data/LocalisationTool.cpp" open="1" top="0" tabpos="3">
-		<Cursor position="4749" topLine="150" />
+	<File name="../Sources/Data/LocalisationTool.cpp" open="0" top="0" tabpos="3">
+		<Cursor position="3226" topLine="52" />
 	</File>
 	<File name="../Sources/Data/LocalisationTool.h" open="0" top="0" tabpos="0">
-		<Cursor position="1022" topLine="0" />
+		<Cursor position="1046" topLine="0" />
 	</File>
 	<File name="../Sources/Data/LuaContext.cpp" open="0" top="0" tabpos="0">
-		<Cursor position="2420" topLine="38" />
+		<Cursor position="2418" topLine="25" />
 	</File>
 	<File name="../Sources/Data/LuaContext.h" open="0" top="0" tabpos="0">
-		<Cursor position="703" topLine="0" />
+		<Cursor position="699" topLine="0" />
 	</File>
-	<File name="../Sources/Data/LuaObject.cpp" open="1" top="0" tabpos="5">
-		<Cursor position="8479" topLine="231" />
+	<File name="../Sources/Data/LuaObject.cpp" open="1" top="0" tabpos="1">
+		<Cursor position="9281" topLine="231" />
 	</File>
 	<File name="../Sources/Data/LuaObject.h" open="0" top="0" tabpos="0">
-		<Cursor position="914" topLine="27" />
+		<Cursor position="910" topLine="0" />
 	</File>
-	<File name="../Sources/Data/LuaTargetable.cpp" open="1" top="0" tabpos="6">
-		<Cursor position="10720" topLine="279" />
+	<File name="../Sources/Data/LuaTargetable.cpp" open="0" top="0" tabpos="6">
+		<Cursor position="5370" topLine="114" />
 	</File>
 	<File name="../Sources/Data/LuaTargetable.h" open="0" top="0" tabpos="0">
-		<Cursor position="1761" topLine="25" />
+		<Cursor position="1753" topLine="26" />
 	</File>
 	<File name="../Sources/Data/NetworkSerializer.cpp" open="0" top="0" tabpos="0">
-		<Cursor position="2444" topLine="47" />
+		<Cursor position="2420" topLine="37" />
 	</File>
 	<File name="../Sources/Data/NetworkSerializer.h" open="0" top="0" tabpos="0">
-		<Cursor position="684" topLine="0" />
+		<Cursor position="681" topLine="0" />
 	</File>
-	<File name="../Sources/Data/Parameters.cpp" open="1" top="0" tabpos="2">
-		<Cursor position="1536" topLine="82" />
+	<File name="../Sources/Data/Parameters.cpp" open="0" top="0" tabpos="2">
+		<Cursor position="1444" topLine="4" />
 	</File>
 	<File name="../Sources/Data/Parameters.h" open="0" top="0" tabpos="3">
-		<Cursor position="269" topLine="0" />
+		<Cursor position="399" topLine="0" />
 	</File>
 	<File name="../Sources/Data/Serializer.h" open="0" top="0" tabpos="0">
-		<Cursor position="374" topLine="0" />
+		<Cursor position="373" topLine="0" />
 	</File>
 	<File name="../Sources/Data/XMLLiteElement.cpp" open="0" top="0" tabpos="0">
-		<Cursor position="229" topLine="0" />
+		<Cursor position="228" topLine="0" />
 	</File>
 	<File name="../Sources/Data/XMLLiteElement.h" open="0" top="0" tabpos="0">
-		<Cursor position="1128" topLine="14" />
+		<Cursor position="1122" topLine="5" />
 	</File>
-	<File name="../Sources/Data/XMLLiteReader.cpp" open="1" top="0" tabpos="7">
-		<Cursor position="11123" topLine="348" />
+	<File name="../Sources/Data/XMLLiteReader.cpp" open="0" top="0" tabpos="7">
+		<Cursor position="7956" topLine="260" />
 	</File>
 	<File name="../Sources/Data/XMLLiteReader.h" open="0" top="0" tabpos="0">
-		<Cursor position="898" topLine="0" />
+		<Cursor position="579" topLine="0" />
 	</File>
 	<File name="../Sources/Data/XMLObject.cpp" open="0" top="0" tabpos="8">
-		<Cursor position="3183" topLine="41" />
+		<Cursor position="3178" topLine="42" />
 	</File>
 	<File name="../Sources/Data/XMLObject.h" open="0" top="0" tabpos="9">
-		<Cursor position="804" topLine="0" />
+		<Cursor position="798" topLine="0" />
 	</File>
 	<File name="../Sources/Debug/DebugManager.cpp" open="0" top="0" tabpos="3">
-		<Cursor position="11209" topLine="303" />
+		<Cursor position="8005" topLine="202" />
 	</File>
 	<File name="../Sources/Debug/DebugManager.h" open="0" top="0" tabpos="0">
-		<Cursor position="1044" topLine="0" />
+		<Cursor position="857" topLine="0" />
 	</File>
 	<File name="../Sources/DeckData/AIData.cpp" open="0" top="0" tabpos="0">
-		<Cursor position="2504" topLine="24" />
+		<Cursor position="2499" topLine="27" />
 	</File>
 	<File name="../Sources/DeckData/AIData.h" open="0" top="0" tabpos="0">
-		<Cursor position="363" topLine="0" />
+		<Cursor position="358" topLine="0" />
 	</File>
 	<File name="../Sources/DeckData/AvatarData.cpp" open="0" top="0" tabpos="10">
-		<Cursor position="6985" topLine="138" />
+		<Cursor position="6974" topLine="135" />
 	</File>
 	<File name="../Sources/DeckData/AvatarData.h" open="0" top="0" tabpos="0">
-		<Cursor position="1393" topLine="19" />
+		<Cursor position="1386" topLine="5" />
 	</File>
 	<File name="../Sources/DeckData/Edition.cpp" open="0" top="0" tabpos="11">
-		<Cursor position="51749" topLine="1325" />
+		<Cursor position="20502" topLine="418" />
 	</File>
 	<File name="../Sources/DeckData/Edition.h" open="0" top="0" tabpos="0">
-		<Cursor position="558" topLine="10" />
+		<Cursor position="554" topLine="0" />
 	</File>
 	<File name="../Sources/DeckData/Ethnicity.cpp" open="0" top="0" tabpos="0">
-		<Cursor position="1433" topLine="0" />
+		<Cursor position="1430" topLine="0" />
 	</File>
 	<File name="../Sources/DeckData/Ethnicity.h" open="0" top="0" tabpos="0">
-		<Cursor position="1654" topLine="0" />
+		<Cursor position="1648" topLine="22" />
 	</File>
 	<File name="../Sources/DeckData/Profile.cpp" open="0" top="0" tabpos="13">
-		<Cursor position="1135" topLine="24" />
+		<Cursor position="1133" topLine="0" />
 	</File>
 	<File name="../Sources/DeckData/Profile.h" open="0" top="0" tabpos="0">
-		<Cursor position="491" topLine="0" />
+		<Cursor position="486" topLine="0" />
 	</File>
-	<File name="../Sources/DeckData/ProgressionElement.cpp" open="1" top="0" tabpos="8">
-		<Cursor position="6568" topLine="98" />
+	<File name="../Sources/DeckData/ProgressionElement.cpp" open="0" top="0" tabpos="8">
+		<Cursor position="3996" topLine="46" />
 	</File>
 	<File name="../Sources/DeckData/ProgressionElement.h" open="0" top="0" tabpos="0">
-		<Cursor position="2801" topLine="40" />
+		<Cursor position="2795" topLine="60" />
 	</File>
 	<File name="../Sources/DeckData/ProgressionTree.cpp" open="0" top="0" tabpos="0">
-		<Cursor position="11643" topLine="253" />
+		<Cursor position="1241" topLine="0" />
 	</File>
 	<File name="../Sources/DeckData/ProgressionTree.h" open="0" top="0" tabpos="0">
-		<Cursor position="816" topLine="0" />
+		<Cursor position="810" topLine="0" />
+	</File>
+	<File name="../Sources/DeckData/ShahmahCreation.cpp" open="0" top="0" tabpos="0">
+		<Cursor position="326" topLine="0" />
 	</File>
 	<File name="../Sources/DeckData/ShopItem.cpp" open="0" top="0" tabpos="0">
-		<Cursor position="1454" topLine="32" />
+		<Cursor position="2724" topLine="32" />
 	</File>
 	<File name="../Sources/DeckData/ShopItem.h" open="0" top="0" tabpos="0">
-		<Cursor position="1418" topLine="20" />
+		<Cursor position="1408" topLine="29" />
 	</File>
 	<File name="../Sources/DeckData/UnitData.cpp" open="0" top="0" tabpos="0">
-		<Cursor position="6738" topLine="177" />
+		<Cursor position="6726" topLine="164" />
 	</File>
 	<File name="../Sources/DeckData/UnitData.h" open="0" top="0" tabpos="12">
-		<Cursor position="643" topLine="3" />
+		<Cursor position="640" topLine="0" />
 	</File>
 	<File name="../Sources/Display/DisplayEngine.cpp" open="0" top="0" tabpos="0">
-		<Cursor position="22221" topLine="592" />
+		<Cursor position="2259" topLine="30" />
 	</File>
 	<File name="../Sources/Display/DisplayEngine.h" open="0" top="0" tabpos="0">
-		<Cursor position="928" topLine="6" />
+		<Cursor position="921" topLine="0" />
 	</File>
 	<File name="../Sources/Display/Texture.cpp" open="0" top="0" tabpos="0">
-		<Cursor position="1340" topLine="7" />
+		<Cursor position="1337" topLine="0" />
 	</File>
 	<File name="../Sources/Display/Texture.h" open="0" top="0" tabpos="0">
-		<Cursor position="249" topLine="0" />
+		<Cursor position="245" topLine="0" />
 	</File>
 	<File name="../Sources/Display/TextureEngine.cpp" open="0" top="0" tabpos="0">
-		<Cursor position="5098" topLine="113" />
+		<Cursor position="8237" topLine="177" />
 	</File>
 	<File name="../Sources/Display/TextureEngine.h" open="0" top="0" tabpos="0">
-		<Cursor position="507" topLine="0" />
+		<Cursor position="503" topLine="0" />
 	</File>
-	<File name="../Sources/Fonts/Font.cpp" open="1" top="0" tabpos="9">
-		<Cursor position="15826" topLine="314" />
+	<File name="../Sources/Fonts/Font.cpp" open="0" top="0" tabpos="9">
+		<Cursor position="10086" topLine="282" />
 	</File>
 	<File name="../Sources/Fonts/Font.h" open="0" top="0" tabpos="0">
-		<Cursor position="961" topLine="6" />
+		<Cursor position="1166" topLine="10" />
 	</File>
 	<File name="../Sources/Fonts/FontEngine.cpp" open="0" top="0" tabpos="0">
-		<Cursor position="1795" topLine="58" />
+		<Cursor position="1791" topLine="14" />
 	</File>
 	<File name="../Sources/Fonts/FontEngine.h" open="0" top="0" tabpos="0">
-		<Cursor position="930" topLine="0" />
+		<Cursor position="923" topLine="0" />
 	</File>
 	<File name="../Sources/Fx/FxManager.cpp" open="0" top="0" tabpos="0">
-		<Cursor position="13005" topLine="313" />
+		<Cursor position="1477" topLine="0" />
 	</File>
 	<File name="../Sources/Fx/FxManager.h" open="0" top="0" tabpos="0">
-		<Cursor position="613" topLine="0" />
+		<Cursor position="607" topLine="0" />
 	</File>
 	<File name="../Sources/GUIClasses/guiButton.cpp" open="0" top="0" tabpos="0">
-		<Cursor position="15227" topLine="400" />
+		<Cursor position="13851" topLine="350" />
 	</File>
 	<File name="../Sources/GUIClasses/guiButton.h" open="0" top="0" tabpos="0">
-		<Cursor position="3015" topLine="41" />
+		<Cursor position="3004" topLine="68" />
 	</File>
 	<File name="../Sources/GUIClasses/guiComboBox.cpp" open="0" top="0" tabpos="0">
-		<Cursor position="10572" topLine="266" />
+		<Cursor position="10549" topLine="231" />
 	</File>
 	<File name="../Sources/GUIClasses/guiComboBox.h" open="0" top="0" tabpos="0">
-		<Cursor position="1283" topLine="19" />
+		<Cursor position="1275" topLine="0" />
 	</File>
 	<File name="../Sources/GUIClasses/guiComponent.cpp" open="0" top="0" tabpos="0">
-		<Cursor position="284" topLine="0" />
+		<Cursor position="283" topLine="0" />
 	</File>
 	<File name="../Sources/GUIClasses/guiComponent.h" open="0" top="0" tabpos="0">
-		<Cursor position="1397" topLine="19" />
+		<Cursor position="1386" topLine="26" />
 	</File>
 	<File name="../Sources/GUIClasses/guiContainer.cpp" open="0" top="0" tabpos="0">
-		<Cursor position="24486" topLine="565" />
+		<Cursor position="23995" topLine="556" />
 	</File>
 	<File name="../Sources/GUIClasses/guiContainer.h" open="0" top="0" tabpos="0">
-		<Cursor position="2803" topLine="54" />
+		<Cursor position="2792" topLine="70" />
 	</File>
 	<File name="../Sources/GUIClasses/guiDocument.cpp" open="0" top="0" tabpos="0">
-		<Cursor position="6360" topLine="145" />
+		<Cursor position="6343" topLine="142" />
 	</File>
 	<File name="../Sources/GUIClasses/guiDocument.h" open="0" top="0" tabpos="0">
-		<Cursor position="3005" topLine="43" />
+		<Cursor position="2994" topLine="72" />
 	</File>
-	<File name="../Sources/GUIClasses/guiEditBox.cpp" open="1" top="0" tabpos="10">
-		<Cursor position="33553" topLine="768" />
+	<File name="../Sources/GUIClasses/guiEditBox.cpp" open="0" top="0" tabpos="10">
+		<Cursor position="34741" topLine="740" />
 	</File>
 	<File name="../Sources/GUIClasses/guiEditBox.h" open="0" top="0" tabpos="0">
-		<Cursor position="2426" topLine="40" />
+		<Cursor position="2413" topLine="46" />
 	</File>
 	<File name="../Sources/GUIClasses/guiFrame.cpp" open="0" top="0" tabpos="0">
-		<Cursor position="15015" topLine="396" />
+		<Cursor position="14846" topLine="386" />
 	</File>
 	<File name="../Sources/GUIClasses/guiFrame.h" open="0" top="0" tabpos="0">
-		<Cursor position="1910" topLine="31" />
+		<Cursor position="1899" topLine="33" />
 	</File>
 	<File name="../Sources/GUIClasses/guiGauge.cpp" open="0" top="0" tabpos="0">
-		<Cursor position="4694" topLine="77" />
+		<Cursor position="4685" topLine="74" />
 	</File>
 	<File name="../Sources/GUIClasses/guiGauge.h" open="0" top="0" tabpos="0">
-		<Cursor position="795" topLine="0" />
+		<Cursor position="788" topLine="0" />
 	</File>
 	<File name="../Sources/GUIClasses/guiImage.cpp" open="0" top="0" tabpos="0">
-		<Cursor position="792" topLine="25" />
+		<Cursor position="789" topLine="0" />
 	</File>
 	<File name="../Sources/GUIClasses/guiImage.h" open="0" top="0" tabpos="0">
-		<Cursor position="477" topLine="0" />
+		<Cursor position="472" topLine="0" />
 	</File>
 	<File name="../Sources/GUIClasses/guiLabel.cpp" open="0" top="0" tabpos="0">
-		<Cursor position="2284" topLine="21" />
+		<Cursor position="2278" topLine="21" />
 	</File>
 	<File name="../Sources/GUIClasses/guiLabel.h" open="0" top="0" tabpos="0">
-		<Cursor position="1176" topLine="4" />
+		<Cursor position="1170" topLine="6" />
 	</File>
 	<File name="../Sources/GUIClasses/guiList.cpp" open="0" top="0" tabpos="0">
-		<Cursor position="13243" topLine="385" />
+		<Cursor position="17088" topLine="434" />
 	</File>
 	<File name="../Sources/GUIClasses/guiList.h" open="0" top="0" tabpos="0">
-		<Cursor position="2925" topLine="54" />
+		<Cursor position="2914" topLine="71" />
 	</File>
 	<File name="../Sources/GUIClasses/guiObject.cpp" open="0" top="0" tabpos="0">
-		<Cursor position="3887" topLine="74" />
+		<Cursor position="3867" topLine="75" />
 	</File>
 	<File name="../Sources/GUIClasses/guiObject.h" open="0" top="0" tabpos="0">
-		<Cursor position="2168" topLine="42" />
+		<Cursor position="2157" topLine="52" />
 	</File>
-	<File name="../Sources/GUIClasses/guiPopup.cpp" open="1" top="0" tabpos="11">
-		<Cursor position="12701" topLine="300" />
+	<File name="../Sources/GUIClasses/guiPopup.cpp" open="0" top="0" tabpos="11">
+		<Cursor position="15548" topLine="365" />
 	</File>
 	<File name="../Sources/GUIClasses/guiPopup.h" open="0" top="0" tabpos="0">
-		<Cursor position="882" topLine="8" />
+		<Cursor position="874" topLine="0" />
 	</File>
 	<File name="../Sources/GUIClasses/guiSmartSlider.cpp" open="0" top="0" tabpos="0">
-		<Cursor position="6707" topLine="144" />
+		<Cursor position="6692" topLine="137" />
 	</File>
 	<File name="../Sources/GUIClasses/guiSmartSlider.h" open="0" top="0" tabpos="0">
-		<Cursor position="719" topLine="11" />
+		<Cursor position="714" topLine="0" />
 	</File>
 	<File name="../Sources/GUIClasses/guiTabbedFrame.cpp" open="0" top="0" tabpos="0">
-		<Cursor position="14005" topLine="307" />
+		<Cursor position="13065" topLine="278" />
 	</File>
 	<File name="../Sources/GUIClasses/guiTabbedFrame.h" open="0" top="0" tabpos="0">
-		<Cursor position="2095" topLine="23" />
+		<Cursor position="2084" topLine="19" />
 	</File>
 	<File name="../Sources/GUIClasses/guiToggleButton.cpp" open="0" top="0" tabpos="0">
-		<Cursor position="3479" topLine="47" />
+		<Cursor position="3473" topLine="42" />
 	</File>
 	<File name="../Sources/GUIClasses/guiToggleButton.h" open="0" top="0" tabpos="0">
-		<Cursor position="738" topLine="0" />
+		<Cursor position="733" topLine="0" />
+	</File>
+	<File name="../Sources/GameRoot.cpp" open="0" top="0" tabpos="0">
+		<Cursor position="994" topLine="0" />
 	</File>
 	<File name="../Sources/Gameboard/Building.cpp" open="0" top="0" tabpos="0">
-		<Cursor position="2811" topLine="41" />
+		<Cursor position="2804" topLine="37" />
 	</File>
 	<File name="../Sources/Gameboard/Building.h" open="0" top="0" tabpos="0">
-		<Cursor position="146" topLine="1" />
+		<Cursor position="144" topLine="0" />
 	</File>
 	<File name="../Sources/Gameboard/GameboardInputs.cpp" open="0" top="0" tabpos="0">
-		<Cursor position="18296" topLine="424" />
+		<Cursor position="18272" topLine="404" />
 	</File>
 	<File name="../Sources/Gameboard/GameboardManager.cpp" open="0" top="0" tabpos="0">
-		<Cursor position="16014" topLine="403" />
+		<Cursor position="15989" topLine="353" />
 	</File>
 	<File name="../Sources/Gameboard/Map.cpp" open="0" top="0" tabpos="0">
-		<Cursor position="2956" topLine="93" />
+		<Cursor position="9231" topLine="198" />
 	</File>
 	<File name="../Sources/Gameboard/MapCursor.cpp" open="0" top="0" tabpos="0">
-		<Cursor position="1148" topLine="0" />
+		<Cursor position="1145" topLine="0" />
 	</File>
 	<File name="../Sources/Gameboard/MapObject.cpp" open="0" top="0" tabpos="0">
-		<Cursor position="295" topLine="0" />
+		<Cursor position="294" topLine="0" />
 	</File>
 	<File name="../Sources/Gameboard/MapObject.h" open="0" top="0" tabpos="0">
-		<Cursor position="1197" topLine="10" />
+		<Cursor position="1190" topLine="4" />
 	</File>
 	<File name="../Sources/Gameboard/MapTile.cpp" open="0" top="0" tabpos="0">
-		<Cursor position="8690" topLine="237" />
+		<Cursor position="8565" topLine="222" />
 	</File>
 	<File name="../Sources/Gameboard/MapTile.h" open="0" top="0" tabpos="0">
-		<Cursor position="961" topLine="16" />
+		<Cursor position="955" topLine="0" />
 	</File>
 	<File name="../Sources/Gameboard/Skill.cpp" open="0" top="0" tabpos="0">
-		<Cursor position="4977" topLine="119" />
+		<Cursor position="4962" topLine="99" />
 	</File>
 	<File name="../Sources/Gameboard/Skill.h" open="0" top="0" tabpos="0">
-		<Cursor position="1239" topLine="2" />
+		<Cursor position="1234" topLine="8" />
 	</File>
 	<File name="../Sources/Gameboard/SpecialTile.cpp" open="0" top="0" tabpos="0">
-		<Cursor position="2762" topLine="50" />
+		<Cursor position="1280" topLine="0" />
 	</File>
 	<File name="../Sources/Gameboard/SpecialTile.h" open="0" top="0" tabpos="0">
-		<Cursor position="118" topLine="0" />
+		<Cursor position="116" topLine="0" />
 	</File>
 	<File name="../Sources/Gameboard/Temple.cpp" open="0" top="0" tabpos="0">
-		<Cursor position="4847" topLine="120" />
+		<Cursor position="4426" topLine="99" />
 	</File>
 	<File name="../Sources/Gameboard/Temple.h" open="0" top="0" tabpos="0">
-		<Cursor position="778" topLine="0" />
+		<Cursor position="772" topLine="0" />
 	</File>
 	<File name="../Sources/Gameboard/Town.cpp" open="0" top="0" tabpos="0">
-		<Cursor position="25503" topLine="744" />
+		<Cursor position="26566" topLine="707" />
 	</File>
 	<File name="../Sources/Gameboard/Town.h" open="0" top="0" tabpos="0">
-		<Cursor position="1716" topLine="32" />
+		<Cursor position="1707" topLine="14" />
 	</File>
 	<File name="../Sources/Gameboard/Unit.cpp" open="0" top="0" tabpos="0">
-		<Cursor position="23856" topLine="683" />
+		<Cursor position="11648" topLine="280" />
 	</File>
 	<File name="../Sources/Gameboard/Unit.h" open="0" top="0" tabpos="0">
-		<Cursor position="4061" topLine="116" />
+		<Cursor position="4046" topLine="114" />
 	</File>
 	<File name="../Sources/Geometries/GeometryCylinder.cpp" open="0" top="0" tabpos="0">
-		<Cursor position="787" topLine="0" />
+		<Cursor position="786" topLine="0" />
 	</File>
 	<File name="../Sources/Geometries/GeometryQuads.cpp" open="0" top="0" tabpos="0">
-		<Cursor position="10283" topLine="269" />
+		<Cursor position="3794" topLine="82" />
 	</File>
 	<File name="../Sources/Geometries/GeometryQuads.h" open="0" top="0" tabpos="0">
-		<Cursor position="1361" topLine="11" />
+		<Cursor position="1354" topLine="0" />
 	</File>
 	<File name="../Sources/Geometries/GeometryText.cpp" open="0" top="0" tabpos="0">
-		<Cursor position="7664" topLine="161" />
+		<Cursor position="7649" topLine="162" />
 	</File>
 	<File name="../Sources/Geometries/GeometryText.h" open="0" top="0" tabpos="0">
-		<Cursor position="569" topLine="0" />
+		<Cursor position="565" topLine="0" />
 	</File>
 	<File name="../Sources/Input/InputEngine.cpp" open="0" top="0" tabpos="0">
-		<Cursor position="2127" topLine="60" />
-	</File>
-	<File name="../Sources/Input/InputEngine.h" open="0" top="0" tabpos="0">
-		<Cursor position="0" topLine="34" />
+		<Cursor position="2121" topLine="15" />
 	</File>
 	<File name="../Sources/Interface/ArtifactsEquipDlg.cpp" open="0" top="0" tabpos="0">
-		<Cursor position="34340" topLine="803" />
+		<Cursor position="11432" topLine="220" />
 	</File>
 	<File name="../Sources/Interface/BattleSpellPopup.cpp" open="0" top="0" tabpos="0">
-		<Cursor position="4065" topLine="63" />
+		<Cursor position="2564" topLine="20" />
 	</File>
 	<File name="../Sources/Interface/BuildDeckDlg.cpp" open="0" top="0" tabpos="0">
-		<Cursor position="44268" topLine="1078" />
+		<Cursor position="44188" topLine="1011" />
 	</File>
 	<File name="../Sources/Interface/CreateAvatarDlg.cpp" open="0" top="0" tabpos="0">
-		<Cursor position="32935" topLine="859" />
+		<Cursor position="7716" topLine="144" />
 	</File>
 	<File name="../Sources/Interface/GameOverDlg.cpp" open="0" top="0" tabpos="0">
-		<Cursor position="1559" topLine="50" />
+		<Cursor position="1554" topLine="6" />
 	</File>
 	<File name="../Sources/Interface/HostGameDlg.cpp" open="0" top="0" tabpos="0">
-		<Cursor position="12176" topLine="298" />
+		<Cursor position="12147" topLine="270" />
 	</File>
 	<File name="../Sources/Interface/HostGameDlg.h" open="0" top="0" tabpos="0">
-		<Cursor position="1601" topLine="34" />
+		<Cursor position="1593" topLine="21" />
 	</File>
 	<File name="../Sources/Interface/InfoboxDlg.cpp" open="0" top="0" tabpos="0">
-		<Cursor position="12143" topLine="288" />
+		<Cursor position="15486" topLine="364" />
 	</File>
 	<File name="../Sources/Interface/InfoboxDlg.h" open="0" top="0" tabpos="0">
-		<Cursor position="1684" topLine="18" />
+		<Cursor position="1678" topLine="8" />
 	</File>
-	<File name="../Sources/Interface/InterfaceManager.cpp" open="1" top="0" tabpos="12">
-		<Cursor position="51923" topLine="1349" />
+	<File name="../Sources/Interface/InterfaceManager.cpp" open="0" top="0" tabpos="12">
+		<Cursor position="47788" topLine="1183" />
 	</File>
 	<File name="../Sources/Interface/InterfaceManager.h" open="0" top="0" tabpos="0">
-		<Cursor position="4838" topLine="103" />
+		<Cursor position="4827" topLine="141" />
 	</File>
 	<File name="../Sources/Interface/LevelUpDlg.cpp" open="0" top="0" tabpos="0">
-		<Cursor position="9616" topLine="227" />
+		<Cursor position="9598" topLine="211" />
 	</File>
-	<File name="../Sources/Interface/LoadGameDlg.cpp" open="1" top="0" tabpos="13">
-		<Cursor position="4215" topLine="83" />
+	<File name="../Sources/Interface/LoadGameDlg.cpp" open="0" top="0" tabpos="13">
+		<Cursor position="1152" topLine="0" />
 	</File>
 	<File name="../Sources/Interface/LoadGameDlg.h" open="0" top="0" tabpos="0">
-		<Cursor position="574" topLine="0" />
+		<Cursor position="568" topLine="0" />
 	</File>
 	<File name="../Sources/Interface/LogDlg.cpp" open="0" top="0" tabpos="0">
-		<Cursor position="2196" topLine="55" />
+		<Cursor position="2191" topLine="22" />
 	</File>
 	<File name="../Sources/Interface/LogDlg.h" open="0" top="0" tabpos="0">
-		<Cursor position="862" topLine="3" />
+		<Cursor position="857" topLine="0" />
 	</File>
 	<File name="../Sources/Interface/MapObjectDlg.cpp" open="0" top="0" tabpos="0">
-		<Cursor position="38063" topLine="879" />
+		<Cursor position="23139" topLine="514" />
 	</File>
 	<File name="../Sources/Interface/MoveOrAttackDlg.cpp" open="0" top="0" tabpos="0">
-		<Cursor position="3456" topLine="54" />
+		<Cursor position="3449" topLine="44" />
 	</File>
 	<File name="../Sources/Interface/OptionsDlg.cpp" open="0" top="0" tabpos="0">
-		<Cursor position="17641" topLine="424" />
+		<Cursor position="21503" topLine="454" />
 	</File>
 	<File name="../Sources/Interface/PlayerSelectorDlg.cpp" open="0" top="0" tabpos="0">
-		<Cursor position="2209" topLine="46" />
+		<Cursor position="4844" topLine="101" />
 	</File>
 	<File name="../Sources/Interface/ResolveDlg.cpp" open="0" top="0" tabpos="0">
-		<Cursor position="34788" topLine="793" />
+		<Cursor position="6215" topLine="109" />
 	</File>
 	<File name="../Sources/Interface/ResolveDlg.h" open="0" top="0" tabpos="0">
-		<Cursor position="3294" topLine="79" />
+		<Cursor position="3279" topLine="71" />
 	</File>
 	<File name="../Sources/Interface/SelectPlayerAvatarDlg.cpp" open="0" top="0" tabpos="0">
-		<Cursor position="9425" topLine="212" />
+		<Cursor position="9404" topLine="199" />
 	</File>
 	<File name="../Sources/Interface/SelectPlayerAvatarDlg.h" open="0" top="0" tabpos="0">
-		<Cursor position="760" topLine="1" />
+		<Cursor position="753" topLine="0" />
 	</File>
 	<File name="../Sources/Interface/ShopDlg.cpp" open="0" top="0" tabpos="0">
-		<Cursor position="6382" topLine="131" />
+		<Cursor position="6364" topLine="127" />
 	</File>
 	<File name="../Sources/Interface/SpellDlg.cpp" open="0" top="0" tabpos="0">
-		<Cursor position="11550" topLine="259" />
+		<Cursor position="11530" topLine="246" />
 	</File>
 	<File name="../Sources/Interface/SpellDlg.h" open="0" top="0" tabpos="0">
-		<Cursor position="404" topLine="0" />
+		<Cursor position="400" topLine="0" />
 	</File>
 	<File name="../Sources/Interface/SpellsSelectorDlg.cpp" open="0" top="0" tabpos="0">
-		<Cursor position="3221" topLine="59" />
+		<Cursor position="7647" topLine="151" />
 	</File>
 	<File name="../Sources/Interface/StartMenuDlg.cpp" open="0" top="0" tabpos="0">
-		<Cursor position="6001" topLine="132" />
+		<Cursor position="5984" topLine="124" />
 	</File>
 	<File name="../Sources/Interface/StatusDlg.cpp" open="0" top="0" tabpos="0">
-		<Cursor position="1282" topLine="5" />
+		<Cursor position="1277" topLine="0" />
 	</File>
 	<File name="../Sources/Interface/StatusDlg.h" open="0" top="0" tabpos="0">
-		<Cursor position="257" topLine="0" />
+		<Cursor position="253" topLine="0" />
 	</File>
 	<File name="../Sources/Interface/Tooltip.cpp" open="0" top="0" tabpos="0">
 		<Cursor position="903" topLine="0" />
@@ -461,132 +464,132 @@
 		<Cursor position="296" topLine="0" />
 	</File>
 	<File name="../Sources/Interface/UnitOptionsDlg.cpp" open="0" top="0" tabpos="0">
-		<Cursor position="7344" topLine="173" />
+		<Cursor position="7333" topLine="160" />
 	</File>
-	<File name="../Sources/LocalClient.cpp" open="1" top="0" tabpos="1">
-		<Cursor position="30849" topLine="944" />
+	<File name="../Sources/LocalClient.cpp" open="0" top="0" tabpos="1">
+		<Cursor position="4558" topLine="121" />
 	</File>
 	<File name="../Sources/LocalClient.h" open="0" top="0" tabpos="0">
-		<Cursor position="1796" topLine="36" />
+		<Cursor position="1786" topLine="54" />
 	</File>
 	<File name="../Sources/Players/AISpell.cpp" open="0" top="0" tabpos="0">
-		<Cursor position="506" topLine="0" />
+		<Cursor position="505" topLine="0" />
 	</File>
 	<File name="../Sources/Players/AISpell.h" open="0" top="0" tabpos="0">
-		<Cursor position="552" topLine="0" />
+		<Cursor position="549" topLine="0" />
 	</File>
 	<File name="../Sources/Players/Artifact.cpp" open="0" top="0" tabpos="0">
-		<Cursor position="272" topLine="0" />
+		<Cursor position="271" topLine="0" />
 	</File>
 	<File name="../Sources/Players/Artifact.h" open="0" top="0" tabpos="0">
-		<Cursor position="2295" topLine="35" />
+		<Cursor position="2288" topLine="49" />
 	</File>
-	<File name="../Sources/Players/Mana.h" open="1" top="0" tabpos="14">
-		<Cursor position="406" topLine="0" />
+	<File name="../Sources/Players/Mana.h" open="0" top="0" tabpos="14">
+		<Cursor position="293" topLine="0" />
 	</File>
 	<File name="../Sources/Players/Player.cpp" open="0" top="0" tabpos="0">
-		<Cursor position="20297" topLine="606" />
+		<Cursor position="20267" topLine="579" />
 	</File>
 	<File name="../Sources/Players/Player.h" open="0" top="0" tabpos="0">
-		<Cursor position="379" topLine="6" />
+		<Cursor position="377" topLine="0" />
 	</File>
-	<File name="../Sources/Players/PlayerManager.cpp" open="1" top="0" tabpos="15">
-		<Cursor position="26466" topLine="740" />
+	<File name="../Sources/Players/PlayerManager.cpp" open="0" top="0" tabpos="15">
+		<Cursor position="26433" topLine="682" />
 	</File>
 	<File name="../Sources/Players/PlayerManager.h" open="0" top="0" tabpos="0">
-		<Cursor position="1683" topLine="55" />
+		<Cursor position="1678" topLine="8" />
 	</File>
 	<File name="../Sources/Players/PlayerManagerAbstract.cpp" open="0" top="0" tabpos="0">
-		<Cursor position="7849" topLine="192" />
+		<Cursor position="7838" topLine="178" />
 	</File>
 	<File name="../Sources/Players/PlayerManagerAbstract.h" open="0" top="0" tabpos="0">
-		<Cursor position="1558" topLine="14" />
+		<Cursor position="1550" topLine="21" />
 	</File>
-	<File name="../Sources/Players/Spell.cpp" open="1" top="0" tabpos="16">
-		<Cursor position="6509" topLine="153" />
+	<File name="../Sources/Players/Spell.cpp" open="0" top="0" tabpos="16">
+		<Cursor position="6493" topLine="149" />
 	</File>
 	<File name="../Sources/Players/Spell.h" open="0" top="0" tabpos="0">
-		<Cursor position="156" topLine="7" />
+		<Cursor position="154" topLine="0" />
 	</File>
 	<File name="../Sources/Players/SummonSpell.h" open="0" top="0" tabpos="0">
-		<Cursor position="165" topLine="0" />
+		<Cursor position="162" topLine="0" />
 	</File>
 	<File name="../Sources/Server/AILuaSolver.cpp" open="0" top="0" tabpos="0">
-		<Cursor position="13804" topLine="250" />
+		<Cursor position="7796" topLine="125" />
 	</File>
 	<File name="../Sources/Server/AILuaSolver.h" open="0" top="0" tabpos="0">
-		<Cursor position="737" topLine="3" />
+		<Cursor position="733" topLine="0" />
 	</File>
 	<File name="../Sources/Server/AISolver.cpp" open="0" top="0" tabpos="0">
-		<Cursor position="4310" topLine="135" />
+		<Cursor position="4304" topLine="85" />
 	</File>
 	<File name="../Sources/Server/MapReader.cpp" open="0" top="0" tabpos="0">
-		<Cursor position="8530" topLine="245" />
+		<Cursor position="8513" topLine="210" />
 	</File>
 	<File name="../Sources/Server/MapReader.h" open="0" top="0" tabpos="0">
-		<Cursor position="2013" topLine="35" />
+		<Cursor position="2006" topLine="49" />
 	</File>
-	<File name="../Sources/Server/NetworkData.cpp" open="1" top="0" tabpos="17">
-		<Cursor position="4924" topLine="124" />
+	<File name="../Sources/Server/NetworkData.cpp" open="0" top="0" tabpos="17">
+		<Cursor position="4913" topLine="122" />
 	</File>
 	<File name="../Sources/Server/NetworkData.h" open="0" top="0" tabpos="0">
-		<Cursor position="398" topLine="0" />
+		<Cursor position="394" topLine="0" />
 	</File>
-	<File name="../Sources/Server/Server.cpp" open="1" top="0" tabpos="18">
-		<Cursor position="20505" topLine="608" />
+	<File name="../Sources/Server/Server.cpp" open="0" top="0" tabpos="18">
+		<Cursor position="18426" topLine="526" />
 	</File>
 	<File name="../Sources/Server/Server.h" open="0" top="0" tabpos="0">
-		<Cursor position="5344" topLine="110" />
+		<Cursor position="5333" topLine="85" />
 	</File>
 	<File name="../Sources/Server/ServerUnit.cpp" open="0" top="0" tabpos="0">
-		<Cursor position="2871" topLine="50" />
+		<Cursor position="2865" topLine="38" />
 	</File>
 	<File name="../Sources/Server/SpellsSolver.cpp" open="0" top="0" tabpos="0">
-		<Cursor position="51249" topLine="1312" />
+		<Cursor position="15106" topLine="326" />
 	</File>
 	<File name="../Sources/Server/SpellsSolver.h" open="0" top="0" tabpos="0">
-		<Cursor position="3331" topLine="66" />
+		<Cursor position="3322" topLine="43" />
 	</File>
 	<File name="../Sources/Server/TurnSolver.cpp" open="0" top="0" tabpos="0">
-		<Cursor position="34998" topLine="972" />
+		<Cursor position="31367" topLine="819" />
 	</File>
 	<File name="../Sources/Server/TurnSolver.h" open="0" top="0" tabpos="0">
-		<Cursor position="729" topLine="17" />
+		<Cursor position="723" topLine="0" />
 	</File>
 	<File name="../Sources/SystemHeaders.h" open="0" top="0" tabpos="0">
-		<Cursor position="470" topLine="2" />
+		<Cursor position="463" topLine="0" />
 	</File>
-	<File name="../Sources/_System/DirectoryChecker.cpp" open="1" top="0" tabpos="19">
+	<File name="../Sources/_System/DirectoryChecker.cpp" open="0" top="0" tabpos="19">
 		<Cursor position="5850" topLine="157" />
 	</File>
 	<File name="../Sources/_System/TheAvatars.cpp" open="0" top="0" tabpos="0">
-		<Cursor position="4044" topLine="79" />
+		<Cursor position="1515" topLine="12" />
 	</File>
 	<File name="../Sources/_System/linux_utils.cpp" open="0" top="0" tabpos="0">
-		<Cursor position="1044" topLine="26" />
+		<Cursor position="1037" topLine="3" />
 	</File>
-	<File name="../Sources/_System/main.cpp" open="0" top="0" tabpos="0">
-		<Cursor position="2579" topLine="81" />
+	<File name="../Sources/_System/main.cpp" open="1" top="1" tabpos="2">
+		<Cursor position="357" topLine="0" />
 	</File>
 	<File name="../Sources/_System/utils_win32.cpp" open="0" top="0" tabpos="0">
-		<Cursor position="645" topLine="13" />
+		<Cursor position="641" topLine="0" />
 	</File>
 	<File name="../Sources/lua_callbacks.cpp" open="0" top="0" tabpos="0">
-		<Cursor position="66790" topLine="2049" />
+		<Cursor position="70995" topLine="2111" />
 	</File>
 	<File name="../Sources/lua_callbacks.h" open="0" top="0" tabpos="0">
-		<Cursor position="1057" topLine="0" />
+		<Cursor position="1048" topLine="0" />
 	</File>
-	<File name="../Sources/lua_callbacks_utils.cpp" open="1" top="0" tabpos="20">
-		<Cursor position="27882" topLine="765" />
+	<File name="../Sources/lua_callbacks_utils.cpp" open="0" top="0" tabpos="20">
+		<Cursor position="27851" topLine="707" />
 	</File>
 	<File name="../Sources/lua_callbacks_utils.h" open="0" top="0" tabpos="0">
-		<Cursor position="1725" topLine="13" />
+		<Cursor position="1721" topLine="0" />
 	</File>
-	<File name="../Sources/utils.cpp" open="1" top="0" tabpos="21">
-		<Cursor position="2817" topLine="85" />
+	<File name="../Sources/utils.cpp" open="0" top="0" tabpos="21">
+		<Cursor position="2809" topLine="85" />
 	</File>
 	<File name="../Sources/utils.h" open="0" top="0" tabpos="1">
-		<Cursor position="7842" topLine="161" />
+		<Cursor position="1418" topLine="13" />
 	</File>
 </CodeBlocks_layout_file>

@@ -11,19 +11,19 @@
 // -----------------------------------------------------------------
 guiButton::guiButton() : guiImage()
 {
-  m_ClickOption = BCO_None;
-  m_OverOption = BCO_None;
-  m_bMouseDown = m_bMouseOver = false;
-  m_bClickState = false;
-  m_pLabel = new guiLabel();
-  m_pGeometryClicked = NULL;
-  m_pGeometryOver = NULL;
-  m_pGeometryNormal = NULL;
-  m_pGeometryAttachedImage = NULL;
-  m_bCatchButton2Events = false;
-  m_bCatchDoubleClicks = false;
-  m_bMultiClicks = false;
-  m_fMultiClicksTimer = 0.0f;
+    m_ClickOption = BCO_None;
+    m_OverOption = BCO_None;
+    m_bMouseDown = m_bMouseOver = false;
+    m_bClickState = false;
+    m_pLabel = new guiLabel();
+    m_pGeometryClicked = NULL;
+    m_pGeometryOver = NULL;
+    m_pGeometryNormal = NULL;
+    m_pGeometryAttachedImage = NULL;
+    m_bCatchButton2Events = false;
+    m_bCatchDoubleClicks = false;
+    m_bMultiClicks = false;
+    m_fMultiClicksTimer = 0.0f;
 }
 
 // -----------------------------------------------------------------
@@ -32,11 +32,11 @@ guiButton::guiButton() : guiImage()
 // -----------------------------------------------------------------
 guiButton::~guiButton()
 {
-  FREE(m_pLabel);
-  FREE(m_pGeometryClicked);
-  FREE(m_pGeometryOver);
-  FREE(m_pGeometryAttachedImage);
-  m_pGeometry = m_pGeometryNormal;
+    FREE(m_pLabel);
+    FREE(m_pGeometryClicked);
+    FREE(m_pGeometryOver);
+    FREE(m_pGeometryAttachedImage);
+    m_pGeometry = m_pGeometryNormal;
 }
 
 // -----------------------------------------------------------------
@@ -44,22 +44,22 @@ guiButton::~guiButton()
 // -----------------------------------------------------------------
 void guiButton::init(const char * sText, FontId fontId, F_RGBA textColor, int iClickedTex, BtnClickOptions clickOption, int iOverTex, BtnClickOptions overOption, int iTexId, const char * sCpntId, int xPxl, int yPxl, int wPxl, int hPxl, DisplayEngine * pDisplay)
 {
-  guiImage::init(iTexId, sCpntId, xPxl, yPxl, wPxl, hPxl, pDisplay);
-  m_pLabel->init(sText, fontId, textColor, "ButtonLabe", 0, 0, 0, 0, pDisplay);
-  m_pLabel->centerOnComponent(this);
-  m_pGeometryNormal = (GeometryQuads*) m_pGeometry;
-  m_ClickOption = clickOption;
-  if (m_ClickOption == BCO_ReplaceTex || m_ClickOption == BCO_AddTex)
-  {
-    QuadData quad(0, m_iWidth, 0, m_iHeight, iClickedTex, pDisplay);
-    m_pGeometryClicked = new GeometryQuads(&quad, VB_Static);
-  }
-  m_OverOption = overOption;
-  if (m_OverOption == BCO_ReplaceTex || m_OverOption == BCO_AddTex)
-  {
-    QuadData quad(0, m_iWidth, 0, m_iHeight, iOverTex, pDisplay);
-    m_pGeometryOver = new GeometryQuads(&quad, VB_Static);
-  }
+    guiImage::init(iTexId, sCpntId, xPxl, yPxl, wPxl, hPxl, pDisplay);
+    m_pLabel->init(sText, fontId, textColor, "ButtonLabe", 0, 0, 0, 0, pDisplay);
+    m_pLabel->centerOnComponent(this);
+    m_pGeometryNormal = (GeometryQuads*) m_pGeometry;
+    m_ClickOption = clickOption;
+    if (m_ClickOption == BCO_ReplaceTex || m_ClickOption == BCO_AddTex)
+    {
+        QuadData quad(0, m_iWidth, 0, m_iHeight, iClickedTex, pDisplay);
+        m_pGeometryClicked = new GeometryQuads(&quad, VB_Static);
+    }
+    m_OverOption = overOption;
+    if (m_OverOption == BCO_ReplaceTex || m_OverOption == BCO_AddTex)
+    {
+        QuadData quad(0, m_iWidth, 0, m_iHeight, iOverTex, pDisplay);
+        m_pGeometryOver = new GeometryQuads(&quad, VB_Static);
+    }
 }
 
 // -----------------------------------------------------------------
@@ -67,12 +67,12 @@ void guiButton::init(const char * sText, FontId fontId, F_RGBA textColor, int iC
 // -----------------------------------------------------------------
 guiObject * guiButton::clone()
 {
-  guiButton * pObj = new guiButton();
-  pObj->init(m_pLabel->getText(), m_pLabel->getFontId(), m_pLabel->getDiffuseColor(), (m_pGeometryClicked == NULL) ? -1 : m_pGeometryClicked->getTexture(), m_ClickOption, (m_pGeometryOver == NULL) ? -1 : m_pGeometryOver->getTexture(), m_OverOption, m_pGeometryNormal->getTexture(), m_sCpntId, m_iXPxl, m_iYPxl, m_iWidth, m_iHeight, getDisplay());
-  if (m_pGeometryAttachedImage != NULL)
-    pObj->attachImage(m_pGeometryAttachedImage->getTexture());
-  pObj->setMultiClicks(m_bMultiClicks);
-  return pObj;
+    guiButton * pObj = new guiButton();
+    pObj->init(m_pLabel->getText(), m_pLabel->getFontId(), m_pLabel->getDiffuseColor(), (m_pGeometryClicked == NULL) ? -1 : m_pGeometryClicked->getTexture(), m_ClickOption, (m_pGeometryOver == NULL) ? -1 : m_pGeometryOver->getTexture(), m_OverOption, m_pGeometryNormal->getTexture(), m_sCpntId, m_iXPxl, m_iYPxl, m_iWidth, m_iHeight, getDisplay());
+    if (m_pGeometryAttachedImage != NULL)
+        pObj->attachImage(m_pGeometryAttachedImage->getTexture());
+    pObj->setMultiClicks(m_bMultiClicks);
+    return pObj;
 }
 
 // -----------------------------------------------------------------
@@ -80,16 +80,16 @@ guiObject * guiButton::clone()
 // -----------------------------------------------------------------
 void guiButton::update(double delta)
 {
-  guiImage::update(delta);
-  if (m_bEnabled && m_bVisible && m_bMultiClicks && m_bMouseDown && m_bMouseOver && m_fMultiClicksTimer > 0)
-  {
-    m_fMultiClicksTimer -= delta;
-    if (m_fMultiClicksTimer <= 0)
+    guiImage::update(delta);
+    if (m_bEnabled && m_bVisible && m_bMultiClicks && m_bMouseDown && m_bMouseOver && m_fMultiClicksTimer > 0)
     {
-      m_pOwner->onButtonEvent(&m_MultiClicksEvent, this);
-      m_fMultiClicksTimer = MULTICLICKS_TIMER_NEXT;
+        m_fMultiClicksTimer -= delta;
+        if (m_fMultiClicksTimer <= 0)
+        {
+            m_pOwner->onButtonEvent(&m_MultiClicksEvent, this);
+            m_fMultiClicksTimer = MULTICLICKS_TIMER_NEXT;
+        }
     }
-  }
 }
 
 // -----------------------------------------------------------------
@@ -97,111 +97,111 @@ void guiButton::update(double delta)
 // -----------------------------------------------------------------
 void guiButton::displayAt(int iXOffset, int iYOffset, F_RGBA cpntColor, F_RGBA docColor)
 {
-  if (m_bVisible)
-  {
-    m_pGeometry = m_pGeometryNormal;
-    bool bNeedPop = false;
-    bool bAddMode = false;
-    if (m_bClickState)
+    if (m_bVisible)
     {
-      switch (m_ClickOption)
-      {
-      case BCO_None:
-        break;
-      case BCO_ReplaceTex:
-        m_pGeometry = m_pGeometryClicked;
-        break;
-      case BCO_AddTex:
-        guiImage::displayAt(iXOffset, iYOffset, cpntColor);
-        m_pGeometry = m_pGeometryClicked;
-        break;
-      case BCO_Decal:
-        iXOffset += 3;
-        iYOffset += 3;
-        break;
-      case BCO_Scale:
+        m_pGeometry = m_pGeometryNormal;
+        bool bNeedPop = false;
+        bool bAddMode = false;
+        if (m_bClickState)
         {
-          float coef = 1.2f;
-          Coords3D fCenter = getDisplay()->get3DCoords(CoordsScreen(
-                iXOffset + getXPos() + getWidth() / 2,
-                iYOffset + getYPos() + getHeight() / 2),
-                DMS_2D);
-          glPushMatrix();
-          glTranslatef(fCenter.x * (1 - coef), fCenter.y * (1 - coef), 0.0f);
-          glScalef(coef, coef, 1.0f);
-          bNeedPop = true;
-          break;
+            switch (m_ClickOption)
+            {
+            case BCO_None:
+                break;
+            case BCO_ReplaceTex:
+                m_pGeometry = m_pGeometryClicked;
+                break;
+            case BCO_AddTex:
+                guiImage::displayAt(iXOffset, iYOffset, cpntColor);
+                m_pGeometry = m_pGeometryClicked;
+                break;
+            case BCO_Decal:
+                iXOffset += 3;
+                iYOffset += 3;
+                break;
+            case BCO_Scale:
+            {
+                float coef = 1.2f;
+                Coords3D fCenter = getDisplay()->get3DCoords(CoordsScreen(
+                                       iXOffset + getXPos() + getWidth() / 2,
+                                       iYOffset + getYPos() + getHeight() / 2),
+                                   DMS_2D);
+                glPushMatrix();
+                glTranslatef(fCenter.x * (1 - coef), fCenter.y * (1 - coef), 0.0f);
+                glScalef(coef, coef, 1.0f);
+                bNeedPop = true;
+                break;
+            }
+            case BCO_Enlight:
+            {
+                if (F_RGBA_ISNULL(cpntColor))
+                    cpntColor = rgb(1, 1, 1);
+                cpntColor = cpntColor + rgb(1, 1, 1);
+                cpntColor = cpntColor / 2;
+                bAddMode = true;
+                break;
+            }
+            }
         }
-      case BCO_Enlight:
-        {
-          if (F_RGBA_ISNULL(cpntColor))
-            cpntColor = rgb(1, 1, 1);
-          cpntColor = cpntColor + rgb(1, 1, 1);
-          cpntColor = cpntColor / 2;
-          bAddMode = true;
-          break;
-        }
-      }
-    }
 
-    if (!m_bEnabled)
-      cpntColor = F_RGBA_MULTIPLY(cpntColor, rgba(1,1,1, 0.3f));
-    else if (m_bMouseOver && !m_bClickState)
-    {
-      switch (m_OverOption)
-      {
-      case BCO_None:
-        break;
-      case BCO_ReplaceTex:
-        m_pGeometry = m_pGeometryOver;
-        break;
-      case BCO_AddTex:
+        if (!m_bEnabled)
+            cpntColor = F_RGBA_MULTIPLY(cpntColor, rgba(1,1,1, 0.3f));
+        else if (m_bMouseOver && !m_bClickState)
+        {
+            switch (m_OverOption)
+            {
+            case BCO_None:
+                break;
+            case BCO_ReplaceTex:
+                m_pGeometry = m_pGeometryOver;
+                break;
+            case BCO_AddTex:
+                guiImage::displayAt(iXOffset, iYOffset, cpntColor);
+                m_pGeometry = m_pGeometryOver;
+                break;
+            case BCO_Decal:
+                iXOffset += 3;
+                iYOffset += 3;
+                break;
+            case BCO_Scale:
+            {
+                float coef = 1.2f;
+                Coords3D fCenter = getDisplay()->get3DCoords(CoordsScreen(
+                                       iXOffset + getXPos() + getWidth() / 2,
+                                       iYOffset + getYPos() + getHeight() / 2),
+                                   DMS_2D);
+                glPushMatrix();
+                glTranslatef(fCenter.x * (1 - coef), fCenter.y * (1 - coef), 0.0f);
+                glScalef(coef, coef, 1.0f);
+                bNeedPop = true;
+                break;
+            }
+            case BCO_Enlight:
+            {
+                if (F_RGBA_ISNULL(cpntColor))
+                    cpntColor = rgb(1, 1, 1);
+                cpntColor = cpntColor + rgb(1, 1, 1);
+                cpntColor = cpntColor / 2;
+                bAddMode = true;
+                break;
+            }
+            }
+        }
+        bool bPrevMode = false;
+        if (bAddMode)
+            bPrevMode = getDisplay()->setAdditiveMode(true);
         guiImage::displayAt(iXOffset, iYOffset, cpntColor);
-        m_pGeometry = m_pGeometryOver;
-        break;
-      case BCO_Decal:
-        iXOffset += 3;
-        iYOffset += 3;
-        break;
-      case BCO_Scale:
+        m_pLabel->displayAt(iXOffset, iYOffset, cpntColor);
+        if (m_pGeometryAttachedImage != NULL)
         {
-          float coef = 1.2f;
-          Coords3D fCenter = getDisplay()->get3DCoords(CoordsScreen(
-                iXOffset + getXPos() + getWidth() / 2,
-                iYOffset + getYPos() + getHeight() / 2),
-                DMS_2D);
-          glPushMatrix();
-          glTranslatef(fCenter.x * (1 - coef), fCenter.y * (1 - coef), 0.0f);
-          glScalef(coef, coef, 1.0f);
-          bNeedPop = true;
-          break;
+            CoordsScreen coords = CoordsScreen(m_iXPxl + iXOffset, m_iYPxl + iYOffset, GUIPLANE);
+            m_pGeometryAttachedImage->display(coords, F_RGBA_MULTIPLY(cpntColor, m_DiffuseColor));
         }
-      case BCO_Enlight:
-        {
-          if (F_RGBA_ISNULL(cpntColor))
-            cpntColor = rgb(1, 1, 1);
-          cpntColor = cpntColor + rgb(1, 1, 1);
-          cpntColor = cpntColor / 2;
-          bAddMode = true;
-          break;
-        }
-      }
+        if (bAddMode)
+            getDisplay()->setAdditiveMode(bPrevMode);
+        if (bNeedPop)
+            glPopMatrix();
     }
-    bool bPrevMode = false;
-    if (bAddMode)
-      bPrevMode = getDisplay()->setAdditiveMode(true);
-    guiImage::displayAt(iXOffset, iYOffset, cpntColor);
-    m_pLabel->displayAt(iXOffset, iYOffset, cpntColor);
-    if (m_pGeometryAttachedImage != NULL)
-    {
-      CoordsScreen coords = CoordsScreen(m_iXPxl + iXOffset, m_iYPxl + iYOffset, GUIPLANE);
-      m_pGeometryAttachedImage->display(coords, F_RGBA_MULTIPLY(cpntColor, m_DiffuseColor));
-    }
-    if (bAddMode)
-      getDisplay()->setAdditiveMode(bPrevMode);
-    if (bNeedPop)
-      glPopMatrix();
-  }
 }
 
 // -----------------------------------------------------------------
@@ -209,55 +209,55 @@ void guiButton::displayAt(int iXOffset, int iYOffset, F_RGBA cpntColor, F_RGBA d
 // -----------------------------------------------------------------
 guiObject * guiButton::onButtonEvent(ButtonAction * pEvent)
 {
-  if ((pEvent->eButton != Button1 && (pEvent->eButton != Button2 || !m_bCatchButton2Events)) || !m_bEnabled || !m_bVisible)
-    return NULL;
-  switch (pEvent->eEvent)
-  {
-  case Event_Down:
+    if ((pEvent->eButton != Button1 && (pEvent->eButton != Button2 || !m_bCatchButton2Events)) || !m_bEnabled || !m_bVisible)
+        return NULL;
+    switch (pEvent->eEvent)
     {
-      m_bMouseDown = true;
-      m_bMouseOver = true;
-      m_bClickState = true;
-      AudioManager::getInstance()->playSound(SOUND_CLICK);
-      if (m_bMultiClicks)
-      {
-        m_fMultiClicksTimer = MULTICLICKS_TIMER_FIRST;
-        memcpy(&m_MultiClicksEvent, pEvent, sizeof(ButtonAction));
+    case Event_Down:
+    {
+        m_bMouseDown = true;
+        m_bMouseOver = true;
+        m_bClickState = true;
+        AudioManager::getInstance()->playSound(SOUND_CLICK);
+        if (m_bMultiClicks)
+        {
+            m_fMultiClicksTimer = MULTICLICKS_TIMER_FIRST;
+            memcpy(&m_MultiClicksEvent, pEvent, sizeof(ButtonAction));
+            bool bClose = false;
+            if (m_pOwner != NULL)
+                bClose = !m_pOwner->onButtonEvent(pEvent, this);
+            return bClose ? NULL : this;
+        }
+        return this;
+    }
+    case Event_Up:
+    {
+        m_bMouseDown = false;
+        m_bClickState = false;
         bool bClose = false;
-        if (m_pOwner != NULL)
-          bClose = !m_pOwner->onButtonEvent(pEvent, this);
+        if (!m_bMultiClicks && m_bMouseOver && m_pOwner != NULL)
+            bClose = !m_pOwner->onButtonEvent(pEvent, this);
         return bClose ? NULL : this;
-      }
-      return this;
     }
-  case Event_Up:
+    case Event_Drag:
     {
-      m_bMouseDown = false;
-      m_bClickState = false;
-      bool bClose = false;
-      if (!m_bMultiClicks && m_bMouseOver && m_pOwner != NULL)
-        bClose = !m_pOwner->onButtonEvent(pEvent, this);
-      return bClose ? NULL : this;
+        m_bClickState = m_bMouseOver = isAt(pEvent->xPos - pEvent->xOffset, pEvent->yPos - pEvent->yOffset);
+        return this;
     }
-  case Event_Drag:
+    case Event_DoubleClick:
     {
-      m_bClickState = m_bMouseOver = isAt(pEvent->xPos - pEvent->xOffset, pEvent->yPos - pEvent->yOffset);
-      return this;
-    }
-  case Event_DoubleClick:
-    {
-      if (m_bCatchDoubleClicks)
-      {
-        bool bClose = false;
-        if (m_bMouseOver && m_pOwner != NULL)
-          bClose = !m_pOwner->onButtonEvent(pEvent, this);
-        return bClose ? NULL : this;
-      }
+        if (m_bCatchDoubleClicks)
+        {
+            bool bClose = false;
+            if (m_bMouseOver && m_pOwner != NULL)
+                bClose = !m_pOwner->onButtonEvent(pEvent, this);
+            return bClose ? NULL : this;
+        }
     }
     default:
-    break;
-  }
-  return NULL;
+        break;
+    }
+    return NULL;
 }
 
 // -----------------------------------------------------------------
@@ -265,8 +265,8 @@ guiObject * guiButton::onButtonEvent(ButtonAction * pEvent)
 // -----------------------------------------------------------------
 guiObject * guiButton::onCursorMoveEvent(int xPxl, int yPxl)
 {
-  m_bMouseOver = true;
-  return this;
+    m_bMouseOver = true;
+    return this;
 }
 
 // -----------------------------------------------------------------
@@ -274,7 +274,7 @@ guiObject * guiButton::onCursorMoveEvent(int xPxl, int yPxl)
 // -----------------------------------------------------------------
 void guiButton::onCursorMoveOutEvent()
 {
-  m_bMouseOver = false;
+    m_bMouseOver = false;
 }
 
 // -----------------------------------------------------------------
@@ -282,15 +282,15 @@ void guiButton::onCursorMoveOutEvent()
 // -----------------------------------------------------------------
 void guiButton::onResize(int iOldWidth, int iOldHeight)
 {
-  Geometry * ptmp = m_pGeometry;
-  m_pGeometry = m_pGeometryNormal;
-  guiImage::onResize(iOldWidth, iOldHeight);
-  m_pGeometry = m_pGeometryClicked;
-  guiImage::onResize(iOldWidth, iOldHeight);
-  m_pGeometry = m_pGeometryAttachedImage;
-  guiImage::onResize(iOldWidth, iOldHeight);
-  m_pGeometry = ptmp;
-  m_pLabel->centerOnComponent(this);
+    Geometry * ptmp = m_pGeometry;
+    m_pGeometry = m_pGeometryNormal;
+    guiImage::onResize(iOldWidth, iOldHeight);
+    m_pGeometry = m_pGeometryClicked;
+    guiImage::onResize(iOldWidth, iOldHeight);
+    m_pGeometry = m_pGeometryAttachedImage;
+    guiImage::onResize(iOldWidth, iOldHeight);
+    m_pGeometry = ptmp;
+    m_pLabel->centerOnComponent(this);
 }
 
 // -----------------------------------------------------------------
@@ -298,7 +298,7 @@ void guiButton::onResize(int iOldWidth, int iOldHeight)
 // -----------------------------------------------------------------
 void guiButton::setNormalTexture(int iTexId)
 {
-  m_pGeometryNormal->setTexture(iTexId);
+    m_pGeometryNormal->setTexture(iTexId);
 }
 
 // -----------------------------------------------------------------
@@ -306,8 +306,8 @@ void guiButton::setNormalTexture(int iTexId)
 // -----------------------------------------------------------------
 void guiButton::setText(const char * sText)
 {
-  m_pLabel->setText(sText);
-  m_pLabel->centerOnComponent(this);
+    m_pLabel->setText(sText);
+    m_pLabel->centerOnComponent(this);
 }
 
 // -----------------------------------------------------------------
@@ -315,8 +315,8 @@ void guiButton::setText(const char * sText)
 // -----------------------------------------------------------------
 void guiButton::moveTo(int xPxl, int yPxl)
 {
-  guiComponent::moveTo(xPxl, yPxl);
-  m_pLabel->centerOnComponent(this);
+    guiComponent::moveTo(xPxl, yPxl);
+    m_pLabel->centerOnComponent(this);
 }
 
 // -----------------------------------------------------------------
@@ -324,8 +324,8 @@ void guiButton::moveTo(int xPxl, int yPxl)
 // -----------------------------------------------------------------
 void guiButton::moveBy(int xPxl, int yPxl)
 {
-  guiComponent::moveBy(xPxl, yPxl);
-  m_pLabel->centerOnComponent(this);
+    guiComponent::moveBy(xPxl, yPxl);
+    m_pLabel->centerOnComponent(this);
 }
 
 // -----------------------------------------------------------------
@@ -333,9 +333,9 @@ void guiButton::moveBy(int xPxl, int yPxl)
 // -----------------------------------------------------------------
 void guiButton::autoPad(int margin)
 {
-  setWidth(m_pLabel->getWidth() + 2 * margin);
-  setHeight(m_pLabel->getHeight() + 2 * margin);
-  m_pLabel->centerOnComponent(this);
+    setWidth(m_pLabel->getWidth() + 2 * margin);
+    setHeight(m_pLabel->getHeight() + 2 * margin);
+    m_pLabel->centerOnComponent(this);
 }
 
 // -----------------------------------------------------------------
@@ -343,12 +343,12 @@ void guiButton::autoPad(int margin)
 // -----------------------------------------------------------------
 void guiButton::autoPadWidth(int margin, int minWidth)
 {
-  int newWidth = m_pLabel->getWidth() + 2 * margin;
-  if (newWidth < minWidth)
-    setWidth(minWidth);
-  else
-    setWidth(newWidth);
-  m_pLabel->centerOnComponent(this);
+    int newWidth = m_pLabel->getWidth() + 2 * margin;
+    if (newWidth < minWidth)
+        setWidth(minWidth);
+    else
+        setWidth(newWidth);
+    m_pLabel->centerOnComponent(this);
 }
 
 // -----------------------------------------------------------------
@@ -356,13 +356,13 @@ void guiButton::autoPadWidth(int margin, int minWidth)
 // -----------------------------------------------------------------
 void guiButton::attachImage(int iTex)
 {
-  if (m_pGeometryAttachedImage == NULL)
-  {
-    QuadData quad(0, m_iWidth, 0, m_iHeight, iTex, getDisplay());
-    m_pGeometryAttachedImage = new GeometryQuads(&quad, VB_Static);
-  }
-  else
-    m_pGeometryAttachedImage->setTexture(iTex);
+    if (m_pGeometryAttachedImage == NULL)
+    {
+        QuadData quad(0, m_iWidth, 0, m_iHeight, iTex, getDisplay());
+        m_pGeometryAttachedImage = new GeometryQuads(&quad, VB_Static);
+    }
+    else
+        m_pGeometryAttachedImage->setTexture(iTex);
 }
 
 // -----------------------------------------------------------------
@@ -370,12 +370,12 @@ void guiButton::attachImage(int iTex)
 // -----------------------------------------------------------------
 void guiButton::setEnabled(bool bEnabled)
 {
-  guiImage::setEnabled(bEnabled);
-  if (!bEnabled)
-  {
-    m_bMouseDown = m_bMouseOver = false;
-    m_bClickState = false;
-  }
+    guiImage::setEnabled(bEnabled);
+    if (!bEnabled)
+    {
+        m_bMouseDown = m_bMouseOver = false;
+        m_bClickState = false;
+    }
 }
 
 // -----------------------------------------------------------------
@@ -385,16 +385,16 @@ void guiButton::setEnabled(bool bEnabled)
 // -----------------------------------------------------------------
 guiButton * guiButton::createDefaultNormalButton(const char * sText, const char * sId, DisplayEngine * pDisplay)
 {
-  guiButton * pBtn = new guiButton();
-  pBtn->init(
-    sText, H2_FONT, H2_COLOR,
-    pDisplay->getTextureEngine()->findTexture("interface:Transparent"),
-    BCO_None,
-    pDisplay->getTextureEngine()->findTexture("interface:Transparent"),
-    BCO_Decal,
-    pDisplay->getTextureEngine()->findTexture("interface:Transparent"),
-    sId, 0, 0, 50, 32, pDisplay);
-  return pBtn;
+    guiButton * pBtn = new guiButton();
+    pBtn->init(
+        sText, H2_FONT, H2_COLOR,
+        pDisplay->getTextureEngine()->findTexture("interface:Transparent"),
+        BCO_None,
+        pDisplay->getTextureEngine()->findTexture("interface:Transparent"),
+        BCO_Decal,
+        pDisplay->getTextureEngine()->findTexture("interface:Transparent"),
+        sId, 0, 0, 50, 32, pDisplay);
+    return pBtn;
 }
 
 // -----------------------------------------------------------------
@@ -404,15 +404,15 @@ guiButton * guiButton::createDefaultNormalButton(const char * sText, const char 
 // -----------------------------------------------------------------
 guiButton * guiButton::createDefaultSmallButton(const char * sText, int width, const char * sId, DisplayEngine * pDisplay)
 {
-  guiButton * pBtn = new guiButton();
-  pBtn->init(
-    sText, TEXT_FONT, TEXT_COLOR,
-    pDisplay->getTextureEngine()->findTexture("interface:SmallButtonClicked"),
-    BCO_ReplaceTex,
-    -1, BCO_None,
-    pDisplay->getTextureEngine()->findTexture("interface:SmallButtonNormal"),
-    sId, 0, 0, width, 20, pDisplay);
-  return pBtn;
+    guiButton * pBtn = new guiButton();
+    pBtn->init(
+        sText, TEXT_FONT, TEXT_COLOR,
+        pDisplay->getTextureEngine()->findTexture("interface:SmallButtonClicked"),
+        BCO_ReplaceTex,
+        -1, BCO_None,
+        pDisplay->getTextureEngine()->findTexture("interface:SmallButtonNormal"),
+        sId, 0, 0, width, 20, pDisplay);
+    return pBtn;
 }
 
 // -----------------------------------------------------------------
@@ -422,15 +422,15 @@ guiButton * guiButton::createDefaultSmallButton(const char * sText, int width, c
 // -----------------------------------------------------------------
 guiButton * guiButton::createDefaultWhiteButton(const char * sText, int width, int height, const char * sId, DisplayEngine * pDisplay)
 {
-  guiButton * pBtn = new guiButton();
-  pBtn->init(
-    sText, TEXT_FONT, TEXT_COLOR,
-    pDisplay->getTextureEngine()->findTexture("interface:WhiteButtonClicked"),
-    BCO_ReplaceTex,
-    -1, BCO_None,
-    pDisplay->getTextureEngine()->findTexture("interface:WhiteButtonNormal"),
-    sId, 0, 0, width, height, pDisplay);
-  return pBtn;
+    guiButton * pBtn = new guiButton();
+    pBtn->init(
+        sText, TEXT_FONT, TEXT_COLOR,
+        pDisplay->getTextureEngine()->findTexture("interface:WhiteButtonClicked"),
+        BCO_ReplaceTex,
+        -1, BCO_None,
+        pDisplay->getTextureEngine()->findTexture("interface:WhiteButtonNormal"),
+        sId, 0, 0, width, height, pDisplay);
+    return pBtn;
 }
 
 // -----------------------------------------------------------------
@@ -440,10 +440,10 @@ guiButton * guiButton::createDefaultWhiteButton(const char * sText, int width, i
 // -----------------------------------------------------------------
 guiButton * guiButton::createDefaultImageButton(int iTex, const char * sId, DisplayEngine * pDisplay)
 {
-  guiButton * pBtn = new guiButton();
-  pBtn->init(
-    "", TEXT_FONT, TEXT_COLOR,
-    0, BCO_Decal, -1, BCO_None,
-    iTex, sId, 0, 0, -1, -1, pDisplay);
-  return pBtn;
+    guiButton * pBtn = new guiButton();
+    pBtn->init(
+        "", TEXT_FONT, TEXT_COLOR,
+        0, BCO_Decal, -1, BCO_None,
+        iTex, sId, 0, 0, -1, -1, pDisplay);
+    return pBtn;
 }

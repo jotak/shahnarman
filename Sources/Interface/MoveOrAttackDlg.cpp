@@ -13,56 +13,56 @@
 // -----------------------------------------------------------------
 MoveOrAttackDlg::MoveOrAttackDlg(LocalClient * pLocalClient, Unit * pUnit, CoordsMap mapPos) : guiDocument()
 {
-  m_pLocalClient = pLocalClient;
-  m_pTarget = NULL;
-  m_iMoveToTex = pLocalClient->getDisplay()->getTextureEngine()->loadTexture("moveto_icon");
+    m_pLocalClient = pLocalClient;
+    m_pTarget = NULL;
+    m_iMoveToTex = pLocalClient->getDisplay()->getTextureEngine()->loadTexture("moveto_icon");
 
-  // Document
-  init("MoveOrAttackPopupDocument",
-    pLocalClient->getDisplay()->getTextureEngine()->findTexture("interface:WinBg"),
-    0, 0, 1, 1, pLocalClient->getDisplay());
+    // Document
+    init("MoveOrAttackPopupDocument",
+         pLocalClient->getDisplay()->getTextureEngine()->findTexture("interface:WinBg"),
+         0, 0, 1, 1, pLocalClient->getDisplay());
 
-  // Button "Move to position"
-  int xPxl = 0;
-  int yPxl = 0;
-  int iButton = 1;
-  guiToggleButton * pBtn = guiToggleButton::createDefaultTexturedToggleButton(m_iMoveToTex, SMALL_ICON_SIZE, "MoveBtn", pLocalClient->getDisplay());
-  pBtn->moveTo(xPxl, yPxl);
-  addComponent(pBtn);
-  char sText[LABEL_MAX_CHARS] = "";
-  i18n->getText("MOVE_TO_POS", sText, LABEL_MAX_CHARS);
-  pBtn->setTooltipText(sText);
+    // Button "Move to position"
+    int xPxl = 0;
+    int yPxl = 0;
+    int iButton = 1;
+    guiToggleButton * pBtn = guiToggleButton::createDefaultTexturedToggleButton(m_iMoveToTex, SMALL_ICON_SIZE, "MoveBtn", pLocalClient->getDisplay());
+    pBtn->moveTo(xPxl, yPxl);
+    addComponent(pBtn);
+    char sText[LABEL_MAX_CHARS] = "";
+    i18n->getText("MOVE_TO_POS", sText, LABEL_MAX_CHARS);
+    pBtn->setTooltipText(sText);
 
-  // Find foe units on this tile
-  char sBuf[LABEL_MAX_CHARS] = "";
-  xPxl += SMALL_ICON_SIZE + SMALL_ICON_SPACING;
-  MapTile * pTile = pLocalClient->getGameboard()->getMap()->getTileAt(mapPos);
-  assert(pTile != NULL);
-  u8 owner = pUnit->getOwner();
-  Unit * pOther = (Unit*) pTile->getFirstMapObject(GOTYPE_UNIT);
-  while (pOther != NULL)
-  {
-    if (pOther->getOwner() != owner)
+    // Find foe units on this tile
+    char sBuf[LABEL_MAX_CHARS] = "";
+    xPxl += SMALL_ICON_SIZE + SMALL_ICON_SPACING;
+    MapTile * pTile = pLocalClient->getGameboard()->getMap()->getTileAt(mapPos);
+    assert(pTile != NULL);
+    u8 owner = pUnit->getOwner();
+    Unit * pOther = (Unit*) pTile->getFirstMapObject(GOTYPE_UNIT);
+    while (pOther != NULL)
     {
-      xPxl = (iButton % 8) * (SMALL_ICON_SIZE + SMALL_ICON_SPACING);
-      yPxl = (iButton / 8) * (SMALL_ICON_SIZE + SMALL_ICON_SPACING);
-      int itex = pOther->getTexture();
-      pBtn = guiToggleButton::createDefaultTexturedToggleButton(itex, SMALL_ICON_SIZE, "EnnemyBtn", pLocalClient->getDisplay());
-      pBtn->moveTo(xPxl, yPxl);
-      pBtn->setAttachment(pOther);
-      addComponent(pBtn);
-      i18n->getText("ATTACK_(s)", sBuf, LABEL_MAX_CHARS);
-      snprintf(sText, LABEL_MAX_CHARS, sBuf, pOther->getName());
-      pBtn->setTooltipText(sText);
-      iButton++;
+        if (pOther->getOwner() != owner)
+        {
+            xPxl = (iButton % 8) * (SMALL_ICON_SIZE + SMALL_ICON_SPACING);
+            yPxl = (iButton / 8) * (SMALL_ICON_SIZE + SMALL_ICON_SPACING);
+            int itex = pOther->getTexture();
+            pBtn = guiToggleButton::createDefaultTexturedToggleButton(itex, SMALL_ICON_SIZE, "EnnemyBtn", pLocalClient->getDisplay());
+            pBtn->moveTo(xPxl, yPxl);
+            pBtn->setAttachment(pOther);
+            addComponent(pBtn);
+            i18n->getText("ATTACK_(s)", sBuf, LABEL_MAX_CHARS);
+            snprintf(sText, LABEL_MAX_CHARS, sBuf, pOther->getName());
+            pBtn->setTooltipText(sText);
+            iButton++;
+        }
+        pOther = (Unit*) pTile->getNextMapObject(GOTYPE_UNIT);
     }
-    pOther = (Unit*) pTile->getNextMapObject(GOTYPE_UNIT);
-  }
 
-  if (iButton < 8)
-    setDimensions(iButton * (SMALL_ICON_SIZE + SMALL_ICON_SPACING) - SMALL_ICON_SPACING, SMALL_ICON_SIZE);
-  else
-    setDimensions(8 * (SMALL_ICON_SIZE + SMALL_ICON_SPACING) - SMALL_ICON_SPACING, (iButton / 8) * (SMALL_ICON_SIZE + SMALL_ICON_SPACING) - SMALL_ICON_SPACING);
+    if (iButton < 8)
+        setDimensions(iButton * (SMALL_ICON_SIZE + SMALL_ICON_SPACING) - SMALL_ICON_SPACING, SMALL_ICON_SIZE);
+    else
+        setDimensions(8 * (SMALL_ICON_SIZE + SMALL_ICON_SPACING) - SMALL_ICON_SPACING, (iButton / 8) * (SMALL_ICON_SIZE + SMALL_ICON_SPACING) - SMALL_ICON_SPACING);
 }
 
 // -----------------------------------------------------------------
@@ -72,10 +72,10 @@ MoveOrAttackDlg::MoveOrAttackDlg(LocalClient * pLocalClient, Unit * pUnit, Coord
 MoveOrAttackDlg::~MoveOrAttackDlg()
 {
 #ifdef DBG_VERBOSE1
-  printf("Begin destroy MoveOrAttackDlg\n");
+    printf("Begin destroy MoveOrAttackDlg\n");
 #endif
 #ifdef DBG_VERBOSE1
-  printf("End destroy MoveOrAttackDlg\n");
+    printf("End destroy MoveOrAttackDlg\n");
 #endif
 }
 
@@ -84,29 +84,29 @@ MoveOrAttackDlg::~MoveOrAttackDlg()
 // -----------------------------------------------------------------
 guiObject * MoveOrAttackDlg::onCursorMoveEvent(int xPxl, int yPxl)
 {
-  m_pTarget = NULL;
-  guiComponent * cpnt = getFirstComponent();
-  while (cpnt != NULL)
-  {
-    if (cpnt->isAt(xPxl, yPxl))
+    m_pTarget = NULL;
+    guiComponent * cpnt = getFirstComponent();
+    while (cpnt != NULL)
     {
-      if (strcmp(cpnt->getId(), "MoveBtn") == 0)
-      {
-        m_pTarget = cpnt;
-        break;
-      }
-      MapObject * pAttachment = (MapObject*) cpnt->getAttachment();
-      if (pAttachment != NULL)
-      {
-        m_pTarget = pAttachment;
-        char sBuf[LABEL_MAX_CHARS] = "";
-        m_pLocalClient->getInterface()->getInfoDialog()->setInfoText(pAttachment->getInfo(sBuf, LABEL_MAX_CHARS, Dest_InfoDialog));
-      }
-      break;
+        if (cpnt->isAt(xPxl, yPxl))
+        {
+            if (strcmp(cpnt->getId(), "MoveBtn") == 0)
+            {
+                m_pTarget = cpnt;
+                break;
+            }
+            MapObject * pAttachment = (MapObject*) cpnt->getAttachment();
+            if (pAttachment != NULL)
+            {
+                m_pTarget = pAttachment;
+                char sBuf[LABEL_MAX_CHARS] = "";
+                m_pLocalClient->getInterface()->getInfoDialog()->setInfoText(pAttachment->getInfo(sBuf, LABEL_MAX_CHARS, Dest_InfoDialog));
+            }
+            break;
+        }
+        cpnt = getNextComponent();
     }
-    cpnt = getNextComponent();
-  }
-  return guiDocument::onCursorMoveEvent(xPxl, yPxl);
+    return guiDocument::onCursorMoveEvent(xPxl, yPxl);
 }
 
 // -----------------------------------------------------------------
@@ -114,13 +114,13 @@ guiObject * MoveOrAttackDlg::onCursorMoveEvent(int xPxl, int yPxl)
 // -----------------------------------------------------------------
 void MoveOrAttackDlg::setTargetValid(bool bValid)
 {
-  guiComponent * pOther = getFirstComponent();
-  while (pOther != NULL)
-  {
-    if (pOther != m_pTarget && pOther->getAttachment() != m_pTarget && pOther->getType() & GOTYPE_BUTTON)
-      ((guiToggleButton*)pOther)->setClickState(false);
-    else
-      ((guiToggleButton*)pOther)->setClickState(bValid);
-    pOther = getNextComponent();
-  }
+    guiComponent * pOther = getFirstComponent();
+    while (pOther != NULL)
+    {
+        if (pOther != m_pTarget && pOther->getAttachment() != m_pTarget && pOther->getType() & GOTYPE_BUTTON)
+            ((guiToggleButton*)pOther)->setClickState(false);
+        else
+            ((guiToggleButton*)pOther)->setClickState(bValid);
+        pOther = getNextComponent();
+    }
 }

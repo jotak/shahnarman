@@ -4,14 +4,14 @@
 class Serializer
 {
 public:
-  virtual void writeLong(long l) = 0;
-  virtual long readLong() = 0;
-  virtual void writeShort(short i) = 0;
-  virtual short readShort() = 0;
-  virtual void writeChar(char c) = 0;
-  virtual char readChar() = 0;
-  virtual void writeString(const char * s) = 0;
-  virtual void readString(char * s) = 0;
+    virtual void writeLong(long l) = 0;
+    virtual long readLong() = 0;
+    virtual void writeShort(short i) = 0;
+    virtual short readShort() = 0;
+    virtual void writeChar(char c) = 0;
+    virtual char readChar() = 0;
+    virtual void writeString(const char * s) = 0;
+    virtual void readString(char * s) = 0;
 };
 
 #endif

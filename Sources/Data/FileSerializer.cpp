@@ -8,7 +8,7 @@ FileSerializer * FileSerializer::mInst = NULL;
 // -----------------------------------------------------------------
 FileSerializer::FileSerializer()
 {
-  m_pFile = NULL;
+    m_pFile = NULL;
 }
 
 // -----------------------------------------------------------------
@@ -23,7 +23,7 @@ FileSerializer::~FileSerializer()
 // -----------------------------------------------------------------
 void FileSerializer::writeLong(long l)
 {
-  fwrite(&l, sizeof(long), 1, m_pFile);
+    fwrite(&l, sizeof(long), 1, m_pFile);
 }
 
 // -----------------------------------------------------------------
@@ -31,9 +31,9 @@ void FileSerializer::writeLong(long l)
 // -----------------------------------------------------------------
 long FileSerializer::readLong()
 {
-  long l = 0;
-  fread(&l, sizeof(long), 1, m_pFile);
-  return l;
+    long l = 0;
+    fread(&l, sizeof(long), 1, m_pFile);
+    return l;
 }
 
 // -----------------------------------------------------------------
@@ -41,7 +41,7 @@ long FileSerializer::readLong()
 // -----------------------------------------------------------------
 void FileSerializer::writeShort(short i)
 {
-  fwrite(&i, sizeof(short), 1, m_pFile);
+    fwrite(&i, sizeof(short), 1, m_pFile);
 }
 
 // -----------------------------------------------------------------
@@ -49,9 +49,9 @@ void FileSerializer::writeShort(short i)
 // -----------------------------------------------------------------
 short FileSerializer::readShort()
 {
-  short i = 0;
-  fread(&i, sizeof(short), 1, m_pFile);
-  return i;
+    short i = 0;
+    fread(&i, sizeof(short), 1, m_pFile);
+    return i;
 }
 
 // -----------------------------------------------------------------
@@ -59,7 +59,7 @@ short FileSerializer::readShort()
 // -----------------------------------------------------------------
 void FileSerializer::writeChar(char c)
 {
-  fwrite(&c, sizeof(char), 1, m_pFile);
+    fwrite(&c, sizeof(char), 1, m_pFile);
 }
 
 // -----------------------------------------------------------------
@@ -67,9 +67,9 @@ void FileSerializer::writeChar(char c)
 // -----------------------------------------------------------------
 char FileSerializer::readChar()
 {
-  char c = 0;
-  fread(&c, sizeof(char), 1, m_pFile);
-  return c;
+    char c = 0;
+    fread(&c, sizeof(char), 1, m_pFile);
+    return c;
 }
 
 // -----------------------------------------------------------------
@@ -77,9 +77,9 @@ char FileSerializer::readChar()
 // -----------------------------------------------------------------
 void FileSerializer::writeString(const char * s)
 {
-  int len = strlen(s) + 1;
-  fwrite(&len, sizeof(int), 1, m_pFile);
-  fwrite(s, sizeof(char), len, m_pFile);
+    int len = strlen(s) + 1;
+    fwrite(&len, sizeof(int), 1, m_pFile);
+    fwrite(s, sizeof(char), len, m_pFile);
 }
 
 // -----------------------------------------------------------------
@@ -87,7 +87,7 @@ void FileSerializer::writeString(const char * s)
 // -----------------------------------------------------------------
 void FileSerializer::readString(char * s)
 {
-  int len = 0;
-  fread(&len, sizeof(int), 1, m_pFile);
-  fread(s, sizeof(char), len, m_pFile);
+    int len = 0;
+    fread(&len, sizeof(int), 1, m_pFile);
+    fread(s, sizeof(char), len, m_pFile);
 }

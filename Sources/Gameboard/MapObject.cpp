@@ -6,10 +6,10 @@
 // -----------------------------------------------------------------
 MapObject::MapObject(CoordsMap mapPos, Map * pMap, ObjectList ** pGlobalEffects, const char * sIdentifiers) : GraphicObject(), LuaTargetable(pGlobalEffects, sIdentifiers)
 {
-  m_MapPosition = mapPos;
-  m_uOwner = 0;
-  m_pMap = pMap;
-  m_pMap->addObject(this);
+    m_MapPosition = mapPos;
+    m_uOwner = 0;
+    m_pMap = pMap;
+    m_pMap->addObject(this);
 }
 
 // -----------------------------------------------------------------
@@ -17,9 +17,9 @@ MapObject::MapObject(CoordsMap mapPos, Map * pMap, ObjectList ** pGlobalEffects,
 // -----------------------------------------------------------------
 void MapObject::setMapPos(CoordsMap coords)
 {
-  m_pMap->removeObject(this);
-  m_MapPosition = coords;
-  m_pMap->addObject(this);
+    m_pMap->removeObject(this);
+    m_MapPosition = coords;
+    m_pMap->addObject(this);
 }
 
 // -----------------------------------------------------------------
@@ -27,9 +27,9 @@ void MapObject::setMapPos(CoordsMap coords)
 // -----------------------------------------------------------------
 void MapObject::moveBy(CoordsMap coords)
 {
-  m_pMap->removeObject(this);
-  m_MapPosition += coords;
-  m_pMap->addObject(this);
+    m_pMap->removeObject(this);
+    m_MapPosition += coords;
+    m_pMap->addObject(this);
 }
 
 // -----------------------------------------------------------------
@@ -37,6 +37,6 @@ void MapObject::moveBy(CoordsMap coords)
 // -----------------------------------------------------------------
 void MapObject::setOwner(u8 uOwner)
 {
-  m_uOwner = uOwner;
-  updateIdentifiers();
+    m_uOwner = uOwner;
+    updateIdentifiers();
 }

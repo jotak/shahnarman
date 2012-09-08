@@ -37,35 +37,48 @@ class GeometryText;
 class MapTile : public GraphicObject, public LuaTargetable
 {
 public:
-  MapTile(u8 uTerrainType, ObjectList ** pGlobalEffects);
-  ~MapTile();
+    MapTile(u8 uTerrainType, ObjectList ** pGlobalEffects);
+    ~MapTile();
 
-  virtual u32 getType() { return GraphicObject::getType() | GOTYPE_MAPTILE; };
+    virtual u32 getType()
+    {
+        return GraphicObject::getType() | GOTYPE_MAPTILE;
+    };
 
-  void initGraphics(Geometry * pTileGeo, DisplayEngine * pDisplay);
-  void resetTexture(DisplayEngine * pDisplay);
-  void display(CoordsMap mapPos);
-  char * getInfo(char * sBuf, int iSize);
-  int getTexture() { return m_iTexture; };
-  MapObject * getFirstMapObject(u32 uType = GOTYPE_MAPOBJECT, int _it = 0);
-  MapObject * getNextMapObject(u32 uType = GOTYPE_MAPOBJECT, int _it = 0);
-  void setMask(u16 uMask);
-  DisplayEngine * getDisplay() { if (m_pGeometryPtr != NULL) return m_pGeometryPtr->getDisplay(); else return NULL; };
-  Geometry * getGeometry() { return m_pGeometryPtr; };
-  void hideSpecialTile();
+    void initGraphics(Geometry * pTileGeo, DisplayEngine * pDisplay);
+    void resetTexture(DisplayEngine * pDisplay);
+    void display(CoordsMap mapPos);
+    char * getInfo(char * sBuf, int iSize);
+    int getTexture()
+    {
+        return m_iTexture;
+    };
+    MapObject * getFirstMapObject(u32 uType = GOTYPE_MAPOBJECT, int _it = 0);
+    MapObject * getNextMapObject(u32 uType = GOTYPE_MAPOBJECT, int _it = 0);
+    void setMask(u16 uMask);
+    DisplayEngine * getDisplay()
+    {
+        if (m_pGeometryPtr != NULL) return m_pGeometryPtr->getDisplay();
+        else return NULL;
+    };
+    Geometry * getGeometry()
+    {
+        return m_pGeometryPtr;
+    };
+    void hideSpecialTile();
 
-  u8 m_uTerrainType;
-  u8 m_uInfluence;
-  ObjectList * m_pMapObjects;
-  SpecialTile * m_pSpecialTile;
-  GeometryText * m_pNbAlliesGeo;
-  GeometryText * m_pNbFoesGeo;
+    u8 m_uTerrainType;
+    u8 m_uInfluence;
+    ObjectList * m_pMapObjects;
+    SpecialTile * m_pSpecialTile;
+    GeometryText * m_pNbAlliesGeo;
+    GeometryText * m_pNbFoesGeo;
 
 private:
-  int m_iMaskTexture;
-  GeometryQuads * m_pSpecialTileGeometry;
-  Geometry * m_pGeometryPtr;
-  int m_iTexture;
+    int m_iMaskTexture;
+    GeometryQuads * m_pSpecialTileGeometry;
+    Geometry * m_pGeometryPtr;
+    int m_iTexture;
 };
 
 #endif

@@ -6,10 +6,10 @@
 class SummonSpell : public Spell
 {
 public:
-  SummonSpell();
-  ~SummonSpell();
+    SummonSpell();
+    ~SummonSpell();
 
-  char m_sCreatureName[NAME_MAX_CHARS];
+    char m_sCreatureName[NAME_MAX_CHARS];
 };
 
 #endif

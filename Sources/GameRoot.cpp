@@ -13,7 +13,7 @@
 GameRoot::GameRoot()
 {
 //  m_pServer = NULL;
-  m_pLocalClient = new LocalClient();
+    m_pLocalClient = new LocalClient();
 }
 
 // -----------------------------------------------------------------
@@ -21,7 +21,7 @@ GameRoot::GameRoot()
 // -----------------------------------------------------------------
 GameRoot::~GameRoot()
 {
-  FREE(m_pLocalClient);
+    FREE(m_pLocalClient);
 }
 
 // -----------------------------------------------------------------
@@ -29,7 +29,7 @@ GameRoot::~GameRoot()
 // -----------------------------------------------------------------
 void GameRoot::Init()
 {
-  m_pLocalClient->Init();
+    m_pLocalClient->Init();
 }
 
 // -----------------------------------------------------------------
@@ -38,28 +38,28 @@ void GameRoot::Init()
 void GameRoot::Update(double delta)
 {
 #ifdef DEBUG
-  if (delta > 1.0f) // probably being debugged step by step
-    delta = 0.05f;  // put some kind of consistant value
+    if (delta > 1.0f) // probably being debugged step by step
+        delta = 0.05f;  // put some kind of consistant value
 #endif
-  Server * pServer = m_pLocalClient->getServer();
-  if (pServer != NULL)
-    pServer->Update(delta);
-  m_pLocalClient->Update(delta);
+    Server * pServer = m_pLocalClient->getServer();
+    if (pServer != NULL)
+        pServer->Update(delta);
+    m_pLocalClient->Update(delta);
 
-  switch (m_pLocalClient->getMessage())
-  {
-  case MSG_REQUEST_EXIT:
-    exit(0);
-    break;
-  //case MSG_SERVER_WAS_CREATED:
-  //  m_pServer = m_pLocalClient->getServer();
-  //  break;
-  //case MSG_SERVER_WAS_STOPPED:
-  //  m_pServer = NULL;
-  //  break;
-  default:
-    break;
-  }
+    switch (m_pLocalClient->getMessage())
+    {
+    case MSG_REQUEST_EXIT:
+        exit(0);
+        break;
+        //case MSG_SERVER_WAS_CREATED:
+        //  m_pServer = m_pLocalClient->getServer();
+        //  break;
+        //case MSG_SERVER_WAS_STOPPED:
+        //  m_pServer = NULL;
+        //  break;
+    default:
+        break;
+    }
 }
 
 // -----------------------------------------------------------------
@@ -67,5 +67,5 @@ void GameRoot::Update(double delta)
 // -----------------------------------------------------------------
 void GameRoot::Display()
 {
-  m_pLocalClient->Display();
+    m_pLocalClient->Display();
 }

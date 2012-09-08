@@ -10,11 +10,11 @@
 // -----------------------------------------------------------------
 StatusDlg::StatusDlg(LocalClient * pLocalClient) : guiDocument()
 {
-  m_pLocalClient = pLocalClient;
+    m_pLocalClient = pLocalClient;
 
-  init("StatusDlg",
-    pLocalClient->getDisplay()->getTextureEngine()->findTexture("interface:WinBg"),
-    0, 0, 1, 1, pLocalClient->getDisplay());
+    init("StatusDlg",
+         pLocalClient->getDisplay()->getTextureEngine()->findTexture("interface:WinBg"),
+         0, 0, 1, 1, pLocalClient->getDisplay());
 }
 
 // -----------------------------------------------------------------
@@ -24,10 +24,10 @@ StatusDlg::StatusDlg(LocalClient * pLocalClient) : guiDocument()
 StatusDlg::~StatusDlg()
 {
 #ifdef DBG_VERBOSE1
-  printf("Begin destroy StatusDlg\n");
+    printf("Begin destroy StatusDlg\n");
 #endif
 #ifdef DBG_VERBOSE1
-  printf("End destroy StatusDlg\n");
+    printf("End destroy StatusDlg\n");
 #endif
 }
 
@@ -36,17 +36,17 @@ StatusDlg::~StatusDlg()
 // -----------------------------------------------------------------
 void StatusDlg::showStatus(char * sMessage)
 {
-  deleteAllComponents();
+    deleteAllComponents();
 
-  guiLabel * pLbl = new guiLabel();
-  pLbl->init(sMessage, TEXT_FONT, TEXT_COLOR, "", 0, 0, 400, 0, getDisplay());
-  addComponent(pLbl);
+    guiLabel * pLbl = new guiLabel();
+    pLbl->init(sMessage, TEXT_FONT, TEXT_COLOR, "", 0, 0, 400, 0, getDisplay());
+    addComponent(pLbl);
 
-  setDimensions(pLbl->getWidth(), pLbl->getHeight());
-  guiFrame * pFrm = m_pLocalClient->getInterface()->findFrameFromDoc(this);
-  pFrm->updateSizeFit();
-  pFrm->moveTo(m_pLocalClient->getClientParameters()->screenXSize / 2 - pFrm->getWidth() / 2, 0);
-  pFrm->setVisible(true);
+    setDimensions(pLbl->getWidth(), pLbl->getHeight());
+    guiFrame * pFrm = m_pLocalClient->getInterface()->findFrameFromDoc(this);
+    pFrm->updateSizeFit();
+    pFrm->moveTo(m_pLocalClient->getClientParameters()->screenXSize / 2 - pFrm->getWidth() / 2, 0);
+    pFrm->setVisible(true);
 }
 
 // -----------------------------------------------------------------
@@ -54,6 +54,6 @@ void StatusDlg::showStatus(char * sMessage)
 // -----------------------------------------------------------------
 void StatusDlg::hide()
 {
-  guiFrame * pFrm = m_pLocalClient->getInterface()->findFrameFromDoc(this);
-  pFrm->setVisible(false);
+    guiFrame * pFrm = m_pLocalClient->getInterface()->findFrameFromDoc(this);
+    pFrm->setVisible(false);
 }
