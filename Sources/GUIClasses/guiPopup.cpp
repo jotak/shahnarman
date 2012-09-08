@@ -73,12 +73,12 @@ guiPopup * guiPopup::createEmptyPopup(DisplayEngine * pDisplay)
   // Create empty popup (frame)
   guiPopup * pPopup = new guiPopup();
   int frmtex[8];
-  frmtex[0] = pDisplay->getTextureEngine()->findTexture("interface:FrmT");
+  frmtex[0] = pDisplay->getTextureEngine()->findTexture("interface:FrmTL");
   frmtex[1] = pDisplay->getTextureEngine()->findTexture("interface:FrmTC");
   frmtex[2] = pDisplay->getTextureEngine()->findTexture("interface:FrmTR");
-  frmtex[3] = pDisplay->getTextureEngine()->findTexture("interface:FrmC");
+  frmtex[3] = pDisplay->getTextureEngine()->findTexture("interface:FrmCL");
   frmtex[4] = pDisplay->getTextureEngine()->findTexture("interface:FrmCR");
-  frmtex[5] = pDisplay->getTextureEngine()->findTexture("interface:FrmB");
+  frmtex[5] = pDisplay->getTextureEngine()->findTexture("interface:FrmBL");
   frmtex[6] = pDisplay->getTextureEngine()->findTexture("interface:FrmBC");
   frmtex[7] = pDisplay->getTextureEngine()->findTexture("interface:FrmBR");
   pPopup->init(
@@ -113,12 +113,12 @@ guiPopup * guiPopup::createOkAutoclosePopup(const char * sText, DisplayEngine * 
   // Create empty popup (frame)
   guiPopup * pPopup = new guiPopup();
   int frmtex[8];
-  frmtex[0] = pDisplay->getTextureEngine()->findTexture("interface:FrmT");
+  frmtex[0] = pDisplay->getTextureEngine()->findTexture("interface:FrmTL");
   frmtex[1] = pDisplay->getTextureEngine()->findTexture("interface:FrmTC");
   frmtex[2] = pDisplay->getTextureEngine()->findTexture("interface:FrmTR");
-  frmtex[3] = pDisplay->getTextureEngine()->findTexture("interface:FrmC");
+  frmtex[3] = pDisplay->getTextureEngine()->findTexture("interface:FrmCL");
   frmtex[4] = pDisplay->getTextureEngine()->findTexture("interface:FrmCR");
-  frmtex[5] = pDisplay->getTextureEngine()->findTexture("interface:FrmB");
+  frmtex[5] = pDisplay->getTextureEngine()->findTexture("interface:FrmBL");
   frmtex[6] = pDisplay->getTextureEngine()->findTexture("interface:FrmBC");
   frmtex[7] = pDisplay->getTextureEngine()->findTexture("interface:FrmBR");
   pPopup->init(
@@ -175,12 +175,12 @@ guiPopup * guiPopup::createOkCancelPopup(const char * sText, DisplayEngine * pDi
   // Create empty popup (frame)
   guiPopup * pPopup = new guiPopup();
   int frmtex[8];
-  frmtex[0] = pDisplay->getTextureEngine()->findTexture("interface:FrmT");
+  frmtex[0] = pDisplay->getTextureEngine()->findTexture("interface:FrmTL");
   frmtex[1] = pDisplay->getTextureEngine()->findTexture("interface:FrmTC");
   frmtex[2] = pDisplay->getTextureEngine()->findTexture("interface:FrmTR");
-  frmtex[3] = pDisplay->getTextureEngine()->findTexture("interface:FrmC");
+  frmtex[3] = pDisplay->getTextureEngine()->findTexture("interface:FrmCL");
   frmtex[4] = pDisplay->getTextureEngine()->findTexture("interface:FrmCR");
-  frmtex[5] = pDisplay->getTextureEngine()->findTexture("interface:FrmB");
+  frmtex[5] = pDisplay->getTextureEngine()->findTexture("interface:FrmBL");
   frmtex[6] = pDisplay->getTextureEngine()->findTexture("interface:FrmBC");
   frmtex[7] = pDisplay->getTextureEngine()->findTexture("interface:FrmBR");
   pPopup->init(
@@ -213,7 +213,7 @@ guiPopup * guiPopup::createOkCancelPopup(const char * sText, DisplayEngine * pDi
   pBtn->moveTo(3 * iWidth / 4 - pBtn->getWidth() / 2, yPxl);
   pDoc->addComponent(pBtn);
 
-  pBtn = guiButton::createDefaultNormalButton(i18n->getText1stUp("CANCE", str, 64), "CancelButton", pDisplay);
+  pBtn = guiButton::createDefaultNormalButton(i18n->getText1stUp("CANCEL", str, 64), "CancelButton", pDisplay);
   pBtn->moveTo(iWidth / 4 - pBtn->getWidth() / 2, yPxl);
   pDoc->addComponent(pBtn);
 
@@ -240,12 +240,12 @@ guiPopup * guiPopup::createYesNoPopup(const char * sText, DisplayEngine * pDispl
   // Create empty popup (frame)
   guiPopup * pPopup = new guiPopup();
   int frmtex[8];
-  frmtex[0] = pDisplay->getTextureEngine()->findTexture("interface:FrmT");
+  frmtex[0] = pDisplay->getTextureEngine()->findTexture("interface:FrmTL");
   frmtex[1] = pDisplay->getTextureEngine()->findTexture("interface:FrmTC");
   frmtex[2] = pDisplay->getTextureEngine()->findTexture("interface:FrmTR");
-  frmtex[3] = pDisplay->getTextureEngine()->findTexture("interface:FrmC");
+  frmtex[3] = pDisplay->getTextureEngine()->findTexture("interface:FrmCL");
   frmtex[4] = pDisplay->getTextureEngine()->findTexture("interface:FrmCR");
-  frmtex[5] = pDisplay->getTextureEngine()->findTexture("interface:FrmB");
+  frmtex[5] = pDisplay->getTextureEngine()->findTexture("interface:FrmBL");
   frmtex[6] = pDisplay->getTextureEngine()->findTexture("interface:FrmBC");
   frmtex[7] = pDisplay->getTextureEngine()->findTexture("interface:FrmBR");
   pPopup->init(
@@ -305,12 +305,12 @@ guiPopup * guiPopup::createTextAndMultiButtonsPopup(const char * sText, int iNbB
   // Create empty popup (frame)
   guiPopup * pPopup = new guiPopup();
   int frmtex[8];
-  frmtex[0] = pDisplay->getTextureEngine()->findTexture("interface:FrmT");
+  frmtex[0] = pDisplay->getTextureEngine()->findTexture("interface:FrmTL");
   frmtex[1] = pDisplay->getTextureEngine()->findTexture("interface:FrmTC");
   frmtex[2] = pDisplay->getTextureEngine()->findTexture("interface:FrmTR");
-  frmtex[3] = pDisplay->getTextureEngine()->findTexture("interface:FrmC");
+  frmtex[3] = pDisplay->getTextureEngine()->findTexture("interface:FrmCL");
   frmtex[4] = pDisplay->getTextureEngine()->findTexture("interface:FrmCR");
-  frmtex[5] = pDisplay->getTextureEngine()->findTexture("interface:FrmB");
+  frmtex[5] = pDisplay->getTextureEngine()->findTexture("interface:FrmBL");
   frmtex[6] = pDisplay->getTextureEngine()->findTexture("interface:FrmBC");
   frmtex[7] = pDisplay->getTextureEngine()->findTexture("interface:FrmBR");
   pPopup->init(
@@ -372,12 +372,12 @@ guiPopup * guiPopup::createTextInputPopup(const char * sText, int iNbLines, bool
   // Create empty popup (frame)
   guiPopup * pPopup = new guiPopup();
   int frmtex[8];
-  frmtex[0] = pDisplay->getTextureEngine()->findTexture("interface:FrmT");
+  frmtex[0] = pDisplay->getTextureEngine()->findTexture("interface:FrmTL");
   frmtex[1] = pDisplay->getTextureEngine()->findTexture("interface:FrmTC");
   frmtex[2] = pDisplay->getTextureEngine()->findTexture("interface:FrmTR");
-  frmtex[3] = pDisplay->getTextureEngine()->findTexture("interface:FrmC");
+  frmtex[3] = pDisplay->getTextureEngine()->findTexture("interface:FrmCL");
   frmtex[4] = pDisplay->getTextureEngine()->findTexture("interface:FrmCR");
-  frmtex[5] = pDisplay->getTextureEngine()->findTexture("interface:FrmB");
+  frmtex[5] = pDisplay->getTextureEngine()->findTexture("interface:FrmBL");
   frmtex[6] = pDisplay->getTextureEngine()->findTexture("interface:FrmBC");
   frmtex[7] = pDisplay->getTextureEngine()->findTexture("interface:FrmBR");
   pPopup->init(
@@ -420,7 +420,7 @@ guiPopup * guiPopup::createTextInputPopup(const char * sText, int iNbLines, bool
 
   // Buttons
   char str[64] = "";
-  guiButton * pBtn = guiButton::createDefaultNormalButton(i18n->getText1stUp("CANCE", str, 64), "CancelButton", pDisplay);
+  guiButton * pBtn = guiButton::createDefaultNormalButton(i18n->getText1stUp("CANCEL", str, 64), "CancelButton", pDisplay);
   pBtn->moveTo(iWidth / 4 - pBtn->getWidth() / 2, yPxl);
   pDoc->addComponent(pBtn);
 
@@ -451,12 +451,12 @@ guiPopup * guiPopup::createTimedPopup(const char * sText, double fTimer, int iWi
   // Create empty popup (frame)
   guiPopup * pPopup = new guiPopup();
   int frmtex[8];
-  frmtex[0] = pDisplay->getTextureEngine()->findTexture("interface:FrmT");
+  frmtex[0] = pDisplay->getTextureEngine()->findTexture("interface:FrmTL");
   frmtex[1] = pDisplay->getTextureEngine()->findTexture("interface:FrmTC");
   frmtex[2] = pDisplay->getTextureEngine()->findTexture("interface:FrmTR");
-  frmtex[3] = pDisplay->getTextureEngine()->findTexture("interface:FrmC");
+  frmtex[3] = pDisplay->getTextureEngine()->findTexture("interface:FrmCL");
   frmtex[4] = pDisplay->getTextureEngine()->findTexture("interface:FrmCR");
-  frmtex[5] = pDisplay->getTextureEngine()->findTexture("interface:FrmB");
+  frmtex[5] = pDisplay->getTextureEngine()->findTexture("interface:FrmBL");
   frmtex[6] = pDisplay->getTextureEngine()->findTexture("interface:FrmBC");
   frmtex[7] = pDisplay->getTextureEngine()->findTexture("interface:FrmBR");
   pPopup->init(

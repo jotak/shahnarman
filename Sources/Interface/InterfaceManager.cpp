@@ -1218,8 +1218,8 @@ void InterfaceManager::askForExtraMana(char * sDescription, u16 mana, int min, i
   if (nbCombos == 0)
     pBtn->setEnabled(false);
 
-  i18n->getText("CANCE", sText, LABEL_MAX_CHARS);
-  pBtn = guiButton::createDefaultNormalButton(sText, "Cance", m_pLocalClient->getDisplay());
+  i18n->getText("CANCEL", sText, LABEL_MAX_CHARS);
+  pBtn = guiButton::createDefaultNormalButton(sText, "Cancel", m_pLocalClient->getDisplay());
   pBtn->moveTo(iWidth / 4 - pBtn->getWidth() / 2, yPxl);
   pDoc->addComponent(pBtn);
   yPxl += pBtn->getHeight() + 5;
@@ -1259,7 +1259,7 @@ void InterfaceManager::onClickExtraMana(guiComponent * pCpnt)
     deleteFrame(m_pExtraMana);
     m_pExtraMana = NULL;
   }
-  else if (strcmp(pCpnt->getId(), "Cance") == 0)
+  else if (strcmp(pCpnt->getId(), "Cancel") == 0)
   {
     // No logic in what follows!
     guiComponent * pLbl = m_pExtraMana->getDocument()->getComponent("Hidden");

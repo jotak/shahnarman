@@ -132,12 +132,12 @@ int LUA_selectTarget(const char * sText, bool bThenResolve)
     char sSrc[NAME_MAX_CHARS];
     if (g_uLuaCurrentObjectType == LUAOBJECT_SPELL)
     {
-      i18n->getText("(THE)_SPEL", sSrcType, 64);
+      i18n->getText("(THE)_SPELL", sSrcType, 64);
       wsafecpy(sSrc, NAME_MAX_CHARS, g_pMainGameRoot->m_pLocalClient->getPlayerManager()->getSpellBeingCast()->getLocalizedName());
     }
     else
     {
-      i18n->getText("(THE)_SKIL", sSrcType, 64);
+      i18n->getText("(THE)_SKILL", sSrcType, 64);
       wsafecpy(sSrc, NAME_MAX_CHARS, g_pMainGameRoot->m_pLocalClient->getPlayerManager()->getSkillBeingActivated()->sName);
     }
     void * pArgs[4] = { sSrcType, sSrc, sType, sConstraints };
@@ -850,10 +850,10 @@ int LUA_setDefenderArmor(lua_State * pState)
 
 int LUA_discardActiveSpell(lua_State * pState)
 {
-  Server * pServer = checkServerResolving("discardActiveSpel");
+  Server * pServer = checkServerResolving("discardActiveSpell");
   if (pServer == NULL)
     return 0;
-  int nbParams = checkNumberOfParams(pState, 0, 2, "discardActiveSpel");
+  int nbParams = checkNumberOfParams(pState, 0, 2, "discardActiveSpell");
   if (nbParams < 0)
     return 0;
   long iPlayerId = -1, iSpellId = -1;
@@ -875,10 +875,10 @@ int LUA_discardActiveSpell(lua_State * pState)
 
 int LUA_discardDeckSpell(lua_State * pState)
 {
-  Server * pServer = checkServerResolving("discardDeckSpel");
+  Server * pServer = checkServerResolving("discardDeckSpell");
   if (pServer == NULL)
     return 0;
-  if (!checkNumberOfParams(pState, 2, "discardDeckSpel"))
+  if (!checkNumberOfParams(pState, 2, "discardDeckSpell"))
     return 0;
   long iPlayerId = (long) lua_tonumber(pState, 1);
   long iSpellId = (long) lua_tonumber(pState, 2);
@@ -895,10 +895,10 @@ int LUA_discardDeckSpell(lua_State * pState)
 
 int LUA_discardHandSpell(lua_State * pState)
 {
-  Server * pServer = checkServerResolving("discardHandSpel");
+  Server * pServer = checkServerResolving("discardHandSpell");
   if (pServer == NULL)
     return 0;
-  if (!checkNumberOfParams(pState, 2, "discardHandSpel"))
+  if (!checkNumberOfParams(pState, 2, "discardHandSpell"))
     return 0;
   long iPlayerId = (long) lua_tonumber(pState, 1);
   long iSpellId = (long) lua_tonumber(pState, 2);
@@ -915,10 +915,10 @@ int LUA_discardHandSpell(lua_State * pState)
 
 int LUA_drawSpell(lua_State * pState)
 {
-  Server * pServer = checkServerResolving("drawSpel");
+  Server * pServer = checkServerResolving("drawSpell");
   if (pServer == NULL)
     return 0;
-  if (!checkNumberOfParams(pState, 2, "drawSpel"))
+  if (!checkNumberOfParams(pState, 2, "drawSpell"))
     return 0;
   u8 uPlayerId = (u8)lua_tonumber(pState, 1);
   u32 uSpellId = (u32)lua_tonumber(pState, 2);
@@ -935,7 +935,7 @@ int LUA_drawSpell(lua_State * pState)
 
 int LUA_attachAsGlobal(lua_State * pState)
 {
-  Server * pServer = checkServerResolving("attachAsGloba");
+  Server * pServer = checkServerResolving("attachAsGlobal");
   if (pServer == NULL)
     return 0;
 
@@ -951,7 +951,7 @@ int LUA_attachAsGlobal(lua_State * pState)
 
 int LUA_detachFromGlobal(lua_State * pState)
 {
-  Server * pServer = checkServerResolving("detachFromGloba");
+  Server * pServer = checkServerResolving("detachFromGlobal");
   if (pServer == NULL)
     return 0;
 
@@ -1205,11 +1205,11 @@ int LUA_getTownsList(lua_State * pState)
 
 int LUA_deactivateSkill(lua_State * pState)
 {
-  Server * pServer = checkServerResolving("deactivateSkil");
+  Server * pServer = checkServerResolving("deactivateSkill");
   if (pServer == NULL)
     return 0;
-  int nbParams = checkNumberOfParams(pState, 0, 3, "deactivateSkil");
-  if (nbParams != 0 && !checkNumberOfParams(pState, 3, "deactivateSkil"))
+  int nbParams = checkNumberOfParams(pState, 0, 3, "deactivateSkill");
+  if (nbParams != 0 && !checkNumberOfParams(pState, 3, "deactivateSkill"))
     return 0;
   long iPlayerId = -1, iUnitId = -1, iSkillId = -1;
   if (nbParams == 3)
@@ -1843,10 +1843,10 @@ int LUA_removeMagicCircle(lua_State * pState)
 
 int LUA_recallSpell(lua_State * pState)
 {
-  Server * pServer = checkServerResolving("recallSpel");
+  Server * pServer = checkServerResolving("recallSpell");
   if (pServer == NULL)
     return 0;
-  if (!checkNumberOfParams(pState, 3, "recallSpel"))
+  if (!checkNumberOfParams(pState, 3, "recallSpell"))
     return 0;
 
   const char * objtype = lua_tostring(pState, 1);
@@ -1967,7 +1967,7 @@ int LUA_getUnitStatus(lua_State * pState) {
         break;
       case US_Normal:
       default:
-        lua_pushstring(pState, "norma");
+        lua_pushstring(pState, "normal");
         break;
       }
       return 1;
@@ -2089,8 +2089,8 @@ void registerLuaCallbacks(lua_State * pState)
 	lua_register(pState, "attachToTown", LUA_attachToTown);
 	lua_register(pState, "attachToTemple", LUA_attachToTemple);
 	lua_register(pState, "attachToTile", LUA_attachToTile);
-	lua_register(pState, "attachAsGloba", LUA_attachAsGlobal);
-	lua_register(pState, "detachFromGloba", LUA_detachFromGlobal);
+	lua_register(pState, "attachAsGlobal", LUA_attachAsGlobal);
+	lua_register(pState, "detachFromGlobal", LUA_detachFromGlobal);
 	lua_register(pState, "addChildEffectToUnit", LUA_addChildEffectToUnit);
 	lua_register(pState, "removeChildEffectFromUnit", LUA_removeChildEffectFromUnit);
 	lua_register(pState, "addChildEffectToTown", LUA_addChildEffectToTown);
@@ -2098,10 +2098,10 @@ void registerLuaCallbacks(lua_State * pState)
 	lua_register(pState, "getUnitData", LUA_getUnitData);
 	lua_register(pState, "getUnitBaseData", LUA_getUnitBaseData);
 	lua_register(pState, "setUnitData", LUA_setUnitData);
-	lua_register(pState, "drawSpel", LUA_drawSpell);
-	lua_register(pState, "discardActiveSpel", LUA_discardActiveSpell);
-	lua_register(pState, "discardDeckSpel", LUA_discardDeckSpell);
-	lua_register(pState, "discardHandSpel", LUA_discardHandSpell);
+	lua_register(pState, "drawSpell", LUA_drawSpell);
+	lua_register(pState, "discardActiveSpell", LUA_discardActiveSpell);
+	lua_register(pState, "discardDeckSpell", LUA_discardDeckSpell);
+	lua_register(pState, "discardHandSpell", LUA_discardHandSpell);
 	lua_register(pState, "produceMana", LUA_produceMana);
 	lua_register(pState, "getAttacker", LUA_getAttacker);
 	lua_register(pState, "getDefender", LUA_getDefender);
@@ -2124,7 +2124,7 @@ void registerLuaCallbacks(lua_State * pState)
 	lua_register(pState, "getUnitsList", LUA_getUnitsList);
 	lua_register(pState, "getSkillsList", LUA_getSkillsList);
 	lua_register(pState, "getTownsList", LUA_getTownsList);
-	lua_register(pState, "deactivateSkil", LUA_deactivateSkill);
+	lua_register(pState, "deactivateSkill", LUA_deactivateSkill);
 	lua_register(pState, "changeSpellOwner", LUA_changeSpellOwner);
 	lua_register(pState, "changeUnitOwner", LUA_changeUnitOwner);
 	lua_register(pState, "changeTownOwner", LUA_changeTownOwner);
@@ -2143,7 +2143,7 @@ void registerLuaCallbacks(lua_State * pState)
 	lua_register(pState, "resurrect", LUA_resurrect);
 	lua_register(pState, "addMagicCircle", LUA_addMagicCircle);
 	lua_register(pState, "removeMagicCircle", LUA_removeMagicCircle);
-	lua_register(pState, "recallSpel", LUA_recallSpell);
+	lua_register(pState, "recallSpell", LUA_recallSpell);
 	lua_register(pState, "addGoldToPlayer", LUA_addGoldToPlayer);
 	lua_register(pState, "addSpellToPlayer", LUA_addSpellToPlayer);
 	lua_register(pState, "addArtifactToPlayer", LUA_addArtifactToPlayer);

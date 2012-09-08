@@ -160,7 +160,7 @@ void Server::Update(double delta)
   if (bLog)
   {
     m_pDebug->log("Server::Update");
-    m_pDebug->log("m_pGC->deleteAl");
+    m_pDebug->log("m_pGC->deleteAll");
   }
 #endif
   m_pGC->deleteAll();

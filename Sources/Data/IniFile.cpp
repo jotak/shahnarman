@@ -8,42 +8,35 @@
 // -----------------------------------------------------------------
 // Name : IniFile
 // -----------------------------------------------------------------
-IniFile::IniFile(const char * sFileName, int iMaxLines)
+IniFile::IniFile(const char * sFileName, int * pError)
 {
   FILE * pFile = NULL;
-
-  m_iMaxLines = iMaxLines;
-  m_sAllValues = NULL;
-  m_sAllKeys = NULL;
+  *pError = 0;
 
   if (0 != fopen_s(&pFile, sFileName, "r"))
-    throw INIREADER_ERROR_CANT_OPEN_FILE;
-
-  m_sAllValues = new char*[iMaxLines];
-  m_sAllKeys = new char*[iMaxLines];
-  for (int i = 0; i < iMaxLines; i++)
   {
-    m_sAllValues[i] = new char[INI_READER_MAX_CHARS];
-    m_sAllKeys[i] = new char[INI_READER_MAX_CHARS];
-    wsafecpy(m_sAllValues[i], INI_READER_MAX_CHARS, "");
-    wsafecpy(m_sAllKeys[i], INI_READER_MAX_CHARS, "");
+      *pError = INIREADER_ERROR_CANT_OPEN_FILE;
+      return;
   }
 
-  int iLine = 0;
   int iChar = 0;
   bool bKey = true;
+  char sBuf[1024];
+  std::string sKey;
+
   while (!feof(pFile))
   {
-    char c = fgetwc(pFile);
+    char c = fgetc(pFile);
     if (bKey)
     {
       if ((c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z') || (c >= '0' && c <= '9') || c == '_')
       {
-        m_sAllKeys[iLine][iChar++] = c;
-        m_sAllKeys[iLine][iChar] = '\0';
+        sBuf[iChar++] = c;
+        sBuf[iChar] = '\0';
       }
       else if (c == '=')
       {
+          sKey = std::string(sBuf);
         bKey = false;
         iChar = 0;
       }
@@ -54,19 +47,14 @@ IniFile::IniFile(const char * sFileName, int iMaxLines)
         continue;
       if (c == '\r' || c == '\n')
       {
+          m_hmData[sKey] = std::string(sBuf);
         bKey = true;
         iChar = 0;
-        iLine++;
-        if (iLine == iMaxLines)
-        {
-          fclose(pFile);
-          throw INIREADER_ERROR_MAX_LINES_REACHED;
-        }
       }
       else
       {
-        m_sAllValues[iLine][iChar++] = c;
-        m_sAllValues[iLine][iChar] = '\0';
+        sBuf[iChar++] = c;
+        sBuf[iChar] = '\0';
       }
     }
   }
@@ -79,144 +67,109 @@ IniFile::IniFile(const char * sFileName, int iMaxLines)
 // -----------------------------------------------------------------
 IniFile::~IniFile()
 {
-  if (m_sAllValues != NULL)
-  {
-    for (int i = 0; i < m_iMaxLines; i++)
-    {
-      if (m_sAllValues[i] != NULL)
-        delete[] m_sAllValues[i];
-    }
-    delete[] m_sAllValues;
-  }
-  if (m_sAllKeys != NULL)
-  {
-    for (int i = 0; i < m_iMaxLines; i++)
-    {
-      if (m_sAllKeys[i] != NULL)
-        delete[] m_sAllKeys[i];
-    }
-    delete[] m_sAllKeys;
-  }
+    m_hmData.clear();
 }
 
 // -----------------------------------------------------------------
 // Name : findValue
 // -----------------------------------------------------------------
-char * IniFile::findValue(const char * sKey)
+std::string * IniFile::findValue(std::string sKey)
 {
-  for (int i = 0; i < m_iMaxLines; i++)
-  {
-    if (m_sAllKeys[i] != NULL && strcmp(m_sAllKeys[i], sKey) == 0)
-      return m_sAllValues[i];
-  }
-  return NULL;
+    str_hash::iterator it = m_hmData.find(sKey);
+    if (it == m_hmData.end())
+        return NULL;
+    return &(it->second);
 }
 
 // -----------------------------------------------------------------
 // Name : findCharValue
 // -----------------------------------------------------------------
-const char * IniFile::findCharValue(const char * sKey, const char * sDefault)
+const char * IniFile::findCharValue(std::string sKey, const char * sDefault)
 {
-  const char * res = findValue(sKey);
-  return (res == NULL ? sDefault : res);
+  std::string * res = findValue(sKey);
+  return (res == NULL ? sDefault : res->c_str());
 }
 
 // -----------------------------------------------------------------
 // Name : findIntValue
 // -----------------------------------------------------------------
-int IniFile::findIntValue(const char * sKey, int iDefault)
+int IniFile::findIntValue(std::string sKey, int iDefault)
 {
-  char * res = findValue(sKey);
-  if (res == NULL)
-    return iDefault;
-  return atoi(res);
+  std::string * res = findValue(sKey);
+  return (res == NULL ? iDefault : atoi(res->c_str()));
 }
 
 // -----------------------------------------------------------------
 // Name : findBoolValue
 // -----------------------------------------------------------------
-bool IniFile::findBoolValue(const char * sKey, bool bDefault)
+bool IniFile::findBoolValue(std::string sKey, bool bDefault)
 {
-  char * res = findValue(sKey);
-  if (res == NULL)
-    return bDefault;
-  return (strcmp(res, "1") == 0 || strcmp(res, "true") == 0);
+  std::string * res = findValue(sKey);
+  return (res == NULL ? bDefault : (strcmp(res->c_str(), "1") == 0 || strcmp(res->c_str(), "true") == 0));
 }
 
 // -----------------------------------------------------------------
 // Name : findFloatValue
 // -----------------------------------------------------------------
-float IniFile::findFloatValue(const char * sKey, float fDefault)
+float IniFile::findFloatValue(std::string sKey, float fDefault)
 {
-  char * res = findValue(sKey);
-  if (res == NULL)
-    return fDefault;
-  return atof(res);
+  std::string * res = findValue(sKey);
+  return (res == NULL ? fDefault : atof(res->c_str()));
 }
 
 // -----------------------------------------------------------------
 // Name : setKeyAndCharValue
 // -----------------------------------------------------------------
-void IniFile::setKeyAndCharValue(const char * sKey, const char * sValue)
+void IniFile::setKeyAndCharValue(std::string sKey, std::string sValue)
 {
-  char * res = findValue(sKey);
-  if (res == NULL)
-  {
-    for (int i = 0; i < m_iMaxLines; i++)
-    {
-      if (strcmp(m_sAllKeys[i], "") == 0)
-      {
-        wsafecpy(m_sAllKeys[i], INI_READER_MAX_CHARS, sKey);
-        wsafecpy(m_sAllValues[i], INI_READER_MAX_CHARS, sValue);
-        break;
-      }
-    }
-  }
-  else
-    wsafecpy(res, INI_READER_MAX_CHARS, sValue);
+    m_hmData[sKey] = sValue;
 }
 
 // -----------------------------------------------------------------
 // Name : setKeyAndBoolValue
 // -----------------------------------------------------------------
-void IniFile::setKeyAndBoolValue(const char * sKey, bool bValue)
+void IniFile::setKeyAndBoolValue(std::string sKey, bool bValue)
 {
-  setKeyAndCharValue(sKey, bValue ? "true" : "false");
+  setKeyAndCharValue(sKey, std::string(bValue ? "true" : "false"));
 }
 
 // -----------------------------------------------------------------
 // Name : setKeyAndIntValue
 // -----------------------------------------------------------------
-void IniFile::setKeyAndIntValue(const char * sKey, int iValue)
+void IniFile::setKeyAndIntValue(std::string sKey, int iValue)
 {
-  char sValue[INI_READER_MAX_CHARS];
-  snprintf(sValue, INI_READER_MAX_CHARS, "%d", iValue);
-  setKeyAndCharValue(sKey, sValue);
+  char sValue[32];
+  snprintf(sValue, 32, "%d", iValue);
+  setKeyAndCharValue(sKey, std::string(sValue));
 }
 
 // -----------------------------------------------------------------
 // Name : setKeyAndFloatValue
 // -----------------------------------------------------------------
-void IniFile::setKeyAndFloatValue(const char * sKey, float fValue)
+void IniFile::setKeyAndFloatValue(std::string sKey, float fValue)
 {
-  char sValue[INI_READER_MAX_CHARS];
-  snprintf(sValue, INI_READER_MAX_CHARS, "%f", fValue);
-  setKeyAndCharValue(sKey, sValue);
+  char sValue[32];
+  snprintf(sValue, 32, "%f", fValue);
+  setKeyAndCharValue(sKey, std::string(sValue));
 }
 
 // -----------------------------------------------------------------
 // Name : write
 // -----------------------------------------------------------------
-void IniFile::write(const char * sFileName)
+void IniFile::write(const char * sFileName, int * pError)
 {
+    *pError = 0;
   FILE * pFile = NULL;
   if (0 != fopen_s(&pFile, sFileName, "w"))
-    throw INIREADER_ERROR_CANT_OPEN_FILE;
-
-  for (int i = 0; i < m_iMaxLines; i++)
   {
-    if (m_sAllKeys[i] != NULL && strcmp(m_sAllKeys[i], "") != 0)
-      fprintf(pFile, "%s = %s\n", m_sAllKeys[i], m_sAllValues[i]);
+      *pError = INIREADER_ERROR_CANT_OPEN_FILE;
+      return;
+  }
+
+  str_hash::iterator it;
+  for (it = m_hmData.begin(); it != m_hmData.end(); ++it)
+  {
+      fprintf(pFile, "%s = %s\n", it->first.c_str(), it->second.c_str());
   }
 
   fclose(pFile);

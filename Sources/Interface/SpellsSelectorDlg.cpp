@@ -200,7 +200,7 @@ void SpellsSelectorDlg::showPlayersSpells(ObjectList * pPlayers, int iSrc, CLBK_
   guiButton * pBtn = (guiButton*) getComponent("CancelButton");
   assert(pBtn != NULL);
   if (pCancelCallback != NULL)
-    i18n->getText("CANCE", sText, LABEL_MAX_CHARS);
+    i18n->getText("CANCEL", sText, LABEL_MAX_CHARS);
   else
     i18n->getText("CLOSE", sText, LABEL_MAX_CHARS);
   pBtn->setText(sText);

@@ -57,12 +57,12 @@ BattleSpellPopup::BattleSpellPopup(Player * pPlayer, int iTimer, DisplayEngine *
   pDoc->setDimensions(iWidth, pBtn->getYPos() + pBtn->getHeight() + 5);
 
   int iTexs[8];
-  iTexs[0] = pDisplay->getTextureEngine()->findTexture("interface:FrmT");
+  iTexs[0] = pDisplay->getTextureEngine()->findTexture("interface:FrmTL");
   iTexs[1] = pDisplay->getTextureEngine()->findTexture("interface:FrmTC");
   iTexs[2] = pDisplay->getTextureEngine()->findTexture("interface:FrmTR");
-  iTexs[3] = pDisplay->getTextureEngine()->findTexture("interface:FrmC");
+  iTexs[3] = pDisplay->getTextureEngine()->findTexture("interface:FrmCL");
   iTexs[4] = pDisplay->getTextureEngine()->findTexture("interface:FrmCR");
-  iTexs[5] = pDisplay->getTextureEngine()->findTexture("interface:FrmB");
+  iTexs[5] = pDisplay->getTextureEngine()->findTexture("interface:FrmBL");
   iTexs[6] = pDisplay->getTextureEngine()->findTexture("interface:FrmBC");
   iTexs[7] = pDisplay->getTextureEngine()->findTexture("interface:FrmBR");
   init(FP_Floating, FB_FitFrameToDocument, FB_FitFrameToDocument, 0, 0, 0, 0, iTexs, "BattleSpellPopup", 0, 0, 1, 1, pDisplay);

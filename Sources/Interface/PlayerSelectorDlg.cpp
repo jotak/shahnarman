@@ -148,7 +148,7 @@ void PlayerSelectorDlg::showPlayers(ObjectList * pPlayers, CLBK_ON_CANCEL * pCan
 
   // Cancel button
   if (pCancelCallback != NULL)
-    i18n->getText("CANCE", sText, LABEL_MAX_CHARS);
+    i18n->getText("CANCEL", sText, LABEL_MAX_CHARS);
   else
     i18n->getText("CLOSE", sText, LABEL_MAX_CHARS);
   guiButton * pBtn = guiButton::createDefaultNormalButton(sText, "CancelButton", m_pLocalClient->getDisplay());

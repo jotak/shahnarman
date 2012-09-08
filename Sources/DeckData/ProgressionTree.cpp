@@ -23,15 +23,14 @@ ProgressionTree::ProgressionTree(char * sEdition, char * sName, u8 uType, DebugM
   // Parse file
   char sFileName[MAX_PATH];
   XMLLiteReader reader;
-  snprintf(sFileName, MAX_PATH, "%s%s/progressions/%s.xm", EDITIONS_PATH, m_sEdition, m_sObjectId);
+  snprintf(sFileName, MAX_PATH, "%s%s/progressions/%s.xml", EDITIONS_PATH, m_sEdition, m_sObjectId);
   char sError[1024] = "";
   XMLLiteElement * pRootNode = NULL;
-  try {
-    pRootNode = reader.parseFile(sFileName);
-  }
-  catch (int errorCode)
+  int error;
+    pRootNode = reader.parseFile(sFileName, &error);
+  if (error != 0)
   {
-    pDebug->notifyXMLErrorMessage(sFileName, errorCode, reader.getCurrentLine(), reader.getCurrentCol());
+    pDebug->notifyXMLErrorMessage(sFileName, error, reader.getCurrentLine(), reader.getCurrentCol());
     return;
   }
   if (pRootNode != NULL)
@@ -94,8 +93,8 @@ ProgressionTree::ProgressionTree(char * sEdition, char * sName, u8 uType, DebugM
         XMLLiteElement * pOptData = pOption->getFirstChild();
         while (pOptData != NULL)
         {
-          if (strcasecmp(pOptData->getName(), "skil") == 0
-                || strcasecmp(pOptData->getName(), "spel") == 0
+          if (strcasecmp(pOptData->getName(), "skill") == 0
+                || strcasecmp(pOptData->getName(), "spell") == 0
                 || strcasecmp(pOptData->getName(), "modify") == 0
                 || strcasecmp(pOptData->getName(), "artifact") == 0
                 || strcasecmp(pOptData->getName(), STRING_AVATAR_XML) == 0)
@@ -231,7 +230,7 @@ ProgressionEffect * ProgressionTree::readXMLEffect(XMLLiteElement * pNode, XMLLi
 {
   char sError[1024];
   XMLLiteAttribute * pAttr = NULL;
-  if (strcasecmp(pNode->getName(), "skil") == 0)
+  if (strcasecmp(pNode->getName(), "skill") == 0)
   {
     char sName[NAME_MAX_CHARS];
     char sParams[LUA_FUNCTION_PARAMS_MAX_CHARS] = "";
@@ -248,7 +247,7 @@ ProgressionEffect * ProgressionTree::readXMLEffect(XMLLiteElement * pNode, XMLLi
       wsafecpy(sParams, LUA_FUNCTION_PARAMS_MAX_CHARS, pAttr->getCharValue());
     return new ProgressionEffect_Skill(m_sEdition, sName, sParams);
   }
-  else if (strcasecmp(pNode->getName(), "spel") == 0)
+  else if (strcasecmp(pNode->getName(), "spell") == 0)
   {
     char sName[NAME_MAX_CHARS];
     pAttr = pNode->getAttributeByName("name");

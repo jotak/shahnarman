@@ -27,7 +27,7 @@ private:
 	LocalisationTool();
   static LocalisationTool * mInst;
   char m_sLanguage[64];
-  wstr_hash m_sAllTexts;
+  str_hash m_sAllTexts;
   DebugManager * m_pDebug;
 };
 

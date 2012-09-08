@@ -106,7 +106,7 @@ void cleanUp()
   if (g_pMainGameRoot != NULL)
   {
     g_pMainGameRoot->m_pLocalClient->getDisplay()->getWindowData();
-    g_pMainGameRoot->m_pLocalClient->getClientParameters()->saveParameters();
+    g_pMainGameRoot->m_pLocalClient->getClientParameters()->saveParameters(g_pMainGameRoot->m_pLocalClient->getDebug());
     delete g_pMainGameRoot;
   }
 }

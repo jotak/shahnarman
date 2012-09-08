@@ -15,8 +15,8 @@ public:
 
   void Init(DebugManager * pDebug);
 //  void resetLocale(DebugManager * pDebug);
-  void loadParameters();
-  void saveParameters();
+  void loadParameters(DebugManager * pDebug);
+  void saveParameters(DebugManager * pDebug);
 
   u16 screenXSize, screenYSize;
   u16 winXPos, winYPos;

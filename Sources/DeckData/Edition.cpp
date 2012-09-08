@@ -48,7 +48,7 @@ Edition::Edition(const char * sName, LocalClient * pLocalClient)
   // Read edition.xml
   XMLLiteReader reader;
   char sFileName[MAX_PATH];
-  snprintf(sFileName, MAX_PATH, "%s%s/edition.xm", EDITIONS_PATH, m_sObjectId);
+  snprintf(sFileName, MAX_PATH, "%s%s/edition.xml", EDITIONS_PATH, m_sObjectId);
   XMLLiteElement * pRootNode = loadXMLFile(&reader, sFileName, pLocalClient->getDebug());
   if (pRootNode != NULL)
   {
@@ -131,7 +131,7 @@ bool Edition::activate(DebugManager * pDebug)
 
   // Load ethnicities
   XMLLiteReader reader;
-  snprintf(sFileName, MAX_PATH, "%s%s/ethnicities.xm", EDITIONS_PATH, m_sObjectId);
+  snprintf(sFileName, MAX_PATH, "%s%s/ethnicities.xml", EDITIONS_PATH, m_sObjectId);
   XMLLiteElement * pRootNode = loadXMLFile(&reader, sFileName, pDebug);
   if (pRootNode != NULL) {
     pDebug->notifyLoadingMessage(sFileName);
@@ -139,7 +139,7 @@ bool Edition::activate(DebugManager * pDebug)
   }
 
   // Load progression trees
-  snprintf(sFileName, MAX_PATH, "%s%s/progressions.xm", EDITIONS_PATH, m_sObjectId);
+  snprintf(sFileName, MAX_PATH, "%s%s/progressions.xml", EDITIONS_PATH, m_sObjectId);
   pRootNode = loadXMLFile(&reader, sFileName, pDebug);
   if (pRootNode != NULL)
   {
@@ -186,8 +186,8 @@ bool Edition::activate(DebugManager * pDebug)
         XMLLiteElement * pDataElt = pNode->getFirstChild();
         while (pDataElt != NULL)
         {
-          if (strcasecmp(pDataElt->getName(), "skil") == 0
-                || strcasecmp(pDataElt->getName(), "spel") == 0
+          if (strcasecmp(pDataElt->getName(), "skill") == 0
+                || strcasecmp(pDataElt->getName(), "spell") == 0
                 || strcasecmp(pDataElt->getName(), "modify") == 0
                 || strcasecmp(pDataElt->getName(), "artifact") == 0
                 || strcasecmp(pDataElt->getName(), STRING_AVATAR_XML) == 0)
@@ -222,7 +222,7 @@ bool Edition::activate(DebugManager * pDebug)
   delete[] sList;
 
   // Load avatars
-  snprintf(sFileName, MAX_PATH, "%s%s/shahmahs.xm", EDITIONS_PATH, m_sObjectId);
+  snprintf(sFileName, MAX_PATH, "%s%s/shahmahs.xml", EDITIONS_PATH, m_sObjectId);
   pRootNode = loadXMLFile(&reader, sFileName, pDebug);
   if (pRootNode != NULL) {
     pDebug->notifyLoadingMessage(sFileName);
@@ -230,7 +230,7 @@ bool Edition::activate(DebugManager * pDebug)
   }
 
   // Load units
-  snprintf(sFileName, MAX_PATH, "%s%s/units.xm", EDITIONS_PATH, m_sObjectId);
+  snprintf(sFileName, MAX_PATH, "%s%s/units.xml", EDITIONS_PATH, m_sObjectId);
   pRootNode = loadXMLFile(&reader, sFileName, pDebug);
   if (pRootNode != NULL) {
     pDebug->notifyLoadingMessage(sFileName);
@@ -239,7 +239,7 @@ bool Edition::activate(DebugManager * pDebug)
 
   // Load spells
   m_iTotalFreq = 0;
-  snprintf(sFileName, MAX_PATH, "%s%s/spells.xm", EDITIONS_PATH, m_sObjectId);
+  snprintf(sFileName, MAX_PATH, "%s%s/spells.xml", EDITIONS_PATH, m_sObjectId);
   pRootNode = loadXMLFile(&reader, sFileName, pDebug);
   if (pRootNode != NULL)
   {
@@ -248,7 +248,7 @@ bool Edition::activate(DebugManager * pDebug)
     XMLLiteElement * pNode = pRootNode->getFirstChild();
     while (pNode != NULL)
     {
-      if (0 != strcasecmp(pNode->getName(), "spel"))
+      if (0 != strcasecmp(pNode->getName(), "spell"))
         continue;
       XMLLiteAttribute * pIdAttr = pNode->getAttributeByName("id");
       if (pIdAttr == NULL)
@@ -273,7 +273,7 @@ bool Edition::activate(DebugManager * pDebug)
   }
 
   // Load special tiles
-  snprintf(sFileName, MAX_PATH, "%s%s/spectiles.xm", EDITIONS_PATH, m_sObjectId);
+  snprintf(sFileName, MAX_PATH, "%s%s/spectiles.xml", EDITIONS_PATH, m_sObjectId);
   pRootNode = loadXMLFile(&reader, sFileName, pDebug);
   if (pRootNode != NULL)
   {
@@ -311,7 +311,7 @@ bool Edition::activate(DebugManager * pDebug)
   }
 
   // Load artifacts
-  snprintf(sFileName, MAX_PATH, "%s%s/artifacts.xm", EDITIONS_PATH, m_sObjectId);
+  snprintf(sFileName, MAX_PATH, "%s%s/artifacts.xml", EDITIONS_PATH, m_sObjectId);
   pRootNode = loadXMLFile(&reader, sFileName, pDebug);
   if (pRootNode != NULL) {
     pDebug->notifyLoadingMessage(sFileName);
@@ -319,7 +319,7 @@ bool Edition::activate(DebugManager * pDebug)
   }
 
   // Load ShahmahCreation
-  snprintf(sFileName, MAX_PATH, "%s%s/creation.xm", EDITIONS_PATH, m_sObjectId);
+  snprintf(sFileName, MAX_PATH, "%s%s/creation.xml", EDITIONS_PATH, m_sObjectId);
   pRootNode = loadXMLFile(&reader, sFileName, pDebug);
   if (pRootNode != NULL)
   {
@@ -337,7 +337,7 @@ bool Edition::activate(DebugManager * pDebug)
       XMLLiteElement * pElt = pNode->getFirstChild();
       while (pElt != NULL)
       {
-        if (0 == strcasecmp(pElt->getName(), "skil"))
+        if (0 == strcasecmp(pElt->getName(), "skill"))
         {
           XMLLiteAttribute * pFileAttr = pElt->getAttributeByName("luafile");
           XMLLiteAttribute * pParamsAttr = pElt->getAttributeByName("parameters");
@@ -437,7 +437,7 @@ bool Edition::activate(DebugManager * pDebug)
   }
 
   // Load AIs
-  snprintf(sFileName, MAX_PATH, "%s%s/ais.xm", EDITIONS_PATH, m_sObjectId);
+  snprintf(sFileName, MAX_PATH, "%s%s/ais.xml", EDITIONS_PATH, m_sObjectId);
   pRootNode = loadXMLFile(&reader, sFileName, pDebug);
   if (pRootNode != NULL) {
     pDebug->notifyLoadingMessage(sFileName);
@@ -509,13 +509,12 @@ XMLLiteElement * Edition::loadXMLFile(XMLLiteReader * pReader, const char * file
 {
   char sError[1024] = "";
   XMLLiteElement * pRootNode = NULL;
-  try {
-    pRootNode = pReader->parseFile(fileName);
-  }
-  catch (int errorCode)
+  int error;
+    pRootNode = pReader->parseFile(fileName, &error);
+    if (error != 0)
   {
-    if (errorCode != XMLLITE_ERROR_CANT_OPEN_FILE)  // If file not found, don't show error (because it's not)
-      pDebug->notifyXMLErrorMessage(fileName, errorCode, pReader->getCurrentLine(), pReader->getCurrentCol());
+    if (error != XMLLITE_ERROR_CANT_OPEN_FILE)  // If file not found, don't show error (because it's not)
+      pDebug->notifyXMLErrorMessage(fileName, error, pReader->getCurrentLine(), pReader->getCurrentCol());
     return NULL;
   }
   return pRootNode;
@@ -629,7 +628,7 @@ void Edition::parseXMLObjectData(XMLLiteElement * pRootNode, DebugManager * pDeb
           iValue = pAttr->getIntValue();
           pArtifact->addArtifactEffect(new ArtifactEffect_Charac(sKey, iValue));
         }
-        else if (0 == strcasecmp(pName, "spel"))
+        else if (0 == strcasecmp(pName, "spell"))
         {
           char sEdition[NAME_MAX_CHARS];
           char sName[NAME_MAX_CHARS];
@@ -653,7 +652,7 @@ void Edition::parseXMLObjectData(XMLLiteElement * pRootNode, DebugManager * pDeb
           wsafecpy(sName, NAME_MAX_CHARS, pAttr->getCharValue());
           pArtifact->addArtifactEffect(new ArtifactEffect_Spell(sEdition, sName));
         }
-        else if (0 == strcasecmp(pName, "skil"))
+        else if (0 == strcasecmp(pName, "skill"))
         {
           char sEdition[NAME_MAX_CHARS];
           char sName[NAME_MAX_CHARS];
@@ -718,7 +717,7 @@ void Edition::parseXMLObjectData(XMLLiteElement * pRootNode, DebugManager * pDeb
         pData->m_lValues.insert(long_hash::value_type(pName, pDataElt->getIntValue()));
       else if (0 == strcasecmp(pName, "texture"))
         snprintf(pData->m_sTextureFilename, MAX_PATH, "%s/%s", m_sObjectId, pDataElt->getCharValue());
-      else if (0 == strcasecmp(pName, "skil"))
+      else if (0 == strcasecmp(pName, "skill"))
       {
         XMLLiteAttribute * pSkillFile = pDataElt->getAttributeByName("luafile");
         XMLLiteAttribute * pSkillParams = pDataElt->getAttributeByName("parameters");
@@ -752,7 +751,7 @@ void Edition::addShopItems(Profile * pPlayer, guiSmartSlider * pShopSlider, Debu
 {
   // Read and parse shop.xml file in edition's folder
   char sFileName[MAX_PATH];
-  snprintf(sFileName, MAX_PATH, "%s%s/shop.xm", EDITIONS_PATH, m_sObjectId);
+  snprintf(sFileName, MAX_PATH, "%s%s/shop.xml", EDITIONS_PATH, m_sObjectId);
 
   XMLLiteReader reader;
   XMLLiteElement * pRootNode = loadXMLFile(&reader, sFileName, pDebug);

@@ -482,12 +482,12 @@ guiObject * guiList::guiListLabel::onButtonEvent(ButtonAction * pEvent)
 guiList * guiList::createDefaultList(int width, int height, const char * sId, KeyboardInputEngine * pInputs, DisplayEngine * pDisplay)
 {
   int frmtex[8];
-  frmtex[0] = pDisplay->getTextureEngine()->findTexture("interface:LstT");
+  frmtex[0] = pDisplay->getTextureEngine()->findTexture("interface:LstTL");
   frmtex[1] = pDisplay->getTextureEngine()->findTexture("interface:LstTC");
   frmtex[2] = pDisplay->getTextureEngine()->findTexture("interface:LstTR");
-  frmtex[3] = pDisplay->getTextureEngine()->findTexture("interface:LstC");
+  frmtex[3] = pDisplay->getTextureEngine()->findTexture("interface:LstCL");
   frmtex[4] = pDisplay->getTextureEngine()->findTexture("interface:LstCR");
-  frmtex[5] = pDisplay->getTextureEngine()->findTexture("interface:LstB");
+  frmtex[5] = pDisplay->getTextureEngine()->findTexture("interface:LstBL");
   frmtex[6] = pDisplay->getTextureEngine()->findTexture("interface:LstBC");
   frmtex[7] = pDisplay->getTextureEngine()->findTexture("interface:LstBR");
   guiList * pBox = new guiList(pInputs);

@@ -21,13 +21,7 @@ GameRoot::GameRoot()
 // -----------------------------------------------------------------
 GameRoot::~GameRoot()
 {
-#ifdef DBG_VERBOSE1
-  printf("Begin destroy GameRoot\n");
-#endif
   FREE(m_pLocalClient);
-#ifdef DBG_VERBOSE1
-  printf("End destroy GameRoot\n");
-#endif
 }
 
 // -----------------------------------------------------------------

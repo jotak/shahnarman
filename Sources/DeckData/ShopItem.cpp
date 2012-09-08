@@ -74,7 +74,7 @@ guiPopup * ShopItem::createPopup(int iCash, DisplayEngine * pDisplay)
   guiButton * pBtn = (guiButton*) pPopup->getDocument()->getComponent("0");
   pBtn->setId("CancelButton");
   char str[64] = "";
-  i18n->getText1stUp("CANCE", str, 64);
+  i18n->getText1stUp("CANCEL", str, 64);
   pBtn->setText(str);
   int width = pBtn->getWidth();
   pBtn->autoPadWidth(6, 64);

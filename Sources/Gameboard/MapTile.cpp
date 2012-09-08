@@ -152,7 +152,7 @@ void MapTile::setMask(u16 uMask)
   // first check corners
   if ((uMask & MASK_CORNER_NW) && (uMask & MASK_CORNER_NE) && (uMask & MASK_CORNER_SE) && (uMask & MASK_CORNER_SW))
   {
-    wsafecpy(sCornerStr, 64, "_corner_al");
+    wsafecpy(sCornerStr, 64, "_corner_all");
     uMask &= ~(MASK_CORNER_NW | MASK_CORNER_NE | MASK_CORNER_SE | MASK_CORNER_SW);
   }
   else if ((uMask & MASK_CORNER_NW) && (uMask & MASK_CORNER_NE) && (uMask & MASK_CORNER_SE))
@@ -275,7 +275,7 @@ void MapTile::setMask(u16 uMask)
     wsafecpy(sMainStr, 64, "tile_mask_ns");
     break;
   case MASK_WEST | MASK_NORTH | MASK_EAST | MASK_SOUTH:
-    wsafecpy(sMainStr, 64, "tile_mask_al");
+    wsafecpy(sMainStr, 64, "tile_mask_all");
     break;
   }
   char sPath[MAX_PATH];

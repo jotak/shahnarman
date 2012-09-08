@@ -46,8 +46,8 @@ typedef long            s32;
 #endif
 
 typedef std::tr1::unordered_map<std::string, long> long_hash;
-typedef std::tr1::unordered_map<std::string, std::string> wstr_hash;
-typedef std::tr1::unordered_map<char, char> wch_hash;
+typedef std::tr1::unordered_map<std::string, std::string> str_hash;
+typedef std::tr1::unordered_map<char, char> ch_hash;
 
 #ifndef MAX_PATH
   #define MAX_PATH    512

@@ -410,7 +410,7 @@ guiButton * guiButton::createDefaultSmallButton(const char * sText, int width, c
     pDisplay->getTextureEngine()->findTexture("interface:SmallButtonClicked"),
     BCO_ReplaceTex,
     -1, BCO_None,
-    pDisplay->getTextureEngine()->findTexture("interface:SmallButtonNorma"),
+    pDisplay->getTextureEngine()->findTexture("interface:SmallButtonNormal"),
     sId, 0, 0, width, 20, pDisplay);
   return pBtn;
 }
@@ -428,7 +428,7 @@ guiButton * guiButton::createDefaultWhiteButton(const char * sText, int width, i
     pDisplay->getTextureEngine()->findTexture("interface:WhiteButtonClicked"),
     BCO_ReplaceTex,
     -1, BCO_None,
-    pDisplay->getTextureEngine()->findTexture("interface:WhiteButtonNorma"),
+    pDisplay->getTextureEngine()->findTexture("interface:WhiteButtonNormal"),
     sId, 0, 0, width, height, pDisplay);
   return pBtn;
 }

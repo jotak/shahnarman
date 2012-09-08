@@ -161,13 +161,13 @@ bool SpellsSolver::startResolvePlayerSpell(Player * pPlayer)
   else if (pPlayer->m_pHand->goTo(0, pSpell) == false)  // spell may have been discarded for instance: it's not in hand anymore, so ignore it
   {
     pPlayer->m_pCastSpells->deleteCurrent(0, true);
-    m_pServer->sendCustomLogToAll("(s)_CANT_FIND_SPEL", 0, "p", pPlayer->m_uPlayerId);
+    m_pServer->sendCustomLogToAll("(s)_CANT_FIND_SPELL", 0, "p", pPlayer->m_uPlayerId);
   }
   else
   {
     pPlayer->m_SpentMana += pSpell->getCost();
     NetworkData msg(NETWORKMSG_SEND_CAST_SPELLS_DATA);
-    msg.addLong(0); // stands for "start cast spel"
+    msg.addLong(0); // stands for "start cast spell"
     msg.addLong((long) pPlayer->m_uPlayerId);
     msg.addLong((long) pSpell->getInstanceId());
     m_pServer->sendMessageToAllClients(&msg);
@@ -176,7 +176,7 @@ bool SpellsSolver::startResolvePlayerSpell(Player * pPlayer)
     pSpell->setCaster(pPlayer);
     pSpell->setCurrentEffect(-1);
     // In what follows, it's possible that m_pSpellNetworkData is modified during the "onResolve" call
-    pSpell->callLuaFunction("onResolve", 0, "si", pSpell->getResolveParameters(), (int) pPlayer->m_uPlayerId, (long) pSpell->getInstanceId());
+    pSpell->callLuaFunction("onResolve", 0, "sil", pSpell->getResolveParameters(), (int) pPlayer->m_uPlayerId, (long) pSpell->getInstanceId());
     if (!m_bPauseResolving)  // During call of "onResolve", it's possible that it was paused for instance to select a target during resolve
       endCastSpell(false);
   }
@@ -236,7 +236,7 @@ void SpellsSolver::endCastSpell(bool bCancel)
   pPlayer->m_pCastSpells->deleteCurrent(0, true);
   pPlayer->m_pHand->deleteObject(pSpell, true, true);
   NetworkData msg(NETWORKMSG_SEND_CAST_SPELLS_DATA);
-  msg.addLong(1); // stands for "finished cast spel"
+  msg.addLong(1); // stands for "finished cast spell"
   msg.addLong((long) pPlayer->m_uPlayerId);
   msg.addLong((long) pSpell->getInstanceId());
   if (bCancel)
@@ -989,7 +989,7 @@ void SpellsSolver::onRecallSpell(const char * sType, u8 uPlayerId, u32 uSpellId)
       pSrc = pPlayer->m_pDiscard;
     else
     {
-      m_pServer->getDebug()->notifyErrorMessage("Error in LUA: invalid type provided to function onRecallSpel");
+      m_pServer->getDebug()->notifyErrorMessage("Error in LUA: invalid type provided to function onRecallSpell");
       return;
     }
 
@@ -1042,7 +1042,7 @@ void SpellsSolver::onAttachAsGlobal()
     ((Spell*)(m_LuaContext.pLua))->setGlobal();
   // now we'll complete the current network message m_pSpellNetworkData
   // that is going to be send from function resolvePlayerSpells
-  msg.addLong(0);                      // stands for "spell was attached as globa"
+  msg.addLong(0);                      // stands for "spell was attached as global"
   m_pServer->sendMessageToAllClients(&msg);
 }
 
@@ -1055,7 +1055,7 @@ void SpellsSolver::onDetachFromGlobal()
   if (!retrieveLuaContext(0, &msg))
     return;
   m_pSolver->getGlobalSpells()->deleteObject(m_LuaContext.pLua, true);
-  msg.addLong(0);                      // stands for "spell was detached from globa"
+  msg.addLong(0);                      // stands for "spell was detached from global"
   m_pServer->sendMessageToAllClients(&msg);
 }
 
@@ -1092,7 +1092,7 @@ void SpellsSolver::onDeactivateSkill(long iPlayerId, long iUnitId, long iSkillId
     pPlayer = m_LuaContext.pPlayer;
   if (pPlayer == NULL)
   {
-    m_pServer->getDebug()->notifyErrorMessage("Error in LUA: invalid player provided to function onDeactivateSkil");
+    m_pServer->getDebug()->notifyErrorMessage("Error in LUA: invalid player provided to function onDeactivateSkill");
     return;
   }
   if (iUnitId >= 0)
@@ -1101,7 +1101,7 @@ void SpellsSolver::onDeactivateSkill(long iPlayerId, long iUnitId, long iSkillId
     pUnit = m_LuaContext.pUnit;
   if (pUnit == NULL)
   {
-    m_pServer->getDebug()->notifyErrorMessage("Error in LUA: invalid unit provided to function onDeactivateSkil");
+    m_pServer->getDebug()->notifyErrorMessage("Error in LUA: invalid unit provided to function onDeactivateSkill");
     return;
   }
   bool bIsActive;
@@ -1112,13 +1112,13 @@ void SpellsSolver::onDeactivateSkill(long iPlayerId, long iUnitId, long iSkillId
       pSkill = pUnit->findSkill(((Skill*)m_LuaContext.pLua)->getInstanceId(), &bIsActive);
     else
     {
-      m_pServer->getDebug()->notifyErrorMessage("Error in LUA: function onDeactivateSkill expected current LUA to be a skil");
+      m_pServer->getDebug()->notifyErrorMessage("Error in LUA: function onDeactivateSkill expected current LUA to be a skill");
       return;
     }
   }
   if (pSkill == NULL)
   {
-    m_pServer->getDebug()->notifyErrorMessage("Error in LUA: invalid skill provided to function onDeactivateSkil");
+    m_pServer->getDebug()->notifyErrorMessage("Error in LUA: invalid skill provided to function onDeactivateSkill");
     return;
   }
   if (bIsActive)

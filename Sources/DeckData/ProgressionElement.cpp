@@ -77,7 +77,7 @@ char * ProgressionElement::getDescription(XMLObject * pObj, ObjectList * pEffect
         char sBuf2[DESCRIPTION_MAX_CHARS];
         char sDeuxPoints[8];
         Spell * pSpell = pLocalClient->getDataFactory()->findSpell(((ProgressionEffect_Spell*)pEffect)->m_sSpellEdition, ((ProgressionEffect_Spell*)pEffect)->m_sSpellName);
-        i18n->getText("SPEL", sType, NAME_MAX_CHARS);
+        i18n->getText("SPELL", sType, NAME_MAX_CHARS);
         i18n->getText("2P", sDeuxPoints, 8);
         snprintf(sBuf2, DESCRIPTION_MAX_CHARS, "%s %s%s%s\n", sType, pSpell->getLocalizedName(), sDeuxPoints, pSpell->getLocalizedDescription());
         wsafecat(sBuf, iBufSize, sBuf2);
@@ -89,7 +89,7 @@ char * ProgressionElement::getDescription(XMLObject * pObj, ObjectList * pEffect
         char sBuf2[DESCRIPTION_MAX_CHARS];
         char sDeuxPoints[8];
         Skill * pSkill = new Skill(((ProgressionEffect_Skill*)pEffect)->m_sSkillEdition, ((ProgressionEffect_Skill*)pEffect)->m_sSkillName, ((ProgressionEffect_Skill*)pEffect)->m_sSkillParameters, pLocalClient->getDebug());
-        i18n->getText("SKIL", sType, NAME_MAX_CHARS);
+        i18n->getText("SKILL", sType, NAME_MAX_CHARS);
         i18n->getText("2P", sDeuxPoints, 8);
         snprintf(sBuf2, DESCRIPTION_MAX_CHARS, "%s %s%s%s\n", sType, pSkill->getLocalizedName(), sDeuxPoints, pSkill->getLocalizedDescription());
         wsafecat(sBuf, iBufSize, sBuf2);

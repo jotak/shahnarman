@@ -8,8 +8,8 @@
 #include "../errorcodes.h"
 
 
-wch_hash Font::m_hmUnicodeReplacementTable;
-wch_hash Font::m_hmUnicodeReplacementAcutesTable;
+ch_hash Font::m_hmUnicodeReplacementTable;
+ch_hash Font::m_hmUnicodeReplacementAcutesTable;
 
 // -----------------------------------------------------------------
 // Name : Font
@@ -57,16 +57,16 @@ s16 Font::load(const char * sFontName, TextureEngine * pTexEngine)
     int curchar = 0;
     while (!feof(f))
     {
-        wint_t c;
+        int c;
         do
         {
-            c = fgetwc(f);
+            c = fgetc(f);
         }
         while (c == ' ' || c == '\t' || c == '\n' || c == '\r');
         do
         {
             sTitle[curchar++] = (char)c;
-            c = fgetwc(f);
+            c = fgetc(f);
         }
         while (c != ' ' && c != '\t' && c != '\n' && c != '\r' && !feof(f));
         sTitle[curchar] = '\0';
@@ -75,7 +75,7 @@ s16 Font::load(const char * sFontName, TextureEngine * pTexEngine)
             break;
         do
         {
-            c = fgetwc(f);
+            c = fgetc(f);
         }
         while (c == ' ' || c == '\t');
         while (c != '\n' && c != '\r')
@@ -83,31 +83,31 @@ s16 Font::load(const char * sFontName, TextureEngine * pTexEngine)
             do
             {
                 sKey[curchar++] = (char)c;
-                c = fgetwc(f);
+                c = fgetc(f);
             }
             while (c != '=');
             sKey[curchar] = '\0';
             curchar = 0;
-            c = fgetwc(f);
+            c = fgetc(f);
             if (c == '\"')
             {
                 bGuillemets = true;
-                c = fgetwc(f);
+                c = fgetc(f);
             }
             else
                 bGuillemets = false;
             while ((bGuillemets && c != '\"') || (!bGuillemets && c != ' ' && c != '\t' && c != '\n' && c != '\r'))
             {
                 sValue[curchar++] = (char)c;
-                c = fgetwc(f);
+                c = fgetc(f);
             }
             sValue[curchar] = '\0';
             curchar = 0;
             storeData(sTitle, sKey, sValue);
             if (bGuillemets)
-                c = fgetwc(f);
+                c = fgetc(f);
             while (c == ' ' || c == '\t')
-                c = fgetwc(f);
+                c = fgetc(f);
         }
     }
     fclose(f);
@@ -126,7 +126,7 @@ void Font::storeData(char * sTitle, char * sKey, char * sValue)
     if (strcmp(sTitle, "common") == 0 && strcmp(sKey, "lineHeight") == 0)
         m_uFontHeight = (u8) atoi(sValue);
     else if (strcmp(sTitle, "char") == 0 && strcmp(sKey, "id") == 0)
-        m_AllChars[m_iNbDescriptor++].c = (wint_t) atoi(sValue);
+        m_AllChars[m_iNbDescriptor++].c = (int) atoi(sValue);
     else if (strcmp(sTitle, "char") == 0 && strcmp(sKey, "x") == 0)
         m_AllChars[m_iNbDescriptor-1].x = atoi(sValue);
     else if (strcmp(sTitle, "char") == 0 && strcmp(sKey, "y") == 0)
@@ -187,11 +187,11 @@ CharDescriptor * Font::findCharDescriptor(char c, bool checkAcute)
     }
     if (checkAcute)
     {
-        wch_hash::iterator it = Font::m_hmUnicodeReplacementTable.find(c);
+        ch_hash::iterator it = Font::m_hmUnicodeReplacementTable.find(c);
         if (it != Font::m_hmUnicodeReplacementTable.end())
         {
 
-            wch_hash::iterator itAcute = Font::m_hmUnicodeReplacementAcutesTable.find(c);
+            ch_hash::iterator itAcute = Font::m_hmUnicodeReplacementAcutesTable.find(c);
             if (itAcute != Font::m_hmUnicodeReplacementTable.end())
             {
 
@@ -324,8 +324,8 @@ int Font::getCharacterPosition(CoordsScreen cs, const char * sText)
 // ------------------------------------------------------------------
 void Font::initUnicodeTables()
 {
-//wch_hash Font::m_hmUnicodeReplacementTable;
-//wch_hash Font::m_hmUnicodeReplacementAcutesTable;
+//ch_hash Font::m_hmUnicodeReplacementTable;
+//ch_hash Font::m_hmUnicodeReplacementAcutesTable;
 
 // See http://fr.wikipedia.org/wiki/Table_des_caract%C3%A8res_Unicode_%280000-0FFF%29
     Font::m_hmUnicodeReplacementTable[L'\u00C0'] = 'A';

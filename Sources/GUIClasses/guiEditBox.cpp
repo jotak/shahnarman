@@ -831,13 +831,13 @@ void guiEditBox::setFocus()
 guiEditBox * guiEditBox::createDefaultEditBox(int iNbLines, bool bMultiLines, int wPxl, const char * sId, KeyboardInputEngine * pInputs, DisplayEngine * pDisplay)
 {
   int iTexs[9];
-  iTexs[0] = pDisplay->getTextureEngine()->findTexture("interface:LstT");
+  iTexs[0] = pDisplay->getTextureEngine()->findTexture("interface:LstTL");
   iTexs[1] = pDisplay->getTextureEngine()->findTexture("interface:LstTC");
   iTexs[2] = pDisplay->getTextureEngine()->findTexture("interface:LstTR");
-  iTexs[3] = pDisplay->getTextureEngine()->findTexture("interface:LstC");
+  iTexs[3] = pDisplay->getTextureEngine()->findTexture("interface:LstCL");
   iTexs[4] = pDisplay->getTextureEngine()->findTexture("interface:EditBg");
   iTexs[5] = pDisplay->getTextureEngine()->findTexture("interface:LstCR");
-  iTexs[6] = pDisplay->getTextureEngine()->findTexture("interface:LstB");
+  iTexs[6] = pDisplay->getTextureEngine()->findTexture("interface:LstBL");
   iTexs[7] = pDisplay->getTextureEngine()->findTexture("interface:LstBC");
   iTexs[8] = pDisplay->getTextureEngine()->findTexture("interface:LstBR");
   guiEditBox * pBox = new guiEditBox(pInputs);

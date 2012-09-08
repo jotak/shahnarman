@@ -74,7 +74,7 @@ void Town::init(u32 uTownId, u8 uSize, Ethnicity * pEthn, LocalClient * pLocalCl
   if (pName != NULL)
     wsafecpy(m_sName, NAME_MAX_CHARS, pName);
   else
-    wsafecpy(m_sName, NAME_MAX_CHARS, "NUL");
+    wsafecpy(m_sName, NAME_MAX_CHARS, "NULL");
   wsafecpy(m_sEthnicityEdition, NAME_MAX_CHARS, pEthn->m_sEdition);
   wsafecpy(m_sEthnicityId, NAME_MAX_CHARS, pEthn->m_sObjectId);
   for (int i = 0; i < 5; i++)
@@ -779,7 +779,7 @@ void Town::buildBuilding(const char * sName, Server * pServer)
 // -----------------------------------------------------------------
 bool Town::isBuildingAllowed(Building * pBuild)
 {
-  if (pBuild->callLuaFunction("isAllowed", 1, "", (long)getId()))
+  if (pBuild->callLuaFunction("isAllowed", 1, "l", (long)getId()))
   {
     double resp = pBuild->getLuaNumber();
     return (resp == 1);

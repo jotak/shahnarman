@@ -254,7 +254,7 @@ void Map::initGraphics(DisplayEngine * pDisplay)
   QuadData mapquad(0.0f, (float) m_iWidth, 0.0f, (float) m_iHeight, "map", pDisplay);
   m_pEmptyMapGeometry = new GeometryQuads(&mapquad, VB_Static);
   FREE(m_pTombGeometry);
-  QuadData quad(0.0f, 0.4f, 0.0f, 0.4f, "skul", pDisplay);
+  QuadData quad(0.0f, 0.4f, 0.0f, 0.4f, "skull", pDisplay);
   m_pTombGeometry = new GeometryQuads(&quad, VB_Static);
   FREE(m_pFoeBannerGeometry);
   QuadData quad2(0.0f, 0.3f, 0.0f, 0.3f, "attack_icon", pDisplay);

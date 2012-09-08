@@ -49,7 +49,7 @@ void Parameters::Init(DebugManager * pDebug)
 //  chop(sLocale);
 //  fclose(pFile);
 //  resetLocale(pDebug);
-  loadParameters();
+  loadParameters(pDebug);
 }
 
 // -----------------------------------------------------------------
@@ -70,10 +70,12 @@ void Parameters::Init(DebugManager * pDebug)
 // -----------------------------------------------------------------
 // Name : loadParameters
 // -----------------------------------------------------------------
-void Parameters::loadParameters()
+void Parameters::loadParameters(DebugManager * pDebug)
 {
-  char sPath[MAX_PATH] = "config.ini";
-  IniFile reader(sPath, 100);
+    int error;
+  IniFile reader("config.ini", &error);
+  if (error == 0)
+  {
   fullscreen = reader.findBoolValue("Fullscreen", false);
   wsafecpy(sGameModeString, 64, reader.findCharValue("GameModeString", "1280x1024:32"));
   winWidth = reader.findIntValue("WindowWidth", 1024);
@@ -102,15 +104,22 @@ void Parameters::loadParameters()
     snprintf(sKey, NAME_MAX_CHARS, "Language%d", i);
     wsafecpy(sLanguages[i], NAME_MAX_CHARS, reader.findCharValue(sKey));
   }
+  }
+  else
+  {
+      pDebug->notifyINIErrorMessage("config.ini", error);
+  }
 }
 
 // -----------------------------------------------------------------
 // Name : saveParameters
 // -----------------------------------------------------------------
-void Parameters::saveParameters()
+void Parameters::saveParameters(DebugManager * pDebug)
 {
-  char sPath[MAX_PATH] = "config.ini";
-  IniFile writer(sPath, 100);
+    int error;
+  IniFile writer("config.ini", &error);
+  if (error == 0)
+  {
   writer.setKeyAndBoolValue("Fullscreen", fullscreen);
   writer.setKeyAndCharValue("GameModeString", sGameModeString);
   writer.setKeyAndIntValue("WindowWidth", winWidth);
@@ -123,5 +132,14 @@ void Parameters::saveParameters()
   writer.setKeyAndIntValue("GameLogsLifetime", iGameLogsLifetime);
   writer.setKeyAndIntValue("SoundVolume", iSoundVolume);
   writer.setKeyAndIntValue("MusicVolume", iMusicVolume);
-  writer.write(sPath);
+  writer.write("config.ini", &error);
+  if (error != 0)
+  {
+      pDebug->notifyINIErrorMessage("config.ini", error);
+  }
+  }
+  else
+  {
+      pDebug->notifyINIErrorMessage("config.ini", error);
+  }
 }

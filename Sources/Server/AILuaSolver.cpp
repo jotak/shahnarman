@@ -130,7 +130,7 @@ void AILuaSolver::resolveAISpells(Player * pPlayer)
 //  This function initializes the environment to start evaluating a spell. It is called through AI resolution for each spell of the current player.
 //  (mainly set m_pEvaluationTargets to true)
 //  Then it "casts" the spell (in simulation mode)
-//  Eventually the spell may need targets ; so it calls "getTargetsForSpel" which will recursively construct
+//  Eventually the spell may need targets ; so it calls "getTargetsForSpell" which will recursively construct
 //    the whole tree of possible targets (list of lists)
 //  For each set of targets the spell is "resolved" (still in simulation mode), which allows to get an interest value
 //    for the spell associated to a set of targets.
@@ -164,7 +164,7 @@ AISpell * AILuaSolver::evaluateSpell(Player * pCaster, Spell * pRealSpell)
     m_pCurrentPlayer = pCaster;
     m_pCurrentLua = pClone;
     m_fCurrentInterest = 0;
-    pClone->callLuaFunction("onResolve", 0, "si", pClone->getResolveParameters(), (int) pCaster->m_uPlayerId, (long) pClone->getInstanceId());
+    pClone->callLuaFunction("onResolve", 0, "sil", pClone->getResolveParameters(), (int) pCaster->m_uPlayerId, (long) pClone->getInstanceId());
     // TODO : evaluate other function like "getMod..."
     if (m_fCurrentInterest > pClone->getInterest()) {
       pClone->setInterest(m_fCurrentInterest);
@@ -179,7 +179,7 @@ AISpell * AILuaSolver::evaluateSpell(Player * pCaster, Spell * pRealSpell)
 
 // -----------------------------------------------------------------
 // Name : findTargetForLua
-//  During the LUA evaluation process (like to evaluate interest of a spell), this function is called by "getTargetsForSpel"
+//  During the LUA evaluation process (like to evaluate interest of a spell), this function is called by "getTargetsForSpell"
 //  (See getTargetsForSpell comments for global algorithm)
 //  The "pInfoPtr" argument contains the demanded target type and current iterators to loop through game data
 //  If it's NULL, the info is retrieved from member "m_pEvaluationTargets" (the spell may need several targets, so it's a list)

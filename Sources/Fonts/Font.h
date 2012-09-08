@@ -42,8 +42,8 @@ private:
   int m_iTexId;
   CharDescriptor * m_pLastAcute;
 
-  static wch_hash m_hmUnicodeReplacementTable;
-  static wch_hash m_hmUnicodeReplacementAcutesTable;
+  static ch_hash m_hmUnicodeReplacementTable;
+  static ch_hash m_hmUnicodeReplacementAcutesTable;
 };
 
 #endif

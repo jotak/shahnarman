@@ -247,9 +247,6 @@ void DebugManager::notifyINIErrorMessage(const char * sFile, int errorCode)
   case INIREADER_ERROR_CANT_OPEN_FILE:
     snprintf(sError, 1024, "%s: INIREADER_ERROR_CANT_OPEN_FILE.", sFile);
     break;
-  case INIREADER_ERROR_MAX_LINES_REACHED:
-    snprintf(sError, 1024, "%s: INIREADER_ERROR_MAX_LINES_REACHED.", sFile);
-    break;
   default:
     snprintf(sError, 1024, "%s: Unknown error.", sFile);
     break;

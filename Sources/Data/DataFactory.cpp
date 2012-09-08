@@ -57,7 +57,7 @@ void DataFactory::Init(LocalClient * pLocalClient)
     chop(sName);
     // Test if edition exists
     char sFilePath[MAX_PATH];
-    snprintf(sFilePath, MAX_PATH, "%s%s/edition.xm", EDITIONS_PATH, sName);
+    snprintf(sFilePath, MAX_PATH, "%s%s/edition.xml", EDITIONS_PATH, sName);
     FILE * pTmp = NULL;
     if (0 == fopen_s(&pTmp, sFilePath, "r"))
     {
@@ -66,6 +66,11 @@ void DataFactory::Init(LocalClient * pLocalClient)
       Edition * pEdition = new Edition(sName, pLocalClient);
       m_pEditions->addLast(pEdition);
       pEdition->activate(pLocalClient->getDebug());
+    }
+    else {
+        char sError[512];
+        snprintf(sError, 512, "File %s not found.", sFilePath);
+        pLocalClient->getDebug()->notifyErrorMessage(sError);
     }
   }
   fclose(pFile);

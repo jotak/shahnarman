@@ -64,7 +64,7 @@ void TurnSolver::onInitFinished()
   SpecialTile * pSpec = m_pServer->getMap()->getFirstSpecialTile();
   while (pSpec != NULL)
   {
-    pSpec->callLuaFunction("onCreate", 0, "", (long) pSpec->getInstanceId());
+    pSpec->callLuaFunction("onCreate", 0, "l", (long) pSpec->getInstanceId());
     pSpec = m_pServer->getMap()->getNextSpecialTile();
   }
   resetDataForNextTurn(true);

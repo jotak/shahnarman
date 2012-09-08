@@ -152,7 +152,7 @@ int ResolveDlg::initChooseUnitsScreen(int yPos)
   addComponent(m_pDefendersPanel);
 
   yPos = m_pDefendersPanel->getYPos() + m_pDefendersPanel->getHeight() + SPACING;
-  i18n->getText1stUp("CANCE", sText, 64);
+  i18n->getText1stUp("CANCEL", sText, 64);
   guiButton * pBtn = guiButton::createDefaultNormalButton(sText, "CancelButton", getDisplay());
   pBtn->autoPadWidth(6, 64);
   pBtn->moveTo(SPACING + 2, yPos);

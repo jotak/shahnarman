@@ -137,17 +137,16 @@ s32 TextureEngine::loadComposedTexture(const char * sFilename)
   wsafecat(pngfile, MAX_PATH, sFilename);
   char xmlfile[MAX_PATH];
   wsafecpy(xmlfile, MAX_PATH, pngfile);
-  wsafecat(xmlfile, MAX_PATH, ".xm");
+  wsafecat(xmlfile, MAX_PATH, ".xml");
 
   // Read XML
   XMLLiteReader reader;
   XMLLiteElement * pRootNode = NULL;
-  try {
-    pRootNode = reader.parseFile(xmlfile);
-  }
-  catch (int errorCode)
+  int error;
+    pRootNode = reader.parseFile(xmlfile, &error);
+  if (error != 0)
   {
-    m_pDebug->notifyXMLErrorMessage(xmlfile, errorCode, reader.getCurrentLine(), reader.getCurrentCol());
+    m_pDebug->notifyXMLErrorMessage(xmlfile, error, reader.getCurrentLine(), reader.getCurrentCol());
     return iMasterTexture;
   }
   assert(pRootNode != NULL);

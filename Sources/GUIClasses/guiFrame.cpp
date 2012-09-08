@@ -432,12 +432,12 @@ guiFrame * guiFrame::createDefaultFrame(FrameFitBehavior widthFit, FrameFitBehav
 {
   guiFrame * pFrame = new guiFrame();
   int iTexs[8];
-  iTexs[0] = pDisplay->getTextureEngine()->findTexture("interface:FrmT");
+  iTexs[0] = pDisplay->getTextureEngine()->findTexture("interface:FrmTL");
   iTexs[1] = pDisplay->getTextureEngine()->findTexture("interface:FrmTC");
   iTexs[2] = pDisplay->getTextureEngine()->findTexture("interface:FrmTR");
-  iTexs[3] = pDisplay->getTextureEngine()->findTexture("interface:FrmC");
+  iTexs[3] = pDisplay->getTextureEngine()->findTexture("interface:FrmCL");
   iTexs[4] = pDisplay->getTextureEngine()->findTexture("interface:FrmCR");
-  iTexs[5] = pDisplay->getTextureEngine()->findTexture("interface:FrmB");
+  iTexs[5] = pDisplay->getTextureEngine()->findTexture("interface:FrmBL");
   iTexs[6] = pDisplay->getTextureEngine()->findTexture("interface:FrmBC");
   iTexs[7] = pDisplay->getTextureEngine()->findTexture("interface:FrmBR");
   int maxw = (widthFit == FB_FitFrameToDocumentWhenSmaller) ? width : 0;

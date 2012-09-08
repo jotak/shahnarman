@@ -583,7 +583,7 @@ void MapObjectDlg::loadTown(Town * pTown)
   pLbl->init(sText, TEXT_FONT, TEXT_COLOR, "", xPxl, yPxl, -1, -1, getDisplay());
   m_pContentPanel->getDocument()->addComponent(pLbl);
   if (fear <= 0)
-    i18n->getText("FEAR_DESCRIPTION_NUL", sText, LABEL_MAX_CHARS);
+    i18n->getText("FEAR_DESCRIPTION_NULL", sText, LABEL_MAX_CHARS);
   else if (fear < 3)
     i18n->getText("FEAR_DESCRIPTION_LOW", sText, LABEL_MAX_CHARS);
   else if (fear < 7)

@@ -29,9 +29,9 @@ LoadGameDlg::LoadGameDlg(int iWidth, int iHeight, LocalClient * pLocalClient) : 
   pLbl->moveTo((getWidth() - pLbl->getWidth()) / 2, yPxl);
   addComponent(pLbl);
 
-  // Create button "Cance"
+  // Create button "Cancel"
   float fx = getWidth() / 8;
-  guiButton * pBtn = guiButton::createDefaultNormalButton(i18n->getText("CANCE", str, 64), "CancelButton", pLocalClient->getDisplay());
+  guiButton * pBtn = guiButton::createDefaultNormalButton(i18n->getText("CANCEL", str, 64), "CancelButton", pLocalClient->getDisplay());
   yPxl = getHeight() - (int)(1.25f * (float)pBtn->getHeight());
   pBtn->moveTo((int)fx, yPxl);
   pBtn->setWidth(2*fx);

@@ -98,7 +98,7 @@ char * LocalisationTool::getText(const char * sKey, char * sBuf, int iSize, void
   if (pArgs == NULL)
   {
     // Get text in hashmap
-    wstr_hash::iterator it = m_sAllTexts.find(sKey);
+    str_hash::iterator it = m_sAllTexts.find(sKey);
     if (it == m_sAllTexts.end())
     {
       if (m_pDebug != NULL)
@@ -117,7 +117,7 @@ char * LocalisationTool::getText(const char * sKey, char * sBuf, int iSize, void
   char * sModel = new char[iSize];
 
   // Get text in hashmap
-  wstr_hash::iterator it = m_sAllTexts.find(sKey);
+  str_hash::iterator it = m_sAllTexts.find(sKey);
   if (it == m_sAllTexts.end())
     wsafecpy(sModel, iSize, sKey);
   else
@@ -226,7 +226,7 @@ char * LocalisationTool::getText(const char * sKey, char * sBuf, int iSize, void
 char * LocalisationTool::getText1stUp(const char * sKey, char * sBuf, int iSize)
 {
   // Get text in hashmap
-  wstr_hash::iterator it = m_sAllTexts.find(sKey);
+  str_hash::iterator it = m_sAllTexts.find(sKey);
   if (it == m_sAllTexts.end())
   {
     if (m_pDebug != NULL)
@@ -251,7 +251,7 @@ char * LocalisationTool::getText1stUp(const char * sKey, char * sBuf, int iSize)
 char * LocalisationTool::getTextUp(const char * sKey, char * sBuf, int iSize)
 {
   // Get text in hashmap
-  wstr_hash::iterator it = m_sAllTexts.find(sKey);
+  str_hash::iterator it = m_sAllTexts.find(sKey);
   if (it == m_sAllTexts.end())
   {
     if (m_pDebug != NULL)
@@ -281,7 +281,7 @@ char * LocalisationTool::getTextUp(const char * sKey, char * sBuf, int iSize)
 char * LocalisationTool::getTextLow(const char * sKey, char * sBuf, int iSize)
 {
   // Get text in hashmap
-  wstr_hash::iterator it = m_sAllTexts.find(sKey);
+  str_hash::iterator it = m_sAllTexts.find(sKey);
   if (it == m_sAllTexts.end())
   {
     if (m_pDebug != NULL)

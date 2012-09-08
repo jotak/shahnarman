@@ -188,7 +188,7 @@ void OptionsDlg::update(double delta)
       m_pLocalClient->getInterface()->deleteFrame(m_pConfirmVideoModeDlg);
       m_pConfirmVideoModeDlg = NULL;
       m_pLocalClient->getClientParameters()->fullscreen = false;
-      m_pLocalClient->getClientParameters()->saveParameters();
+      m_pLocalClient->getClientParameters()->saveParameters(m_pLocalClient->getDebug());
       extern void restartGlut();
       restartGlut();
     }
@@ -485,7 +485,7 @@ void OptionsDlg::onAcceptVideoParameters()
   guiComboBox * pCombo = (guiComboBox*) m_pVideoOptionsDlg->getDocument()->getComponent("ResolutionCombo");
   assert(pCombo != NULL);
   wsafecpy(m_pLocalClient->getClientParameters()->sGameModeString, 64, pCombo->getSelectedItem()->getId());
-  m_pLocalClient->getClientParameters()->saveParameters();
+  m_pLocalClient->getClientParameters()->saveParameters(m_pLocalClient->getDebug());
   extern void restartGlut();
   restartGlut();
   if (m_pLocalClient->getClientParameters()->fullscreen)
@@ -518,6 +518,6 @@ void OptionsDlg::onAcceptAudioParameters()
   pCombo = (guiComboBox*) m_pAudioOptionsDlg->getDocument()->getComponent("MusicCombo");
   assert(pCombo != NULL);
   m_pLocalClient->getClientParameters()->iMusicVolume = pCombo->getSelectedItemId();
-  m_pLocalClient->getClientParameters()->saveParameters();
+  m_pLocalClient->getClientParameters()->saveParameters(m_pLocalClient->getDebug());
   AudioManager::getInstance()->updateVolume();
 }
