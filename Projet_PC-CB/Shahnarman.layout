@@ -10,6 +10,9 @@
 	<File name="../Sources/Common/BaseObject.h" open="0" top="0" tabpos="0">
 		<Cursor position="71" topLine="0" />
 	</File>
+	<File name="../Sources/Common/ObjectList.cpp" open="0" top="0" tabpos="0">
+		<Cursor position="6043" topLine="422" />
+	</File>
 	<File name="../Sources/Common/md5.cpp" open="0" top="0" tabpos="0">
 		<Cursor position="9745" topLine="235" />
 	</File>
@@ -19,8 +22,8 @@
 	<File name="../Sources/Data/DataFactory.h" open="0" top="0" tabpos="0">
 		<Cursor position="699" topLine="0" />
 	</File>
-	<File name="../Sources/Data/FileSerializer.cpp" open="0" top="0" tabpos="5">
-		<Cursor position="2327" topLine="36" />
+	<File name="../Sources/Data/FileSerializer.cpp" open="1" top="1" tabpos="3">
+		<Cursor position="2604" topLine="48" />
 	</File>
 	<File name="../Sources/Data/FileSerializer.h" open="0" top="0" tabpos="0">
 		<Cursor position="612" topLine="0" />
@@ -32,10 +35,10 @@
 		<Cursor position="596" topLine="0" />
 	</File>
 	<File name="../Sources/Data/LocalisationTool.cpp" open="0" top="0" tabpos="3">
-		<Cursor position="3226" topLine="52" />
+		<Cursor position="1446" topLine="28" />
 	</File>
 	<File name="../Sources/Data/LocalisationTool.h" open="0" top="0" tabpos="0">
-		<Cursor position="1046" topLine="0" />
+		<Cursor position="1079" topLine="0" />
 	</File>
 	<File name="../Sources/Data/LuaContext.cpp" open="0" top="0" tabpos="0">
 		<Cursor position="2418" topLine="25" />
@@ -43,8 +46,8 @@
 	<File name="../Sources/Data/LuaContext.h" open="0" top="0" tabpos="0">
 		<Cursor position="699" topLine="0" />
 	</File>
-	<File name="../Sources/Data/LuaObject.cpp" open="1" top="0" tabpos="1">
-		<Cursor position="9281" topLine="231" />
+	<File name="../Sources/Data/LuaObject.cpp" open="0" top="0" tabpos="1">
+		<Cursor position="9327" topLine="231" />
 	</File>
 	<File name="../Sources/Data/LuaObject.h" open="0" top="0" tabpos="0">
 		<Cursor position="910" topLine="0" />
@@ -83,10 +86,10 @@
 		<Cursor position="579" topLine="0" />
 	</File>
 	<File name="../Sources/Data/XMLObject.cpp" open="0" top="0" tabpos="8">
-		<Cursor position="3178" topLine="42" />
+		<Cursor position="3156" topLine="34" />
 	</File>
 	<File name="../Sources/Data/XMLObject.h" open="0" top="0" tabpos="9">
-		<Cursor position="798" topLine="0" />
+		<Cursor position="442" topLine="1" />
 	</File>
 	<File name="../Sources/Debug/DebugManager.cpp" open="0" top="0" tabpos="3">
 		<Cursor position="8005" topLine="202" />
@@ -145,8 +148,8 @@
 	<File name="../Sources/DeckData/ShopItem.h" open="0" top="0" tabpos="0">
 		<Cursor position="1408" topLine="29" />
 	</File>
-	<File name="../Sources/DeckData/UnitData.cpp" open="0" top="0" tabpos="0">
-		<Cursor position="6726" topLine="164" />
+	<File name="../Sources/DeckData/UnitData.cpp" open="1" top="0" tabpos="2">
+		<Cursor position="2263" topLine="52" />
 	</File>
 	<File name="../Sources/DeckData/UnitData.h" open="0" top="0" tabpos="12">
 		<Cursor position="640" topLine="0" />
@@ -158,13 +161,13 @@
 		<Cursor position="921" topLine="0" />
 	</File>
 	<File name="../Sources/Display/Texture.cpp" open="0" top="0" tabpos="0">
-		<Cursor position="1337" topLine="0" />
+		<Cursor position="1302" topLine="17" />
 	</File>
 	<File name="../Sources/Display/Texture.h" open="0" top="0" tabpos="0">
 		<Cursor position="245" topLine="0" />
 	</File>
 	<File name="../Sources/Display/TextureEngine.cpp" open="0" top="0" tabpos="0">
-		<Cursor position="8237" topLine="177" />
+		<Cursor position="1465" topLine="33" />
 	</File>
 	<File name="../Sources/Display/TextureEngine.h" open="0" top="0" tabpos="0">
 		<Cursor position="503" topLine="0" />
@@ -317,10 +320,10 @@
 		<Cursor position="955" topLine="0" />
 	</File>
 	<File name="../Sources/Gameboard/Skill.cpp" open="0" top="0" tabpos="0">
-		<Cursor position="4962" topLine="99" />
+		<Cursor position="337" topLine="0" />
 	</File>
 	<File name="../Sources/Gameboard/Skill.h" open="0" top="0" tabpos="0">
-		<Cursor position="1234" topLine="8" />
+		<Cursor position="786" topLine="0" />
 	</File>
 	<File name="../Sources/Gameboard/SpecialTile.cpp" open="0" top="0" tabpos="0">
 		<Cursor position="1280" topLine="0" />
@@ -379,8 +382,8 @@
 	<File name="../Sources/Interface/GameOverDlg.cpp" open="0" top="0" tabpos="0">
 		<Cursor position="1554" topLine="6" />
 	</File>
-	<File name="../Sources/Interface/HostGameDlg.cpp" open="0" top="0" tabpos="0">
-		<Cursor position="12147" topLine="270" />
+	<File name="../Sources/Interface/HostGameDlg.cpp" open="1" top="0" tabpos="1">
+		<Cursor position="43115" topLine="1035" />
 	</File>
 	<File name="../Sources/Interface/HostGameDlg.h" open="0" top="0" tabpos="0">
 		<Cursor position="1593" topLine="21" />
@@ -568,14 +571,14 @@
 	<File name="../Sources/_System/linux_utils.cpp" open="0" top="0" tabpos="0">
 		<Cursor position="1037" topLine="3" />
 	</File>
-	<File name="../Sources/_System/main.cpp" open="1" top="1" tabpos="2">
-		<Cursor position="357" topLine="0" />
+	<File name="../Sources/_System/main.cpp" open="0" top="0" tabpos="2">
+		<Cursor position="862" topLine="0" />
 	</File>
 	<File name="../Sources/_System/utils_win32.cpp" open="0" top="0" tabpos="0">
 		<Cursor position="641" topLine="0" />
 	</File>
 	<File name="../Sources/lua_callbacks.cpp" open="0" top="0" tabpos="0">
-		<Cursor position="70995" topLine="2111" />
+		<Cursor position="54453" topLine="1607" />
 	</File>
 	<File name="../Sources/lua_callbacks.h" open="0" top="0" tabpos="0">
 		<Cursor position="1048" topLine="0" />
@@ -590,6 +593,6 @@
 		<Cursor position="2809" topLine="85" />
 	</File>
 	<File name="../Sources/utils.h" open="0" top="0" tabpos="1">
-		<Cursor position="1418" topLine="13" />
+		<Cursor position="1341" topLine="35" />
 	</File>
 </CodeBlocks_layout_file>

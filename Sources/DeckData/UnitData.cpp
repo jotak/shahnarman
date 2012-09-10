@@ -129,7 +129,7 @@ char * UnitData::getInfos(char * sBuf, int iSize, const char * sSeparator, bool 
         wsafecat(sBuf, iSize, sTemp);
         wsafecat(sBuf, iSize, s2P);
         int iAlign = 0;
-        long_hash::iterator it = m_lValues.find(STRING_ALIGNMENT);
+        long_hash::iterator it = m_lValues.find(std::string(STRING_ALIGNMENT));
         if (it != m_lValues.end())
             iAlign = it->second;
         getAlignmentInfos(iAlign, sTemp, 512);

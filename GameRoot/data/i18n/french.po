@@ -684,9 +684,7 @@ msgstr "Pognon : %d"
 
 #: Sources/Interface/HostGameDlg.cpp:1006
 msgid "DISPUTED_GAMES_(d)_WON_(d)_LOST_(d)"
-msgstr ""
-"Number of disputed games: %d\n"
-"(won: %d, lost: %d)"
+msgstr "Nombre de parties disputées : %d\n(gagnées : %d, perdues : %d)"
 
 #: Sources/Interface/HostGameDlg.cpp:1012
 msgid "PCT_VICTORIES_(d)"

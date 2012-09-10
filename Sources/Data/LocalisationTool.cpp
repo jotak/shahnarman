@@ -34,20 +34,19 @@ void LocalisationTool::Init(Parameters * pParams, DebugManager * pDebug)
     char sError[1024] = "";
     char sLine[1024] = "";
     char sKey[64] = "";
-    char sLang[64] = "";
     char sValue[1024] = "";
 
     // Free current data, if any
     m_sAllTexts.clear();
 
     // Build path
-    strncpy(sLang, pParams->sLanguages[pParams->language], 64);
-    snprintf(sPath, MAX_PATH, "%si18n/%s.po", DATA_PATH, sLang);
+    strncpy(m_sLanguage, pParams->sLanguages[pParams->language], 64);
+    snprintf(sPath, MAX_PATH, "%si18n/%s.po", DATA_PATH, m_sLanguage);
 
     // Open file
     if (0 != fopen_s(&pFile, sPath, "r"))
     {
-        snprintf(sError, 1024, "Could not open language file for %s. Check out file %s.", sLang, sPath);
+        snprintf(sError, 1024, "Could not open language file for %s. Check out file %s.", m_sLanguage, sPath);
         pDebug->notifyErrorMessage(sError);
         return;
     }

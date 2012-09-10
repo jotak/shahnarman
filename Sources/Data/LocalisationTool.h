@@ -19,7 +19,7 @@ public:
     };
 
     void Init(Parameters * pParams, DebugManager * pDebug);
-    char * getCurrentLanguageName()
+    const char * getCurrentLanguageName()
     {
         return m_sLanguage;
     };
