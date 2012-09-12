@@ -108,9 +108,9 @@ Skill * Skill::deserialize(u32 uInstanceId, NetworkData * pData, DebugManager * 
     char sEdition[NAME_MAX_CHARS];
     char sObjectName[NAME_MAX_CHARS];
     char sParameters[LUA_FUNCTION_PARAMS_MAX_CHARS];
-    pData->readString(sEdition);
-    pData->readString(sObjectName);
-    pData->readString(sParameters);
+    pData->readString(sEdition, NAME_MAX_CHARS, pDebug, "Error in Skill::deserialize: data corrupted (sEdition)");
+    pData->readString(sObjectName, NAME_MAX_CHARS, pDebug, "Error in Skill::deserialize: data corrupted (sObjectName)");
+    pData->readString(sParameters, LUA_FUNCTION_PARAMS_MAX_CHARS, pDebug, "Error in Skill::deserialize: data corrupted (sParameters)");
     return new Skill(uInstanceId, sEdition, sObjectName, sParameters, pDebug);;
 }
 

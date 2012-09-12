@@ -61,17 +61,17 @@ void UnitData::serialize(Serializer * pSerializer)
 // -----------------------------------------------------------------
 void UnitData::deserialize(Serializer * pSerializer, DebugManager * pDebug)
 {
-    pSerializer->readString(m_sEdition);
-    pSerializer->readString(m_sObjectId);
-    pSerializer->readString(m_sEthnicityId);
-    pSerializer->readString(m_sTextureFilename);
+    pSerializer->readString(m_sEdition, NAME_MAX_CHARS, pDebug, "Error in UnitData::deserialize: data corrupted (m_sEdition)");
+    pSerializer->readString(m_sObjectId, NAME_MAX_CHARS, pDebug, "Error in UnitData::deserialize: data corrupted (m_sObjectId)");
+    pSerializer->readString(m_sEthnicityId, NAME_MAX_CHARS, pDebug, "Error in UnitData::deserialize: data corrupted (m_sEthnicityId)");
+    pSerializer->readString(m_sTextureFilename, MAX_PATH, pDebug, "Error in UnitData::deserialize: data corrupted (m_sTextureFilename)");
     // hashmap values
     int len = pSerializer->readLong();
     for (int i = 0; i < len; i++)
     {
         char str[1024];
         long val = 0;
-        pSerializer->readString(str);
+        pSerializer->readString(str, 1024, pDebug, "Error in UnitData::deserialize: data corrupted (values)");
         val = pSerializer->readLong();
         m_lValues.insert(long_hash::value_type(str, val));
     }
@@ -82,9 +82,9 @@ void UnitData::deserialize(Serializer * pSerializer, DebugManager * pDebug)
         char sEdition[NAME_MAX_CHARS];
         char sName[NAME_MAX_CHARS];
         char sParameters[LUA_FUNCTION_PARAMS_MAX_CHARS];
-        pSerializer->readString(sEdition);
-        pSerializer->readString(sName);
-        pSerializer->readString(sParameters);
+        pSerializer->readString(sEdition, NAME_MAX_CHARS, pDebug, "Error in UnitData::deserialize: data corrupted (Skill sEdition)");
+        pSerializer->readString(sName, NAME_MAX_CHARS, pDebug, "Error in UnitData::deserialize: data corrupted (Skill sName)");
+        pSerializer->readString(sParameters, LUA_FUNCTION_PARAMS_MAX_CHARS, pDebug, "Error in UnitData::deserialize: data corrupted (Skill sParameters)");
         Skill * pSkill = new Skill(sEdition, sName, sParameters, pDebug);
         m_pSkills->addLast(pSkill);
     }

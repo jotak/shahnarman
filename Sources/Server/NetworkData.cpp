@@ -3,6 +3,7 @@
 // -----------------------------------------------------------------
 #include "NetworkData.h"
 #include "../utils.h"
+#include "../Debug/DebugManager.h"
 #include <stdio.h>
 
 // -----------------------------------------------------------------
@@ -162,12 +163,36 @@ double NetworkData::readDouble()
 // -----------------------------------------------------------------
 // Name : readString
 // -----------------------------------------------------------------
-void NetworkData::readString(char * str)
+bool NetworkData::readString(char * str, int maxSize)
 {
     long size = readLong();
-    memcpy(str, m_pReadCursor, size * sizeof(char));
-    str[size] = '\0';
-    m_pReadCursor += size * sizeof(char);
+    if (size > maxSize-1)
+    {
+        memcpy(str, m_pReadCursor, (maxSize-1) * sizeof(char));
+        str[maxSize-1] = '\0';
+        m_pReadCursor += (maxSize-1) * sizeof(char);
+        return false;
+    }
+    else
+    {
+        memcpy(str, m_pReadCursor, size * sizeof(char));
+        str[size] = '\0';
+        m_pReadCursor += size * sizeof(char);
+        return true;
+    }
+}
+
+// -----------------------------------------------------------------
+// Name : readString
+// -----------------------------------------------------------------
+bool NetworkData::readString(char * str, int maxSize, DebugManager * pDebug, const char * sError)
+{
+    if (!readString(str, maxSize))
+    {
+        pDebug->notifyErrorMessage(sError);
+        return false;
+    }
+    return true;
 }
 
 // -----------------------------------------------------------------

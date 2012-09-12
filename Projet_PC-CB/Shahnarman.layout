@@ -22,11 +22,11 @@
 	<File name="../Sources/Data/DataFactory.h" open="0" top="0" tabpos="0">
 		<Cursor position="699" topLine="0" />
 	</File>
-	<File name="../Sources/Data/FileSerializer.cpp" open="1" top="1" tabpos="3">
-		<Cursor position="2604" topLine="48" />
+	<File name="../Sources/Data/FileSerializer.cpp" open="0" top="0" tabpos="3">
+		<Cursor position="3200" topLine="72" />
 	</File>
 	<File name="../Sources/Data/FileSerializer.h" open="0" top="0" tabpos="0">
-		<Cursor position="612" topLine="0" />
+		<Cursor position="667" topLine="0" />
 	</File>
 	<File name="../Sources/Data/IniFile.cpp" open="0" top="0" tabpos="4">
 		<Cursor position="5008" topLine="117" />
@@ -41,28 +41,28 @@
 		<Cursor position="1079" topLine="0" />
 	</File>
 	<File name="../Sources/Data/LuaContext.cpp" open="0" top="0" tabpos="0">
-		<Cursor position="2418" topLine="25" />
+		<Cursor position="6923" topLine="177" />
 	</File>
 	<File name="../Sources/Data/LuaContext.h" open="0" top="0" tabpos="0">
 		<Cursor position="699" topLine="0" />
 	</File>
-	<File name="../Sources/Data/LuaObject.cpp" open="0" top="0" tabpos="1">
-		<Cursor position="9327" topLine="231" />
+	<File name="../Sources/Data/LuaObject.cpp" open="1" top="0" tabpos="7">
+		<Cursor position="8949" topLine="231" />
 	</File>
 	<File name="../Sources/Data/LuaObject.h" open="0" top="0" tabpos="0">
 		<Cursor position="910" topLine="0" />
 	</File>
 	<File name="../Sources/Data/LuaTargetable.cpp" open="0" top="0" tabpos="6">
-		<Cursor position="5370" topLine="114" />
+		<Cursor position="6842" topLine="174" />
 	</File>
 	<File name="../Sources/Data/LuaTargetable.h" open="0" top="0" tabpos="0">
 		<Cursor position="1753" topLine="26" />
 	</File>
 	<File name="../Sources/Data/NetworkSerializer.cpp" open="0" top="0" tabpos="0">
-		<Cursor position="2420" topLine="37" />
+		<Cursor position="2757" topLine="51" />
 	</File>
 	<File name="../Sources/Data/NetworkSerializer.h" open="0" top="0" tabpos="0">
-		<Cursor position="681" topLine="0" />
+		<Cursor position="735" topLine="0" />
 	</File>
 	<File name="../Sources/Data/Parameters.cpp" open="0" top="0" tabpos="2">
 		<Cursor position="1444" topLine="4" />
@@ -71,7 +71,7 @@
 		<Cursor position="399" topLine="0" />
 	</File>
 	<File name="../Sources/Data/Serializer.h" open="0" top="0" tabpos="0">
-		<Cursor position="373" topLine="0" />
+		<Cursor position="422" topLine="0" />
 	</File>
 	<File name="../Sources/Data/XMLLiteElement.cpp" open="0" top="0" tabpos="0">
 		<Cursor position="228" topLine="0" />
@@ -89,7 +89,7 @@
 		<Cursor position="3156" topLine="34" />
 	</File>
 	<File name="../Sources/Data/XMLObject.h" open="0" top="0" tabpos="9">
-		<Cursor position="442" topLine="1" />
+		<Cursor position="442" topLine="0" />
 	</File>
 	<File name="../Sources/Debug/DebugManager.cpp" open="0" top="0" tabpos="3">
 		<Cursor position="8005" topLine="202" />
@@ -104,10 +104,10 @@
 		<Cursor position="358" topLine="0" />
 	</File>
 	<File name="../Sources/DeckData/AvatarData.cpp" open="0" top="0" tabpos="10">
-		<Cursor position="6974" topLine="135" />
+		<Cursor position="4247" topLine="78" />
 	</File>
 	<File name="../Sources/DeckData/AvatarData.h" open="0" top="0" tabpos="0">
-		<Cursor position="1386" topLine="5" />
+		<Cursor position="1439" topLine="13" />
 	</File>
 	<File name="../Sources/DeckData/Edition.cpp" open="0" top="0" tabpos="11">
 		<Cursor position="20502" topLine="418" />
@@ -148,11 +148,11 @@
 	<File name="../Sources/DeckData/ShopItem.h" open="0" top="0" tabpos="0">
 		<Cursor position="1408" topLine="29" />
 	</File>
-	<File name="../Sources/DeckData/UnitData.cpp" open="1" top="0" tabpos="2">
-		<Cursor position="2263" topLine="52" />
+	<File name="../Sources/DeckData/UnitData.cpp" open="0" top="0" tabpos="2">
+		<Cursor position="3306" topLine="64" />
 	</File>
 	<File name="../Sources/DeckData/UnitData.h" open="0" top="0" tabpos="12">
-		<Cursor position="640" topLine="0" />
+		<Cursor position="1393" topLine="3" />
 	</File>
 	<File name="../Sources/Display/DisplayEngine.cpp" open="0" top="0" tabpos="0">
 		<Cursor position="2259" topLine="30" />
@@ -319,14 +319,14 @@
 	<File name="../Sources/Gameboard/MapTile.h" open="0" top="0" tabpos="0">
 		<Cursor position="955" topLine="0" />
 	</File>
-	<File name="../Sources/Gameboard/Skill.cpp" open="0" top="0" tabpos="0">
-		<Cursor position="337" topLine="0" />
+	<File name="../Sources/Gameboard/Skill.cpp" open="1" top="0" tabpos="6">
+		<Cursor position="3591" topLine="88" />
 	</File>
 	<File name="../Sources/Gameboard/Skill.h" open="0" top="0" tabpos="0">
 		<Cursor position="786" topLine="0" />
 	</File>
 	<File name="../Sources/Gameboard/SpecialTile.cpp" open="0" top="0" tabpos="0">
-		<Cursor position="1280" topLine="0" />
+		<Cursor position="3664" topLine="81" />
 	</File>
 	<File name="../Sources/Gameboard/SpecialTile.h" open="0" top="0" tabpos="0">
 		<Cursor position="116" topLine="0" />
@@ -337,14 +337,14 @@
 	<File name="../Sources/Gameboard/Temple.h" open="0" top="0" tabpos="0">
 		<Cursor position="772" topLine="0" />
 	</File>
-	<File name="../Sources/Gameboard/Town.cpp" open="0" top="0" tabpos="0">
-		<Cursor position="26566" topLine="707" />
+	<File name="../Sources/Gameboard/Town.cpp" open="1" top="0" tabpos="8">
+		<Cursor position="10568" topLine="254" />
 	</File>
 	<File name="../Sources/Gameboard/Town.h" open="0" top="0" tabpos="0">
-		<Cursor position="1707" topLine="14" />
+		<Cursor position="3563" topLine="105" />
 	</File>
 	<File name="../Sources/Gameboard/Unit.cpp" open="0" top="0" tabpos="0">
-		<Cursor position="11648" topLine="280" />
+		<Cursor position="8924" topLine="209" />
 	</File>
 	<File name="../Sources/Gameboard/Unit.h" open="0" top="0" tabpos="0">
 		<Cursor position="4046" topLine="114" />
@@ -382,7 +382,7 @@
 	<File name="../Sources/Interface/GameOverDlg.cpp" open="0" top="0" tabpos="0">
 		<Cursor position="1554" topLine="6" />
 	</File>
-	<File name="../Sources/Interface/HostGameDlg.cpp" open="1" top="0" tabpos="1">
+	<File name="../Sources/Interface/HostGameDlg.cpp" open="0" top="0" tabpos="1">
 		<Cursor position="43115" topLine="1035" />
 	</File>
 	<File name="../Sources/Interface/HostGameDlg.h" open="0" top="0" tabpos="0">
@@ -428,10 +428,10 @@
 		<Cursor position="4844" topLine="101" />
 	</File>
 	<File name="../Sources/Interface/ResolveDlg.cpp" open="0" top="0" tabpos="0">
-		<Cursor position="6215" topLine="109" />
+		<Cursor position="43890" topLine="1005" />
 	</File>
 	<File name="../Sources/Interface/ResolveDlg.h" open="0" top="0" tabpos="0">
-		<Cursor position="3279" topLine="71" />
+		<Cursor position="3419" topLine="79" />
 	</File>
 	<File name="../Sources/Interface/SelectPlayerAvatarDlg.cpp" open="0" top="0" tabpos="0">
 		<Cursor position="9404" topLine="199" />
@@ -469,8 +469,8 @@
 	<File name="../Sources/Interface/UnitOptionsDlg.cpp" open="0" top="0" tabpos="0">
 		<Cursor position="7333" topLine="160" />
 	</File>
-	<File name="../Sources/LocalClient.cpp" open="0" top="0" tabpos="1">
-		<Cursor position="4558" topLine="121" />
+	<File name="../Sources/LocalClient.cpp" open="1" top="0" tabpos="9">
+		<Cursor position="25536" topLine="791" />
 	</File>
 	<File name="../Sources/LocalClient.h" open="0" top="0" tabpos="0">
 		<Cursor position="1786" topLine="54" />
@@ -491,25 +491,25 @@
 		<Cursor position="293" topLine="0" />
 	</File>
 	<File name="../Sources/Players/Player.cpp" open="0" top="0" tabpos="0">
-		<Cursor position="20267" topLine="579" />
+		<Cursor position="7716" topLine="186" />
 	</File>
 	<File name="../Sources/Players/Player.h" open="0" top="0" tabpos="0">
-		<Cursor position="377" topLine="0" />
+		<Cursor position="2278" topLine="68" />
 	</File>
 	<File name="../Sources/Players/PlayerManager.cpp" open="0" top="0" tabpos="15">
-		<Cursor position="26433" topLine="682" />
+		<Cursor position="43692" topLine="1176" />
 	</File>
 	<File name="../Sources/Players/PlayerManager.h" open="0" top="0" tabpos="0">
 		<Cursor position="1678" topLine="8" />
 	</File>
 	<File name="../Sources/Players/PlayerManagerAbstract.cpp" open="0" top="0" tabpos="0">
-		<Cursor position="7838" topLine="178" />
+		<Cursor position="4863" topLine="101" />
 	</File>
 	<File name="../Sources/Players/PlayerManagerAbstract.h" open="0" top="0" tabpos="0">
 		<Cursor position="1550" topLine="21" />
 	</File>
-	<File name="../Sources/Players/Spell.cpp" open="0" top="0" tabpos="16">
-		<Cursor position="6493" topLine="149" />
+	<File name="../Sources/Players/Spell.cpp" open="1" top="0" tabpos="1">
+		<Cursor position="4714" topLine="110" />
 	</File>
 	<File name="../Sources/Players/Spell.h" open="0" top="0" tabpos="0">
 		<Cursor position="154" topLine="0" />
@@ -532,23 +532,23 @@
 	<File name="../Sources/Server/MapReader.h" open="0" top="0" tabpos="0">
 		<Cursor position="2006" topLine="49" />
 	</File>
-	<File name="../Sources/Server/NetworkData.cpp" open="0" top="0" tabpos="17">
-		<Cursor position="4913" topLine="122" />
+	<File name="../Sources/Server/NetworkData.cpp" open="1" top="0" tabpos="2">
+		<Cursor position="232" topLine="0" />
 	</File>
-	<File name="../Sources/Server/NetworkData.h" open="0" top="0" tabpos="0">
-		<Cursor position="394" topLine="0" />
+	<File name="../Sources/Server/NetworkData.h" open="1" top="0" tabpos="3">
+		<Cursor position="69" topLine="0" />
 	</File>
-	<File name="../Sources/Server/Server.cpp" open="0" top="0" tabpos="18">
-		<Cursor position="18426" topLine="526" />
+	<File name="../Sources/Server/Server.cpp" open="1" top="0" tabpos="4">
+		<Cursor position="20926" topLine="608" />
 	</File>
 	<File name="../Sources/Server/Server.h" open="0" top="0" tabpos="0">
-		<Cursor position="5333" topLine="85" />
+		<Cursor position="6365" topLine="131" />
 	</File>
 	<File name="../Sources/Server/ServerUnit.cpp" open="0" top="0" tabpos="0">
 		<Cursor position="2865" topLine="38" />
 	</File>
-	<File name="../Sources/Server/SpellsSolver.cpp" open="0" top="0" tabpos="0">
-		<Cursor position="15106" topLine="326" />
+	<File name="../Sources/Server/SpellsSolver.cpp" open="1" top="1" tabpos="5">
+		<Cursor position="16306" topLine="375" />
 	</File>
 	<File name="../Sources/Server/SpellsSolver.h" open="0" top="0" tabpos="0">
 		<Cursor position="3322" topLine="43" />

@@ -153,8 +153,8 @@ void Player::deserialize(NetworkData * pData, bool bShort, LocalClient * pLocalC
     {
         m_uPlayerId = (u8) pData->readLong();
         m_uClientId = (u8) pData->readLong();
-        pData->readString(m_sProfileName);
-        pData->readString(m_sBanner);
+        pData->readString(m_sProfileName, NAME_MAX_CHARS, pLocalClient->getDebug(), "Error in Player::deserialize: corrupted data (m_sProfileName)");
+        pData->readString(m_sBanner, 64, pLocalClient->getDebug(), "Error in Player::deserialize: corrupted data (m_sBanner)");
         m_Color.r = pData->readLong();
         m_Color.g = pData->readLong();
         m_Color.b = pData->readLong();
@@ -182,9 +182,9 @@ void Player::deserialize(NetworkData * pData, bool bShort, LocalClient * pLocalC
         for (int i = 0; i < size; i++)
         {
             char sEdition[NAME_MAX_CHARS];
-            pData->readString(sEdition);
             char sName[NAME_MAX_CHARS];
-            pData->readString(sName);
+            pData->readString(sEdition, NAME_MAX_CHARS, pLocalClient->getDebug(), "Error in Player::deserialize: corrupted data (sEdition)");
+            pData->readString(sName, NAME_MAX_CHARS, pLocalClient->getDebug(), "Error in Player::deserialize: corrupted data (sName)");
             Spell * pSpell = pLocalClient->getDataFactory()->findSpell(sEdition, sName);
             assert(pSpell != NULL);
             m_pWonSpells->addLast(pSpell);
@@ -193,9 +193,9 @@ void Player::deserialize(NetworkData * pData, bool bShort, LocalClient * pLocalC
         for (int i = 0; i < size; i++)
         {
             char sEdition[NAME_MAX_CHARS];
-            pData->readString(sEdition);
             char sName[NAME_MAX_CHARS];
-            pData->readString(sName);
+            pData->readString(sEdition, NAME_MAX_CHARS, pLocalClient->getDebug(), "Error in Player::deserialize: corrupted data (sEdition)");
+            pData->readString(sName, NAME_MAX_CHARS, pLocalClient->getDebug(), "Error in Player::deserialize: corrupted data (sName)");
             Edition * pEdition = pLocalClient->getDataFactory()->findEdition(sEdition);
             assert(pEdition != NULL);
             Artifact * pArtifact = pEdition->findArtifact(sName);
@@ -206,9 +206,9 @@ void Player::deserialize(NetworkData * pData, bool bShort, LocalClient * pLocalC
         for (int i = 0; i < size; i++)
         {
             char sEdition[NAME_MAX_CHARS];
-            pData->readString(sEdition);
             char sName[NAME_MAX_CHARS];
-            pData->readString(sName);
+            pData->readString(sEdition, NAME_MAX_CHARS, pLocalClient->getDebug(), "Error in Player::deserialize: corrupted data (sEdition)");
+            pData->readString(sName, NAME_MAX_CHARS, pLocalClient->getDebug(), "Error in Player::deserialize: corrupted data (sName)");
             AvatarData * pAvatar = (AvatarData*) pLocalClient->getDataFactory()->getUnitData(sEdition, sName);
             assert(pAvatar != NULL);
             m_pWonAvatars->addLast(pAvatar);

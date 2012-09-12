@@ -210,7 +210,8 @@ bool LuaContext::deserializeTargets(NetworkData * pData, PlayerManagerAbstract *
     {
         long type = pData->readLong();
         bool bEnabled = (pData->readLong() == 1);
-        pData->readString(ids);
+        if (!pData->readString(ids, 16))
+            return false;
         LuaTargetable * pTarget = pMngr->findTargetFromIdentifiers(type, ids, pMap);
         pTarget->attachEffect(pLua);
         if (!bEnabled)

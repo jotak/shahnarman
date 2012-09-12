@@ -1,4 +1,5 @@
 #include "NetworkSerializer.h"
+#include "../Debug/DebugManager.h"
 
 NetworkSerializer * NetworkSerializer::mInst = NULL;
 
@@ -76,7 +77,20 @@ void NetworkSerializer::writeString(const char * s)
 // -----------------------------------------------------------------
 // Name : readString
 // -----------------------------------------------------------------
-void NetworkSerializer::readString(char * s)
+bool NetworkSerializer::readString(char * s, int maxSize)
 {
-    m_pData->readString(s);
+    return m_pData->readString(s, maxSize);
+}
+
+// -----------------------------------------------------------------
+// Name : readString
+// -----------------------------------------------------------------
+bool NetworkSerializer::readString(char * str, int maxSize, DebugManager * pDebug, const char * sErrorMessage)
+{
+    if (!readString(str, maxSize))
+    {
+        pDebug->notifyErrorMessage(sErrorMessage);
+        return false;
+    }
+    return true;
 }

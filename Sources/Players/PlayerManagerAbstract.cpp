@@ -121,7 +121,13 @@ void PlayerManagerAbstract::deserializeLuaTargets(NetworkData * pData, LocalClie
     LuaContext context;
     int nbObjects = pData->readLong();
     for (int i = 0; i < nbObjects; i++)
-        context.deserializeTargets(pData, this, pMap);
+    {
+        if (!context.deserializeTargets(pData, this, pMap))
+        {
+            pLocalClient->getDebug()->notifyErrorMessage("Error when deserializing lua targets. Corrupted paquets.");
+            break;
+        }
+    }
 }
 
 // -----------------------------------------------------------------

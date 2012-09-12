@@ -194,7 +194,7 @@ void LuaTargetable::deserializeValues(NetworkData * pData)
     for (int i = 0; i < nbValues; i++)
     {
         char sKey[64];
-        pData->readString(sKey);
+        pData->readString(sKey, 64);
         setBaseValue(sKey, pData->readLong());
     }
 }

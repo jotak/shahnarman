@@ -217,7 +217,7 @@ void PlayerManager::recallSpells(NetworkData * pData)
     while (pData->dataYetToRead() > 0)
     {
         char sType[64];
-        pData->readString(sType);
+        pData->readString(sType, 64, m_pLocalClient->getDebug(), "Error in PlayerManager::recallSpells: corrupted data (sType)");
         u32 uSpellId = (u32) pData->readLong();
         if (strcmp(sType, "spell_in_play") == 0)
         {
@@ -737,7 +737,7 @@ void PlayerManager::onCustomLuaUpdate(NetworkData * pData)
 
     // Get callback name
     char sCallback[NAME_MAX_CHARS];
-    pData->readString(sCallback);
+    pData->readString(sCallback, NAME_MAX_CHARS, m_pLocalClient->getDebug(), "Error in PlayerManager::onCustomLuaUpdate: corrupted data (sCallback)");
 
     // Prepare calling function
     lua_State * pState = pLua->prepareLuaFunction(sCallback);
@@ -760,7 +760,7 @@ void PlayerManager::onCustomLuaUpdate(NetworkData * pData)
         else if (type == 1) // string
         {
             char charval[LUA_FUNCTION_PARAMS_MAX_CHARS];
-            pData->readString(charval);
+            pData->readString(charval, LUA_FUNCTION_PARAMS_MAX_CHARS, m_pLocalClient->getDebug(), "Error in PlayerManager::onCustomLuaUpdate: corrupted data (charval)");
             lua_pushstring(pState, charval);
             snprintf(sBuf, 128, "%s,", charval);
             wsafecat(sParams, 512, sBuf);
@@ -825,7 +825,7 @@ void PlayerManager::enableAllEffects(NetworkData * pData)
 void PlayerManager::changeSpellOwner(NetworkData * pData)
 {
     char sType[128];
-    pData->readString(sType);
+    pData->readString(sType, 128, m_pLocalClient->getDebug(), "Error in PlayerManager::changeSpellOwner: corrupted data (sType)");
     u8 uOld = (u8) pData->readLong();
     u32 uSpell = (u32) pData->readLong();
     u8 uNew = (u8) pData->readLong();
@@ -910,10 +910,10 @@ void PlayerManager::addSkillToUnit(NetworkData * pData)
     char sEdition[NAME_MAX_CHARS];
     char sSkill[NAME_MAX_CHARS];
     char sParams[256];
-    pData->readString(sEdition);
-    pData->readString(sSkill);
+    pData->readString(sEdition, NAME_MAX_CHARS, m_pLocalClient->getDebug(), "Error in PlayerManager::addSkillToUnit: corrupted data (sEdition)");
+    pData->readString(sSkill, NAME_MAX_CHARS, m_pLocalClient->getDebug(), "Error in PlayerManager::addSkillToUnit: corrupted data (sSkill)");
     u32 uId = (u32) pData->readLong();
-    pData->readString(sParams);
+    pData->readString(sParams, 256, m_pLocalClient->getDebug(), "Error in PlayerManager::addSkillToUnit: corrupted data (sParams)");
     u8 uPlayer = (u8) pData->readLong();
     u32 uUnit = (u32) pData->readLong();
 
@@ -1145,7 +1145,7 @@ void PlayerManager::buildBuilding(NetworkData * pData)
 {
     u32 uTownId = (u32) pData->readLong();
     char sName[NAME_MAX_CHARS];
-    pData->readString(sName);
+    pData->readString(sName, NAME_MAX_CHARS, m_pLocalClient->getDebug(), "Error in PlayerManager::buildBuilding: corrupted data (sName)");
     Town * pTown = m_pLocalClient->getGameboard()->getMap()->findTown(uTownId);
     assert(pTown != NULL);
     pTown->buildBuilding(sName, NULL);
@@ -1158,7 +1158,7 @@ void PlayerManager::teleport(NetworkData * pData)
 {
     long type = pData->readLong();
     char sIds[16];
-    pData->readString(sIds);
+    pData->readString(sIds, 16, m_pLocalClient->getDebug(), "Error in PlayerManager::teleport: corrupted data (sIds)");
     MapObject * pMapObj = (MapObject*) findTargetFromIdentifiers(type, sIds, m_pLocalClient->getGameboard()->getMap());
     assert(pMapObj != NULL);
     int x = (int) pData->readLong();
@@ -1172,7 +1172,7 @@ void PlayerManager::teleport(NetworkData * pData)
 void PlayerManager::resurrectUnit(NetworkData * pData)
 {
     char sIds[16];
-    pData->readString(sIds);
+    pData->readString(sIds, 16, m_pLocalClient->getDebug(), "Error in PlayerManager::resurrectUnit: corrupted data (sIds)");
     Unit * pUnit = (Unit*) findTargetFromIdentifiers(SELECT_TYPE_UNIT, sIds, m_pLocalClient->getGameboard()->getMap());
     assert(pUnit != NULL);
     Player * pPlayer = findPlayer(pUnit->getOwner());
@@ -1189,7 +1189,7 @@ void PlayerManager::resurrectUnit(NetworkData * pData)
 void PlayerManager::removeUnit(NetworkData * pData)
 {
     char sIds[16];
-    pData->readString(sIds);
+    pData->readString(sIds, 16, m_pLocalClient->getDebug(), "Error in PlayerManager::removeUnit: corrupted data (sIds)");
     Unit * pUnit = (Unit*) findTargetFromIdentifiers(SELECT_TYPE_UNIT, sIds, m_pLocalClient->getGameboard()->getMap());
     assert(pUnit != NULL);
     Player * pPlayer = findPlayer(pUnit->getOwner());

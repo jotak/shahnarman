@@ -85,22 +85,20 @@ void AvatarData::deserialize(Serializer * pSerializer, DebugManager * pDebug)
     m_uXP = pSerializer->readShort();
     for (int j = 0; j < NB_PROGRESSION_TREES; j++)
     {
-        pSerializer->readString(m_pProgression[j].sTreeName);
+        pSerializer->readString(m_pProgression[j].sTreeName, NAME_MAX_CHARS, pDebug, "Error in AvatarData::deserialize: corrupted data sTreeName.");
         for (int k = 0; k < NB_PROGRESSION_LEVELS; k++)
-        {
-            pSerializer->readString(m_pProgression[j].sElements[k]);
-        }
+            pSerializer->readString(m_pProgression[j].sElements[k], NAME_MAX_CHARS, pDebug, "Error in AvatarData::deserialize: corrupted data sElements.");
     }
     int len = pSerializer->readLong();
     for (int i = 0; i < len; i++)
     {
         AvatarData::EthnicityAndFame * pFameObj = new AvatarData::EthnicityAndFame();
-        pSerializer->readString(pFameObj->sEthnicity);
+        pSerializer->readString(pFameObj->sEthnicity, NAME_MAX_CHARS, pDebug, "Error in AvatarData::deserialize: corrupted data sEthnicity.");
         pFameObj->iFame = pSerializer->readLong();
         m_pAllFames->addLast(pFameObj);
     }
-    pSerializer->readString(m_sCustomName);
-    pSerializer->readString(m_sCustomDescription);
+    pSerializer->readString(m_sCustomName, NAME_MAX_CHARS, pDebug, "Error in AvatarData::deserialize: corrupted data m_sCustomName.");
+    pSerializer->readString(m_sCustomDescription, CUSTOMDESC_MAX_CHARS, pDebug, "Error in AvatarData::deserialize: corrupted data m_sCustomDescription.");
 }
 
 // -----------------------------------------------------------------

@@ -100,8 +100,8 @@ SpecialTile * SpecialTile::deserialize(NetworkData * pData, DebugManager * pDebu
     char sEdition[NAME_MAX_CHARS];
     char sObjectName[NAME_MAX_CHARS];
     u32 uId = pData->readLong();
-    pData->readString(sEdition);
-    pData->readString(sObjectName);
+    pData->readString(sEdition, NAME_MAX_CHARS, pDebug, "Error in SpecialTile::deserialize: corrupted data (sEdition)");
+    pData->readString(sObjectName, NAME_MAX_CHARS, pDebug, "Error in SpecialTile::deserialize: corrupted data (sObjectName)");
     CoordsMap mapPos;
     mapPos.x = pData->readLong();
     mapPos.y = pData->readLong();

@@ -1947,7 +1947,7 @@
 1347131931 /home/jotak/dev/Shahnarman/Sources/Players/Mana.h
 	"../Common/BaseObject.h"
 
-1347131932 /home/jotak/dev/Shahnarman/Sources/Server/NetworkData.h
+1347314314 /home/jotak/dev/Shahnarman/Sources/Server/NetworkData.h
 
 1347131920 /home/jotak/dev/Shahnarman/Sources/DeckData/ProgressionTree.h
 	"ProgressionElement.h"
@@ -1956,15 +1956,16 @@
 	"../Data/XMLObject.h"
 	"../Data/LuaObject.h"
 
-1347131918 source:/home/jotak/dev/Shahnarman/Sources/Data/FileSerializer.cpp
+1347304313 source:/home/jotak/dev/Shahnarman/Sources/Data/FileSerializer.cpp
 	"FileSerializer.h"
+	"../Debug/DebugManager.h"
 	<stdio.h>
 
-1347131918 /home/jotak/dev/Shahnarman/Sources/Data/FileSerializer.h
+1347304067 /home/jotak/dev/Shahnarman/Sources/Data/FileSerializer.h
 	"Serializer.h"
 	"../utils.h"
 
-1347131919 /home/jotak/dev/Shahnarman/Sources/Data/Serializer.h
+1347304292 /home/jotak/dev/Shahnarman/Sources/Data/Serializer.h
 
 1347131918 source:/home/jotak/dev/Shahnarman/Sources/Data/IniFile.cpp
 	"IniFile.h"
@@ -1991,7 +1992,7 @@
 1347131919 /home/jotak/dev/Shahnarman/Sources/Data/XMLLiteElement.h
 	"../Common/ObjectList.h"
 
-1347131919 source:/home/jotak/dev/Shahnarman/Sources/Data/LuaContext.cpp
+1347302258 source:/home/jotak/dev/Shahnarman/Sources/Data/LuaContext.cpp
 	"LuaContext.h"
 	"../Players/PlayerManagerAbstract.h"
 	"../Players/Player.h"
@@ -2126,7 +2127,7 @@
 
 1347131925 /home/jotak/dev/Shahnarman/Sources/GameRoot.h
 
-1347131919 source:/home/jotak/dev/Shahnarman/Sources/Data/LuaTargetable.cpp
+1347302263 source:/home/jotak/dev/Shahnarman/Sources/Data/LuaTargetable.cpp
 	"LuaTargetable.h"
 	"../Server/NetworkData.h"
 	"../Players/PlayerManager.h"
@@ -2143,10 +2144,11 @@
 1347131931 /home/jotak/dev/Shahnarman/Sources/Players/PlayerManager.h
 	"PlayerManagerAbstract.h"
 
-1347131919 source:/home/jotak/dev/Shahnarman/Sources/Data/NetworkSerializer.cpp
+1347304471 source:/home/jotak/dev/Shahnarman/Sources/Data/NetworkSerializer.cpp
 	"NetworkSerializer.h"
+	"../Debug/DebugManager.h"
 
-1347131919 /home/jotak/dev/Shahnarman/Sources/Data/NetworkSerializer.h
+1347304059 /home/jotak/dev/Shahnarman/Sources/Data/NetworkSerializer.h
 	"Serializer.h"
 	"../Server/NetworkData.h"
 	"../utils.h"
@@ -2243,7 +2245,7 @@
 	"guiLabel.h"
 	"../Geometries/GeometryQuads.h"
 
-1347131920 source:/home/jotak/dev/Shahnarman/Sources/DeckData/AvatarData.cpp
+1347308751 source:/home/jotak/dev/Shahnarman/Sources/DeckData/AvatarData.cpp
 	"AvatarData.h"
 	"Edition.h"
 	"../LocalClient.h"
@@ -2390,7 +2392,7 @@
 	"../Input/KeyboardListener.h"
 	"guiLabel.h"
 
-1347221623 source:/home/jotak/dev/Shahnarman/Sources/DeckData/UnitData.cpp
+1347309913 source:/home/jotak/dev/Shahnarman/Sources/DeckData/UnitData.cpp
 	"UnitData.h"
 	"../Data/LocalisationTool.h"
 	"../Debug/DebugManager.h"
@@ -2700,14 +2702,14 @@
 	"Pathfinder.h"
 	"MapObject.h"
 
-1347229278 source:/home/jotak/dev/Shahnarman/Sources/Gameboard/Skill.cpp
+1347310019 source:/home/jotak/dev/Shahnarman/Sources/Gameboard/Skill.cpp
 	"Skill.h"
 	"../Debug/DebugManager.h"
 	"../lua_callbacks.h"
 	"../Data/LocalisationTool.h"
 	"../DeckData/UnitData.h"
 
-1347131926 source:/home/jotak/dev/Shahnarman/Sources/Gameboard/SpecialTile.cpp
+1347310158 source:/home/jotak/dev/Shahnarman/Sources/Gameboard/SpecialTile.cpp
 	"SpecialTile.h"
 	"../Debug/DebugManager.h"
 	"../lua_callbacks.h"
@@ -2718,7 +2720,7 @@
 	"Temple.h"
 	"../Data/LocalisationTool.h"
 
-1347131926 source:/home/jotak/dev/Shahnarman/Sources/Gameboard/Town.cpp
+1347314241 source:/home/jotak/dev/Shahnarman/Sources/Gameboard/Town.cpp
 	"Town.h"
 	"../DeckData/Edition.h"
 	"../DeckData/Ethnicity.h"
@@ -2737,7 +2739,7 @@
 1347131929 /home/jotak/dev/Shahnarman/Sources/Interface/LogDlg.h
 	"../GUIClasses/guiDocument.h"
 
-1347131927 source:/home/jotak/dev/Shahnarman/Sources/Gameboard/Unit.cpp
+1347311524 source:/home/jotak/dev/Shahnarman/Sources/Gameboard/Unit.cpp
 	"Unit.h"
 	"GameboardManager.h"
 	"../Data/LocalisationTool.h"
@@ -3102,7 +3104,7 @@
 	"../Data/LocalisationTool.h"
 	"../Players/Player.h"
 
-1347131929 source:/home/jotak/dev/Shahnarman/Sources/Interface/ResolveDlg.cpp
+1347311730 source:/home/jotak/dev/Shahnarman/Sources/Interface/ResolveDlg.cpp
 	"ResolveDlg.h"
 	"../GUIClasses/guiToggleButton.h"
 	"../Data/LocalisationTool.h"
@@ -3219,7 +3221,7 @@
 	"../Gameboard/GameboardInputs.h"
 	"../Players/PlayerManager.h"
 
-1347131930 source:/home/jotak/dev/Shahnarman/Sources/LocalClient.cpp
+1347314291 source:/home/jotak/dev/Shahnarman/Sources/LocalClient.cpp
 	"LocalClient.h"
 	"Data/LocalisationTool.h"
 	"Display/DisplayEngine.h"
@@ -3281,7 +3283,7 @@
 1347131931 source:/home/jotak/dev/Shahnarman/Sources/Players/Mana.cpp
 	"Mana.h"
 
-1347131931 source:/home/jotak/dev/Shahnarman/Sources/Players/Player.cpp
+1347312560 source:/home/jotak/dev/Shahnarman/Sources/Players/Player.cpp
 	"Player.h"
 	"Spell.h"
 	"Artifact.h"
@@ -3296,7 +3298,7 @@
 	"../Data/NetworkSerializer.h"
 	"../LocalClient.h"
 
-1347131931 source:/home/jotak/dev/Shahnarman/Sources/Players/PlayerManager.cpp
+1347313264 source:/home/jotak/dev/Shahnarman/Sources/Players/PlayerManager.cpp
 	"PlayerManager.h"
 	"Player.h"
 	"Spell.h"
@@ -3323,7 +3325,7 @@
 	"../Debug/DebugManager.h"
 	"../Audio/AudioManager.h"
 
-1347131931 source:/home/jotak/dev/Shahnarman/Sources/Players/PlayerManagerAbstract.cpp
+1347301458 source:/home/jotak/dev/Shahnarman/Sources/Players/PlayerManagerAbstract.cpp
 	"PlayerManagerAbstract.h"
 	"Player.h"
 	"Spell.h"
@@ -3362,7 +3364,7 @@
 	"Server/Server.h"
 	"Server/TurnSolver.h"
 
-1347131931 source:/home/jotak/dev/Shahnarman/Sources/Players/Spell.cpp
+1347313323 source:/home/jotak/dev/Shahnarman/Sources/Players/Spell.cpp
 	"Spell.h"
 	"../Common/ObjectList.h"
 	"../Data/LuaTargetable.h"
@@ -3416,12 +3418,13 @@
 	"../DeckData/Ethnicity.h"
 	"../Gameboard/Town.h"
 
-1347131932 source:/home/jotak/dev/Shahnarman/Sources/Server/NetworkData.cpp
+1347314373 source:/home/jotak/dev/Shahnarman/Sources/Server/NetworkData.cpp
 	"NetworkData.h"
 	"../utils.h"
+	"../Debug/DebugManager.h"
 	<stdio.h>
 
-1347131932 source:/home/jotak/dev/Shahnarman/Sources/Server/Server.cpp
+1347313679 source:/home/jotak/dev/Shahnarman/Sources/Server/Server.cpp
 	"Server.h"
 	"MapReader.h"
 	"TurnSolver.h"

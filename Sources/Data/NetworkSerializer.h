@@ -24,7 +24,8 @@ public:
     virtual void writeChar(char c);
     virtual char readChar();
     virtual void writeString(const char * s);
-    virtual void readString(char * s);
+    virtual bool readString(char * s, int maxSize);
+    virtual bool readString(char * s, int maxSize, DebugManager * pDebug, const char * sErrorMessage);
 
 private:
     NetworkSerializer();

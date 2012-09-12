@@ -786,9 +786,9 @@ void LocalClient::gameOver(NetworkData * pData)
         for (int i = 0; i < size; i++)
         {
             char sEdition[NAME_MAX_CHARS];
-            pData->readString(sEdition);
             char sName[NAME_MAX_CHARS];
-            pData->readString(sName);
+            pData->readString(sEdition, NAME_MAX_CHARS, getDebug(), "Error in LocalClient::gameOver: corrupted data (sEdition)");
+            pData->readString(sName, NAME_MAX_CHARS, getDebug(), "Error in LocalClient::gameOver: corrupted data (sName)");
             Spell * pSpell = m_pDataFactory->findSpell(sEdition, sName);
             assert(pSpell != NULL);
             pPlayer->m_pWonSpells->addLast(pSpell);
@@ -797,9 +797,9 @@ void LocalClient::gameOver(NetworkData * pData)
         for (int i = 0; i < size; i++)
         {
             char sEdition[NAME_MAX_CHARS];
-            pData->readString(sEdition);
             char sName[NAME_MAX_CHARS];
-            pData->readString(sName);
+            pData->readString(sEdition, NAME_MAX_CHARS, getDebug(), "Error in LocalClient::gameOver: corrupted data (sEdition)");
+            pData->readString(sName, NAME_MAX_CHARS, getDebug(), "Error in LocalClient::gameOver: corrupted data (sName)");
             Edition * pEdition = m_pDataFactory->findEdition(sEdition);
             assert(pEdition != NULL);
             Artifact * pArtifact = pEdition->findArtifact(sName);
@@ -810,9 +810,9 @@ void LocalClient::gameOver(NetworkData * pData)
         for (int i = 0; i < size; i++)
         {
             char sEdition[NAME_MAX_CHARS];
-            pData->readString(sEdition);
             char sName[NAME_MAX_CHARS];
-            pData->readString(sName);
+            pData->readString(sEdition, NAME_MAX_CHARS, getDebug(), "Error in LocalClient::gameOver: corrupted data (sEdition)");
+            pData->readString(sName, NAME_MAX_CHARS, getDebug(), "Error in LocalClient::gameOver: corrupted data (sName)");
             UnitData * pData = m_pDataFactory->getUnitData(sEdition, sName);
             assert(pData != NULL);
             pPlayer->m_pWonAvatars->addLast(pData);
@@ -866,7 +866,7 @@ void LocalClient::logCustomMessage(NetworkData * pData)
     u8 uAction = LOG_ACTION_NONE;
     void * pAction = NULL;
     CoordsMap cm;
-    pData->readString(sMsgKey);
+    pData->readString(sMsgKey, 256, getDebug(), "Error in LocalClient::logCustomMessage: corrupted data (sMsgKey)");
     u8 uLevel = pData->readLong();
     int nbData = (int) pData->readLong();
     if (nbData > 0)
@@ -887,8 +887,8 @@ void LocalClient::logCustomMessage(NetworkData * pData)
             {
                 char sEdition[NAME_MAX_CHARS];
                 char sName[NAME_MAX_CHARS];
-                pData->readString(sEdition);
-                pData->readString(sName);
+                pData->readString(sEdition, NAME_MAX_CHARS, getDebug(), "Error in LocalClient::logCustomMessage: corrupted data (sEdition)");
+                pData->readString(sName, NAME_MAX_CHARS, getDebug(), "Error in LocalClient::logCustomMessage: corrupted data (sName)");
                 Spell * pSpell = m_pDataFactory->findSpell(sEdition, sName);
                 assert(pSpell != NULL);
                 pPhraseArgs[i] = pSpell->getLocalizedName();
@@ -898,8 +898,8 @@ void LocalClient::logCustomMessage(NetworkData * pData)
             {
                 char sEdition[NAME_MAX_CHARS];
                 char sName[NAME_MAX_CHARS];
-                pData->readString(sEdition);
-                pData->readString(sName);
+                pData->readString(sEdition, NAME_MAX_CHARS, getDebug(), "Error in LocalClient::logCustomMessage: corrupted data (sEdition)");
+                pData->readString(sName, NAME_MAX_CHARS, getDebug(), "Error in LocalClient::logCustomMessage: corrupted data (sName)");
                 Edition * pEdition = m_pDataFactory->findEdition(sEdition);
                 assert(pEdition != NULL);
                 Artifact * pArtifact = pEdition->findArtifact(sName);
@@ -912,8 +912,8 @@ void LocalClient::logCustomMessage(NetworkData * pData)
             {
                 char sEdition[NAME_MAX_CHARS];
                 char sName[NAME_MAX_CHARS];
-                pData->readString(sEdition);
-                pData->readString(sName);
+                pData->readString(sEdition, NAME_MAX_CHARS, getDebug(), "Error in LocalClient::logCustomMessage: corrupted data (sEdition)");
+                pData->readString(sName, NAME_MAX_CHARS, getDebug(), "Error in LocalClient::logCustomMessage: corrupted data (sName)");
                 UnitData * pData = m_pDataFactory->getUnitData(sEdition, sName);
                 assert(pData != NULL);
                 pData->findLocalizedElement(sName, NAME_MAX_CHARS, i18n->getCurrentLanguageName(), "name");
@@ -934,7 +934,7 @@ void LocalClient::logCustomMessage(NetworkData * pData)
                 Player * pPlayer = m_pPlayerManager->findPlayer(uPlayerId);
                 assert(pPlayer != NULL);
                 char sSrc[16];
-                pData->readString(sSrc);
+                pData->readString(sSrc, 16, getDebug(), "Error in LocalClient::logCustomMessage: corrupted data (sSrc)");
                 ObjectList * pList = NULL;
                 if (strcmp(sSrc, "hand") == 0)
                     pList = pPlayer->m_pHand;
@@ -974,7 +974,7 @@ void LocalClient::logCustomMessage(NetworkData * pData)
                 Town * pTown = m_pGameboardManager->getMap()->findTown(uTownId);
                 assert(pTown != NULL);
                 char sName[NAME_MAX_CHARS];
-                pData->readString(sName);
+                pData->readString(sName, NAME_MAX_CHARS, getDebug(), "Error in LocalClient::logCustomMessage: corrupted data (sName)");
                 pPhraseArgs[i] = sNotFound;
                 Building * pBuild = pTown->getFirstBuilding(0);
                 while (pBuild != NULL)

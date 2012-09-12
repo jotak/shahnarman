@@ -519,7 +519,7 @@ void Server::updatePlayerUnitsOrder(NetworkData * pData)
                         if (pEffect != NULL)
                         {
                             char params[LUA_FUNCTION_PARAMS_MAX_CHARS];
-                            pData->readString(params);
+                            pData->readString(params, LUA_FUNCTION_PARAMS_MAX_CHARS, m_pDebug, "Error in Server::updatePlayerUnitsOrder: corrupted data (params)");
                             wsafecpy(pEffect->sResolveParams, LUA_FUNCTION_PARAMS_MAX_CHARS, params);
                             pUnit->setSkillOrder(uSkillId, iEffectId);
                         }
@@ -729,7 +729,7 @@ bool Server::loadGame(const char * sGameName)
     NetworkData data(f);
     fclose(f);
     data.readLong();  // Read but ignore message type
-    data.readString(m_sGameName);
+    data.readString(m_sGameName, 64, m_pDebug, "Error in Server::loadGame: corrupted data (m_sGameName)");
     m_iNbClients = data.readLong();
     m_pAllClients = new ClientData[m_iNbClients];
     data.readCustom(m_pAllClients);

@@ -103,8 +103,8 @@ void Unit::deserialize(NetworkData * pData, LocalClient * pLocalClient, std::que
     pos.y = (int) pData->readLong();
     setMapPos(pos);
     moveTo(pLocalClient->getDisplay()->get3DCoords(pos)); // 3D position
-    pData->readString(m_sUnitId);
-    pData->readString(m_sEdition);
+    pData->readString(m_sUnitId, NAME_MAX_CHARS, pLocalClient->getDebug(), "Error in Unit::deserialize: corrupted data (m_sUnitId)");
+    pData->readString(m_sEdition, NAME_MAX_CHARS, pLocalClient->getDebug(), "Error in Unit::deserialize: corrupted data (m_sEdition)");
     LuaTargetable::deserializeValues(pData);
     m_Order = (UnitOrder) pData->readLong();
 
@@ -154,9 +154,9 @@ void Unit::deserialize(NetworkData * pData, LocalClient * pLocalClient, std::que
         char sName[NAME_MAX_CHARS];
         char sParams[LUA_FUNCTION_PARAMS_MAX_CHARS];
         u32 id = (u32) pData->readLong();
-        pData->readString(sEdition);
-        pData->readString(sName);
-        pData->readString(sParams);
+        pData->readString(sEdition, NAME_MAX_CHARS, pLocalClient->getDebug(), "Error in Unit::deserialize: corrupted data (Skill sEdition)");
+        pData->readString(sName, NAME_MAX_CHARS, pLocalClient->getDebug(), "Error in Unit::deserialize: corrupted data (Skill sName)");
+        pData->readString(sParams, LUA_FUNCTION_PARAMS_MAX_CHARS, pLocalClient->getDebug(), "Error in Unit::deserialize: corrupted data (Skill sParams)");
         Skill * pSkill = new Skill(id, sEdition, sName, sParams, pLocalClient->getDebug());
         m_pSkillsRef->addLast(pSkill);
     }
@@ -226,7 +226,7 @@ void Unit::deserializeForUpdate(NetworkData * pData, LocalClient * pLocalClient)
     for (int i = 0; i < nbValues; i++)
     {
         char sKey[64];
-        pData->readString(sKey);
+        pData->readString(sKey, 64, pLocalClient->getDebug(), "Error in Unit::deserializeForUpdate: corrupted data (value)");
         setBaseValue(sKey, (double) pData->readLong());
     }
     m_Order = (UnitOrder) pData->readLong();

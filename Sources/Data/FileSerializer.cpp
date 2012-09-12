@@ -1,4 +1,5 @@
 #include "FileSerializer.h"
+#include "../Debug/DebugManager.h"
 #include <stdio.h>
 
 FileSerializer * FileSerializer::mInst = NULL;
@@ -84,10 +85,33 @@ void FileSerializer::writeString(const char * s)
 
 // -----------------------------------------------------------------
 // Name : readString
+//  Return false if len > maxSize
 // -----------------------------------------------------------------
-void FileSerializer::readString(char * s)
+bool FileSerializer::readString(char * s, int maxSize)
 {
     int len = 0;
     fread(&len, sizeof(int), 1, m_pFile);
-    fread(s, sizeof(char), len, m_pFile);
+    if (len > maxSize-1)
+    {
+        fread(s, sizeof(char), maxSize-1, m_pFile);
+        return false;
+    }
+    else
+    {
+        fread(s, sizeof(char), len, m_pFile);
+        return true;
+    }
+}
+
+// -----------------------------------------------------------------
+// Name : readString
+// -----------------------------------------------------------------
+bool FileSerializer::readString(char * str, int maxSize, DebugManager * pDebug, const char * sErrorMessage)
+{
+    if (!readString(str, maxSize))
+    {
+        pDebug->notifyErrorMessage(sErrorMessage);
+        return false;
+    }
+    return true;
 }

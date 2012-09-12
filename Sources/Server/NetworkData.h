@@ -1,6 +1,8 @@
 #ifndef _NETWORK_DATA_H
 #define _NETWORK_DATA_H
 
+class DebugManager;
+
 class NetworkData
 {
 public:
@@ -17,7 +19,8 @@ public:
     void addCustom(void * p, long size);
 
     long readLong();
-    void readString(char * str);
+    bool readString(char * str, int maxSize);
+    bool readString(char * str, int maxSize, DebugManager * pDebug, const char * sError);
     double readDouble();
     long readCustom(void * p);
 

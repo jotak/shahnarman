@@ -1025,7 +1025,7 @@ void ResolveDlg::onMessage(int iMessage, NetworkData * pData)
         extern u32 g_uLuaSelectConstraints;
         g_uLuaSelectTargetType = (u8) pData->readLong();
         g_uLuaSelectConstraints = (u32) pData->readLong();
-        pData->readString(m_sSelectTargetLuaCallback);
+        pData->readString(m_sSelectTargetLuaCallback, 128, m_pLocalClient->getDebug(), "Error in ResolveDlg::onMessage: corrupted data (m_sSelectTargetLuaCallback)");
 
         char sStatus[512] = "";
         switch (context.pLua->getType())

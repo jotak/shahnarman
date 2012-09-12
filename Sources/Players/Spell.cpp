@@ -130,8 +130,8 @@ Spell * Spell::deserialize(NetworkData * pData, DebugManager * pDebug)
     char sFilename[NAME_MAX_CHARS];
     u8 uPlayerId = (u8) pData->readLong();
     u32 uSpellId = (u32) pData->readLong();
-    pData->readString(sEdition);
-    pData->readString(sFilename);
+    pData->readString(sEdition, NAME_MAX_CHARS, pDebug, "Error in Spell::deserialize: corrupted data (sEdition)");
+    pData->readString(sFilename, NAME_MAX_CHARS, pDebug, "Error in Spell::deserialize: corrupted data (sFilename)");
     long iGlobal = pData->readLong();
     Spell * pSpell = new Spell(uSpellId, uPlayerId, sEdition, 1, sFilename, pDebug);
     if (iGlobal)

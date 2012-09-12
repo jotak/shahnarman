@@ -201,9 +201,9 @@ void Town::deserialize(NetworkData * pData, LocalClient * pLocalClient)
 {
     m_pLocalClient = pLocalClient;
     m_uTownId = pData->readLong();
-    pData->readString(m_sName);
-    pData->readString(m_sEthnicityEdition);
-    pData->readString(m_sEthnicityId);
+    pData->readString(m_sName, NAME_MAX_CHARS, pLocalClient->getDebug(), "Error in Town::deserialize: corrupted data (m_sName)");
+    pData->readString(m_sEthnicityEdition, NAME_MAX_CHARS, pLocalClient->getDebug(), "Error in Town::deserialize: corrupted data (m_sEthnicityEdition)");
+    pData->readString(m_sEthnicityId, NAME_MAX_CHARS, pLocalClient->getDebug(), "Error in Town::deserialize: corrupted data (m_sEthnicityId)");
     m_uOwner = pData->readLong();
     m_uSize = pData->readLong();
     LuaTargetable::deserializeValues(pData);
@@ -226,14 +226,14 @@ void Town::deserialize(NetworkData * pData, LocalClient * pLocalClient)
         int iX = (int) pData->readLong();
         int iY = (int) pData->readLong();
         char sName[NAME_MAX_CHARS];
-        pData->readString(sName);
+        pData->readString(sName, NAME_MAX_CHARS, pLocalClient->getDebug(), "Error in Town::deserialize: corrupted data (Building sName)");
         Building * pBuilding = new Building(id, iX, iY, m_sEthnicityEdition, sName, m_pLocalClient->getDebug());
         bool bBuilt = (pData->readLong() == 1);
         pBuilding->setBuilt(bBuilt);
         m_pBuildings->addLast(pBuilding);
         listsize--;
     }
-    pData->readString(m_sCurrentBuilding);
+    pData->readString(m_sCurrentBuilding, NAME_MAX_CHARS, pLocalClient->getDebug(), "Error in Town::deserialize: corrupted data (m_sCurrentBuilding)");
 
     // Unit being produced
     FREE(m_pCurrentBuildingUnit);
@@ -241,7 +241,7 @@ void Town::deserialize(NetworkData * pData, LocalClient * pLocalClient)
     if (listsize != 0)
     {
         char sName[NAME_MAX_CHARS];
-        pData->readString(sName);
+        pData->readString(sName, NAME_MAX_CHARS, pLocalClient->getDebug(), "Error in Town::deserialize: corrupted data (TownUnit sName)");
         u8 cost = (u8) pData->readLong();
         m_pCurrentBuildingUnit = new Ethnicity::TownUnit(sName, cost);
     }
@@ -262,9 +262,9 @@ void Town::deserialize(NetworkData * pData, LocalClient * pLocalClient)
 // -----------------------------------------------------------------
 void Town::deserializeForUpdate(NetworkData * pData)
 {
-    pData->readString(m_sName);
-    pData->readString(m_sEthnicityEdition);
-    pData->readString(m_sEthnicityId);
+    pData->readString(m_sName, NAME_MAX_CHARS);
+    pData->readString(m_sEthnicityEdition, NAME_MAX_CHARS);
+    pData->readString(m_sEthnicityId, NAME_MAX_CHARS);
     m_uOwner = pData->readLong();
     m_uSize = pData->readLong();
     LuaTargetable::deserializeValues(pData);
@@ -278,7 +278,7 @@ void Town::deserializeForUpdate(NetworkData * pData)
     pos.y = pData->readLong();
     setMapPos(pos);
 
-    pData->readString(m_sCurrentBuilding);
+    pData->readString(m_sCurrentBuilding, NAME_MAX_CHARS);
 
     // Unit being produced
     FREE(m_pCurrentBuildingUnit);
@@ -286,7 +286,7 @@ void Town::deserializeForUpdate(NetworkData * pData)
     if (listsize != 0)
     {
         char sName[NAME_MAX_CHARS];
-        pData->readString(sName);
+        pData->readString(sName, NAME_MAX_CHARS);
         u8 cost = (u8) pData->readLong();
         m_pCurrentBuildingUnit = new Ethnicity::TownUnit(sName, cost);
     }
@@ -318,14 +318,13 @@ void Town::getOrders(NetworkData * pData)
 void Town::updateOrders(NetworkData * pData)
 {
     char sName[NAME_MAX_CHARS];
-    pData->readString(sName);
+    pData->readString(sName, NAME_MAX_CHARS);
     setCurrentBuilding(sName);
 
     // Unit being produced
     if (pData->readLong() == 1)
     {
-        char sName[NAME_MAX_CHARS];
-        pData->readString(sName);
+        pData->readString(sName, NAME_MAX_CHARS);
         u8 cost = (u8) pData->readLong();
         if (m_pCurrentBuildingUnit == NULL || strcmp(m_pCurrentBuildingUnit->m_sId, sName) != 0)
         {

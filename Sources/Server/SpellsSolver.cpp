@@ -314,7 +314,7 @@ void SpellsSolver::receiveSpells(NetworkData * pData)
                     char spellParams[LUA_FUNCTION_PARAMS_MAX_CHARS];
                     // Note: keep spell in hand, it still can be discarded by opponent for instance
                     pPlayer->m_pCastSpells->addLast(pSpell);
-                    pData->readString(spellParams);
+                    pData->readString(spellParams, LUA_FUNCTION_PARAMS_MAX_CHARS, m_pServer->getDebug(), "Error in Server::receiveSpells: corrupted data (spellParams)");
                     pSpell->resetResolveParameters();
                     pSpell->addResolveParameters(spellParams);
                 }
@@ -376,14 +376,14 @@ void SpellsSolver::receiveTargetOnResolve(NetworkData * pData)
     }
     assert(m_pLuaBeingResolved != NULL);
     char sResolveFunc[128];
-    pData->readString(sResolveFunc);
+    pData->readString(sResolveFunc, 128, m_pServer->getDebug(), "Error in SpellsSolver::receiveTargetOnResolve: corrupted data (sResolveFunc)");
     char sParams[LUA_FUNCTION_PARAMS_MAX_CHARS];
     m_bPauseResolving = false;
     if (isChild)
     {
         int id = (int) pData->readLong();
         ChildEffect * pChild = m_pLuaBeingResolved->getChildEffect(id);
-        pData->readString(sParams);
+        pData->readString(sParams, LUA_FUNCTION_PARAMS_MAX_CHARS, m_pServer->getDebug(), "Error in SpellsSolver::receiveTargetOnResolve: corrupted data (sParams)");
         m_pLuaBeingResolved->setCurrentEffect(pChild->id);
         m_pLuaBeingResolved->callLuaFunction(sResolveFunc, 0, "is", (int) (pChild->id + 1), sParams);
         if (!m_bPauseResolving)  // During call of "onResolve", it's possible that it was paused for instance to select a target during resolve
@@ -393,7 +393,7 @@ void SpellsSolver::receiveTargetOnResolve(NetworkData * pData)
     {
         if (uType == LUAOBJECT_SPELL)
         {
-            pData->readString(sParams);
+            pData->readString(sParams, LUA_FUNCTION_PARAMS_MAX_CHARS, m_pServer->getDebug(), "Error in SpellsSolver::receiveTargetOnResolve: corrupted data (sParams)");
             m_pLuaBeingResolved->callLuaFunction(sResolveFunc, 0, "s", sParams);
             if (!m_bPauseResolving)  // During call of "onResolve", it's possible that it was paused for instance to select a target during resolve
                 endCastSpell(false);
