@@ -50,6 +50,11 @@
 			<Add library="libGLU" />
 			<Add directory="/media/Naymlap/dev/sdk/Other libs" />
 		</Linker>
+		<Unit filename="../Docs/NOTES - LUA.txt" />
+		<Unit filename="../Docs/NOTES.txt" />
+		<Unit filename="../Docs/TODO - GD.txt" />
+		<Unit filename="../Docs/TODO - LUA.txt" />
+		<Unit filename="../Docs/TODO.txt" />
 		<Unit filename="../Sources/Audio/AudioManager.cpp" />
 		<Unit filename="../Sources/Audio/AudioManager.h" />
 		<Unit filename="../Sources/Common/BaseObject.h" />

@@ -1,6 +1,12 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
 <CodeBlocks_layout_file>
 	<ActiveTarget name="Debug" />
+	<File name="../Docs/NOTES - LUA.txt" open="1" top="0" tabpos="1">
+		<Cursor position="0" topLine="0" />
+	</File>
+	<File name="../Docs/TODO.txt" open="1" top="1" tabpos="2">
+		<Cursor position="3791" topLine="0" />
+	</File>
 	<File name="../Sources/Audio/AudioManager.cpp" open="0" top="0" tabpos="22">
 		<Cursor position="3222" topLine="58" />
 	</File>
@@ -23,7 +29,7 @@
 		<Cursor position="699" topLine="0" />
 	</File>
 	<File name="../Sources/Data/FileSerializer.cpp" open="0" top="0" tabpos="3">
-		<Cursor position="3200" topLine="72" />
+		<Cursor position="2729" topLine="72" />
 	</File>
 	<File name="../Sources/Data/FileSerializer.h" open="0" top="0" tabpos="0">
 		<Cursor position="667" topLine="0" />
@@ -46,7 +52,7 @@
 	<File name="../Sources/Data/LuaContext.h" open="0" top="0" tabpos="0">
 		<Cursor position="699" topLine="0" />
 	</File>
-	<File name="../Sources/Data/LuaObject.cpp" open="1" top="0" tabpos="7">
+	<File name="../Sources/Data/LuaObject.cpp" open="0" top="0" tabpos="7">
 		<Cursor position="8949" topLine="231" />
 	</File>
 	<File name="../Sources/Data/LuaObject.h" open="0" top="0" tabpos="0">
@@ -149,7 +155,7 @@
 		<Cursor position="1408" topLine="29" />
 	</File>
 	<File name="../Sources/DeckData/UnitData.cpp" open="0" top="0" tabpos="2">
-		<Cursor position="3306" topLine="64" />
+		<Cursor position="1853" topLine="35" />
 	</File>
 	<File name="../Sources/DeckData/UnitData.h" open="0" top="0" tabpos="12">
 		<Cursor position="1393" topLine="3" />
@@ -158,16 +164,16 @@
 		<Cursor position="2259" topLine="30" />
 	</File>
 	<File name="../Sources/Display/DisplayEngine.h" open="0" top="0" tabpos="0">
-		<Cursor position="921" topLine="0" />
+		<Cursor position="948" topLine="12" />
 	</File>
 	<File name="../Sources/Display/Texture.cpp" open="0" top="0" tabpos="0">
-		<Cursor position="1302" topLine="17" />
+		<Cursor position="1575" topLine="129" />
 	</File>
 	<File name="../Sources/Display/Texture.h" open="0" top="0" tabpos="0">
 		<Cursor position="245" topLine="0" />
 	</File>
 	<File name="../Sources/Display/TextureEngine.cpp" open="0" top="0" tabpos="0">
-		<Cursor position="1465" topLine="33" />
+		<Cursor position="1616" topLine="9" />
 	</File>
 	<File name="../Sources/Display/TextureEngine.h" open="0" top="0" tabpos="0">
 		<Cursor position="503" topLine="0" />
@@ -319,7 +325,7 @@
 	<File name="../Sources/Gameboard/MapTile.h" open="0" top="0" tabpos="0">
 		<Cursor position="955" topLine="0" />
 	</File>
-	<File name="../Sources/Gameboard/Skill.cpp" open="1" top="0" tabpos="6">
+	<File name="../Sources/Gameboard/Skill.cpp" open="0" top="0" tabpos="6">
 		<Cursor position="3591" topLine="88" />
 	</File>
 	<File name="../Sources/Gameboard/Skill.h" open="0" top="0" tabpos="0">
@@ -337,7 +343,7 @@
 	<File name="../Sources/Gameboard/Temple.h" open="0" top="0" tabpos="0">
 		<Cursor position="772" topLine="0" />
 	</File>
-	<File name="../Sources/Gameboard/Town.cpp" open="1" top="0" tabpos="8">
+	<File name="../Sources/Gameboard/Town.cpp" open="0" top="0" tabpos="8">
 		<Cursor position="10568" topLine="254" />
 	</File>
 	<File name="../Sources/Gameboard/Town.h" open="0" top="0" tabpos="0">
@@ -395,7 +401,7 @@
 		<Cursor position="1678" topLine="8" />
 	</File>
 	<File name="../Sources/Interface/InterfaceManager.cpp" open="0" top="0" tabpos="12">
-		<Cursor position="47788" topLine="1183" />
+		<Cursor position="3546" topLine="93" />
 	</File>
 	<File name="../Sources/Interface/InterfaceManager.h" open="0" top="0" tabpos="0">
 		<Cursor position="4827" topLine="141" />
@@ -469,11 +475,11 @@
 	<File name="../Sources/Interface/UnitOptionsDlg.cpp" open="0" top="0" tabpos="0">
 		<Cursor position="7333" topLine="160" />
 	</File>
-	<File name="../Sources/LocalClient.cpp" open="1" top="0" tabpos="9">
+	<File name="../Sources/LocalClient.cpp" open="0" top="0" tabpos="9">
 		<Cursor position="25536" topLine="791" />
 	</File>
 	<File name="../Sources/LocalClient.h" open="0" top="0" tabpos="0">
-		<Cursor position="1786" topLine="54" />
+		<Cursor position="918" topLine="51" />
 	</File>
 	<File name="../Sources/Players/AISpell.cpp" open="0" top="0" tabpos="0">
 		<Cursor position="505" topLine="0" />
@@ -508,7 +514,7 @@
 	<File name="../Sources/Players/PlayerManagerAbstract.h" open="0" top="0" tabpos="0">
 		<Cursor position="1550" topLine="21" />
 	</File>
-	<File name="../Sources/Players/Spell.cpp" open="1" top="0" tabpos="1">
+	<File name="../Sources/Players/Spell.cpp" open="0" top="0" tabpos="1">
 		<Cursor position="4714" topLine="110" />
 	</File>
 	<File name="../Sources/Players/Spell.h" open="0" top="0" tabpos="0">
@@ -532,13 +538,13 @@
 	<File name="../Sources/Server/MapReader.h" open="0" top="0" tabpos="0">
 		<Cursor position="2006" topLine="49" />
 	</File>
-	<File name="../Sources/Server/NetworkData.cpp" open="1" top="0" tabpos="2">
+	<File name="../Sources/Server/NetworkData.cpp" open="0" top="0" tabpos="2">
 		<Cursor position="232" topLine="0" />
 	</File>
-	<File name="../Sources/Server/NetworkData.h" open="1" top="0" tabpos="3">
+	<File name="../Sources/Server/NetworkData.h" open="0" top="0" tabpos="3">
 		<Cursor position="69" topLine="0" />
 	</File>
-	<File name="../Sources/Server/Server.cpp" open="1" top="0" tabpos="4">
+	<File name="../Sources/Server/Server.cpp" open="0" top="0" tabpos="4">
 		<Cursor position="20926" topLine="608" />
 	</File>
 	<File name="../Sources/Server/Server.h" open="0" top="0" tabpos="0">
@@ -547,8 +553,8 @@
 	<File name="../Sources/Server/ServerUnit.cpp" open="0" top="0" tabpos="0">
 		<Cursor position="2865" topLine="38" />
 	</File>
-	<File name="../Sources/Server/SpellsSolver.cpp" open="1" top="1" tabpos="5">
-		<Cursor position="16306" topLine="375" />
+	<File name="../Sources/Server/SpellsSolver.cpp" open="0" top="0" tabpos="5">
+		<Cursor position="16321" topLine="375" />
 	</File>
 	<File name="../Sources/Server/SpellsSolver.h" open="0" top="0" tabpos="0">
 		<Cursor position="3322" topLine="43" />

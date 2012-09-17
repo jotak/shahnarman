@@ -16,6 +16,8 @@ Texture::Texture(const char * sFilename, bool bMipMap)
     m_bIsLoadedInVideo = false;
     m_iMasterTexture = -1;
     m_bMipMap = bMipMap;
+    m_Format = GL_RGB;
+    m_iBpp = 3;
 }
 
 // -----------------------------------------------------------------
@@ -132,6 +134,11 @@ s16 Texture::load()
         m_Format = GL_RGBA;
         m_iBpp = 4;
         break;
+    default:
+        fclose(f);
+        png_destroy_read_struct(&lpPng, &lpPngInfo, NULL);
+        unload();
+        return TEX_PNGERROR;
     }
 
     // Read pixel data
